@@ -26,4 +26,4 @@ Allow: /
 User-agent: Amazonbot
 Allow: /
 
-Sitemap: https://www.sitecheckai.dev/sitemap.xml
+Sitemap: https://sitecheckai.dev/sitemap.xml
