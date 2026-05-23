@@ -1,0 +1,40 @@
+# AuditAI
+
+> AuditAI ist ein KI-gestütztes Website-Audit-Tool, das SEO, Performance, Security und GEO-Sichtbarkeit (Generative Engine Optimization) in unter 60 Sekunden analysiert und einen vollständigen KI-Report generiert.
+
+## Was ist AuditAI?
+
+AuditAI prüft Websites automatisch auf technische Probleme und Optimierungspotenziale. Das Tool kombiniert technische Analyse mit einem von Claude AI generierten Bericht, der konkrete Handlungsempfehlungen enthält.
+
+## Analysebereiche
+
+- **SEO**: Title-Tag, Meta Description, H1–H6-Struktur, interne und externe Links, Alt-Texte für Bilder, kanonische URLs
+- **Performance**: Time to First Byte (TTFB), First Contentful Paint (FCP), DOM Load, vollständige Ladezeit, Seitengröße, Anzahl Requests
+- **Security**: HTTPS-Verschlüsselung, HSTS, Content-Security-Policy, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, weitere Security-Header
+- **GEO / KI-Sichtbarkeit**: llms.txt vorhanden, Schema.org strukturierte Daten, FAQ-Schema, Organization-Schema, Robots.txt AI-Crawler-Erlaubnis
+
+## KI-Report
+
+Jeder Audit enthält einen vollständigen KI-Bericht, erstellt von Claude (Anthropic), mit:
+- Zusammenfassung der wichtigsten Probleme
+- Konkreten Fixes für jede Kategorie
+- Priorisierter Action-Plan
+
+## Preise
+
+- Free: 1 Audit pro Monat, €0
+- Pro: 10 Audits pro Monat, €29/Monat
+- Agency: Unbegrenzte Audits, €99/Monat, White-Label, API-Zugang
+
+## Technische Details
+
+- Audit-Dauer: < 60 Sekunden
+- PDF-Export inklusive
+- API verfügbar (Agency-Plan)
+- Unterstützt alle öffentlich erreichbaren Websites
+
+## Kontakt
+
+- Website: https://auditai.io
+- Dashboard: https://auditai.io/dashboard
+- Preise: https://auditai.io/pricing

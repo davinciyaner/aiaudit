@@ -1,0 +1,26 @@
+{
+  "name": "auditai-backend",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "server.js",
+  "license": "MIT",
+  "author": "Finn Paustian",
+  "scripts": {
+    "dev": "node server.js",
+    "audit": "node src/cli.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.96.0",
+    "bcrypt": "^6.0.0",
+    "cheerio": "^1.2.0",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.5.2",
+    "jsonwebtoken": "^9.0.3",
+    "mongodb": "^7.2.0",
+    "mongoose": "^9.6.2",
+    "playwright": "^1.60.0",
+    "puppeteer-core": "^25.0.2"
+  }
+}
