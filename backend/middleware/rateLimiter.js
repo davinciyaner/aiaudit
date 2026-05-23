@@ -9,7 +9,7 @@ export const authLimiter = rateLimit({
 });
 
 export const anonymousAuditLimiter = rateLimit({
-    windowMs: 30 * 24 * 60 * 60 * 1000, // 30 Tage
+    windowMs: 24 * 24 * 60 * 60 * 1000, // 24 Tage (max 32-bit int)
     max: 1,
     standardHeaders: true,
     legacyHeaders: false,
