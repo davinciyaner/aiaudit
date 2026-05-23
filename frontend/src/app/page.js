@@ -12,7 +12,7 @@ export const metadata = {
     openGraph: {
         title: 'AuditAI – Kompletter Website Audit in 60 Sekunden',
         description: 'SEO, Performance, Security & GEO — ein KI-generierter Report mit konkreten Fixes. Kostenlos starten.',
-        url: 'https://auditai.io',
+        url: 'https://sitecheckai.dev',
         siteName: 'AuditAI',
         type: 'website',
         locale: 'de_DE',
@@ -23,7 +23,7 @@ export const metadata = {
         description: 'SEO, Performance, Security & GEO in 60 Sekunden. KI-Report mit konkreten Fixes. Kostenlos.',
     },
     robots: { index: true, follow: true, googleBot: { index: true, follow: true } },
-    alternates: { canonical: 'https://auditai.io' },
+    alternates: { canonical: 'https://sitecheckai.dev' },
 }
 
 export default function LandingPage() {
