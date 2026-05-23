@@ -15,7 +15,7 @@ const securityHeaders = [
             "style-src 'self' 'unsafe-inline'",
             "img-src 'self' data: https: blob:",
             "font-src 'self' data:",
-            "connect-src 'self' http://localhost:3001 https://api-m.sandbox.paypal.com https://api-m.paypal.com https://www.paypal.com",
+            `connect-src 'self' http://localhost:3001 ${process.env.NEXT_PUBLIC_API_URL ? new URL(process.env.NEXT_PUBLIC_API_URL).origin : ''} https://api-m.sandbox.paypal.com https://api-m.paypal.com https://www.paypal.com`,
             "frame-src https://www.paypal.com https://www.sandbox.paypal.com",
             "object-src 'none'",
             "base-uri 'self'",
