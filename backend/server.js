@@ -16,7 +16,7 @@ const app = express();
 const allowedOrigin = process.env.ALLOWED_ORIGIN || "http://localhost:3000";
 app.use(cors({
     origin: (origin, callback) => {
-        if (!origin && process.env.NODE_ENV !== "production") return callback(null, true);
+        if (!origin) return callback(null, true);
         if (origin === allowedOrigin) return callback(null, true);
         callback(new Error("CORS: Origin nicht erlaubt"));
     },
