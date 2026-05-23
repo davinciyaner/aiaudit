@@ -47,10 +47,10 @@ export default function DatenschutzPage() {
                         </p>
                         <p className="bg-white/2 border border-white/5 rounded-xl p-4 not-prose">
                             Finn Paustian<br />
-                            [DEINE STRASSE UND HAUSNUMMER]<br />
-                            [PLZ] [DEINE STADT]<br />
+                            Am Rund 6<br />
+                            23566 Lübeck<br />
                             Deutschland<br />
-                            E-Mail: <a href="mailto:finnolinoo@gmail.com" className="text-violet-400 hover:text-violet-300">finnolinoo@gmail.com</a>
+                            E-Mail: <a href="mailto:finnpaustian94@gmail.com" className="text-violet-400 hover:text-violet-300">finnpaustian94@gmail.com</a>
                         </p>
                     </Section>
 
@@ -190,12 +190,39 @@ export default function DatenschutzPage() {
                         </p>
                     </Section>
 
-                    <Section title="7. Keine Weitergabe an Dritte">
+                    <Section title="7. Vercel Analytics und Speed Insights">
+                        <p>
+                            AuditAI nutzt <strong className="text-slate-300">Vercel Analytics</strong> und <strong className="text-slate-300">Vercel Speed Insights</strong> zur Analyse von Seitenaufrufen und Performance-Metriken.
+                        </p>
+                        <p>
+                            Anbieter: Vercel Inc., 340 Pine Street, Suite 701, San Francisco, CA 94104, USA.
+                        </p>
+                        <Sub title="Was wird erfasst?">
+                            <ul className="list-disc list-inside space-y-1 ml-2">
+                                <li>Aufgerufene Seiten (anonymisiert)</li>
+                                <li>Herkunftsland und Gerätetyp (aggregiert)</li>
+                                <li>Performance-Metriken (Core Web Vitals: LCP, FID, CLS)</li>
+                                <li>Referrer-URL</li>
+                            </ul>
+                            <p>
+                                Es werden <strong className="text-slate-300">keine Cookies gesetzt</strong> und keine personenbezogenen Daten (Name, E-Mail, IP) gespeichert. Alle Daten werden aggregiert und anonymisiert verarbeitet.
+                            </p>
+                        </Sub>
+                        <p>
+                            Die Daten werden auf Servern von Vercel Inc. in den USA verarbeitet. Die Übermittlung erfolgt auf Basis von Standardvertragsklauseln gemäß Art. 46 Abs. 2 lit. c DSGVO.
+                        </p>
+                        <p>
+                            <strong className="text-slate-300">Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der Verbesserung und Analyse des Dienstes). Da keine personenbezogenen Daten verarbeitet werden, ist eine Einwilligung nicht erforderlich.<br />
+                            Weitere Informationen: <a href="https://vercel.com/legal/privacy-policy" className="text-violet-400 hover:text-violet-300" target="_blank" rel="noopener noreferrer">Vercel Privacy Policy</a>
+                        </p>
+                    </Section>
+
+                    <Section title="9. Keine Weitergabe an Dritte">
                         <p>
                             Personenbezogene Daten werden nicht an Dritte verkauft, vermietet oder anderweitig weitergegeben, außer:
                         </p>
                         <ul className="list-disc list-inside space-y-1 ml-2">
-                            <li>Zur Vertragserfüllung notwendige Dienstleister (PayPal, Anthropic, MongoDB — wie oben beschrieben)</li>
+                            <li>Zur Vertragserfüllung notwendige Dienstleister (PayPal, Anthropic, MongoDB, Vercel — wie oben beschrieben)</li>
                             <li>Bei gesetzlicher Verpflichtung</li>
                         </ul>
                         <p>Es findet kein Verkauf von Nutzerdaten statt.</p>
@@ -217,7 +244,7 @@ export default function DatenschutzPage() {
                         </p>
                     </Section>
 
-                    <Section title="9. Datensicherheit">
+                    <Section title="10. Datensicherheit">
                         <p>
                             AuditAI setzt technische und organisatorische Maßnahmen ein, um deine Daten zu schützen:
                         </p>
@@ -230,7 +257,7 @@ export default function DatenschutzPage() {
                         </ul>
                     </Section>
 
-                    <Section title="10. Änderungen dieser Datenschutzerklärung">
+                    <Section title="11. Änderungen dieser Datenschutzerklärung">
                         <p>
                             Diese Datenschutzerklärung kann bei Änderungen des Dienstes oder der gesetzlichen Anforderungen aktualisiert werden. Die jeweils aktuelle Version ist unter <a href="https://auditai.io/datenschutz" className="text-violet-400 hover:text-violet-300">auditai.io/datenschutz</a> abrufbar. Bei wesentlichen Änderungen werden registrierte Nutzer per E-Mail informiert.
                         </p>

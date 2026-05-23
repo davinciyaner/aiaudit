@@ -27,8 +27,8 @@ export default function ImpressumPage() {
                         <h2 className="text-white font-semibold text-base mb-3">Anbieter</h2>
                         <p>
                             Finn Paustian<br />
-                            [DEINE STRASSE UND HAUSNUMMER]<br />
-                            [PLZ] [DEINE STADT]<br />
+                            Am Rund 6<br />
+                            23566 Lübeck<br />
                             Deutschland
                         </p>
                     </section>
@@ -36,8 +36,8 @@ export default function ImpressumPage() {
                     <section>
                         <h2 className="text-white font-semibold text-base mb-3">Kontakt</h2>
                         <p>
-                            E-Mail: <a href="mailto:finnolinoo@gmail.com" className="text-violet-400 hover:text-violet-300">finnolinoo@gmail.com</a><br />
-                            Telefon: [DEINE TELEFONNUMMER]
+                            E-Mail: <a href="mailto:finnpaustian94@gmail.com" className="text-violet-400 hover:text-violet-300">finnpaustian94@gmail.com</a><br />
+                            Telefon: 01752436318
                         </p>
                     </section>
 
