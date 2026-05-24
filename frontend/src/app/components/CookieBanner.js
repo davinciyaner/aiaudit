@@ -3,13 +3,26 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 
+function loadClarity() {
+    if (typeof window === 'undefined' || window.clarity) return
+    ;(function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)}
+        t=l.createElement(r);t.async=1;t.src='https://www.clarity.ms/tag/'+i
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)
+    })(window, document, 'clarity', 'script', 'wwbww32zg0')
+}
+
 export default function CookieBanner() {
     const [visible, setVisible] = useState(false)
 
     useEffect(() => {
         try {
             const consent = localStorage.getItem('cookie_consent')
-            if (!consent) setVisible(true)
+            if (!consent) {
+                setVisible(true)
+            } else if (consent === 'granted') {
+                loadClarity()
+            }
         } catch (e) {}
     }, [])
 
@@ -21,6 +34,7 @@ export default function CookieBanner() {
                 analytics_storage: 'granted',
             })
         }
+        loadClarity()
         setVisible(false)
     }
 
@@ -44,10 +58,12 @@ export default function CookieBanner() {
                     <div className="bg-[#0d1117] border border-white/10 rounded-2xl p-5 shadow-2xl shadow-black/60">
                         <p className="text-xs text-slate-500 uppercase tracking-wider font-semibold mb-2">Cookie-Einstellungen</p>
                         <p className="text-sm text-slate-300 leading-relaxed">
-                            Wir verwenden <strong className="text-slate-200">Marketing-Cookies</strong> von Google Ads, um den Erfolg unserer Werbeanzeigen zu messen. Technisch notwendige Daten (Login-Session) werden unabhängig von deiner Wahl gespeichert.
+                            Wir verwenden <strong className="text-slate-200">Analyse- und Marketing-Cookies</strong> von{' '}
+                            <strong className="text-slate-200">Microsoft Clarity</strong> (Heatmaps & Sitzungsaufzeichnungen) und{' '}
+                            <strong className="text-slate-200">Google Ads</strong> (Conversion-Tracking). Technisch notwendige Daten (Login-Session) werden unabhängig von deiner Wahl gespeichert.
                         </p>
                         <p className="text-xs text-slate-500 mt-2">
-                            Du kannst ablehnen — die Website funktioniert vollständig ohne Marketing-Cookies.{' '}
+                            Du kannst ablehnen — die Website funktioniert vollständig ohne diese Cookies.{' '}
                             <Link href="/datenschutz" className="text-violet-400 hover:text-violet-300 underline underline-offset-2 transition-colors">
                                 Datenschutzerklärung
                             </Link>

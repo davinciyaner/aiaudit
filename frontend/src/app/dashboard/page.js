@@ -268,11 +268,51 @@ export default function Dashboard() {
 
                         {/* SECURITY */}
                         <Section title="Security" icon="🔒">
-                            <div className="space-y-2">
-                                {audit?.security?.issues?.map((issue, i) => (
-                                    <IssueItem key={i} text={issue} type="error"/>
-                                ))}
-                            </div>
+                            {audit?.security?.checks?.length > 0 && (
+                                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-5">
+                                    {audit.security.checks.map((chk, i) => (
+                                        <div
+                                            key={i}
+                                            className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-xs font-medium ${
+                                                chk.passed
+                                                    ? 'bg-emerald-500/8 border-emerald-500/20 text-emerald-400'
+                                                    : chk.severity === 'critical'
+                                                        ? 'bg-red-500/10 border-red-500/30 text-red-400'
+                                                        : chk.severity === 'high'
+                                                            ? 'bg-orange-500/10 border-orange-500/20 text-orange-400'
+                                                            : chk.severity === 'info'
+                                                                ? 'bg-slate-500/8 border-slate-500/20 text-slate-400'
+                                                                : 'bg-amber-500/8 border-amber-500/20 text-amber-400'
+                                            }`}
+                                        >
+                                            {chk.passed
+                                                ? <CheckCircle className="w-3 h-3 shrink-0" strokeWidth={2}/>
+                                                : <XCircle className="w-3 h-3 shrink-0" strokeWidth={2}/>
+                                            }
+                                            <span className="truncate">{chk.name}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+
+                            {audit?.security?.issues?.length > 0 ? (
+                                <div className="space-y-3">
+                                    {audit.security.issues.map((issue, i) => (
+                                        <div key={i} className="space-y-1.5">
+                                            <IssueItem text={issue} type="error"/>
+                                            {audit.security.suggestions?.[i] && (
+                                                <div className="ml-6 text-xs text-slate-500 bg-white/[0.02] rounded-lg px-3 py-2 border border-white/[0.05]">
+                                                    Empfehlung: {audit.security.suggestions[i]}
+                                                </div>
+                                            )}
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (
+                                <div className="text-center py-4 text-emerald-400 text-sm">
+                                    Alle Security-Checks bestanden
+                                </div>
+                            )}
                         </Section>
 
                         {/* DOWNLOAD */}
