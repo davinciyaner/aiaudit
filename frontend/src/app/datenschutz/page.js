@@ -102,25 +102,47 @@ export default function DatenschutzPage() {
                         </Sub>
                     </Section>
 
-                    <Section title="3. Cookies und lokale Speicherung">
-                        <p>
-                            AuditAI verwendet <strong className="text-slate-300">keine Tracking-Cookies</strong> und kein Cookie-Banner-Tracking. Es werden ausschließlich technisch notwendige Speichermechanismen eingesetzt:
-                        </p>
-                        <Sub title="LocalStorage (Browser-Speicher)">
+                    <Section title="3. Cookies, LocalStorage und Einwilligungsverwaltung">
+
+                        <Sub title="3.1 Technisch notwendige Speicherung (kein Consent erforderlich)">
                             <p>
-                                Nach dem Login werden folgende Daten im LocalStorage deines Browsers gespeichert:
+                                Folgende Daten werden im <strong className="text-slate-300">LocalStorage</strong> deines Browsers gespeichert und sind technisch notwendig für den Betrieb des Dienstes:
                             </p>
                             <ul className="list-disc list-inside space-y-1 ml-2">
-                                <li><code className="text-violet-300 text-xs bg-violet-500/10 px-1.5 py-0.5 rounded">token</code> – JWT-Authentifizierungstoken (7 Tage gültig)</li>
-                                <li><code className="text-violet-300 text-xs bg-violet-500/10 px-1.5 py-0.5 rounded">user</code> – Name und E-Mail des eingeloggten Nutzers</li>
+                                <li><code className="text-violet-300 text-xs bg-violet-500/10 px-1.5 py-0.5 rounded">token</code> – JWT-Authentifizierungstoken (Gültigkeit: 7 Tage)</li>
+                                <li><code className="text-violet-300 text-xs bg-violet-500/10 px-1.5 py-0.5 rounded">user</code> – Name und E-Mail des eingeloggten Nutzers (nur lokal)</li>
+                                <li><code className="text-violet-300 text-xs bg-violet-500/10 px-1.5 py-0.5 rounded">cookie_consent</code> – Deine Einwilligungsentscheidung für Marketing-Cookies (granted/denied)</li>
                             </ul>
                             <p>
-                                Diese Daten verlassen deinen Browser nicht und werden ausschließlich zur Authentifizierung verwendet. Sie werden beim Abmelden oder nach Ablauf des Tokens automatisch gelöscht.
+                                Diese Daten verlassen deinen Browser nicht, werden nicht an Dritte übermittelt und dienen ausschließlich der Authentifizierung sowie der Speicherung deiner Datenschutzentscheidung. Sie werden beim Abmelden oder nach Ablauf des Tokens gelöscht.
                             </p>
                             <p>
-                                <strong className="text-slate-300">Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. b DSGVO (technisch notwendig zur Vertragserfüllung), § 25 Abs. 2 Nr. 2 TTDSG.
+                                <strong className="text-slate-300">Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung), § 25 Abs. 2 Nr. 2 TTDSG (technisch notwendig).
                             </p>
                         </Sub>
+
+                        <Sub title="3.2 Marketing-Cookies (Google Ads) – nur mit Einwilligung">
+                            <p>
+                                Nur wenn du dem Einsatz von Marketing-Cookies über das Cookie-Banner auf dieser Website ausdrücklich zustimmst, werden Cookies von <strong className="text-slate-300">Google Ads (Google LLC)</strong> gesetzt. Diese dienen ausschließlich der Messung der Wirksamkeit unserer Werbeanzeigen (Conversion-Tracking).
+                            </p>
+                            <ul className="list-disc list-inside space-y-1 ml-2">
+                                <li>Zweck: Messung von Conversions aus Google-Anzeigen (z.B. Registrierungen)</li>
+                                <li>Gesetzt von: Google LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA</li>
+                                <li>Speicherdauer: bis zu 90 Tage (Google-seitig)</li>
+                                <li>Datenverarbeitung: USA (Standardvertragsklauseln gem. Art. 46 Abs. 2 lit. c DSGVO)</li>
+                            </ul>
+                            <p>
+                                Lehnst du ab, bleibt das Google Ads Tracking vollständig deaktiviert (<strong className="text-slate-300">Google Consent Mode v2</strong>: <code className="text-violet-300 text-xs bg-violet-500/10 px-1.5 py-0.5 rounded">ad_storage: denied</code>). Die Website funktioniert in vollem Umfang ohne diese Cookies.
+                            </p>
+                            <p>
+                                Du kannst deine Einwilligung jederzeit widerrufen, indem du den LocalStorage-Eintrag <code className="text-violet-300 text-xs bg-violet-500/10 px-1.5 py-0.5 rounded">cookie_consent</code> in den Browser-Entwicklertools löschst und die Seite neu lädst.
+                            </p>
+                            <p>
+                                <strong className="text-slate-300">Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. a DSGVO (Einwilligung), § 25 Abs. 1 TTDSG.<br />
+                                Weitere Informationen: <a href="https://policies.google.com/privacy" className="text-violet-400 hover:text-violet-300" target="_blank" rel="noopener noreferrer">Google Datenschutzerklärung</a>
+                            </p>
+                        </Sub>
+
                     </Section>
 
                     <Section title="4. Zahlungsabwicklung über PayPal">
@@ -217,18 +239,19 @@ export default function DatenschutzPage() {
                         </p>
                     </Section>
 
-                    <Section title="9. Keine Weitergabe an Dritte">
+                    <Section title="8. Keine Weitergabe an Dritte">
                         <p>
                             Personenbezogene Daten werden nicht an Dritte verkauft, vermietet oder anderweitig weitergegeben, außer:
                         </p>
                         <ul className="list-disc list-inside space-y-1 ml-2">
                             <li>Zur Vertragserfüllung notwendige Dienstleister (PayPal, Anthropic, MongoDB, Vercel — wie oben beschrieben)</li>
+                            <li>Google LLC — nur bei erteilter Einwilligung für Marketing-Cookies (Google Ads)</li>
                             <li>Bei gesetzlicher Verpflichtung</li>
                         </ul>
                         <p>Es findet kein Verkauf von Nutzerdaten statt.</p>
                     </Section>
 
-                    <Section title="8. Deine Rechte nach DSGVO">
+                    <Section title="9. Deine Rechte nach DSGVO">
                         <p>Du hast folgende Rechte bezüglich deiner personenbezogenen Daten:</p>
                         <ul className="space-y-2 ml-2">
                             <li><strong className="text-slate-300">Auskunft</strong> (Art. 15 DSGVO): Welche Daten über dich gespeichert sind.</li>
@@ -259,7 +282,7 @@ export default function DatenschutzPage() {
 
                     <Section title="11. Änderungen dieser Datenschutzerklärung">
                         <p>
-                            Diese Datenschutzerklärung kann bei Änderungen des Dienstes oder der gesetzlichen Anforderungen aktualisiert werden. Die jeweils aktuelle Version ist unter <a href="https://auditai.io/datenschutz" className="text-violet-400 hover:text-violet-300">auditai.io/datenschutz</a> abrufbar. Bei wesentlichen Änderungen werden registrierte Nutzer per E-Mail informiert.
+                            Diese Datenschutzerklärung kann bei Änderungen des Dienstes oder der gesetzlichen Anforderungen aktualisiert werden. Die jeweils aktuelle Version ist unter <a href="https://sitecheckai.dev/datenschutz" className="text-violet-400 hover:text-violet-300">sitecheckai.dev/datenschutz</a> abrufbar. Bei wesentlichen Änderungen werden registrierte Nutzer per E-Mail informiert.
                         </p>
                     </Section>
 
