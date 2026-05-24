@@ -1,6 +1,8 @@
 import './globals.css'
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
+import Script from 'next/script'
+import CookieBanner from './components/CookieBanner'
 
 export const metadata = {
     metadataBase: new URL('https://sitecheckai.dev'),
@@ -116,8 +118,36 @@ export default function RootLayout({ children }) {
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
             />
         </head>
+        <Script id="google-consent-init" strategy="beforeInteractive">
+            {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('consent', 'default', {
+                    ad_storage: 'denied',
+                    analytics_storage: 'denied',
+                    wait_for_update: 500
+                });
+                try {
+                    var c = localStorage.getItem('cookie_consent');
+                    if (c === 'granted') {
+                        gtag('consent', 'update', { ad_storage: 'granted', analytics_storage: 'granted' });
+                    }
+                } catch(e) {}
+            `}
+        </Script>
+        <Script
+            src="https://www.googletagmanager.com/gtag/js?id=AW-691789119"
+            strategy="afterInteractive"
+        />
+        <Script id="google-gtag" strategy="afterInteractive">
+            {`
+                gtag('js', new Date());
+                gtag('config', 'AW-691789119');
+            `}
+        </Script>
         <body className="bg-[#080b14] text-white antialiased">
         {children}
+        <CookieBanner />
         <Analytics />
         <SpeedInsights />
         </body>
