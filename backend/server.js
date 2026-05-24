@@ -9,6 +9,7 @@ import reportRouter from "./routes/report_router.js";
 import authRouter from "./routes/auth_router.js";
 import subscriptionRouter from "./routes/subscription.js";
 import userRouter from "./routes/user_router.js";
+import testsRouter from "./routes/tests_router.js";
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.use(cors({
     origin: (origin, callback) => {
         if (!origin) return callback(null, true);
         if (origin === allowedOrigin) return callback(null, true);
+        if (origin.startsWith("chrome-extension://")) return callback(null, true);
         callback(new Error("CORS: Origin nicht erlaubt"));
     },
     credentials: true,
@@ -32,6 +34,7 @@ app.use("/api/audit", auditRouter);
 app.use("/api/reports", reportRouter);
 app.use("/api/subscriptions", subscriptionRouter);
 app.use("/api/users", userRouter);
+app.use("/api/tests", testsRouter);
 app.use("/reports", express.static("reports"));
 
 app.get("/health", (req, res) => {
