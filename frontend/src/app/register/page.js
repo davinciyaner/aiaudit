@@ -41,6 +41,9 @@ export default function RegisterPage() {
             toast.success('Account erstellt! Willkommen 🎉')
             localStorage.setItem('token', data.token)
             localStorage.setItem('user', JSON.stringify(data.user))
+            if (typeof window.gtag === 'function' && localStorage.getItem('cookie_consent') === 'granted') {
+                window.gtag('event', 'conversion', { send_to: 'AW-691789119/vlaKCOS8lcwZEL-678kC' })
+            }
             setTimeout(() => router.push('/dashboard'), 1000)
         } catch (err) {
             toast.error(err.message)
