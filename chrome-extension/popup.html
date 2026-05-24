@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>SiteCheckAI Recorder</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+
+  <div class="header">
+    <div class="logo">
+      <span class="logo-dot"></span>
+      <span class="logo-text">SiteCheckAI</span>
+    </div>
+    <span id="status-badge" class="badge badge--idle">Bereit</span>
+  </div>
+
+  <!-- ── Nicht eingeloggt ── -->
+  <div id="view-login" class="view hidden">
+    <div class="auth-box">
+      <div class="auth-icon">🔗</div>
+      <p class="auth-title">Mit SiteCheckAI verbinden</p>
+      <p class="auth-desc">Einmalig einloggen — danach funktioniert alles mit einem Klick.</p>
+      <button id="btn-connect" class="btn btn--primary btn--full">
+        Mit sitecheckai.dev verbinden
+      </button>
+    </div>
+  </div>
+
+  <!-- ── Eingeloggt: Hauptansicht ── -->
+  <div id="view-main" class="view hidden">
+
+    <div class="user-bar">
+      <span id="user-email" class="user-email"></span>
+      <button id="btn-logout" class="btn-link">Abmelden</button>
+    </div>
+
+    <div class="controls">
+      <button id="btn-record" class="btn btn--primary">
+        <span class="btn-icon" id="record-icon">⏺</span>
+        <span id="btn-label">Aufnahme starten</span>
+      </button>
+      <button id="btn-clear" class="btn btn--ghost" title="Zurücksetzen">✕</button>
+    </div>
+
+    <div id="steps-container" class="steps-container hidden">
+      <div class="steps-header">
+        <span class="steps-title">Schritte (<span id="step-count">0</span>)</span>
+        <span id="url-hint" class="url-hint"></span>
+      </div>
+      <ul id="steps-list" class="steps-list"></ul>
+    </div>
+
+    <div id="empty-state" class="empty-state">
+      <p>Starte die Aufnahme und klicke dich durch die Website.</p>
+    </div>
+
+    <div class="actions">
+      <button id="btn-csv" class="btn btn--secondary" disabled>↓ CSV</button>
+      <button id="btn-upload" class="btn btn--accent" disabled>↑ Test starten</button>
+    </div>
+
+    <div id="upload-status" class="upload-status hidden"></div>
+
+  </div>
+
+  <!-- ── Lade-Zustand ── -->
+  <div id="view-loading" class="view">
+    <div class="loading-box">
+      <div class="spinner"></div>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
