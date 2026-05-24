@@ -17,7 +17,8 @@ function parseCSV(csv) {
     const values = parseCSVLine(line);
     const row = {};
     header.forEach((h, idx) => { row[h] = values[idx]?.trim() ?? ''; });
-    row.step = parseInt(row.step) || i + 1;
+    row.step     = parseInt(row.step) || i + 1;
+    row.optional = row.optional === 'true';
     return row;
   }).filter(r => r.action);
 }
@@ -44,53 +45,67 @@ function parseCSVLine(line) {
 
 // ─── Playwright Executor ─────────────────────────────────────────────────────
 
-async function executeStep(page, step) {
-  const start = Date.now();
-  const result = { ...step, result: 'pass', error: null, screenshot: null, duration: 0 };
+const RETRY_COUNT = 3;
+const RETRY_DELAY = 1500;
 
-  try {
-    switch (step.action) {
-      case 'navigate': {
-        const target = step.value || step.url;
-        if (!target) throw new Error('Kein URL für navigate');
-        await page.goto(target, { waitUntil: 'domcontentloaded', timeout: 15000 });
-        break;
+async function executeStep(page, step) {
+  const maxAttempts = step.action === 'navigate' ? 1 : RETRY_COUNT;
+  const totalStart  = Date.now();
+  let lastErr       = null;
+
+  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+    try {
+      switch (step.action) {
+        case 'navigate': {
+          const target = step.value || step.url;
+          if (!target) throw new Error('Kein URL für navigate');
+          await page.goto(target, { waitUntil: 'domcontentloaded', timeout: 15000 });
+          break;
+        }
+        case 'click': {
+          if (!step.selector) throw new Error('Kein Selektor für click');
+          const locator = resolveLocator(page, step);
+          await locator.waitFor({ state: 'visible', timeout: 8000 });
+          await locator.click({ timeout: 8000 });
+          break;
+        }
+        case 'input': {
+          if (!step.selector) throw new Error('Kein Selektor für input');
+          const locator = resolveLocator(page, step);
+          await locator.waitFor({ state: 'visible', timeout: 8000 });
+          await locator.fill(step.value ?? '', { timeout: 8000 });
+          break;
+        }
+        case 'select': {
+          if (!step.selector) throw new Error('Kein Selektor für select');
+          const locator = resolveLocator(page, step);
+          await locator.selectOption(step.value ?? '', { timeout: 8000 });
+          break;
+        }
+        default:
+          throw new Error(`Unbekannte Action: ${step.action}`);
       }
-      case 'click': {
-        if (!step.selector) throw new Error('Kein Selektor für click');
-        const locator = resolveLocator(page, step);
-        await locator.waitFor({ state: 'visible', timeout: 8000 });
-        await locator.click({ timeout: 8000 });
-        break;
+      return { ...step, result: 'pass', error: null, screenshot: null, duration: Date.now() - totalStart, attempts: attempt };
+    } catch (err) {
+      lastErr = err;
+      if (attempt < maxAttempts) {
+        await new Promise(r => setTimeout(r, RETRY_DELAY));
       }
-      case 'input': {
-        if (!step.selector) throw new Error('Kein Selektor für input');
-        const locator = resolveLocator(page, step);
-        await locator.waitFor({ state: 'visible', timeout: 8000 });
-        await locator.fill(step.value ?? '', { timeout: 8000 });
-        break;
-      }
-      case 'select': {
-        if (!step.selector) throw new Error('Kein Selektor für select');
-        const locator = resolveLocator(page, step);
-        await locator.selectOption(step.value ?? '', { timeout: 8000 });
-        break;
-      }
-      default:
-        throw new Error(`Unbekannte Action: ${step.action}`);
     }
-  } catch (err) {
-    result.result = 'fail';
-    result.error = err.message;
-    // Screenshot bei Fehler
+  }
+
+  // Alle Versuche fehlgeschlagen
+  const finalResult = step.optional ? 'warn' : 'fail';
+  const out = { ...step, result: finalResult, error: lastErr.message, screenshot: null, duration: Date.now() - totalStart, attempts: maxAttempts };
+
+  if (finalResult === 'fail') {
     try {
       const buf = await page.screenshot({ type: 'png', timeout: 5000 });
-      result.screenshot = buf.toString('base64');
+      out.screenshot = buf.toString('base64');
     } catch {}
   }
 
-  result.duration = Date.now() - start;
-  return result;
+  return out;
 }
 
 function resolveLocator(page, step) {
@@ -144,6 +159,7 @@ export async function runTest(req, res) {
     await browser.close();
 
     const passed  = results.filter(r => r.result === 'pass').length;
+    const warned  = results.filter(r => r.result === 'warn').length;
     const failed  = results.filter(r => r.result === 'fail').length;
 
     await TestResult.findByIdAndUpdate(doc._id, {
@@ -152,6 +168,7 @@ export async function runTest(req, res) {
       summary: {
         total: results.length,
         passed,
+        warned,
         failed,
         duration: Date.now() - startTime,
       },

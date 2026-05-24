@@ -105,6 +105,7 @@ function handleClick(e) {
     value: '',
     url: location.href,
     timestamp: new Date().toISOString(),
+    optional: false,
     meta: el.innerText?.trim().slice(0, 60) || el.getAttribute('placeholder') || '',
   });
 }
@@ -126,6 +127,7 @@ function handleChange(e) {
     value,
     url: location.href,
     timestamp: new Date().toISOString(),
+    optional: false,
     meta: el.placeholder || el.name || '',
   });
 }
@@ -139,6 +141,7 @@ function recordNavigate() {
     value: location.href,
     url: location.href,
     timestamp: new Date().toISOString(),
+    optional: false,
     meta: document.title,
   });
 }

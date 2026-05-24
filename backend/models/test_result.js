@@ -9,10 +9,12 @@ const stepResultSchema = new mongoose.Schema({
   url:          String,
   timestamp:    String,
   meta:         String,
-  result:       { type: String, enum: ['pass', 'fail', 'skip'], default: 'skip' },
+  optional:     { type: Boolean, default: false },
+  result:       { type: String, enum: ['pass', 'fail', 'warn', 'skip'], default: 'skip' },
   error:        String,
-  screenshot:   String, // base64 PNG
-  duration:     Number, // ms
+  screenshot:   String,
+  duration:     Number,
+  attempts:     Number,
 }, { _id: false });
 
 const testResultSchema = new mongoose.Schema({

@@ -1,5 +1,5 @@
-const SITE_URL   = 'https://sitecheckai.dev';
-const API_BASE   = 'https://api.sitecheckai.dev';
+const SITE_URL   = 'http://localhost:3000';
+const API_BASE   = 'http://localhost:3001';
 const AUTH_PAGE  = `${SITE_URL}/extension-auth`;
 
 // ─── DOM Refs ────────────────────────────────────────────────────────────────
@@ -37,7 +37,7 @@ function showView(name) {
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
 function stepsToCSV(steps) {
-  const header = 'step,action,selector,selectorType,value,url,timestamp';
+  const header = 'step,action,selector,selectorType,value,url,timestamp,optional';
   const rows = steps.map(s => [
     s.step,
     s.action,
@@ -46,6 +46,7 @@ function stepsToCSV(steps) {
     `"${(s.value || '').replace(/"/g, '""')}"`,
     `"${(s.url || '').replace(/"/g, '""')}"`,
     s.timestamp,
+    s.optional ? 'true' : 'false',
   ].join(','));
   return [header, ...rows].join('\n');
 }
@@ -53,11 +54,7 @@ function stepsToCSV(steps) {
 function downloadCSV(steps) {
   const blob = new Blob([stepsToCSV(steps)], { type: 'text/csv;charset=utf-8;' });
   const url  = URL.createObjectURL(blob);
-  const a    = document.createElement('a');
-  a.href     = url;
-  a.download = `sitecheck-${Date.now()}.csv`;
-  a.click();
-  URL.revokeObjectURL(url);
+  chrome.downloads.download({ url, filename: `sitecheck-${Date.now()}.csv`, saveAs: false });
 }
 
 function setStatus(text, cls = '') {

@@ -10,6 +10,7 @@ import authRouter from "./routes/auth_router.js";
 import subscriptionRouter from "./routes/subscription.js";
 import userRouter from "./routes/user_router.js";
 import testsRouter from "./routes/tests_router.js";
+import waitlistRouter from "./routes/waitlist_router.js";
 
 const app = express();
 
@@ -35,6 +36,7 @@ app.use("/api/reports", reportRouter);
 app.use("/api/subscriptions", subscriptionRouter);
 app.use("/api/users", userRouter);
 app.use("/api/tests", testsRouter);
+app.use("/api/waitlist", waitlistRouter);
 app.use("/reports", express.static("reports"));
 
 app.get("/health", (req, res) => {

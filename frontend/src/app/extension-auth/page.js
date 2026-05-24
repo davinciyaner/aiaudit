@@ -14,16 +14,19 @@ export default function ExtensionAuthPage() {
         const token = localStorage.getItem('token')
         const userRaw = localStorage.getItem('user')
 
-        if (token) {
-            let email = ''
-            try { email = JSON.parse(userRaw)?.email || '' } catch {}
+        if (!token) { setStatus('login'); return }
 
-            // Token an Extension senden
-            window.postMessage({ type: 'SITECHECK_EXT_AUTH', token, email }, '*')
-            setStatus('connected')
-        } else {
-            setStatus('login')
-        }
+        let email = ''
+        try { email = JSON.parse(userRaw)?.email || '' } catch {}
+
+        // Mehrfach senden damit der Content Script sicher bereit ist
+        const send = () => window.postMessage({ type: 'SITECHECK_EXT_AUTH', token, email }, '*')
+        send()
+        const t1 = setTimeout(send, 500)
+        const t2 = setTimeout(send, 1200)
+        setStatus('connected')
+
+        return () => { clearTimeout(t1); clearTimeout(t2) }
     }, [])
 
     return (

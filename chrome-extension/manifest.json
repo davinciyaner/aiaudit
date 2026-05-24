@@ -3,7 +3,7 @@
   "name": "SiteCheckAI Recorder",
   "version": "1.0.0",
   "description": "Zeichnet Nutzer-Interaktionen auf und generiert automatisierte Playwright-Tests",
-  "permissions": ["activeTab", "storage", "scripting", "tabs"],
+  "permissions": ["activeTab", "storage", "scripting", "tabs", "downloads"],
   "action": {
     "default_popup": "popup.html",
     "default_title": "SiteCheckAI Recorder"

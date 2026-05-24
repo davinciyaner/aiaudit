@@ -53,6 +53,7 @@ export default function Navbar() {
 
     const links = [
         { label: 'Features', href: '#features' },
+        { label: 'Testautomatisierung', href: '#testautomation'},
         { label: 'Sicherheit', href: '#security' },
         { label: 'Preise', href: '#pricing' },
     ]
