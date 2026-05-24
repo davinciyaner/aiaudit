@@ -287,39 +287,133 @@ export function generateHTMLReport(auditData, aiReport) {
     </div>`
 
     // PAGE: Security
-    const securityPage = `
+    const secChecks = security.checks || [
+        { name: 'HTTPS', passed: security.https, severity: 'critical' },
+        { name: 'HSTS', passed: !!security.headers?.hsts, severity: 'high' },
+        { name: 'Content-Security-Policy', passed: !!security.headers?.csp, severity: 'high' },
+        { name: 'X-Content-Type-Options', passed: !!security.headers?.xContentType, severity: 'medium' },
+        { name: 'Clickjacking-Schutz', passed: !!security.headers?.xFrameOptions, severity: 'medium' },
+        { name: 'Referrer-Policy', passed: !!security.headers?.referrerPolicy, severity: 'low' },
+    ]
+
+    const riskMap = {
+        'HTTPS': 'Alle Daten werden unverschlüsselt übertragen — Passwörter, Formulardaten und Cookies können von Angreifern im selben Netzwerk mitgelesen werden (Man-in-the-Middle-Angriff).',
+        'HSTS': '"SSL-Stripping"-Angriffe können Nutzer auf HTTP umleiten, selbst wenn HTTPS eingerichtet ist. Erste Verbindungen bleiben angreifbar.',
+        'X-Content-Type-Options': 'Browser interpretieren Dateitypen falsch — als Bild getarnte Scripts können XSS-Angriffe über Datei-Uploads auslösen.',
+        'Clickjacking-Schutz': 'Deine Seite kann unsichtbar in einen iframe eingebettet werden. Nutzer klicken unwissentlich auf versteckte Buttons (z.B. "Zahlung bestätigen").',
+        'Content-Security-Policy': 'Ohne CSP können Angreifer über XSS-Lücken beliebige Scripts einschleusen, Nutzerdaten stehlen und im Namen des Nutzers Aktionen ausführen.',
+        'Referrer-Policy': 'Session-Tokens, interne Pfade und sensible URL-Parameter werden bei jedem Link-Klick im Referer-Header an externe Seiten weitergegeben.',
+        'Permissions-Policy': 'Eingebettete Werbung oder Drittanbieter-Scripts können auf Kamera, Mikrofon oder GPS-Standort der Nutzer zugreifen.',
+        'Server-Header': 'Angreifer erfahren exakte Server-Software und Version — gezielte Ausnutzung bekannter Sicherheitslücken dieser Version wird erheblich einfacher.',
+        'Mixed Content': 'HTTP-Ressourcen auf einer HTTPS-Seite können abgefangen und manipuliert werden. Browser zeigen Sicherheitswarnungen, Nutzer verlieren Vertrauen.',
+        'Cookie-Sicherheit': 'Ohne HttpOnly sind Session-Cookies per JavaScript stehlbar. Ohne Secure werden Cookies unverschlüsselt übertragen. Ohne SameSite sind CSRF-Angriffe möglich.',
+        'Subresource Integrity': 'Wird ein CDN kompromittiert, kann Schadcode über deine Seite an alle Besucher verteilt werden — ohne dass du es bemerkst.',
+        'Cross-Origin-Opener-Policy': 'Andere Browser-Tabs können über window.opener auf deine Seite zugreifen (Spectre-Angriffe, Cross-Tab-Datenleak).',
+        'Sensible Dateien': '.env, .git und Backup-Dateien enthalten oft Datenbankpasswörter, API-Keys und Secrets — vollständiger Systemzugriff für Angreifer ist möglich.',
+        'security.txt': 'Sicherheitsforscher können entdeckte Schwachstellen nicht verantwortungsvoll melden. Lücken bleiben länger offen und ausnutzbar.',
+    }
+
+    const sevStyle = {
+        critical: { label: 'KRITISCH', bg: 'rgba(239,68,68,0.15)',  border: 'rgba(239,68,68,0.3)',   color: '#fca5a5', cardBg: 'rgba(239,68,68,0.05)',  cardBorder: 'rgba(239,68,68,0.2)'  },
+        high:     { label: 'HOCH',     bg: 'rgba(249,115,22,0.15)', border: 'rgba(249,115,22,0.3)',  color: '#fdba74', cardBg: 'rgba(249,115,22,0.04)', cardBorder: 'rgba(249,115,22,0.18)' },
+        medium:   { label: 'MITTEL',   bg: 'rgba(234,179,8,0.15)',  border: 'rgba(234,179,8,0.28)',  color: '#fde68a', cardBg: 'rgba(234,179,8,0.04)',  cardBorder: 'rgba(234,179,8,0.18)' },
+        low:      { label: 'NIEDRIG',  bg: 'rgba(100,116,139,0.12)', border: 'rgba(100,116,139,0.22)', color: '#94a3b8', cardBg: 'rgba(100,116,139,0.04)', cardBorder: 'rgba(100,116,139,0.15)' },
+        info:     { label: 'INFO',     bg: 'rgba(100,116,139,0.1)', border: 'rgba(100,116,139,0.18)', color: '#64748b', cardBg: 'rgba(100,116,139,0.03)', cardBorder: 'rgba(100,116,139,0.12)' },
+    }
+
+    const failedSecChecks = secChecks.filter(c => !c.passed)
+    const passedSecCount = secChecks.length - failedSecChecks.length
+
+    const securityOverviewPage = `
     <div style="${pageStyle}">
         ${glow(-60, -60, null, null, 'rgba(59,130,246,0.07)')}
-        ${sectionHeader('&#128274;', 'Security Analysis', `Score: ${security.score}/100 · ${security.issues.length} vulnerabilities`)}
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px">
-            ${[
-        ['HTTPS', security.https, 'Encrypted connection'],
-        ['HSTS', security.headers.hsts, 'Force secure transport'],
-        ['CSP', security.headers.csp, 'Content Security Policy'],
-        ['X-Content-Type', security.headers.xContentType, 'MIME type protection'],
-        ['X-Frame-Options', security.headers.xFrameOptions, 'Clickjacking protection'],
-        ['Referrer-Policy', security.headers.referrerPolicy, 'Referrer control'],
-    ].map(([name, ok, desc]) => `
-            <div style="background:${ok ? 'rgba(16,185,129,0.07)' : 'rgba(239,68,68,0.07)'};border:1px solid ${ok ? 'rgba(16,185,129,0.2)' : 'rgba(239,68,68,0.2)'};border-radius:14px;padding:16px;text-align:center">
-                <div style="font-size:24px;margin-bottom:8px">${ok ? '&#9989;' : '&#10060;'}</div>
-                <div style="font-size:12px;font-weight:700;color:${ok ? '#6ee7b7' : '#fca5a5'};margin-bottom:4px">${name}</div>
-                <div style="font-size:9px;color:#475569">${desc}</div>
-            </div>`).join('')}
+        ${sectionHeader('&#128274;', 'Security Analysis', `Score: ${security.score}/100 · ${failedSecChecks.length} von ${secChecks.length} Checks fehlgeschlagen`)}
+
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:20px">
+            ${secChecks.map(chk => {
+                const s = chk.passed ? null : (sevStyle[chk.severity] || sevStyle.medium)
+                return `<div style="background:${chk.passed ? 'rgba(16,185,129,0.07)' : s.cardBg};border:1px solid ${chk.passed ? 'rgba(16,185,129,0.2)' : s.cardBorder};border-radius:10px;padding:10px 12px;display:flex;align-items:center;gap:9px">
+                    <span style="font-size:14px;flex-shrink:0">${chk.passed ? '&#9989;' : '&#10060;'}</span>
+                    <div>
+                        <div style="font-size:10px;font-weight:700;color:${chk.passed ? '#6ee7b7' : s.color};line-height:1.3">${chk.name}</div>
+                        ${!chk.passed ? `<div style="font-size:8px;color:${s.color};opacity:0.75;text-transform:uppercase;letter-spacing:0.05em;margin-top:2px">${s.label}</div>` : ''}
+                    </div>
+                </div>`
+            }).join('')}
         </div>
-        ${security.issues.length > 0 ? `
-        <div style="margin-bottom:14px">
-            <div style="font-size:11px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px">Vulnerabilities to Fix</div>
-            ${security.issues.map(i => issueRow(i)).join('')}
+
+        <div style="background:rgba(15,23,42,0.7);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:16px 20px;margin-bottom:16px">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+                <div style="font-size:12px;font-weight:600;color:#94a3b8">Security Score</div>
+                <div style="font-size:28px;font-weight:800;color:${scoreColor(security.score)}">${security.score}<span style="font-size:13px;color:#475569;font-weight:400">/100</span></div>
+            </div>
+            <div style="height:6px;background:rgba(255,255,255,0.06);border-radius:3px;margin-bottom:12px">
+                <div style="height:100%;width:${security.score}%;background:${scoreColor(security.score)};border-radius:3px"></div>
+            </div>
+            <div style="display:flex;justify-content:space-around">
+                <div style="text-align:center">
+                    <div style="font-size:22px;font-weight:700;color:#6ee7b7">${passedSecCount}</div>
+                    <div style="font-size:9px;color:#475569;text-transform:uppercase;letter-spacing:0.06em">Bestanden</div>
+                </div>
+                <div style="width:1px;background:rgba(255,255,255,0.06)"></div>
+                <div style="text-align:center">
+                    <div style="font-size:22px;font-weight:700;color:#fca5a5">${failedSecChecks.length}</div>
+                    <div style="font-size:9px;color:#475569;text-transform:uppercase;letter-spacing:0.06em">Fehlgeschlagen</div>
+                </div>
+                <div style="width:1px;background:rgba(255,255,255,0.06)"></div>
+                <div style="text-align:center">
+                    <div style="font-size:22px;font-weight:700;color:#94a3b8">${secChecks.length}</div>
+                    <div style="font-size:9px;color:#475569;text-transform:uppercase;letter-spacing:0.06em">Gesamt</div>
+                </div>
+            </div>
+        </div>
+
+        ${failedSecChecks.length === 0 ? `
+        <div style="background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.2);border-radius:12px;padding:24px;text-align:center">
+            <div style="font-size:28px;margin-bottom:8px">&#127881;</div>
+            <div style="font-size:14px;color:#6ee7b7;font-weight:700">Alle Security-Checks bestanden!</div>
+            <div style="font-size:11px;color:#475569;margin-top:4px">Deine Website erfüllt alle geprüften Sicherheitsstandards.</div>
         </div>` : `
-        <div style="background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.2);border-radius:12px;padding:18px;text-align:center;margin-bottom:14px">
-            <div style="font-size:13px;color:#6ee7b7;font-weight:700">All security checks passed</div>
-        </div>`}
-        ${security.suggestions?.length > 0 ? `
-        <div>
-            <div style="font-size:11px;font-weight:700;color:#67e8f9;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px">Recommendations</div>
-            ${security.suggestions.map(s => suggestionRow(s)).join('')}
-        </div>` : ''}
+        <div style="font-size:10px;color:#475569;text-align:center;padding:8px">Detaillierte Risikoanalyse auf der nächsten Seite &#8594;</div>
+        `}
     </div>`
+
+    const securityDetailsPage = failedSecChecks.length > 0 ? `
+    <div style="${pageStyle}">
+        ${glow(-60, null, null, -60, 'rgba(239,68,68,0.05)')}
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,0.06)">
+            <div style="display:flex;align-items:center;gap:12px">
+                <div style="width:36px;height:36px;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.25);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0">&#128272;</div>
+                <div>
+                    <div style="font-size:19px;font-weight:700;color:#f8fafc">Sicherheitslücken im Detail</div>
+                    <div style="font-size:11px;color:#64748b;margin-top:2px">Risiken & Lösungen für ${failedSecChecks.length} fehlgeschlagene Checks</div>
+                </div>
+            </div>
+            <div style="font-size:10px;color:#475569;font-weight:600;letter-spacing:0.08em;text-transform:uppercase">AuditAI</div>
+        </div>
+
+        ${failedSecChecks.map((chk, i) => {
+            const s = sevStyle[chk.severity] || sevStyle.medium
+            const issue = security.issues?.[i] || `${chk.name} — Problem gefunden`
+            const suggestion = security.suggestions?.[i] || ''
+            const risk = riskMap[chk.name] || 'Dieses Sicherheitsmerkmal schützt deine Website und Besucher vor bekannten Angriffsvektoren.'
+            return `<div style="background:${s.cardBg};border:1px solid ${s.cardBorder};border-left:3px solid ${s.color};border-radius:10px;padding:12px 14px;margin-bottom:10px">
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+                    <span style="font-size:8px;font-weight:700;padding:2px 8px;border-radius:4px;text-transform:uppercase;letter-spacing:0.06em;background:${s.bg};border:1px solid ${s.border};color:${s.color};flex-shrink:0">${s.label}</span>
+                    <span style="font-size:12px;font-weight:700;color:#f1f5f9">${chk.name}</span>
+                </div>
+                <div style="font-size:10px;color:#94a3b8;line-height:1.6;margin-bottom:5px">
+                    <span style="color:#fca5a5;font-weight:600">Problem: </span>${issue}
+                </div>
+                <div style="font-size:10px;color:#94a3b8;line-height:1.6;margin-bottom:5px">
+                    <span style="color:${s.color};font-weight:600">Was passiert ohne Fix: </span>${risk}
+                </div>
+                ${suggestion ? `<div style="font-size:10px;color:#67e8f9;line-height:1.6;background:rgba(6,182,212,0.06);border:1px solid rgba(6,182,212,0.12);border-radius:6px;padding:6px 10px">
+                    <span style="font-weight:600">&#128161; Empfehlung: </span>${suggestion}
+                </div>` : ''}
+            </div>`
+        }).join('')}
+    </div>` : ''
 
     // PAGE: GEO
     const geoPage = geo ? `
@@ -387,7 +481,8 @@ ${aiPages}
 ${performancePage}
 ${seoPage}
 ${keywordsPage}
-${securityPage}
+${securityOverviewPage}
+${securityDetailsPage}
 ${geoPage}
 </body>
 </html>`
