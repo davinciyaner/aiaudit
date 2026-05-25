@@ -94,14 +94,7 @@ export default function Dashboard() {
         setResult(data || null)
     }
 
-    // 🔥 SAFE ACCESS (CRASH FIX)
     const audit = result?.auditData
-
-    // 🔥 DOWNLOAD URL FIX
-    const downloadUrl =
-        result?.reportFile
-            ? `${process.env.NEXT_PUBLIC_API_URL.replace('/api', '')}/reports/${result.reportFile.split('/').pop()}`
-            : null
 
     return (
         <div className="min-h-screen bg-[#080b14]">
