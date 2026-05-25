@@ -28,7 +28,7 @@ export default function CTA() {
                             <span className="text-red-400">Sicherheitslücken auch.</span>
                         </h2>
                         <p className="text-slate-400 max-w-2xl mx-auto text-lg leading-relaxed">
-                            ChatGPT, Claude und Cursor schreiben Code der funktioniert — aber sie denken nicht wie ein Angreifer. Diese Risiken entstehen automatisch wenn du eine Website schnell deployst.
+                            ChatGPT, Claude und Cursor schreiben Code der funktioniert - aber sie denken nicht wie ein Angreifer. Diese Risiken entstehen automatisch wenn du eine Website schnell deployst.
                         </p>
                     </motion.div>
 
