@@ -137,12 +137,6 @@ export async function runAudit(url) {
             }
         })
 
-        console.log('Screenshots werden erstellt...')
-        const screenshotDesktop = await page.screenshot({ fullPage: false, type: 'jpeg', quality: 80 })
-        await page.setViewportSize({ width: 390, height: 844 })
-        await page.waitForTimeout(500)
-        const screenshotMobile = await page.screenshot({ fullPage: false, type: 'jpeg', quality: 80 })
-
         // Resources der Landingpage sichern bevor der Crawler andere Seiten lädt
         const landingResources = [...resources]
 
@@ -195,10 +189,7 @@ export async function runAudit(url) {
             security,
             keywords,
             geo,
-            screenshots: {
-                desktop: screenshotDesktop.toString('base64'),
-                mobile: screenshotMobile.toString('base64'),
-            }
+            screenshots: null
         }
 
     } catch (err) {
