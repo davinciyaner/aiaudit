@@ -80,7 +80,10 @@ export async function runAudit(url) {
 
     if (!url.startsWith('http')) url = 'https://' + url
 
-    const browser = await chromium.launch({ headless: true })
+    const browser = await chromium.launch({
+        headless: true,
+        args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    })
     const context = await browser.newContext({
         userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
         viewport: { width: 1280, height: 800 }

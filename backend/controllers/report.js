@@ -491,7 +491,10 @@ ${geoPage}
 export async function saveReportAsPDF(html, url) {
     mkdirSync('./reports', { recursive: true })
     const filename = `reports/audit-${new URL(url).hostname}-${Date.now()}.pdf`
-    const browser = await chromium.launch({ headless: true })
+    const browser = await chromium.launch({
+        headless: true,
+        args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    })
     const page = await browser.newPage()
     await page.setContent(html, { waitUntil: 'networkidle' })
     await page.pdf({
