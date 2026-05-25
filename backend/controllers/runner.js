@@ -5,7 +5,7 @@ import { analyzeSecurity } from './security.js'
 import { analyzeKeywords } from './keywords.js'
 import { analyzeGEO } from './geo.js'
 
-const MAX_PAGES = 25
+const MAX_PAGES = 8
 
 async function crawlSite(page, startUrl) {
     const origin = new URL(startUrl).origin
@@ -82,7 +82,14 @@ export async function runAudit(url) {
 
     const browser = await chromium.launch({
         headless: true,
-        args: ['--no-sandbox', '--disable-setuid-sandbox'],
+        args: [
+            '--no-sandbox',
+            '--disable-setuid-sandbox',
+            '--disable-dev-shm-usage',
+            '--disable-gpu',
+            '--disable-extensions',
+            '--js-flags=--max-old-space-size=256',
+        ],
     })
     const context = await browser.newContext({
         userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
@@ -131,10 +138,10 @@ export async function runAudit(url) {
         })
 
         console.log('Screenshots werden erstellt...')
-        const screenshotDesktop = await page.screenshot({ fullPage: true, type: 'png' })
+        const screenshotDesktop = await page.screenshot({ fullPage: false, type: 'jpeg', quality: 80 })
         await page.setViewportSize({ width: 390, height: 844 })
         await page.waitForTimeout(500)
-        const screenshotMobile = await page.screenshot({ fullPage: true, type: 'png' })
+        const screenshotMobile = await page.screenshot({ fullPage: false, type: 'jpeg', quality: 80 })
 
         // Resources der Landingpage sichern bevor der Crawler andere Seiten lädt
         const landingResources = [...resources]

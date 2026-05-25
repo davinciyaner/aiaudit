@@ -493,7 +493,13 @@ export async function saveReportAsPDF(html, url) {
     const filename = `reports/audit-${new URL(url).hostname}-${Date.now()}.pdf`
     const browser = await chromium.launch({
         headless: true,
-        args: ['--no-sandbox', '--disable-setuid-sandbox'],
+        args: [
+            '--no-sandbox',
+            '--disable-setuid-sandbox',
+            '--disable-dev-shm-usage',
+            '--disable-gpu',
+            '--disable-extensions',
+        ],
     })
     const page = await browser.newPage()
     await page.setContent(html, { waitUntil: 'networkidle' })
