@@ -3,12 +3,20 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import {
     User, Mail, Crown, Building2, Zap, BarChart2,
-    Receipt, Download, AlertTriangle, Loader2, CheckCircle, XCircle
+    Receipt, Download, AlertTriangle, Loader2, CheckCircle, XCircle,
+    MessageSquare, Clock, Wrench, ArrowRight, Plus
 } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import toast, { Toaster } from 'react-hot-toast'
 import Navbar from '../components/Navbar'
+import SupportModal from '../components/SupportModal'
+
+const TICKET_STATUS = {
+    open:        { label: 'Warten auf Support', icon: Clock,         color: 'text-amber-400',   bg: 'bg-amber-500/10',   border: 'border-amber-500/20' },
+    in_progress: { label: 'Wird bearbeitet',    icon: Wrench,        color: 'text-blue-400',    bg: 'bg-blue-500/10',    border: 'border-blue-500/20' },
+    closed:      { label: 'Geschlossen',         icon: CheckCircle,   color: 'text-emerald-400', bg: 'bg-emerald-500/10', border: 'border-emerald-500/20' },
+}
 
 const PLAN_META = {
     free:   { label: 'Free',   color: '#64748b', icon: Zap,       limit: 1 },
@@ -34,6 +42,10 @@ export default function ProfilePage() {
     const [cancelling, setCancelling] = useState(false)
     const [showCancelConfirm, setShowCancelConfirm] = useState(false)
     const [downloadingId, setDownloadingId] = useState(null)
+    const [tickets, setTickets] = useState([])
+    const [ticketsLoading, setTicketsLoading] = useState(false)
+    const [supportOpen, setSupportOpen] = useState(false)
+    const [ticketsExpanded, setTicketsExpanded] = useState(false)
 
     useEffect(() => {
         const token = localStorage.getItem('token')
@@ -52,10 +64,22 @@ export default function ProfilePage() {
             const billingData = await billingRes.json()
             setData(profile)
             setBilling(billingData.transactions || [])
+            if (profile?.user?.email) fetchTickets(profile.user.email)
         } catch {
             toast.error('Profil konnte nicht geladen werden')
         } finally {
             setLoading(false)
+        }
+    }
+
+    const fetchTickets = async (email) => {
+        setTicketsLoading(true)
+        try {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/support/by-email?email=${encodeURIComponent(email)}`)
+            const data = await res.json()
+            if (res.ok) setTickets(data)
+        } catch { /* ignore */ } finally {
+            setTicketsLoading(false)
         }
     }
 
@@ -312,8 +336,89 @@ export default function ProfilePage() {
                         )}
                     </motion.div>
 
+                    {/* Support Tickets */}
+                    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}
+                        className="bg-white/2 border border-white/6 rounded-2xl p-6">
+                        <div className="flex items-center justify-between mb-5">
+                            <h2 className="text-base font-semibold text-white flex items-center gap-2">
+                                <MessageSquare className="w-4 h-4 text-violet-400" /> Support-Tickets
+                            </h2>
+                            <button
+                                onClick={() => setSupportOpen(true)}
+                                className="flex items-center gap-1.5 px-3 py-1.5 bg-violet-500/10 hover:bg-violet-500/20 border border-violet-500/20 text-violet-400 text-xs font-medium rounded-lg transition-all"
+                            >
+                                <Plus className="w-3.5 h-3.5" /> Neues Ticket
+                            </button>
+                        </div>
+
+                        {ticketsLoading ? (
+                            <div className="flex items-center gap-2 text-slate-500 text-sm py-4">
+                                <Loader2 className="w-4 h-4 animate-spin" /> Lade Tickets...
+                            </div>
+                        ) : (() => {
+                            const activeTickets = tickets.filter(t => t.status !== 'closed')
+                            if (activeTickets.length === 0) return (
+                                <div className="text-center py-8 text-slate-600 text-sm">
+                                    Keine offenen Support-Tickets vorhanden
+                                </div>
+                            )
+                            const visible = ticketsExpanded ? activeTickets : activeTickets.slice(0, 1)
+                            return (
+                                <div>
+                                    <div className="divide-y divide-white/4">
+                                        {visible.map(ticket => {
+                                            const cfg = TICKET_STATUS[ticket.status] || TICKET_STATUS.open
+                                            const Icon = cfg.icon
+                                            return (
+                                                <Link
+                                                    key={ticket.ticketNumber}
+                                                    href={`/support/${ticket.ticketNumber}`}
+                                                    className="flex items-center justify-between gap-4 py-3.5 first:pt-0 last:pb-0 group"
+                                                >
+                                                    <div className="min-w-0">
+                                                        <div className="flex items-center gap-2 mb-0.5">
+                                                            <span className="font-mono text-xs font-bold text-violet-300">{ticket.ticketNumber}</span>
+                                                            <span className={`text-xs px-2 py-0.5 rounded-full border flex items-center gap-1 ${cfg.bg} ${cfg.border} ${cfg.color}`}>
+                                                                <Icon className="w-3 h-3" />
+                                                                {cfg.label}
+                                                            </span>
+                                                        </div>
+                                                        <p className="text-sm text-slate-300 truncate">{ticket.subject}</p>
+                                                        <p className="text-xs text-slate-600 mt-0.5">
+                                                            {new Date(ticket.createdAt).toLocaleDateString('de-DE', { day: '2-digit', month: 'short', year: 'numeric' })}
+                                                        </p>
+                                                    </div>
+                                                    <ArrowRight className="w-4 h-4 text-slate-600 group-hover:text-slate-400 shrink-0 transition-colors" />
+                                                </Link>
+                                            )
+                                        })}
+                                    </div>
+                                    {activeTickets.length > 1 && (
+                                        <button
+                                            onClick={() => setTicketsExpanded(e => !e)}
+                                            className="mt-4 w-full flex items-center justify-center gap-2 py-2 text-xs text-slate-500 hover:text-slate-300 border border-white/6 hover:border-white/10 rounded-xl transition-all"
+                                        >
+                                            <ArrowRight className={`w-3.5 h-3.5 transition-transform ${ticketsExpanded ? '-rotate-90' : 'rotate-90'}`} />
+                                            {ticketsExpanded ? 'Weniger anzeigen' : `${activeTickets.length - 1} weitere${activeTickets.length - 1 !== 1 ? '' : 's'} Ticket anzeigen`}
+                                        </button>
+                                    )}
+                                </div>
+                            )
+                        })()}
+                    </motion.div>
+
                 </div>
             </div>
+
+            <SupportModal
+                open={supportOpen}
+                defaultName={data?.user?.name || ''}
+                defaultEmail={data?.user?.email || ''}
+                onClose={() => {
+                    setSupportOpen(false)
+                    if (data?.user?.email) fetchTickets(data.user.email)
+                }}
+            />
         </div>
     )
 }
