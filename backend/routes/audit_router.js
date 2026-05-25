@@ -94,22 +94,18 @@ async function handleAudit(req, res, next) {
 
         const auditData = await runAudit(cleanUrl);
         const aiReport = await generateAIReport(auditData);
+        const html = generateHTMLReport(auditData, aiReport);
+        const pdfFile = await saveReportAsPDF(html, cleanUrl);
 
         const report = await Report.create({
             userId: req.userId || null,
             url: cleanUrl,
             auditData,
             aiReport,
-            pdfPath: null,
+            pdfPath: pdfFile,
         });
 
-        res.json({ success: true, auditData, aiReport, reportFile: null, report });
-
-        // PDF im Hintergrund generieren und Report aktualisieren
-        const html = generateHTMLReport(auditData, aiReport);
-        saveReportAsPDF(html, cleanUrl)
-            .then(pdfFile => Report.findByIdAndUpdate(report._id, { pdfPath: pdfFile }))
-            .catch(console.error);
+        res.json({ success: true, auditData, aiReport, reportFile: pdfFile, report });
     } catch (err) {
         next(err);
     }
