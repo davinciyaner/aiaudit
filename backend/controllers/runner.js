@@ -19,7 +19,7 @@ async function crawlSite(page, startUrl) {
         visited.add(url)
 
         try {
-            const response = await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 20000 })
+            const response = await page.goto(url, { waitUntil: 'load', timeout: 20000 })
             const html = await page.content()
 
             // Interne Links sammeln
@@ -119,7 +119,7 @@ export async function runAudit(url) {
 
     try {
         // Landingpage laden für Performance/Security/Screenshots
-        const response = await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 20000 })
+        const response = await page.goto(url, { waitUntil: 'load', timeout: 20000 })
         headers = response.headers()
         responseStatus = response.status()
         console.log(`Geladen in ${Date.now() - startTime}ms (Status: ${responseStatus})`)
