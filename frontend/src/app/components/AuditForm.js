@@ -21,13 +21,17 @@ export default function AuditForm({ onAuditStart, onAuditComplete }) {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ url: auditUrl })
             })
+            if (res.status === 429) {
+                onAuditComplete?.({ limitReached: true })
+                return
+            }
             if (!res.ok) throw new Error('Audit fehlgeschlagen')
             const data = await res.json()
             onAuditComplete?.(data)
             toast.success('Audit abgeschlossen!')
         } catch (err) {
             toast.error(err.message || 'Fehler beim Audit')
-            onAuditStart?.(null)
+            onAuditComplete?.(null)
         } finally {
             setLoading(false)
         }

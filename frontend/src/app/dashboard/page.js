@@ -11,7 +11,9 @@ import {
     CheckCircle,
     XCircle,
     ChevronDown,
-    ChevronUp
+    ChevronUp,
+    Lock,
+    ArrowRight
 } from 'lucide-react'
 import {Toaster} from 'react-hot-toast'
 import Link from 'next/link'
@@ -127,7 +129,7 @@ export default function Dashboard() {
                         </span>
                     </Link>
 
-                    {result && (
+                    {(result && !result.limitReached) && (
                         <button
                             onClick={() => {
                                 setResult(null)
@@ -173,6 +175,45 @@ export default function Dashboard() {
 
                 {/* LOADING */}
                 {loading && <Loading url={auditUrl}/>}
+
+                {/* LIMIT REACHED */}
+                {result?.limitReached && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="flex flex-col items-center text-center gap-6 py-16"
+                    >
+                        <div className="w-16 h-16 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center">
+                            <Lock className="w-7 h-7 text-amber-400" />
+                        </div>
+                        <div>
+                            <h2 className="text-2xl font-bold text-white mb-2">
+                                Kostenloses Audit bereits genutzt
+                            </h2>
+                            <p className="text-slate-400 max-w-md">
+                                Du hast dein monatliches Gratis-Audit bereits durchgeführt. Upgrade auf <span className="text-violet-400 font-semibold">Pro</span>, um bis zu 10 Audits pro Monat zu erhalten.
+                            </p>
+                        </div>
+                        <div className="flex flex-col sm:flex-row gap-3">
+                            <Link
+                                href="/pricing"
+                                className="flex items-center gap-2 px-6 py-3 bg-linear-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white font-semibold rounded-xl transition-all shadow-lg shadow-violet-500/20"
+                            >
+                                Auf Pro upgraden
+                                <ArrowRight className="w-4 h-4" />
+                            </Link>
+                            <button
+                                onClick={() => setResult(null)}
+                                className="px-6 py-3 text-slate-400 hover:text-white border border-white/10 hover:border-white/20 rounded-xl transition-all text-sm"
+                            >
+                                Zurück
+                            </button>
+                        </div>
+                        <p className="text-xs text-slate-600">
+                            Nächster kostenloser Audit: Anfang nächsten Monats
+                        </p>
+                    </motion.div>
+                )}
 
                 {/* RESULTS */}
                 {result && audit && (
