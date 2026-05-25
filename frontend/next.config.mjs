@@ -11,11 +11,11 @@ const securityHeaders = [
         key: 'Content-Security-Policy',
         value: [
             "default-src 'self'",
-            "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.paypal.com https://www.paypalobjects.com",
+            "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.paypal.com https://www.paypalobjects.com https://www.googletagmanager.com https://www.google-analytics.com https://www.clarity.ms",
             "style-src 'self' 'unsafe-inline'",
             "img-src 'self' data: https: blob:",
             "font-src 'self' data:",
-            `connect-src 'self' http://localhost:3001 ${process.env.NEXT_PUBLIC_API_URL ? new URL(process.env.NEXT_PUBLIC_API_URL).origin : ''} https://api-m.sandbox.paypal.com https://api-m.paypal.com https://www.paypal.com`,
+            `connect-src 'self' http://localhost:3001 ${process.env.NEXT_PUBLIC_API_URL ? new URL(process.env.NEXT_PUBLIC_API_URL).origin : ''} https://api-m.sandbox.paypal.com https://api-m.paypal.com https://www.paypal.com https://www.googletagmanager.com https://www.google-analytics.com https://stats.g.doubleclick.net https://e.clarity.ms`,
             "frame-src https://www.paypal.com https://www.sandbox.paypal.com",
             "object-src 'none'",
             "base-uri 'self'",
