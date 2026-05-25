@@ -151,27 +151,22 @@ export async function runAudit(url) {
         const crawledPages = await crawlSite(page, url)
         console.log(`${crawledPages.length} Seiten gecrawlt`)
 
-        // SEO auf allen Seiten analysieren
-        console.log('SEO-Analyse läuft...')
-        const seoResults = []
-        for (const p of crawledPages) {
-            const result = await analyzeSEO(p.url, p.html)
-            result._url = p.url
-            seoResults.push(result)
-        }
-        const seo = aggregateSEO(seoResults)
-        console.log('SEO done')
-
-        // Performance, Security, Keywords, GEO auf Landingpage
         const landingHtml = crawledPages[0]?.html || ''
-        const performance = await analyzePerformance(url, page, { timing, resources: landingResources })
-        console.log('Performance done')
-        const security = await analyzeSecurity(url, headers, landingHtml)
-        console.log('Security done')
-        const keywords = await analyzeKeywords(url, landingHtml)
-        console.log('Keywords done')
-        const geo = await analyzeGEO(url, landingHtml)
-        console.log('GEO done')
+
+        console.log('Analyse läuft...')
+        const [seoResults, performance, security, keywords, geo] = await Promise.all([
+            Promise.all(crawledPages.map(async p => {
+                const result = await analyzeSEO(p.url, p.html)
+                result._url = p.url
+                return result
+            })),
+            analyzePerformance(url, page, { timing, resources: landingResources }),
+            analyzeSecurity(url, headers, landingHtml),
+            analyzeKeywords(url, landingHtml),
+            analyzeGEO(url, landingHtml),
+        ])
+        const seo = aggregateSEO(seoResults)
+        console.log('Analyse done')
 
         await browser.close()
 
