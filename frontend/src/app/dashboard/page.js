@@ -144,7 +144,7 @@ export default function Dashboard() {
                 </div>
             </nav>
 
-            <div className="max-w-5xl mx-auto px-5 sm:px-8 py-12">
+            <div className="max-w-5xl mx-auto px-4 sm:px-8 py-8 sm:py-12">
 
                 {/* HEADER */}
                 <motion.div
@@ -152,7 +152,7 @@ export default function Dashboard() {
                     animate={{opacity: 1, y: 0}}
                     className="text-center mb-10"
                 >
-                    <h1 className="text-3xl sm:text-4xl font-bold text-white mb-3">
+                    <h1 className="text-2xl sm:text-4xl font-bold text-white mb-3">
                         {result ? 'Audit Fertig' : 'Audit deine Website'}
                     </h1>
                     <p className="text-slate-400">
@@ -271,7 +271,7 @@ export default function Dashboard() {
                         {!isLoggedIn && <ReauditCTA />}
 
                         {/* SCORE CARDS */}
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
                             <ScoreCard label="Overall" score={audit.overallScore ?? 0}/>
                             <ScoreCard label="SEO" score={audit?.seo?.score ?? 0}/>
                             <ScoreCard label="Performance" score={audit?.performance?.score ?? 0}/>
@@ -281,7 +281,7 @@ export default function Dashboard() {
                         {/* AI REPORT */}
                         <Section title="AI Analysis & Recommendations" icon="🤖">
                             <div
-                                className="text-slate-300 text-sm whitespace-pre-wrap"
+                                className="text-slate-300 text-sm whitespace-pre-wrap break-words"
                                 dangerouslySetInnerHTML={{
                                     __html: (result.aiReport || '')
                                         .replace(/\*\*(.*?)\*\*/g, '<strong class="text-white">$1</strong>')

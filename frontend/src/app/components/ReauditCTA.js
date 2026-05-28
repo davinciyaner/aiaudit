@@ -32,7 +32,8 @@ export default function ReauditCTA() {
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-3 shrink-0">
-                    <Link
+
+         ,           <Link
                         href="/register"
                         className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white text-sm font-semibold rounded-xl transition-all shadow-lg shadow-violet-500/20"
                     >
