@@ -2,7 +2,7 @@ import { mkdirSync } from 'fs'
 import { chromium } from 'playwright'
 
 export function generateHTMLReport(auditData, aiReport) {
-    const { url, timestamp, overallScore, seo, performance, security, keywords, geo } = auditData
+    const { url, timestamp, overallScore, seo, performance, security, keywords, geo, screenshots } = auditData
 
     const scoreColor = (s) => s >= 80 ? '#22c55e' : s >= 60 ? '#f59e0b' : '#ef4444'
     const scoreLabel = (s) => s >= 80 ? 'Good' : s >= 60 ? 'Needs Work' : 'Critical'
@@ -465,6 +465,26 @@ export function generateHTMLReport(auditData, aiReport) {
         </div>
     </div>` : ''
 
+    const screenshotsPage = screenshots ? `
+    <div style="${pageStyle}">
+        ${glow(-60, -60, null, null, 'rgba(124,58,237,0.07)')}
+        ${sectionHeader('&#128247;', 'Screenshots', 'Desktop &amp; Mobile Capture')}
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;flex:1">
+            <div>
+                <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:#475569;font-weight:600;margin-bottom:8px">Desktop · 1280px</div>
+                <div style="border:1px solid rgba(255,255,255,0.08);border-radius:12px;overflow:hidden;height:360px;background:#0a0e1a">
+                    <img src="data:image/jpeg;base64,${screenshots.desktop}" style="width:100%;display:block;object-fit:cover;object-position:top" />
+                </div>
+            </div>
+            <div>
+                <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:#475569;font-weight:600;margin-bottom:8px">Mobile · 390px</div>
+                <div style="border:1px solid rgba(255,255,255,0.08);border-radius:12px;overflow:hidden;height:360px;background:#0a0e1a;display:flex;justify-content:center">
+                    <img src="data:image/jpeg;base64,${screenshots.mobile}" style="height:100%;display:block;object-fit:cover;object-position:top" />
+                </div>
+            </div>
+        </div>
+    </div>` : ''
+
     return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -484,6 +504,7 @@ ${keywordsPage}
 ${securityOverviewPage}
 ${securityDetailsPage}
 ${geoPage}
+${screenshotsPage}
 </body>
 </html>`
 }

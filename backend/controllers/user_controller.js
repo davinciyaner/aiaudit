@@ -4,6 +4,42 @@ import Report from '../models/report_model.js'
 
 const PLAN_LIMITS = { free: 1, pro: 10, agency: null }
 
+export async function getAuditHistory(req, res) {
+    try {
+        const page = Math.max(1, parseInt(req.query.page) || 1)
+        const limit = 10
+        const skip = (page - 1) * limit
+
+        const [rawReports, total] = await Promise.all([
+            Report.find({ userId: req.userId })
+                .select('url auditData pdfPath createdAt')
+                .sort({ createdAt: -1 })
+                .skip(skip)
+                .limit(limit)
+                .lean(),
+            Report.countDocuments({ userId: req.userId }),
+        ])
+
+        const reports = rawReports.map(r => ({
+            _id: r._id,
+            url: r.url,
+            createdAt: r.createdAt,
+            pdfPath: r.pdfPath,
+            scores: {
+                overall: r.auditData?.overallScore ?? 0,
+                seo: r.auditData?.seo?.score ?? 0,
+                performance: r.auditData?.performance?.score ?? 0,
+                security: r.auditData?.security?.score ?? 0,
+                geo: r.auditData?.geo?.score ?? 0,
+            },
+        }))
+
+        res.json({ reports, total, page, pages: Math.ceil(total / limit) })
+    } catch (err) {
+        res.status(500).json({ error: err.message })
+    }
+}
+
 export async function getProfile(req, res) {
     try {
         const [user, sub] = await Promise.all([

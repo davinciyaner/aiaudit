@@ -32,8 +32,8 @@ function saveAuditedDomain(domain) {
     }
 }
 
-export default function AuditForm({ onAuditStart, onAuditComplete }) {
-    const [url, setUrl] = useState('')
+export default function AuditForm({ onAuditStart, onAuditComplete, defaultUrl = '' }) {
+    const [url, setUrl] = useState(defaultUrl)
     const [loading, setLoading] = useState(false)
 
     const normalized = normalizeUrl(url)
@@ -46,7 +46,6 @@ export default function AuditForm({ onAuditStart, onAuditComplete }) {
         const domain = extractDomain(auditUrl)
         const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
 
-        // Client-side gate: if anonymous and domain already audited locally, skip the API call
         if (!token && domain && getAuditedDomains().includes(domain)) {
             onAuditComplete?.({ domainLimitReached: true, domain })
             return
@@ -82,7 +81,6 @@ export default function AuditForm({ onAuditStart, onAuditComplete }) {
 
             const data = await res.json()
 
-            // Track domain so the client-side gate fires instantly on the next attempt
             if (!token && domain) saveAuditedDomain(domain)
 
             onAuditComplete?.(data)
