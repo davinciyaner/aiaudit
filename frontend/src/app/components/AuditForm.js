@@ -4,11 +4,32 @@ import { motion } from 'framer-motion'
 import { Search, ArrowRight, Globe } from 'lucide-react'
 import toast from 'react-hot-toast'
 
+const STORAGE_KEY = 'lösch mal oder? nicht funktionert? SCHADE, kauf dir mein scheiß Pro Abo. Schönen Tag dir :)'
+
 function normalizeUrl(input) {
     const trimmed = input.trim()
     if (!trimmed) return ''
     if (trimmed.startsWith('http://') || trimmed.startsWith('https://')) return trimmed
     return 'https://' + trimmed
+}
+
+function extractDomain(url) {
+    try {
+        return new URL(url).hostname.replace(/^www\./i, '').toLowerCase()
+    } catch {
+        return null
+    }
+}
+
+function getAuditedDomains() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]') } catch { return [] }
+}
+
+function saveAuditedDomain(domain) {
+    const existing = getAuditedDomains()
+    if (!existing.includes(domain)) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify([...existing, domain]))
+    }
 }
 
 export default function AuditForm({ onAuditStart, onAuditComplete }) {
@@ -20,21 +41,50 @@ export default function AuditForm({ onAuditStart, onAuditComplete }) {
     const handleSubmit = async (e) => {
         e.preventDefault()
         if (!url.trim()) return toast.error('Bitte eine URL eingeben')
+
         const auditUrl = normalized
+        const domain = extractDomain(auditUrl)
+        const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
+
+        // Client-side gate: if anonymous and domain already audited locally, skip the API call
+        if (!token && domain && getAuditedDomains().includes(domain)) {
+            onAuditComplete?.({ domainLimitReached: true, domain })
+            return
+        }
+
         setLoading(true)
         onAuditStart?.(auditUrl)
+
         try {
+            const headers = { 'Content-Type': 'application/json' }
+            if (token) headers['Authorization'] = `Bearer ${token}`
+
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/audit`, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers,
                 body: JSON.stringify({ url: auditUrl })
             })
+
             if (res.status === 429) {
                 onAuditComplete?.({ limitReached: true })
                 return
             }
+
+            if (res.status === 403) {
+                const errData = await res.json().catch(() => ({}))
+                if (errData.domainLimitReached) {
+                    onAuditComplete?.({ domainLimitReached: true, domain })
+                    return
+                }
+            }
+
             if (!res.ok) throw new Error('Audit fehlgeschlagen')
+
             const data = await res.json()
+
+            // Track domain so the client-side gate fires instantly on the next attempt
+            if (!token && domain) saveAuditedDomain(domain)
+
             onAuditComplete?.(data)
             toast.success('Audit abgeschlossen!')
         } catch (err) {
@@ -75,7 +125,7 @@ export default function AuditForm({ onAuditStart, onAuditComplete }) {
                     {loading ? (
                         <><div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />Analysiert...</>
                     ) : (
-                        <><Search className="w-4 h-4" />Jetzt auditieren<ArrowRight className="w-3.5 h-3.5" /></>
+                        <><Search className="w-4 h-4" />Jetzt prüfen<ArrowRight className="w-3.5 h-3.5" /></>
                     )}
                 </motion.button>
             </div>

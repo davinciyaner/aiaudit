@@ -2,6 +2,7 @@ import { Router } from "express";
 import jwt from "jsonwebtoken";
 import Report from "../models/report_model.js";
 import Subscription from "../models/subscription.js";
+import FreeDomainAudit from "../models/free_domain_audit.js";
 import { runAudit } from "../controllers/runner.js";
 import { generateAIReport } from "../controllers/ai-report.js";
 import { generateHTMLReport, saveReportAsPDF } from "../controllers/report.js";
@@ -10,6 +11,14 @@ import { anonymousAuditLimiter } from "../middleware/rateLimiter.js";
 const router = Router();
 
 const PLAN_LIMITS = { free: 1, pro: 10, agency: null };
+
+function extractDomain(url) {
+    try {
+        return new URL(url).hostname.replace(/^www\./i, '').toLowerCase();
+    } catch {
+        return null;
+    }
+}
 
 // Extrahiert userId aus Token wenn vorhanden — lehnt aber nicht ab wenn kein Token da ist
 function optionalAuth(req, res, next) {
@@ -92,6 +101,20 @@ async function handleAudit(req, res, next) {
         const cleanUrl = validateURL(url);
         await checkPlanLimit(req.userId);
 
+        // Anonymous users: block if domain was already audited for free
+        if (!req.userId) {
+            const domain = extractDomain(cleanUrl);
+            if (domain) {
+                const existing = await FreeDomainAudit.findOne({ domain });
+                if (existing) {
+                    return res.status(403).json({
+                        error: "Diese Domain wurde bereits kostenlos auditiert.",
+                        domainLimitReached: true,
+                    });
+                }
+            }
+        }
+
         const auditData = await runAudit(cleanUrl);
         const aiReport = await generateAIReport(auditData);
         const html = generateHTMLReport(auditData, aiReport);
@@ -104,6 +127,18 @@ async function handleAudit(req, res, next) {
             aiReport,
             pdfPath: pdfFile,
         });
+
+        // Track domain so anonymous users can't re-audit for free
+        if (!req.userId) {
+            const domain = extractDomain(cleanUrl);
+            if (domain) {
+                await FreeDomainAudit.findOneAndUpdate(
+                    { domain },
+                    { domain },
+                    { upsert: true, setDefaultsOnInsert: true }
+                ).catch(() => {});
+            }
+        }
 
         res.json({ success: true, auditData, aiReport, reportFile: pdfFile, report });
     } catch (err) {

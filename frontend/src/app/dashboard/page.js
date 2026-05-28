@@ -1,6 +1,6 @@
 'use client'
 
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import {motion, AnimatePresence} from 'framer-motion'
 import {
     Zap,
@@ -13,7 +13,8 @@ import {
     ChevronDown,
     ChevronUp,
     Lock,
-    ArrowRight
+    ArrowRight,
+    UserPlus,
 } from 'lucide-react'
 import {Toaster} from 'react-hot-toast'
 import Link from 'next/link'
@@ -21,6 +22,7 @@ import Link from 'next/link'
 import ScoreCard from "../components/ScoreCard"
 import AuditForm from "../components/AuditForm"
 import Loading from "../components/Loading"
+import ReauditCTA from "../components/ReauditCTA"
 
 function IssueItem({text, type = 'error'}) {
     const styles = {
@@ -83,6 +85,11 @@ export default function Dashboard() {
     const [loading, setLoading] = useState(false)
     const [auditUrl, setAuditUrl] = useState('')
     const [result, setResult] = useState(null)
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
+
+    useEffect(() => {
+        setIsLoggedIn(!!localStorage.getItem('token'))
+    }, [])
 
     const handleStart = () => {
         setLoading(true)
@@ -131,7 +138,7 @@ export default function Dashboard() {
                             className="flex items-center gap-2 px-4 py-2 text-sm text-slate-400 hover:text-white border border-white/10 rounded-xl"
                         >
                             <RefreshCw className="w-3.5 h-3.5"/>
-                            Neuer Audit
+                            Neue Prüfung
                         </button>
                     )}
                 </div>
@@ -169,7 +176,7 @@ export default function Dashboard() {
                 {/* LOADING */}
                 {loading && <Loading url={auditUrl}/>}
 
-                {/* LIMIT REACHED */}
+                {/* LIMIT REACHED (plan/IP rate limit) */}
                 {result?.limitReached && (
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
@@ -181,10 +188,10 @@ export default function Dashboard() {
                         </div>
                         <div>
                             <h2 className="text-2xl font-bold text-white mb-2">
-                                Kostenloses Audit bereits genutzt
+                                Kostenlose Prüfung bereits genutzt
                             </h2>
                             <p className="text-slate-400 max-w-md">
-                                Du hast dein monatliches Gratis-Audit bereits durchgeführt. Upgrade auf <span className="text-violet-400 font-semibold">Pro</span>, um bis zu 10 Audits pro Monat zu erhalten.
+                                Du hast deine monatliche Gratis-Prüfung bereits durchgeführt. Upgrade auf <span className="text-violet-400 font-semibold">Pro</span>, um 10 Prüfungen pro Monat zu erhalten.
                             </p>
                         </div>
                         <div className="flex flex-col sm:flex-row gap-3">
@@ -203,8 +210,52 @@ export default function Dashboard() {
                             </button>
                         </div>
                         <p className="text-xs text-slate-600">
-                            Nächster kostenloser Audit: Anfang nächsten Monats
+                            Nächste kostenlose Prüfung: In einem Monat
                         </p>
+                    </motion.div>
+                )}
+
+                {/* DOMAIN LIMIT REACHED — same domain audited before (anonymous) */}
+                {result?.domainLimitReached && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="flex flex-col items-center text-center gap-6 py-16"
+                    >
+                        <div className="w-16 h-16 rounded-2xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center">
+                            <RefreshCw className="w-7 h-7 text-violet-400" />
+                        </div>
+                        <div>
+                            <h2 className="text-2xl font-bold text-white mb-2">
+                                Hast du die Fehler behoben?
+                            </h2>
+                            <p className="text-slate-400 max-w-md">
+                                Diese Domain wurde bereits kostenlos geprüft.
+                                Erstell ein <span className="text-violet-400 font-semibold">kostenloses Konto</span> um deine Website erneut zu prüfen – oder steig direkt auf Pro um.
+                            </p>
+                        </div>
+                        <div className="flex flex-col sm:flex-row gap-3">
+                            <Link
+                                href="/register"
+                                className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white font-semibold rounded-xl transition-all shadow-lg shadow-violet-500/20"
+                            >
+                                <UserPlus className="w-4 h-4" />
+                                Kostenlos registrieren
+                            </Link>
+                            <Link
+                                href="/pricing"
+                                className="flex items-center gap-2 px-6 py-3 text-slate-300 hover:text-white border border-white/10 hover:border-violet-500/40 font-semibold rounded-xl transition-all text-sm"
+                            >
+                                Pro für 29€/Monat
+                                <ArrowRight className="w-4 h-4" />
+                            </Link>
+                        </div>
+                        <button
+                            onClick={() => setResult(null)}
+                            className="text-xs text-slate-600 hover:text-slate-400 transition-colors"
+                        >
+                            Andere URL prüfen
+                        </button>
                     </motion.div>
                 )}
 
@@ -215,6 +266,9 @@ export default function Dashboard() {
                         animate={{opacity: 1, y: 0}}
                         className="space-y-6"
                     >
+
+                        {/* RE-AUDIT CTA — shown to anonymous users after first audit */}
+                        {!isLoggedIn && <ReauditCTA />}
 
                         {/* SCORE CARDS */}
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">

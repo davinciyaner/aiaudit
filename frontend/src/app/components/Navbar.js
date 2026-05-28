@@ -137,7 +137,7 @@ export default function Navbar() {
                             <Link href="/login" className="text-sm text-slate-400 hover:text-white transition-colors">Anmelden</Link>
                         )}
                         <Link href="/dashboard" className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-violet-500/20 hover:-translate-y-px">
-                            Jetzt auditieren <ArrowRight className="w-3.5 h-3.5" />
+                            Jetzt prüfen <ArrowRight className="w-3.5 h-3.5" />
                         </Link>
                     </div>
 
@@ -174,7 +174,7 @@ export default function Navbar() {
                             </>
                         )}
                         <Link href="/dashboard" className="mt-2 block px-4 py-3 text-center font-semibold text-white rounded-xl bg-gradient-to-r from-violet-600 to-cyan-600 text-sm">
-                            Jetzt auditieren →
+                            Jetzt prüfen →
                         </Link>
                     </motion.div>
                 )}
