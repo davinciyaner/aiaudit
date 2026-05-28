@@ -6,7 +6,7 @@ import Link from 'next/link'
 
 const MOCK_SCORES_BEFORE = [
     { label: 'Overall', score: 34, color: '#ef4444' },
-    { label: 'SEO', score: 52, color: '#f59e0b' },
+    { label: 'SEO', score: 52, color: '#ef4444' },
     { label: 'Performance', score: 28, color: '#ef4444' },
     { label: 'Security', score: 19, color: '#ef4444' },
     { label: 'GEO', score: 11, color: '#ef4444' },
@@ -19,20 +19,20 @@ const MOCK_SCORES_AFTER = [
     { label: 'GEO', score: 78, color: '#22c55e' },
 ]
 const MOCK_ISSUES_BEFORE = [
-    { type: 'error', text: 'Missing Content-Security-Policy — XSS attacks possible' },
-    { type: 'error', text: 'No HSTS — connection can be downgraded to HTTP' },
-    { type: 'error', text: 'Server header exposes: Vercel — infrastructure visible' },
-    { type: 'warn', text: 'Title tag too long: 76 chars (ideal: 30–60)' },
-    { type: 'warn', text: 'First Contentful Paint: 4.2s — 58% of users will leave' },
-    { type: 'success', text: 'HTTPS enabled with valid SSL certificate' },
+    { type: 'error', text: 'H1-Tag fehlt — Suchmaschinen finden keinen Seiteninhalt' },
+    { type: 'error', text: 'Meta-Description auf 7 Seiten leer — kein Snippet in Google' },
+    { type: 'error', text: '14 Bilder ohne Alt-Text — unsichtbar für Crawler' },
+    { type: 'warn', text: 'Title-Tag zu lang: 76 Zeichen (optimal: 30–60)' },
+    { type: 'warn', text: 'Kein Canonical-Tag gesetzt — Duplicate-Content-Risiko' },
+    { type: 'success', text: 'HTTPS aktiv mit gültigem SSL-Zertifikat' },
 ]
 const MOCK_ISSUES_AFTER = [
-    { type: 'success', text: 'All 6 security headers configured correctly' },
-    { type: 'success', text: 'Title tag optimized: 52 chars — perfect range' },
-    { type: 'success', text: 'First Contentful Paint: 0.9s — excellent' },
-    { type: 'success', text: 'HTTPS + HSTS enabled, no mixed content' },
-    { type: 'success', text: 'llms.txt present — AI models can find you' },
-    { type: 'success', text: 'FAQ Schema detected — citation-ready for AI' },
+    { type: 'success', text: 'H1-Tag gesetzt und keyword-optimiert' },
+    { type: 'success', text: 'Alle Meta-Descriptions vorhanden — max. 155 Zeichen' },
+    { type: 'success', text: '14 Bilder mit beschreibendem Alt-Text versehen' },
+    { type: 'success', text: 'Title-Tag optimiert: 48 Zeichen — perfekter Bereich' },
+    { type: 'success', text: 'Canonical-Tags auf allen Seiten gesetzt' },
+    { type: 'success', text: 'FAQ-Schema erkannt — Rich Snippets in Google möglich' },
 ]
 const STATS = [
     { value: '94%', label: 'der Vibe-coded Sites haben kritische Security-Lücken' },
@@ -55,12 +55,21 @@ function MockCard({ scores, issues, label, labelColor }) {
             </div>
             <div className="p-5">
                 <div className="grid grid-cols-5 gap-2 mb-4">
-                    {scores.map(({ label: l, score, color }) => (
-                        <div key={l} className="bg-white/[0.03] border border-white/5 rounded-xl p-2.5 text-center">
-                            <div className="text-xl font-bold" style={{ color }}>{score}</div>
-                            <div className="text-[9px] text-slate-600 mt-0.5">{l}</div>
-                        </div>
-                    ))}
+                    {scores.map(({ label: l, score, color }) => {
+                        const isSeo = l === 'SEO'
+                        return (
+                            <div key={l}
+                                className="bg-white/[0.03] rounded-xl p-2.5 text-center transition-all duration-300"
+                                style={isSeo ? {
+                                    border: `1px solid ${color}`,
+                                    boxShadow: `0 0 0 2px ${color}35, 0 0 14px ${color}25`,
+                                } : { border: '1px solid rgba(255,255,255,0.05)' }}
+                            >
+                                <div className="text-xl font-bold" style={{ color }}>{score}</div>
+                                <div className="text-[9px] text-slate-600 mt-0.5">{l}</div>
+                            </div>
+                        )
+                    })}
                 </div>
                 <div className="space-y-1.5">
                     {issues.map((issue, i) => (
@@ -141,12 +150,12 @@ export default function Hero() {
 
                         <motion.div initial={{ opacity: 0, x: 40 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.3 }} className="relative">
                             <div className="flex items-center gap-3 mb-4 justify-end">
-                                <span className="text-xs text-slate-500">Vorher</span>
+                                <span className="text-xs text-slate-200">Vorher</span>
                                 <button onClick={() => setShowAfter(!showAfter)}
                                         className={`relative w-12 h-6 rounded-full transition-all duration-300 ${showAfter ? 'bg-gradient-to-r from-violet-600 to-cyan-600' : 'bg-white/10'}`}>
                                     <div className={`absolute top-1 w-4 h-4 bg-white rounded-full shadow transition-all duration-300 ${showAfter ? 'left-7' : 'left-1'}`} />
                                 </button>
-                                <span className="text-xs text-slate-500">Nachher</span>
+                                <span className="text-xs text-slate-200">Nachher</span>
                             </div>
                             <AnimatePresence mode="wait">
                                 <motion.div key={showAfter ? 'after' : 'before'}

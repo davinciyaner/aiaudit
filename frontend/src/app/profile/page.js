@@ -4,7 +4,8 @@ import { motion } from 'framer-motion'
 import {
     User, Mail, Crown, Building2, Zap, BarChart2,
     Receipt, Download, AlertTriangle, Loader2, CheckCircle, XCircle,
-    MessageSquare, Clock, Wrench, ArrowRight, Plus
+    MessageSquare, Clock, Wrench, ArrowRight, Plus, History, ExternalLink,
+    ChevronLeft, ChevronRight
 } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -46,6 +47,10 @@ export default function ProfilePage() {
     const [ticketsLoading, setTicketsLoading] = useState(false)
     const [supportOpen, setSupportOpen] = useState(false)
     const [ticketsExpanded, setTicketsExpanded] = useState(false)
+    const [history, setHistory] = useState([])
+    const [historyTotal, setHistoryTotal] = useState(0)
+    const [historyPage, setHistoryPage] = useState(1)
+    const [historyLoading, setHistoryLoading] = useState(false)
 
     useEffect(() => {
         const token = localStorage.getItem('token')
@@ -65,11 +70,34 @@ export default function ProfilePage() {
             setData(profile)
             setBilling(billingData.transactions || [])
             if (profile?.user?.email) fetchTickets(profile.user.email)
+            fetchHistory(token, 1)
         } catch {
             toast.error('Profil konnte nicht geladen werden')
         } finally {
             setLoading(false)
         }
+    }
+
+    const fetchHistory = async (token, page) => {
+        setHistoryLoading(true)
+        try {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/history?page=${page}`, {
+                headers: { Authorization: `Bearer ${token}` },
+            })
+            const data = await res.json()
+            if (res.ok) {
+                setHistory(data.reports || [])
+                setHistoryTotal(data.total || 0)
+                setHistoryPage(page)
+            }
+        } catch { /* ignore */ } finally {
+            setHistoryLoading(false)
+        }
+    }
+
+    const handleHistoryPage = (page) => {
+        const token = localStorage.getItem('token')
+        if (token) fetchHistory(token, page)
     }
 
     const fetchTickets = async (email) => {
@@ -216,6 +244,81 @@ export default function ProfilePage() {
                             )}
                         </motion.div>
                     )}
+
+                    {/* Audit History */}
+                    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.12 }}
+                        className="bg-white/2 border border-white/6 rounded-2xl p-6">
+                        <h2 className="text-base font-semibold text-white mb-5 flex items-center gap-2">
+                            <History className="w-4 h-4 text-violet-400" /> Audit-Verlauf
+                            {historyTotal > 0 && (
+                                <span className="text-xs text-slate-600 font-normal ml-1">{historyTotal} gesamt</span>
+                            )}
+                        </h2>
+                        {historyLoading ? (
+                            <div className="flex items-center gap-2 text-slate-500 text-sm py-6 justify-center">
+                                <Loader2 className="w-4 h-4 animate-spin" /> Lade Verlauf...
+                            </div>
+                        ) : history.length === 0 ? (
+                            <div className="text-center py-10 text-slate-600 text-sm">
+                                Noch keine Audits durchgeführt
+                            </div>
+                        ) : (
+                            <>
+                                <div className="space-y-2">
+                                    {history.map((report) => {
+                                        const domain = (() => { try { return new URL(report.url).hostname.replace(/^www\./, '') } catch { return report.url } })()
+                                        const date = new Date(report.createdAt).toLocaleDateString('de-DE', { day: '2-digit', month: 'short', year: 'numeric' })
+                                        const scoreColor = (s) => s >= 80 ? 'text-emerald-400' : s >= 60 ? 'text-amber-400' : 'text-red-400'
+                                        const pdfUrl = report.pdfPath
+                                            ? `${process.env.NEXT_PUBLIC_API_URL.replace('/api', '')}/reports/${report.pdfPath.split('/').pop()}`
+                                            : null
+                                        return (
+                                            <div key={report._id} className="flex items-center gap-4 py-3.5 border-b border-white/4 last:border-0">
+                                                <div className="flex-1 min-w-0">
+                                                    <div className="text-sm font-medium text-slate-200 truncate">{domain}</div>
+                                                    <div className="text-xs text-slate-600 mt-0.5">{date}</div>
+                                                </div>
+                                                <div className="flex items-center gap-3 shrink-0">
+                                                    {[['Ges', report.scores.overall], ['SEO', report.scores.seo], ['Perf', report.scores.performance], ['Sec', report.scores.security]].map(([label, score]) => (
+                                                        <div key={label} className="text-center hidden sm:block">
+                                                            <div className={`text-sm font-bold ${scoreColor(score)}`}>{score}</div>
+                                                            <div className="text-[9px] text-slate-600 uppercase tracking-wide">{label}</div>
+                                                        </div>
+                                                    ))}
+                                                    <div className="text-center sm:hidden">
+                                                        <div className={`text-sm font-bold ${scoreColor(report.scores.overall)}`}>{report.scores.overall}</div>
+                                                        <div className="text-[9px] text-slate-600 uppercase tracking-wide">Ges</div>
+                                                    </div>
+                                                    {pdfUrl && (
+                                                        <a href={pdfUrl} target="_blank" rel="noopener noreferrer"
+                                                            className="flex items-center gap-1 px-2.5 py-1.5 border border-white/10 text-slate-400 hover:text-white hover:border-white/20 text-xs rounded-lg transition-all">
+                                                            <Download className="w-3 h-3" />
+                                                            <span className="hidden sm:inline">PDF</span>
+                                                        </a>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        )
+                                    })}
+                                </div>
+                                {historyTotal > 10 && (
+                                    <div className="flex items-center justify-between mt-4 pt-4 border-t border-white/5">
+                                        <span className="text-xs text-slate-600">Seite {historyPage} von {Math.ceil(historyTotal / 10)}</span>
+                                        <div className="flex gap-2">
+                                            <button onClick={() => handleHistoryPage(historyPage - 1)} disabled={historyPage <= 1}
+                                                className="p-1.5 border border-white/10 text-slate-400 hover:text-white hover:border-white/20 rounded-lg transition-all disabled:opacity-30 disabled:cursor-not-allowed">
+                                                <ChevronLeft className="w-3.5 h-3.5" />
+                                            </button>
+                                            <button onClick={() => handleHistoryPage(historyPage + 1)} disabled={historyPage >= Math.ceil(historyTotal / 10)}
+                                                className="p-1.5 border border-white/10 text-slate-400 hover:text-white hover:border-white/20 rounded-lg transition-all disabled:opacity-30 disabled:cursor-not-allowed">
+                                                <ChevronRight className="w-3.5 h-3.5" />
+                                            </button>
+                                        </div>
+                                    </div>
+                                )}
+                            </>
+                        )}
+                    </motion.div>
 
                     {/* Subscription Management */}
                     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}
