@@ -26,14 +26,14 @@ const plans = [
 
 export default function Pricing() {
     return (
-        <section id="pricing" className="relative py-32 bg-[#05080f]">
+        <section id="pricing" className="relative py-20 md:py-32 bg-[#05080f]">
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] rounded-full blur-3xl pointer-events-none" style={{ background: 'radial-gradient(ellipse, rgba(124,58,237,0.06) 0%, transparent 70%)' }} />
             <div className="relative z-10 max-w-6xl mx-auto px-5 sm:px-8">
                 <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
                     <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-violet-500/20 bg-violet-500/5 text-violet-400 text-xs font-medium mb-6">
                         Einfache Preise
                     </div>
-                    <h2 className="text-4xl sm:text-5xl font-bold tracking-tight mb-5">
+                    <h2 className="text-3xl sm:text-5xl font-bold tracking-tight mb-5">
                         Kostenlos starten.<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-cyan-400">Wachsen wenn nötig.</span>
                     </h2>
                     <p className="text-lg text-slate-400 max-w-xl mx-auto">Keine versteckten Gebühren. Monatliches Abo. Jederzeit kündbar.</p>
@@ -43,7 +43,7 @@ export default function Pricing() {
                     {plans.map((plan, i) => (
                         <motion.div key={plan.id}
                                     initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
-                                    className={`relative rounded-2xl p-8 border transition-all duration-300 ${plan.highlight ? 'bg-gradient-to-b from-violet-600/10 to-transparent border-violet-500/30 shadow-2xl shadow-violet-500/10' : 'bg-white/[0.02] border-white/[0.06] hover:border-white/10'}`}>
+                                    className={`relative rounded-2xl p-5 sm:p-8 border transition-all duration-300 ${plan.highlight ? 'bg-gradient-to-b from-violet-600/10 to-transparent border-violet-500/30 shadow-2xl shadow-violet-500/10' : 'bg-white/[0.02] border-white/[0.06] hover:border-white/10'}`}>
                             {plan.badge && (
                                 <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-gradient-to-r from-violet-600 to-cyan-600 rounded-full text-xs font-semibold text-white shadow-lg">
                                     {plan.badge}
@@ -56,7 +56,7 @@ export default function Pricing() {
                                 </div>
                                 <div className="flex items-baseline gap-1 mb-1">
                                     <span className="text-slate-400 text-lg">€</span>
-                                    <span className="text-5xl font-bold text-white">{plan.price}</span>
+                                    <span className="text-4xl sm:text-5xl font-bold text-white">{plan.price}</span>
                                 </div>
                                 <div className="text-sm text-slate-500 mb-3">{plan.period}</div>
                                 <p className="text-sm text-slate-400">{plan.desc}</p>

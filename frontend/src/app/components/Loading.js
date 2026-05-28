@@ -30,7 +30,7 @@ export default function Loading({ url }) {
 
     return (
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} className="w-full max-w-lg mx-auto">
-            <div className="bg-white/[0.02] border border-white/[0.07] rounded-2xl p-8 text-center">
+            <div className="bg-white/[0.02] border border-white/[0.07] rounded-2xl p-5 sm:p-8 text-center">
                 <div className="relative w-20 h-20 mx-auto mb-6">
                     <div className="absolute inset-0 rounded-full bg-gradient-to-br from-violet-600 to-cyan-600 opacity-20 animate-ping" />
                     <div className="absolute inset-2 rounded-full bg-gradient-to-br from-violet-600 to-cyan-600 opacity-40 animate-pulse" />

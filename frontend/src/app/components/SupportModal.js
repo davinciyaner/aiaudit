@@ -80,7 +80,7 @@ export default function SupportModal({ open, onClose, defaultName = '', defaultE
                                     <SuccessView ticketNumber={ticketNumber} onClose={handleClose} />
                                 ) : (
                                     <form onSubmit={handleSubmit} className="space-y-4">
-                                        <div className="grid grid-cols-2 gap-4">
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                             <Field label="Name" value={form.name} onChange={set('name')} placeholder="Max Mustermann" required />
                                             <Field label="E-Mail" type="email" value={form.email} onChange={set('email')} placeholder="max@beispiel.de" required />
                                         </div>

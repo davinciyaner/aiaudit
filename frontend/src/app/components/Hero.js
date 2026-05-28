@@ -106,30 +106,30 @@ export default function Hero() {
                             </motion.div>
 
                             <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.1 }}
-                                       className="text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.0] tracking-tight mb-6">
+                                       className="text-4xl sm:text-5xl lg:text-7xl font-bold leading-[1.05] sm:leading-[1.0] tracking-tight mb-6">
                                 Deine Website.<br />
                                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 via-purple-400 to-cyan-400">Vollständig geprüft.</span><br />
                                 In 60 Sekunden.
                             </motion.h1>
 
                             <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }}
-                                      className="text-lg text-slate-400 leading-relaxed mb-10 max-w-lg">
+                                      className="text-base sm:text-lg text-slate-400 leading-relaxed mb-10 max-w-lg">
                                 Wie gut ist deine Website wirklich? AuditAI prüft SEO, Security, Performance und KI-Sichtbarkeit – und zeigt dir genau was du verbessern musst. – alles in einem Report.
                             </motion.p>
 
                             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.3 }}
-                                        className="flex flex-col sm:flex-row gap-4 mb-12">
-                                <Link href="/dashboard" className="group flex items-center justify-center gap-2.5 px-8 py-4 bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white font-semibold rounded-2xl transition-all duration-200 shadow-2xl shadow-violet-500/25 hover:-translate-y-0.5 text-sm">
+                                        className="flex flex-col sm:flex-row gap-3 mb-10">
+                                <Link href="/dashboard" className="group flex items-center justify-center gap-2.5 px-6 sm:px-8 py-3.5 sm:py-4 bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white font-semibold rounded-2xl transition-all duration-200 shadow-2xl shadow-violet-500/25 hover:-translate-y-0.5 text-sm">
                                     Website jetzt prüfen - kostenlos
                                     <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
                                 </Link>
-                                <Link href="#security" className="flex items-center justify-center gap-2 px-8 py-4 border border-white/10 hover:border-white/20 text-slate-300 hover:text-white rounded-2xl transition-all text-sm">
+                                <Link href="#security" className="flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 sm:py-4 border border-white/10 hover:border-white/20 text-slate-300 hover:text-white rounded-2xl transition-all text-sm">
                                     <AlertTriangle className="w-4 h-4 text-amber-400" />
                                     Sicherheitsrisiken ansehen
                                 </Link>
                             </motion.div>
 
-                            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }} className="flex flex-wrap gap-8">
+                            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }} className="flex flex-wrap gap-4 sm:gap-8">
                                 {STATS.map((s, i) => (
                                     <div key={i}>
                                         <div className="text-2xl font-bold text-white">{s.value}</div>

@@ -15,13 +15,13 @@ const FEATURES = [
 
 export default function Features() {
     return (
-        <section id="features" className="relative py-32 bg-[#05080f]">
+        <section id="features" className="relative py-20 md:py-32 bg-[#05080f]">
             <div className="max-w-7xl mx-auto px-5 sm:px-8">
                 <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
                     <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-cyan-500/20 bg-cyan-500/5 text-cyan-400 text-xs font-medium mb-6">
                         8 Analysekategorien
                     </div>
-                    <h2 className="text-4xl sm:text-5xl font-bold mb-5 tracking-tight">
+                    <h2 className="text-3xl sm:text-5xl font-bold mb-5 tracking-tight">
                         Alles was zählt.<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-cyan-400">In einem Tool.</span>
                     </h2>
                     <p className="text-slate-400 max-w-xl mx-auto text-lg">
@@ -49,11 +49,12 @@ export default function Features() {
                     <h3 className="text-2xl sm:text-3xl font-bold text-center mb-10 tracking-tight">
                         AuditAI vs. <span className="text-slate-400">8 separate Tools</span>
                     </h3>
-                    <div className="bg-white/[0.02] border border-white/[0.07] rounded-2xl overflow-hidden">
+                    <div className="overflow-x-auto -mx-5 sm:mx-0 px-5 sm:px-0">
+                    <div className="bg-white/[0.02] border border-white/[0.07] rounded-2xl overflow-hidden min-w-[520px] sm:min-w-0">
                         <div className="grid grid-cols-3 border-b border-white/5">
-                            <div className="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Analyse</div>
-                            <div className="px-6 py-4 text-center text-xs font-semibold text-slate-400 uppercase tracking-wider">Andere Tools<br /><span className="text-[10px] text-slate-600 font-normal">8 verschiedene, manuell</span></div>
-                            <div className="px-6 py-4 text-center bg-violet-500/5 border-l border-violet-500/10 text-xs font-semibold text-violet-400 uppercase tracking-wider">AuditAI<br /><span className="text-[10px] text-violet-600 font-normal">1 Tool, automatisch</span></div>
+                            <div className="px-3 sm:px-6 py-3 sm:py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Analyse</div>
+                            <div className="px-3 sm:px-6 py-3 sm:py-4 text-center text-xs font-semibold text-slate-400 uppercase tracking-wider">Andere Tools<br /><span className="text-[10px] text-slate-600 font-normal">8 verschiedene, manuell</span></div>
+                            <div className="px-3 sm:px-6 py-3 sm:py-4 text-center bg-violet-500/5 border-l border-violet-500/10 text-xs font-semibold text-violet-400 uppercase tracking-wider">AuditAI<br /><span className="text-[10px] text-violet-600 font-normal">1 Tool, automatisch</span></div>
                         </div>
                         {[
                             ['Security Headers', 'SecurityHeaders.io'],
@@ -66,20 +67,21 @@ export default function Features() {
                             ['PDF-Export in einem Klick', 'Manuell zusammenstellen'],
                         ].map(([feature, other], i) => (
                             <div key={feature} className={`grid grid-cols-3 border-b border-white/[0.04] ${i % 2 === 0 ? '' : 'bg-white/[0.01]'}`}>
-                                <div className="px-6 py-3.5 text-sm text-slate-300">{feature}</div>
-                                <div className="px-6 py-3.5 text-center text-xs text-slate-500">{other}</div>
-                                <div className="px-6 py-3.5 text-center bg-violet-500/[0.03] border-l border-violet-500/10">
+                                <div className="px-3 sm:px-6 py-3 text-xs sm:text-sm text-slate-300">{feature}</div>
+                                <div className="px-3 sm:px-6 py-3 text-center text-[10px] sm:text-xs text-slate-500">{other}</div>
+                                <div className="px-3 sm:px-6 py-3 text-center bg-violet-500/[0.03] border-l border-violet-500/10">
                                     <span className="text-emerald-400 text-sm">✓</span>
                                 </div>
                             </div>
                         ))}
                         <div className="grid grid-cols-3">
-                            <div className="px-6 py-4 text-sm font-semibold text-white">Preis</div>
-                            <div className="px-6 py-4 text-center text-sm text-red-400 font-medium">€200–500 / Monat</div>
-                            <div className="px-6 py-4 text-center bg-violet-500/[0.03] border-l border-violet-500/10">
-                                <span className="text-emerald-400 font-bold text-sm">Kostenlos starten</span>
+                            <div className="px-3 sm:px-6 py-4 text-sm font-semibold text-white">Preis</div>
+                            <div className="px-3 sm:px-6 py-4 text-center text-xs sm:text-sm text-red-400 font-medium">€200–500 / Monat</div>
+                            <div className="px-3 sm:px-6 py-4 text-center bg-violet-500/[0.03] border-l border-violet-500/10">
+                                <span className="text-emerald-400 font-bold text-xs sm:text-sm">Kostenlos starten</span>
                             </div>
                         </div>
+                    </div>
                     </div>
                 </motion.div>
             </div>

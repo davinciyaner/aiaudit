@@ -26,9 +26,9 @@ const PLAN_META = {
 
 function StatCard({ label, value, sub, color }) {
     return (
-        <div className="bg-white/2 border border-white/6 rounded-2xl p-6">
-            <div className="text-sm text-slate-500 mb-1">{label}</div>
-            <div className="text-3xl font-bold text-white" style={color ? { color } : {}}>{value}</div>
+        <div className="bg-white/2 border border-white/6 rounded-2xl p-4 sm:p-6">
+            <div className="text-xs sm:text-sm text-slate-500 mb-1">{label}</div>
+            <div className="text-2xl sm:text-3xl font-bold text-white" style={color ? { color } : {}}>{value}</div>
             {sub && <div className="text-xs text-slate-600 mt-1">{sub}</div>}
         </div>
     )
@@ -174,7 +174,7 @@ export default function ProfilePage() {
 
                     {/* Stats Row */}
                     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }}
-                        className="grid grid-cols-3 gap-4">
+                        className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                         <StatCard label="Audits diesen Monat" value={auditsUsed} sub={auditsLimit ? `von ${auditsLimit} verfügbar` : 'Unbegrenzt'} />
                         <StatCard label="Audits gesamt" value={data?.audits?.total ?? 0} />
                         <StatCard label="Abo-Status"
