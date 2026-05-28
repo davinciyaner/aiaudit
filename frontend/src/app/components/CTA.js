@@ -81,7 +81,7 @@ export default function CTA() {
                             Kein Account nötig. URL eingeben, 60 Sekunden warten, vollständigen Report herunterladen.
                         </p>
                         <Link href="/dashboard" className="group inline-flex items-center gap-3 px-10 py-5 bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white font-semibold rounded-2xl transition-all duration-200 shadow-2xl shadow-violet-500/25 hover:-translate-y-0.5 text-base">
-                            Website jetzt kostenlos auditieren
+                            Website jetzt kostenlos prüfen
                             <ArrowRight className="w-5 h-5 group-hover:translate-x-0.5 transition-transform" />
                         </Link>
                         <div className="flex items-center justify-center gap-6 mt-8 text-xs text-slate-600">
