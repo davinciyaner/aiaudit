@@ -113,12 +113,10 @@ export default function Dashboard() {
             if (stored) setUserName(JSON.parse(stored).name || '')
         } catch { /* ignore */ }
 
-        if (token) {
-            const pending = sessionStorage.getItem('pendingAuditUrl')
-            if (pending) {
-                sessionStorage.removeItem('pendingAuditUrl')
-                runAudit(pending, token)
-            }
+        const pending = sessionStorage.getItem('pendingAuditUrl')
+        if (pending) {
+            sessionStorage.removeItem('pendingAuditUrl')
+            runAudit(pending, token || null)
         }
     }, [])
 
@@ -126,12 +124,11 @@ export default function Dashboard() {
         setLoading(true)
         setAuditUrl(url)
         try {
+            const headers = { 'Content-Type': 'application/json' }
+            if (token) headers['Authorization'] = `Bearer ${token}`
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/audit`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`,
-                },
+                headers,
                 body: JSON.stringify({ url }),
             })
 

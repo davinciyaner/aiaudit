@@ -1,8 +1,9 @@
 'use client'
 import { useRef, useState } from 'react'
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
-import { Zap, AlertTriangle, ArrowRight, Check, Shield } from 'lucide-react'
+import { Zap, AlertTriangle, ArrowRight, Check, Shield, Globe, Search } from 'lucide-react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 const MOCK_SCORES_BEFORE = [
     { label: 'Overall', score: 34, color: '#ef4444' },
@@ -90,10 +91,20 @@ function MockCard({ scores, issues, label, labelColor }) {
 
 export default function Hero() {
     const [showAfter, setShowAfter] = useState(false)
+    const [heroUrl, setHeroUrl] = useState('')
     const heroRef = useRef(null)
+    const router = useRouter()
     const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] })
     const heroY = useTransform(scrollYProgress, [0, 1], ['0%', '20%'])
     const heroOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0])
+
+    const handleHeroSubmit = (e) => {
+        e.preventDefault()
+        if (!heroUrl.trim()) return
+        const normalized = heroUrl.trim().startsWith('http') ? heroUrl.trim() : 'https://' + heroUrl.trim()
+        sessionStorage.setItem('pendingAuditUrl', normalized)
+        router.push('/dashboard')
+    }
 
     return (
         <section ref={heroRef} className="relative min-h-screen flex items-center pt-20 overflow-hidden">
@@ -127,15 +138,36 @@ export default function Hero() {
                             </motion.p>
 
                             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.3 }}
-                                        className="flex flex-col sm:flex-row gap-3 mb-10">
-                                <Link href="/dashboard" className="group flex items-center justify-center gap-2.5 px-6 sm:px-8 py-3.5 sm:py-4 bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white font-semibold rounded-2xl transition-all duration-200 shadow-2xl shadow-violet-500/25 hover:-translate-y-0.5 text-sm">
-                                    Website jetzt prüfen - kostenlos
-                                    <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-                                </Link>
-                                <Link href="#security" className="flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 sm:py-4 border border-white/10 hover:border-white/20 text-slate-300 hover:text-white rounded-2xl transition-all text-sm">
-                                    <AlertTriangle className="w-4 h-4 text-amber-400" />
-                                    Sicherheitsrisiken ansehen
-                                </Link>
+                                        className="mb-10">
+                                <form onSubmit={handleHeroSubmit} className="relative flex items-center gap-2 p-2 bg-white/[0.03] border border-white/10 rounded-2xl focus-within:border-violet-500/50 focus-within:bg-white/[0.05] transition-all duration-200 shadow-xl shadow-black/20 mb-3">
+                                    <div className="flex items-center gap-3 flex-1 px-3">
+                                        <Globe className="w-4 h-4 text-slate-500 shrink-0" />
+                                        <input
+                                            type="text"
+                                            value={heroUrl}
+                                            onChange={e => setHeroUrl(e.target.value)}
+                                            placeholder="yourwebsite.com"
+                                            className="flex-1 bg-transparent text-white placeholder-slate-600 text-sm outline-none py-2"
+                                            autoComplete="off"
+                                            spellCheck={false}
+                                        />
+                                    </div>
+                                    <button
+                                        type="submit"
+                                        className="flex items-center gap-2 px-5 sm:px-6 py-3 bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-violet-500/20 shrink-0"
+                                    >
+                                        <Search className="w-4 h-4" />
+                                        <span className="hidden sm:inline">Website prüfen</span>
+                                        <ArrowRight className="w-3.5 h-3.5" />
+                                    </button>
+                                </form>
+                                <div className="flex items-center gap-4">
+                                    <span className="text-xs text-slate-600">Kostenlos · Kein Account nötig · ~60 Sekunden</span>
+                                    <Link href="#security" className="flex items-center gap-1.5 text-xs text-slate-500 hover:text-slate-300 transition-colors ml-auto">
+                                        <AlertTriangle className="w-3.5 h-3.5 text-amber-400" />
+                                        Sicherheitsrisiken ansehen
+                                    </Link>
+                                </div>
                             </motion.div>
 
                             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }} className="flex flex-wrap gap-4 sm:gap-8">
