@@ -92,6 +92,8 @@ router.post("/", optionalAuth, async (req, res, next) => {
     await handleAudit(req, res, next);
 });
 
+const GLOBAL_DAILY_CAP = parseInt(process.env.GLOBAL_DAILY_AUDIT_CAP || '100', 10);
+
 async function handleAudit(req, res, next) {
     const { url } = req.body;
 
@@ -99,6 +101,13 @@ async function handleAudit(req, res, next) {
 
     try {
         const cleanUrl = validateURL(url);
+
+        // Globale Notbremse: verhindert Kostenschäden bei Abuse
+        const since = new Date(Date.now() - 24 * 60 * 60 * 1000);
+        const todayCount = await Report.countDocuments({ createdAt: { $gte: since } });
+        if (todayCount >= GLOBAL_DAILY_CAP) {
+            return res.status(503).json({ error: "Tageslimit erreicht. Bitte später erneut versuchen." });
+        }
         await checkPlanLimit(req.userId);
 
         // Anonymous users: block if domain was already audited for free

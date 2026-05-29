@@ -20,7 +20,11 @@ const app = express();
 const allowedOrigin = process.env.ALLOWED_ORIGIN || "http://localhost:3000";
 app.use(cors({
     origin: (origin, callback) => {
-        if (!origin) return callback(null, true);
+        // in Produktion: kein Origin (direkte Curl-Requests) blockieren
+        if (!origin) {
+            const isProd = process.env.NODE_ENV === 'production';
+            return callback(isProd ? new Error("CORS: Origin fehlt") : null, !isProd);
+        }
         if (origin === allowedOrigin) return callback(null, true);
         if (origin.startsWith("chrome-extension://")) return callback(null, true);
         callback(new Error("CORS: Origin nicht erlaubt"));
