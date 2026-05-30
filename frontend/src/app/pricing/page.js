@@ -19,11 +19,10 @@ const PLANS = [
         icon: Zap,
         features: [
             '1 Audit pro Monat',
-            'Vollständige SEO-Analyse',
+            'SEO-Score & Analyse',
             'Performance-Metriken',
             'Security-Check',
-            'Keyword-Analyse',
-            'PDF-Export',
+            'GEO-Sichtbarkeit',
         ],
         cta: 'Kostenlos starten',
         href: '/dashboard',
@@ -42,8 +41,6 @@ const PLANS = [
             'Alles aus Free',
             'KI-generierter Bericht',
             'Desktop + Mobile Screenshots',
-            'Priorität-Verarbeitung',
-            'E-Mail-Zustellung',
             'Audit-Verlauf',
         ],
         cta: 'Pro holen',
@@ -59,11 +56,7 @@ const PLANS = [
         features: [
             'Unbegrenzte Audits',
             'Alles aus Pro',
-            'White-Label Reports',
-            'API-Zugang',
-            'Team-Mitglieder',
             'Priorität-Support',
-            'Custom Branding',
         ],
         cta: 'Agency holen',
         planEnvKey: 'NEXT_PUBLIC_PAYPAL_PLAN_ID_AGENCY',
@@ -249,7 +242,8 @@ export default function PricingPage() {
                     style: {
                         background: '#0d1117',
                         color: '#fff',
-                        border: '1px solid rgba(255,255,255,0.08)'
+                        border: '1px solid rgba(255,255,255,0.08)',
+                        maxWidth: 'calc(100vw - 2rem)',
                     }
                 }}/>
                 <Navbar/>

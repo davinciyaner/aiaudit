@@ -4,10 +4,10 @@ import { ArrowRight, Calendar, BarChart2, Globe, FileText } from 'lucide-react'
 import Link from 'next/link'
 
 const PRO_FEATURES = [
-    { icon: Calendar, label: 'Wöchentliche Auto-Audits' },
-    { icon: BarChart2, label: 'Score-Verlauf & Trends' },
-    { icon: Globe, label: 'Mehrere Domains' },
-    { icon: FileText, label: 'PDF-Reports' },
+    { icon: BarChart2, label: '10 Audits pro Monat' },
+    { icon: FileText, label: 'KI-Bericht mit Fixes' },
+    { icon: Globe, label: 'PDF-Export' },
+    { icon: Calendar, label: 'Audit-Verlauf' },
 ]
 
 export default function ReauditCTA() {
@@ -24,7 +24,7 @@ export default function ReauditCTA() {
                         Mehr mit Pro
                     </span>
                     <h3 className="text-base font-bold text-white mb-3">
-                        Audits automatisieren &amp; vergleichen
+                        KI-Bericht &amp; PDF mit Pro freischalten
                     </h3>
                     <div className="flex flex-wrap gap-x-5 gap-y-2">
                         {PRO_FEATURES.map(({ icon: Icon, label }) => (

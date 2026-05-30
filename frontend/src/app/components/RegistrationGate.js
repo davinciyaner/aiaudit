@@ -1,14 +1,14 @@
 'use client'
 import { motion } from 'framer-motion'
-import { Lock, UserPlus, ArrowRight, Shield, Zap, Search, Bot } from 'lucide-react'
+import { Lock, UserPlus, ArrowRight, Shield, Zap, Search, Globe } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
 const LOCKED_FEATURES = [
-    { icon: Bot, label: 'KI-Analyse' },
-    { icon: Shield, label: 'Security-Fixes' },
-    { icon: Zap, label: 'Performance' },
     { icon: Search, label: 'SEO-Details' },
+    { icon: Shield, label: 'Security-Checks' },
+    { icon: Zap, label: 'Performance' },
+    { icon: Globe, label: 'GEO-Sichtbarkeit' },
 ]
 
 const PENDING_URL_KEY = 'pendingAuditUrl'
@@ -60,7 +60,7 @@ export default function RegistrationGate({ stats = [], auditUrl = '' }) {
                         : 'Audit abgeschlossen'}
                 </h3>
                 <p className="text-slate-400 text-sm mb-8 leading-relaxed">
-                    Registrier dich kostenlos um alle Details und konkreten Fixes zu sehen.
+                    Registrier dich kostenlos um alle technischen Details zu sehen — SEO-Fehler, Security-Lücken, Performance-Probleme und GEO-Sichtbarkeit.
                 </p>
 
                 {/* What gets unlocked */}

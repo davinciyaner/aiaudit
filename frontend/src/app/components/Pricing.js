@@ -7,19 +7,19 @@ const plans = [
     {
         id: 'free', name: 'Free', price: '0', period: 'forever',
         desc: 'Zum Ausprobieren von AuditAI',
-        features: ['1 Audit pro Monat', 'Vollständige SEO-Analyse', 'Performance-Metriken', 'Security-Check', 'Keyword-Analyse', 'PDF-Export'],
+        features: ['1 Audit pro Monat', 'SEO-Score & Analyse', 'Performance-Metriken', 'Security-Check', 'GEO-Sichtbarkeit'],
         cta: 'Kostenlos starten', href: '/dashboard', highlight: false,
     },
     {
         id: 'pro', name: 'Pro', price: '29', period: 'pro Monat',
         desc: 'Für Freelancer und kleine Agenturen',
-        features: ['10 Audits pro Monat', 'Alles aus Free', 'KI-generierter Bericht', 'Desktop + Mobile Screenshots', 'Priorität-Verarbeitung', 'E-Mail-Zustellung', 'Audit-Verlauf'],
+        features: ['10 Audits pro Monat', 'Alles aus Free', 'KI-generierter Bericht', 'Desktop + Mobile Screenshots', 'PDF-Export', 'Audit-Verlauf'],
         cta: 'Pro holen', highlight: true, badge: 'Beliebteste',
     },
     {
         id: 'agency', name: 'Agency', price: '99', period: 'pro Monat',
         desc: 'Für Teams mit mehreren Kunden',
-        features: ['Unbegrenzte Audits', 'Alles aus Pro', 'White-Label Reports', 'API-Zugang', 'Team-Mitglieder', 'Priorität-Support', 'Custom Branding'],
+        features: ['Unbegrenzte Audits', 'Alles aus Pro', 'Priorität-Support'],
         cta: 'Agency holen', highlight: false,
     },
 ]

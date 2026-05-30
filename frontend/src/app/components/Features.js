@@ -7,7 +7,7 @@ const FEATURES = [
     { icon: Shield, title: 'Security Deep-Scan', desc: '14 Security-Checks: Headers, HTTPS, Mixed Content, Clickjacking-Schutz und CSP-Analyse. Was Vibe-Code immer vergisst.', color: '#ef4444' },
     { icon: Search, title: 'SEO Vollanalyse', desc: 'Title, Meta, H1-H6, Canonical, OG-Tags, Structured Data, interne Links, Alt-Texte — alles was Google bewertet.', color: '#10b981' },
     { icon: Zap, title: 'Core Web Vitals', desc: 'TTFB, FCP, DOM Load, Full Load, Ressourcengröße — mit Farbkodierung gegen Google-Richtwerte.', color: '#f59e0b' },
-    { icon: Globe, title: 'GEO — KI-Sichtbarkeit', desc: 'Neu: analysiert ob ChatGPT, Claude und Perplexity dich empfehlen. llms.txt, Schema.org, FAQ-Markup.', color: '#6366f1' },
+    { icon: Globe, title: 'GEO — KI-Sichtbarkeit', desc: 'Prüft ob deine Website für KI-Modelle wie ChatGPT und Claude auffindbar ist: llms.txt, Schema.org, FAQ-Markup, AI-Crawler-Zugang.', color: '#6366f1' },
     { icon: Key, title: 'Keyword Intelligence', desc: 'Top-Keywords, Keyword-Dichte, schwache Keywords erkennen und Long-tail Alternativen vorschlagen.', color: '#a78bfa' },
     { icon: Camera, title: 'Desktop + Mobile Screenshots', desc: 'Volle Seitenscreenshots auf 1280px und 390px — siehst genau was deine Nutzer sehen.', color: '#06b6d4' },
     { icon: TrendingUp, title: 'Aktions-Scores 0–100', desc: 'Jede Kategorie bekommt einen Score. Du weißt immer was als nächstes zu tun ist.', color: '#22c55e' },
