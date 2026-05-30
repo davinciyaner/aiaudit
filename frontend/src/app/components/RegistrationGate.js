@@ -28,7 +28,7 @@ export default function RegistrationGate({ stats = [], auditUrl = '' }) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="relative overflow-hidden rounded-2xl border border-violet-500/25 bg-[#0d1117] p-8 md:p-12 text-center shadow-2xl shadow-violet-500/10"
+            className="relative overflow-hidden rounded-2xl border border-violet-500/25 bg-[#0d1117] p-5 sm:p-8 md:p-12 text-center shadow-2xl shadow-violet-500/10"
         >
             <div className="pointer-events-none absolute -top-32 left-1/2 -translate-x-1/2 w-96 h-96 rounded-full bg-violet-600/8 blur-3xl" />
 
@@ -64,7 +64,7 @@ export default function RegistrationGate({ stats = [], auditUrl = '' }) {
                 </p>
 
                 {/* What gets unlocked */}
-                <div className="grid grid-cols-4 gap-3 mb-8">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
                     {LOCKED_FEATURES.map(({ icon: Icon, label }) => (
                         <div key={label} className="flex flex-col items-center gap-2 p-3 bg-white/[0.03] border border-white/[0.06] rounded-xl">
                             <Icon className="w-5 h-5 text-slate-400" />

@@ -51,7 +51,7 @@ export default function FeedbackWidget({ auditUrl, reportId }) {
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: 16, scale: 0.96 }}
                     transition={{ duration: 0.25, ease: 'easeOut' }}
-                    className="fixed bottom-6 right-6 z-50 w-72 bg-[#0d1117] border border-white/10 rounded-2xl shadow-2xl shadow-black/50 p-5"
+                    className="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-6 sm:w-72 z-50 bg-[#0d1117] border border-white/10 rounded-2xl shadow-2xl shadow-black/50 p-5"
                 >
                     {/* Close */}
                     {!done && (

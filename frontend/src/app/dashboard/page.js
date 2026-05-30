@@ -53,7 +53,7 @@ function Section({ title, icon, children, defaultOpen = true }) {
         <div className="bg-white/2 border border-white/[0.07] rounded-2xl overflow-hidden">
             <button
                 onClick={() => setOpen(!open)}
-                className="w-full flex items-center justify-between px-6 py-5 hover:bg-white/2 transition-colors"
+                className="w-full flex items-center justify-between px-4 sm:px-6 py-4 sm:py-5 hover:bg-white/2 transition-colors"
             >
                 <div className="flex items-center gap-3">
                     <span className="text-lg">{icon}</span>
@@ -70,7 +70,7 @@ function Section({ title, icon, children, defaultOpen = true }) {
                         transition={{ duration: 0.3 }}
                         className="overflow-hidden"
                     >
-                        <div className="px-6 pb-6 border-t border-white/5">
+                        <div className="px-4 sm:px-6 pb-4 sm:pb-6 border-t border-white/5">
                             <div className="pt-4">{children}</div>
                         </div>
                     </motion.div>
@@ -273,7 +273,7 @@ export default function Dashboard() {
                     <h1 className="text-2xl sm:text-4xl font-bold text-white mb-3">
                         {result ? 'Audit Fertig' : 'Audit deine Website'}
                     </h1>
-                    <p className="text-slate-400">
+                    <p className="text-slate-400 text-sm max-w-sm mx-auto truncate px-4">
                         {result
                             ? `Resultate für ${result?.auditData?.url || auditUrl}`
                             : 'Gib deine URL ein und erhalte einen vollständigen AI Bericht'}

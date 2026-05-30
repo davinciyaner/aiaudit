@@ -106,6 +106,9 @@ export default function AuditForm({ onAuditStart, onAuditComplete, defaultUrl = 
                         className="flex-1 bg-transparent text-white placeholder-slate-600 text-sm outline-none py-2"
                         disabled={loading}
                         autoComplete="off"
+                        autoCapitalize="off"
+                        autoCorrect="off"
+                        inputMode="url"
                         spellCheck={false}
                     />
                     {url.trim() && !url.startsWith('http') && (
