@@ -3,10 +3,12 @@ import jwt from "jsonwebtoken";
 import Report from "../models/report_model.js";
 import Subscription from "../models/subscription.js";
 import FreeDomainAudit from "../models/free_domain_audit.js";
+import User from "../models/auth_model.js";
 import { runAudit } from "../controllers/runner.js";
 import { generateAIReport } from "../controllers/ai-report.js";
 import { generateHTMLReport, saveReportAsPDF } from "../controllers/report.js";
 import { anonymousAuditLimiter } from "../middleware/rateLimiter.js";
+import { sendAdminNewAudit } from "../utils/mailer.js";
 
 const router = Router();
 
@@ -162,6 +164,11 @@ async function handleAudit(req, res, next) {
                 ).catch(() => {});
             }
         }
+
+        const userEmail = req.userId
+            ? (await User.findById(req.userId).select('email').lean())?.email
+            : null;
+        sendAdminNewAudit({ url: cleanUrl, plan, userEmail }).catch(() => {});
 
         res.json({ success: true, auditData, aiReport, reportFile: pdfFile, report });
     } catch (err) {

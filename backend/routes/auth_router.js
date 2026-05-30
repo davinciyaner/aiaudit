@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 
 import User from "../models/auth_model.js";
 import bcrypt from "bcrypt";
+import { sendAdminNewUser, sendWelcome } from "../utils/mailer.js";
 
 const router = Router();
 
@@ -34,6 +35,9 @@ router.post("/register", async (req, res) => {
             process.env.JWT_SECRET,
             { expiresIn: "7d" }
         );
+
+        sendAdminNewUser({ name: user.name, email: user.email }).catch(() => {});
+        sendWelcome({ name: user.name, email: user.email }).catch(() => {});
 
         res.json({
             success: true,
