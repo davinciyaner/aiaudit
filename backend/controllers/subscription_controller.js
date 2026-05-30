@@ -1,6 +1,7 @@
 import Subscription from '../models/subscription.js'
 import User from '../models/auth_model.js'
 import { generateInvoiceHTML, renderToPDF } from '../utils/invoice.js'
+import { sendAdminNewSubscription, sendSubscriptionConfirmation } from '../utils/mailer.js'
 
 async function getPayPalToken() {
     const creds = Buffer.from(`${process.env.PAYPAL_CLIENT_ID}:${process.env.PAYPAL_CLIENT_SECRET}`).toString('base64')
@@ -36,6 +37,12 @@ export async function captureSubscription(req, res) {
             { $set: { plan, paypalSubscriptionId: subscriptionId, status: 'ACTIVE' }, $setOnInsert: { userId } },
             { upsert: true }
         )
+
+        const user = await User.findById(userId).select('name email').lean()
+        if (user) {
+            sendAdminNewSubscription({ name: user.name, email: user.email, plan }).catch(() => {})
+            sendSubscriptionConfirmation({ name: user.name, email: user.email, plan }).catch(() => {})
+        }
 
         res.json({ success: true, plan })
     } catch (err) {

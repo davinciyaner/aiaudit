@@ -204,6 +204,207 @@ function ticketAdminHtml(ticket, adminUrl) {
 </html>`
 }
 
+export async function sendWelcome({ name, email }) {
+    await transporter.sendMail({
+        from: process.env.SMTP_FROM || process.env.SMTP_USER,
+        to: email,
+        subject: 'Willkommen bei AuditAI!',
+        html: welcomeHtml(name),
+    })
+}
+
+export async function sendSubscriptionConfirmation({ name, email, plan }) {
+    const planLabel = plan === 'agency' ? 'Agency' : 'Pro'
+    const planPrice = plan === 'agency' ? '€99/Monat' : '€29/Monat'
+    const auditLimit = plan === 'agency' ? 'unbegrenzte Audits' : '10 Audits pro Monat'
+    await transporter.sendMail({
+        from: process.env.SMTP_FROM || process.env.SMTP_USER,
+        to: email,
+        subject: `Dein AuditAI ${planLabel}-Abo ist aktiv`,
+        html: subscriptionConfirmHtml(name, planLabel, planPrice, auditLimit),
+    })
+}
+
+function welcomeHtml(name) {
+    return `<!DOCTYPE html>
+<html lang="de">
+<head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/></head>
+<body style="margin:0;padding:0;background:#05080f;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#05080f;padding:40px 20px;">
+    <tr><td align="center">
+      <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
+        <tr><td align="center" style="padding-bottom:32px;">
+          <table cellpadding="0" cellspacing="0"><tr>
+            <td style="background:linear-gradient(135deg,#7c3aed,#06b6d4);border-radius:12px;width:40px;height:40px;text-align:center;vertical-align:middle;">
+              <span style="color:#fff;font-size:18px;font-weight:bold;">⚡</span>
+            </td>
+            <td style="padding-left:10px;vertical-align:middle;">
+              <span style="color:#ffffff;font-size:20px;font-weight:700;">Audit<span style="color:#22d3ee;">AI</span></span>
+            </td>
+          </tr></table>
+        </td></tr>
+        <tr><td style="background:#0d1117;border:1px solid rgba(255,255,255,0.07);border-radius:20px;padding:40px;">
+          <p style="margin:0 0 8px;font-size:24px;font-weight:700;color:#ffffff;">Willkommen, ${name}!</p>
+          <p style="margin:0 0 28px;font-size:15px;color:#94a3b8;line-height:1.6;">
+            Schön, dass du dabei bist. Mit AuditAI kannst du deine Website auf SEO, Performance, Sicherheit und mehr analysieren - in Sekunden.
+          </p>
+          <table cellpadding="0" cellspacing="0" width="100%" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:20px;margin-bottom:28px;">
+            <tr><td>
+              <p style="margin:0 0 12px;font-size:13px;color:#64748b;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;">Was dich erwartet</p>
+              <p style="margin:0 0 8px;font-size:14px;color:#e2e8f0;">⚡ &nbsp;SEO-Analyse – Meta-Tags, Struktur, Keywords</p>
+              <p style="margin:0 0 8px;font-size:14px;color:#e2e8f0;">🚀 &nbsp;Performance – Ladezeiten und Core Web Vitals</p>
+              <p style="margin:0 0 8px;font-size:14px;color:#e2e8f0;">🔒 &nbsp;Sicherheit – Header, Schwachstellen</p>
+              <p style="margin:0;font-size:14px;color:#e2e8f0;">🤖 &nbsp;GEO – KI-Sichtbarkeit deiner Website</p>
+            </td></tr>
+          </table>
+          <table cellpadding="0" cellspacing="0"><tr>
+            <td style="background:linear-gradient(135deg,#7c3aed,#06b6d4);border-radius:12px;padding:1px;">
+              <a href="${APP_URL}/dashboard" style="display:block;background:#0d1117;border-radius:11px;padding:12px 28px;font-size:14px;font-weight:600;color:#ffffff;text-decoration:none;">
+                Zum Dashboard →
+              </a>
+            </td>
+          </tr></table>
+          <hr style="border:none;border-top:1px solid rgba(255,255,255,0.06);margin:28px 0;"/>
+          <p style="margin:0;font-size:14px;color:#64748b;">Viel Erfolg,<br/><strong style="color:#94a3b8;">Dein AuditAI Team</strong></p>
+        </td></tr>
+        <tr><td align="center" style="padding-top:24px;">
+          <p style="margin:0;font-size:11px;color:#334155;">Du erhältst diese E-Mail, weil du dich auf <a href="${APP_URL}" style="color:#475569;text-decoration:none;">sitecheckai.dev</a> registriert hast.</p>
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`
+}
+
+function subscriptionConfirmHtml(name, planLabel, planPrice, auditLimit) {
+    return `<!DOCTYPE html>
+<html lang="de">
+<head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/></head>
+<body style="margin:0;padding:0;background:#05080f;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#05080f;padding:40px 20px;">
+    <tr><td align="center">
+      <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
+        <tr><td align="center" style="padding-bottom:32px;">
+          <table cellpadding="0" cellspacing="0"><tr>
+            <td style="background:linear-gradient(135deg,#7c3aed,#06b6d4);border-radius:12px;width:40px;height:40px;text-align:center;vertical-align:middle;">
+              <span style="color:#fff;font-size:18px;font-weight:bold;">⚡</span>
+            </td>
+            <td style="padding-left:10px;vertical-align:middle;">
+              <span style="color:#ffffff;font-size:20px;font-weight:700;">Audit<span style="color:#22d3ee;">AI</span></span>
+            </td>
+          </tr></table>
+        </td></tr>
+        <tr><td style="background:#0d1117;border:1px solid rgba(255,255,255,0.07);border-radius:20px;padding:40px;">
+          <p style="margin:0 0 8px;font-size:24px;font-weight:700;color:#ffffff;">Vielen Dank, ${name}!</p>
+          <p style="margin:0 0 28px;font-size:15px;color:#94a3b8;line-height:1.6;">
+            Dein <strong style="color:#a78bfa;">${planLabel}-Abo</strong> ist jetzt aktiv. Wir freuen uns sehr, dich als ${planLabel}-Mitglied begrüßen zu dürfen.
+          </p>
+          <table cellpadding="0" cellspacing="0" width="100%" style="background:rgba(124,58,237,0.08);border:1px solid rgba(124,58,237,0.2);border-radius:12px;padding:20px;margin-bottom:28px;">
+            <tr><td>
+              <p style="margin:0 0 4px;font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;">Dein Plan</p>
+              <p style="margin:0 0 16px;font-size:18px;font-weight:700;color:#a78bfa;">${planLabel} · ${planPrice}</p>
+              <p style="margin:0 0 4px;font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;">Inbegriffen</p>
+              <p style="margin:0 0 8px;font-size:14px;color:#e2e8f0;">✓ &nbsp;${auditLimit}</p>
+              <p style="margin:0 0 8px;font-size:14px;color:#e2e8f0;">✓ &nbsp;KI-Analyse mit detailliertem Bericht</p>
+              <p style="margin:0;font-size:14px;color:#e2e8f0;">✓ &nbsp;PDF-Export</p>
+            </td></tr>
+          </table>
+          <table cellpadding="0" cellspacing="0"><tr>
+            <td style="background:linear-gradient(135deg,#7c3aed,#06b6d4);border-radius:12px;padding:1px;">
+              <a href="${APP_URL}/dashboard" style="display:block;background:#0d1117;border-radius:11px;padding:12px 28px;font-size:14px;font-weight:600;color:#ffffff;text-decoration:none;">
+                Jetzt Audit starten →
+              </a>
+            </td>
+          </tr></table>
+          <hr style="border:none;border-top:1px solid rgba(255,255,255,0.06);margin:28px 0;"/>
+          <p style="margin:0;font-size:14px;color:#64748b;">Herzlichen Glückwunsch und viel Erfolg,<br/><strong style="color:#94a3b8;">Dein AuditAI Team</strong></p>
+        </td></tr>
+        <tr><td align="center" style="padding-top:24px;">
+          <p style="margin:0;font-size:11px;color:#334155;">Du erhältst diese E-Mail, weil du ein Abo auf <a href="${APP_URL}" style="color:#475569;text-decoration:none;">sitecheckai.dev</a> abgeschlossen hast.</p>
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`
+}
+
+export async function sendAdminNewUser({ name, email }) {
+    const adminEmail = process.env.ADMIN_EMAIL || process.env.SMTP_USER
+    const now = new Date().toLocaleString('de-DE', { timeZone: 'Europe/Berlin' })
+    await transporter.sendMail({
+        from: process.env.SMTP_FROM || process.env.SMTP_USER,
+        to: adminEmail,
+        subject: `Neue Registrierung: ${name}`,
+        html: adminNotifyHtml('Neue Registrierung', [
+            ['Name', name],
+            ['E-Mail', email],
+            ['Zeitpunkt', now],
+        ]),
+    })
+}
+
+export async function sendAdminNewAudit({ url, plan, userEmail }) {
+    const adminEmail = process.env.ADMIN_EMAIL || process.env.SMTP_USER
+    const now = new Date().toLocaleString('de-DE', { timeZone: 'Europe/Berlin' })
+    await transporter.sendMail({
+        from: process.env.SMTP_FROM || process.env.SMTP_USER,
+        to: adminEmail,
+        subject: `Neues Audit: ${url}`,
+        html: adminNotifyHtml('Neues Audit durchgeführt', [
+            ['URL', url],
+            ['Plan', plan],
+            ['Nutzer', userEmail || 'anonym'],
+            ['Zeitpunkt', now],
+        ]),
+    })
+}
+
+export async function sendAdminNewSubscription({ name, email, plan }) {
+    const adminEmail = process.env.ADMIN_EMAIL || process.env.SMTP_USER
+    const now = new Date().toLocaleString('de-DE', { timeZone: 'Europe/Berlin' })
+    const planLabel = plan === 'agency' ? 'Agency (€99/mo)' : 'Pro (€29/mo)'
+    await transporter.sendMail({
+        from: process.env.SMTP_FROM || process.env.SMTP_USER,
+        to: adminEmail,
+        subject: `Neues Abo: ${planLabel} – ${name}`,
+        html: adminNotifyHtml('Neues Abonnement', [
+            ['Plan', planLabel],
+            ['Name', name],
+            ['E-Mail', email],
+            ['Zeitpunkt', now],
+        ]),
+    })
+}
+
+function adminNotifyHtml(title, rows) {
+    const rowsHtml = rows.map(([label, value]) => `
+      <tr>
+        <td style="padding:8px 0;font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;width:100px;">${label}</td>
+        <td style="padding:8px 0;font-size:14px;color:#e2e8f0;font-weight:500;">${value}</td>
+      </tr>`).join('')
+    return `<!DOCTYPE html>
+<html lang="de">
+<head><meta charset="UTF-8"/></head>
+<body style="margin:0;padding:0;background:#05080f;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#05080f;padding:40px 20px;">
+    <tr><td align="center">
+      <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
+        <tr><td style="background:#0d1117;border:1px solid rgba(255,255,255,0.07);border-radius:20px;padding:32px 40px;">
+          <p style="margin:0 0 4px;font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.1em;">AuditAI · Admin</p>
+          <p style="margin:0 0 24px;font-size:20px;font-weight:700;color:#ffffff;">${title}</p>
+          <table cellpadding="0" cellspacing="0" width="100%" style="border-top:1px solid rgba(255,255,255,0.06);">
+            ${rowsHtml}
+          </table>
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`
+}
+
 export async function sendWaitlistConfirmation(to) {
     await transporter.sendMail({
         from: process.env.SMTP_FROM || process.env.SMTP_USER,
