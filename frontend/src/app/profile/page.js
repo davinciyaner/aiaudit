@@ -182,21 +182,30 @@ export default function ProfilePage() {
 
                     {/* Profile Header */}
                     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-                        className="bg-white/2 border border-white/6 rounded-2xl p-8 flex items-center gap-6">
-                        <div className="w-16 h-16 rounded-2xl bg-linear-to-br from-violet-600 to-cyan-600 flex items-center justify-center text-white text-xl font-bold shrink-0 shadow-lg shadow-violet-500/20">
-                            {initials}
-                        </div>
-                        <div className="flex-1 min-w-0">
-                            <h1 className="text-2xl font-bold text-white">{data?.user?.name}</h1>
-                            <div className="flex items-center gap-2 text-slate-400 text-sm mt-1">
-                                <Mail className="w-3.5 h-3.5" />
-                                {data?.user?.email}
+                        className="bg-white/2 border border-white/6 rounded-2xl p-5 sm:p-8">
+                        <div className="flex items-center gap-4 sm:gap-6">
+                            <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-linear-to-br from-violet-600 to-cyan-600 flex items-center justify-center text-white text-xl font-bold shrink-0 shadow-lg shadow-violet-500/20">
+                                {initials}
                             </div>
-                        </div>
-                        <div className="flex items-center gap-2 px-4 py-2 rounded-xl border"
-                            style={{ borderColor: planMeta.color + '40', background: planMeta.color + '10', color: planMeta.color }}>
-                            <PlanIcon className="w-4 h-4" />
-                            <span className="text-sm font-semibold">{planMeta.label}</span>
+                            <div className="flex-1 min-w-0">
+                                <h1 className="text-xl sm:text-2xl font-bold text-white truncate">{data?.user?.name}</h1>
+                                <div className="flex items-center gap-2 text-slate-400 text-sm mt-1 min-w-0">
+                                    <Mail className="w-3.5 h-3.5 shrink-0" />
+                                    <span className="truncate">{data?.user?.email}</span>
+                                </div>
+                                <div className="mt-2 sm:hidden">
+                                    <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-semibold"
+                                        style={{ borderColor: planMeta.color + '40', background: planMeta.color + '10', color: planMeta.color }}>
+                                        <PlanIcon className="w-3.5 h-3.5" />
+                                        {planMeta.label}
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-xl border shrink-0"
+                                style={{ borderColor: planMeta.color + '40', background: planMeta.color + '10', color: planMeta.color }}>
+                                <PlanIcon className="w-4 h-4" />
+                                <span className="text-sm font-semibold">{planMeta.label}</span>
+                            </div>
                         </div>
                     </motion.div>
 

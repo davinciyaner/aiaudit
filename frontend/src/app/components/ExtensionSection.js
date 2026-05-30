@@ -274,7 +274,7 @@ export default function ExtensionSection() {
     }, [])
 
     return (
-        <section id="testautomation" className="relative py-32 bg-[#05080f] overflow-hidden">
+        <section id="testautomation" className="relative py-16 sm:py-32 bg-[#05080f] overflow-hidden">
             <div className="absolute inset-0 pointer-events-none">
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-violet-600/5 rounded-full blur-3xl" />
             </div>
@@ -282,7 +282,7 @@ export default function ExtensionSection() {
             <div className="max-w-7xl mx-auto px-5 sm:px-8 relative">
 
                 {/* Header */}
-                <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-20">
+                <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-10 sm:mb-20">
                     <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-violet-500/20 bg-violet-500/5 text-violet-400 text-xs font-medium mb-6">
                         <Puzzle className="w-3.5 h-3.5" /> Neu: Chrome Extension
                     </div>
@@ -301,7 +301,7 @@ export default function ExtensionSection() {
 
                 {/* Animated Demo */}
                 <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-                    className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-24">
+                    className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-12 sm:mb-24">
                     <div className="flex flex-col items-center gap-3">
                         <p className="text-xs text-slate-500 font-medium uppercase tracking-wider">Aufnahme</p>
                         <MockExtension active={recording} />
@@ -316,7 +316,7 @@ export default function ExtensionSection() {
                 </motion.div>
 
                 {/* Steps */}
-                <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-24">
+                <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-12 sm:mb-24">
                     {STEPS.map((step, i) => (
                         <motion.div key={step.num}
                             initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
@@ -334,7 +334,7 @@ export default function ExtensionSection() {
                 </div>
 
                 {/* CSV Section */}
-                <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-24">
+                <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12 sm:mb-24">
                     <div className="grid lg:grid-cols-2 gap-10 items-center">
                         <div>
                             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-cyan-500/20 bg-cyan-500/5 text-cyan-400 text-xs font-medium mb-5">
@@ -410,7 +410,7 @@ export default function ExtensionSection() {
                 </motion.div>
 
                 {/* Benefits */}
-                <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-20">
+                <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-10 sm:mb-20">
                     <h3 className="text-2xl sm:text-3xl font-bold text-center mb-3">
                         Warum du das <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-cyan-400">unbedingt brauchst</span>
                     </h3>

@@ -115,8 +115,8 @@ export default function Hero() {
             </div>
 
             <motion.div style={{ y: heroY, opacity: heroOpacity }} className="relative z-10 w-full">
-                <div className="max-w-7xl mx-auto px-5 sm:px-8 py-20">
-                    <div className="grid lg:grid-cols-2 gap-16 items-center">
+                <div className="max-w-7xl mx-auto px-5 sm:px-8 py-10 sm:py-20">
+                    <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
 
                         <div>
                             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
@@ -149,6 +149,9 @@ export default function Hero() {
                                             placeholder="yourwebsite.com"
                                             className="flex-1 bg-transparent text-white placeholder-slate-600 text-sm outline-none py-2"
                                             autoComplete="off"
+                                            autoCapitalize="off"
+                                            autoCorrect="off"
+                                            inputMode="url"
                                             spellCheck={false}
                                         />
                                     </div>
@@ -181,7 +184,7 @@ export default function Hero() {
                         </div>
 
                         <motion.div initial={{ opacity: 0, x: 40 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.3 }} className="relative">
-                            <div className="flex items-center gap-3 mb-4 justify-end">
+                            <div className="flex items-center gap-3 mb-4 justify-center sm:justify-end">
                                 <span className="text-xs text-slate-200">Vorher</span>
                                 <button onClick={() => setShowAfter(!showAfter)}
                                         className={`relative w-12 h-6 rounded-full transition-all duration-300 ${showAfter ? 'bg-gradient-to-r from-violet-600 to-cyan-600' : 'bg-white/10'}`}>

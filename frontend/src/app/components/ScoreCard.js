@@ -14,7 +14,7 @@ export default function ScoreCard({ label, score, delay = 0 }) {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.4, delay }}
-            className="bg-white/[0.03] border border-white/[0.07] rounded-2xl p-6 text-center"
+            className="bg-white/[0.03] border border-white/[0.07] rounded-2xl p-4 sm:p-6 text-center"
         >
             <div className="text-xs text-slate-500 uppercase tracking-widest mb-3">{label}</div>
             <div className="relative w-20 h-20 mx-auto mb-3">

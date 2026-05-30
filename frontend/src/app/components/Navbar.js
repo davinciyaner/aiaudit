@@ -161,7 +161,7 @@ export default function Navbar() {
                                 {l.label}
                             </Link>
                         ))}
-                        {user && (
+                        {user ? (
                             <>
                                 <Link href="/profile" onClick={() => setMobileOpen(false)}
                                     className="block px-4 py-3 text-slate-300 hover:text-white rounded-lg hover:bg-white/5 transition-all text-sm">
@@ -172,6 +172,11 @@ export default function Navbar() {
                                     Abmelden
                                 </button>
                             </>
+                        ) : (
+                            <Link href="/login" onClick={() => setMobileOpen(false)}
+                                className="block px-4 py-3 text-slate-300 hover:text-white rounded-lg hover:bg-white/5 transition-all text-sm">
+                                Anmelden
+                            </Link>
                         )}
                         <Link href="/dashboard" className="mt-2 block px-4 py-3 text-center font-semibold text-white rounded-xl bg-gradient-to-r from-violet-600 to-cyan-600 text-sm">
                             Jetzt prüfen →
