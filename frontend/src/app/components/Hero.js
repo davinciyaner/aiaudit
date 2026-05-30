@@ -36,10 +36,9 @@ const MOCK_ISSUES_AFTER = [
     { type: 'success', text: 'FAQ-Schema erkannt — Rich Snippets in Google möglich' },
 ]
 const STATS = [
-    { value: '94%', label: 'der Vibe-coded Sites haben kritische Security-Lücken' },
-    { value: '< 60s', label: 'vollständiger Audit inkl. KI-Bericht' },
-    { value: '8', label: 'Analysekategorien in einem Report' },
-    { value: '0€', label: 'kostenlos starten' },
+    { value: 'SEO-Score', label: 'plus Security & Performance' },
+    { value: '< 60s', label: 'vollständiger SEO-Bericht' },
+    { value: 'PDF', label: 'Report zum Download' },
 ]
 
 function MockCard({ scores, issues, label, labelColor }) {
@@ -119,22 +118,17 @@ export default function Hero() {
                     <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
 
                         <div>
-                            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
-                                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-violet-500/20 bg-violet-500/8 text-violet-300 text-xs font-medium tracking-wide mb-8">
-                                <span className="w-1.5 h-1.5 rounded-full bg-violet-400 animate-pulse" />
-                                Der Audit den deine KI vergisst zu machen
-                            </motion.div>
 
                             <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.1 }}
                                        className="text-4xl sm:text-5xl lg:text-7xl font-bold leading-[1.05] sm:leading-[1.0] tracking-tight mb-6">
-                                Deine Website.<br />
-                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 via-purple-400 to-cyan-400">Vollständig geprüft.</span><br />
-                                In 60 Sekunden.
+                                SEO-Test &amp;<br />
+                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 via-purple-400 to-cyan-400">Website-Audit.</span><br />
+                                Kostenlos in 60s.
                             </motion.h1>
 
                             <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }}
-                                      className="text-base sm:text-lg text-slate-400 leading-relaxed mb-10 max-w-lg">
-                                Wie gut ist deine Website wirklich? AuditAI prüft SEO, Security, Performance und KI-Sichtbarkeit – und zeigt dir genau was du verbessern musst. – alles in einem Report.
+                                      className="text-base sm:text-lg text-slate-200 leading-relaxed mb-10 max-w-lg">
+                                Prüfe kostenlos Title-Tags, Meta-Descriptions, H1-Tags, Core Web Vitals, Security-Headers und KI-Sichtbarkeit - vollständiger SEO-Test in unter 60 Sekunden, mit konkreten Fixes.
                             </motion.p>
 
                             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.3 }}

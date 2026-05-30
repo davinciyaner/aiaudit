@@ -62,7 +62,8 @@ export default function RegisterPage() {
                 style: {
                     background: '#0d1117',
                     color: '#fff',
-                    border: '1px solid rgba(255,255,255,0.08)'
+                    border: '1px solid rgba(255,255,255,0.08)',
+                    maxWidth: 'calc(100vw - 2rem)',
                 }
             }}/>
 

@@ -44,7 +44,7 @@ export default function LoginPage() {
 
     return (
         <div className="min-h-screen bg-[#05080f] flex">
-            <Toaster position="top-right" toastOptions={{ style: { background: '#0d1117', color: '#fff', border: '1px solid rgba(255,255,255,0.08)' } }} />
+            <Toaster position="top-right" toastOptions={{ style: { background: '#0d1117', color: '#fff', border: '1px solid rgba(255,255,255,0.08)', maxWidth: 'calc(100vw - 2rem)' } }} />
 
             {/* Left — Branding */}
             <div className="hidden lg:flex flex-col justify-between w-120 shrink-0 relative overflow-hidden border-r border-white/5 p-12">

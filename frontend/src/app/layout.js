@@ -7,11 +7,11 @@ import CookieBanner from './components/CookieBanner'
 export const metadata = {
     metadataBase: new URL('https://sitecheckai.dev'),
     title: {
-        default: 'AuditAI – KI-gestützter Website Audit',
+        default: 'Kostenloser SEO-Test & Website-Audit | AuditAI',
         template: '%s | AuditAI',
     },
-    description: 'Website in unter 60 Sekunden vollständig prüfen: SEO, Performance, Security und KI-Sichtbarkeit. KI-generierter Report mit konkreten Fixes. Kostenlos starten.',
-    keywords: 'website audit, SEO analyse, security check, performance test, KI sichtbarkeit, GEO, llms.txt, website checker kostenlos',
+    description: 'Kostenloser SEO-Test in unter 60 Sekunden: Title-Tags, Meta-Descriptions, H1-Tags, Core Web Vitals und Security-Headers prüfen. Vollständiger Website-Audit mit KI-Report und konkreten Fixes.',
+    keywords: 'seo test, seo test kostenlos, seo check, kostenloser seo check, website seo check, seo analyse kostenlos, website audit, core web vitals test, security check, performance test, KI sichtbarkeit, GEO, llms.txt, website checker kostenlos',
     authors: [{ name: 'AuditAI' }],
     creator: 'AuditAI',
     publisher: 'AuditAI',

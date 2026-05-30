@@ -63,19 +63,19 @@ export default function SupportModal({ open, onClose, defaultName = '', defaultE
                     >
                         <div className="w-full max-w-lg bg-[#0d1117] border border-white/[0.08] rounded-2xl shadow-2xl shadow-black/60 pointer-events-auto">
                             {/* Header */}
-                            <div className="flex items-center justify-between px-6 py-5 border-b border-white/[0.06]">
+                            <div className="flex items-center justify-between px-4 sm:px-6 py-4 sm:py-5 border-b border-white/[0.06]">
                                 <div className="flex items-center gap-3">
                                     <div className="w-8 h-8 rounded-lg bg-violet-500/10 border border-violet-500/20 flex items-center justify-center">
                                         <MessageSquare className="w-4 h-4 text-violet-400" />
                                     </div>
                                     <span className="font-semibold text-white">Support-Ticket erstellen</span>
                                 </div>
-                                <button onClick={handleClose} className="text-slate-500 hover:text-white transition-colors">
+                                <button onClick={handleClose} className="p-2 -mr-2 text-slate-500 hover:text-white transition-colors rounded-lg hover:bg-white/5">
                                     <X className="w-5 h-5" />
                                 </button>
                             </div>
 
-                            <div className="px-6 py-6">
+                            <div className="px-4 sm:px-6 py-5 sm:py-6">
                                 {ticketNumber ? (
                                     <SuccessView ticketNumber={ticketNumber} onClose={handleClose} />
                                 ) : (

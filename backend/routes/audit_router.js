@@ -124,17 +124,31 @@ async function handleAudit(req, res, next) {
             }
         }
 
+        // Plan-basiertes Feature-Gating: KI-Bericht + PDF nur für Pro/Agency
+        let plan = 'free';
+        if (req.userId) {
+            const sub = await Subscription.findOne({ userId: req.userId, status: 'ACTIVE' });
+            plan = sub?.plan || 'free';
+        }
+        const isPro = ['pro', 'agency'].includes(plan);
+
         const auditData = await runAudit(cleanUrl);
-        const aiReport = await generateAIReport(auditData);
-        const html = generateHTMLReport(auditData, aiReport);
-        const pdfFile = await saveReportAsPDF(html, cleanUrl);
+
+        let aiReport = null;
+        let pdfFile = null;
+
+        if (isPro) {
+            aiReport = await generateAIReport(auditData);
+            const html = generateHTMLReport(auditData, aiReport);
+            pdfFile = await saveReportAsPDF(html, cleanUrl);
+        }
 
         const report = await Report.create({
             userId: req.userId || null,
             url: cleanUrl,
             auditData,
-            aiReport,
-            pdfPath: pdfFile,
+            aiReport: aiReport || '',
+            pdfPath: pdfFile || '',
         });
 
         // Track domain so anonymous users can't re-audit for free

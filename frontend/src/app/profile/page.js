@@ -171,7 +171,7 @@ export default function ProfilePage() {
 
     return (
         <div className="min-h-screen bg-[#05080f]">
-            <Toaster position="top-right" toastOptions={{ style: { background: '#0d1117', color: '#fff', border: '1px solid rgba(255,255,255,0.08)' } }} />
+            <Toaster position="top-right" toastOptions={{ style: { background: '#0d1117', color: '#fff', border: '1px solid rgba(255,255,255,0.08)', maxWidth: 'calc(100vw - 2rem)' } }} />
             <Navbar />
 
             <div className="relative pt-28 pb-24 px-5 sm:px-8">
