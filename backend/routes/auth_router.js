@@ -1,9 +1,10 @@
-import { Router } from "express";
+import {Router} from "express";
 import jwt from "jsonwebtoken";
+import crypto from "crypto";
 
 import User from "../models/auth_model.js";
 import bcrypt from "bcrypt";
-import { sendAdminNewUser, sendWelcome } from "../utils/mailer.js";
+import {sendAdminNewUser, sendPasswordReset, sendWelcome} from "../utils/mailer.js";
 
 const router = Router();
 
@@ -89,6 +90,54 @@ router.post("/login", async (req, res) => {
             user: { id: user._id, name: user.name, email: user.email }
         });
 
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+
+router.post("/forgot-password", async (req, res) => {
+    const { email } = req.body;
+    if (!email) return res.status(400).json({ error: "E-Mail ist erforderlich" });
+
+    try {
+        const user = await User.findOne({ email });
+        // Always respond the same to prevent email enumeration
+        if (!user) return res.json({ success: true });
+
+        const rawToken = crypto.randomBytes(32).toString("hex");
+        user.resetToken = crypto.createHash("sha256").update(rawToken).digest("hex");
+        user.resetTokenExpiry = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
+        await user.save();
+
+        await sendPasswordReset({ name: user.name, email: user.email, token: rawToken });
+        res.json({ success: true });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+
+router.post("/reset-password", async (req, res) => {
+    const { token, password } = req.body;
+    if (!token || !password) return res.status(400).json({ error: "Token und Passwort sind erforderlich" });
+    if (password.length < 6) return res.status(400).json({ error: "Passwort muss mindestens 6 Zeichen haben" });
+
+    try {
+        const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
+        const user = await User.findOne({
+            resetToken: hashedToken,
+            resetTokenExpiry: { $gt: new Date() },
+        });
+
+        if (!user) return res.status(400).json({ error: "Link ungültig oder abgelaufen" });
+
+        await User.updateOne(
+            { _id: user._id },
+            { $set: { password: await bcrypt.hash(password, 10) }, $unset: { resetToken: 1, resetTokenExpiry: 1 } }
+        );
+
+        res.json({ success: true });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
