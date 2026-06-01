@@ -30,7 +30,7 @@ export const metadata = {
 
 export default function LandingPage() {
     return (
-        <main className="bg-[#05080f] min-h-screen">
+        <main className="bg-[#05080f] min-h-screen pb-20 sm:pb-0">
             <Navbar />
             <Hero />
             <WhyAudit />

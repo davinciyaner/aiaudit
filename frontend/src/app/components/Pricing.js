@@ -26,7 +26,7 @@ const plans = [
 
 export default function Pricing() {
     return (
-        <section id="pricing" className="relative py-20 md:py-32 bg-[#05080f]">
+        <section id="pricing" className="relative py-16 md:py-28 bg-[#05080f]">
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] rounded-full blur-3xl pointer-events-none" style={{ background: 'radial-gradient(ellipse, rgba(124,58,237,0.06) 0%, transparent 70%)' }} />
             <div className="relative z-10 max-w-6xl mx-auto px-5 sm:px-8">
                 <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
@@ -39,7 +39,7 @@ export default function Pricing() {
                     <p className="text-lg text-slate-400 max-w-xl mx-auto">Keine versteckten Gebühren. Monatliches Abo. Jederzeit kündbar.</p>
                 </motion.div>
 
-                <div className="grid md:grid-cols-3 gap-6 items-start">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 items-start">
                     {plans.map((plan, i) => (
                         <motion.div key={plan.id}
                                     initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
@@ -72,7 +72,7 @@ export default function Pricing() {
                                 ))}
                             </div>
                             <Link href={plan.href || '/pricing'}
-                                  className={`block w-full py-3 text-center text-sm font-semibold rounded-xl transition-all duration-200 ${plan.highlight ? 'bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white shadow-lg shadow-violet-500/20 hover:-translate-y-0.5' : 'border border-white/10 text-slate-300 hover:text-white hover:border-white/20 hover:bg-white/5'}`}>
+                                  className={`block w-full py-4 text-center text-sm font-semibold rounded-xl transition-all duration-200 ${plan.highlight ? 'bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white shadow-lg shadow-violet-500/20' : 'border border-white/10 text-slate-300 hover:text-white hover:border-white/20 hover:bg-white/5'}`}>
                                 {plan.cta}
                             </Link>
                         </motion.div>

@@ -110,7 +110,7 @@ router.post("/forgot-password", async (req, res) => {
         user.resetTokenExpiry = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
         await user.save();
 
-        await sendPasswordReset({ name: user.name, email: user.email, token: rawToken });
+        await sendPasswordReset({ name: user.name, email: user.email, token: rawToken });dev
         res.json({ success: true });
     } catch (err) {
         res.status(500).json({ error: err.message });
