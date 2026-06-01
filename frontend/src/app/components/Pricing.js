@@ -30,9 +30,6 @@ export default function Pricing() {
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] rounded-full blur-3xl pointer-events-none" style={{ background: 'radial-gradient(ellipse, rgba(124,58,237,0.06) 0%, transparent 70%)' }} />
             <div className="relative z-10 max-w-6xl mx-auto px-5 sm:px-8">
                 <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
-                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-violet-500/20 bg-violet-500/5 text-violet-400 text-xs font-medium mb-6">
-                        Einfache Preise
-                    </div>
                     <h2 className="text-3xl sm:text-5xl font-bold tracking-tight mb-5">
                         Kostenlos starten.<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-cyan-400">Wachsen wenn nötig.</span>
                     </h2>

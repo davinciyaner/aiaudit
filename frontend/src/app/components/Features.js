@@ -29,9 +29,6 @@ export default function Features() {
         <section id="features" className="relative py-16 md:py-28 bg-[#05080f]">
             <div className="max-w-7xl mx-auto px-5 sm:px-8">
                 <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-10 sm:mb-16">
-                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-cyan-500/20 bg-cyan-500/5 text-cyan-400 text-xs font-medium mb-5">
-                        8 Analysekategorien
-                    </div>
                     <h2 className="text-3xl sm:text-5xl font-bold mb-4 tracking-tight">
                         Alles was zählt.<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-cyan-400">In einem Tool.</span>
                     </h2>

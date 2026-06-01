@@ -3,15 +3,15 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 const steps = [
-    { label: 'Browser wird geöffnet...', icon: '🌐' },
-    { label: 'Website wird geladen...', icon: '📡' },
-    { label: 'Screenshots werden erstellt...', icon: '📸' },
-    { label: 'SEO wird analysiert...', icon: '🔍' },
-    { label: 'Performance wird gemessen...', icon: '⚡' },
-    { label: 'Security wird geprüft...', icon: '🔒' },
-    { label: 'Keywords werden extrahiert...', icon: '🎯' },
-    { label: 'GEO-Sichtbarkeit wird analysiert...', icon: '🌍' },
-    { label: 'KI-Bericht wird generiert...', icon: '🤖' },
+    { label: 'Browser wird geöffnet...' },
+    { label: 'Website wird geladen...' },
+    { label: 'Screenshots werden erstellt...' },
+    { label: 'SEO wird analysiert...' },
+    { label: 'Performance wird gemessen...' },
+    { label: 'Security wird geprüft...' },
+    { label: 'Keywords werden extrahiert...' },
+    { label: 'GEO-Sichtbarkeit wird analysiert...' },
+    { label: 'KI-Bericht wird generiert...' },
 ]
 
 export default function Loading({ url }) {

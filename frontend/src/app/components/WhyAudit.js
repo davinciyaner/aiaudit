@@ -60,9 +60,6 @@ export default function WhyAudit() {
 
                 {/* Header */}
                 <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12 sm:mb-16">
-                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-red-500/20 bg-red-500/5 text-red-400 text-xs font-medium mb-5">
-                        <AlertTriangle className="w-3.5 h-3.5" /> Rankings sind flüchtig
-                    </div>
                     <h2 className="text-3xl sm:text-5xl font-bold mb-4 leading-tight tracking-tight">
                         Deine Rankings verfallen.<br />
                         <span className="text-red-400">Jeden Monat.</span>
