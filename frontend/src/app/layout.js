@@ -117,24 +117,26 @@ export default function RootLayout({ children }) {
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
             />
+            <script
+                dangerouslySetInnerHTML={{ __html: `
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){dataLayer.push(arguments);}
+                    gtag('consent', 'default', {
+                        ad_storage: 'denied',
+                        analytics_storage: 'denied',
+                        wait_for_update: 500
+                    });
+                    try {
+                        var c = localStorage.getItem('cookie_consent');
+                        if (c === 'granted') {
+                            gtag('consent', 'update', { ad_storage: 'granted', analytics_storage: 'granted' });
+                        }
+                    } catch(e) {}
+                `}}
+            />
         </head>
-        <Script id="google-consent-init" strategy="beforeInteractive">
-            {`
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('consent', 'default', {
-                    ad_storage: 'denied',
-                    analytics_storage: 'denied',
-                    wait_for_update: 500
-                });
-                try {
-                    var c = localStorage.getItem('cookie_consent');
-                    if (c === 'granted') {
-                        gtag('consent', 'update', { ad_storage: 'granted', analytics_storage: 'granted' });
-                    }
-                } catch(e) {}
-            `}
-        </Script>
+        <body className="bg-[#080b14] text-white antialiased">
+        {children}
         <Script
             src="https://www.googletagmanager.com/gtag/js?id=AW-691789119"
             strategy="afterInteractive"
@@ -145,8 +147,6 @@ export default function RootLayout({ children }) {
                 gtag('config', 'AW-691789119');
             `}
         </Script>
-        <body className="bg-[#080b14] text-white antialiased">
-        {children}
         <CookieBanner />
         <Analytics />
         <SpeedInsights />
