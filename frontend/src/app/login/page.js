@@ -66,10 +66,6 @@ export default function LoginPage() {
                 </div>
 
                 <div className="relative z-10">
-                    <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-violet-500/20 bg-violet-500/8 text-violet-300 text-xs font-medium mb-6">
-                        <span className="w-1.5 h-1.5 rounded-full bg-violet-400 animate-pulse" />
-                        Der Audit den deine KI vergisst
-                    </div>
                     <h2 className="text-4xl font-bold text-white leading-tight mb-4">
                         Willkommen<br />
                         <span className="text-transparent bg-clip-text bg-linear-to-r from-violet-400 to-cyan-400">zurück.</span>

@@ -20,9 +20,6 @@ export default function CTA() {
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-red-950/5 to-transparent" />
                 <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
                     <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-10 sm:mb-16">
-                        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-red-500/20 bg-red-500/5 text-red-400 text-xs font-medium mb-5">
-                            <AlertTriangle className="w-3.5 h-3.5" /> Was KI-Assistenten übersehen
-                        </div>
                         <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 leading-tight tracking-tight">
                             Vibe-Code geht live.<br />
                             <span className="text-red-400">Sicherheitslücken auch.</span>

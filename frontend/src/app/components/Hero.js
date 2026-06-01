@@ -1,95 +1,278 @@
 'use client'
 import { useRef, useState, useEffect } from 'react'
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
-import { Zap, AlertTriangle, ArrowRight, Check, Shield, Globe, Search } from 'lucide-react'
+import { ArrowRight, Globe, Search, Bot } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
-const MOCK_SCORES_BEFORE = [
-    { label: 'Overall', score: 34, color: '#ef4444' },
-    { label: 'SEO', score: 52, color: '#ef4444' },
-    { label: 'Performance', score: 28, color: '#ef4444' },
-    { label: 'Security', score: 19, color: '#ef4444' },
-    { label: 'GEO', score: 11, color: '#ef4444' },
-]
-const MOCK_SCORES_AFTER = [
-    { label: 'Overall', score: 91, color: '#22c55e' },
-    { label: 'SEO', score: 94, color: '#22c55e' },
-    { label: 'Performance', score: 88, color: '#22c55e' },
-    { label: 'Security', score: 96, color: '#22c55e' },
-    { label: 'GEO', score: 78, color: '#22c55e' },
-]
-const MOCK_ISSUES_BEFORE = [
-    { type: 'error', text: 'H1-Tag fehlt — Suchmaschinen finden keinen Seiteninhalt' },
-    { type: 'error', text: 'Meta-Description auf 7 Seiten leer — kein Snippet in Google' },
-    { type: 'error', text: '14 Bilder ohne Alt-Text — unsichtbar für Crawler' },
-    { type: 'warn', text: 'Title-Tag zu lang: 76 Zeichen (optimal: 30–60)' },
-    { type: 'warn', text: 'Kein Canonical-Tag gesetzt — Duplicate-Content-Risiko' },
-    { type: 'success', text: 'HTTPS aktiv mit gültigem SSL-Zertifikat' },
-]
-const MOCK_ISSUES_AFTER = [
-    { type: 'success', text: 'H1-Tag gesetzt und keyword-optimiert' },
-    { type: 'success', text: 'Alle Meta-Descriptions vorhanden — max. 155 Zeichen' },
-    { type: 'success', text: '14 Bilder mit beschreibendem Alt-Text versehen' },
-    { type: 'success', text: 'Title-Tag optimiert: 48 Zeichen — perfekter Bereich' },
-    { type: 'success', text: 'Canonical-Tags auf allen Seiten gesetzt' },
-    { type: 'success', text: 'FAQ-Schema erkannt — Rich Snippets in Google möglich' },
-]
 const STATS = [
     { value: 'SEO-Score', label: 'plus Security & Performance' },
     { value: '< 60s', label: 'vollständiger SEO-Bericht' },
     { value: 'PDF', label: 'Report zum Download' },
 ]
 
-function MockCard({ scores, issues, label, labelColor }) {
+// --- Audit Demo ---
+const DEMO_URL = 'meineshop.de'
+
+const BEFORE_SCORES = [
+    { label: 'Overall', score: 34, color: '#ef4444' },
+    { label: 'SEO', score: 52, color: '#ef4444' },
+    { label: 'Perf', score: 28, color: '#ef4444' },
+    { label: 'Sec', score: 19, color: '#ef4444' },
+    { label: 'GEO', score: 11, color: '#ef4444' },
+]
+const AFTER_SCORES = [
+    { label: 'Overall', score: 91, color: '#22c55e' },
+    { label: 'SEO', score: 94, color: '#22c55e' },
+    { label: 'Perf', score: 88, color: '#22c55e' },
+    { label: 'Sec', score: 96, color: '#22c55e' },
+    { label: 'GEO', score: 78, color: '#22c55e' },
+]
+const BEFORE_ISSUES = [
+    { type: 'error', text: 'H1-Tag fehlt auf der Startseite' },
+    { type: 'error', text: 'Security Headers nicht gesetzt' },
+    { type: 'warn', text: 'Ladezeit: 4.8s — Richtwert: 2.5s' },
+    { type: 'warn', text: 'Meta-Description auf 4 Seiten leer' },
+]
+const AFTER_ISSUES = [
+    { type: 'success', text: 'H1-Tag optimiert und keyword-reich' },
+    { type: 'success', text: 'CSP, HSTS & X-Frame-Options gesetzt' },
+    { type: 'success', text: 'Ladezeit auf 1.8s reduziert' },
+    { type: 'success', text: 'Meta-Descriptions vollständig' },
+]
+const SCAN_MODULES = [
+    { label: 'SEO-Analyse', color: '#10b981' },
+    { label: 'Security-Scan', color: '#ef4444' },
+    { label: 'Performance', color: '#f59e0b' },
+    { label: 'KI-Bericht', color: '#7c3aed' },
+]
+const FOUND_ISSUES = [
+    { severity: 'Critical', text: '3 Security-Lücken gefunden', color: '#ef4444' },
+    { severity: 'Warning', text: '5 SEO-Probleme erkannt', color: '#f59e0b' },
+    { severity: 'Info', text: 'Performance unter Richtwert', color: '#6366f1' },
+]
+const DEMO_STEPS = [
+    { id: 'before', label: 'Ausgangslage', duration: 3000 },
+    { id: 'input',  label: 'URL eingeben',  duration: 2800 },
+    { id: 'scan',   label: 'KI analysiert', duration: 3800 },
+    { id: 'after',  label: 'Optimiert',     duration: 3200 },
+]
+
+function ScoreRow({ scores }) {
     return (
-        <div className="relative bg-[#0d1117] border border-white/10 rounded-2xl overflow-hidden shadow-2xl">
+        <div className="grid grid-cols-5 gap-1.5 sm:gap-2 mb-4">
+            {scores.map(({ label, score, color }) => (
+                <div key={label} className="rounded-xl p-2 sm:p-2.5 text-center border border-white/5 bg-white/[0.03]">
+                    <div className="text-lg sm:text-xl font-bold" style={{ color }}>{score}</div>
+                    <div className="text-[9px] text-slate-600 mt-0.5">{label}</div>
+                </div>
+            ))}
+        </div>
+    )
+}
+
+function IssueItem({ type, text }) {
+    return (
+        <div className={`flex items-start gap-2 px-3 py-2 rounded-lg text-[11px] ${
+            type === 'error' ? 'bg-red-500/10 text-red-400' :
+            type === 'warn'  ? 'bg-amber-500/10 text-amber-400' :
+                               'bg-emerald-500/10 text-emerald-400'
+        }`}>
+            <span className="shrink-0 mt-0.5">{type === 'error' ? '✕' : type === 'warn' ? '⚠' : '✓'}</span>
+            <span className="leading-relaxed">{text}</span>
+        </div>
+    )
+}
+
+function AuditDemo() {
+    const [stepIdx, setStepIdx] = useState(0)
+    const [typedChars, setTypedChars] = useState(0)
+    const [scanProgress, setScanProgress] = useState([0, 0, 0, 0])
+
+    const step = DEMO_STEPS[stepIdx]
+
+    useEffect(() => {
+        const t = setTimeout(() => setStepIdx(i => (i + 1) % DEMO_STEPS.length), step.duration)
+        return () => clearTimeout(t)
+    }, [stepIdx, step.duration])
+
+    useEffect(() => {
+        if (stepIdx === 0) {
+            setTypedChars(0)
+            setScanProgress([0, 0, 0, 0])
+        }
+    }, [stepIdx])
+
+    useEffect(() => {
+        if (step.id !== 'input') return
+        setTypedChars(0)
+        let i = 0
+        const iv = setInterval(() => {
+            i++
+            setTypedChars(i)
+            if (i >= DEMO_URL.length) clearInterval(iv)
+        }, 90)
+        return () => clearInterval(iv)
+    }, [stepIdx])
+
+    useEffect(() => {
+        if (step.id !== 'scan') {
+            setScanProgress([0, 0, 0, 0])
+            return
+        }
+        const targets = [92, 78, 85, 100]
+        const timers = targets.map((target, i) =>
+            setTimeout(() => setScanProgress(prev => prev.map((v, idx) => idx === i ? target : v)), 200 + i * 380)
+        )
+        return () => timers.forEach(clearTimeout)
+    }, [stepIdx])
+
+    const urlDisplay = DEMO_URL.slice(0, typedChars)
+    const urlReady = typedChars >= DEMO_URL.length
+
+    return (
+        <div className="bg-[#0d1117] border border-white/10 rounded-2xl overflow-hidden shadow-2xl">
+            {/* Browser chrome */}
             <div className="flex items-center gap-2 px-4 py-3 border-b border-white/5 bg-white/[0.02]">
-                <div className="flex gap-1.5">
+                <div className="flex gap-1.5 shrink-0">
                     <div className="w-3 h-3 rounded-full bg-red-500/60" />
                     <div className="w-3 h-3 rounded-full bg-yellow-500/60" />
                     <div className="w-3 h-3 rounded-full bg-green-500/60" />
                 </div>
-                <div className="flex-1 bg-white/5 rounded px-3 py-1 text-[10px] text-slate-500">auditai.io/report</div>
-                <div className="text-[10px] font-bold px-2 py-0.5 rounded-full" style={{ background: labelColor + '20', color: labelColor }}>{label}</div>
-            </div>
-            <div className="p-5">
-                <div className="grid grid-cols-5 gap-2 mb-4">
-                    {scores.map(({ label: l, score, color }) => {
-                        const isSeo = l === 'SEO'
-                        return (
-                            <div key={l}
-                                className="bg-white/[0.03] rounded-xl p-2.5 text-center transition-all duration-300"
-                                style={isSeo ? {
-                                    border: `1px solid ${color}`,
-                                    boxShadow: `0 0 0 2px ${color}35, 0 0 14px ${color}25`,
-                                } : { border: '1px solid rgba(255,255,255,0.05)' }}
-                            >
-                                <div className="text-xl font-bold" style={{ color }}>{score}</div>
-                                <div className="text-[9px] text-slate-600 mt-0.5">{l}</div>
-                            </div>
-                        )
-                    })}
-                </div>
-                <div className="space-y-1.5">
-                    {issues.map((issue, i) => (
-                        <div key={i} className={`flex items-start gap-2 px-3 py-2 rounded-lg text-[11px] ${
-                            issue.type === 'error' ? 'bg-red-500/10 text-red-400' :
-                                issue.type === 'warn' ? 'bg-amber-500/10 text-amber-400' :
-                                    'bg-emerald-500/10 text-emerald-400'
-                        }`}>
-                            <span className="flex-shrink-0 mt-0.5">{issue.type === 'error' ? '✕' : issue.type === 'warn' ? '⚠' : '✓'}</span>
-                            <span className="leading-relaxed">{issue.text}</span>
-                        </div>
+                <div className="flex-1 bg-white/5 rounded px-3 py-1 text-[10px] text-slate-500">auditai.io</div>
+                <div className="flex items-center gap-1.5 shrink-0">
+                    {DEMO_STEPS.map((_, i) => (
+                        <div key={i} className="h-1.5 rounded-full transition-all duration-500"
+                            style={{
+                                width: i === stepIdx ? '20px' : '6px',
+                                background: i === stepIdx ? '#7c3aed' : i < stepIdx ? 'rgba(124,58,237,0.3)' : 'rgba(255,255,255,0.07)'
+                            }} />
                     ))}
                 </div>
+            </div>
+
+            {/* Step label */}
+            <div className="px-5 pt-3">
+                <div className="text-[10px] uppercase tracking-widest font-semibold text-slate-600">{step.label}</div>
+            </div>
+
+            {/* Animated content */}
+            <div className="p-5 pt-2 min-h-[268px] sm:min-h-[290px]">
+                <AnimatePresence mode="wait">
+
+                    {step.id === 'before' && (
+                        <motion.div key="before"
+                            initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
+                            transition={{ duration: 0.3 }}>
+                            <div className="flex items-center justify-between mb-3">
+                                <span className="text-[11px] text-slate-500">meineshop.de — Aktueller Stand</span>
+                                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-red-500/15 text-red-400">VORHER</span>
+                            </div>
+                            <ScoreRow scores={BEFORE_SCORES} />
+                            <div className="space-y-1.5">
+                                {BEFORE_ISSUES.map((issue, i) => <IssueItem key={i} {...issue} />)}
+                            </div>
+                        </motion.div>
+                    )}
+
+                    {step.id === 'input' && (
+                        <motion.div key="input"
+                            initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
+                            transition={{ duration: 0.3 }}
+                            className="flex flex-col justify-center h-[268px] sm:h-[290px]">
+                            <p className="text-xs text-slate-500 mb-5 text-center">URL eingeben und Audit starten</p>
+                            <div className="flex items-center gap-2 px-3 py-3 mb-3 bg-white/[0.04] border border-violet-500/30 rounded-xl">
+                                <Globe className="w-4 h-4 text-slate-500 shrink-0" />
+                                <span className="flex-1 text-sm text-white">
+                                    {urlDisplay}
+                                    <span className="inline-block w-0.5 h-4 bg-violet-400 ml-0.5 animate-pulse align-middle" />
+                                </span>
+                            </div>
+                            <motion.div
+                                className="w-full py-3 rounded-xl text-sm font-semibold text-center transition-all duration-500"
+                                animate={urlReady
+                                    ? { background: 'linear-gradient(to right, #7c3aed, #0891b2)', color: '#fff', boxShadow: '0 4px 20px rgba(124,58,237,0.3)' }
+                                    : { background: 'rgba(255,255,255,0.04)', color: 'rgba(100,116,139,0.7)', boxShadow: 'none' }
+                                }>
+                                {urlReady ? 'Website prüfen →' : 'Website prüfen'}
+                            </motion.div>
+                            <p className="text-[10px] text-slate-600 text-center mt-3">Kostenlos · Kein Account nötig</p>
+                        </motion.div>
+                    )}
+
+                    {step.id === 'scan' && (
+                        <motion.div key="scan"
+                            initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
+                            transition={{ duration: 0.3 }}>
+                            <div className="flex items-center gap-2 mb-4">
+                                <span className="relative flex h-2 w-2">
+                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-violet-400 opacity-75" />
+                                    <span className="relative inline-flex rounded-full h-2 w-2 bg-violet-500" />
+                                </span>
+                                <span className="text-xs text-slate-300 font-medium">KI analysiert meineshop.de…</span>
+                            </div>
+                            <div className="space-y-3 mb-4">
+                                {SCAN_MODULES.map((mod, i) => (
+                                    <div key={i}>
+                                        <div className="flex justify-between mb-1">
+                                            <span className="text-[11px] text-slate-400">{mod.label}</span>
+                                            <span className="text-[11px] font-mono tabular-nums" style={{ color: mod.color }}>
+                                                {scanProgress[i]}%
+                                            </span>
+                                        </div>
+                                        <div className="h-1.5 bg-white/5 rounded-full overflow-hidden">
+                                            <div className="h-full rounded-full transition-all duration-[1100ms] ease-out"
+                                                style={{ width: `${scanProgress[i]}%`, background: mod.color }} />
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                            <div className="border-t border-white/5 pt-3 space-y-2">
+                                <div className="text-[10px] text-slate-600 mb-1.5">Erste Funde:</div>
+                                {FOUND_ISSUES.map((issue, i) => (
+                                    <motion.div key={i}
+                                        initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }}
+                                        transition={{ delay: 0.9 + i * 0.35 }}
+                                        className="flex items-center gap-2">
+                                        <span className="text-[10px] font-bold px-2 py-0.5 rounded shrink-0"
+                                            style={{ background: issue.color + '20', color: issue.color }}>
+                                            {issue.severity}
+                                        </span>
+                                        <span className="text-[11px] text-slate-400">{issue.text}</span>
+                                    </motion.div>
+                                ))}
+                            </div>
+                        </motion.div>
+                    )}
+
+                    {step.id === 'after' && (
+                        <motion.div key="after"
+                            initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
+                            transition={{ duration: 0.3 }}>
+                            <div className="flex items-center justify-between mb-3">
+                                <span className="text-[11px] text-slate-500">meineshop.de — Nach Optimierung</span>
+                                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400">NACHHER</span>
+                            </div>
+                            <ScoreRow scores={AFTER_SCORES} />
+                            <div className="space-y-1.5">
+                                {AFTER_ISSUES.map((issue, i) => (
+                                    <motion.div key={i}
+                                        initial={{ opacity: 0, x: -6 }} animate={{ opacity: 1, x: 0 }}
+                                        transition={{ delay: i * 0.12 }}>
+                                        <IssueItem {...issue} />
+                                    </motion.div>
+                                ))}
+                            </div>
+                        </motion.div>
+                    )}
+
+                </AnimatePresence>
             </div>
         </div>
     )
 }
 
 export default function Hero() {
-    const [showAfter, setShowAfter] = useState(false)
     const [heroUrl, setHeroUrl] = useState('')
     const [showStickyBar, setShowStickyBar] = useState(false)
     const heroRef = useRef(null)
@@ -103,14 +286,11 @@ export default function Hero() {
         const handleScroll = () => {
             if (!formRef.current) return
             const rect = formRef.current.getBoundingClientRect()
-            // Zeigen: Form-Unterkante scrollt über Navbar (80px)
             if (rect.bottom < 80) {
                 setShowStickyBar(true)
-            // Verstecken: Form-Oberkante hat genug Platz — User ist klar oben
             } else if (rect.top > 300) {
                 setShowStickyBar(false)
             }
-            // Hysterese-Zone dazwischen: Status bleibt erhalten
         }
         window.addEventListener('scroll', handleScroll, { passive: true })
         return () => window.removeEventListener('scroll', handleScroll)
@@ -204,11 +384,15 @@ export default function Hero() {
                 </>
             )}
         </AnimatePresence>
+
         <section ref={heroRef} className="relative min-h-screen flex items-center pt-20 overflow-hidden">
             <div className="absolute inset-0">
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[600px] rounded-full blur-3xl" style={{ background: 'radial-gradient(ellipse, rgba(124,58,237,0.18) 0%, rgba(124,58,237,0.04) 50%, transparent 70%)' }} />
-                <div className="absolute bottom-0 right-0 w-[500px] h-[500px] rounded-full blur-3xl" style={{ background: 'radial-gradient(ellipse, rgba(6,182,212,0.08) 0%, transparent 70%)' }} />
-                <div className="absolute inset-0" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px)', backgroundSize: '60px 60px' }} />
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[600px] rounded-full blur-3xl"
+                    style={{ background: 'radial-gradient(ellipse, rgba(124,58,237,0.18) 0%, rgba(124,58,237,0.04) 50%, transparent 70%)' }} />
+                <div className="absolute bottom-0 right-0 w-[500px] h-[500px] rounded-full blur-3xl"
+                    style={{ background: 'radial-gradient(ellipse, rgba(6,182,212,0.08) 0%, transparent 70%)' }} />
+                <div className="absolute inset-0"
+                    style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px)', backgroundSize: '60px 60px' }} />
             </div>
 
             <motion.div style={{ y: heroY, opacity: heroOpacity }} className="relative z-10 w-full">
@@ -216,22 +400,21 @@ export default function Hero() {
                     <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
 
                         <div>
-
                             <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.1 }}
-                                       className="text-4xl sm:text-5xl lg:text-7xl font-bold leading-[1.05] sm:leading-[1.0] tracking-tight mb-6">
+                                className="text-4xl sm:text-5xl lg:text-7xl font-bold leading-[1.05] sm:leading-none tracking-tight mb-6">
                                 SEO-Test &amp;<br />
                                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 via-purple-400 to-cyan-400">Website-Audit.</span><br />
                                 Kostenlos in 60s.
                             </motion.h1>
 
                             <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }}
-                                      className="text-base sm:text-lg text-slate-200 leading-relaxed mb-10 max-w-lg">
-                                Prüfe kostenlos Title-Tags, Meta-Descriptions, H1-Tags, Core Web Vitals, Security-Headers und KI-Sichtbarkeit - vollständiger SEO-Test in unter 60 Sekunden, mit konkreten Fixes.
+                                className="text-base sm:text-lg text-slate-200 leading-relaxed mb-10 max-w-lg">
+                                Prüfe kostenlos Title-Tags, Meta-Descriptions, H1-Tags, Core Web Vitals, Security-Headers und KI-Sichtbarkeit — vollständiger SEO-Test in unter 60 Sekunden, mit konkreten Fixes.
                             </motion.p>
 
-                            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.3 }}
-                                        className="mb-10">
-                                <form ref={formRef} onSubmit={handleHeroSubmit} className="relative flex items-center gap-2 p-2 bg-white/[0.03] border border-white/10 rounded-2xl focus-within:border-violet-500/50 focus-within:bg-white/[0.05] transition-all duration-200 shadow-xl shadow-black/20 mb-3">
+                            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.3 }} className="mb-10">
+                                <form ref={formRef} onSubmit={handleHeroSubmit}
+                                    className="relative flex items-center gap-2 p-2 bg-white/[0.03] border border-white/10 rounded-2xl focus-within:border-violet-500/50 focus-within:bg-white/[0.05] transition-all duration-200 shadow-xl shadow-black/20 mb-3">
                                     <div className="flex items-center gap-3 flex-1 px-3">
                                         <Globe className="w-4 h-4 text-slate-500 shrink-0" />
                                         <input
@@ -247,10 +430,8 @@ export default function Hero() {
                                             spellCheck={false}
                                         />
                                     </div>
-                                    <button
-                                        type="submit"
-                                        className="flex items-center gap-2 px-5 sm:px-6 py-3 bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-violet-500/20 shrink-0"
-                                    >
+                                    <button type="submit"
+                                        className="flex items-center gap-2 px-5 sm:px-6 py-3 bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-violet-500/20 shrink-0">
                                         <Search className="w-4 h-4" />
                                         <span className="hidden sm:inline">Website prüfen</span>
                                         <ArrowRight className="w-3.5 h-3.5" />
@@ -258,9 +439,9 @@ export default function Hero() {
                                 </form>
                                 <div className="flex items-center gap-4">
                                     <span className="text-xs text-slate-600">Kostenlos · Kein Account nötig · ~60 Sekunden</span>
-                                    <Link href="#security" className="flex items-center gap-1.5 text-xs text-slate-500 hover:text-slate-300 transition-colors ml-auto">
-                                        <AlertTriangle className="w-3.5 h-3.5 text-amber-400" />
-                                        Sicherheitsrisiken ansehen
+                                    <Link href="#testautomation" className="flex items-center gap-1.5 text-xs text-slate-500 hover:text-slate-300 transition-colors ml-auto">
+                                        <Bot className="w-3.5 h-3.5 text-violet-400" />
+                                        Testautomatisierung
                                     </Link>
                                 </div>
                             </motion.div>
@@ -276,27 +457,10 @@ export default function Hero() {
                         </div>
 
                         <motion.div initial={{ opacity: 0, x: 40 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.3 }} className="relative">
-                            <div className="flex items-center gap-3 mb-4 justify-center sm:justify-end">
-                                <span className="text-xs text-slate-200">Vorher</span>
-                                <button onClick={() => setShowAfter(!showAfter)}
-                                        className={`relative w-12 h-6 rounded-full transition-all duration-300 ${showAfter ? 'bg-gradient-to-r from-violet-600 to-cyan-600' : 'bg-white/10'}`}>
-                                    <div className={`absolute top-1 w-4 h-4 bg-white rounded-full shadow transition-all duration-300 ${showAfter ? 'left-7' : 'left-1'}`} />
-                                </button>
-                                <span className="text-xs text-slate-200">Nachher</span>
-                            </div>
-                            <AnimatePresence mode="wait">
-                                <motion.div key={showAfter ? 'after' : 'before'}
-                                            initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.3 }}>
-                                    <MockCard
-                                        scores={showAfter ? MOCK_SCORES_AFTER : MOCK_SCORES_BEFORE}
-                                        issues={showAfter ? MOCK_ISSUES_AFTER : MOCK_ISSUES_BEFORE}
-                                        label={showAfter ? 'NACH AUDIT' : 'VOR AUDIT'}
-                                        labelColor={showAfter ? '#22c55e' : '#ef4444'}
-                                    />
-                                </motion.div>
-                            </AnimatePresence>
-                            <div className={`absolute -inset-4 rounded-3xl blur-2xl transition-all duration-500 -z-10 ${showAfter ? 'bg-emerald-500/8' : 'bg-red-500/8'}`} />
+                            <AuditDemo />
+                            <div className="absolute -inset-4 rounded-3xl blur-2xl -z-10 bg-violet-500/6" />
                         </motion.div>
+
                     </div>
                 </div>
             </motion.div>

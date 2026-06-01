@@ -80,7 +80,7 @@ export default function Navbar() {
 
                     <div className="hidden md:flex items-center gap-1">
                         {links.map(l => (
-                            <Link key={l.href} href={l.href} className="px-4 py-2 text-sm text-slate-400 hover:text-white rounded-lg hover:bg-white/5 transition-all">
+                            <Link key={l.href} href={l.href} className="px-4 py-2 text-sm text-slate-200 hover:text-white rounded-lg hover:bg-white/5 transition-all">
                                 {l.label}
                             </Link>
                         ))}
@@ -134,9 +134,9 @@ export default function Navbar() {
                                 </AnimatePresence>
                             </div>
                         ) : (
-                            <Link href="/login" className="text-sm text-slate-400 hover:text-white transition-colors">Anmelden</Link>
+                            <Link href="/login" className="text-sm text-slate-200 hover:text-white transition-colors">Anmelden</Link>
                         )}
-                        <Link href="/dashboard" className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-violet-500/20 hover:-translate-y-px">
+                        <Link href="/dashboard" className="flex items-center gap-2 px-5 py-2.5 bg-linear-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-violet-500/20 hover:-translate-y-px">
                             Jetzt prüfen <ArrowRight className="w-3.5 h-3.5" />
                         </Link>
                     </div>
