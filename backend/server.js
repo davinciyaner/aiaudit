@@ -13,6 +13,7 @@ import testsRouter from "./routes/tests_router.js";
 import waitlistRouter from "./routes/waitlist_router.js";
 import supportRouter from "./routes/support_router.js"
 import feedbackRouter from "./routes/feedback_router.js";
+import landingFeedbackRouter from "./routes/landing_feedback_router.js";
 
 const app = express();
 
@@ -46,6 +47,7 @@ app.use("/api/tests", testsRouter);
 app.use("/api/waitlist", waitlistRouter);
 app.use("/api/support", supportRouter)
 app.use("/api/feedback", feedbackRouter);
+app.use("/api/landing-feedback", landingFeedbackRouter);
 app.use("/reports", express.static("reports"));
 
 app.get("/health", (req, res) => {

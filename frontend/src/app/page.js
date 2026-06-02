@@ -6,6 +6,7 @@ import ExtensionSection from './components/ExtensionSection'
 import CTA from './components/CTA'
 import Pricing from './components/Pricing'
 import Footer from './components/Footer'
+import LandingFeedback from './components/LandingFeedback'
 
 export const metadata = {
     title: 'Kostenloser SEO-Test & Website-Audit | AuditAI – Security & Performance',
@@ -39,6 +40,7 @@ export default function LandingPage() {
             <CTA />
             <Pricing />
             <Footer />
+            <LandingFeedback />
         </main>
     )
 }
