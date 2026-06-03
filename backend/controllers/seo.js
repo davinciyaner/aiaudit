@@ -35,7 +35,7 @@ export async function analyzeSEO(url, html) {
 
     const h2s = $('h2')
     check(h2s.length > 0, 5,
-        'Keine H1 Tags gefunden',
+        'Keine H2 Tags gefunden',
         'Nutze H2 Tags für Unterüberschriften')
 
     const imgs = $('img')
@@ -75,6 +75,18 @@ export async function analyzeSEO(url, html) {
     check(!robots || !robots.includes('noindex'), 8,
         'Seite auf noindex gesetzt!',
         'Robots Meta Tag prüfen, noindex entfernen wenn nicht gewünscht.')
+
+    // Viewport
+    const viewport = $('meta[name="viewport"]').attr('content')
+    check(!!viewport, 8,
+        'Viewport Meta Tag fehlt — Seite nicht mobil-optimiert.',
+        'Füge hinzu: <meta name="viewport" content="width=device-width, initial-scale=1">')
+
+    // Lang-Attribut
+    const lang = $('html').attr('lang')
+    check(!!lang, 5,
+        'HTML lang-Attribut fehlt.',
+        'Sprache im HTML-Tag setzen, z.B. <html lang="de">')
 
     // Links
     const internalLinks = []

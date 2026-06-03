@@ -125,16 +125,24 @@ export async function runAudit(url) {
         console.log(`Geladen in ${Date.now() - startTime}ms (Status: ${responseStatus})`)
 
         timing = await page.evaluate(() => {
-            const t = performance.timing
+            const nav = performance.getEntriesByType('navigation')[0] || {}
             const fcp = performance.getEntriesByName('first-contentful-paint')[0]
             return {
-                navigationStart: t.navigationStart,
-                requestStart: t.requestStart,
-                responseStart: t.responseStart,
-                domContentLoadedEventEnd: t.domContentLoadedEventEnd,
-                loadEventEnd: t.loadEventEnd,
+                requestStart: nav.requestStart || 0,
+                responseStart: nav.responseStart || 0,
+                domContentLoadedEventEnd: nav.domContentLoadedEventEnd || 0,
+                loadEventEnd: nav.loadEventEnd || 0,
                 firstContentfulPaint: fcp ? fcp.startTime : 0
             }
+        })
+
+        // Genaue Ressourcengrößen via Performance API (content-length ist bei gzip/brotli oft 0)
+        const perfResourceSizes = await page.evaluate(() => {
+            const map = {}
+            for (const r of performance.getEntriesByType('resource')) {
+                map[r.name] = r.transferSize || r.decodedBodySize || 0
+            }
+            return map
         })
 
         console.log('Screenshots werden erstellt...')
@@ -143,8 +151,11 @@ export async function runAudit(url) {
         await page.waitForTimeout(500)
         const screenshotMobile = await page.screenshot({ fullPage: true, type: 'jpeg', quality: 85 })
 
-        // Resources der Landingpage sichern bevor der Crawler andere Seiten lädt
-        const landingResources = [...resources]
+        // Resources der Landingpage sichern mit korrekten Größen
+        const landingResources = resources.map(r => ({
+            ...r,
+            size: perfResourceSizes[r.url] || r.size
+        }))
 
         // Website crawlen
         console.log('Website wird gecrawlt...')

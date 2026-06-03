@@ -8,8 +8,8 @@ export async function analyzePerformance(url, page, metrics) {
 
     const ttfb = timing.responseStart - timing.requestStart || 0
     const fcp = timing.firstContentfulPaint || 0
-    const domLoad = timing.domContentLoadedEventEnd - timing.navigationStart || 0
-    const fullLoad = timing.loadEventEnd - timing.navigationStart || 0
+    const domLoad = timing.domContentLoadedEventEnd || 0
+    const fullLoad = timing.loadEventEnd || 0
 
     // Score berechnen
     let score = 100
