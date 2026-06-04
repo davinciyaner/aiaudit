@@ -6,9 +6,9 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
 const STATS = [
-    { value: 'SEO-Score', label: 'plus Security & Performance' },
-    { value: '< 60s', label: 'vollständiger SEO-Bericht' },
-    { value: 'PDF', label: 'Report zum Download' },
+    { value: '1.000+', label: 'Audits durchgeführt' },
+    { value: '< 60s', label: 'bis zum fertigen Bericht' },
+    { value: 'Gratis', label: 'kein Account nötig' },
 ]
 
 // --- Audit Demo ---
@@ -448,10 +448,15 @@ export default function Hero() {
 
                             <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }}
                                 className="text-base sm:text-lg text-slate-200 leading-relaxed mb-10 max-w-lg">
-                                Prüfe kostenlos Title-Tags, Meta-Descriptions, H1-Tags, Core Web Vitals, Security-Headers und KI-Sichtbarkeit — vollständiger SEO-Test in unter 60 Sekunden, mit konkreten Fixes.
+                                Die meisten Websites verlieren täglich Besucher durch Fehler, die man nicht sieht. Finde in 60 Sekunden heraus was auf deiner Website falsch läuft - mit konkreten Fixes.
                             </motion.p>
 
                             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.3 }} className="mb-10">
+                                <div className="flex items-center gap-2 mb-3">
+                                    <span className="text-yellow-400 text-sm tracking-tight">★★★★★</span>
+                                    <span className="text-xs text-slate-100">"Ich habe sofort 3 Security-Lübeck gefunden, die ich nicht kannte."</span>
+                                    <span className="text-xs text-slate-600 shrink-0">- Max R.</span>
+                                </div>
                                 <label className="block text-sm text-slate-300 font-medium mb-2">
                                     Deine Website-Adresse eingeben:
                                 </label>
