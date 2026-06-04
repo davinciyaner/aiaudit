@@ -521,42 +521,86 @@ export default function Dashboard() {
 
                                 {/* GEO */}
                                 {audit?.geo && (
-                                    <Section title="GEO — AI Visibility" icon="🌐">
-                                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
+                                    <Section title="GEO — KI-Sichtbarkeit" icon="🤖">
+                                        {/* Checks Grid */}
+                                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-5">
                                             {[
-                                                ['llms.txt', audit.geo.checks?.hasLlmsTxt],
-                                                ['FAQ Schema', audit.geo.checks?.hasFAQ],
-                                                ['Organization', audit.geo.checks?.hasOrganization],
-                                                ['AI Crawlers', audit.geo.checks?.robotsAllowsAI],
-                                            ].map(([name, ok]) => (
-                                                <div key={name} className={`rounded-xl p-3 text-center border ${ok ? 'bg-emerald-500/8 border-emerald-500/20' : 'bg-red-500/8 border-red-500/20'}`}>
-                                                    <div className="text-xl mb-1">{ok ? '✅' : '❌'}</div>
-                                                    <div className={`text-xs font-semibold ${ok ? 'text-emerald-400' : 'text-red-400'}`}>{name}</div>
+                                                { label: 'llms.txt', ok: audit.geo.checks?.hasLlmsTxt, detail: audit.geo.checks?.hasLlmsTxt ? 'vorhanden' : 'fehlt' },
+                                                { label: 'llms-full.txt', ok: audit.geo.checks?.hasLlmsFullTxt, detail: audit.geo.checks?.hasLlmsFullTxt ? 'vorhanden' : 'fehlt' },
+                                                { label: 'FAQ Schema', ok: audit.geo.checks?.hasFAQ, detail: audit.geo.checks?.hasFAQ ? 'vorhanden' : 'fehlt' },
+                                                { label: 'Organization', ok: audit.geo.checks?.hasOrganization, detail: audit.geo.checks?.hasOrganization ? 'vorhanden' : 'fehlt' },
+                                                { label: 'KI-Crawler', ok: audit.geo.checks?.robotsAllowsAI, detail: audit.geo.checks?.robotsAllowsAI ? 'erlaubt' : `${audit.geo.checks?.blockedCrawlers?.length ?? 0} blockiert` },
+                                                { label: 'sitemap.xml', ok: audit.geo.checks?.hasSitemap, detail: audit.geo.checks?.hasSitemap ? 'vorhanden' : 'fehlt' },
+                                                { label: 'Produktdefinition', ok: audit.geo.checks?.hasDirectDefinition, detail: audit.geo.checks?.hasDirectDefinition ? 'gefunden' : 'fehlt' },
+                                                { label: 'Statistiken', ok: audit.geo.checks?.hasStatistics, detail: audit.geo.checks?.hasStatistics ? 'vorhanden' : 'fehlt' },
+                                                { label: 'lang-Attribut', ok: audit.geo.checks?.hasLang, detail: audit.geo.checks?.hasLang ? 'gesetzt' : 'fehlt' },
+                                                { label: 'HTTPS', ok: audit.geo.checks?.hasHTTPS, detail: audit.geo.checks?.hasHTTPS ? 'aktiv' : 'fehlt' },
+                                                { label: 'Canonical', ok: audit.geo.checks?.canonical, detail: audit.geo.checks?.canonical ? 'gesetzt' : 'fehlt' },
+                                                { label: 'Kontakt/About', ok: audit.geo.checks?.hasAuthorInfo || audit.geo.checks?.hasContactInfo, detail: (audit.geo.checks?.hasAuthorInfo || audit.geo.checks?.hasContactInfo) ? 'gefunden' : 'fehlt' },
+                                            ].map(({ label, ok, detail }) => (
+                                                <div key={label} className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-xs font-medium ${
+                                                    ok ? 'bg-emerald-500/8 border-emerald-500/20 text-emerald-400' : 'bg-red-500/10 border-red-500/20 text-red-400'
+                                                }`}>
+                                                    {ok
+                                                        ? <CheckCircle className="w-3 h-3 shrink-0" strokeWidth={2} />
+                                                        : <XCircle className="w-3 h-3 shrink-0" strokeWidth={2} />
+                                                    }
+                                                    <div className="min-w-0">
+                                                        <div className="truncate">{label}</div>
+                                                        <div className="text-[10px] opacity-70 truncate">{detail}</div>
+                                                    </div>
                                                 </div>
                                             ))}
                                         </div>
 
-                                        {audit.geo.recommendations?.map((r, i) => (
-                                            <div key={i} className="flex gap-3 bg-white/2 border border-white/[0.06] rounded-xl p-4 mb-3">
-                                                <span className={`text-xs font-bold px-2 py-1 rounded shrink-0 ${
-                                                    r.priority === 'critical' ? 'bg-red-500/15 text-red-400' :
-                                                    r.priority === 'high' ? 'bg-amber-500/15 text-amber-400' :
-                                                    'bg-blue-500/15 text-blue-400'
-                                                }`}>{r.priority}</span>
-                                                <div className="flex-1">
-                                                    <div className="text-sm font-semibold text-white mb-1">{r.title}</div>
-                                                    <div className="text-xs text-slate-500 leading-relaxed">{r.desc}</div>
-                                                </div>
-                                                <div className="text-xs text-slate-600 shrink-0">{r.effort}</div>
+                                        {/* Issues + Empfehlungen */}
+                                        {audit.geo.issues?.length > 0 ? (
+                                            <div className="space-y-3 mb-5">
+                                                {audit.geo.issues.map((issue, i) => (
+                                                    <div key={i} className="space-y-1.5">
+                                                        <IssueItem text={issue} type="error" />
+                                                        {audit.geo.suggestions?.[i] && (
+                                                            <div className="ml-6 text-xs text-slate-500 bg-white/[0.02] rounded-lg px-3 py-2 border border-white/[0.05]">
+                                                                Empfehlung: {audit.geo.suggestions[i]}
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                ))}
                                             </div>
-                                        ))}
+                                        ) : (
+                                            <div className="text-center py-4 text-emerald-400 text-sm mb-4">
+                                                Alle GEO-Checks bestanden ✓
+                                            </div>
+                                        )}
 
-                                        {audit.geo.generatedLlmsTxt && (
-                                            <div className="mt-4">
+                                        {/* Priorisierte Massnahmen */}
+                                        {audit.geo.recommendations?.length > 0 && (
+                                            <div className="space-y-2 mb-5">
+                                                <div className="text-[10px] text-slate-600 uppercase tracking-wider mb-2">Priorisierte Massnahmen</div>
+                                                {audit.geo.recommendations.map((r, i) => (
+                                                    <div key={i} className="flex gap-3 bg-white/2 border border-white/[0.06] rounded-xl p-4">
+                                                        <span className={`text-xs font-bold px-2 py-1 rounded shrink-0 h-fit ${
+                                                            r.priority === 'critical' ? 'bg-red-500/15 text-red-400' :
+                                                            r.priority === 'high' ? 'bg-amber-500/15 text-amber-400' :
+                                                            'bg-blue-500/15 text-blue-400'
+                                                        }`}>{r.priority}</span>
+                                                        <div className="flex-1 min-w-0">
+                                                            <div className="text-sm font-semibold text-white mb-1">{r.title}</div>
+                                                            <div className="text-xs text-slate-500 leading-relaxed">{r.desc}</div>
+                                                        </div>
+                                                        <div className="text-xs text-slate-600 shrink-0 whitespace-nowrap">{r.effort}</div>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        )}
+
+                                        {/* Generated llms.txt */}
+                                        {!audit.geo.checks?.hasLlmsTxt && audit.geo.generatedLlmsTxt && (
+                                            <div className="mt-2">
                                                 <div className="text-xs font-bold text-cyan-400 uppercase tracking-wider mb-2">
-                                                    Generated llms.txt — save as /llms.txt in your project
+                                                    Generierte llms.txt — als /llms.txt in dein Projekt speichern
                                                 </div>
-                                                <pre className="bg-cyan-500/5 border border-cyan-500/15 rounded-xl p-4 text-xs text-slate-400 overflow-auto">
+                                                <pre className="bg-cyan-500/5 border border-cyan-500/15 rounded-xl p-4 text-xs text-slate-400 overflow-auto whitespace-pre-wrap">
                                                     {audit.geo.generatedLlmsTxt}
                                                 </pre>
                                             </div>
