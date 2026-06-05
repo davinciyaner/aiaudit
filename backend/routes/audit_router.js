@@ -35,7 +35,13 @@ function optionalAuth(req, res, next) {
     next();
 }
 
-// Blockiert private/lokale URLs (SSRF-Schutz)
+const TRACKING_PARAM_RE = /^(utm_|fbclid|gclid|msclkid|dclid|gbraid|wbraid|mc_eid|mc_cid|_ga)/;
+
+const NON_AUDITABLE_DOMAINS = new Set(['paypal.com', 'stripe.com', 'pay.google.com', 'klarna.com', 'adyen.com']);
+
+const NON_AUDITABLE_PATH_RE = /^\/(login|signin|sign-in|signup|sign-up|register|checkout|cart|account|password|auth|session)(\/|$)/i;
+
+// Blockiert private/lokale URLs (SSRF-Schutz), normalisiert Tracking-Parameter weg
 function validateURL(url) {
     let parsed;
     try {
@@ -60,6 +66,26 @@ function validateURL(url) {
     if (blocked.some(r => r.test(host))) {
         throw new Error("Private oder lokale URLs sind nicht erlaubt");
     }
+
+    const domain = host.replace(/^www\./, '');
+    if (NON_AUDITABLE_DOMAINS.has(domain) || [...NON_AUDITABLE_DOMAINS].some(d => domain.endsWith(`.${d}`))) {
+        const err = new Error("Diese URL ist für einen SEO-Audit nicht geeignet (Zahlungsanbieter). Bitte eine reguläre Seite oder Startseite eingeben.");
+        err.status = 400;
+        throw err;
+    }
+
+    if (NON_AUDITABLE_PATH_RE.test(parsed.pathname)) {
+        const err = new Error("Login-, Checkout- und Account-Seiten können nicht sinnvoll auditiert werden. Bitte die Startseite oder eine Produktseite eingeben.");
+        err.status = 400;
+        throw err;
+    }
+
+    // Tracking-Parameter und Fragment entfernen – für Analyse irrelevant und stört Domain-Deduplizierung
+    for (const key of [...parsed.searchParams.keys()]) {
+        if (TRACKING_PARAM_RE.test(key)) parsed.searchParams.delete(key);
+    }
+    parsed.hash = '';
+
     return parsed.href;
 }
 
