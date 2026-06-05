@@ -182,6 +182,14 @@ export default function Dashboard() {
         },
     ].filter(s => s.count > 0) : []
 
+    const anonymousIssues = !isLoggedIn && audit ? [
+        ...(audit.security?.checks?.filter(c => !c.passed && ['critical', 'high'].includes(c.severity)).map(c => ({ text: c.name, type: 'critical' })) ?? []),
+        ...(audit.security?.checks?.filter(c => !c.passed && !['critical', 'high'].includes(c.severity)).map(c => ({ text: c.name, type: 'warn' })) ?? []),
+        ...(audit.seo?.issues?.map(i => ({ text: i, type: 'warn' })) ?? []),
+        ...(audit.performance?.issues?.map(i => ({ text: i, type: 'warn' })) ?? []),
+        ...(audit.geo?.issues?.slice(0, 2).map(i => ({ text: i, type: 'warn' })) ?? []),
+    ].slice(0, 9) : []
+
     return (
         <div className="min-h-screen bg-[#080b14]">
             <Toaster
@@ -370,6 +378,25 @@ export default function Dashboard() {
                             <ScoreCard label="Security" score={audit?.security?.score ?? 0} delay={0.3} />
                             <ScoreCard label="GEO" score={audit?.geo?.score ?? 0} delay={0.4} />
                         </div>
+
+                        {/* PROBLEM LIST — anonymous: was kaputt ist, Lösungen hinter Gate */}
+                        {!isLoggedIn && anonymousIssues.length > 0 && (
+                            <div className="rounded-2xl border border-white/[0.08] bg-[#0d1117] p-5 sm:p-6">
+                                <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">Gefundene Probleme</p>
+                                <div className="space-y-2">
+                                    {anonymousIssues.map((issue, i) => (
+                                        <div key={i} className={`flex items-start gap-3 px-3 py-2.5 rounded-xl text-sm ${
+                                            issue.type === 'critical'
+                                                ? 'bg-red-500/[0.08] border border-red-500/20 text-red-300'
+                                                : 'bg-amber-500/[0.06] border border-amber-500/15 text-amber-200/80'
+                                        }`}>
+                                            <span className="shrink-0 mt-0.5">{issue.type === 'critical' ? '❌' : '⚠️'}</span>
+                                            <span>{issue.text}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
 
                         {/* GATE for anonymous users */}
                         {!isLoggedIn && (
