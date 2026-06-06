@@ -30,6 +30,7 @@ import Loading from '../components/Loading'
 import ReauditCTA from '../components/ReauditCTA'
 import RegistrationGate from '../components/RegistrationGate'
 import FeedbackWidget from '../components/FeedbackWidget'
+import ScoreRegisterModal from '../components/ScoreRegisterModal'
 
 function IssueItem({ text, type = 'error' }) {
     const styles = {
@@ -90,6 +91,7 @@ export default function Dashboard() {
     const [isLoggedIn, setIsLoggedIn] = useState(false)
     const [userName, setUserName] = useState('')
     const [menuOpen, setMenuOpen] = useState(false)
+    const [scoreModalOpen, setScoreModalOpen] = useState(false)
     const menuRef = useRef(null)
 
     useEffect(() => {
@@ -372,12 +374,18 @@ export default function Dashboard() {
 
                         {/* SCORE CARDS — always visible */}
                         <div className="grid grid-cols-2 md:grid-cols-5 gap-3 sm:gap-4">
-                            <ScoreCard label="Overall" score={audit.overallScore ?? 0} />
-                            <ScoreCard label="SEO" score={audit?.seo?.score ?? 0} delay={0.1} />
-                            <ScoreCard label="Performance" score={audit?.performance?.score ?? 0} delay={0.2} />
-                            <ScoreCard label="Security" score={audit?.security?.score ?? 0} delay={0.3} />
-                            <ScoreCard label="GEO" score={audit?.geo?.score ?? 0} delay={0.4} />
+                            <ScoreCard label="Overall" score={audit.overallScore ?? 0} onClick={!isLoggedIn ? () => setScoreModalOpen(true) : undefined} />
+                            <ScoreCard label="SEO" score={audit?.seo?.score ?? 0} delay={0.1} onClick={!isLoggedIn ? () => setScoreModalOpen(true) : undefined} />
+                            <ScoreCard label="Performance" score={audit?.performance?.score ?? 0} delay={0.2} onClick={!isLoggedIn ? () => setScoreModalOpen(true) : undefined} />
+                            <ScoreCard label="Security" score={audit?.security?.score ?? 0} delay={0.3} onClick={!isLoggedIn ? () => setScoreModalOpen(true) : undefined} />
+                            <ScoreCard label="GEO" score={audit?.geo?.score ?? 0} delay={0.4} onClick={!isLoggedIn ? () => setScoreModalOpen(true) : undefined} />
                         </div>
+
+                        <ScoreRegisterModal
+                            open={scoreModalOpen}
+                            onClose={() => setScoreModalOpen(false)}
+                            auditUrl={auditUrl}
+                        />
 
                         {/* PROBLEM LIST — anonymous: was kaputt ist, Lösungen hinter Gate */}
                         {!isLoggedIn && anonymousIssues.length > 0 && (

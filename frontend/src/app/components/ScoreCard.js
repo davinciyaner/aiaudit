@@ -1,7 +1,7 @@
 'use client'
 import { motion } from 'framer-motion'
 
-export default function ScoreCard({ label, score, delay = 0 }) {
+export default function ScoreCard({ label, score, delay = 0, onClick }) {
     const color = score >= 80 ? '#22c55e' : score >= 60 ? '#f59e0b' : '#ef4444'
     const bgColor = score >= 80 ? 'rgba(34,197,94,0.1)' : score >= 60 ? 'rgba(245,158,11,0.1)' : 'rgba(239,68,68,0.1)'
     const borderColor = score >= 80 ? 'rgba(34,197,94,0.2)' : score >= 60 ? 'rgba(245,158,11,0.2)' : 'rgba(239,68,68,0.2)'
@@ -14,7 +14,8 @@ export default function ScoreCard({ label, score, delay = 0 }) {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.4, delay }}
-            className="bg-white/[0.03] border border-white/[0.07] rounded-2xl p-4 sm:p-6 text-center"
+            onClick={onClick}
+            className={`bg-white/[0.03] border border-white/[0.07] rounded-2xl p-4 sm:p-6 text-center ${onClick ? 'cursor-pointer hover:border-violet-500/30 hover:bg-white/[0.05] transition-all' : ''}`}
         >
             <div className="text-xs text-slate-500 uppercase tracking-widest mb-3">{label}</div>
             <div className="relative w-20 h-20 mx-auto mb-3">
