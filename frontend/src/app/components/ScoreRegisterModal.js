@@ -4,14 +4,16 @@ import { X, Lock, UserPlus, Search, Shield, Zap, Globe } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
-const UNLOCK_ITEMS = [
-    { icon: Search, label: 'Alle SEO-Fehler & Fixes' },
-    { icon: Shield, label: 'Security-Details' },
-    { icon: Zap, label: 'Performance-Tipps' },
-    { icon: Globe, label: 'GEO-Empfehlungen' },
+const FREE_ITEMS = [
+    { icon: Search, label: 'SEO-Analyse & alle Probleme' },
+    { icon: Shield, label: 'Security-Checks' },
+    { icon: Zap, label: 'Performance-Score' },
+    { icon: Globe, label: 'KI-Sichtbarkeit (GEO)' },
 ]
 
-export default function ScoreRegisterModal({ open, onClose, auditUrl = '' }) {
+
+// mode="start" → Pre-Audit (Registrierung nötig um zu starten)
+export default function ScoreRegisterModal({ open, onClose, auditUrl = '', mode = 'start' }) {
     const router = useRouter()
 
     const handleRegister = () => {
@@ -58,20 +60,27 @@ export default function ScoreRegisterModal({ open, onClose, auditUrl = '' }) {
                                 </div>
 
                                 <h3 className="text-xl font-bold text-white mb-2">
-                                    Vollständiges Audit freischalten
+                                    Kostenlos registrieren & Audit starten
                                 </h3>
-                                <p className="text-slate-400 text-sm mb-6 leading-relaxed">
-                                    Registriere dich kostenlos, um das komplette Audit zu erhalten — mit allen Fehlermeldungen und konkreten Verbesserungsvorschlägen für deine Website.
+                                <p className="text-slate-400 text-sm mb-5 leading-relaxed">
+                                    Mit einem kostenlosen Account siehst du alle Scores, Probleme und Security-Checks deiner Website.
                                 </p>
 
-                                <div className="grid grid-cols-2 gap-2 mb-6">
-                                    {UNLOCK_ITEMS.map(({ icon: Icon, label }) => (
-                                        <div key={label} className="flex items-center gap-2 p-3 bg-white/3 border border-white/6 rounded-xl text-left">
-                                            <Icon className="w-4 h-4 text-violet-400 shrink-0" />
-                                            <span className="text-xs text-slate-400">{label}</span>
-                                        </div>
-                                    ))}
+                                <div className="mb-3">
+                                    <div className="flex items-center gap-2 mb-2">
+                                        <span className="text-[10px] font-semibold uppercase tracking-wider text-emerald-400">Kostenlos enthalten</span>
+                                        <div className="flex-1 h-px bg-white/5" />
+                                    </div>
+                                    <div className="grid grid-cols-2 gap-2">
+                                        {FREE_ITEMS.map(({ icon: Icon, label }) => (
+                                            <div key={label} className="flex items-center gap-2 p-3 bg-white/3 border border-white/6 rounded-xl text-left">
+                                                <Icon className="w-4 h-4 text-emerald-400 shrink-0" />
+                                                <span className="text-xs text-slate-400">{label}</span>
+                                            </div>
+                                        ))}
+                                    </div>
                                 </div>
+
 
                                 <button
                                     onClick={handleRegister}

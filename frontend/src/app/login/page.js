@@ -164,13 +164,6 @@ export default function LoginPage() {
                         </Link>
                     </div>
 
-                    <div className="mt-8 pt-6 border-t border-white/5 text-center">
-                        <p className="text-xs text-slate-700">Kein Account nötig für einen kostenlosen Audit —{' '}
-                            <Link href="/dashboard" className="text-slate-500 hover:text-slate-400 underline underline-offset-2 transition-colors">
-                                direkt starten
-                            </Link>
-                        </p>
-                    </div>
                 </motion.div>
             </div>
         </div>

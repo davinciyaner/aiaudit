@@ -7,10 +7,10 @@ import toast, {Toaster} from 'react-hot-toast'
 import {useRouter} from 'next/navigation'
 
 const BENEFITS = [
-    {icon: Check, text: 'Audit-Verlauf dauerhaft gespeichert'},
-    {icon: Check, text: 'PDF-Reports jederzeit abrufbar'},
+    {icon: Check, text: 'Vollständiger Audit mit allen Scores'},
+    {icon: Check, text: 'SEO, Security, Performance & GEO'},
     {icon: Check, text: '1 kostenloser Audit pro Monat'},
-    {icon: Check, text: 'KI-Bericht mit konkreten Fixes'},
+    {icon: Check, text: 'Verbesserungsvorschläge & PDF mit Pro'},
 ]
 
 const PLAN_FEATURES = [

@@ -4,11 +4,12 @@ import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
 import { ArrowRight, Globe, Search, Bot } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import ScoreRegisterModal from './ScoreRegisterModal'
 
 const STATS = [
     { value: '1.000+', label: 'Audits durchgeführt' },
     { value: '< 60s', label: 'bis zum fertigen Bericht' },
-    { value: 'Gratis', label: 'kein Account nötig' },
+    { value: 'Gratis', label: 'kostenlos starten' },
 ]
 
 // --- Audit Demo ---
@@ -196,7 +197,7 @@ function AuditDemo() {
                                 }>
                                 {urlReady ? 'Website prüfen →' : 'Website prüfen'}
                             </motion.div>
-                            <p className="text-[10px] text-slate-600 text-center mt-3">Kostenlos · Kein Account nötig</p>
+                            <p className="text-[10px] text-slate-600 text-center mt-3">Kostenlos · Registrierung erforderlich</p>
                         </motion.div>
                     )}
 
@@ -276,6 +277,9 @@ export default function Hero() {
     const [heroUrl, setHeroUrl] = useState('')
     const [showStickyBar, setShowStickyBar] = useState(false)
     const [showError, setShowError] = useState(false)
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
+    const [showRegModal, setShowRegModal] = useState(false)
+    const [pendingModalUrl, setPendingModalUrl] = useState('')
     const heroRef = useRef(null)
     const formRef = useRef(null)
     const inputRef = useRef(null)
@@ -285,6 +289,10 @@ export default function Hero() {
     const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] })
     const heroY = useTransform(scrollYProgress, [0, 1], ['0%', '20%'])
     const heroOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0])
+
+    useEffect(() => {
+        setIsLoggedIn(!!localStorage.getItem('token'))
+    }, [])
 
     useEffect(() => {
         const handleScroll = () => {
@@ -310,11 +318,22 @@ export default function Hero() {
         setShowError(false)
         const normalized = heroUrl.trim().startsWith('http') ? heroUrl.trim() : 'https://' + heroUrl.trim()
         sessionStorage.setItem('pendingAuditUrl', normalized)
+        if (!isLoggedIn) {
+            setPendingModalUrl(normalized)
+            setShowRegModal(true)
+            return
+        }
         router.push('/dashboard')
     }
 
     return (
         <>
+        <ScoreRegisterModal
+            open={showRegModal}
+            onClose={() => setShowRegModal(false)}
+            auditUrl={pendingModalUrl}
+            mode="start"
+        />
         <AnimatePresence>
             {showStickyBar && (
                 <>
@@ -502,7 +521,7 @@ export default function Hero() {
                                             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
                                             transition={{ duration: 0.15 }}
                                             className="flex items-center gap-4 mb-3">
-                                            <span className="text-xs text-slate-600">Kostenlos · Kein Account nötig · ~60 Sekunden</span>
+                                            <span className="text-xs text-slate-600">Kostenlos · Registrierung erforderlich · ~60 Sekunden</span>
                                             <Link href="#testautomation" className="flex items-center gap-1.5 text-xs text-slate-500 hover:text-slate-300 transition-colors ml-auto">
                                                 <Bot className="w-3.5 h-3.5 text-violet-400" />
                                                 Testautomatisierung
