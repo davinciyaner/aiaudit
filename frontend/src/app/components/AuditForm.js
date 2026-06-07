@@ -32,7 +32,7 @@ function saveAuditedDomain(domain) {
     }
 }
 
-export default function AuditForm({ onAuditStart, onAuditComplete, defaultUrl = '' }) {
+export default function AuditForm({ onAuditStart, onAuditComplete, defaultUrl = '', onRequiresAuth }) {
     const [url, setUrl] = useState(defaultUrl)
     const [loading, setLoading] = useState(false)
 
@@ -46,8 +46,9 @@ export default function AuditForm({ onAuditStart, onAuditComplete, defaultUrl = 
         const domain = extractDomain(auditUrl)
         const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
 
-        if (!token && domain && getAuditedDomains().includes(domain)) {
-            onAuditComplete?.({ domainLimitReached: true, domain })
+        if (!token) {
+            sessionStorage.setItem('pendingAuditUrl', auditUrl)
+            onRequiresAuth?.(auditUrl)
             return
         }
 
@@ -131,7 +132,7 @@ export default function AuditForm({ onAuditStart, onAuditComplete, defaultUrl = 
                 </motion.button>
             </div>
             <p className="text-xs text-slate-600 text-center mt-3">
-                Kostenlos · Kein Account nötig · Ergebnis in ~60 Sekunden
+                Kostenlos · Registrierung erforderlich · Ergebnis in ~60 Sekunden
             </p>
         </form>
     )

@@ -91,7 +91,8 @@ export default function Dashboard() {
     const [isLoggedIn, setIsLoggedIn] = useState(false)
     const [userName, setUserName] = useState('')
     const [menuOpen, setMenuOpen] = useState(false)
-    const [scoreModalOpen, setScoreModalOpen] = useState(false)
+    const [registerModalOpen, setRegisterModalOpen] = useState(false)
+    const [registerModalUrl, setRegisterModalUrl] = useState('')
     const menuRef = useRef(null)
 
     useEffect(() => {
@@ -120,7 +121,13 @@ export default function Dashboard() {
         const pending = sessionStorage.getItem('pendingAuditUrl')
         if (pending) {
             sessionStorage.removeItem('pendingAuditUrl')
-            runAudit(pending, token || null)
+            if (token) {
+                runAudit(pending, token)
+            } else {
+                setAuditUrl(pending)
+                setRegisterModalUrl(pending)
+                setRegisterModalOpen(true)
+            }
         }
     }, [])
 
@@ -165,6 +172,7 @@ export default function Dashboard() {
     }
 
     const audit = result?.auditData
+    const isPro = !!result?.aiReport
 
     const gateStats = audit ? [
         {
@@ -298,8 +306,16 @@ export default function Dashboard() {
                     <AuditForm
                         onAuditStart={(url) => { handleStart(); setAuditUrl(url) }}
                         onAuditComplete={handleComplete}
+                        onRequiresAuth={(url) => { setRegisterModalUrl(url); setRegisterModalOpen(true) }}
                     />
                 )}
+
+                <ScoreRegisterModal
+                    open={registerModalOpen}
+                    onClose={() => setRegisterModalOpen(false)}
+                    auditUrl={registerModalUrl}
+                    mode="start"
+                />
 
                 {/* LOADING */}
                 {loading && <Loading url={auditUrl} />}
@@ -374,18 +390,12 @@ export default function Dashboard() {
 
                         {/* SCORE CARDS — always visible */}
                         <div className="grid grid-cols-2 md:grid-cols-5 gap-3 sm:gap-4">
-                            <ScoreCard label="Overall" score={audit.overallScore ?? 0} onClick={!isLoggedIn ? () => setScoreModalOpen(true) : undefined} />
-                            <ScoreCard label="SEO" score={audit?.seo?.score ?? 0} delay={0.1} onClick={!isLoggedIn ? () => setScoreModalOpen(true) : undefined} />
-                            <ScoreCard label="Performance" score={audit?.performance?.score ?? 0} delay={0.2} onClick={!isLoggedIn ? () => setScoreModalOpen(true) : undefined} />
-                            <ScoreCard label="Security" score={audit?.security?.score ?? 0} delay={0.3} onClick={!isLoggedIn ? () => setScoreModalOpen(true) : undefined} />
-                            <ScoreCard label="GEO" score={audit?.geo?.score ?? 0} delay={0.4} onClick={!isLoggedIn ? () => setScoreModalOpen(true) : undefined} />
+                            <ScoreCard label="Overall" score={audit.overallScore ?? 0} />
+                            <ScoreCard label="SEO" score={audit?.seo?.score ?? 0} delay={0.1} />
+                            <ScoreCard label="Performance" score={audit?.performance?.score ?? 0} delay={0.2} />
+                            <ScoreCard label="Security" score={audit?.security?.score ?? 0} delay={0.3} />
+                            <ScoreCard label="GEO" score={audit?.geo?.score ?? 0} delay={0.4} />
                         </div>
-
-                        <ScoreRegisterModal
-                            open={scoreModalOpen}
-                            onClose={() => setScoreModalOpen(false)}
-                            auditUrl={auditUrl}
-                        />
 
                         {/* PROBLEM LIST — anonymous: was kaputt ist, Lösungen hinter Gate */}
                         {!isLoggedIn && anonymousIssues.length > 0 && (
@@ -515,13 +525,13 @@ export default function Dashboard() {
                                         ))}
                                     </div>
 
-                                    {/* Issues + Empfehlungen */}
+                                    {/* Issues + Empfehlungen (nur Pro) */}
                                     {audit?.seo?.issues?.length > 0 ? (
                                         <div className="space-y-3">
                                             {audit.seo.issues.map((issue, i) => (
                                                 <div key={i} className="space-y-1.5">
                                                     <IssueItem text={issue} type="error" />
-                                                    {audit.seo.suggestions?.[i] && (
+                                                    {isPro && audit.seo.suggestions?.[i] && (
                                                         <div className="ml-6 text-xs text-slate-500 bg-white/[0.02] rounded-lg px-3 py-2 border border-white/[0.05]">
                                                             Empfehlung: {audit.seo.suggestions[i]}
                                                         </div>
@@ -588,13 +598,13 @@ export default function Dashboard() {
                                             ))}
                                         </div>
 
-                                        {/* Issues + Empfehlungen */}
+                                        {/* Issues + Empfehlungen (nur Pro) */}
                                         {audit.geo.issues?.length > 0 ? (
                                             <div className="space-y-3 mb-5">
                                                 {audit.geo.issues.map((issue, i) => (
                                                     <div key={i} className="space-y-1.5">
                                                         <IssueItem text={issue} type="error" />
-                                                        {audit.geo.suggestions?.[i] && (
+                                                        {isPro && audit.geo.suggestions?.[i] && (
                                                             <div className="ml-6 text-xs text-slate-500 bg-white/[0.02] rounded-lg px-3 py-2 border border-white/[0.05]">
                                                                 Empfehlung: {audit.geo.suggestions[i]}
                                                             </div>
@@ -608,8 +618,8 @@ export default function Dashboard() {
                                             </div>
                                         )}
 
-                                        {/* Priorisierte Massnahmen */}
-                                        {audit.geo.recommendations?.length > 0 && (
+                                        {/* Priorisierte Massnahmen — nur Pro */}
+                                        {isPro && audit.geo.recommendations?.length > 0 && (
                                             <div className="space-y-2 mb-5">
                                                 <div className="text-[10px] text-slate-600 uppercase tracking-wider mb-2">Priorisierte Massnahmen</div>
                                                 {audit.geo.recommendations.map((r, i) => (
@@ -629,8 +639,8 @@ export default function Dashboard() {
                                             </div>
                                         )}
 
-                                        {/* Generated llms.txt */}
-                                        {!audit.geo.checks?.hasLlmsTxt && audit.geo.generatedLlmsTxt && (
+                                        {/* Generated llms.txt — nur Pro */}
+                                        {isPro && !audit.geo.checks?.hasLlmsTxt && audit.geo.generatedLlmsTxt && (
                                             <div className="mt-2">
                                                 <div className="text-xs font-bold text-cyan-400 uppercase tracking-wider mb-2">
                                                     Generierte llms.txt — als /llms.txt in dein Projekt speichern
@@ -669,7 +679,7 @@ export default function Dashboard() {
                                             {audit.security.issues.map((issue, i) => (
                                                 <div key={i} className="space-y-1.5">
                                                     <IssueItem text={issue} type="error" />
-                                                    {audit.security.suggestions?.[i] && (
+                                                    {isPro && audit.security.suggestions?.[i] && (
                                                         <div className="ml-6 text-xs text-slate-500 bg-white/[0.02] rounded-lg px-3 py-2 border border-white/[0.05]">
                                                             Empfehlung: {audit.security.suggestions[i]}
                                                         </div>
