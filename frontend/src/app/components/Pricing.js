@@ -1,19 +1,22 @@
 'use client'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Check, Zap } from 'lucide-react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import ScoreRegisterModal from './ScoreRegisterModal'
 
 const plans = [
     {
         id: 'free', name: 'Free', price: '0', period: 'forever',
         desc: 'Zum Ausprobieren von AuditAI',
-        features: ['1 Audit pro Monat', 'SEO-Score & Analyse', 'Performance-Metriken', 'Security-Check', 'GEO-Sichtbarkeit'],
-        cta: 'Kostenlos starten', href: '/dashboard', highlight: false,
+        features: ['1 Audit pro Monat', 'SEO-Score & Analyse', 'GEO-Sichtbarkeit', 'Security-Check', 'Performance-Metriken', 'Audit-Verlauf'],
+        cta: 'Kostenlos starten', highlight: false,
     },
     {
         id: 'pro', name: 'Pro', price: '29', period: 'pro Monat',
         desc: 'Für Freelancer und kleine Agenturen',
-        features: ['10 Audits pro Monat', 'Alles aus Free', 'KI-generierter Bericht', 'Desktop + Mobile Screenshots', 'PDF-Export', 'Audit-Verlauf'],
+        features: ['10 Audits pro Monat', 'Alles aus Free', 'KI-generierter Bericht', 'Desktop + Mobile Screenshots', 'PDF-Export'],
         cta: 'Pro holen', highlight: true, badge: 'Beliebteste',
     },
     {
@@ -25,7 +28,22 @@ const plans = [
 ]
 
 export default function Pricing() {
+    const router = useRouter()
+    const [modalOpen, setModalOpen] = useState(false)
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
+
+    useEffect(() => {
+        setIsLoggedIn(!!localStorage.getItem('token'))
+    }, [])
+
+    const handleFreeCta = () => {
+        if (isLoggedIn) router.push('/dashboard')
+        else setModalOpen(true)
+    }
+
     return (
+        <>
+        <ScoreRegisterModal open={modalOpen} onClose={() => setModalOpen(false)} />
         <section id="pricing" className="relative py-16 md:py-28 bg-[#05080f]">
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] rounded-full blur-3xl pointer-events-none" style={{ background: 'radial-gradient(ellipse, rgba(124,58,237,0.06) 0%, transparent 70%)' }} />
             <div className="relative z-10 max-w-6xl mx-auto px-5 sm:px-8">
@@ -68,14 +86,22 @@ export default function Pricing() {
                                     </div>
                                 ))}
                             </div>
-                            <Link href={plan.href || '/pricing'}
-                                  className={`block w-full py-4 text-center text-sm font-semibold rounded-xl transition-all duration-200 ${plan.highlight ? 'bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white shadow-lg shadow-violet-500/20' : 'border border-white/10 text-slate-300 hover:text-white hover:border-white/20 hover:bg-white/5'}`}>
-                                {plan.cta}
-                            </Link>
+                            {plan.id === 'free' ? (
+                                <button onClick={handleFreeCta}
+                                    className="block w-full py-4 text-center text-sm font-semibold rounded-xl transition-all duration-200 border border-white/10 text-slate-300 hover:text-white hover:border-white/20 hover:bg-white/5">
+                                    {plan.cta}
+                                </button>
+                            ) : (
+                                <Link href={plan.href || '/pricing'}
+                                    className={`block w-full py-4 text-center text-sm font-semibold rounded-xl transition-all duration-200 ${plan.highlight ? 'bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white shadow-lg shadow-violet-500/20' : 'border border-white/10 text-slate-300 hover:text-white hover:border-white/20 hover:bg-white/5'}`}>
+                                    {plan.cta}
+                                </Link>
+                            )}
                         </motion.div>
                     ))}
                 </div>
             </div>
         </section>
+        </>
     )
 }

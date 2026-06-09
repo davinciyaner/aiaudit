@@ -1,14 +1,15 @@
 'use client'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, Lock, UserPlus, Search, Shield, Zap, Globe } from 'lucide-react'
+import { X, Lock, UserPlus, Search, Shield, Zap, Globe, Calendar, BarChart2 } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
 const FREE_ITEMS = [
-    { icon: Search, label: 'SEO-Analyse & alle Probleme' },
-    { icon: Shield, label: 'Security-Checks' },
-    { icon: Zap, label: 'Performance-Score' },
-    { icon: Globe, label: 'KI-Sichtbarkeit (GEO)' },
+    { icon: Calendar, label: '1 Audit pro Monat', desc: 'Vollständige Analyse deiner Website' },
+    { icon: Search, label: 'SEO-Score & Analyse', desc: 'Title, Meta, H1, Alt-Texte & alle Fehler' },
+    { icon: Globe, label: 'GEO-Sichtbarkeit', desc: 'llms.txt, Schema, KI-Crawler & alle Checks' },
+    { icon: Shield, label: 'Security-Check', desc: 'HTTPS, Headers & alle Sicherheitslücken' },
+    { icon: BarChart2, label: 'Performance-Metriken', desc: 'Ladezeiten, Core Web Vitals & alle Issues' },
 ]
 
 
@@ -71,11 +72,16 @@ export default function ScoreRegisterModal({ open, onClose, auditUrl = '', mode 
                                         <span className="text-[10px] font-semibold uppercase tracking-wider text-emerald-400">Kostenlos enthalten</span>
                                         <div className="flex-1 h-px bg-white/5" />
                                     </div>
-                                    <div className="grid grid-cols-2 gap-2">
-                                        {FREE_ITEMS.map(({ icon: Icon, label }) => (
-                                            <div key={label} className="flex items-center gap-2 p-3 bg-white/3 border border-white/6 rounded-xl text-left">
-                                                <Icon className="w-4 h-4 text-emerald-400 shrink-0" />
-                                                <span className="text-xs text-slate-400">{label}</span>
+                                    <div className="flex flex-col gap-1.5">
+                                        {FREE_ITEMS.map(({ icon: Icon, label, desc }) => (
+                                            <div key={label} className="flex items-center gap-3 px-3 py-2.5 bg-white/3 border border-white/6 rounded-xl text-left">
+                                                <div className="w-7 h-7 rounded-lg bg-emerald-500/10 flex items-center justify-center shrink-0">
+                                                    <Icon className="w-3.5 h-3.5 text-emerald-400" />
+                                                </div>
+                                                <div className="min-w-0">
+                                                    <div className="text-xs font-medium text-slate-200 leading-tight">{label}</div>
+                                                    <div className="text-[11px] text-slate-500 leading-tight mt-0.5">{desc}</div>
+                                                </div>
                                             </div>
                                         ))}
                                     </div>

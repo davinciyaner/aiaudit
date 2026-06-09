@@ -5,7 +5,7 @@ import {
     User, Mail, Crown, Building2, Zap, BarChart2,
     Receipt, Download, AlertTriangle, Loader2, CheckCircle, XCircle,
     MessageSquare, Clock, Wrench, ArrowRight, Plus, History, ExternalLink,
-    ChevronLeft, ChevronRight
+    ChevronLeft, ChevronRight, Lock
 } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -298,13 +298,20 @@ export default function ProfilePage() {
                                                         <div className={`text-sm font-bold ${scoreColor(report.scores.overall)}`}>{report.scores.overall}</div>
                                                         <div className="text-[9px] text-slate-600 uppercase tracking-wide">Ges</div>
                                                     </div>
-                                                    {pdfUrl && (
+                                                    {plan === 'free' ? (
+                                                        <Link href="/pricing"
+                                                            className="flex items-center gap-1 px-2.5 py-1.5 border border-white/6 text-slate-600 text-xs rounded-lg cursor-pointer opacity-50 hover:opacity-75 transition-opacity"
+                                                            title="PDF-Export nur mit Pro">
+                                                            <Lock className="w-3 h-3" />
+                                                            <span className="hidden sm:inline">PDF</span>
+                                                        </Link>
+                                                    ) : pdfUrl ? (
                                                         <a href={pdfUrl} target="_blank" rel="noopener noreferrer"
                                                             className="flex items-center gap-1 px-2.5 py-1.5 border border-white/10 text-slate-400 hover:text-white hover:border-white/20 text-xs rounded-lg transition-all">
                                                             <Download className="w-3 h-3" />
                                                             <span className="hidden sm:inline">PDF</span>
                                                         </a>
-                                                    )}
+                                                    ) : null}
                                                 </div>
                                             </div>
                                         )
