@@ -183,9 +183,9 @@ export async function runAudit(url) {
 
         const overallScore = Math.round(
             (seo.score * 0.30) +
-            (performance.score * 0.20) +
+            (performance.score * 0.15) +
             (security.score * 0.25) +
-            (geo.score * 0.25)
+            (geo.score * 0.30)
         )
 
         console.log(`Audit abgeschlossen | Gesamt: ${overallScore}/100 | ${crawledPages.length} Seiten analysiert`)
