@@ -2,22 +2,29 @@
 import {useState} from 'react'
 import Link from 'next/link'
 import {motion} from 'framer-motion'
-import {Zap, Mail, Lock, User, ArrowRight, Check, Shield, Brain, TrendingUp} from 'lucide-react'
+import {Zap, Mail, Lock, User, ArrowRight, Check, Shield, Search, Globe} from 'lucide-react'
 import toast, {Toaster} from 'react-hot-toast'
 import {useRouter} from 'next/navigation'
 
 const BENEFITS = [
-    {icon: Check, text: 'Vollständiger Audit mit allen Scores'},
-    {icon: Check, text: 'SEO, Security, Performance & GEO'},
-    {icon: Check, text: '1 kostenloser Audit pro Monat'},
-    {icon: Check, text: 'Verbesserungsvorschläge & PDF mit Pro'},
+    {icon: Check, text: '1 Audit pro Monat - vollständig & kostenlos'},
+    {icon: Check, text: 'SEO: Title, Meta, H1, Alt-Texte & alle Fehler'},
+    {icon: Check, text: 'GEO: llms.txt, Schema, KI-Crawler & alle Checks'},
+    {icon: Check, text: 'Security: HTTPS, Headers & alle Lücken'},
 ]
 
 const PLAN_FEATURES = [
     {icon: Shield, label: 'Security', value: '14 Checks', color: '#ef4444'},
-    {icon: Brain, label: 'AI-Report', value: 'Inklusive', color: '#7c3aed'},
-    {icon: TrendingUp, label: 'GEO Score', value: 'Neu', color: '#6366f1'},
+    {icon: Search, label: 'SEO', value: '14 Checks', color: '#7c3aed'},
+    {icon: Globe, label: 'GEO', value: '19 Checks', color: '#06b6d4'},
     {icon: Zap, label: 'Speed', value: '60s', color: '#f59e0b'},
+]
+
+const REVIEWS = [
+    {name: 'Niklas',   text: 'Durch die Übersicht meiner Audits auf meinem Profil, habe ich einen viel besseren Überblick bekommen.'},
+    {name: 'Thorsten', text: 'Ich bin durch den KI-Report direkt auf Seite 1 bei Google gerankt.'},
+    {name: 'Daniel',   text: 'Ich habe sofort alle meine SEO-Fehler gefunden.'},
+    {name: 'Max R.',   text: 'Habe sofort 3 Security-Lücken entdeckt, die ich nicht kannte.'},
 ]
 
 export default function RegisterPage() {
@@ -91,16 +98,15 @@ export default function RegisterPage() {
 
                     <div className="mb-8">
                         <h1 className="text-3xl font-bold text-white mb-2">Account erstellen</h1>
-                        <p className="text-slate-400 text-sm">Kostenlos starten. Keine Kreditkarte nötig.</p>
                     </div>
 
                     <form onSubmit={handleSubmit} className="space-y-4">
                         <div>
-                            <label className="text-sm text-slate-300 mb-2 block font-medium">Name</label>
+                            <label className="text-sm text-slate-300 mb-2 block font-medium">Benutzername</label>
                             <div className="relative">
                                 <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500"/>
                                 <input type="text" name="name" value={formData.name} onChange={handleChange}
-                                       placeholder="Max Mustermann" required
+                                       placeholder="Benutzername" required
                                        className="w-full bg-white/3 border border-white/10 hover:border-white/15 focus:border-violet-500/60 rounded-xl pl-11 pr-4 py-3.5 text-white placeholder:text-slate-600 outline-none transition-all text-sm"/>
                             </div>
                         </div>
@@ -145,7 +151,7 @@ export default function RegisterPage() {
                                         className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"/>
                                     Account wird erstellt...</>
                             ) : (
-                                <>Account erstellen <ArrowRight className="w-4 h-4"/></>
+                                <>Account erstellen</>
                             )}
                         </motion.button>
                     </form>
@@ -203,8 +209,7 @@ export default function RegisterPage() {
                         <span className="text-transparent bg-clip-text bg-linear-to-r from-violet-400 to-cyan-400">Sofort einsatzbereit.</span>
                     </h2>
                     <p className="text-slate-400 text-sm leading-relaxed mb-8">
-                        Dein Account gibt dir Zugriff auf alle Analysen, gespeicherte Reports und den vollständigen
-                        KI-Bericht.
+                        Kostenlos registrieren und sofort alle Scores, Checks und Probleme deiner Website sehen — für SEO, GEO, Security und Performance.
                     </p>
 
                     {/* Benefits */}
@@ -240,16 +245,19 @@ export default function RegisterPage() {
                     </div>
                 </div>
 
-                {/* Testimonial / Social proof */}
-                <div className="relative z-10 bg-white/3 border border-white/[0.07] rounded-2xl p-4">
-                    <div className="flex items-center gap-1 mb-2">
-                        {[1, 2, 3, 4, 5].map(i => <span key={i} className="text-amber-400 text-sm">★</span>)}
-                    </div>
-                    <p className="text-xs text-slate-400 leading-relaxed italic">
-                        "Nach dem Audit hatte ich in 30 Minuten alle Security-Headers gesetzt. Vorher wusste ich nicht
-                        mal dass sie fehlen."
-                    </p>
-                    <div className="mt-3 text-[10px] text-slate-600">- Markus, Fullstack Developer</div>
+                {/* Reviews */}
+                <div className="relative z-10 grid grid-cols-2 gap-2">
+                    {REVIEWS.map((r, i) => (
+                        <motion.div key={i} initial={{opacity: 0, y: 10}} animate={{opacity: 1, y: 0}}
+                                    transition={{delay: 0.4 + i * 0.08}}
+                                    className="bg-white/[0.03] border border-white/8 rounded-xl p-3">
+                            <div className="flex items-center justify-between mb-1.5">
+                                <span className="text-yellow-400 text-[10px] tracking-tight leading-none">★★★★★</span>
+                                <span className="text-[10px] text-slate-500 leading-none">{r.name}</span>
+                            </div>
+                            <p className="text-[11px] text-slate-300 leading-relaxed line-clamp-3">{r.text}</p>
+                        </motion.div>
+                    ))}
                 </div>
             </div>
         </div>

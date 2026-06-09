@@ -7,11 +7,12 @@ import toast, { Toaster } from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
 
 const FEATURES = [
-    { icon: Shield, text: 'Security Deep-Scan mit 14 Checks' },
-    { icon: Search, text: 'Vollständige SEO-Analyse' },
-    { icon: Globe, text: 'GEO — KI-Sichtbarkeit prüfen' },
-    { icon: Zap, text: 'KI-Bericht in 60s' },
+    { icon: Search, text: 'SEO: Title, Meta, H1, Alt-Texte & alle Fehler' },
+    { icon: Globe, text: 'GEO: llms.txt, Schema, KI-Crawler & alle Checks' },
+    { icon: Shield, text: 'Security: HTTPS, Headers & alle Lücken' },
+    { icon: Zap, text: 'Ergebnis in unter 60 Sekunden' },
 ]
+
 
 export default function LoginPage() {
     const router = useRouter()
@@ -85,8 +86,6 @@ export default function LoginPage() {
                         ))}
                     </div>
                 </div>
-
-                {/* Mock score preview */}
                 <div className="relative z-10">
                     <div className="bg-white/3 border border-white/[0.07] rounded-2xl p-4">
                         <div className="text-[10px] text-slate-600 uppercase tracking-wider mb-3">Letzter Audit</div>
