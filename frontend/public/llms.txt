@@ -24,17 +24,15 @@ Jeder Audit enthält einen vollständigen KI-Bericht, erstellt von Claude (Anthr
 
 - Free: 1 Audit pro Monat, €0
 - Pro: 10 Audits pro Monat, €29/Monat
-- Agency: Unbegrenzte Audits, €99/Monat, White-Label, API-Zugang
+- Agency: Unbegrenzte Audits, €99/Monat, White-Label
 
 ## Technische Details
 
 - Audit-Dauer: < 60 Sekunden
-- PDF-Export inklusive
-- API verfügbar (Agency-Plan)
 - Unterstützt alle öffentlich erreichbaren Websites
 
 ## Kontakt
 
-- Website: https://auditai.io
-- Dashboard: https://auditai.io/dashboard
-- Preise: https://auditai.io/pricing
+- Website: https://sitecheckai.dev
+- Dashboard: https://sitecheckai.dev/dashboard
+- Preise: https://sitecheckai.dev/pricing

@@ -120,11 +120,8 @@ export default function WhyAudit() {
                                 Während deine Konkurrenz schläft,{' '}
                                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-cyan-400">weißt du genau wo du stehst.</span>
                             </h3>
-                            <p className="text-slate-400 text-sm leading-relaxed max-w-lg mx-auto lg:mx-0">
-                                Mit AuditAI Pro hast du 10 vollständige SEO-Audits pro Monat — mit KI-Bericht, PDF-Export und Audit-Verlauf.
-                            </p>
                             <div className="flex flex-wrap gap-x-5 gap-y-2 mt-4 justify-center lg:justify-start">
-                                {['10 Audits / Monat', 'KI-Bericht', 'PDF-Export', 'Audit-Verlauf'].map(f => (
+                                {['10 Audits / Monat', 'KI-Bericht', 'PDF-Export', 'Screenshots', 'Audit-Verlauf'].map(f => (
                                     <div key={f} className="flex items-center gap-1.5 text-xs text-slate-400">
                                         <RefreshCw className="w-3 h-3 text-violet-400 shrink-0" /> {f}
                                     </div>
@@ -139,10 +136,9 @@ export default function WhyAudit() {
                             <Link href="/pricing"
                                 className="flex items-center justify-center gap-2 w-full lg:w-auto px-8 py-4 bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-violet-500/25 text-sm">
                                 Jetzt Pro holen
-                                <ArrowRight className="w-4 h-4" />
                             </Link>
                             <Link href="/dashboard" className="text-xs text-slate-600 hover:text-slate-400 transition-colors py-1">
-                                Erst kostenlos testen →
+                                Erst kostenlos testen
                             </Link>
                         </div>
                     </div>
