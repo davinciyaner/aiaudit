@@ -466,29 +466,23 @@ export default function Hero() {
 
                         <div>
                             <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.1 }}
-                                className="text-4xl sm:text-5xl lg:text-7xl font-bold leading-[1.05] sm:leading-none tracking-tight mb-6">
-                                SEO-Test &amp;<br />
-                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 via-purple-400 to-cyan-400">Website-Audit.</span><br />
-                                Kostenlos in 60s.
+                                className="text-3xl sm:text-5xl lg:text-7xl font-bold leading-[1.1] sm:leading-none tracking-tight mb-3 sm:mb-6">
+                                SEO. GEO. Security. Performance.<br />
+                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 via-purple-400 to-cyan-400">Dein kompletter Website-Audit in 60 Sekunden.</span>
                             </motion.h1>
 
-                            <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }}
-                                className="text-base sm:text-lg text-slate-200 leading-relaxed mb-10 max-w-lg">
-                                Die meisten Websites verlieren täglich Besucher durch Fehler, die man nicht sieht. Finde in 60 Sekunden heraus was auf deiner Website falsch läuft - mit konkreten Fixes.
-                            </motion.p>
-
-                            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.3 }} className="mb-10">
+                            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.3 }} className="mb-4 sm:mb-10">
                                 {/* flex-col-reverse on mobile: form first, reviews below */}
                                 <div className="flex flex-col-reverse sm:flex-col">
                                     {/* Reviews grid */}
-                                    <div className="grid grid-cols-2 gap-2 mt-4 sm:mt-0 sm:mb-6">
+                                    <div className="grid grid-cols-2 gap-1.5 sm:gap-2 mt-3 sm:mt-0 sm:mb-6">
                                         {REVIEWS.map((r, i) => (
-                                            <div key={i} className="bg-white/[0.03] border border-white/8 rounded-xl p-3">
-                                                <div className="flex items-center justify-between mb-1.5">
-                                                    <span className="text-yellow-400 text-xs tracking-tight leading-none">★★★★★</span>
-                                                    <span className="text-[10px] text-slate-500 leading-none">{r.name}</span>
+                                            <div key={i} className="bg-white/[0.03] border border-white/8 rounded-xl p-2 sm:p-3">
+                                                <div className="flex items-center justify-between mb-1">
+                                                    <span className="text-yellow-400 text-[10px] sm:text-xs tracking-tight leading-none">★★★★★</span>
+                                                    <span className="text-[9px] sm:text-[10px] text-slate-500 leading-none">{r.name}</span>
                                                 </div>
-                                                <p className="text-[11px] text-slate-300 leading-relaxed">{r.text}</p>
+                                                <p className="text-[10px] sm:text-[11px] text-slate-300 leading-snug sm:leading-relaxed line-clamp-3">{r.text}</p>
                                             </div>
                                         ))}
                                     </div>
