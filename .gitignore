@@ -10,10 +10,7 @@
 node_modules/
 
 # IDE
-.idea/workspace.xml
-.idea/modules.xml
-.idea/vcs.xml
-.idea/inspectionProfiles/
+.idea/
 
 # OS
 .DS_Store
