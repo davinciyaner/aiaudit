@@ -17,6 +17,9 @@ Allow: /
 User-agent: anthropic-ai
 Allow: /
 
+User-agent: ClaudeBot
+Allow: /
+
 User-agent: CCBot
 Allow: /
 
@@ -24,6 +27,15 @@ User-agent: PerplexityBot
 Allow: /
 
 User-agent: Amazonbot
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: YouBot
+Allow: /
+
+User-agent: cohere-ai
 Allow: /
 
 Sitemap: https://sitecheckai.dev/sitemap.xml

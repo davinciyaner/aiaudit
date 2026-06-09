@@ -52,9 +52,12 @@ export default function Navbar() {
         : '?'
 
     const links = [
+        { label: 'SEO', href: '#seo' },
+        { label: 'GEO', href: '#geo' },
+        { label: 'Security', href: '#security' },
+        { label: 'Performance', href: '#performance' },
         { label: 'Features', href: '#features' },
-        { label: 'Testautomatisierung', href: '#testautomation'},
-        { label: 'Sicherheit', href: '#security' },
+        { label: 'Testautomatisierung', href: '#testautomation' },
         { label: 'Preise', href: '#pricing' },
     ]
 

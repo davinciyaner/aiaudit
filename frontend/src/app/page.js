@@ -1,5 +1,9 @@
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
+import SeoSection from './components/SeoSection'
+import GeoSection from './components/GeoSection'
+import SecuritySection from './components/SecuritySection'
+import PerformanceSection from './components/PerformanceSection'
 import WhyAudit from './components/WhyAudit'
 import Features from './components/Features'
 import ExtensionSection from './components/ExtensionSection'
@@ -9,8 +13,8 @@ import Footer from './components/Footer'
 import LandingFeedback from './components/LandingFeedback'
 
 export const metadata = {
-    title: 'Kostenloser SEO-Test & Website-Audit | AuditAI – Security & Performance',
-    description: 'Kostenloser SEO-Test in unter 60 Sekunden: Title-Tags, Meta-Descriptions, H1-Tags, Core Web Vitals, Security-Headers und KI-Sichtbarkeit prüfen. Vollständiger Website-Audit mit konkreten Fixes. Jetzt starten.',
+    title: 'Kostenloser Website-Audit: SEO, Security & GEO | AuditAI',
+    description: 'SEO, Performance, Security & KI-Sichtbarkeit in 60 Sekunden prüfen. Kostenloser Website-Audit mit konkreten Fixes – keine Registrierung nötig.',
     keywords: 'seo test, seo test kostenlos, seo check, website seo check, kostenloser seo check, seo analyse kostenlos, website audit kostenlos, SEO analyse tool, security header check, performance test, core web vitals test, GEO optimierung, website checker, lighthouse alternative 2026',
     openGraph: {
         title: 'Kostenloser SEO-Test & Website-Audit in 60 Sekunden | AuditAI',
@@ -34,6 +38,10 @@ export default function LandingPage() {
         <main className="bg-[#05080f] min-h-screen pb-20 sm:pb-0">
             <Navbar />
             <Hero />
+            <SeoSection />
+            <GeoSection />
+            <SecuritySection />
+            <PerformanceSection />
             <WhyAudit />
             <Features />
             <ExtensionSection />

@@ -534,10 +534,10 @@ export default function Hero() {
                                                     initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
                                                     transition={{ duration: 0.15 }}
                                                     className="flex items-center gap-4 mb-3">
-                                                    <span className="text-xs text-slate-600">Kostenlos · Registrierung erforderlich · ~60 Sekunden</span>
-                                                    <Link href="#testautomation" className="flex items-center gap-1.5 text-xs text-slate-500 hover:text-slate-300 transition-colors ml-auto">
+                                                    <span className="text-xs text-slate-500">Kostenlos · Registrierung erforderlich · 60 Sekunden</span>
+                                                    <Link href="#geo" className="flex items-center gap-1.5 text-xs text-slate-500 hover:text-slate-300 transition-colors ml-auto">
                                                         <Bot className="w-3.5 h-3.5 text-violet-400" />
-                                                        Testautomatisierung
+                                                        GEO
                                                     </Link>
                                                 </motion.div>
                                             )}
