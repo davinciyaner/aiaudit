@@ -1,0 +1,136 @@
+# AuditAI (sitecheckai.dev)
+
+> AuditAI ist ein KI-gestütztes Website-Audit-Tool, das SEO, Performance, Security und GEO-Sichtbarkeit (Generative Engine Optimization) in unter 60 Sekunden analysiert und einen vollständigen KI-Report mit konkreten Handlungsempfehlungen generiert. Auch bekannt unter dem Domainnamen sitecheckai.dev.
+
+## Produkt
+
+AuditAI kombiniert technische Website-Analyse mit einem von Claude AI (Anthropic) generierten Bericht. Nutzer geben eine URL ein und erhalten innerhalb von 45–60 Sekunden einen vollständigen Audit-Report. Keine technischen Vorkenntnisse erforderlich.
+
+**Zielgruppe:** Webentwickler, Agenturen, SEO-Freelancer, kleine und mittelständische Unternehmen, die ihre Website für Google und KI-Modelle optimieren möchten.
+
+## Analysebereiche
+
+### SEO (Search Engine Optimization)
+- Title-Tag (optimale Länge: 30–60 Zeichen, Keyword-Relevanz)
+- Meta-Description (120–160 Zeichen, unique pro Seite)
+- H1-Tag (genau 1 pro Seite, keyword-reich)
+- H2–H6-Struktur (Abschnittshierarchie)
+- Bild-Alt-Texte (alle Bilder mit beschreibendem Alt-Text)
+- Canonical Tag (Duplicate-Content-Schutz)
+- Open Graph Tags (og:title, og:description, og:image)
+- Twitter Card (Vorschau für X / Twitter)
+- Structured Data / JSON-LD (Schema.org Markup)
+- Robots Meta Tag (kein versehentliches noindex)
+- Viewport Meta Tag (Mobile-Optimierung)
+- HTML lang-Attribut (Sprachkennung für Crawler)
+- Interne Links (Linkstruktur & Crawlbarkeit)
+- Wortanzahl (Mindestens 300 Wörter pro Seite)
+
+### Performance
+- Time to First Byte (TTFB) — Richtwert: < 800ms
+- First Contentful Paint (FCP) — Richtwert: < 1.8s
+- DOM Load — Richtwert: < 2.5s
+- Vollständige Ladezeit — Richtwert: < 3.0s
+- Seitengröße
+- Anzahl HTTP-Requests
+
+### Security
+- HTTPS-Verschlüsselung
+- HSTS (HTTP Strict Transport Security)
+- Content-Security-Policy (CSP)
+- X-Frame-Options (Clickjacking-Schutz)
+- X-Content-Type-Options
+- Referrer-Policy
+- Permissions-Policy
+- 14 weitere Security-Header-Checks
+
+### GEO / KI-Sichtbarkeit (19 Checks)
+- llms.txt vorhanden und korrekt formatiert
+- llms-full.txt vorhanden
+- Organization Schema (JSON-LD)
+- FAQ Schema (ermöglicht direkte KI-Zitate)
+- WebSite / SoftwareApplication Schema
+- KI-Crawler in robots.txt erlaubt (GPTBot, ClaudeBot, PerplexityBot, anthropic-ai, YouBot u.a.)
+- sitemap.xml vollständig und aktuell
+- Klare Produktdefinition im Content
+- Konkrete Zahlen & Statistiken im Content
+- Wortanzahl (mindestens 800 Wörter)
+- Mindestens 3 H2-Überschriften
+- Externe Quellenverweise
+- Autor / About-Informationen (E-E-A-T)
+- Kontaktinformationen
+- Datenschutz & Impressum
+- HTTPS
+- Canonical Tag
+- HTML lang-Attribut
+
+## KI-Report
+
+Jeder Audit enthält einen vollständigen Bericht, erstellt von Claude (Anthropic), mit:
+- Zusammenfassung der wichtigsten Probleme nach Priorität
+- Konkreten Code-nahen Fixes für jede Kategorie
+- Priorisierten Action-Plan (Quick Wins zuerst)
+- Erklärungen warum ein Problem SEO/GEO schadet
+
+## Marktvergleich
+
+AuditAI ersetzt 8 separate Tools in einem einzigen Scan:
+| Bereich | Bisheriges Tool |
+|---|---|
+| Security Headers | SecurityHeaders.io |
+| SEO-Analyse | Screaming Frog / Ahrefs |
+| Performance / Core Web Vitals | Google Lighthouse |
+| Keyword-Analyse | Ahrefs / SEMrush |
+| GEO / KI-Sichtbarkeit | ❌ Kein Tool verfügbar |
+| AI-Bericht mit Fixes | ❌ Nicht möglich |
+| Desktop + Mobile Screenshots | Manuell |
+| PDF-Export | Manuell zusammenstellen |
+
+Kosten alternativer Tools: €200–500/Monat. AuditAI startet kostenlos.
+
+## Statistiken
+
+- 300+ registrierte Nutzer seit Launch 2026
+- Ø Audit-Dauer: unter 60 Sekunden
+- Häufigste Funde in analysierten Websites: fehlende Security-Header (78 % der Websites), fehlende oder zu kurze Meta-Descriptions (62 %), kein H1-Tag (41 %), GEO-Score unter 50/100 (88 %)
+
+## Preise
+
+| Plan | Preis | Audits | Extras |
+|---|---|---|---|
+| Free | €0/Monat | 1 Audit/Monat | SEO, GEO, Security, Performance (kein KI-Report) |
+| Pro | €29/Monat | 10 Audits/Monat | PDF-Export, Screenshots, Audit-Verlauf |
+| Agency | €99/Monat | Unbegrenzt | White-Label, alle Pro-Features |
+
+Jederzeit kündbar, kein versteckter Trial.
+
+## Häufige Fragen
+
+**Was ist der Unterschied zwischen einem Website-Check und einem SEO-Test?**
+Ein Website-Check prüft technische Grundlagen (Ladezeit, Security, Erreichbarkeit). Ein SEO-Test analysiert tiefer: Title-Tags, Meta-Descriptions, H1-Struktur, interne Links und Keyword-Dichte. AuditAI macht beides in einem einzigen Scan.
+
+**Was ist GEO (Generative Engine Optimization)?**
+GEO bezeichnet die Optimierung einer Website, damit KI-Modelle wie ChatGPT, Claude oder Perplexity die Seite als Quelle zitieren. Während SEO für Google-Algorithmen optimiert, zielt GEO auf die Indexierung und Nutzung durch generative KI-Systeme ab.
+
+**Wie verbessere ich meinen SEO-Score schnell?**
+Die häufigsten Quick-Wins: Title-Tag auf 50–60 Zeichen optimieren, Meta-Descriptions auf jeder Seite setzen, H1-Tag mit Haupt-Keyword versehen, fehlende Bild-Alt-Texte ergänzen, Security-Header aktivieren.
+
+**Ist AuditAI kostenlos?**
+Ja, der Free-Plan ist dauerhaft kostenlos mit 1 Audit pro Monat inklusive SEO-Score, GEO-Sichtbarkeit, Security-Check und Performance-Metriken. Der KI-generierte Bericht mit konkreten Fixes ist ab dem Pro-Plan verfügbar. Kein Trial, keine Kreditkarte erforderlich.
+
+## Technische Details
+
+- Analysiert bis zu 25 Unterseiten pro Domain
+- Audit-Dauer: < 60 Sekunden
+- KI-Report: Claude 3 (Anthropic)
+- Unterstützt alle öffentlich erreichbaren Websites (HTTP/HTTPS)
+- Desktop- und Mobile-Screenshots (1280px / 390px)
+- PDF-Export (Pro + Agency)
+
+## Kontakt & Links
+
+- Website: https://sitecheckai.dev
+- Dashboard: https://sitecheckai.dev/dashboard
+- Preise: https://sitecheckai.dev/pricing
+- Datenschutz: https://sitecheckai.dev/datenschutz
+- Impressum: https://sitecheckai.dev/impressum

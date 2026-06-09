@@ -26,6 +26,16 @@ const securityHeaders = [
 
 const nextConfig = {
     reactCompiler: true,
+    async redirects() {
+        return [
+            {
+                source: '/:path*',
+                has: [{ type: 'host', value: 'www.sitecheckai.dev' }],
+                destination: 'https://sitecheckai.dev/:path*',
+                permanent: true,
+            },
+        ]
+    },
     async headers() {
         return [
             {

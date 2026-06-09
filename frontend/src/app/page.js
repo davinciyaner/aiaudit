@@ -11,9 +11,10 @@ import CTA from './components/CTA'
 import Pricing from './components/Pricing'
 import Footer from './components/Footer'
 import LandingFeedback from './components/LandingFeedback'
+import FAQ from './components/FAQ'
 
 export const metadata = {
-    title: 'Kostenloser Website-Audit: SEO, Security & GEO | AuditAI',
+    title: 'Website prüfen & SEO-Test kostenlos – Audit in 60s | AuditAI',
     description: 'SEO, Performance, Security & KI-Sichtbarkeit in 60 Sekunden prüfen. Kostenloser Website-Audit mit konkreten Fixes – keine Registrierung nötig.',
     keywords: 'seo test, seo test kostenlos, seo check, website seo check, kostenloser seo check, seo analyse kostenlos, website audit kostenlos, SEO analyse tool, security header check, performance test, core web vitals test, GEO optimierung, website checker, lighthouse alternative 2026',
     openGraph: {
@@ -27,7 +28,7 @@ export const metadata = {
     twitter: {
         card: 'summary_large_image',
         title: 'Kostenloser SEO-Test & Website-Audit | AuditAI',
-        description: 'SEO-Test, Security & Performance in 60 Sekunden. KI-Report mit konkreten Fixes. Kostenlos.',
+        description: 'Website prüfen: SEO, Security & Performance in 60 Sekunden. Kostenlos starten. KI-Report ab Pro.',
     },
     robots: { index: true, follow: true, googleBot: { index: true, follow: true } },
     alternates: { canonical: 'https://sitecheckai.dev' },
@@ -47,6 +48,7 @@ export default function LandingPage() {
             <ExtensionSection />
             <CTA />
             <Pricing />
+            <FAQ />
             <Footer />
             <LandingFeedback />
         </main>
