@@ -6,14 +6,21 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import ScoreRegisterModal from './ScoreRegisterModal'
 
+const REVIEWS = [
+    { name: 'Niklas',   text: 'Durch die Übersicht meiner Audits auf meinem Profil, habe ich einen viel besseren Überblick bekommen.' },
+    { name: 'Thorsten', text: 'Ich bin durch den KI-Report direkt auf Seite 1 bei Google gerankt.' },
+    { name: 'Daniel',   text: 'Ich habe sofort alle meine SEO-Fehler gefunden.' },
+    { name: 'Max R.',   text: 'Habe sofort 3 Security-Lücken entdeckt, die ich nicht kannte.' },
+]
+
 const STATS = [
-    { value: '1.000+', label: 'Audits durchgeführt' },
-    { value: '< 60s', label: 'bis zum fertigen Bericht' },
+    { value: '300+', label: 'Registrierte Benutzer' },
+    { value: 'max. 60s', label: 'bis zum fertigen Bericht' },
     { value: 'Gratis', label: 'kostenlos starten' },
 ]
 
 // --- Audit Demo ---
-const DEMO_URL = 'meineshop.de'
+const DEMO_URL = 'meine-website.de'
 
 const BEFORE_SCORES = [
     { label: 'Overall', score: 34, color: '#ef4444' },
@@ -166,7 +173,7 @@ function AuditDemo() {
                             initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
                             transition={{ duration: 0.3 }}>
                             <div className="flex items-center justify-between mb-3">
-                                <span className="text-[11px] text-slate-500">meineshop.de — Aktueller Stand</span>
+                                <span className="text-[11px] text-slate-500">meine-website.de - Aktueller Stand</span>
                                 <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-red-500/15 text-red-400">VORHER</span>
                             </div>
                             <ScoreRow scores={BEFORE_SCORES} />
@@ -210,7 +217,7 @@ function AuditDemo() {
                                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-violet-400 opacity-75" />
                                     <span className="relative inline-flex rounded-full h-2 w-2 bg-violet-500" />
                                 </span>
-                                <span className="text-xs text-slate-300 font-medium">KI analysiert meineshop.de…</span>
+                                <span className="text-xs text-slate-300 font-medium">KI analysiert meine-website.de</span>
                             </div>
                             <div className="space-y-3 mb-4">
                                 {SCAN_MODULES.map((mod, i) => (
@@ -251,7 +258,7 @@ function AuditDemo() {
                             initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
                             transition={{ duration: 0.3 }}>
                             <div className="flex items-center justify-between mb-3">
-                                <span className="text-[11px] text-slate-500">meineshop.de — Nach Optimierung</span>
+                                <span className="text-[11px] text-slate-500">meine-website.de - Nach Optimierung</span>
                                 <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400">NACHHER</span>
                             </div>
                             <ScoreRow scores={AFTER_SCORES} />
@@ -375,7 +382,7 @@ export default function Hero() {
                                         type="text"
                                         value={heroUrl}
                                         onChange={e => { setHeroUrl(e.target.value); if (e.target.value) setShowError(false) }}
-                                        placeholder="meine-firma.de"
+                                        placeholder="meine-website.de"
                                         className="flex-1 bg-transparent text-white placeholder-slate-500 text-sm outline-none"
                                         autoComplete="off"
                                         autoCapitalize="off"
@@ -419,7 +426,7 @@ export default function Hero() {
                                         type="text"
                                         value={heroUrl}
                                         onChange={e => { setHeroUrl(e.target.value); if (e.target.value) setShowError(false) }}
-                                        placeholder="meine-firma.de"
+                                        placeholder="meine-website.de"
                                         className="flex-1 bg-transparent text-white placeholder-slate-600 text-sm outline-none py-1.5"
                                         autoComplete="off"
                                         autoCapitalize="off"
@@ -471,64 +478,78 @@ export default function Hero() {
                             </motion.p>
 
                             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.3 }} className="mb-10">
-                                <div className="flex items-center gap-2 mb-3">
-                                    <span className="text-yellow-400 text-sm tracking-tight">★★★★★</span>
-                                    <span className="text-xs text-slate-100">"Ich habe sofort 3 Security-Lübeck gefunden, die ich nicht kannte."</span>
-                                    <span className="text-xs text-slate-600 shrink-0">- Max R.</span>
-                                </div>
-                                <label className="block text-sm text-slate-300 font-medium mb-2">
-                                    Deine Website-Adresse eingeben:
-                                </label>
-                                <form ref={formRef} onSubmit={e => submitWithRef(e, inputRef)}
-                                    className={`relative flex items-center gap-2 p-2 border rounded-2xl transition-all duration-200 shadow-xl shadow-black/20 mb-2 ${
-                                        showError
-                                            ? 'bg-red-500/[0.04] border-red-500/50'
-                                            : 'bg-white/[0.03] border-white/10 focus-within:border-violet-500/50 focus-within:bg-white/[0.05]'
-                                    }`}>
-                                    <div className="flex items-center gap-3 flex-1 px-3">
-                                        <Globe className={`w-4 h-4 shrink-0 ${showError ? 'text-red-400' : 'text-slate-500'}`} />
-                                        <input
-                                            ref={inputRef}
-                                            type="text"
-                                            value={heroUrl}
-                                            onChange={e => { setHeroUrl(e.target.value); if (e.target.value) setShowError(false) }}
-                                            placeholder="meine-firma.de"
-                                            className="flex-1 bg-transparent text-white placeholder-slate-600 text-sm outline-none py-2"
-                                            autoComplete="off"
-                                            autoCapitalize="off"
-                                            autoCorrect="off"
-                                            inputMode="url"
-                                            spellCheck={false}
-                                        />
+                                {/* flex-col-reverse on mobile: form first, reviews below */}
+                                <div className="flex flex-col-reverse sm:flex-col">
+                                    {/* Reviews grid */}
+                                    <div className="grid grid-cols-2 gap-2 mt-4 sm:mt-0 sm:mb-6">
+                                        {REVIEWS.map((r, i) => (
+                                            <div key={i} className="bg-white/[0.03] border border-white/8 rounded-xl p-3">
+                                                <div className="flex items-center justify-between mb-1.5">
+                                                    <span className="text-yellow-400 text-xs tracking-tight leading-none">★★★★★</span>
+                                                    <span className="text-[10px] text-slate-500 leading-none">{r.name}</span>
+                                                </div>
+                                                <p className="text-[11px] text-slate-300 leading-relaxed">{r.text}</p>
+                                            </div>
+                                        ))}
                                     </div>
-                                    <button type="submit"
-                                        className="flex items-center gap-2 px-5 sm:px-6 py-3 bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-violet-500/20 shrink-0">
-                                        <Search className="w-4 h-4" />
-                                        <span className="hidden sm:inline">Website prüfen</span>
-                                        <ArrowRight className="w-3.5 h-3.5" />
-                                    </button>
-                                </form>
-                                <AnimatePresence mode="wait">
-                                    {showError ? (
-                                        <motion.p key="error"
-                                            initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -4 }}
-                                            transition={{ duration: 0.2 }}
-                                            className="text-xs text-red-400 mb-3 flex items-center gap-1.5">
-                                            Gib hier zuerst deine Website-Adresse ein, z.B. ihre-firma.de
-                                        </motion.p>
-                                    ) : (
-                                        <motion.div key="info"
-                                            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                                            transition={{ duration: 0.15 }}
-                                            className="flex items-center gap-4 mb-3">
-                                            <span className="text-xs text-slate-600">Kostenlos · Registrierung erforderlich · ~60 Sekunden</span>
-                                            <Link href="#testautomation" className="flex items-center gap-1.5 text-xs text-slate-500 hover:text-slate-300 transition-colors ml-auto">
-                                                <Bot className="w-3.5 h-3.5 text-violet-400" />
-                                                Testautomatisierung
-                                            </Link>
-                                        </motion.div>
-                                    )}
-                                </AnimatePresence>
+
+                                    {/* Form */}
+                                    <div>
+                                        <label className="block text-sm text-slate-300 font-medium mb-2">
+                                            Deine Website-Adresse eingeben:
+                                        </label>
+                                        <form ref={formRef} onSubmit={e => submitWithRef(e, inputRef)}
+                                            className={`relative flex items-center gap-2 p-2 border rounded-2xl transition-all duration-200 shadow-xl shadow-black/20 mb-2 ${
+                                                showError
+                                                    ? 'bg-red-500/[0.04] border-red-500/50'
+                                                    : 'bg-white/[0.03] border-white/10 focus-within:border-violet-500/50 focus-within:bg-white/[0.05]'
+                                            }`}>
+                                            <div className="flex items-center gap-3 flex-1 px-3">
+                                                <Globe className={`w-4 h-4 shrink-0 ${showError ? 'text-red-400' : 'text-slate-500'}`} />
+                                                <input
+                                                    ref={inputRef}
+                                                    type="text"
+                                                    value={heroUrl}
+                                                    onChange={e => { setHeroUrl(e.target.value); if (e.target.value) setShowError(false) }}
+                                                    placeholder="meine-website.de"
+                                                    className="flex-1 bg-transparent text-white placeholder-slate-600 text-sm outline-none py-2"
+                                                    autoComplete="off"
+                                                    autoCapitalize="off"
+                                                    autoCorrect="off"
+                                                    inputMode="url"
+                                                    spellCheck={false}
+                                                />
+                                            </div>
+                                            <button type="submit"
+                                                className="flex items-center gap-2 px-5 sm:px-6 py-3 bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-violet-500/20 shrink-0">
+                                                <Search className="w-4 h-4" />
+                                                <span className="hidden sm:inline">Website prüfen</span>
+                                                <ArrowRight className="w-3.5 h-3.5" />
+                                            </button>
+                                        </form>
+                                        <AnimatePresence mode="wait">
+                                            {showError ? (
+                                                <motion.p key="error"
+                                                    initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -4 }}
+                                                    transition={{ duration: 0.2 }}
+                                                    className="text-xs text-red-400 mb-3 flex items-center gap-1.5">
+                                                    Gib hier zuerst deine Website-Adresse ein, z.B. ihre-firma.de
+                                                </motion.p>
+                                            ) : (
+                                                <motion.div key="info"
+                                                    initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                                                    transition={{ duration: 0.15 }}
+                                                    className="flex items-center gap-4 mb-3">
+                                                    <span className="text-xs text-slate-600">Kostenlos · Registrierung erforderlich · ~60 Sekunden</span>
+                                                    <Link href="#testautomation" className="flex items-center gap-1.5 text-xs text-slate-500 hover:text-slate-300 transition-colors ml-auto">
+                                                        <Bot className="w-3.5 h-3.5 text-violet-400" />
+                                                        Testautomatisierung
+                                                    </Link>
+                                                </motion.div>
+                                            )}
+                                        </AnimatePresence>
+                                    </div>
+                                </div>
                             </motion.div>
 
                             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }} className="flex flex-wrap gap-4 sm:gap-8">
