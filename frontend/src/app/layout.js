@@ -46,7 +46,7 @@ const jsonLd = {
             name: 'AuditAI',
             url: 'https://sitecheckai.dev',
             description: 'KI-gestütztes Website-Audit-Tool für SEO, Performance, Security und GEO-Sichtbarkeit.',
-            sameAs: [],
+            sameAs: ['https://twitter.com/auditai'],
         },
         {
             '@type': 'WebSite',
@@ -93,7 +93,7 @@ const jsonLd = {
                     name: 'Was kostet AuditAI?',
                     acceptedAnswer: {
                         '@type': 'Answer',
-                        text: 'AuditAI ist kostenlos nutzbar mit 1 Audit pro Monat. Der Pro-Plan kostet €29/Monat (10 Audits), der Agency-Plan €99/Monat (unbegrenzte Audits). Jederzeit kündbar.',
+                        text: 'Der Free-Plan ist kostenlos und enthält 1 Audit pro Monat mit SEO-Score, GEO-Sichtbarkeit, Security-Check und Performance-Metriken. Der KI-generierte Bericht mit konkreten Fixes ist ab dem Pro-Plan enthalten (€29/Monat, 10 Audits). Der Agency-Plan kostet €99/Monat (unbegrenzte Audits). Jederzeit kündbar.',
                     },
                 },
                 {

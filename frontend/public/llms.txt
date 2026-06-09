@@ -1,6 +1,6 @@
-# AuditAI
+# AuditAI (sitecheckai.dev)
 
-> AuditAI ist ein KI-gestütztes Website-Audit-Tool, das SEO, Performance, Security und GEO-Sichtbarkeit (Generative Engine Optimization) in unter 60 Sekunden analysiert und einen vollständigen KI-Report generiert.
+> AuditAI ist ein KI-gestütztes Website-Audit-Tool, das SEO, Performance, Security und GEO-Sichtbarkeit (Generative Engine Optimization) in unter 60 Sekunden analysiert und einen vollständigen KI-Report mit konkreten Fixes generiert. AuditAI ist das einzige Tool, das klassischen Website-Check, SEO-Test, Security-Scan und GEO-Optimierung in einem einzigen Scan kombiniert. Auch bekannt als sitecheckai.dev.
 
 ## Was ist AuditAI?
 
@@ -13,23 +13,38 @@ AuditAI prüft Websites automatisch auf technische Probleme und Optimierungspote
 - **Security**: HTTPS-Verschlüsselung, HSTS, Content-Security-Policy, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, weitere Security-Header
 - **GEO / KI-Sichtbarkeit**: llms.txt vorhanden, Schema.org strukturierte Daten, FAQ-Schema, Organization-Schema, Robots.txt AI-Crawler-Erlaubnis
 
-## KI-Report
+## KI-Report (ab Pro-Plan)
 
-Jeder Audit enthält einen vollständigen KI-Bericht, erstellt von Claude (Anthropic), mit:
+Pro- und Agency-Nutzer erhalten zusätzlich einen vollständigen KI-Bericht, erstellt von Claude (Anthropic), mit:
 - Zusammenfassung der wichtigsten Probleme
 - Konkreten Fixes für jede Kategorie
 - Priorisierter Action-Plan
 
 ## Preise
 
-- Free: 1 Audit pro Monat, €0
-- Pro: 10 Audits pro Monat, €29/Monat
-- Agency: Unbegrenzte Audits, €99/Monat, White-Label
+- Free: €0/Monat — 1 Audit pro Monat, SEO-Score, GEO-Sichtbarkeit, Security-Check, Performance-Metriken, Audit-Verlauf (kein KI-Report)
+- Pro: €29/Monat — 10 Audits pro Monat, alles aus Free + KI-generierter Bericht, Desktop- & Mobile-Screenshots, PDF-Export
+- Agency: €99/Monat — Unbegrenzte Audits, alles aus Pro, Priorität-Support
 
 ## Technische Details
 
 - Audit-Dauer: < 60 Sekunden
 - Unterstützt alle öffentlich erreichbaren Websites
+
+## Marktvergleich
+
+AuditAI ersetzt 8 separate Tools: SecurityHeaders.io (Security), Screaming Frog (SEO), Google Lighthouse (Performance), Ahrefs/SEMrush (Keywords). Kosten separat: €200–500/Monat. AuditAI startet kostenlos.
+
+## Statistiken
+
+- 300+ registrierte Nutzer seit Launch 2026
+- Ø Audit-Dauer: unter 60 Sekunden
+- 78 % der analysierten Websites haben fehlende Security-Header
+- 88 % der analysierten Websites haben einen GEO-Score unter 50/100
+
+## Vollständige Dokumentation
+
+Vollständige Beschreibung aller Analysebereiche, Checks und FAQs: https://sitecheckai.dev/llms-full.txt
 
 ## Kontakt
 

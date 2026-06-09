@@ -147,7 +147,7 @@ function AuditDemo() {
                     <div className="w-3 h-3 rounded-full bg-yellow-500/60" />
                     <div className="w-3 h-3 rounded-full bg-green-500/60" />
                 </div>
-                <div className="flex-1 bg-white/5 rounded px-3 py-1 text-[10px] text-slate-500">auditai.io</div>
+                <div className="flex-1 bg-white/5 rounded px-3 py-1 text-[10px] text-slate-500">sitecheckai.dev</div>
                 <div className="flex items-center gap-1.5 shrink-0">
                     {DEMO_STEPS.map((_, i) => (
                         <div key={i} className="h-1.5 rounded-full transition-all duration-500"
@@ -467,8 +467,8 @@ export default function Hero() {
                         <div>
                             <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.1 }}
                                 className="text-3xl sm:text-5xl lg:text-7xl font-bold leading-[1.1] sm:leading-none tracking-tight mb-3 sm:mb-6">
-                                SEO. GEO. Security. Performance.<br />
-                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 via-purple-400 to-cyan-400">Dein kompletter Website-Audit in 60 Sekunden.</span>
+                                Website prüfen: SEO, GEO, Performance & Security.<br />
+                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 via-purple-400 to-cyan-400">Dein kostenloser Website-Audit in 60 Sekunden.</span>
                             </motion.h1>
 
                             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.3 }} className="mb-4 sm:mb-10">

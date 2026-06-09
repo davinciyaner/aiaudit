@@ -45,8 +45,8 @@ export default function ImpressumPage() {
                         <h2 className="text-white font-semibold text-base mb-3">Verantwortlich für den Inhalt (§ 18 Abs. 2 MStV)</h2>
                         <p>
                             Finn Paustian<br />
-                            [DEINE STRASSE UND HAUSNUMMER]<br />
-                            [PLZ] [DEINE STADT]
+                            Am Rund 6<br />
+                            23566 Lübeck
                         </p>
                     </section>
 
