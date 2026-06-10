@@ -6,11 +6,11 @@ export const metadata = {
     title: 'Website-Security 2026: Warum ein Hack 50.000€+ kosten kann | AuditAI',
     description: 'Gehackte Websites kosten 2026 mehr als je zuvor - DSGVO-Bußgelder, Cloud-Rechnungen durch Crypto-Mining, Datenverlust. Besonders Vibe-Coding-Projekte sind betroffen. So schützt du dich.',
     keywords: 'website security check, website gehackt, security header, dsgvo bußgeld, vibe coding sicherheit, website hacken kosten, csp header, hsts',
-    alternates: { canonical: 'https://sitecheckai.dev/blog/website-security-check' },
+    alternates: { canonical: 'https://www.sitecheckai.dev/blog/website-security-check' },
     openGraph: {
         title: 'Website-Security 2026: Warum ein Hack 50.000€+ kosten kann',
         description: 'DSGVO-Bußgelder, Cloud-Rechnungen durch Crypto-Mining, Datenverlust. So schützt du deine Website.',
-        url: 'https://sitecheckai.dev/blog/website-security-check',
+        url: 'https://www.sitecheckai.dev/blog/website-security-check',
         type: 'article',
         locale: 'de_DE',
     },
@@ -24,9 +24,9 @@ const jsonLd = {
     datePublished: '2026-06-10',
     dateModified: '2026-06-10',
     author: { '@type': 'Person', name: 'Finn Paustian' },
-    publisher: { '@type': 'Organization', name: 'AuditAI', url: 'https://sitecheckai.dev' },
-    url: 'https://sitecheckai.dev/blog/website-security-check',
-    mainEntityOfPage: 'https://sitecheckai.dev/blog/website-security-check',
+    publisher: { '@type': 'Organization', name: 'AuditAI', url: 'https://www.sitecheckai.dev' },
+    url: 'https://www.sitecheckai.dev/blog/website-security-check',
+    mainEntityOfPage: 'https://www.sitecheckai.dev/blog/website-security-check',
 }
 
 const faqLd = {

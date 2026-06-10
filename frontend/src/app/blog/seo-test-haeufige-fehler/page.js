@@ -6,11 +6,11 @@ export const metadata = {
     title: 'SEO-Test: Die 10 häufigsten Fehler die deinen Google-Rank kosten | AuditAI',
     description: 'Diese 10 SEO-Fehler machen die meisten Websites - und keiner merkt es. Mit kostenlosem SEO-Test-Tool checken und sofort beheben.',
     keywords: 'seo test, seo fehler, seo check kostenlos, seo analyse, website seo prüfen, meta description fehlt, h1 tag, core web vitals',
-    alternates: { canonical: 'https://sitecheckai.dev/blog/seo-test-haeufige-fehler' },
+    alternates: { canonical: 'https://www.sitecheckai.dev/blog/seo-test-haeufige-fehler' },
     openGraph: {
         title: 'SEO-Test: Die 10 häufigsten Fehler die deinen Google-Rank kosten',
         description: 'Diese 10 SEO-Fehler machen die meisten Websites. Mit kostenlosem SEO-Test sofort beheben.',
-        url: 'https://sitecheckai.dev/blog/seo-test-haeufige-fehler',
+        url: 'https://www.sitecheckai.dev/blog/seo-test-haeufige-fehler',
         type: 'article',
         locale: 'de_DE',
     },
@@ -24,9 +24,9 @@ const jsonLd = {
     datePublished: '2026-06-10',
     dateModified: '2026-06-10',
     author: { '@type': 'Person', name: 'Finn Paustian' },
-    publisher: { '@type': 'Organization', name: 'AuditAI', url: 'https://sitecheckai.dev' },
-    url: 'https://sitecheckai.dev/blog/seo-test-haeufige-fehler',
-    mainEntityOfPage: 'https://sitecheckai.dev/blog/seo-test-haeufige-fehler',
+    publisher: { '@type': 'Organization', name: 'AuditAI', url: 'https://www.sitecheckai.dev' },
+    url: 'https://www.sitecheckai.dev/blog/seo-test-haeufige-fehler',
+    mainEntityOfPage: 'https://www.sitecheckai.dev/blog/seo-test-haeufige-fehler',
 }
 
 const faqLd = {

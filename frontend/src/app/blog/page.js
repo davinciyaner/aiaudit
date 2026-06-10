@@ -5,7 +5,7 @@ import Footer from '../components/Footer'
 export const metadata = {
     title: 'Blog – SEO, GEO & Website-Optimierung | AuditAI',
     description: 'Praxisnahe Artikel über SEO, GEO-Optimierung, Security und Performance. Lerne wie du deine Website für Google und KI-Modelle optimierst.',
-    alternates: { canonical: 'https://sitecheckai.dev/blog' },
+    alternates: { canonical: 'https://www.sitecheckai.dev/blog' },
 }
 
 const ARTICLES = [
