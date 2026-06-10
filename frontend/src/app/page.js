@@ -20,7 +20,7 @@ export const metadata = {
     openGraph: {
         title: 'Kostenloser SEO-Test & Website-Audit in 60 Sekunden | AuditAI',
         description: 'SEO-Test, Security, Performance & KI-Sichtbarkeit — ein vollständiger Website-Audit mit konkreten Fixes. Kostenlos starten, kein Account nötig.',
-        url: 'https://sitecheckai.dev',
+        url: 'https://www.sitecheckai.dev',
         siteName: 'AuditAI',
         type: 'website',
         locale: 'de_DE',
@@ -31,12 +31,52 @@ export const metadata = {
         description: 'Website prüfen: SEO, Security & Performance in 60 Sekunden. Kostenlos starten. KI-Report ab Pro.',
     },
     robots: { index: true, follow: true, googleBot: { index: true, follow: true } },
-    alternates: { canonical: 'https://sitecheckai.dev' },
+    alternates: { canonical: 'https://www.sitecheckai.dev' },
+}
+
+const faqLd = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+        {
+            '@type': 'Question',
+            name: 'Was prüft AuditAI genau?',
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'AuditAI analysiert deine Website in vier Bereichen: SEO (Title, Meta, Headings, Links), Performance (TTFB, FCP, Ladezeit), Security (HTTPS, HSTS, CSP, Security Headers) und GEO/KI-Sichtbarkeit (llms.txt, Schema.org, FAQ-Schema). Dazu generiert Claude AI einen vollständigen Bericht mit konkreten Fixes.',
+            },
+        },
+        {
+            '@type': 'Question',
+            name: 'Wie lange dauert ein Audit?',
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Ein vollständiger Audit dauert in der Regel unter 60 Sekunden. Der KI-Report wird parallel zur technischen Analyse generiert.',
+            },
+        },
+        {
+            '@type': 'Question',
+            name: 'Was kostet AuditAI?',
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Der Free-Plan ist kostenlos und enthält 1 Audit pro Monat mit SEO-Score, GEO-Sichtbarkeit, Security-Check und Performance-Metriken. Der KI-generierte Bericht mit konkreten Fixes ist ab dem Pro-Plan enthalten (€29/Monat, 10 Audits). Der Agency-Plan kostet €99/Monat (unbegrenzte Audits). Jederzeit kündbar.',
+            },
+        },
+        {
+            '@type': 'Question',
+            name: 'Was ist GEO und warum ist es wichtig?',
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'GEO steht für Generative Engine Optimization – die Sichtbarkeit deiner Website für KI-Modelle wie ChatGPT, Claude oder Perplexity. AuditAI prüft llms.txt, strukturierte Daten, FAQ-Schema und weitere Signale, die bestimmen ob KI-Modelle deine Website als Quelle zitieren.',
+            },
+        },
+    ],
 }
 
 export default function LandingPage() {
     return (
         <main className="bg-[#05080f] min-h-screen pb-20 sm:pb-0">
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
             <Navbar />
             <Hero />
             <SeoSection />
