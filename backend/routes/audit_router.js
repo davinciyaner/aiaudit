@@ -166,7 +166,7 @@ async function handleAudit(req, res, next) {
         let pdfFile = null;
 
         if (isPro) {
-            aiReport = await generateAIReport(auditData);
+            aiReport = await generateAIReport(auditData, plan);
             const html = generateHTMLReport(auditData, aiReport);
             pdfFile = await saveReportAsPDF(html, cleanUrl);
         }

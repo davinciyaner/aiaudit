@@ -16,13 +16,13 @@ const plans = [
     {
         id: 'pro', name: 'Pro', price: '29', period: 'pro Monat',
         desc: 'Für Freelancer und kleine Agenturen',
-        features: ['10 Audits pro Monat', 'Alles aus Free', 'KI-generierter Bericht', 'Desktop + Mobile Screenshots', 'PDF-Export'],
+        features: ['10 Audits pro Monat', 'Alles aus Free', 'KI-Tiefenanalyse', 'SEO, Performance, Security, Keywords & GEO', 'Konkrete Fixes & priorisierter Action Plan', 'Desktop + Mobile Screenshots', 'PDF-Export'],
         cta: 'Pro holen', highlight: true, badge: 'Beliebteste',
     },
     {
         id: 'agency', name: 'Agency', price: '99', period: 'pro Monat',
         desc: 'Für Teams mit mehreren Kunden',
-        features: ['Unbegrenzte Audits', 'Alles aus Pro', 'Priorität-Support'],
+        features: ['Unbegrenzte Audits', 'Alles aus Pro', 'KI-Tiefenanalyse', 'Priorität-Support'],
         cta: 'Agency holen', highlight: false,
     },
 ]

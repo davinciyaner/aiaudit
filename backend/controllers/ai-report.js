@@ -2,7 +2,7 @@ import Anthropic from '@anthropic-ai/sdk'
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
 
-export async function generateAIReport(auditData) {
+export async function generateAIReport(auditData, plan = 'free') {
     console.log('AI-Bericht wird generiert...')
 
     const largeResources = auditData.performance.resources?.large?.slice(0, 3)
@@ -105,8 +105,10 @@ Wie gut findet KI die Seite aktuell. Was fehlt fuer bessere KI-Empfehlungen. Was
 ACTION PLAN
 Priorisierte To-Do Liste. Jede Zeile im Format: Aufgabe - geschaetzter Zeitaufwand. Wichtigstes zuerst.`
 
+    const model = ['pro', 'agency'].includes(plan) ? 'claude-opus-4-8' : 'claude-sonnet-4-6'
+
     const response = await client.messages.create({
-        model: 'claude-sonnet-4-6',
+        model,
         max_tokens: 4096,
         messages: [{ role: 'user', content: prompt }]
     })
