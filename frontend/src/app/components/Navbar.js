@@ -57,8 +57,8 @@ export default function Navbar() {
         { label: 'Security', href: '#security' },
         { label: 'Performance', href: '#performance' },
         { label: 'Features', href: '#features' },
-        { label: 'Testautomatisierung', href: '#testautomation' },
         { label: 'Preise', href: '#pricing' },
+        { label: 'Blog', href: '/blog' },
     ]
 
     return (

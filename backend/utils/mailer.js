@@ -246,7 +246,7 @@ function welcomeHtml(name) {
         <tr><td style="background:#0d1117;border:1px solid rgba(255,255,255,0.07);border-radius:20px;padding:40px;">
           <p style="margin:0 0 8px;font-size:24px;font-weight:700;color:#ffffff;">Willkommen, ${name}!</p>
           <p style="margin:0 0 28px;font-size:15px;color:#94a3b8;line-height:1.6;">
-            Schön, dass du dabei bist. Mit AuditAI kannst du deine Website auf SEO, Performance, Sicherheit und mehr analysieren - in Sekunden.
+            Schön, dass du dabei bist. Mit AuditAI kannst du deine Website auf SEO, GEO, Sicherheit und Performance analysieren - in Sekunden.
           </p>
           <table cellpadding="0" cellspacing="0" width="100%" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:20px;margin-bottom:28px;">
             <tr><td>
