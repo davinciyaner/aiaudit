@@ -15,11 +15,11 @@ import FAQ from './components/FAQ'
 
 export const metadata = {
     title: 'Website prüfen & SEO-Test kostenlos – Audit in 60s | AuditAI',
-    description: 'SEO, Performance, Security & KI-Sichtbarkeit in 60 Sekunden prüfen. Kostenloser Website-Audit mit konkreten Fixes – keine Registrierung nötig.',
+    description: 'SEO, Performance, Security & KI-Sichtbarkeit in 60 Sekunden prüfen. Kostenloser Website-Audit mit konkreten Fixes.',
     keywords: 'seo test, seo test kostenlos, seo check, website seo check, kostenloser seo check, seo analyse kostenlos, website audit kostenlos, SEO analyse tool, security header check, performance test, core web vitals test, GEO optimierung, website checker, lighthouse alternative 2026',
     openGraph: {
         title: 'Kostenloser SEO-Test & Website-Audit in 60 Sekunden | AuditAI',
-        description: 'SEO-Test, Security, Performance & KI-Sichtbarkeit — ein vollständiger Website-Audit mit konkreten Fixes. Kostenlos starten, kein Account nötig.',
+        description: 'SEO-Test, Security, Performance & KI-Sichtbarkeit — ein vollständiger Website-Audit mit konkreten Fixes. Kostenlos starten.',
         url: 'https://www.sitecheckai.dev',
         siteName: 'AuditAI',
         type: 'website',
