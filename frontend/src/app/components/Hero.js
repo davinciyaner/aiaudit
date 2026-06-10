@@ -6,15 +6,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import ScoreRegisterModal from './ScoreRegisterModal'
 
-const REVIEWS = [
-    { name: 'Niklas',   text: 'Durch die Übersicht meiner Audits auf meinem Profil, habe ich einen viel besseren Überblick bekommen.' },
-    { name: 'Thorsten', text: 'Ich bin durch den KI-Report direkt auf Seite 1 bei Google gerankt.' },
-    { name: 'Daniel',   text: 'Ich habe sofort alle meine SEO-Fehler gefunden.' },
-    { name: 'Max R.',   text: 'Habe sofort 3 Security-Lücken entdeckt, die ich nicht kannte.' },
-]
-
 const STATS = [
-    { value: '300+', label: 'Registrierte Benutzer' },
     { value: 'max. 60s', label: 'bis zum fertigen Bericht' },
     { value: 'Gratis', label: 'kostenlos starten' },
 ]
@@ -474,19 +466,6 @@ export default function Hero() {
                             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.3 }} className="mb-4 sm:mb-10">
                                 {/* flex-col-reverse on mobile: form first, reviews below */}
                                 <div className="flex flex-col-reverse sm:flex-col">
-                                    {/* Reviews grid */}
-                                    <div className="grid grid-cols-2 gap-1.5 sm:gap-2 mt-3 sm:mt-0 sm:mb-6">
-                                        {REVIEWS.map((r, i) => (
-                                            <div key={i} className="bg-white/[0.03] border border-white/8 rounded-xl p-2 sm:p-3">
-                                                <div className="flex items-center justify-between mb-1">
-                                                    <span className="text-yellow-400 text-[10px] sm:text-xs tracking-tight leading-none">★★★★★</span>
-                                                    <span className="text-[9px] sm:text-[10px] text-slate-500 leading-none">{r.name}</span>
-                                                </div>
-                                                <p className="text-[10px] sm:text-[11px] text-slate-300 leading-snug sm:leading-relaxed line-clamp-3">{r.text}</p>
-                                            </div>
-                                        ))}
-                                    </div>
-
                                     {/* Form */}
                                     <div>
                                         <label className="block text-sm text-slate-300 font-medium mb-2">

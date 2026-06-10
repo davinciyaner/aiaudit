@@ -20,7 +20,7 @@ const STEPS = [
         num: '01',
         icon: Puzzle,
         title: 'Extension installieren',
-        desc: 'Einmal aus dem Chrome Web Store hinzufügen - kostenlos, kein Setup, kein Account erforderlich. Funktioniert auf jeder Website.',
+        desc: 'Einmal aus dem Chrome Web Store hinzufügen - kostenlos, kein Setup. Funktioniert auf jeder Website.',
         color: '#6366f1',
     },
     {

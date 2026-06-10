@@ -20,13 +20,6 @@ const PLAN_FEATURES = [
     {icon: Zap, label: 'Speed', value: '60s', color: '#f59e0b'},
 ]
 
-const REVIEWS = [
-    {name: 'Niklas',   text: 'Durch die Übersicht meiner Audits auf meinem Profil, habe ich einen viel besseren Überblick bekommen.'},
-    {name: 'Thorsten', text: 'Ich bin durch den KI-Report direkt auf Seite 1 bei Google gerankt.'},
-    {name: 'Daniel',   text: 'Ich habe sofort alle meine SEO-Fehler gefunden.'},
-    {name: 'Max R.',   text: 'Habe sofort 3 Security-Lücken entdeckt, die ich nicht kannte.'},
-]
-
 export default function RegisterPage() {
     const router = useRouter()
     const [loading, setLoading] = useState(false)
@@ -245,20 +238,6 @@ export default function RegisterPage() {
                     </div>
                 </div>
 
-                {/* Reviews */}
-                <div className="relative z-10 grid grid-cols-2 gap-2">
-                    {REVIEWS.map((r, i) => (
-                        <motion.div key={i} initial={{opacity: 0, y: 10}} animate={{opacity: 1, y: 0}}
-                                    transition={{delay: 0.4 + i * 0.08}}
-                                    className="bg-white/[0.03] border border-white/8 rounded-xl p-3">
-                            <div className="flex items-center justify-between mb-1.5">
-                                <span className="text-yellow-400 text-[10px] tracking-tight leading-none">★★★★★</span>
-                                <span className="text-[10px] text-slate-500 leading-none">{r.name}</span>
-                            </div>
-                            <p className="text-[11px] text-slate-300 leading-relaxed line-clamp-3">{r.text}</p>
-                        </motion.div>
-                    ))}
-                </div>
             </div>
         </div>
     )
