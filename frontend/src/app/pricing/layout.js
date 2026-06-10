@@ -1,11 +1,11 @@
 export const metadata = {
     title: 'Preise & Pläne',
     description: 'AuditAI kostenlos testen oder auf Pro/Agency upgraden. Free: 1 Audit/Monat. Pro: €29/Monat mit 10 Audits. Agency: €99/Monat, unbegrenzte Audits. Jederzeit kündbar.',
-    alternates: { canonical: 'https://sitecheckai.dev/pricing' },
+    alternates: { canonical: 'https://www.sitecheckai.dev/pricing' },
     openGraph: {
         title: 'Preise & Pläne | AuditAI',
         description: 'Kostenlos starten oder upgraden — SEO, Performance, Security & GEO-Audits für Freelancer und Agenturen.',
-        url: 'https://sitecheckai.dev/pricing',
+        url: 'https://www.sitecheckai.dev/pricing',
     },
 }
 

@@ -5,7 +5,7 @@ import Script from 'next/script'
 import CookieBanner from './components/CookieBanner'
 
 export const metadata = {
-    metadataBase: new URL('https://sitecheckai.dev'),
+    metadataBase: new URL('https://www.sitecheckai.dev'),
     title: {
         default: 'Kostenloser SEO-Test & Website-Audit | AuditAI',
         template: '%s | AuditAI',
@@ -23,7 +23,7 @@ export const metadata = {
     openGraph: {
         type: 'website',
         locale: 'de_DE',
-        url: 'https://sitecheckai.dev',
+        url: 'https://www.sitecheckai.dev',
         siteName: 'AuditAI',
         title: 'AuditAI – KI-gestützter Website Audit',
         description: 'SEO, Performance, Security & KI-Sichtbarkeit — ein vollständiger Audit in unter 60 Sekunden.',
@@ -34,7 +34,7 @@ export const metadata = {
         description: 'SEO, Performance, Security & GEO in 60 Sekunden. Kostenlos starten.',
         creator: '@auditai',
     },
-    alternates: { canonical: 'https://sitecheckai.dev' },
+    alternates: { canonical: 'https://www.sitecheckai.dev' },
 }
 
 const jsonLd = {
@@ -42,24 +42,24 @@ const jsonLd = {
     '@graph': [
         {
             '@type': 'Organization',
-            '@id': 'https://sitecheckai.dev',
+            '@id': 'https://www.sitecheckai.dev',
             name: 'AuditAI',
-            url: 'https://sitecheckai.dev',
+            url: 'https://www.sitecheckai.dev',
             description: 'KI-gestütztes Website-Audit-Tool für SEO, Performance, Security und GEO-Sichtbarkeit.',
             sameAs: ['https://twitter.com/auditai'],
         },
         {
             '@type': 'WebSite',
-            '@id': 'https://sitecheckai.dev/#website',
-            url: 'https://sitecheckai.dev',
+            '@id': 'https://www.sitecheckai.dev/#website',
+            url: 'https://www.sitecheckai.dev',
             name: 'AuditAI',
-            publisher: { '@id': 'https://sitecheckai.dev/#organization' },
+            publisher: { '@id': 'https://www.sitecheckai.dev/#organization' },
             inLanguage: 'de-DE',
         },
         {
             '@type': 'SoftwareApplication',
             name: 'AuditAI',
-            url: 'https://sitecheckai.dev',
+            url: 'https://www.sitecheckai.dev',
             applicationCategory: 'BusinessApplication',
             operatingSystem: 'Web',
             description: 'Vollständiger Website-Audit mit KI: SEO, Performance, Security und GEO-Sichtbarkeit in unter 60 Sekunden.',
