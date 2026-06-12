@@ -28,9 +28,7 @@ import ScoreCard from '../components/ScoreCard'
 import AuditForm from '../components/AuditForm'
 import Loading from '../components/Loading'
 import ReauditCTA from '../components/ReauditCTA'
-import RegistrationGate from '../components/RegistrationGate'
 import FeedbackWidget from '../components/FeedbackWidget'
-import ScoreRegisterModal from '../components/ScoreRegisterModal'
 
 function IssueItem({ text, type = 'error' }) {
     const styles = {
@@ -91,8 +89,6 @@ export default function Dashboard() {
     const [isLoggedIn, setIsLoggedIn] = useState(false)
     const [userName, setUserName] = useState('')
     const [menuOpen, setMenuOpen] = useState(false)
-    const [registerModalOpen, setRegisterModalOpen] = useState(false)
-    const [registerModalUrl, setRegisterModalUrl] = useState('')
     const menuRef = useRef(null)
 
     useEffect(() => {
@@ -121,13 +117,7 @@ export default function Dashboard() {
         const pending = sessionStorage.getItem('pendingAuditUrl')
         if (pending) {
             sessionStorage.removeItem('pendingAuditUrl')
-            if (token) {
-                runAudit(pending, token)
-            } else {
-                setAuditUrl(pending)
-                setRegisterModalUrl(pending)
-                setRegisterModalOpen(true)
-            }
+            runAudit(pending, token)
         }
     }, [])
 
@@ -173,32 +163,6 @@ export default function Dashboard() {
 
     const audit = result?.auditData
     const isPro = !!result?.aiReport
-
-    const gateStats = audit ? [
-        {
-            count: audit.security?.checks?.filter(c => !c.passed && ['critical', 'high'].includes(c.severity)).length ?? 0,
-            label: 'Security-Lücken',
-            severity: 'critical',
-        },
-        {
-            count: audit.seo?.issues?.length ?? (audit.seo?.score != null && audit.seo.score < 70 ? Math.max(1, Math.round((70 - audit.seo.score) / 10)) : 0),
-            label: 'SEO-Fehler',
-            severity: 'warn',
-        },
-        {
-            count: audit.performance?.issues?.length ?? 0,
-            label: 'Performance-Probleme',
-            severity: 'warn',
-        },
-    ].filter(s => s.count > 0) : []
-
-    const anonymousIssues = !isLoggedIn && audit ? [
-        ...(audit.security?.checks?.filter(c => !c.passed && ['critical', 'high'].includes(c.severity)).map(c => ({ text: c.name, type: 'critical' })) ?? []),
-        ...(audit.security?.checks?.filter(c => !c.passed && !['critical', 'high'].includes(c.severity)).map(c => ({ text: c.name, type: 'warn' })) ?? []),
-        ...(audit.seo?.issues?.map(i => ({ text: i, type: 'warn' })) ?? []),
-        ...(audit.performance?.issues?.map(i => ({ text: i, type: 'warn' })) ?? []),
-        ...(audit.geo?.issues?.slice(0, 2).map(i => ({ text: i, type: 'warn' })) ?? []),
-    ].slice(0, 9) : []
 
     return (
         <div className="min-h-screen bg-[#080b14]">
@@ -279,9 +243,14 @@ export default function Dashboard() {
                                 </AnimatePresence>
                             </div>
                         ) : (
-                            <Link href="/login" className="flex items-center gap-2 px-4 py-2 text-sm text-slate-400 hover:text-white border border-white/10 hover:border-white/20 rounded-xl transition-all">
-                                Einloggen
-                            </Link>
+                            <div className="flex items-center gap-2">
+                                <Link href="/login" className="px-4 py-2 text-sm text-slate-400 hover:text-white border border-white/10 hover:border-white/20 rounded-xl transition-all">
+                                    Einloggen
+                                </Link>
+                                <Link href="/register" className="px-4 py-2 text-sm text-white bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 rounded-xl transition-all font-semibold shadow-lg shadow-violet-500/20">
+                                    Registrieren
+                                </Link>
+                            </div>
                         )}
                     </div>
                 </div>
@@ -306,16 +275,8 @@ export default function Dashboard() {
                     <AuditForm
                         onAuditStart={(url) => { handleStart(); setAuditUrl(url) }}
                         onAuditComplete={handleComplete}
-                        onRequiresAuth={(url) => { setRegisterModalUrl(url); setRegisterModalOpen(true) }}
                     />
                 )}
-
-                <ScoreRegisterModal
-                    open={registerModalOpen}
-                    onClose={() => setRegisterModalOpen(false)}
-                    auditUrl={registerModalUrl}
-                    mode="start"
-                />
 
                 {/* LOADING */}
                 {loading && <Loading url={auditUrl} />}
@@ -388,7 +349,7 @@ export default function Dashboard() {
                 {result && audit && (
                     <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
 
-                        {/* SCORE CARDS — always visible */}
+                        {/* SCORE CARDS */}
                         <div className="grid grid-cols-2 md:grid-cols-5 gap-3 sm:gap-4">
                             <ScoreCard label="Overall" score={audit.overallScore ?? 0} />
                             <ScoreCard label="SEO" score={audit?.seo?.score ?? 0} delay={0.1} />
@@ -397,35 +358,8 @@ export default function Dashboard() {
                             <ScoreCard label="GEO" score={audit?.geo?.score ?? 0} delay={0.4} />
                         </div>
 
-                        {/* PROBLEM LIST — anonymous: was kaputt ist, Lösungen hinter Gate */}
-                        {!isLoggedIn && anonymousIssues.length > 0 && (
-                            <div className="rounded-2xl border border-white/[0.08] bg-[#0d1117] p-5 sm:p-6">
-                                <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">Gefundene Probleme</p>
-                                <div className="space-y-2">
-                                    {anonymousIssues.map((issue, i) => (
-                                        <div key={i} className={`flex items-start gap-3 px-3 py-2.5 rounded-xl text-sm ${
-                                            issue.type === 'critical'
-                                                ? 'bg-red-500/[0.08] border border-red-500/20 text-red-300'
-                                                : 'bg-amber-500/[0.06] border border-amber-500/15 text-amber-200/80'
-                                        }`}>
-                                            <span className="shrink-0 mt-0.5">{issue.type === 'critical' ? '❌' : '⚠️'}</span>
-                                            <span>{issue.text}</span>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        )}
-
-                        {/* GATE for anonymous users */}
-                        {!isLoggedIn && (
-                            <RegistrationGate
-                                stats={gateStats}
-                                auditUrl={auditUrl}
-                            />
-                        )}
-
-                        {/* FULL REPORT for logged-in users */}
-                        {isLoggedIn && (
+                        {/* FULL REPORT */}
+                        {true && (
                             <>
                                 {/* AI REPORT — nur Pro/Agency */}
                                 {result.aiReport ? (

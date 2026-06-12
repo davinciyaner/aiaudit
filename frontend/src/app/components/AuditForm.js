@@ -46,12 +46,6 @@ export default function AuditForm({ onAuditStart, onAuditComplete, defaultUrl = 
         const domain = extractDomain(auditUrl)
         const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
 
-        if (!token) {
-            sessionStorage.setItem('pendingAuditUrl', auditUrl)
-            onRequiresAuth?.(auditUrl)
-            return
-        }
-
         setLoading(true)
         onAuditStart?.(auditUrl)
 
@@ -132,7 +126,7 @@ export default function AuditForm({ onAuditStart, onAuditComplete, defaultUrl = 
                 </motion.button>
             </div>
             <p className="text-xs text-slate-600 text-center mt-3">
-                Kostenlos · Registrierung erforderlich · Ergebnis in ~60 Sekunden
+                Kostenlos · Keine Registrierung nötig · Ergebnis in ~60 Sekunden
             </p>
         </form>
     )
