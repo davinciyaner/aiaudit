@@ -36,7 +36,7 @@ export default function DatenschutzPage() {
                         <span className="text-white font-bold">Audit<span className="text-transparent bg-clip-text bg-linear-to-r from-violet-400 to-cyan-400">AI</span></span>
                     </Link>
                     <h1 className="text-3xl font-bold text-white mt-6 mb-2">Datenschutzerklärung</h1>
-                    <p className="text-slate-500 text-sm">Stand: Mai 2026 · Gemäß DSGVO, BDSG und TTDSG</p>
+                    <p className="text-slate-500 text-sm">Stand: Juni 2026 · Gemäß DSGVO, BDSG und TTDSG</p>
                 </div>
 
                 <div className="space-y-2">
@@ -106,7 +106,28 @@ export default function DatenschutzPage() {
                             </p>
                         </Sub>
 
-                        <Sub title="2.4 Serverdaten / Zugriffsprotokolle">
+                        <Sub title="2.4 SEO Tracking-Daten">
+                            <p>
+                                Nutzer des SEO Trackings tragen Domains und Keywords ein, für die wöchentliche Google-Ranking-Positionen abgerufen werden. Dabei werden folgende Daten verarbeitet und gespeichert:
+                            </p>
+                            <ul className="list-disc list-inside space-y-1 ml-2">
+                                <li>Domain-Name der getrackten Website</li>
+                                <li>Eingetragene Keywords (Suchbegriffe)</li>
+                                <li>Google-Ranking-Positionen pro Keyword (wöchentlich)</li>
+                                <li>Ranking-URL (die rankende Seite auf der Domain)</li>
+                                <li>Positionsveränderungen im Verlauf</li>
+                            </ul>
+                            <p>
+                                Zur Ermittlung der Google-Positionen werden Keywords und Domain an die <strong className="text-slate-300">DataForSEO API</strong> übermittelt (siehe Abschnitt 5a). Es werden keine personenbezogenen Daten der Suchenden erhoben.
+                            </p>
+                            <p>
+                                <strong className="text-slate-300">Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung).<br />
+                                <strong className="text-slate-300">Speicherdauer:</strong> Ranking-Daten werden für die Dauer des aktiven Abonnements gespeichert und innerhalb von 30 Tagen nach Kündigung gelöscht.<br />
+                                <strong className="text-slate-300">Auftragsverarbeitung:</strong> Soweit personenbezogene Daten im Auftrag des Nutzers verarbeitet werden, gilt der <a href="/avv" className="text-violet-400 hover:text-violet-300">Auftragsverarbeitungsvertrag (AVV)</a> gemäß Art. 28 DSGVO.
+                            </p>
+                        </Sub>
+
+                        <Sub title="2.5 Serverdaten / Zugriffsprotokolle">
                             <p>
                                 Bei jedem Seitenaufruf werden technisch bedingt folgende Daten vorübergehend verarbeitet:
                             </p>
@@ -218,6 +239,32 @@ export default function DatenschutzPage() {
                         </p>
                     </Section>
 
+                    <Section title="5a. Nutzung der DataForSEO API">
+                        <p>
+                            AuditAI nutzt die <strong className="text-slate-300">DataForSEO API</strong> zur Ermittlung von Google-Suchmaschinenrankings im Rahmen des SEO-Tracking-Dienstes.
+                        </p>
+                        <p>
+                            Anbieter: DataForSEO Ltd., Vilnius, Litauen (EU).
+                        </p>
+                        <Sub title="Was wird an DataForSEO übermittelt?">
+                            <p>Zur Ermittlung von Keyword-Positionen werden folgende Daten an DataForSEO übermittelt:</p>
+                            <ul className="list-disc list-inside space-y-1 ml-2">
+                                <li>Das zu prüfende Keyword (Suchbegriff)</li>
+                                <li>Der Suchstandort (z.B. „Germany")</li>
+                                <li>Der Sprachcode (z.B. „de")</li>
+                            </ul>
+                            <p>
+                                Es werden <strong className="text-slate-300">keine personenbezogenen Nutzerdaten</strong> (Name, E-Mail, IP-Adresse) an DataForSEO übermittelt. Die Domain wird serverseitig mit den zurückgegebenen SERP-Ergebnissen abgeglichen; sie verlässt nicht die eigenen Server.
+                            </p>
+                        </Sub>
+                        <p>
+                            Da DataForSEO als EU-Anbieter operiert, ist kein Drittlandtransfer erforderlich. Weitere Informationen: <a href="https://dataforseo.com/privacy-policy" className="text-violet-400 hover:text-violet-300" target="_blank" rel="noopener noreferrer">DataForSEO Privacy Policy</a>
+                        </p>
+                        <p>
+                            <strong className="text-slate-300">Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung — der Ranking-Check ist Bestandteil des angebotenen SEO-Tracking-Dienstes).
+                        </p>
+                    </Section>
+
                     <Section title="6. Datenspeicherung (MongoDB)">
                         <p>
                             Alle Nutzerdaten (Account-Daten, Audit-Reports, Subscription-Daten) werden in einer MongoDB-Datenbank gespeichert, die über MongoDB Atlas gehostet wird.
@@ -326,7 +373,7 @@ export default function DatenschutzPage() {
                             Personenbezogene Daten werden nicht an Dritte verkauft, vermietet oder anderweitig weitergegeben, außer:
                         </p>
                         <ul className="list-disc list-inside space-y-1 ml-2">
-                            <li>Zur Vertragserfüllung notwendige Dienstleister (PayPal, Anthropic, MongoDB, Vercel — wie oben beschrieben)</li>
+                            <li>Zur Vertragserfüllung notwendige Dienstleister (PayPal, Anthropic, MongoDB, Vercel, DataForSEO — wie oben beschrieben)</li>
                             <li>Microsoft Corporation — nur bei erteilter Einwilligung (Microsoft Clarity)</li>
                             <li>Google LLC — nur bei erteilter Einwilligung (Google Ads Conversion-Tracking)</li>
                             <li>Bei gesetzlicher Verpflichtung</li>

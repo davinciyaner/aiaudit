@@ -83,7 +83,26 @@ export default function AgbPage() {
                             </p>
                         </Sub>
 
-                        <Sub title="2.2 Security Monitoring">
+                        <Sub title="2.2 SEO Tracking">
+                            <p>
+                                SEO Tracking ist ein optionaler Zusatzdienst, der für eingetragene Domains und Keywords wöchentlich automatisierte Google-Ranking-Checks durchführt und folgende Daten bereitstellt:
+                            </p>
+                            <ul className="list-disc list-inside space-y-1 ml-2">
+                                <li>Aktuelle Google-Ranking-Positionen (Top 100) pro Keyword und Domain</li>
+                                <li>Positionsveränderungen im Wochenverlauf</li>
+                                <li>Keyword-Ideen auf Basis von Suchvolumen-Daten (Google Ads API via DataForSEO)</li>
+                                <li>Konkurrenzanalyse: Domains mit gemeinsamen organischen Keywords</li>
+                                <li>Backlink-Zusammenfassung der eingetragenen Domain</li>
+                            </ul>
+                            <p>
+                                Ranking-Daten werden über die DataForSEO API abgerufen (siehe Datenschutzerklärung, Abschnitt 5a). Der Anbieter übernimmt keine Gewähr für die Vollständigkeit oder Aktualität der Daten. Keywords und Domains, für die keine Ranking-Position in den Top 100 ermittelt wurde, werden als „nicht gefunden" ausgegeben.
+                            </p>
+                            <p>
+                                Für SEO Tracking gelten ergänzend die Bestimmungen in § 5a.
+                            </p>
+                        </Sub>
+
+                        <Sub title="2.3 Security Monitoring">
                             <p>
                                 Security Monitoring ist ein optionaler Zusatzdienst, der Websites des Nutzers automatisiert und regelmäßig auf folgende Merkmale prüft:
                             </p>
@@ -98,7 +117,7 @@ export default function AgbPage() {
                             </p>
                         </Sub>
 
-                        <Sub title="2.3 Verfügbarkeit">
+                        <Sub title="2.4 Verfügbarkeit">
                             <p>
                                 Der Anbieter strebt eine Verfügbarkeit der Plattform von 99 % im Jahresmittel an, übernimmt jedoch keine garantierte Verfügbarkeitszusage. Geplante Wartungsarbeiten werden, soweit möglich, vorab angekündigt. Ein Anspruch auf ununterbrochene Verfügbarkeit besteht nicht.
                             </p>
@@ -121,7 +140,15 @@ export default function AgbPage() {
                     <Section title="§ 4 Vergütung und Zahlung">
                         <Sub title="4.1 Tarife">
                             <p>
-                                AuditAI bietet verschiedene Abo-Tarife an, deren jeweils aktuelle Preise und Leistungsumfang auf der Preisseite (<a href="/pricing" className="text-violet-400 hover:text-violet-300">sitecheckai.dev/pricing</a>) sowie der Security-Monitoring-Preisseite (<a href="/monitoring/pricing" className="text-violet-400 hover:text-violet-300">sitecheckai.dev/monitoring/pricing</a>) einsehbar sind. Es gilt die zum Zeitpunkt der Bestellung gültige Preisliste.
+                                AuditAI bietet verschiedene Abo-Tarife an, deren jeweils aktuelle Preise und Leistungsumfang auf den folgenden Preisseiten einsehbar sind:
+                            </p>
+                            <ul className="list-disc list-inside space-y-1 ml-2">
+                                <li>Website-Audit: <a href="/pricing" className="text-violet-400 hover:text-violet-300">sitecheckai.dev/pricing</a></li>
+                                <li>Security Monitoring: <a href="/monitoring/pricing" className="text-violet-400 hover:text-violet-300">sitecheckai.dev/monitoring/pricing</a></li>
+                                <li>SEO Tracking: <a href="/seo/pricing" className="text-violet-400 hover:text-violet-300">sitecheckai.dev/seo/pricing</a></li>
+                            </ul>
+                            <p>
+                            Es gilt die zum Zeitpunkt der Bestellung gültige Preisliste.
                             </p>
                         </Sub>
                         <Sub title="4.2 Zahlungsabwicklung">
@@ -180,6 +207,45 @@ export default function AgbPage() {
                         </Sub>
                     </Section>
 
+                    <Section title="§ 5a Pflichten des Nutzers beim SEO Tracking">
+                        <Highlight>
+                            <strong>Wichtig — Nutzungsberechtigung für SEO Tracking:</strong> Der Nutzer darf ausschließlich Domains in das SEO Tracking aufnehmen, für die er eine entsprechende Berechtigung besitzt. Dies ist der Fall, wenn der Nutzer:
+                            <ul className="list-disc list-inside space-y-1 ml-2 mt-2">
+                                <li>Eigentümer der jeweiligen Domain ist,</li>
+                                <li>im Auftrag des Domain-Inhabers handelt und eine ausdrückliche Genehmigung besitzt, oder</li>
+                                <li>als technisch Verantwortlicher (z.B. Webmaster, SEO-Dienstleister) für die Domain tätig ist.</li>
+                            </ul>
+                            <p className="mt-2">
+                                Das Tracking von fremden Domains ohne Genehmigung ist verboten. Der Anbieter ist nicht verpflichtet zu prüfen, ob der Nutzer zur Nutzung des Trackings für eine bestimmte Domain berechtigt ist.
+                            </p>
+                        </Highlight>
+
+                        <Sub title="5a.1 Nutzerpflichten">
+                            <p>Der Nutzer verpflichtet sich,</p>
+                            <ul className="list-disc list-inside space-y-1 ml-2">
+                                <li>ausschließlich Domains einzutragen, für die er die entsprechende Berechtigung besitzt,</li>
+                                <li>Keywords ausschließlich für legitime SEO-Analyse-Zwecke einzugeben,</li>
+                                <li>die über DataForSEO abgerufenen Daten (Keyword-Ideen, Wettbewerbsanalyse, Backlinks) nicht systematisch für Dritte zu extrahieren oder weiterzuverkaufen,</li>
+                                <li>den Anbieter unverzüglich zu informieren, wenn eine eingetragene Domain nicht mehr in seiner Verantwortung liegt.</li>
+                            </ul>
+                        </Sub>
+
+                        <Sub title="5a.2 Drittanbieter-Daten (DataForSEO)">
+                            <p>
+                                Ranking-Positionen, Keyword-Ideen, Wettbewerbsanalysen und Backlink-Daten werden über die DataForSEO API (DataForSEO Ltd., Vilnius, Litauen) abgerufen. Der Anbieter übernimmt keine Gewähr für die Vollständigkeit, Aktualität oder Richtigkeit der von DataForSEO gelieferten Daten.
+                            </p>
+                            <p>
+                                Ranking-Positionen werden im wöchentlichen Rhythmus automatisch aktualisiert. Keyword-Ideen, Konkurrenzanalyse und Backlink-Daten werden nur auf Anfrage (on-demand) abgerufen. Der Nutzer nimmt zur Kenntnis, dass diese Abfragen API-Kosten verursachen und die Nutzung im Rahmen des Fair Use des gewählten Tarifs erfolgen muss.
+                            </p>
+                        </Sub>
+
+                        <Sub title="5a.3 Freistellung">
+                            <p>
+                                Der Nutzer stellt den Anbieter von sämtlichen Ansprüchen Dritter frei, die aus einer vertragswidrigen Nutzung des SEO Trackings entstehen — insbesondere aus dem unberechtigten Tracking fremder Domains.
+                            </p>
+                        </Sub>
+                    </Section>
+
                     <Section title="§ 6 Laufzeit und Kündigung">
                         <p>
                             Abonnements laufen auf monatlicher Basis und verlängern sich automatisch, sofern sie nicht vor Ablauf des jeweiligen Abrechnungsmonats gekündigt werden. Die Kündigung kann jederzeit über die PayPal-Kontoverwaltung vorgenommen werden. Eine anteilige Erstattung bereits gezahlter Gebühren findet nicht statt.
@@ -222,12 +288,14 @@ export default function AgbPage() {
                             <li>Entscheidungen, die der Nutzer auf Basis von Analyseergebnissen trifft</li>
                             <li>Ausfälle von Drittdiensten (PayPal, Anthropic, MongoDB, Vercel)</li>
                             <li>Schäden, die durch eine vertragswidrige Nutzung des Security Monitorings entstehen</li>
+                            <li>Schäden, die durch eine vertragswidrige Nutzung des SEO Trackings entstehen, insbesondere durch das Tracking nicht autorisierter Domains</li>
+                            <li>Ausfälle, Datenlücken oder fehlerhafte Daten der DataForSEO API (DataForSEO Ltd., Vilnius, Litauen)</li>
                         </ul>
                     </Section>
 
                     <Section title="§ 8 Datenschutz">
                         <p>
-                            Der Umgang mit personenbezogenen Daten richtet sich nach der <a href="/datenschutz" className="text-violet-400 hover:text-violet-300">Datenschutzerklärung</a>. Sofern der Nutzer im Rahmen des Security Monitorings personenbezogene Daten verarbeitet (z.B. Websites, auf denen Besucherdaten erfasst werden), gilt ergänzend der <a href="/avv" className="text-violet-400 hover:text-violet-300">Auftragsverarbeitungsvertrag (AVV)</a>.
+                            Der Umgang mit personenbezogenen Daten richtet sich nach der <a href="/datenschutz" className="text-violet-400 hover:text-violet-300">Datenschutzerklärung</a>. Sofern der Nutzer im Rahmen des Security Monitorings oder SEO Trackings personenbezogene Daten verarbeitet (z.B. Websites, auf denen Besucherdaten erfasst werden), gilt ergänzend der <a href="/avv" className="text-violet-400 hover:text-violet-300">Auftragsverarbeitungsvertrag (AVV)</a>.
                         </p>
                     </Section>
 

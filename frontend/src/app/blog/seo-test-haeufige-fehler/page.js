@@ -317,7 +317,7 @@ export default function SeoTestArtikelPage() {
                         Wie viele dieser Fehler hat deine Website?
                     </h2>
                     <p className="text-slate-400 text-sm mb-6 max-w-md mx-auto leading-relaxed">
-                        AuditAI prüft alle 14 SEO-Checks in unter 60 Sekunden - inklusive der 10 Fehler aus diesem Artikel. Kostenlos registrieren und sofort loslegen.
+                        AuditAI prüft alle 14 SEO-Checks in unter 60 Sekunden - inklusive der 10 Fehler aus diesem Artikel. Keine Registrierung nötig und sofort loslegen.
                     </p>
                     <Link
                         href="/dashboard"

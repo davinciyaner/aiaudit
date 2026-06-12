@@ -90,7 +90,7 @@ export default function ExtensionAuthPage() {
                         <p className="mt-4 text-xs text-slate-600">
                             Kein Account?{' '}
                             <a href="/register" className="text-violet-400 hover:text-violet-300 transition-colors">
-                                Kostenlos registrieren
+                                Keine Registrierung nötig
                             </a>
                         </p>
                     </div>
