@@ -19,6 +19,8 @@ import {
     LogOut,
     Bot,
     FileText,
+    Shield,
+    TrendingUp,
 } from 'lucide-react'
 import toast, { Toaster } from 'react-hot-toast'
 import Link from 'next/link'
@@ -628,8 +630,81 @@ export default function Dashboard() {
                                     )}
                                 </Section>
 
-                                {/* PRO UPSELL */}
-                                <ReauditCTA />
+                                {/* PRO UPSELL — nur wenn nicht Pro */}
+                                {!isPro && <ReauditCTA />}
+
+                                {/* SECURITY MONITORING + SEO TRACKING UPSELL */}
+                                <div className="grid sm:grid-cols-2 gap-4">
+                                    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}
+                                        className="rounded-2xl border border-red-500/20 bg-red-500/[0.03] p-5">
+                                        <div className="flex items-start gap-3 mb-4">
+                                            <div className="w-9 h-9 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-center shrink-0">
+                                                <Shield className="w-4 h-4 text-red-400" />
+                                            </div>
+                                            <div>
+                                                <span className="text-xs font-semibold text-red-400 uppercase tracking-wider">Add-on</span>
+                                                <h3 className="text-sm font-bold text-white">Security Monitoring</h3>
+                                            </div>
+                                        </div>
+                                        <ul className="space-y-1.5 mb-4">
+                                            {['Uptime-Monitoring (1-min)', 'SSL-Ablauf-Alerts', 'Sicherheitsheader-Checks', 'Sofort-E-Mail-Alerts'].map(f => (
+                                                <li key={f} className="flex items-center gap-2 text-xs text-slate-500">
+                                                    <CheckCircle className="w-3 h-3 text-red-400/60 shrink-0" />
+                                                    {f}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                        {isLoggedIn ? (
+                                            <Link href="/monitoring/pricing" className="flex items-center justify-center gap-1.5 w-full px-4 py-2 bg-red-500/10 hover:bg-red-500/20 border border-red-500/20 text-red-400 text-xs font-semibold rounded-xl transition-all">
+                                                Jetzt buchen <ArrowRight className="w-3 h-3" />
+                                            </Link>
+                                        ) : (
+                                            <div className="flex gap-2">
+                                                <Link href="/register" className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 bg-red-500/10 hover:bg-red-500/20 border border-red-500/20 text-red-400 text-xs font-semibold rounded-xl transition-all">
+                                                    <UserPlus className="w-3 h-3" /> Registrieren
+                                                </Link>
+                                                <Link href="/monitoring/pricing" className="flex items-center justify-center px-3 py-2 border border-white/10 hover:border-white/20 text-slate-500 hover:text-slate-300 text-xs rounded-xl transition-all">
+                                                    Preise
+                                                </Link>
+                                            </div>
+                                        )}
+                                    </motion.div>
+
+                                    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }}
+                                        className="rounded-2xl border border-emerald-500/20 bg-emerald-500/[0.03] p-5">
+                                        <div className="flex items-start gap-3 mb-4">
+                                            <div className="w-9 h-9 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shrink-0">
+                                                <TrendingUp className="w-4 h-4 text-emerald-400" />
+                                            </div>
+                                            <div>
+                                                <span className="text-xs font-semibold text-emerald-400 uppercase tracking-wider">Add-on</span>
+                                                <h3 className="text-sm font-bold text-white">SEO Tracking</h3>
+                                            </div>
+                                        </div>
+                                        <ul className="space-y-1.5 mb-4">
+                                            {['Wöchentliche Google-Rankings', 'Keyword-Ideen & Suchvolumen', 'Konkurrenzanalyse', 'Backlink-Übersicht'].map(f => (
+                                                <li key={f} className="flex items-center gap-2 text-xs text-slate-500">
+                                                    <CheckCircle className="w-3 h-3 text-emerald-400/60 shrink-0" />
+                                                    {f}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                        {isLoggedIn ? (
+                                            <Link href="/seo/pricing" className="flex items-center justify-center gap-1.5 w-full px-4 py-2 bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/20 text-emerald-400 text-xs font-semibold rounded-xl transition-all">
+                                                Jetzt buchen <ArrowRight className="w-3 h-3" />
+                                            </Link>
+                                        ) : (
+                                            <div className="flex gap-2">
+                                                <Link href="/register" className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/20 text-emerald-400 text-xs font-semibold rounded-xl transition-all">
+                                                    <UserPlus className="w-3 h-3" /> Registrieren
+                                                </Link>
+                                                <Link href="/seo/pricing" className="flex items-center justify-center px-3 py-2 border border-white/10 hover:border-white/20 text-slate-500 hover:text-slate-300 text-xs rounded-xl transition-all">
+                                                    Preise
+                                                </Link>
+                                            </div>
+                                        )}
+                                    </motion.div>
+                                </div>
 
                                 {/* PDF DOWNLOAD — nur Pro/Agency */}
                                 {result?.reportFile ? (
