@@ -1,6 +1,6 @@
 'use client'
 import { motion } from 'framer-motion'
-import { ShieldCheck, ShieldAlert } from 'lucide-react'
+import { ShieldCheck, ShieldAlert, Bell } from 'lucide-react'
 import Link from 'next/link'
 
 const CHECKS = [
@@ -75,10 +75,17 @@ export default function SecuritySection() {
                                 </li>
                             ))}
                         </ul>
-                        <Link href="/dashboard"
-                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-red-600 to-orange-600 hover:from-red-500 hover:to-orange-500 text-white text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-red-500/20">
-                            Security jetzt prüfen
-                        </Link>
+                        <div className="flex flex-wrap items-center gap-3">
+                            <Link href="/dashboard"
+                                className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-red-600 to-orange-600 hover:from-red-500 hover:to-orange-500 text-white text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-red-500/20">
+                                Security jetzt prüfen
+                            </Link>
+                            <Link href="/monitoring/pricing"
+                                className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white text-sm font-semibold rounded-xl transition-all duration-200">
+                                <Bell className="w-4 h-4 text-red-400" />
+                                Täglich automatisch überwachen
+                            </Link>
+                        </div>
                     </motion.div>
 
                     <motion.div

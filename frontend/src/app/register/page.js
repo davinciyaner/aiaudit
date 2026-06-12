@@ -219,7 +219,7 @@ export default function RegisterPage() {
                         <span className="text-transparent bg-clip-text bg-linear-to-r from-violet-400 to-cyan-400">Sofort einsatzbereit.</span>
                     </h2>
                     <p className="text-slate-400 text-sm leading-relaxed mb-8">
-                        Kostenlos registrieren und sofort alle Scores, Checks und Probleme deiner Website sehen — für SEO, GEO, Security und Performance.
+                        Keine Registrierung nötig — sofort alle Scores, Checks und Probleme deiner Website sehen — für SEO, GEO, Security und Performance.
                     </p>
 
                     {/* Benefits */}

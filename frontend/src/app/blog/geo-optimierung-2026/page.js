@@ -330,7 +330,7 @@ export default function GeoArtikelPage() {
                         Wie gut ist dein GEO-Score?
                     </h2>
                     <p className="text-slate-400 text-sm mb-6 max-w-md mx-auto leading-relaxed">
-                        AuditAI prüft alle 19 GEO-Signale in unter 60 Sekunden - inklusive llms.txt, Schema.org, KI-Crawler-Erlaubnis und Content-Qualität. Kostenlos registrieren und sofort loslegen.
+                        AuditAI prüft alle 19 GEO-Signale in unter 60 Sekunden - inklusive llms.txt, Schema.org, KI-Crawler-Erlaubnis und Content-Qualität. Keine Registrierung nötig und sofort loslegen.
                     </p>
                     <Link
                         href="/dashboard"

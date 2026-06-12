@@ -80,7 +80,7 @@ export default function RegistrationGate({ stats = [], auditUrl = '' }) {
                         className="flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white font-semibold rounded-xl transition-all shadow-lg shadow-violet-500/20"
                     >
                         <UserPlus className="w-4 h-4" />
-                        Kostenlos registrieren
+                        Keine Registrierung nötig
                     </button>
                     <Link
                         href="/pricing"

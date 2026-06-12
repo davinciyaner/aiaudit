@@ -43,10 +43,10 @@ export default function NutzungsbedingungenPage() {
 
                     <Section title="1. Geltungsbereich">
                         <p>
-                            Diese Nutzungsbedingungen gelten für die Nutzung der Webanwendung <strong className="text-slate-300">AuditAI</strong> unter <strong className="text-slate-300">sitecheckai.dev</strong> sowie aller zugehörigen Dienste (Website-Audit, Security Monitoring). Mit der Registrierung oder der Nutzung des Dienstes erklärt der Nutzer sein Einverständnis mit diesen Bedingungen.
+                            Diese Nutzungsbedingungen gelten für die Nutzung der Webanwendung <strong className="text-slate-300">AuditAI</strong> unter <strong className="text-slate-300">sitecheckai.dev</strong> sowie aller zugehörigen Dienste (Website-Audit, Security Monitoring, SEO Tracking). Mit der Registrierung oder der Nutzung des Dienstes erklärt der Nutzer sein Einverständnis mit diesen Bedingungen.
                         </p>
                         <p>
-                            Ergänzend gelten die <Link href="/agb" className="text-violet-400 hover:text-violet-300">Allgemeinen Geschäftsbedingungen (AGB)</Link> für kostenpflichtige Abonnements sowie die <Link href="/datenschutz" className="text-violet-400 hover:text-violet-300">Datenschutzerklärung</Link> und der <Link href="/avv" className="text-violet-400 hover:text-violet-300">Auftragsverarbeitungsvertrag (AVV)</Link> für das Security Monitoring.
+                            Ergänzend gelten die <Link href="/agb" className="text-violet-400 hover:text-violet-300">Allgemeinen Geschäftsbedingungen (AGB)</Link> für kostenpflichtige Abonnements sowie die <Link href="/datenschutz" className="text-violet-400 hover:text-violet-300">Datenschutzerklärung</Link> und der <Link href="/avv" className="text-violet-400 hover:text-violet-300">Auftragsverarbeitungsvertrag (AVV)</Link> für Security Monitoring und SEO Tracking.
                         </p>
                     </Section>
 
@@ -64,6 +64,7 @@ export default function NutzungsbedingungenPage() {
                         <ul className="list-disc list-inside space-y-1 ml-2">
                             <li>Analyse eigener Websites oder Websites, für deren Analyse der Nutzer eine ausdrückliche Genehmigung des Betreibers besitzt</li>
                             <li>Überwachung eigener Websites oder solcher, für die der Nutzer als Betreiber, Webmaster oder beauftragter Dienstleister zuständig ist</li>
+                            <li>SEO-Tracking eigener Domains oder Domains, für deren Tracking der Nutzer eine ausdrückliche Genehmigung besitzt</li>
                             <li>Erstellung von Berichten und Analysen für eigene Kunden im Rahmen einer professionellen Tätigkeit</li>
                         </ul>
                     </Section>
@@ -129,7 +130,7 @@ export default function NutzungsbedingungenPage() {
                             <li>Fehler in KI-generierten Analyseergebnissen</li>
                             <li>Datenverlust durch technische Störungen</li>
                             <li>Schäden durch vertragswidrige Nutzung des Dienstes</li>
-                            <li>Ausfälle von Drittdiensten (PayPal, Anthropic, Vercel, MongoDB)</li>
+                            <li>Ausfälle von Drittdiensten (PayPal, Anthropic, Vercel, MongoDB, DataForSEO)</li>
                         </ul>
                         <p>
                             Die Haftung für Vorsatz und grobe Fahrlässigkeit sowie für Schäden an Leib, Leben und Gesundheit bleibt unberührt.

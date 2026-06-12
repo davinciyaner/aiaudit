@@ -331,7 +331,7 @@ export default function Dashboard() {
                             <Link href="/register"
                                 className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white font-semibold rounded-xl transition-all shadow-lg shadow-violet-500/20"
                             >
-                                <UserPlus className="w-4 h-4" /> Kostenlos registrieren
+                                <UserPlus className="w-4 h-4" /> Keine Registrierung nötig
                             </Link>
                             <Link href="/pricing"
                                 className="flex items-center gap-2 px-6 py-3 text-slate-300 hover:text-white border border-white/10 hover:border-violet-500/40 font-semibold rounded-xl transition-all text-sm"

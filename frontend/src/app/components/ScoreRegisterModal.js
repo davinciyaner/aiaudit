@@ -61,7 +61,7 @@ export default function ScoreRegisterModal({ open, onClose, auditUrl = '', mode 
                                 </div>
 
                                 <h3 className="text-xl font-bold text-white mb-2">
-                                    Kostenlos registrieren & Audit starten
+                                    Keine Registrierung nötig — Audit starten
                                 </h3>
                                 <p className="text-slate-400 text-sm mb-5 leading-relaxed">
                                     Mit einem kostenlosen Account siehst du alle Scores, Probleme und Security-Checks deiner Website.
@@ -93,7 +93,7 @@ export default function ScoreRegisterModal({ open, onClose, auditUrl = '', mode 
                                     className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-linear-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white font-semibold rounded-xl transition-all shadow-lg shadow-violet-500/20 mb-3"
                                 >
                                     <UserPlus className="w-4 h-4" />
-                                    Kostenlos registrieren
+                                    Keine Registrierung nötig
                                 </button>
 
                                 <Link

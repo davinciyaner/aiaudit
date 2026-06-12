@@ -55,7 +55,7 @@ export default function AvvPage() {
                             Dieser Auftragsverarbeitungsvertrag (AVV) regelt die datenschutzrechtliche Beziehung zwischen dem Nutzer von AuditAI (nachfolgend <strong className="text-slate-300">„Verantwortlicher"</strong>) und dem Anbieter des Dienstes (nachfolgend <strong className="text-slate-300">„Auftragsverarbeiter"</strong>) gemäß Art. 28 DSGVO.
                         </p>
                         <p>
-                            Dieser AVV gilt automatisch als geschlossen, sobald der Nutzer kostenpflichtige Dienste von AuditAI — insbesondere das Security Monitoring — in Anspruch nimmt, bei deren Nutzung personenbezogene Daten im Auftrag des Nutzers verarbeitet werden. Durch die Nutzung des Dienstes erklärt der Nutzer sein Einverständnis mit den Bedingungen dieses AVV.
+                            Dieser AVV gilt automatisch als geschlossen, sobald der Nutzer kostenpflichtige Dienste von AuditAI — insbesondere das Security Monitoring oder das SEO Tracking — in Anspruch nimmt, bei deren Nutzung personenbezogene Daten im Auftrag des Nutzers verarbeitet werden. Durch die Nutzung des Dienstes erklärt der Nutzer sein Einverständnis mit den Bedingungen dieses AVV.
                         </p>
                         <p className="bg-white/2 border border-white/5 rounded-xl p-4 not-prose text-sm">
                             <strong className="text-slate-300">Auftragsverarbeiter:</strong><br />
@@ -71,21 +71,34 @@ export default function AvvPage() {
                             Gegenstand der Auftragsverarbeitung ist die Erbringung der in den AGB und auf der Produktseite beschriebenen Dienstleistungen, soweit dabei personenbezogene Daten im Auftrag des Verantwortlichen verarbeitet werden. Dies betrifft insbesondere:
                         </p>
                         <ul className="list-disc list-inside space-y-1 ml-2">
-                            <li>Automatisierte HTTP(S)-Anfragen an vom Verantwortlichen eingetragene Websites</li>
+                            <li>Automatisierte HTTP(S)-Anfragen an vom Verantwortlichen eingetragene Websites (Security Monitoring)</li>
                             <li>Speicherung der Monitoring-Ergebnisse (Uptime-Status, Antwortzeiten, SSL-Daten, Sicherheitsheader)</li>
                             <li>Erstellung und Zustellung von E-Mail-Benachrichtigungen bei Problemen</li>
+                            <li>Speicherung der vom Verantwortlichen eingetragenen Domains, Keywords und der dazugehörigen Google-Ranking-Positionen (SEO Tracking)</li>
+                            <li>Abruf von Ranking-, Keyword- und Backlink-Daten über die DataForSEO API im Auftrag des Verantwortlichen</li>
                         </ul>
                         <p>
                             Die Verarbeitung erfolgt für die Dauer des aktiven Abonnements zuzüglich einer Löschfrist von 30 Tagen nach Vertragsende.
                         </p>
 
-                        <Sub title="Verarbeitungsübersicht">
+                        <Sub title="Verarbeitungsübersicht Security Monitoring">
                             <div className="bg-white/2 border border-white/5 rounded-xl p-4">
                                 <TableRow label="Art der Daten" value="Domain-Namen, HTTP-Antwortdaten, SSL-Zertifikatsdaten, Uptime-Status, Antwortzeiten, Sicherheitsheader-Konfiguration" />
                                 <TableRow label="Zweck" value="Überwachung der Verfügbarkeit und Sicherheitskonfiguration der eingetragenen Websites" />
                                 <TableRow label="Betroffene Personen" value="Mittelbar: Betreiber der überwachten Websites (soweit natürliche Personen)" />
                                 <TableRow label="Speicherdauer" value="Uptime-Checks: 90 Tage; Security Scans: 12 Monate; Alerts: bis zur manuellen Auflösung, max. 12 Monate" />
                                 <TableRow label="Ort der Verarbeitung" value="Deutschland / EU (MongoDB Atlas, Vercel)" />
+                            </div>
+                        </Sub>
+
+                        <Sub title="Verarbeitungsübersicht SEO Tracking">
+                            <div className="bg-white/2 border border-white/5 rounded-xl p-4">
+                                <TableRow label="Art der Daten" value="Domains, Keywords, Google-Ranking-Positionen (Top 100), Ranking-URLs, Backlink-Zusammenfassungen, Keyword-Suchvolumina" />
+                                <TableRow label="Zweck" value="Wöchentliches Tracking von Google-Rankings für eingetragene Domains und Keywords; Keyword-Analyse; Wettbewerbsanalyse" />
+                                <TableRow label="Betroffene Personen" value="Mittelbar: Betreiber der getrackten Domains (soweit natürliche Personen)" />
+                                <TableRow label="Speicherdauer" value="Ranking-Daten: 12 Monate; Keyword-Listen: bis zur Löschung durch den Nutzer, max. 30 Tage nach Vertragsende" />
+                                <TableRow label="Drittanbieter" value="DataForSEO Ltd., Vilnius, Litauen (EU) — nur Keyword + Standort + Sprachcode werden übermittelt, keine personenbezogenen Nutzerdaten" />
+                                <TableRow label="Ort der Verarbeitung" value="Deutschland / EU (MongoDB Atlas, Vercel, DataForSEO)" />
                             </div>
                         </Sub>
                     </Section>
@@ -128,6 +141,10 @@ export default function AvvPage() {
                                 <strong className="text-slate-300">SendGrid / Twilio (für E-Mail-Benachrichtigungen)</strong><br />
                                 <span className="text-slate-500">Zweck: Versand von Alert-E-Mails · Standort: USA (Standardvertragsklauseln)</span>
                             </div>
+                            <div className="border-t border-white/5 pt-3">
+                                <strong className="text-slate-300">DataForSEO Ltd.</strong><br />
+                                <span className="text-slate-500">Zweck: Abruf von Google-Ranking-Daten, Keyword-Suchvolumina, Wettbewerbs- und Backlink-Daten für SEO Tracking · Standort: Vilnius, Litauen (EU) · Übermittelte Daten: Keyword, Standortname, Sprachcode — keine personenbezogenen Daten der Endnutzer</span>
+                            </div>
                         </div>
                         <p>
                             Der Auftragsverarbeiter informiert den Verantwortlichen über geplante Änderungen an Unterauftragnehmern und gibt ihm die Möglichkeit, Einwände zu erheben.
@@ -157,7 +174,7 @@ export default function AvvPage() {
 
                     <Section title="§ 7 Löschung und Rückgabe der Daten">
                         <p>
-                            Nach Beendigung des Vertragsverhältnisses werden alle im Rahmen der Auftragsverarbeitung gespeicherten Monitoring-Daten (Uptime-Checks, Security Scans, Alerts) des Verantwortlichen innerhalb von 30 Tagen automatisch gelöscht, sofern keine gesetzliche Aufbewahrungspflicht entgegensteht.
+                            Nach Beendigung des Vertragsverhältnisses werden alle im Rahmen der Auftragsverarbeitung gespeicherten Daten des Verantwortlichen — darunter Monitoring-Daten (Uptime-Checks, Security Scans, Alerts) sowie SEO-Tracking-Daten (Domains, Keywords, Ranking-Positionen) — innerhalb von 30 Tagen automatisch gelöscht, sofern keine gesetzliche Aufbewahrungspflicht entgegensteht.
                         </p>
                         <p>
                             Der Verantwortliche kann vor Vertragsende einen Datenexport seiner Monitoring-Daten per E-Mail an <a href="mailto:finnpaustian94@gmail.com" className="text-violet-400 hover:text-violet-300">finnpaustian94@gmail.com</a> anfordern.

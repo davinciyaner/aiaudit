@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
     Zap, Menu, X, ArrowRight, LogOut, User, ChevronDown, Shield,
-    LayoutDashboard, Search, Globe, BookOpen, CreditCard, Activity,
+    LayoutDashboard, Search, Globe, BookOpen, CreditCard, Activity, TrendingUp,
 } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -13,8 +13,9 @@ const NAV_ITEMS = [
         key: 'seo',
         label: 'SEO',
         items: [
-            { icon: Search, label: 'Website analysieren', desc: 'SEO-Score & Fehler aufdecken', href: '/dashboard' },
-            { icon: CreditCard, label: 'Preise', desc: 'Audit-Pläne vergleichen', href: '/pricing' },
+            { icon: Search, label: 'Einmal-Audit', desc: 'SEO-Score & Fehler aufdecken', href: '/dashboard' },
+            { icon: TrendingUp, label: 'SEO Tracking', desc: 'Wöchentliche Google-Rankings', href: '/seo/dashboard', accent: 'emerald' },
+            { icon: CreditCard, label: 'Tracking Preise', desc: '3 Pläne ab €29/Monat', href: '/seo/pricing' },
             { icon: BookOpen, label: 'SEO-Fehler vermeiden', desc: 'Leitfaden aus der Praxis', href: '/blog/seo-test-haeufige-fehler' },
         ],
     },
@@ -31,7 +32,7 @@ const NAV_ITEMS = [
         label: 'Security',
         items: [
             { icon: Shield, label: 'Einmal-Audit', desc: 'Sicherheits-Check starten', href: '/dashboard' },
-            { icon: Activity, label: 'Security Monitoring', desc: 'Uptime, SSL & Alerts', href: '/monitoring/security', accent: true },
+            { icon: Activity, label: 'Security Monitoring', desc: 'Uptime, SSL & Alerts', href: '/monitoring/security', accent: 'red' },
             { icon: CreditCard, label: 'Monitoring Preise', desc: '3 Pläne ab €29/Monat', href: '/monitoring/pricing' },
             { icon: BookOpen, label: 'Security-Check Guide', desc: 'Was wirklich wichtig ist', href: '/blog/website-security-check' },
         ],
@@ -70,27 +71,28 @@ function NavDropdown({ item, isOpen, onOpen, onClose }) {
                         className="absolute top-full left-0 mt-2 w-64 bg-[#0d1117] border border-white/10 rounded-xl shadow-2xl shadow-black/50 overflow-hidden"
                     >
                         <div className="p-1.5 space-y-0.5">
-                            {item.items.map(sub => (
+                            {item.items.map(sub => {
+                                const a = sub.accent
+                                const hoverBg   = a === 'red' ? 'hover:bg-red-500/5' : a === 'emerald' ? 'hover:bg-emerald-500/5' : 'hover:bg-white/5'
+                                const iconBg    = a === 'red' ? 'bg-red-500/10' : a === 'emerald' ? 'bg-emerald-500/10' : 'bg-white/5 group-hover:bg-white/8'
+                                const iconColor = a === 'red' ? 'text-red-400' : a === 'emerald' ? 'text-emerald-400' : 'text-slate-400'
+                                const textColor = a === 'red' ? 'text-red-400' : a === 'emerald' ? 'text-emerald-400' : 'text-slate-200 group-hover:text-white'
+                                return (
                                 <Link key={sub.href} href={sub.href} onClick={onClose}
-                                    className={`flex items-start gap-3 px-3 py-2.5 rounded-lg transition-all group ${
-                                        sub.accent
-                                            ? 'hover:bg-red-500/5'
-                                            : 'hover:bg-white/5'
-                                    }`}
+                                    className={`flex items-start gap-3 px-3 py-2.5 rounded-lg transition-all group ${hoverBg}`}
                                 >
-                                    <div className={`mt-0.5 w-7 h-7 rounded-lg flex items-center justify-center shrink-0 ${
-                                        sub.accent ? 'bg-red-500/10' : 'bg-white/5 group-hover:bg-white/8'
-                                    }`}>
-                                        <sub.icon className={`w-3.5 h-3.5 ${sub.accent ? 'text-red-400' : 'text-slate-400'}`} />
+                                    <div className={`mt-0.5 w-7 h-7 rounded-lg flex items-center justify-center shrink-0 ${iconBg}`}>
+                                        <sub.icon className={`w-3.5 h-3.5 ${iconColor}`} />
                                     </div>
                                     <div>
-                                        <div className={`text-sm font-medium ${sub.accent ? 'text-red-400' : 'text-slate-200 group-hover:text-white'} transition-colors`}>
+                                        <div className={`text-sm font-medium ${textColor} transition-colors`}>
                                             {sub.label}
                                         </div>
                                         <div className="text-xs text-slate-500 mt-0.5">{sub.desc}</div>
                                     </div>
                                 </Link>
-                            ))}
+                                )
+                            })}
                         </div>
                     </motion.div>
                 )}
@@ -119,18 +121,22 @@ function MobileAccordion({ item, isOpen, onToggle, onClose }) {
                         className="overflow-hidden"
                     >
                         <div className="pl-4 pb-1 space-y-0.5">
-                            {item.items.map(sub => (
+                            {item.items.map(sub => {
+                                const a = sub.accent
+                                const cls = a === 'red'
+                                    ? 'text-red-400 hover:text-red-300 hover:bg-red-500/5'
+                                    : a === 'emerald'
+                                    ? 'text-emerald-400 hover:text-emerald-300 hover:bg-emerald-500/5'
+                                    : 'text-slate-400 hover:text-white hover:bg-white/5'
+                                return (
                                 <Link key={sub.href} href={sub.href} onClick={onClose}
-                                    className={`flex items-center gap-2.5 px-4 py-2.5 text-sm rounded-lg transition-all ${
-                                        sub.accent
-                                            ? 'text-red-400 hover:text-red-300 hover:bg-red-500/5'
-                                            : 'text-slate-400 hover:text-white hover:bg-white/5'
-                                    }`}
+                                    className={`flex items-center gap-2.5 px-4 py-2.5 text-sm rounded-lg transition-all ${cls}`}
                                 >
                                     <sub.icon className="w-3.5 h-3.5 shrink-0" />
                                     {sub.label}
                                 </Link>
-                            ))}
+                                )
+                            })}
                         </div>
                     </motion.div>
                 )}
@@ -277,6 +283,16 @@ export default function Navbar() {
                                                     <CreditCard className="w-3.5 h-3.5 text-slate-500" /> Security Preise
                                                 </Link>
                                                 <div className="my-1 border-t border-white/5" />
+                                                <p className="px-3 pt-1 pb-0.5 text-[10px] text-slate-600 font-semibold uppercase tracking-wider">SEO Tracking</p>
+                                                <Link href="/seo/dashboard" onClick={() => setUserDropdownOpen(false)}
+                                                    className="flex items-center gap-2.5 px-3 py-2 text-sm text-slate-300 hover:text-white hover:bg-white/5 rounded-lg transition-all">
+                                                    <TrendingUp className="w-3.5 h-3.5 text-emerald-400" /> Rankings
+                                                </Link>
+                                                <Link href="/seo/pricing" onClick={() => setUserDropdownOpen(false)}
+                                                    className="flex items-center gap-2.5 px-3 py-2 text-sm text-slate-300 hover:text-white hover:bg-white/5 rounded-lg transition-all">
+                                                    <CreditCard className="w-3.5 h-3.5 text-slate-500" /> Tracking Preise
+                                                </Link>
+                                                <div className="my-1 border-t border-white/5" />
                                                 <button onClick={handleLogout}
                                                     className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-slate-400 hover:text-red-400 hover:bg-red-500/5 rounded-lg transition-all">
                                                     <LogOut className="w-3.5 h-3.5" /> Abmelden
@@ -341,6 +357,14 @@ export default function Navbar() {
                                 <Link href="/profile" onClick={() => setMobileOpen(false)}
                                     className="flex items-center gap-2 px-4 py-3 text-sm text-slate-300 hover:text-white rounded-lg hover:bg-white/5 transition-all">
                                     <User className="w-4 h-4 text-slate-500" /> Mein Profil
+                                </Link>
+                                <Link href="/monitoring/security" onClick={() => setMobileOpen(false)}
+                                    className="flex items-center gap-2 px-4 py-3 text-sm text-slate-300 hover:text-white rounded-lg hover:bg-white/5 transition-all">
+                                    <Shield className="w-4 h-4 text-red-400" /> Security Monitoring
+                                </Link>
+                                <Link href="/seo/dashboard" onClick={() => setMobileOpen(false)}
+                                    className="flex items-center gap-2 px-4 py-3 text-sm text-slate-300 hover:text-white rounded-lg hover:bg-white/5 transition-all">
+                                    <TrendingUp className="w-4 h-4 text-emerald-400" /> SEO Tracking
                                 </Link>
                                 <button onClick={handleLogout}
                                     className="w-full flex items-center gap-2 px-4 py-3 text-sm text-slate-400 hover:text-red-400 rounded-lg hover:bg-red-500/5 transition-all">
