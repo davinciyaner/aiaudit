@@ -328,6 +328,35 @@ export default function SeoTestArtikelPage() {
                     <div className="mt-3 text-xs text-slate-600">Kostenlose Registrierung · Keine Kreditkarte · 60 Sekunden</div>
                 </div>
 
+                {/* SEO TRACKING CTA */}
+                <div className="mt-5 bg-emerald-500/[0.04] border border-emerald-500/20 rounded-2xl p-6 sm:p-8">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 justify-between">
+                        <div>
+                            <span className="text-xs font-semibold text-emerald-400 uppercase tracking-wider mb-1 block">SEO Tracking</span>
+                            <h3 className="text-base sm:text-lg font-bold text-white mb-2">
+                                Nicht nur einmal prüfen — automatisch tracken
+                            </h3>
+                            <p className="text-slate-400 text-sm leading-relaxed max-w-md">
+                                SEO-Fehler entstehen laufend: neue Seiten ohne Meta-Tags, Bilder ohne Alt-Text nach Updates, versehentliches noindex. Mit SEO Tracking überwachst du deine Rankings und Keywords jede Woche automatisch.
+                            </p>
+                            <ul className="mt-3 flex flex-wrap gap-x-4 gap-y-1">
+                                {['Wöchentliche Google-Rankings', 'Keyword-Ideen', 'Konkurrenzanalyse', 'Backlink-Übersicht'].map(f => (
+                                    <li key={f} className="flex items-center gap-1.5 text-xs text-slate-500">
+                                        <span className="w-1 h-1 rounded-full bg-emerald-400 shrink-0" />
+                                        {f}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                        <Link
+                            href="/seo/pricing"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-emerald-500/20 shrink-0"
+                        >
+                            Jetzt tracken
+                        </Link>
+                    </div>
+                </div>
+
                 {/* Back */}
                 <div className="mt-10 pt-8 border-t border-white/5">
                     <Link href="/blog" className="text-sm text-slate-500 hover:text-slate-300 transition-colors">
