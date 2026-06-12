@@ -7,6 +7,23 @@ import { analyzeGEO } from './geo.js'
 
 const MAX_PAGES = 25
 
+const PRIVATE_HOST_RE = [
+    /^localhost$/i,
+    /^127\./,
+    /^10\./,
+    /^192\.168\./,
+    /^172\.(1[6-9]|2\d|3[01])\./,
+    /^::1$/,
+    /^0\.0\.0\.0$/,
+    /^169\.254\./,
+    /^fd[0-9a-f]{2}:/i,
+    /^fe80:/i,
+]
+
+function isPrivateHost(hostname) {
+    return PRIVATE_HOST_RE.some(r => r.test(hostname))
+}
+
 async function crawlSite(page, startUrl) {
     const origin = new URL(startUrl).origin
     const visited = new Set()
@@ -93,9 +110,29 @@ export async function runAudit(url) {
     })
     const context = await browser.newContext({
         userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-        viewport: { width: 1280, height: 800 }
+        viewport: { width: 1280, height: 800 },
+        extraHTTPHeaders: {},       // keine Auth-/Cookie-Header weiterreichen
+        storageState: { cookies: [], origins: [] },  // isolierter Kontext ohne Session-Daten
+        ignoreHTTPSErrors: false,
+        permissions: [],
     })
     const page = await context.newPage()
+
+    // SSRF via Redirect: jede Navigation (inkl. 301/302-Ziele) auf private IPs oder
+    // Nicht-HTTP-Protokolle wird abgebrochen bevor Playwright ihr folgt
+    await page.route('**', async (route) => {
+        try {
+            const { hostname, protocol } = new URL(route.request().url())
+            if (!['http:', 'https:'].includes(protocol) || isPrivateHost(hostname)) {
+                await route.abort('blockedbyclient')
+                return
+            }
+        } catch {
+            await route.abort('blockedbyclient')
+            return
+        }
+        await route.continue()
+    })
 
     const resources = []
     page.on('response', async response => {

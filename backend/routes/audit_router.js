@@ -74,17 +74,21 @@ function validateURL(url) {
         throw err;
     }
 
+    // Nur die Domain erlaubt — Pfade, Query-Parameter und Fragments sind nicht zulässig
+    const hasPath = parsed.pathname !== '' && parsed.pathname !== '/';
+    const hasQuery = parsed.search !== '';
+    const hasFragment = parsed.hash !== '';
+    if (hasPath || hasQuery || hasFragment) {
+        const err = new Error("Bitte nur die Domain eingeben (z.B. example.com) – keine Pfade, Parameter oder Tokens.");
+        err.status = 400;
+        throw err;
+    }
+
     if (NON_AUDITABLE_PATH_RE.test(parsed.pathname)) {
         const err = new Error("Login-, Checkout- und Account-Seiten können nicht sinnvoll auditiert werden. Bitte die Startseite oder eine Produktseite eingeben.");
         err.status = 400;
         throw err;
     }
-
-    // Tracking-Parameter und Fragment entfernen – für Analyse irrelevant und stört Domain-Deduplizierung
-    for (const key of [...parsed.searchParams.keys()]) {
-        if (TRACKING_PARAM_RE.test(key)) parsed.searchParams.delete(key);
-    }
-    parsed.hash = '';
 
     return parsed.href;
 }
