@@ -120,11 +120,16 @@ export async function addSite(req, res) {
             keywords.slice(0, slotsLeft).map(k => k.trim().toLowerCase()).filter(Boolean)
         )]
 
-        const normalizedDomain = domain
-            .replace(/^https?:\/\//, '')
-            .replace(/\/$/, '')
-            .toLowerCase()
-            .split('/')[0]
+        let normalizedDomain
+        try {
+            const parsed = new URL(domain.startsWith('http') ? domain : `https://${domain}`)
+            if ((parsed.pathname && parsed.pathname !== '/') || parsed.search || parsed.hash) {
+                return res.status(400).json({ error: 'Bitte nur die Domain eingeben (z.B. example.com) – keine Pfade, Parameter oder Tokens.' })
+            }
+            normalizedDomain = parsed.hostname.toLowerCase()
+        } catch {
+            return res.status(400).json({ error: 'Ungültige Domain' })
+        }
 
         const site = await SeoTrackedSite.create({
             userId: req.userId,

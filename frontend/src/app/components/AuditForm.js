@@ -13,6 +13,19 @@ function normalizeUrl(input) {
     return 'https://' + trimmed
 }
 
+function validateDomainOnly(input) {
+    if (!input.trim()) return null
+    try {
+        const parsed = new URL(input.startsWith('http') ? input : `https://${input}`)
+        if ((parsed.pathname && parsed.pathname !== '/') || parsed.search || parsed.hash) {
+            return 'Bitte nur die Domain eingeben (z.B. example.com) – keine Pfade, Parameter oder Tokens.'
+        }
+        return null
+    } catch {
+        return null
+    }
+}
+
 function extractDomain(url) {
     try {
         return new URL(url).hostname.replace(/^www\./i, '').toLowerCase()
@@ -41,6 +54,9 @@ export default function AuditForm({ onAuditStart, onAuditComplete, defaultUrl = 
     const handleSubmit = async (e) => {
         e.preventDefault()
         if (!url.trim()) return toast.error('Bitte eine URL eingeben')
+
+        const domainError = validateDomainOnly(url)
+        if (domainError) return toast.error(domainError)
 
         const auditUrl = normalized
         const domain = extractDomain(auditUrl)
