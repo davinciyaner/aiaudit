@@ -467,6 +467,84 @@ function passwordResetHtml(name, resetUrl) {
 </html>`
 }
 
+export async function sendSecurityAlert({ user, site, alert }) {
+    const APP_URL_LOCAL = process.env.APP_URL || process.env.ALLOWED_ORIGIN || 'https://www.sitecheckai.dev'
+    const siteUrl = `${APP_URL_LOCAL}/monitoring/security/${site._id}`
+    const severityColors = { critical: '#ef4444', high: '#f97316', medium: '#eab308', low: '#64748b' }
+    const severityLabels = { critical: 'Kritisch', high: 'Hoch', medium: 'Mittel', low: 'Unkritisch' }
+    const typeLabels = {
+        downtime: 'Website nicht erreichbar',
+        ssl_expiry: 'SSL-Zertifikat läuft ab',
+        security_regression: 'Sicherheitsproblem erkannt',
+        open_ports: 'Gefährliche Ports offen',
+    }
+    const color = severityColors[alert.severity] || '#ef4444'
+    const severityLabel = severityLabels[alert.severity] || alert.severity
+    const typeLabel = typeLabels[alert.type] || alert.type
+
+    await transporter.sendMail({
+        from: process.env.SMTP_FROM || process.env.SMTP_USER,
+        to: user.email,
+        subject: `[Alert] ${typeLabel}: ${site.domain}`,
+        text: `Hallo ${user.name},\n\n${alert.message}\n\nSite: ${site.domain}\nSchwere: ${severityLabel}\n\nDetails: ${siteUrl}\n\nDein AuditAI Team`,
+        html: securityAlertHtml({ user, site, alert, color, severityLabel, typeLabel, siteUrl }),
+    })
+}
+
+function securityAlertHtml({ user, site, alert, color, severityLabel, typeLabel, siteUrl }) {
+    return `<!DOCTYPE html>
+<html lang="de">
+<head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/></head>
+<body style="margin:0;padding:0;background:#05080f;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#05080f;padding:40px 20px;">
+    <tr><td align="center">
+      <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
+        <tr><td align="center" style="padding-bottom:32px;">
+          <table cellpadding="0" cellspacing="0"><tr>
+            <td style="background:linear-gradient(135deg,#7c3aed,#06b6d4);border-radius:12px;width:40px;height:40px;text-align:center;vertical-align:middle;">
+              <span style="color:#fff;font-size:18px;font-weight:bold;">⚡</span>
+            </td>
+            <td style="padding-left:10px;vertical-align:middle;">
+              <span style="color:#ffffff;font-size:20px;font-weight:700;">Audit<span style="color:#22d3ee;">AI</span></span>
+            </td>
+          </tr></table>
+        </td></tr>
+        <tr><td style="background:#0d1117;border:1px solid rgba(255,255,255,0.07);border-radius:20px;padding:40px;">
+          <div style="display:inline-block;padding:4px 12px;background:${color}20;border:1px solid ${color}40;border-radius:20px;margin-bottom:16px;">
+            <span style="color:${color};font-size:12px;font-weight:600;">● ${severityLabel}</span>
+          </div>
+          <p style="margin:0 0 6px;font-size:22px;font-weight:700;color:#ffffff;">${typeLabel}</p>
+          <p style="margin:0 0 28px;font-size:15px;color:#94a3b8;line-height:1.6;">Hallo ${user.name}, wir haben ein Problem mit einer deiner überwachten Websites erkannt.</p>
+          <table cellpadding="0" cellspacing="0" width="100%" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:20px;margin-bottom:28px;">
+            <tr><td>
+              <p style="margin:0 0 4px;font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;">Website</p>
+              <p style="margin:0 0 16px;font-size:16px;font-weight:700;color:#a78bfa;">${site.domain}</p>
+              <p style="margin:0 0 4px;font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;">Problem</p>
+              <p style="margin:0 0 16px;font-size:14px;color:#e2e8f0;">${alert.message}</p>
+              <p style="margin:0 0 4px;font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;">Erkannt am</p>
+              <p style="margin:0;font-size:14px;color:#94a3b8;">${new Date(alert.detectedAt).toLocaleString('de-DE', { timeZone: 'Europe/Berlin' })}</p>
+            </td></tr>
+          </table>
+          <table cellpadding="0" cellspacing="0"><tr>
+            <td style="background:linear-gradient(135deg,#7c3aed,#06b6d4);border-radius:12px;padding:1px;">
+              <a href="${siteUrl}" style="display:block;background:#0d1117;border-radius:11px;padding:12px 28px;font-size:14px;font-weight:600;color:#ffffff;text-decoration:none;">
+                Details ansehen →
+              </a>
+            </td>
+          </tr></table>
+          <hr style="border:none;border-top:1px solid rgba(255,255,255,0.06);margin:28px 0;"/>
+          <p style="margin:0;font-size:14px;color:#64748b;">Dein AuditAI Team</p>
+        </td></tr>
+        <tr><td align="center" style="padding-top:24px;">
+          <p style="margin:0;font-size:11px;color:#334155;">Security Monitoring Alert · <a href="${siteUrl}" style="color:#475569;text-decoration:none;">sitecheckai.dev</a></p>
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`
+}
+
 export async function sendWaitlistConfirmation(to) {
     await transporter.sendMail({
         from: process.env.SMTP_FROM || process.env.SMTP_USER,
@@ -616,11 +694,68 @@ const waitlistHtml = `
               </p>
             </td>
           </tr>
-
+          
         </table>
       </td>
     </tr>
   </table>
 </body>
 </html>
-`.trim();
+`.trim()
+
+
+export async function sendSiteOnlineNotification({ user, site }) {
+    const APP_URL_LOCAL = process.env.APP_URL || process.env.ALLOWED_ORIGIN || 'https://www.sitecheckai.dev'
+    const siteUrl = `${APP_URL_LOCAL}/monitoring/security/${site._id}`
+    await transporter.sendMail({
+        from: process.env.SMTP_FROM || process.env.SMTP_USER,
+        to: user.email,
+        subject: `✓ ${site.domain} ist wieder erreichbar`,
+        text: `Hallo ${user.name},\n\n${site.displayName || site.domain} ist wieder online.\n\nDetails: ${siteUrl}\n\nDein AuditAI Team`,
+        html: `<!DOCTYPE html>
+<html lang="de">
+<head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/></head>
+<body style="margin:0;padding:0;background:#05080f;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#05080f;padding:40px 20px;">
+    <tr><td align="center">
+      <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
+        <tr><td align="center" style="padding-bottom:32px;">
+          <table cellpadding="0" cellspacing="0"><tr>
+            <td style="background:linear-gradient(135deg,#7c3aed,#06b6d4);border-radius:12px;width:40px;height:40px;text-align:center;vertical-align:middle;">
+              <span style="color:#fff;font-size:18px;font-weight:bold;">⚡</span>
+            </td>
+            <td style="padding-left:10px;vertical-align:middle;">
+              <span style="color:#ffffff;font-size:20px;font-weight:700;">Audit<span style="color:#22d3ee;">AI</span></span>
+            </td>
+          </tr></table>
+        </td></tr>
+        <tr><td style="background:#0d1117;border:1px solid rgba(255,255,255,0.07);border-radius:20px;padding:40px;">
+          <p style="margin:0 0 6px;font-size:24px;font-weight:700;color:#10b981;">✓ Wieder online</p>
+          <p style="margin:0 0 28px;font-size:15px;color:#94a3b8;line-height:1.6;">
+            Hallo ${user.name}, <strong style="color:#e2e8f0;">${site.displayName || site.domain}</strong> ist wieder erreichbar.
+          </p>
+          <table cellpadding="0" cellspacing="0" width="100%" style="background:rgba(16,185,129,0.05);border:1px solid rgba(16,185,129,0.2);border-radius:12px;padding:20px;margin-bottom:28px;">
+            <tr><td>
+              <p style="margin:0 0 4px;font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;">Website</p>
+              <p style="margin:0;font-size:16px;font-weight:700;color:#10b981;">● ${site.domain}</p>
+            </td></tr>
+          </table>
+          <table cellpadding="0" cellspacing="0"><tr>
+            <td style="background:linear-gradient(135deg,#7c3aed,#06b6d4);border-radius:12px;padding:1px;">
+              <a href="${siteUrl}" style="display:block;background:#0d1117;border-radius:11px;padding:12px 28px;font-size:14px;font-weight:600;color:#ffffff;text-decoration:none;">
+                Monitoring ansehen →
+              </a>
+            </td>
+          </tr></table>
+        </td></tr>
+        <tr><td align="center" style="padding-top:24px;">
+          <p style="margin:0;font-size:12px;color:#334155;">AuditAI Security Monitoring · <a href="${APP_URL_LOCAL}" style="color:#475569;text-decoration:none;">sitecheckai.dev</a></p>
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`,
+    })
+}
+

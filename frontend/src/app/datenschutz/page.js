@@ -85,7 +85,28 @@ export default function DatenschutzPage() {
                             </p>
                         </Sub>
 
-                        <Sub title="2.3 Serverdaten / Zugriffsprotokolle">
+                        <Sub title="2.3 Security Monitoring-Daten">
+                            <p>
+                                Nutzer des Security Monitorings tragen Websites ein, die automatisiert überwacht werden sollen. Dabei werden folgende Daten verarbeitet und gespeichert:
+                            </p>
+                            <ul className="list-disc list-inside space-y-1 ml-2">
+                                <li>Domain-Name der überwachten Website</li>
+                                <li>Uptime-Status (online / offline / beeinträchtigt) und Antwortzeit in ms</li>
+                                <li>SSL-Zertifikatsdaten (Ablaufdatum, Gültigkeit)</li>
+                                <li>HTTP-Sicherheitsheader-Konfiguration der überwachten Website</li>
+                                <li>Generierte Sicherheitswarnungen (Alerts)</li>
+                            </ul>
+                            <p>
+                                Diese Daten betreffen ausschließlich technische Konfigurationsmerkmale öffentlich zugänglicher Websites. Es werden keine personenbezogenen Daten der Besucher überwachter Websites erhoben.
+                            </p>
+                            <p>
+                                <strong className="text-slate-300">Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung).<br />
+                                <strong className="text-slate-300">Speicherdauer:</strong> Uptime-Checks 90 Tage, Security Scans 12 Monate, Alerts bis zur Auflösung max. 12 Monate. Nach Kündigung des Monitorings werden alle Daten binnen 30 Tagen gelöscht.<br />
+                                <strong className="text-slate-300">Auftragsverarbeitung:</strong> Soweit im Rahmen des Security Monitorings personenbezogene Daten im Auftrag des Nutzers verarbeitet werden, gilt der <a href="/avv" className="text-violet-400 hover:text-violet-300">Auftragsverarbeitungsvertrag (AVV)</a> gemäß Art. 28 DSGVO.
+                            </p>
+                        </Sub>
+
+                        <Sub title="2.4 Serverdaten / Zugriffsprotokolle">
                             <p>
                                 Bei jedem Seitenaufruf werden technisch bedingt folgende Daten vorübergehend verarbeitet:
                             </p>
@@ -350,9 +371,12 @@ export default function DatenschutzPage() {
                         </p>
                     </Section>
 
-                    <div className="border-t border-white/5 pt-8 flex gap-6 text-slate-600 text-xs">
+                    <div className="border-t border-white/5 pt-8 flex flex-wrap gap-6 text-slate-600 text-xs">
                         <Link href="/" className="hover:text-slate-400 transition-colors">Startseite</Link>
                         <Link href="/impressum" className="hover:text-slate-400 transition-colors">Impressum</Link>
+                        <Link href="/agb" className="hover:text-slate-400 transition-colors">AGB</Link>
+                        <Link href="/avv" className="hover:text-slate-400 transition-colors">AVV</Link>
+                        <Link href="/nutzungsbedingungen" className="hover:text-slate-400 transition-colors">Nutzungsbedingungen</Link>
                     </div>
                 </div>
             </div>

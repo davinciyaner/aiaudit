@@ -24,6 +24,7 @@ export default function RegisterPage() {
     const router = useRouter()
     const [loading, setLoading] = useState(false)
     const [formData, setFormData] = useState({name: '', email: '', password: ''})
+    const [consent, setConsent] = useState(false)
 
     const handleChange = (e) => setFormData({...formData, [e.target.name]: e.target.value})
 
@@ -136,7 +137,29 @@ export default function RegisterPage() {
                             )}
                         </div>
 
-                        <motion.button type="submit" disabled={loading} whileTap={{scale: 0.98}}
+                        <label className="flex items-start gap-3 cursor-pointer group">
+                            <div
+                                onClick={() => setConsent(v => !v)}
+                                className={`mt-0.5 w-4 h-4 rounded flex items-center justify-center shrink-0 border transition-all ${
+                                    consent ? 'bg-violet-600 border-violet-600' : 'border-white/20 bg-white/5 group-hover:border-white/40'
+                                }`}
+                            >
+                                {consent && (
+                                    <svg className="w-2.5 h-2.5 text-white" fill="none" viewBox="0 0 10 8" stroke="currentColor" strokeWidth={2.5}>
+                                        <path d="M1 4l3 3 5-6" strokeLinecap="round" strokeLinejoin="round"/>
+                                    </svg>
+                                )}
+                            </div>
+                            <span className="text-xs text-slate-400 leading-relaxed">
+                                Ich habe die{' '}
+                                <Link href="/nutzungsbedingungen" target="_blank" className="text-violet-400 hover:text-violet-300 underline underline-offset-2">Nutzungsbedingungen</Link>{' '}
+                                und die{' '}
+                                <Link href="/datenschutz" target="_blank" className="text-violet-400 hover:text-violet-300 underline underline-offset-2">Datenschutzerklärung</Link>{' '}
+                                gelesen und stimme diesen zu.
+                            </span>
+                        </label>
+
+                        <motion.button type="submit" disabled={loading || !consent} whileTap={{scale: 0.98}}
                                        className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl bg-linear-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white font-semibold transition-all duration-200 shadow-lg shadow-violet-500/20 disabled:opacity-50 disabled:cursor-not-allowed text-sm mt-2">
                             {loading ? (
                                 <>
@@ -162,12 +185,6 @@ export default function RegisterPage() {
                         </Link>
                     </div>
 
-                    <p className="text-center text-xs text-slate-700 mt-6">
-                        Mit der Registrierung stimmst du unseren{' '}
-                        <Link href="/datenschutz"
-                              className="underline underline-offset-2 hover:text-slate-500 transition-colors">Datenschutzbestimmungen</Link>{' '}
-                        zu.
-                    </p>
                 </motion.div>
             </div>
 

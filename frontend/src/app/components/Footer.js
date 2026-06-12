@@ -27,7 +27,10 @@ const COLUMNS = [
         heading: 'Rechtliches',
         links: [
             { label: 'Impressum', href: '/impressum' },
+            { label: 'Nutzungsbedingungen', href: '/nutzungsbedingungen' },
             { label: 'Datenschutz', href: '/datenschutz' },
+            { label: 'AGB', href: '/agb' },
+            { label: 'AVV', href: '/avv' },
         ],
     },
 ]
