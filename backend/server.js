@@ -14,9 +14,7 @@ import waitlistRouter from "./routes/waitlist_router.js";
 import supportRouter from "./routes/support_router.js"
 import feedbackRouter from "./routes/feedback_router.js";
 import landingFeedbackRouter from "./routes/landing_feedback_router.js";
-import securityMonitoringRouter from "./routes/security_monitoring_router.js";
 import seoTrackingRouter from "./routes/seo_tracking_router.js";
-import { startSecurityMonitoringJob } from "./jobs/securityMonitoringJob.js";
 import { startSeoTrackingJob } from "./jobs/seoTrackingJob.js";
 
 const app = express();
@@ -52,7 +50,6 @@ app.use("/api/waitlist", waitlistRouter);
 app.use("/api/support", supportRouter)
 app.use("/api/feedback", feedbackRouter);
 app.use("/api/landing-feedback", landingFeedbackRouter);
-app.use("/api/security-monitoring", securityMonitoringRouter);
 app.use("/api/seo", seoTrackingRouter);
 app.use("/reports", express.static("reports"));
 
@@ -73,6 +70,5 @@ app.use((err, req, res, _next) => {
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
     console.log(`Server läuft auf Port ${PORT}`);
-    startSecurityMonitoringJob();
     startSeoTrackingJob();
 });

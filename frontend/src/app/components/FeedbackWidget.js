@@ -5,7 +5,7 @@ import { ThumbsUp, ThumbsDown, X, CheckCircle } from 'lucide-react'
 
 const POSITIVE_OPTIONS = [
     { value: 'seo',         label: 'Die SEO-Analyse' },
-    { value: 'security',    label: 'Die Security-Ergebnisse' },
+    { value: 'geo',         label: 'Die GEO-Sichtbarkeit' },
     { value: 'performance', label: 'Die Performance-Tipps' },
     { value: 'suggestions', label: 'Die Verbesserungsvorschläge' },
 ]

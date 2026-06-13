@@ -1,10 +1,9 @@
 'use client'
 import { motion } from 'framer-motion'
-import { Zap, Shield, Search, TrendingUp, Brain, Camera, Key, Globe } from 'lucide-react'
+import { Zap, Search, TrendingUp, Brain, Camera, Key, Globe } from 'lucide-react'
 
 const FEATURES = [
     { icon: Brain, title: 'KI-Analyse', desc: 'Spezifischer Bericht mit konkreten Fixes für deine Seite — keine generischen Tipps.', color: '#7c3aed' },
-    { icon: Shield, title: 'Security Deep-Scan', desc: '14 Security-Checks: Headers, HTTPS, Mixed Content, Clickjacking und CSP.', color: '#ef4444' },
     { icon: Search, title: 'SEO Vollanalyse', desc: 'Title, Meta, H1–H6, Canonical, OG-Tags, Structured Data, Links, Alt-Texte.', color: '#10b981' },
     { icon: Zap, title: 'Core Web Vitals', desc: 'TTFB, FCP, DOM Load, Full Load mit Farbkodierung gegen Google-Richtwerte.', color: '#f59e0b' },
     { icon: Globe, title: 'GEO — KI-Sichtbarkeit', desc: 'Auffindbarkeit für ChatGPT & Claude: llms.txt, Schema.org, FAQ-Markup.', color: '#6366f1' },
@@ -14,7 +13,6 @@ const FEATURES = [
 ]
 
 const TABLE_ROWS = [
-    ['Security Headers', 'SecurityHeaders.io'],
     ['SEO-Analyse', 'Screaming Frog / Ahrefs'],
     ['Performance / Core Web Vitals', 'Google Lighthouse'],
     ['Keyword-Analyse', 'Ahrefs / SEMrush'],
@@ -33,7 +31,7 @@ export default function Features() {
                         Alles was zählt.<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-cyan-400">In einem Tool.</span>
                     </h2>
                     <p className="text-slate-400 max-w-xl mx-auto text-base sm:text-lg">
-                        Früher: Lighthouse, Screaming Frog, SecurityHeaders.io, Ahrefs und mehr. Jetzt: AuditAI.
+                        Früher: Lighthouse, Screaming Frog, Ahrefs und mehr. Jetzt: AuditAI.
                     </p>
                 </motion.div>
 
@@ -55,7 +53,7 @@ export default function Features() {
                 {/* Comparison */}
                 <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mt-16 sm:mt-24">
                     <h3 className="text-2xl sm:text-3xl font-bold text-center mb-8 sm:mb-10 tracking-tight">
-                        AuditAI vs. <span className="text-slate-400">8 separate Tools</span>
+                        AuditAI vs. <span className="text-slate-400">7 separate Tools</span>
                     </h3>
 
                     {/* Mobile: simplified list */}

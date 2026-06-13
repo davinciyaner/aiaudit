@@ -1,6 +1,6 @@
 'use client'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, Lock, UserPlus, Search, Shield, Zap, Globe, Calendar, BarChart2 } from 'lucide-react'
+import { X, Lock, UserPlus, Search, Zap, Globe, Calendar, BarChart2 } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
@@ -8,7 +8,6 @@ const FREE_ITEMS = [
     { icon: Calendar, label: '1 Audit pro Monat', desc: 'Vollständige Analyse deiner Website' },
     { icon: Search, label: 'SEO-Score & Analyse', desc: 'Title, Meta, H1, Alt-Texte & alle Fehler' },
     { icon: Globe, label: 'GEO-Sichtbarkeit', desc: 'llms.txt, Schema, KI-Crawler & alle Checks' },
-    { icon: Shield, label: 'Security-Check', desc: 'HTTPS, Headers & alle Sicherheitslücken' },
     { icon: BarChart2, label: 'Performance-Metriken', desc: 'Ladezeiten, Core Web Vitals & alle Issues' },
 ]
 
@@ -64,7 +63,7 @@ export default function ScoreRegisterModal({ open, onClose, auditUrl = '', mode 
                                     Keine Registrierung nötig — Audit starten
                                 </h3>
                                 <p className="text-slate-400 text-sm mb-5 leading-relaxed">
-                                    Mit einem kostenlosen Account siehst du alle Scores, Probleme und Security-Checks deiner Website.
+                                    Mit einem kostenlosen Account siehst du alle Scores, Probleme und Optimierungen deiner Website.
                                 </p>
 
                                 <div className="mb-3">

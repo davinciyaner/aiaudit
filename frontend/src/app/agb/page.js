@@ -75,7 +75,6 @@ export default function AgbPage() {
                             <ul className="list-disc list-inside space-y-1 ml-2">
                                 <li>SEO-Analyse (Suchmaschinenoptimierung)</li>
                                 <li>GEO-Analyse (Sichtbarkeit in KI-gestützten Suchen)</li>
-                                <li>Security-Check (Sicherheitsheader, SSL, HTTPS-Weiterleitung)</li>
                                 <li>Performance-Analyse (Ladezeiten, Core Web Vitals)</li>
                             </ul>
                             <p>
@@ -98,26 +97,11 @@ export default function AgbPage() {
                                 Ranking-Daten werden über die DataForSEO API abgerufen (siehe Datenschutzerklärung, Abschnitt 5a). Der Anbieter übernimmt keine Gewähr für die Vollständigkeit oder Aktualität der Daten. Keywords und Domains, für die keine Ranking-Position in den Top 100 ermittelt wurde, werden als „nicht gefunden" ausgegeben.
                             </p>
                             <p>
-                                Für SEO Tracking gelten ergänzend die Bestimmungen in § 5a.
+                                Für SEO Tracking gelten ergänzend die Bestimmungen in § 5.
                             </p>
                         </Sub>
 
-                        <Sub title="2.3 Security Monitoring">
-                            <p>
-                                Security Monitoring ist ein optionaler Zusatzdienst, der Websites des Nutzers automatisiert und regelmäßig auf folgende Merkmale prüft:
-                            </p>
-                            <ul className="list-disc list-inside space-y-1 ml-2">
-                                <li>Erreichbarkeit (Uptime-Monitoring) via HTTP/HTTPS</li>
-                                <li>Gültigkeit und Ablaufdatum von SSL-Zertifikaten</li>
-                                <li>Vorhandensein von Sicherheitsheadern in HTTP-Antworten</li>
-                                <li>HTTP-zu-HTTPS-Weiterleitung</li>
-                            </ul>
-                            <p>
-                                Für Security Monitoring gelten ergänzend die Bestimmungen in § 5.
-                            </p>
-                        </Sub>
-
-                        <Sub title="2.4 Verfügbarkeit">
+                        <Sub title="2.3 Verfügbarkeit">
                             <p>
                                 Der Anbieter strebt eine Verfügbarkeit der Plattform von 99 % im Jahresmittel an, übernimmt jedoch keine garantierte Verfügbarkeitszusage. Geplante Wartungsarbeiten werden, soweit möglich, vorab angekündigt. Ein Anspruch auf ununterbrochene Verfügbarkeit besteht nicht.
                             </p>
@@ -144,7 +128,6 @@ export default function AgbPage() {
                             </p>
                             <ul className="list-disc list-inside space-y-1 ml-2">
                                 <li>Website-Audit: <a href="/pricing" className="text-violet-400 hover:text-violet-300">sitecheckai.dev/pricing</a></li>
-                                <li>Security Monitoring: <a href="/monitoring/pricing" className="text-violet-400 hover:text-violet-300">sitecheckai.dev/monitoring/pricing</a></li>
                                 <li>SEO Tracking: <a href="/seo/pricing" className="text-violet-400 hover:text-violet-300">sitecheckai.dev/seo/pricing</a></li>
                             </ul>
                             <p>
@@ -163,51 +146,7 @@ export default function AgbPage() {
                         </Sub>
                     </Section>
 
-                    <Section title="§ 5 Pflichten des Nutzers beim Security Monitoring">
-                        <Highlight>
-                            <strong>Wichtig — Nutzungsberechtigung für das Security Monitoring:</strong> Der Nutzer darf ausschließlich Websites in das Security Monitoring aufnehmen, für die er nachweislich die Berechtigung besitzt. Dies ist der Fall, wenn der Nutzer:
-                            <ul className="list-disc list-inside space-y-1 ml-2 mt-2">
-                                <li>Eigentümer der jeweiligen Domain ist,</li>
-                                <li>im Auftrag des Domain-Inhabers handelt und eine ausdrückliche schriftliche Genehmigung besitzt, oder</li>
-                                <li>als technisch Verantwortlicher (z.B. Webmaster, Systemadministrator) für die Domain tätig ist und befugt ist, automatisierte Zugriffe zu autorisieren.</li>
-                            </ul>
-                            <p className="mt-2">
-                                Die Überwachung fremder Websites ohne Genehmigung ist ausdrücklich verboten und kann nach § 202a StGB (Ausspähen von Daten) sowie zivilrechtlich verfolgt werden. Der Anbieter wird in solchen Fällen mit Behörden kooperieren.
-                            </p>
-                        </Highlight>
-
-                        <Sub title="5.1 Allgemeine Nutzerpflichten">
-                            <p>Der Nutzer verpflichtet sich,</p>
-                            <ul className="list-disc list-inside space-y-1 ml-2">
-                                <li>die Plattform ausschließlich für rechtmäßige Zwecke zu nutzen,</li>
-                                <li>keine automatisierten Angriffe, DoS-Angriffe oder sonstigen missbräuchlichen Zugriffe über die Plattform durchzuführen,</li>
-                                <li>den Anbieter unverzüglich zu informieren, wenn er bemerkt, dass ein zu überwachender Server nicht (mehr) in seinem Eigentum oder seiner Verantwortung liegt,</li>
-                                <li>keine sensiblen Zugangsdaten oder persönliche Daten Dritter in die Plattform einzugeben.</li>
-                            </ul>
-                        </Sub>
-
-                        <Sub title="5.2 Monitoring-Frequenz und Fair Use">
-                            <p>
-                                Das Security Monitoring sendet in regelmäßigen Abständen automatisierte HTTP(S)-Anfragen an die überwachten Websites. Die Intervalle richten sich nach dem gewählten Tarif:
-                            </p>
-                            <ul className="list-disc list-inside space-y-1 ml-2">
-                                <li><strong className="text-slate-300">Einsteiger:</strong> alle 5 Minuten · bis zu 5 Websites</li>
-                                <li><strong className="text-slate-300">Pro:</strong> alle 1 Minute · bis zu 10 Websites</li>
-                                <li><strong className="text-slate-300">Expert:</strong> alle 1 Minute · bis zu 30 Websites</li>
-                            </ul>
-                            <p>
-                                Der Nutzer ist dafür verantwortlich, sicherzustellen, dass der Hosting-Anbieter der überwachten Website automatisierte Anfragen in dieser Frequenz erlaubt. Der Anbieter übernimmt keine Haftung für Sperrungen durch Drittanbieter aufgrund des Monitoring-Traffics.
-                            </p>
-                        </Sub>
-
-                        <Sub title="5.3 Freistellung">
-                            <p>
-                                Der Nutzer stellt den Anbieter von sämtlichen Ansprüchen Dritter frei, die aus einer vertragswidrigen Nutzung des Security Monitorings entstehen — insbesondere aus der unberechtigten Überwachung fremder Websites.
-                            </p>
-                        </Sub>
-                    </Section>
-
-                    <Section title="§ 5a Pflichten des Nutzers beim SEO Tracking">
+                    <Section title="§ 5 Pflichten des Nutzers beim SEO Tracking">
                         <Highlight>
                             <strong>Wichtig — Nutzungsberechtigung für SEO Tracking:</strong> Der Nutzer darf ausschließlich Domains in das SEO Tracking aufnehmen, für die er eine entsprechende Berechtigung besitzt. Dies ist der Fall, wenn der Nutzer:
                             <ul className="list-disc list-inside space-y-1 ml-2 mt-2">
@@ -220,7 +159,7 @@ export default function AgbPage() {
                             </p>
                         </Highlight>
 
-                        <Sub title="5a.1 Nutzerpflichten">
+                        <Sub title="5.1 Nutzerpflichten">
                             <p>Der Nutzer verpflichtet sich,</p>
                             <ul className="list-disc list-inside space-y-1 ml-2">
                                 <li>ausschließlich Domains einzutragen, für die er die entsprechende Berechtigung besitzt,</li>
@@ -230,7 +169,7 @@ export default function AgbPage() {
                             </ul>
                         </Sub>
 
-                        <Sub title="5a.2 Drittanbieter-Daten (DataForSEO)">
+                        <Sub title="5.2 Drittanbieter-Daten (DataForSEO)">
                             <p>
                                 Ranking-Positionen, Keyword-Ideen, Wettbewerbsanalysen und Backlink-Daten werden über die DataForSEO API (DataForSEO Ltd., Vilnius, Litauen) abgerufen. Der Anbieter übernimmt keine Gewähr für die Vollständigkeit, Aktualität oder Richtigkeit der von DataForSEO gelieferten Daten.
                             </p>
@@ -239,7 +178,7 @@ export default function AgbPage() {
                             </p>
                         </Sub>
 
-                        <Sub title="5a.3 Freistellung">
+                        <Sub title="5.3 Freistellung">
                             <p>
                                 Der Nutzer stellt den Anbieter von sämtlichen Ansprüchen Dritter frei, die aus einer vertragswidrigen Nutzung des SEO Trackings entstehen — insbesondere aus dem unberechtigten Tracking fremder Domains.
                             </p>
@@ -266,7 +205,7 @@ export default function AgbPage() {
                             Das Widerrufsrecht erlischt vorzeitig, wenn der Anbieter mit der Ausführung des Vertrags begonnen hat und der Verbraucher ausdrücklich zugestimmt hat, dass der Anbieter vor Ablauf der Widerrufsfrist mit der Ausführung beginnt, und seine Kenntnis davon bestätigt hat, dass er durch seine Zustimmung mit Beginn der Ausführung sein Widerrufsrecht verliert (§ 356 Abs. 5 BGB).
                         </p>
                         <p>
-                            <strong className="text-slate-300">Sofortiger Beginn der Leistungserbringung:</strong> Mit Abschluss eines Abonnements beginnt AuditAI unmittelbar mit der Bereitstellung des Dienstes (Freischaltung von Audits, Aktivierung des Security Monitorings). Der Nutzer stimmt mit dem Abschluss des Abonnements ausdrücklich zu, dass die Leistungserbringung sofort beginnt, und bestätigt seine Kenntnis, dass er dadurch sein Widerrufsrecht verliert.
+                            <strong className="text-slate-300">Sofortiger Beginn der Leistungserbringung:</strong> Mit Abschluss eines Abonnements beginnt AuditAI unmittelbar mit der Bereitstellung des Dienstes (Freischaltung von Audits). Der Nutzer stimmt mit dem Abschluss des Abonnements ausdrücklich zu, dass die Leistungserbringung sofort beginnt, und bestätigt seine Kenntnis, dass er dadurch sein Widerrufsrecht verliert.
                         </p>
                         <p>
                             Das Recht zur ordentlichen Kündigung laufender Abonnements gemäß § 6 bleibt unberührt.
@@ -287,7 +226,6 @@ export default function AgbPage() {
                             <li>Die Richtigkeit, Vollständigkeit oder Aktualität von KI-generierten Audit-Ergebnissen</li>
                             <li>Entscheidungen, die der Nutzer auf Basis von Analyseergebnissen trifft</li>
                             <li>Ausfälle von Drittdiensten (PayPal, Anthropic, MongoDB, Vercel)</li>
-                            <li>Schäden, die durch eine vertragswidrige Nutzung des Security Monitorings entstehen</li>
                             <li>Schäden, die durch eine vertragswidrige Nutzung des SEO Trackings entstehen, insbesondere durch das Tracking nicht autorisierter Domains</li>
                             <li>Ausfälle, Datenlücken oder fehlerhafte Daten der DataForSEO API (DataForSEO Ltd., Vilnius, Litauen)</li>
                         </ul>
@@ -295,7 +233,7 @@ export default function AgbPage() {
 
                     <Section title="§ 8 Datenschutz">
                         <p>
-                            Der Umgang mit personenbezogenen Daten richtet sich nach der <a href="/datenschutz" className="text-violet-400 hover:text-violet-300">Datenschutzerklärung</a>. Sofern der Nutzer im Rahmen des Security Monitorings oder SEO Trackings personenbezogene Daten verarbeitet (z.B. Websites, auf denen Besucherdaten erfasst werden), gilt ergänzend der <a href="/avv" className="text-violet-400 hover:text-violet-300">Auftragsverarbeitungsvertrag (AVV)</a>.
+                            Der Umgang mit personenbezogenen Daten richtet sich nach der <a href="/datenschutz" className="text-violet-400 hover:text-violet-300">Datenschutzerklärung</a>. Sofern der Nutzer im Rahmen des SEO Trackings personenbezogene Daten verarbeitet (z.B. Websites, auf denen Besucherdaten erfasst werden), gilt ergänzend der <a href="/avv" className="text-violet-400 hover:text-violet-300">Auftragsverarbeitungsvertrag (AVV)</a>.
                         </p>
                     </Section>
 

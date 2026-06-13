@@ -1,4 +1,4 @@
-import nodemailer from 'nodemailer';
+﻿import nodemailer from 'nodemailer';
 
 const APP_URL = process.env.APP_URL || process.env.ALLOWED_ORIGIN || 'https://www.sitecheckai.dev';
 
@@ -16,16 +16,16 @@ export async function sendTicketStatusChanged(ticket, newStatus) {
     const statusUrl = `${APP_URL}/support/${ticket.ticketNumber}`
     const configs = {
         in_progress: {
-            subject: `[${ticket.ticketNumber}] Wir kümmern uns um dein Anliegen`,
-            headline: 'Wir sind dran! 🙌',
-            body: 'Bitte entschuldige die Unannehmlichkeiten - wir haben dein Ticket erhalten und kümmern uns so schnell wie möglich darum. Ein Mitarbeiter hat dein Anliegen bereits übernommen und arbeitet an einer Lösung für dich.',
+            subject: `[${ticket.ticketNumber}] Wir kÃ¼mmern uns um dein Anliegen`,
+            headline: 'Wir sind dran! ðŸ™Œ',
+            body: 'Bitte entschuldige die Unannehmlichkeiten - wir haben dein Ticket erhalten und kÃ¼mmern uns so schnell wie mÃ¶glich darum. Ein Mitarbeiter hat dein Anliegen bereits Ã¼bernommen und arbeitet an einer LÃ¶sung fÃ¼r dich.',
             statusLabel: 'Wird bearbeitet',
             statusColor: '#3b82f6',
             dotColor: '#3b82f6',
         },
         closed: {
             subject: `[${ticket.ticketNumber}] Dein Ticket wurde geschlossen`,
-            headline: 'Ticket geschlossen ✓',
+            headline: 'Ticket geschlossen âœ“',
             body: 'Dein Support-Ticket wurde erfolgreich bearbeitet und geschlossen. Wir hoffen, wir konnten dir weiterhelfen. Bei weiteren Fragen kannst du jederzeit ein neues Ticket erstellen.',
             statusLabel: 'Geschlossen',
             statusColor: '#10b981',
@@ -54,7 +54,7 @@ function ticketStatusChangedHtml(ticket, cfg, statusUrl) {
         <tr><td align="center" style="padding-bottom:32px;">
           <table cellpadding="0" cellspacing="0"><tr>
             <td style="background:linear-gradient(135deg,#7c3aed,#06b6d4);border-radius:12px;width:40px;height:40px;text-align:center;vertical-align:middle;">
-              <span style="color:#fff;font-size:18px;font-weight:bold;">⚡</span>
+              <span style="color:#fff;font-size:18px;font-weight:bold;">âš¡</span>
             </td>
             <td style="padding-left:10px;vertical-align:middle;">
               <span style="color:#ffffff;font-size:20px;font-weight:700;">Audit<span style="color:#22d3ee;">AI</span></span>
@@ -71,13 +71,13 @@ function ticketStatusChangedHtml(ticket, cfg, statusUrl) {
               <p style="margin:0 0 4px;font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;">Betreff</p>
               <p style="margin:0 0 16px;font-size:14px;color:#e2e8f0;">${ticket.subject}</p>
               <p style="margin:0 0 4px;font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;">Status</p>
-              <p style="margin:0;font-size:13px;color:${cfg.statusColor};font-weight:600;">● ${cfg.statusLabel}</p>
+              <p style="margin:0;font-size:13px;color:${cfg.statusColor};font-weight:600;">â— ${cfg.statusLabel}</p>
             </td></tr>
           </table>
           <table cellpadding="0" cellspacing="0"><tr>
             <td style="background:linear-gradient(135deg,#7c3aed,#06b6d4);border-radius:12px;padding:1px;">
               <a href="${statusUrl}" style="display:block;background:#0d1117;border-radius:11px;padding:12px 28px;font-size:14px;font-weight:600;color:#ffffff;text-decoration:none;">
-                Ticket ansehen →
+                Ticket ansehen â†’
               </a>
             </td>
           </tr></table>
@@ -85,7 +85,7 @@ function ticketStatusChangedHtml(ticket, cfg, statusUrl) {
           <p style="margin:0;font-size:14px;color:#64748b;">Bis bald,<br/><strong style="color:#94a3b8;">Dein AuditAI Support-Team</strong></p>
         </td></tr>
         <tr><td align="center" style="padding-top:24px;">
-          <p style="margin:0;font-size:11px;color:#334155;">Du erhältst diese E-Mail, weil du ein Support-Ticket auf <a href="${APP_URL}" style="color:#475569;text-decoration:none;">sitecheckai.dev</a> erstellt hast.</p>
+          <p style="margin:0;font-size:11px;color:#334155;">Du erhÃ¤ltst diese E-Mail, weil du ein Support-Ticket auf <a href="${APP_URL}" style="color:#475569;text-decoration:none;">sitecheckai.dev</a> erstellt hast.</p>
         </td></tr>
       </table>
     </td></tr>
@@ -100,7 +100,7 @@ export async function sendTicketCreatedUser(ticket) {
         from: process.env.SMTP_FROM || process.env.SMTP_USER,
         to: ticket.email,
         subject: `[${ticket.ticketNumber}] Dein Support-Ticket wurde erstellt`,
-        text: `Hallo ${ticket.name},\n\ndein Ticket "${ticket.subject}" wurde erfolgreich erstellt.\nTicketnummer: ${ticket.ticketNumber}\n\nStatus prüfen: ${statusUrl}\n\nWir melden uns so schnell wie möglich.\n\nDein AuditAI Team`,
+        text: `Hallo ${ticket.name},\n\ndein Ticket "${ticket.subject}" wurde erfolgreich erstellt.\nTicketnummer: ${ticket.ticketNumber}\n\nStatus prÃ¼fen: ${statusUrl}\n\nWir melden uns so schnell wie mÃ¶glich.\n\nDein AuditAI Team`,
         html: ticketUserHtml(ticket, statusUrl),
     })
 }
@@ -128,7 +128,7 @@ function ticketUserHtml(ticket, statusUrl) {
         <tr><td align="center" style="padding-bottom:32px;">
           <table cellpadding="0" cellspacing="0"><tr>
             <td style="background:linear-gradient(135deg,#7c3aed,#06b6d4);border-radius:12px;width:40px;height:40px;text-align:center;vertical-align:middle;">
-              <span style="color:#fff;font-size:18px;font-weight:bold;">⚡</span>
+              <span style="color:#fff;font-size:18px;font-weight:bold;">âš¡</span>
             </td>
             <td style="padding-left:10px;vertical-align:middle;">
               <span style="color:#ffffff;font-size:20px;font-weight:700;">Audit<span style="color:#22d3ee;">AI</span></span>
@@ -136,8 +136,8 @@ function ticketUserHtml(ticket, statusUrl) {
           </tr></table>
         </td></tr>
         <tr><td style="background:#0d1117;border:1px solid rgba(255,255,255,0.07);border-radius:20px;padding:40px;">
-          <p style="margin:0 0 6px;font-size:24px;font-weight:700;color:#ffffff;">Ticket erstellt ✓</p>
-          <p style="margin:0 0 28px;font-size:15px;color:#94a3b8;line-height:1.6;">Hallo ${ticket.name}, wir haben deine Anfrage erhalten und melden uns so schnell wie möglich.</p>
+          <p style="margin:0 0 6px;font-size:24px;font-weight:700;color:#ffffff;">Ticket erstellt âœ“</p>
+          <p style="margin:0 0 28px;font-size:15px;color:#94a3b8;line-height:1.6;">Hallo ${ticket.name}, wir haben deine Anfrage erhalten und melden uns so schnell wie mÃ¶glich.</p>
           <table cellpadding="0" cellspacing="0" width="100%" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:20px;margin-bottom:28px;">
             <tr><td>
               <p style="margin:0 0 4px;font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;">Ticketnummer</p>
@@ -145,13 +145,13 @@ function ticketUserHtml(ticket, statusUrl) {
               <p style="margin:0 0 4px;font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;">Betreff</p>
               <p style="margin:0 0 16px;font-size:14px;color:#e2e8f0;">${ticket.subject}</p>
               <p style="margin:0 0 4px;font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;">Status</p>
-              <p style="margin:0;font-size:13px;color:#f59e0b;font-weight:600;">● Warten auf Support</p>
+              <p style="margin:0;font-size:13px;color:#f59e0b;font-weight:600;">â— Warten auf Support</p>
             </td></tr>
           </table>
           <table cellpadding="0" cellspacing="0"><tr>
             <td style="background:linear-gradient(135deg,#7c3aed,#06b6d4);border-radius:12px;padding:1px;">
               <a href="${statusUrl}" style="display:block;background:#0d1117;border-radius:11px;padding:12px 28px;font-size:14px;font-weight:600;color:#ffffff;text-decoration:none;">
-                Status verfolgen →
+                Status verfolgen â†’
               </a>
             </td>
           </tr></table>
@@ -159,7 +159,7 @@ function ticketUserHtml(ticket, statusUrl) {
           <p style="margin:0;font-size:14px;color:#64748b;">Bis bald,<br/><strong style="color:#94a3b8;">Dein AuditAI Support-Team</strong></p>
         </td></tr>
         <tr><td align="center" style="padding-top:24px;">
-          <p style="margin:0;font-size:11px;color:#334155;">Du erhältst diese E-Mail, weil du ein Support-Ticket auf <a href="${APP_URL}" style="color:#475569;text-decoration:none;">sitecheckai.dev</a> erstellt hast.</p>
+          <p style="margin:0;font-size:11px;color:#334155;">Du erhÃ¤ltst diese E-Mail, weil du ein Support-Ticket auf <a href="${APP_URL}" style="color:#475569;text-decoration:none;">sitecheckai.dev</a> erstellt hast.</p>
         </td></tr>
       </table>
     </td></tr>
@@ -194,7 +194,7 @@ function ticketAdminHtml(ticket, adminUrl) {
             </td></tr>
           </table>
           <a href="${adminUrl}" style="display:inline-block;background:linear-gradient(135deg,#7c3aed,#06b6d4);border-radius:12px;padding:12px 28px;font-size:14px;font-weight:600;color:#ffffff;text-decoration:none;">
-            Admin-Panel öffnen →
+            Admin-Panel Ã¶ffnen â†’
           </a>
         </td></tr>
       </table>
@@ -215,7 +215,7 @@ export async function sendWelcome({ name, email }) {
 
 export async function sendSubscriptionConfirmation({ name, email, plan }) {
     const planLabel = plan === 'agency' ? 'Agency' : 'Pro'
-    const planPrice = plan === 'agency' ? '€99/Monat' : '€29/Monat'
+    const planPrice = plan === 'agency' ? 'â‚¬99/Monat' : 'â‚¬29/Monat'
     const auditLimit = plan === 'agency' ? 'unbegrenzte Audits' : '10 Audits pro Monat'
     await transporter.sendMail({
         from: process.env.SMTP_FROM || process.env.SMTP_USER,
@@ -236,7 +236,7 @@ function welcomeHtml(name) {
         <tr><td align="center" style="padding-bottom:32px;">
           <table cellpadding="0" cellspacing="0"><tr>
             <td style="background:linear-gradient(135deg,#7c3aed,#06b6d4);border-radius:12px;width:40px;height:40px;text-align:center;vertical-align:middle;">
-              <span style="color:#fff;font-size:18px;font-weight:bold;">⚡</span>
+              <span style="color:#fff;font-size:18px;font-weight:bold;">âš¡</span>
             </td>
             <td style="padding-left:10px;vertical-align:middle;">
               <span style="color:#ffffff;font-size:20px;font-weight:700;">Audit<span style="color:#22d3ee;">AI</span></span>
@@ -246,21 +246,21 @@ function welcomeHtml(name) {
         <tr><td style="background:#0d1117;border:1px solid rgba(255,255,255,0.07);border-radius:20px;padding:40px;">
           <p style="margin:0 0 8px;font-size:24px;font-weight:700;color:#ffffff;">Willkommen, ${name}!</p>
           <p style="margin:0 0 28px;font-size:15px;color:#94a3b8;line-height:1.6;">
-            Schön, dass du dabei bist. Mit AuditAI kannst du deine Website auf SEO, GEO, Sicherheit und Performance analysieren - in Sekunden.
+            SchÃ¶n, dass du dabei bist. Mit AuditAI kannst du deine Website auf SEO, GEO, Sicherheit und Performance analysieren - in Sekunden.
           </p>
           <table cellpadding="0" cellspacing="0" width="100%" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:20px;margin-bottom:28px;">
             <tr><td>
               <p style="margin:0 0 12px;font-size:13px;color:#64748b;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;">Was dich erwartet</p>
-              <p style="margin:0 0 8px;font-size:14px;color:#e2e8f0;">⚡ &nbsp;SEO-Analyse – Meta-Tags, Struktur, Keywords</p>
-              <p style="margin:0 0 8px;font-size:14px;color:#e2e8f0;">🚀 &nbsp;Performance – Ladezeiten und Core Web Vitals</p>
-              <p style="margin:0 0 8px;font-size:14px;color:#e2e8f0;">🔒 &nbsp;Sicherheit – Header, Schwachstellen</p>
-              <p style="margin:0;font-size:14px;color:#e2e8f0;">🤖 &nbsp;GEO – KI-Sichtbarkeit deiner Website</p>
+              <p style="margin:0 0 8px;font-size:14px;color:#e2e8f0;">âš¡ &nbsp;SEO-Analyse â€“ Meta-Tags, Struktur, Keywords</p>
+              <p style="margin:0 0 8px;font-size:14px;color:#e2e8f0;">ðŸš€ &nbsp;Performance â€“ Ladezeiten und Core Web Vitals</p>
+              <p style="margin:0 0 8px;font-size:14px;color:#e2e8f0;">ðŸ”’ &nbsp;Sicherheit â€“ Header, Schwachstellen</p>
+              <p style="margin:0;font-size:14px;color:#e2e8f0;">ðŸ¤– &nbsp;GEO â€“ KI-Sichtbarkeit deiner Website</p>
             </td></tr>
           </table>
           <table cellpadding="0" cellspacing="0"><tr>
             <td style="background:linear-gradient(135deg,#7c3aed,#06b6d4);border-radius:12px;padding:1px;">
               <a href="${APP_URL}/dashboard" style="display:block;background:#0d1117;border-radius:11px;padding:12px 28px;font-size:14px;font-weight:600;color:#ffffff;text-decoration:none;">
-                Zum Dashboard →
+                Zum Dashboard â†’
               </a>
             </td>
           </tr></table>
@@ -268,7 +268,7 @@ function welcomeHtml(name) {
           <p style="margin:0;font-size:14px;color:#64748b;">Viel Erfolg,<br/><strong style="color:#94a3b8;">Dein AuditAI Team</strong></p>
         </td></tr>
         <tr><td align="center" style="padding-top:24px;">
-          <p style="margin:0;font-size:11px;color:#334155;">Du erhältst diese E-Mail, weil du dich auf <a href="${APP_URL}" style="color:#475569;text-decoration:none;">sitecheckai.dev</a> registriert hast.</p>
+          <p style="margin:0;font-size:11px;color:#334155;">Du erhÃ¤ltst diese E-Mail, weil du dich auf <a href="${APP_URL}" style="color:#475569;text-decoration:none;">sitecheckai.dev</a> registriert hast.</p>
         </td></tr>
       </table>
     </td></tr>
@@ -288,7 +288,7 @@ function subscriptionConfirmHtml(name, planLabel, planPrice, auditLimit) {
         <tr><td align="center" style="padding-bottom:32px;">
           <table cellpadding="0" cellspacing="0"><tr>
             <td style="background:linear-gradient(135deg,#7c3aed,#06b6d4);border-radius:12px;width:40px;height:40px;text-align:center;vertical-align:middle;">
-              <span style="color:#fff;font-size:18px;font-weight:bold;">⚡</span>
+              <span style="color:#fff;font-size:18px;font-weight:bold;">âš¡</span>
             </td>
             <td style="padding-left:10px;vertical-align:middle;">
               <span style="color:#ffffff;font-size:20px;font-weight:700;">Audit<span style="color:#22d3ee;">AI</span></span>
@@ -298,30 +298,30 @@ function subscriptionConfirmHtml(name, planLabel, planPrice, auditLimit) {
         <tr><td style="background:#0d1117;border:1px solid rgba(255,255,255,0.07);border-radius:20px;padding:40px;">
           <p style="margin:0 0 8px;font-size:24px;font-weight:700;color:#ffffff;">Vielen Dank, ${name}!</p>
           <p style="margin:0 0 28px;font-size:15px;color:#94a3b8;line-height:1.6;">
-            Dein <strong style="color:#a78bfa;">${planLabel}-Abo</strong> ist jetzt aktiv. Wir freuen uns sehr, dich als ${planLabel}-Mitglied begrüßen zu dürfen.
+            Dein <strong style="color:#a78bfa;">${planLabel}-Abo</strong> ist jetzt aktiv. Wir freuen uns sehr, dich als ${planLabel}-Mitglied begrÃ¼ÃŸen zu dÃ¼rfen.
           </p>
           <table cellpadding="0" cellspacing="0" width="100%" style="background:rgba(124,58,237,0.08);border:1px solid rgba(124,58,237,0.2);border-radius:12px;padding:20px;margin-bottom:28px;">
             <tr><td>
               <p style="margin:0 0 4px;font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;">Dein Plan</p>
-              <p style="margin:0 0 16px;font-size:18px;font-weight:700;color:#a78bfa;">${planLabel} · ${planPrice}</p>
+              <p style="margin:0 0 16px;font-size:18px;font-weight:700;color:#a78bfa;">${planLabel} Â· ${planPrice}</p>
               <p style="margin:0 0 4px;font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;">Inbegriffen</p>
-              <p style="margin:0 0 8px;font-size:14px;color:#e2e8f0;">✓ &nbsp;${auditLimit}</p>
-              <p style="margin:0 0 8px;font-size:14px;color:#e2e8f0;">✓ &nbsp;KI-Analyse mit detailliertem Bericht</p>
-              <p style="margin:0;font-size:14px;color:#e2e8f0;">✓ &nbsp;PDF-Export</p>
+              <p style="margin:0 0 8px;font-size:14px;color:#e2e8f0;">âœ“ &nbsp;${auditLimit}</p>
+              <p style="margin:0 0 8px;font-size:14px;color:#e2e8f0;">âœ“ &nbsp;KI-Analyse mit detailliertem Bericht</p>
+              <p style="margin:0;font-size:14px;color:#e2e8f0;">âœ“ &nbsp;PDF-Export</p>
             </td></tr>
           </table>
           <table cellpadding="0" cellspacing="0"><tr>
             <td style="background:linear-gradient(135deg,#7c3aed,#06b6d4);border-radius:12px;padding:1px;">
               <a href="${APP_URL}/dashboard" style="display:block;background:#0d1117;border-radius:11px;padding:12px 28px;font-size:14px;font-weight:600;color:#ffffff;text-decoration:none;">
-                Jetzt Audit starten →
+                Jetzt Audit starten â†’
               </a>
             </td>
           </tr></table>
           <hr style="border:none;border-top:1px solid rgba(255,255,255,0.06);margin:28px 0;"/>
-          <p style="margin:0;font-size:14px;color:#64748b;">Herzlichen Glückwunsch und viel Erfolg,<br/><strong style="color:#94a3b8;">Dein AuditAI Team</strong></p>
+          <p style="margin:0;font-size:14px;color:#64748b;">Herzlichen GlÃ¼ckwunsch und viel Erfolg,<br/><strong style="color:#94a3b8;">Dein AuditAI Team</strong></p>
         </td></tr>
         <tr><td align="center" style="padding-top:24px;">
-          <p style="margin:0;font-size:11px;color:#334155;">Du erhältst diese E-Mail, weil du ein Abo auf <a href="${APP_URL}" style="color:#475569;text-decoration:none;">sitecheckai.dev</a> abgeschlossen hast.</p>
+          <p style="margin:0;font-size:11px;color:#334155;">Du erhÃ¤ltst diese E-Mail, weil du ein Abo auf <a href="${APP_URL}" style="color:#475569;text-decoration:none;">sitecheckai.dev</a> abgeschlossen hast.</p>
         </td></tr>
       </table>
     </td></tr>
@@ -352,7 +352,7 @@ export async function sendAdminNewAudit({ url, plan, userEmail }) {
         from: process.env.SMTP_FROM || process.env.SMTP_USER,
         to: adminEmail,
         subject: `Neues Audit: ${url}`,
-        html: adminNotifyHtml('Neues Audit durchgeführt', [
+        html: adminNotifyHtml('Neues Audit durchgefÃ¼hrt', [
             ['URL', url],
             ['Plan', plan],
             ['Nutzer', userEmail || 'anonym'],
@@ -364,11 +364,11 @@ export async function sendAdminNewAudit({ url, plan, userEmail }) {
 export async function sendAdminNewSubscription({ name, email, plan }) {
     const adminEmail = process.env.ADMIN_EMAIL || process.env.SMTP_USER
     const now = new Date().toLocaleString('de-DE', { timeZone: 'Europe/Berlin' })
-    const planLabel = plan === 'agency' ? 'Agency (€99/mo)' : 'Pro (€29/mo)'
+    const planLabel = plan === 'agency' ? 'Agency (â‚¬99/mo)' : 'Pro (â‚¬29/mo)'
     await transporter.sendMail({
         from: process.env.SMTP_FROM || process.env.SMTP_USER,
         to: adminEmail,
-        subject: `Neues Abo: ${planLabel} – ${name}`,
+        subject: `Neues Abo: ${planLabel} â€“ ${name}`,
         html: adminNotifyHtml('Neues Abonnement', [
             ['Plan', planLabel],
             ['Name', name],
@@ -392,7 +392,7 @@ function adminNotifyHtml(title, rows) {
     <tr><td align="center">
       <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
         <tr><td style="background:#0d1117;border:1px solid rgba(255,255,255,0.07);border-radius:20px;padding:32px 40px;">
-          <p style="margin:0 0 4px;font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.1em;">AuditAI · Admin</p>
+          <p style="margin:0 0 4px;font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.1em;">AuditAI Â· Admin</p>
           <p style="margin:0 0 24px;font-size:20px;font-weight:700;color:#ffffff;">${title}</p>
           <table cellpadding="0" cellspacing="0" width="100%" style="border-top:1px solid rgba(255,255,255,0.06);">
             ${rowsHtml}
@@ -410,8 +410,8 @@ export async function sendPasswordReset({ name, email, token }) {
     await transporter.sendMail({
         from: process.env.SMTP_FROM || process.env.SMTP_USER,
         to: email,
-        subject: 'Passwort zurücksetzen – AuditAI',
-        text: `Hallo ${name},\n\ndu hast angefordert, dein Passwort zurückzusetzen.\n\nKlicke auf diesen Link (gültig für 1 Stunde):\n${resetUrl}\n\nFalls du das nicht angefordert hast, kannst du diese E-Mail ignorieren.\n\nDein AuditAI Team`,
+        subject: 'Passwort zurÃ¼cksetzen â€“ AuditAI',
+        text: `Hallo ${name},\n\ndu hast angefordert, dein Passwort zurÃ¼ckzusetzen.\n\nKlicke auf diesen Link (gÃ¼ltig fÃ¼r 1 Stunde):\n${resetUrl}\n\nFalls du das nicht angefordert hast, kannst du diese E-Mail ignorieren.\n\nDein AuditAI Team`,
         html: passwordResetHtml(name, resetUrl),
     })
 }
@@ -427,7 +427,7 @@ function passwordResetHtml(name, resetUrl) {
         <tr><td align="center" style="padding-bottom:32px;">
           <table cellpadding="0" cellspacing="0"><tr>
             <td style="background:linear-gradient(135deg,#7c3aed,#06b6d4);border-radius:12px;width:40px;height:40px;text-align:center;vertical-align:middle;">
-              <span style="color:#fff;font-size:18px;font-weight:bold;">⚡</span>
+              <span style="color:#fff;font-size:18px;font-weight:bold;">âš¡</span>
             </td>
             <td style="padding-left:10px;vertical-align:middle;">
               <span style="color:#ffffff;font-size:20px;font-weight:700;">Audit<span style="color:#22d3ee;">AI</span></span>
@@ -435,14 +435,14 @@ function passwordResetHtml(name, resetUrl) {
           </tr></table>
         </td></tr>
         <tr><td style="background:#0d1117;border:1px solid rgba(255,255,255,0.07);border-radius:20px;padding:40px;">
-          <p style="margin:0 0 8px;font-size:24px;font-weight:700;color:#ffffff;">Passwort zurücksetzen</p>
+          <p style="margin:0 0 8px;font-size:24px;font-weight:700;color:#ffffff;">Passwort zurÃ¼cksetzen</p>
           <p style="margin:0 0 28px;font-size:15px;color:#94a3b8;line-height:1.6;">
-            Hallo ${name}, du hast angefordert, dein Passwort zurückzusetzen. Klicke auf den Button unten – der Link ist <strong style="color:#ffffff;">1 Stunde gültig</strong>.
+            Hallo ${name}, du hast angefordert, dein Passwort zurÃ¼ckzusetzen. Klicke auf den Button unten â€“ der Link ist <strong style="color:#ffffff;">1 Stunde gÃ¼ltig</strong>.
           </p>
           <table cellpadding="0" cellspacing="0" style="margin-bottom:28px;"><tr>
             <td style="background:linear-gradient(135deg,#7c3aed,#06b6d4);border-radius:12px;padding:1px;">
               <a href="${resetUrl}" style="display:block;background:#0d1117;border-radius:11px;padding:14px 32px;font-size:15px;font-weight:600;color:#ffffff;text-decoration:none;">
-                Neues Passwort setzen →
+                Neues Passwort setzen â†’
               </a>
             </td>
           </tr></table>
@@ -453,90 +453,12 @@ function passwordResetHtml(name, resetUrl) {
             </td></tr>
           </table>
           <hr style="border:none;border-top:1px solid rgba(255,255,255,0.06);margin:24px 0;"/>
-          <p style="margin:0;font-size:13px;color:#64748b;">Falls du kein neues Passwort angefordert hast, kannst du diese E-Mail ignorieren – dein Passwort bleibt unverändert.</p>
+          <p style="margin:0;font-size:13px;color:#64748b;">Falls du kein neues Passwort angefordert hast, kannst du diese E-Mail ignorieren â€“ dein Passwort bleibt unverÃ¤ndert.</p>
           <hr style="border:none;border-top:1px solid rgba(255,255,255,0.06);margin:24px 0;"/>
           <p style="margin:0;font-size:14px;color:#64748b;">Dein AuditAI Team</p>
         </td></tr>
         <tr><td align="center" style="padding-top:24px;">
-          <p style="margin:0;font-size:11px;color:#334155;">Du erhältst diese E-Mail, weil ein Passwort-Reset für deinen Account auf <a href="${APP_URL}" style="color:#475569;text-decoration:none;">sitecheckai.dev</a> angefordert wurde.</p>
-        </td></tr>
-      </table>
-    </td></tr>
-  </table>
-</body>
-</html>`
-}
-
-export async function sendSecurityAlert({ user, site, alert }) {
-    const APP_URL_LOCAL = process.env.APP_URL || process.env.ALLOWED_ORIGIN || 'https://www.sitecheckai.dev'
-    const siteUrl = `${APP_URL_LOCAL}/monitoring/security/${site._id}`
-    const severityColors = { critical: '#ef4444', high: '#f97316', medium: '#eab308', low: '#64748b' }
-    const severityLabels = { critical: 'Kritisch', high: 'Hoch', medium: 'Mittel', low: 'Unkritisch' }
-    const typeLabels = {
-        downtime: 'Website nicht erreichbar',
-        ssl_expiry: 'SSL-Zertifikat läuft ab',
-        security_regression: 'Sicherheitsproblem erkannt',
-        open_ports: 'Gefährliche Ports offen',
-    }
-    const color = severityColors[alert.severity] || '#ef4444'
-    const severityLabel = severityLabels[alert.severity] || alert.severity
-    const typeLabel = typeLabels[alert.type] || alert.type
-
-    await transporter.sendMail({
-        from: process.env.SMTP_FROM || process.env.SMTP_USER,
-        to: user.email,
-        subject: `[Alert] ${typeLabel}: ${site.domain}`,
-        text: `Hallo ${user.name},\n\n${alert.message}\n\nSite: ${site.domain}\nSchwere: ${severityLabel}\n\nDetails: ${siteUrl}\n\nDein AuditAI Team`,
-        html: securityAlertHtml({ user, site, alert, color, severityLabel, typeLabel, siteUrl }),
-    })
-}
-
-function securityAlertHtml({ user, site, alert, color, severityLabel, typeLabel, siteUrl }) {
-    return `<!DOCTYPE html>
-<html lang="de">
-<head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/></head>
-<body style="margin:0;padding:0;background:#05080f;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
-  <table width="100%" cellpadding="0" cellspacing="0" style="background:#05080f;padding:40px 20px;">
-    <tr><td align="center">
-      <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
-        <tr><td align="center" style="padding-bottom:32px;">
-          <table cellpadding="0" cellspacing="0"><tr>
-            <td style="background:linear-gradient(135deg,#7c3aed,#06b6d4);border-radius:12px;width:40px;height:40px;text-align:center;vertical-align:middle;">
-              <span style="color:#fff;font-size:18px;font-weight:bold;">⚡</span>
-            </td>
-            <td style="padding-left:10px;vertical-align:middle;">
-              <span style="color:#ffffff;font-size:20px;font-weight:700;">Audit<span style="color:#22d3ee;">AI</span></span>
-            </td>
-          </tr></table>
-        </td></tr>
-        <tr><td style="background:#0d1117;border:1px solid rgba(255,255,255,0.07);border-radius:20px;padding:40px;">
-          <div style="display:inline-block;padding:4px 12px;background:${color}20;border:1px solid ${color}40;border-radius:20px;margin-bottom:16px;">
-            <span style="color:${color};font-size:12px;font-weight:600;">● ${severityLabel}</span>
-          </div>
-          <p style="margin:0 0 6px;font-size:22px;font-weight:700;color:#ffffff;">${typeLabel}</p>
-          <p style="margin:0 0 28px;font-size:15px;color:#94a3b8;line-height:1.6;">Hallo ${user.name}, wir haben ein Problem mit einer deiner überwachten Websites erkannt.</p>
-          <table cellpadding="0" cellspacing="0" width="100%" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:20px;margin-bottom:28px;">
-            <tr><td>
-              <p style="margin:0 0 4px;font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;">Website</p>
-              <p style="margin:0 0 16px;font-size:16px;font-weight:700;color:#a78bfa;">${site.domain}</p>
-              <p style="margin:0 0 4px;font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;">Problem</p>
-              <p style="margin:0 0 16px;font-size:14px;color:#e2e8f0;">${alert.message}</p>
-              <p style="margin:0 0 4px;font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;">Erkannt am</p>
-              <p style="margin:0;font-size:14px;color:#94a3b8;">${new Date(alert.detectedAt).toLocaleString('de-DE', { timeZone: 'Europe/Berlin' })}</p>
-            </td></tr>
-          </table>
-          <table cellpadding="0" cellspacing="0"><tr>
-            <td style="background:linear-gradient(135deg,#7c3aed,#06b6d4);border-radius:12px;padding:1px;">
-              <a href="${siteUrl}" style="display:block;background:#0d1117;border-radius:11px;padding:12px 28px;font-size:14px;font-weight:600;color:#ffffff;text-decoration:none;">
-                Details ansehen →
-              </a>
-            </td>
-          </tr></table>
-          <hr style="border:none;border-top:1px solid rgba(255,255,255,0.06);margin:28px 0;"/>
-          <p style="margin:0;font-size:14px;color:#64748b;">Dein AuditAI Team</p>
-        </td></tr>
-        <tr><td align="center" style="padding-top:24px;">
-          <p style="margin:0;font-size:11px;color:#334155;">Security Monitoring Alert · <a href="${siteUrl}" style="color:#475569;text-decoration:none;">sitecheckai.dev</a></p>
+          <p style="margin:0;font-size:11px;color:#334155;">Du erhÃ¤ltst diese E-Mail, weil ein Passwort-Reset fÃ¼r deinen Account auf <a href="${APP_URL}" style="color:#475569;text-decoration:none;">sitecheckai.dev</a> angefordert wurde.</p>
         </td></tr>
       </table>
     </td></tr>
@@ -549,7 +471,7 @@ export async function sendWaitlistConfirmation(to) {
     await transporter.sendMail({
         from: process.env.SMTP_FROM || process.env.SMTP_USER,
         to,
-        subject: 'SiteCheckAI Extension – Du bist dabei! 🎉',
+        subject: 'SiteCheckAI Extension â€“ Du bist dabei! ðŸŽ‰',
         text: waitlistText,
         html: waitlistHtml,
     });
@@ -558,15 +480,15 @@ export async function sendWaitlistConfirmation(to) {
 const waitlistText = `
 Hallo!
 
-Vielen Dank, dass du dich für die SiteCheckAI Chrome Extension vorgemerkt hast.
+Vielen Dank, dass du dich fÃ¼r die SiteCheckAI Chrome Extension vorgemerkt hast.
 
-Wir freuen uns sehr über dein Interesse! Sobald die Extension im Chrome Web Store verfügbar ist, bist du als Erstes dabei – wir schicken dir sofort eine Benachrichtigung.
+Wir freuen uns sehr Ã¼ber dein Interesse! Sobald die Extension im Chrome Web Store verfÃ¼gbar ist, bist du als Erstes dabei â€“ wir schicken dir sofort eine Benachrichtigung.
 
 Was dich erwartet:
-- Klick durch deine Website aufnehmen – ganz ohne Code
+- Klick durch deine Website aufnehmen â€“ ganz ohne Code
 - Automatisierte Playwright-Tests starten mit einem Klick
 - Schritte als CSV exportieren und anpassen
-- Jede Regression sofort erkennen – vor deinen Nutzern
+- Jede Regression sofort erkennen â€“ vor deinen Nutzern
 
 Wir arbeiten mit Hochdruck daran und freuen uns, dich bald an Bord zu haben.
 
@@ -574,7 +496,7 @@ Bis bald,
 Dein SiteCheckAI Team
 
 ---
-Du erhältst diese E-Mail, weil du dich auf sitecheckai.dev für die Warteliste eingetragen hast.
+Du erhÃ¤ltst diese E-Mail, weil du dich auf sitecheckai.dev fÃ¼r die Warteliste eingetragen hast.
 `.trim();
 
 const waitlistHtml = `
@@ -596,7 +518,7 @@ const waitlistHtml = `
               <table cellpadding="0" cellspacing="0">
                 <tr>
                   <td style="background:linear-gradient(135deg,#7c3aed,#06b6d4);border-radius:12px;width:40px;height:40px;text-align:center;vertical-align:middle;">
-                    <span style="color:#fff;font-size:18px;font-weight:bold;">⚡</span>
+                    <span style="color:#fff;font-size:18px;font-weight:bold;">âš¡</span>
                   </td>
                   <td style="padding-left:10px;vertical-align:middle;">
                     <span style="color:#ffffff;font-size:20px;font-weight:700;letter-spacing:-0.5px;">Audit<span style="color:#22d3ee;">AI</span></span>
@@ -611,14 +533,14 @@ const waitlistHtml = `
             <td style="background:#0d1117;border:1px solid rgba(255,255,255,0.07);border-radius:20px;padding:40px 40px 32px;">
 
               <p style="margin:0 0 8px;font-size:24px;font-weight:700;color:#ffffff;line-height:1.3;">
-                Du bist auf der Liste! 🎉
+                Du bist auf der Liste! ðŸŽ‰
               </p>
               <p style="margin:0 0 28px;font-size:15px;color:#94a3b8;line-height:1.6;">
-                Vielen Dank, dass du dich für die <strong style="color:#a5b4fc;">SiteCheckAI Chrome Extension</strong> vorgemerkt hast. Wir freuen uns sehr über dein Interesse!
+                Vielen Dank, dass du dich fÃ¼r die <strong style="color:#a5b4fc;">SiteCheckAI Chrome Extension</strong> vorgemerkt hast. Wir freuen uns sehr Ã¼ber dein Interesse!
               </p>
 
               <p style="margin:0 0 24px;font-size:15px;color:#94a3b8;line-height:1.6;">
-                Sobald die Extension im <strong style="color:#ffffff;">Chrome Web Store</strong> verfügbar ist, bist du als Erstes dabei – du erhältst sofort eine Benachrichtigung von uns.
+                Sobald die Extension im <strong style="color:#ffffff;">Chrome Web Store</strong> verfÃ¼gbar ist, bist du als Erstes dabei â€“ du erhÃ¤ltst sofort eine Benachrichtigung von uns.
               </p>
 
               <p style="margin:0 0 12px;font-size:13px;color:#64748b;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;">Was dich erwartet</p>
@@ -626,11 +548,11 @@ const waitlistHtml = `
               <table cellpadding="0" cellspacing="0" width="100%" style="margin-bottom:12px;">
                 <tr>
                   <td width="36" valign="top" style="padding-top:2px;">
-                    <div style="background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.2);border-radius:8px;width:28px;height:28px;text-align:center;line-height:28px;font-size:14px;">🎬</div>
+                    <div style="background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.2);border-radius:8px;width:28px;height:28px;text-align:center;line-height:28px;font-size:14px;">ðŸŽ¬</div>
                   </td>
                   <td style="padding-left:12px;vertical-align:top;">
                     <p style="margin:0 0 2px;font-size:13px;font-weight:600;color:#e2e8f0;">Klick-Aufnahme ohne Code</p>
-                    <p style="margin:0;font-size:12px;color:#64748b;line-height:1.5;">Klick einfach durch deine Website – jede Interaktion wird automatisch aufgezeichnet.</p>
+                    <p style="margin:0;font-size:12px;color:#64748b;line-height:1.5;">Klick einfach durch deine Website â€“ jede Interaktion wird automatisch aufgezeichnet.</p>
                   </td>
                 </tr>
               </table>
@@ -638,7 +560,7 @@ const waitlistHtml = `
               <table cellpadding="0" cellspacing="0" width="100%" style="margin-bottom:12px;">
                 <tr>
                   <td width="36" valign="top" style="padding-top:2px;">
-                    <div style="background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.2);border-radius:8px;width:28px;height:28px;text-align:center;line-height:28px;font-size:14px;">▶️</div>
+                    <div style="background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.2);border-radius:8px;width:28px;height:28px;text-align:center;line-height:28px;font-size:14px;">â–¶ï¸</div>
                   </td>
                   <td style="padding-left:12px;vertical-align:top;">
                     <p style="margin:0 0 2px;font-size:13px;font-weight:600;color:#e2e8f0;">Automatisierte Tests mit einem Klick</p>
@@ -650,10 +572,10 @@ const waitlistHtml = `
               <table cellpadding="0" cellspacing="0" width="100%" style="margin-bottom:12px;">
                 <tr>
                   <td width="36" valign="top" style="padding-top:2px;">
-                    <div style="background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.2);border-radius:8px;width:28px;height:28px;text-align:center;line-height:28px;font-size:14px;">📄</div>
+                    <div style="background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.2);border-radius:8px;width:28px;height:28px;text-align:center;line-height:28px;font-size:14px;">ðŸ“„</div>
                   </td>
                   <td style="padding-left:12px;vertical-align:top;">
-                    <p style="margin:0 0 2px;font-size:13px;font-weight:600;color:#e2e8f0;">CSV-Export für volle Kontrolle</p>
+                    <p style="margin:0 0 2px;font-size:13px;font-weight:600;color:#e2e8f0;">CSV-Export fÃ¼r volle Kontrolle</p>
                     <p style="margin:0;font-size:12px;color:#64748b;line-height:1.5;">Exportiere alle Schritte als lesbare CSV-Datei und passe sie beliebig an.</p>
                   </td>
                 </tr>
@@ -662,11 +584,11 @@ const waitlistHtml = `
               <table cellpadding="0" cellspacing="0" width="100%" style="margin-bottom:28px;">
                 <tr>
                   <td width="36" valign="top" style="padding-top:2px;">
-                    <div style="background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.2);border-radius:8px;width:28px;height:28px;text-align:center;line-height:28px;font-size:14px;">🛡️</div>
+                    <div style="background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.2);border-radius:8px;width:28px;height:28px;text-align:center;line-height:28px;font-size:14px;">ðŸ›¡ï¸</div>
                   </td>
                   <td style="padding-left:12px;vertical-align:top;">
                     <p style="margin:0 0 2px;font-size:13px;font-weight:600;color:#e2e8f0;">Regressions-Schutz nach jedem Deploy</p>
-                    <p style="margin:0;font-size:12px;color:#64748b;line-height:1.5;">Kein manuelles Durchklicken mehr – der Test läuft automatisch nach jedem Deploy.</p>
+                    <p style="margin:0;font-size:12px;color:#64748b;line-height:1.5;">Kein manuelles Durchklicken mehr â€“ der Test lÃ¤uft automatisch nach jedem Deploy.</p>
                   </td>
                 </tr>
               </table>
@@ -688,9 +610,9 @@ const waitlistHtml = `
           <tr>
             <td align="center" style="padding-top:24px;">
               <p style="margin:0;font-size:11px;color:#334155;line-height:1.6;">
-                Du erhältst diese E-Mail, weil du dich auf
+                Du erhÃ¤ltst diese E-Mail, weil du dich auf
                 <a href="https://sitecheckai.dev" style="color:#475569;text-decoration:none;">sitecheckai.dev</a>
-                für die Warteliste eingetragen hast.
+                fÃ¼r die Warteliste eingetragen hast.
               </p>
             </td>
           </tr>
@@ -703,59 +625,4 @@ const waitlistHtml = `
 </html>
 `.trim()
 
-
-export async function sendSiteOnlineNotification({ user, site }) {
-    const APP_URL_LOCAL = process.env.APP_URL || process.env.ALLOWED_ORIGIN || 'https://www.sitecheckai.dev'
-    const siteUrl = `${APP_URL_LOCAL}/monitoring/security/${site._id}`
-    await transporter.sendMail({
-        from: process.env.SMTP_FROM || process.env.SMTP_USER,
-        to: user.email,
-        subject: `✓ ${site.domain} ist wieder erreichbar`,
-        text: `Hallo ${user.name},\n\n${site.displayName || site.domain} ist wieder online.\n\nDetails: ${siteUrl}\n\nDein AuditAI Team`,
-        html: `<!DOCTYPE html>
-<html lang="de">
-<head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/></head>
-<body style="margin:0;padding:0;background:#05080f;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
-  <table width="100%" cellpadding="0" cellspacing="0" style="background:#05080f;padding:40px 20px;">
-    <tr><td align="center">
-      <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
-        <tr><td align="center" style="padding-bottom:32px;">
-          <table cellpadding="0" cellspacing="0"><tr>
-            <td style="background:linear-gradient(135deg,#7c3aed,#06b6d4);border-radius:12px;width:40px;height:40px;text-align:center;vertical-align:middle;">
-              <span style="color:#fff;font-size:18px;font-weight:bold;">⚡</span>
-            </td>
-            <td style="padding-left:10px;vertical-align:middle;">
-              <span style="color:#ffffff;font-size:20px;font-weight:700;">Audit<span style="color:#22d3ee;">AI</span></span>
-            </td>
-          </tr></table>
-        </td></tr>
-        <tr><td style="background:#0d1117;border:1px solid rgba(255,255,255,0.07);border-radius:20px;padding:40px;">
-          <p style="margin:0 0 6px;font-size:24px;font-weight:700;color:#10b981;">✓ Wieder online</p>
-          <p style="margin:0 0 28px;font-size:15px;color:#94a3b8;line-height:1.6;">
-            Hallo ${user.name}, <strong style="color:#e2e8f0;">${site.displayName || site.domain}</strong> ist wieder erreichbar.
-          </p>
-          <table cellpadding="0" cellspacing="0" width="100%" style="background:rgba(16,185,129,0.05);border:1px solid rgba(16,185,129,0.2);border-radius:12px;padding:20px;margin-bottom:28px;">
-            <tr><td>
-              <p style="margin:0 0 4px;font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;">Website</p>
-              <p style="margin:0;font-size:16px;font-weight:700;color:#10b981;">● ${site.domain}</p>
-            </td></tr>
-          </table>
-          <table cellpadding="0" cellspacing="0"><tr>
-            <td style="background:linear-gradient(135deg,#7c3aed,#06b6d4);border-radius:12px;padding:1px;">
-              <a href="${siteUrl}" style="display:block;background:#0d1117;border-radius:11px;padding:12px 28px;font-size:14px;font-weight:600;color:#ffffff;text-decoration:none;">
-                Monitoring ansehen →
-              </a>
-            </td>
-          </tr></table>
-        </td></tr>
-        <tr><td align="center" style="padding-top:24px;">
-          <p style="margin:0;font-size:12px;color:#334155;">AuditAI Security Monitoring · <a href="${APP_URL_LOCAL}" style="color:#475569;text-decoration:none;">sitecheckai.dev</a></p>
-        </td></tr>
-      </table>
-    </td></tr>
-  </table>
-</body>
-</html>`,
-    })
-}
 

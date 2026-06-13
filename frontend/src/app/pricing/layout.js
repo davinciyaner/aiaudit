@@ -4,7 +4,7 @@ export const metadata = {
     alternates: { canonical: 'https://www.sitecheckai.dev/pricing' },
     openGraph: {
         title: 'Preise & Pläne | AuditAI',
-        description: 'Kostenlos starten oder upgraden — SEO, Performance, Security & GEO-Audits für Freelancer und Agenturen.',
+        description: 'Kostenlos starten oder upgraden — SEO, Performance & GEO-Audits für Freelancer und Agenturen.',
         url: 'https://www.sitecheckai.dev/pricing',
     },
 }

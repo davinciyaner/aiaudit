@@ -21,7 +21,6 @@ const PLANS = [
             '1 Audit pro Monat',
             'SEO-Score & Analyse',
             'Performance-Metriken',
-            'Security-Check',
             'GEO-Sichtbarkeit',
         ],
         cta: 'Kostenlos starten',

@@ -89,7 +89,7 @@ export default function ImpressumPage() {
                         <section className="mb-8">
                             <h3 className="text-white font-semibold mb-3">Haftung für technische Analyseergebnisse</h3>
                             <p className="text-slate-400">
-                                Die technischen Audit-Ergebnisse (SEO, Performance, Security, GEO) werden automatisiert erstellt und können Fehler enthalten. Sie ersetzen keine professionelle Sicherheitsüberprüfung oder Rechtsberatung. Für Schäden oder Verluste, die durch die Nutzung oder Nichtnutzung der bereitgestellten Informationen entstehen, wird keine Haftung übernommen.
+                                Die technischen Audit-Ergebnisse (SEO, Performance, GEO) werden automatisiert erstellt und können Fehler enthalten. Sie ersetzen keine professionelle Rechtsberatung. Für Schäden oder Verluste, die durch die Nutzung oder Nichtnutzung der bereitgestellten Informationen entstehen, wird keine Haftung übernommen.
                             </p>
                         </section>
 

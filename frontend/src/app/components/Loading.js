@@ -8,7 +8,6 @@ const steps = [
     { label: 'Screenshots werden erstellt...' },
     { label: 'SEO wird analysiert...' },
     { label: 'Performance wird gemessen...' },
-    { label: 'Security wird geprüft...' },
     { label: 'Keywords werden extrahiert...' },
     { label: 'GEO-Sichtbarkeit wird analysiert...' },
     { label: 'KI-Bericht wird generiert...' },
@@ -56,7 +55,7 @@ export default function Loading({ url }) {
                                 transition={{ duration: 0.5 }} />
                 </div>
 
-                <div className="grid grid-cols-9 gap-1">
+                <div className="grid grid-cols-8 gap-1">
                     {steps.map((_, i) => (
                         <div key={i} className={`h-1 rounded-full transition-all duration-500 ${i <= currentStep ? 'bg-gradient-to-r from-violet-500 to-cyan-500' : 'bg-white/5'}`} />
                     ))}

@@ -2,7 +2,7 @@
 import {useState} from 'react'
 import Link from 'next/link'
 import {motion} from 'framer-motion'
-import {Zap, Mail, Lock, User, ArrowRight, Check, Shield, Search, Globe} from 'lucide-react'
+import {Zap, Mail, Lock, User, ArrowRight, Check, Search, Globe} from 'lucide-react'
 import toast, {Toaster} from 'react-hot-toast'
 import {useRouter} from 'next/navigation'
 
@@ -10,11 +10,10 @@ const BENEFITS = [
     {icon: Check, text: '1 Audit pro Monat - vollständig & kostenlos'},
     {icon: Check, text: 'SEO: Title, Meta, H1, Alt-Texte & alle Fehler'},
     {icon: Check, text: 'GEO: llms.txt, Schema, KI-Crawler & alle Checks'},
-    {icon: Check, text: 'Security: HTTPS, Headers & alle Lücken'},
+    {icon: Check, text: 'Performance: Core Web Vitals & Ladezeiten'},
 ]
 
 const PLAN_FEATURES = [
-    {icon: Shield, label: 'Security', value: '14 Checks', color: '#ef4444'},
     {icon: Search, label: 'SEO', value: '14 Checks', color: '#7c3aed'},
     {icon: Globe, label: 'GEO', value: '19 Checks', color: '#06b6d4'},
     {icon: Zap, label: 'Speed', value: '60s', color: '#f59e0b'},
@@ -219,7 +218,7 @@ export default function RegisterPage() {
                         <span className="text-transparent bg-clip-text bg-linear-to-r from-violet-400 to-cyan-400">Sofort einsatzbereit.</span>
                     </h2>
                     <p className="text-slate-400 text-sm leading-relaxed mb-8">
-                        Keine Registrierung nötig — sofort alle Scores, Checks und Probleme deiner Website sehen — für SEO, GEO, Security und Performance.
+                        Keine Registrierung nötig — sofort alle Scores, Checks und Probleme deiner Website sehen — für SEO, GEO und Performance.
                     </p>
 
                     {/* Benefits */}

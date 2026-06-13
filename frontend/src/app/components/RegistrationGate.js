@@ -1,12 +1,11 @@
 'use client'
 import { motion } from 'framer-motion'
-import { Lock, UserPlus, ArrowRight, Shield, Zap, Search, Globe } from 'lucide-react'
+import { Lock, UserPlus, ArrowRight, Zap, Search, Globe } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
 const LOCKED_FEATURES = [
     { icon: Search, label: 'SEO-Lösungen' },
-    { icon: Shield, label: 'Security-Fixes' },
     { icon: Zap, label: 'Performance-Tipps' },
     { icon: Globe, label: 'GEO-Optimierung' },
 ]

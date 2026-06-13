@@ -2,14 +2,13 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { Zap, Mail, Lock, ArrowRight, Shield, Search, Globe } from 'lucide-react'
+import { Zap, Mail, Lock, ArrowRight, Search, Globe } from 'lucide-react'
 import toast, { Toaster } from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
 
 const FEATURES = [
     { icon: Search, text: 'SEO: Title, Meta, H1, Alt-Texte & alle Fehler' },
     { icon: Globe, text: 'GEO: llms.txt, Schema, KI-Crawler & alle Checks' },
-    { icon: Shield, text: 'Security: HTTPS, Headers & alle Lücken' },
     { icon: Zap, text: 'Ergebnis in unter 60 Sekunden' },
 ]
 
@@ -90,7 +89,7 @@ export default function LoginPage() {
                     <div className="bg-white/3 border border-white/[0.07] rounded-2xl p-4">
                         <div className="text-[10px] text-slate-600 uppercase tracking-wider mb-3">Letzter Audit</div>
                         <div className="grid grid-cols-4 gap-2">
-                            {[['SEO', 81, '#22c55e'], ['Perf.', 68, '#f59e0b'], ['Sec.', 59, '#ef4444'], ['GEO', 42, '#ef4444']].map(([l, s, c]) => (
+                            {[['SEO', 81, '#22c55e'], ['Perf.', 68, '#f59e0b'], ['GEO', 42, '#ef4444']].map(([l, s, c]) => (
                                 <div key={l} className="text-center">
                                     <div className="text-lg font-bold" style={{ color: c }}>{s}</div>
                                     <div className="text-[9px] text-slate-600">{l}</div>
