@@ -43,10 +43,10 @@ export default function NutzungsbedingungenPage() {
 
                     <Section title="1. Geltungsbereich">
                         <p>
-                            Diese Nutzungsbedingungen gelten für die Nutzung der Webanwendung <strong className="text-slate-300">AuditAI</strong> unter <strong className="text-slate-300">sitecheckai.dev</strong> sowie aller zugehörigen Dienste (Website-Audit, Security Monitoring, SEO Tracking). Mit der Registrierung oder der Nutzung des Dienstes erklärt der Nutzer sein Einverständnis mit diesen Bedingungen.
+                            Diese Nutzungsbedingungen gelten für die Nutzung der Webanwendung <strong className="text-slate-300">AuditAI</strong> unter <strong className="text-slate-300">sitecheckai.dev</strong> sowie aller zugehörigen Dienste (Website-Audit, SEO Tracking). Mit der Registrierung oder der Nutzung des Dienstes erklärt der Nutzer sein Einverständnis mit diesen Bedingungen.
                         </p>
                         <p>
-                            Ergänzend gelten die <Link href="/agb" className="text-violet-400 hover:text-violet-300">Allgemeinen Geschäftsbedingungen (AGB)</Link> für kostenpflichtige Abonnements sowie die <Link href="/datenschutz" className="text-violet-400 hover:text-violet-300">Datenschutzerklärung</Link> und der <Link href="/avv" className="text-violet-400 hover:text-violet-300">Auftragsverarbeitungsvertrag (AVV)</Link> für Security Monitoring und SEO Tracking.
+                            Ergänzend gelten die <Link href="/agb" className="text-violet-400 hover:text-violet-300">Allgemeinen Geschäftsbedingungen (AGB)</Link> für kostenpflichtige Abonnements sowie die <Link href="/datenschutz" className="text-violet-400 hover:text-violet-300">Datenschutzerklärung</Link> und der <Link href="/avv" className="text-violet-400 hover:text-violet-300">Auftragsverarbeitungsvertrag (AVV)</Link> für das SEO Tracking.
                         </p>
                     </Section>
 

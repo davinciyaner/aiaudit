@@ -19,7 +19,6 @@ import {
     LogOut,
     Bot,
     FileText,
-    Shield,
     TrendingUp,
 } from 'lucide-react'
 import toast, { Toaster } from 'react-hot-toast'
@@ -352,12 +351,11 @@ export default function Dashboard() {
                     <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
 
                         {/* SCORE CARDS */}
-                        <div className="grid grid-cols-2 md:grid-cols-5 gap-3 sm:gap-4">
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
                             <ScoreCard label="Overall" score={audit.overallScore ?? 0} />
                             <ScoreCard label="SEO" score={audit?.seo?.score ?? 0} delay={0.1} />
                             <ScoreCard label="Performance" score={audit?.performance?.score ?? 0} delay={0.2} />
-                            <ScoreCard label="Security" score={audit?.security?.score ?? 0} delay={0.3} />
-                            <ScoreCard label="GEO" score={audit?.geo?.score ?? 0} delay={0.4} />
+                            <ScoreCard label="GEO" score={audit?.geo?.score ?? 0} delay={0.3} />
                         </div>
 
                         {/* FULL REPORT */}
@@ -589,88 +587,11 @@ export default function Dashboard() {
                                     </Section>
                                 )}
 
-                                {/* SECURITY */}
-                                <Section title="Security" icon="🔒">
-                                    {audit?.security?.checks?.length > 0 && (
-                                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-5">
-                                            {audit.security.checks.map((chk, i) => (
-                                                <div key={i} className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-xs font-medium ${
-                                                    chk.passed ? 'bg-emerald-500/8 border-emerald-500/20 text-emerald-400' :
-                                                    chk.severity === 'critical' ? 'bg-red-500/10 border-red-500/30 text-red-400' :
-                                                    chk.severity === 'high' ? 'bg-orange-500/10 border-orange-500/20 text-orange-400' :
-                                                    chk.severity === 'info' ? 'bg-slate-500/8 border-slate-500/20 text-slate-400' :
-                                                    'bg-amber-500/8 border-amber-500/20 text-amber-400'
-                                                }`}>
-                                                    {chk.passed
-                                                        ? <CheckCircle className="w-3 h-3 shrink-0" strokeWidth={2} />
-                                                        : <XCircle className="w-3 h-3 shrink-0" strokeWidth={2} />
-                                                    }
-                                                    <span className="truncate">{chk.name}</span>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    )}
-                                    {audit?.security?.issues?.length > 0 ? (
-                                        <div className="space-y-3">
-                                            {audit.security.issues.map((issue, i) => (
-                                                <div key={i} className="space-y-1.5">
-                                                    <IssueItem text={issue} type="error" />
-                                                    {isPro && audit.security.suggestions?.[i] && (
-                                                        <div className="ml-6 text-xs text-slate-500 bg-white/[0.02] rounded-lg px-3 py-2 border border-white/[0.05]">
-                                                            Empfehlung: {audit.security.suggestions[i]}
-                                                        </div>
-                                                    )}
-                                                </div>
-                                            ))}
-                                        </div>
-                                    ) : (
-                                        <div className="text-center py-4 text-emerald-400 text-sm">
-                                            Alle Security-Checks bestanden
-                                        </div>
-                                    )}
-                                </Section>
-
                                 {/* PRO UPSELL — nur wenn nicht Pro */}
                                 {!isPro && <ReauditCTA />}
 
-                                {/* SECURITY MONITORING + SEO TRACKING UPSELL */}
-                                <div className="grid sm:grid-cols-2 gap-4">
+                                {/* SEO TRACKING UPSELL */}
                                     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}
-                                        className="rounded-2xl border border-red-500/20 bg-red-500/[0.03] p-5">
-                                        <div className="flex items-start gap-3 mb-4">
-                                            <div className="w-9 h-9 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-center shrink-0">
-                                                <Shield className="w-4 h-4 text-red-400" />
-                                            </div>
-                                            <div>
-                                                <span className="text-xs font-semibold text-red-400 uppercase tracking-wider">Add-on</span>
-                                                <h3 className="text-sm font-bold text-white">Security Monitoring</h3>
-                                            </div>
-                                        </div>
-                                        <ul className="space-y-1.5 mb-4">
-                                            {['Uptime-Monitoring (1-min)', 'SSL-Ablauf-Alerts', 'Sicherheitsheader-Checks', 'Sofort-E-Mail-Alerts'].map(f => (
-                                                <li key={f} className="flex items-center gap-2 text-xs text-slate-500">
-                                                    <CheckCircle className="w-3 h-3 text-red-400/60 shrink-0" />
-                                                    {f}
-                                                </li>
-                                            ))}
-                                        </ul>
-                                        {isLoggedIn ? (
-                                            <Link href="/monitoring/pricing" className="flex items-center justify-center gap-1.5 w-full px-4 py-2 bg-red-500/10 hover:bg-red-500/20 border border-red-500/20 text-red-400 text-xs font-semibold rounded-xl transition-all">
-                                                Jetzt buchen <ArrowRight className="w-3 h-3" />
-                                            </Link>
-                                        ) : (
-                                            <div className="flex gap-2">
-                                                <Link href="/register" className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 bg-red-500/10 hover:bg-red-500/20 border border-red-500/20 text-red-400 text-xs font-semibold rounded-xl transition-all">
-                                                    <UserPlus className="w-3 h-3" /> Registrieren
-                                                </Link>
-                                                <Link href="/monitoring/pricing" className="flex items-center justify-center px-3 py-2 border border-white/10 hover:border-white/20 text-slate-500 hover:text-slate-300 text-xs rounded-xl transition-all">
-                                                    Preise
-                                                </Link>
-                                            </div>
-                                        )}
-                                    </motion.div>
-
-                                    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }}
                                         className="rounded-2xl border border-emerald-500/20 bg-emerald-500/[0.03] p-5">
                                         <div className="flex items-start gap-3 mb-4">
                                             <div className="w-9 h-9 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shrink-0">
@@ -704,7 +625,6 @@ export default function Dashboard() {
                                             </div>
                                         )}
                                     </motion.div>
-                                </div>
 
                                 {/* PDF DOWNLOAD — nur Pro/Agency */}
                                 {result?.reportFile ? (

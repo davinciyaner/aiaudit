@@ -288,7 +288,7 @@ export default function ProfilePage() {
                                                     <div className="text-xs text-slate-600 mt-0.5">{date}</div>
                                                 </div>
                                                 <div className="flex items-center gap-3 shrink-0">
-                                                    {[['Ges', report.scores.overall], ['SEO', report.scores.seo], ['Perf', report.scores.performance], ['Sec', report.scores.security]].map(([label, score]) => (
+                                                    {[['Ges', report.scores.overall], ['SEO', report.scores.seo], ['Perf', report.scores.performance], ['GEO', report.scores.geo]].map(([label, score]) => (
                                                         <div key={label} className="text-center hidden sm:block">
                                                             <div className={`text-sm font-bold ${scoreColor(score)}`}>{score}</div>
                                                             <div className="text-[9px] text-slate-600 uppercase tracking-wide">{label}</div>

@@ -9,7 +9,6 @@ const COLUMNS = [
         heading: 'Produkt',
         links: [
             { label: 'Features', href: '#features' },
-            { label: 'Security', href: '#security' },
             { label: 'Pricing', href: '#pricing' },
             { label: 'Dashboard', href: '/dashboard' },
         ],
@@ -20,7 +19,6 @@ const COLUMNS = [
             { label: 'Alle Artikel', href: '/blog' },
             { label: 'SEO-Test', href: '/blog/seo-test-haeufige-fehler' },
             { label: 'GEO-Optimierung', href: '/blog/geo-optimierung-2026' },
-            { label: 'Website-Security', href: '/blog/website-security-check' },
         ],
     },
     {
@@ -57,7 +55,7 @@ export default function Footer() {
                                 </span>
                             </Link>
                             <p className="text-xs text-slate-600 leading-relaxed max-w-[180px]">
-                                SEO, GEO, Security & Performance - in 60 Sekunden.
+                                SEO, GEO & Performance - in 60 Sekunden.
                             </p>
                         </div>
 

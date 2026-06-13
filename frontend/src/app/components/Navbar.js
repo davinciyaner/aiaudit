@@ -2,8 +2,8 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
-    Zap, Menu, X, ArrowRight, LogOut, User, ChevronDown, Shield,
-    LayoutDashboard, Search, Globe, BookOpen, CreditCard, Activity, TrendingUp,
+    Zap, Menu, X, ArrowRight, LogOut, User, ChevronDown,
+    LayoutDashboard, Search, Globe, BookOpen, CreditCard, TrendingUp,
 } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -25,16 +25,6 @@ const NAV_ITEMS = [
         items: [
             { icon: Globe, label: 'GEO-Analyse', desc: 'KI-Sichtbarkeit messen', href: '/dashboard' },
             { icon: BookOpen, label: 'GEO-Optimierung 2026', desc: 'Tipps für KI-Suchen', href: '/blog/geo-optimierung-2026' },
-        ],
-    },
-    {
-        key: 'security',
-        label: 'Security',
-        items: [
-            { icon: Shield, label: 'Einmal-Audit', desc: 'Sicherheits-Check starten', href: '/dashboard' },
-            { icon: Activity, label: 'Security Monitoring', desc: 'Uptime, SSL & Alerts', href: '/monitoring/security', accent: 'red' },
-            { icon: CreditCard, label: 'Monitoring Preise', desc: '3 Pläne ab €29/Monat', href: '/monitoring/pricing' },
-            { icon: BookOpen, label: 'Security-Check Guide', desc: 'Was wirklich wichtig ist', href: '/blog/website-security-check' },
         ],
     },
     { key: 'preise', label: 'Preise', href: '/pricing' },
@@ -273,16 +263,6 @@ export default function Navbar() {
                                                     <User className="w-3.5 h-3.5 text-slate-500" /> Mein Profil
                                                 </Link>
                                                 <div className="my-1 border-t border-white/5" />
-                                                <p className="px-3 pt-1 pb-0.5 text-[10px] text-slate-600 font-semibold uppercase tracking-wider">Monitoring</p>
-                                                <Link href="/monitoring/security" onClick={() => setUserDropdownOpen(false)}
-                                                    className="flex items-center gap-2.5 px-3 py-2 text-sm text-slate-300 hover:text-white hover:bg-white/5 rounded-lg transition-all">
-                                                    <Shield className="w-3.5 h-3.5 text-red-400" /> Security
-                                                </Link>
-                                                <Link href="/monitoring/pricing" onClick={() => setUserDropdownOpen(false)}
-                                                    className="flex items-center gap-2.5 px-3 py-2 text-sm text-slate-300 hover:text-white hover:bg-white/5 rounded-lg transition-all">
-                                                    <CreditCard className="w-3.5 h-3.5 text-slate-500" /> Security Preise
-                                                </Link>
-                                                <div className="my-1 border-t border-white/5" />
                                                 <p className="px-3 pt-1 pb-0.5 text-[10px] text-slate-600 font-semibold uppercase tracking-wider">SEO Tracking</p>
                                                 <Link href="/seo/dashboard" onClick={() => setUserDropdownOpen(false)}
                                                     className="flex items-center gap-2.5 px-3 py-2 text-sm text-slate-300 hover:text-white hover:bg-white/5 rounded-lg transition-all">
@@ -357,10 +337,6 @@ export default function Navbar() {
                                 <Link href="/profile" onClick={() => setMobileOpen(false)}
                                     className="flex items-center gap-2 px-4 py-3 text-sm text-slate-300 hover:text-white rounded-lg hover:bg-white/5 transition-all">
                                     <User className="w-4 h-4 text-slate-500" /> Mein Profil
-                                </Link>
-                                <Link href="/monitoring/security" onClick={() => setMobileOpen(false)}
-                                    className="flex items-center gap-2 px-4 py-3 text-sm text-slate-300 hover:text-white rounded-lg hover:bg-white/5 transition-all">
-                                    <Shield className="w-4 h-4 text-red-400" /> Security Monitoring
                                 </Link>
                                 <Link href="/seo/dashboard" onClick={() => setMobileOpen(false)}
                                     className="flex items-center gap-2 px-4 py-3 text-sm text-slate-300 hover:text-white rounded-lg hover:bg-white/5 transition-all">

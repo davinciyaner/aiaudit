@@ -17,38 +17,36 @@ const BEFORE_SCORES = [
     { label: 'Overall', score: 34, color: '#ef4444' },
     { label: 'SEO', score: 52, color: '#ef4444' },
     { label: 'Perf', score: 28, color: '#ef4444' },
-    { label: 'Sec', score: 19, color: '#ef4444' },
     { label: 'GEO', score: 11, color: '#ef4444' },
 ]
 const AFTER_SCORES = [
     { label: 'Overall', score: 91, color: '#22c55e' },
     { label: 'SEO', score: 94, color: '#22c55e' },
     { label: 'Perf', score: 88, color: '#22c55e' },
-    { label: 'Sec', score: 96, color: '#22c55e' },
     { label: 'GEO', score: 78, color: '#22c55e' },
 ]
 const BEFORE_ISSUES = [
     { type: 'error', text: 'H1-Tag fehlt auf der Startseite' },
-    { type: 'error', text: 'Security Headers nicht gesetzt' },
     { type: 'warn', text: 'Ladezeit: 4.8s — Richtwert: 2.5s' },
     { type: 'warn', text: 'Meta-Description auf 4 Seiten leer' },
+    { type: 'error', text: 'llms.txt fehlt — KI-Crawler ignorieren dich' },
 ]
 const AFTER_ISSUES = [
     { type: 'success', text: 'H1-Tag optimiert und keyword-reich' },
-    { type: 'success', text: 'CSP, HSTS & X-Frame-Options gesetzt' },
     { type: 'success', text: 'Ladezeit auf 1.8s reduziert' },
     { type: 'success', text: 'Meta-Descriptions vollständig' },
+    { type: 'success', text: 'llms.txt erstellt & KI-Crawler erlaubt' },
 ]
 const SCAN_MODULES = [
     { label: 'SEO-Analyse', color: '#10b981' },
-    { label: 'Security-Scan', color: '#ef4444' },
     { label: 'Performance', color: '#f59e0b' },
+    { label: 'GEO-Analyse', color: '#6366f1' },
     { label: 'KI-Bericht', color: '#7c3aed' },
 ]
 const FOUND_ISSUES = [
-    { severity: 'Critical', text: '3 Security-Lücken gefunden', color: '#ef4444' },
     { severity: 'Warning', text: '5 SEO-Probleme erkannt', color: '#f59e0b' },
     { severity: 'Info', text: 'Performance unter Richtwert', color: '#6366f1' },
+    { severity: 'Info', text: 'GEO-Sichtbarkeit optimierbar', color: '#06b6d4' },
 ]
 const DEMO_STEPS = [
     { id: 'before', label: 'Ausgangslage', duration: 3000 },
@@ -59,7 +57,7 @@ const DEMO_STEPS = [
 
 function ScoreRow({ scores }) {
     return (
-        <div className="grid grid-cols-5 gap-1.5 sm:gap-2 mb-4">
+        <div className="grid grid-cols-4 gap-1.5 sm:gap-2 mb-4">
             {scores.map(({ label, score, color }) => (
                 <div key={label} className="rounded-xl p-2 sm:p-2.5 text-center border border-white/5 bg-white/[0.03]">
                     <div className="text-lg sm:text-xl font-bold" style={{ color }}>{score}</div>
@@ -445,7 +443,7 @@ export default function Hero() {
                         <div>
                             <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.1 }}
                                 className="text-3xl sm:text-5xl lg:text-7xl font-bold leading-[1.1] sm:leading-none tracking-tight mb-3 sm:mb-6">
-                                Website prüfen: SEO, GEO, Performance & Security.<br />
+                                Website prüfen: SEO, GEO & Performance.<br />
                                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 via-purple-400 to-cyan-400">Dein kostenloser Website-Audit in 60 Sekunden.</span>
                             </motion.h1>
 

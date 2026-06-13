@@ -1,7 +1,6 @@
 import { chromium } from 'playwright'
 import { analyzeSEO } from './seo.js'
 import { analyzePerformance } from './performance.js'
-import { analyzeSecurity } from './security.js'
 import { analyzeKeywords } from './keywords.js'
 import { analyzeGEO } from './geo.js'
 
@@ -155,7 +154,7 @@ export async function runAudit(url) {
     let timing = {}
 
     try {
-        // Landingpage laden für Performance/Security/Screenshots
+        // Landingpage laden für Performance-Messung und Screenshots
         const response = await page.goto(url, { waitUntil: 'load', timeout: 20000 })
         headers = response.headers()
         responseStatus = response.status()
@@ -202,14 +201,13 @@ export async function runAudit(url) {
         const landingHtml = crawledPages[0]?.html || ''
 
         console.log('Analyse läuft...')
-        const [seoResults, performance, security, keywords, geo] = await Promise.all([
+        const [seoResults, performance, keywords, geo] = await Promise.all([
             Promise.all(crawledPages.map(async p => {
                 const result = await analyzeSEO(p.url, p.html)
                 result._url = p.url
                 return result
             })),
             analyzePerformance(url, page, { timing, resources: landingResources }),
-            analyzeSecurity(url, headers, landingHtml),
             analyzeKeywords(url, landingHtml),
             analyzeGEO(url, landingHtml),
         ])
@@ -219,10 +217,9 @@ export async function runAudit(url) {
         await browser.close()
 
         const overallScore = Math.round(
-            (seo.score * 0.30) +
-            (performance.score * 0.15) +
-            (security.score * 0.25) +
-            (geo.score * 0.30)
+            (seo.score * 0.40) +
+            (performance.score * 0.20) +
+            (geo.score * 0.40)
         )
 
         console.log(`Audit abgeschlossen | Gesamt: ${overallScore}/100 | ${crawledPages.length} Seiten analysiert`)
@@ -235,7 +232,6 @@ export async function runAudit(url) {
             pagesAnalyzed: crawledPages.length,
             seo,
             performance,
-            security,
             keywords,
             geo,
             screenshots: {

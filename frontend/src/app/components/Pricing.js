@@ -10,13 +10,13 @@ const plans = [
     {
         id: 'free', name: 'Free', price: '0', period: 'forever',
         desc: 'Zum Ausprobieren von AuditAI',
-        features: ['1 Audit pro Monat', 'SEO-Score & Analyse', 'GEO-Sichtbarkeit', 'Security-Check', 'Performance-Metriken', 'Audit-Verlauf'],
+        features: ['1 Audit pro Monat', 'SEO-Score & Analyse', 'GEO-Sichtbarkeit', 'Performance-Metriken', 'Audit-Verlauf'],
         cta: 'Kostenlos starten', highlight: false,
     },
     {
         id: 'pro', name: 'Pro', price: '29', period: 'pro Monat',
         desc: 'Für Freelancer und kleine Agenturen',
-        features: ['10 Audits pro Monat', 'Alles aus Free', 'KI-Tiefenanalyse', 'SEO, Performance, Security, Keywords & GEO', 'Konkrete Fixes & priorisierter Action Plan', 'Desktop + Mobile Screenshots', 'PDF-Export'],
+        features: ['10 Audits pro Monat', 'Alles aus Free', 'KI-Tiefenanalyse', 'SEO, Performance, Keywords & GEO', 'Konkrete Fixes & priorisierter Action Plan', 'Desktop + Mobile Screenshots', 'PDF-Export'],
         cta: 'Pro holen', highlight: true, badge: 'Beliebteste',
     },
     {

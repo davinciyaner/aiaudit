@@ -4,7 +4,7 @@ import Footer from '../components/Footer'
 
 export const metadata = {
     title: 'Blog – SEO, GEO & Website-Optimierung | AuditAI',
-    description: 'Praxisnahe Artikel über SEO, GEO-Optimierung, Security und Performance. Lerne wie du deine Website für Google und KI-Modelle optimierst.',
+    description: 'Praxisnahe Artikel über SEO, GEO-Optimierung und Performance. Lerne wie du deine Website für Google und KI-Modelle optimierst.',
     alternates: { canonical: 'https://www.sitecheckai.dev/blog' },
 }
 
@@ -27,15 +27,6 @@ const ARTICLES = [
         date: '10. Juni 2026',
         readTime: '8 min',
     },
-    {
-        slug: 'website-security-check',
-        title: 'Website-Security 2026: Warum ein Hack 50.000€+ kosten kann — und wie du dich schützt',
-        description: 'Websites werden täglich gehackt — besonders Vibe-Coding-Projekte. DSGVO-Bußgelder, Cloud-Rechnungen durch Crypto-Mining und Datenverlust können schnell sechsstellig werden. So schützt du dich.',
-        category: 'Security',
-        categoryColor: '#ef4444',
-        date: '10. Juni 2026',
-        readTime: '10 min',
-    },
 ]
 
 export default function BlogPage() {
@@ -45,7 +36,7 @@ export default function BlogPage() {
             <div className="max-w-4xl mx-auto px-5 sm:px-8 pt-32 pb-24">
                 <div className="mb-12">
                     <h1 className="text-3xl sm:text-5xl font-bold text-white tracking-tight mb-4">Blog</h1>
-                    <p className="text-slate-400 text-lg">SEO, GEO, Security und Performance — praxisnah erklärt.</p>
+                    <p className="text-slate-400 text-lg">SEO, GEO und Performance — praxisnah erklärt.</p>
                 </div>
 
                 <div className="space-y-4">

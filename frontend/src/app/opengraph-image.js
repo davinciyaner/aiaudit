@@ -1,11 +1,11 @@
 import { ImageResponse } from 'next/og'
 
 export const runtime = 'edge'
-export const alt = 'AuditAI – Website prüfen: SEO, GEO, Performance & Security'
+export const alt = 'AuditAI – Website prüfen: SEO, GEO & Performance'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
-const TAGS = ['SEO-Analyse', 'GEO-Sichtbarkeit', 'Security-Scan', 'Performance']
+const TAGS = ['SEO-Analyse', 'GEO-Sichtbarkeit', 'Performance', 'KI-Bericht']
 
 export default function Image() {
     return new ImageResponse(
@@ -104,7 +104,7 @@ export default function Image() {
                             color: 'white',
                         }}
                     >
-                        & Security.
+                        & mehr.
                     </div>
                     <div style={{ fontSize: 26, color: '#64748b', marginTop: 16, fontWeight: 400 }}>
                         Kostenloser KI-Audit in unter 60 Sekunden — sitecheckai.dev
