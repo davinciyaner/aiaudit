@@ -1,7 +1,7 @@
 'use client'
 import {useState, useEffect} from 'react'
 import {motion} from 'framer-motion'
-import {Check, Zap, Crown, Building2, LogIn, Loader2} from 'lucide-react'
+import {Check, Zap, Crown, Building2, LogIn, Loader2, TrendingUp, Star, ArrowRight} from 'lucide-react'
 import Link from 'next/link'
 import {PayPalScriptProvider, PayPalButtons} from '@paypal/react-paypal-js'
 import toast, {Toaster} from 'react-hot-toast'
@@ -66,6 +66,55 @@ const PLAN_IDS = {
     pro: process.env.NEXT_PUBLIC_PAYPAL_PLAN_ID_PRO,
     agency: process.env.NEXT_PUBLIC_PAYPAL_PLAN_ID_AGENCY,
 }
+
+const SEO_PLANS = [
+    {
+        id: 'einsteiger',
+        name: 'Einsteiger',
+        price: 29,
+        icon: Zap,
+        desc: 'Für Einzelpersonen und kleine Projekte',
+        features: [
+            '3 Websites tracken',
+            '50 Keywords gesamt',
+            'Wöchentliches Ranking-Update',
+            'Positionsveränderung anzeigen',
+            '8 Wochen Verlauf',
+        ],
+    },
+    {
+        id: 'pro',
+        name: 'Pro',
+        price: 79,
+        icon: Star,
+        badge: 'Beliebteste',
+        highlight: true,
+        desc: 'Für Freelancer und wachsende Agenturen',
+        features: [
+            '10 Websites tracken',
+            '200 Keywords gesamt',
+            'Wöchentliches Ranking-Update',
+            'Alles aus Einsteiger',
+            'Keyword-Verlauf & Trends',
+            '6 Monate Verlauf',
+        ],
+    },
+    {
+        id: 'expert',
+        name: 'Expert',
+        price: 149,
+        icon: Building2,
+        desc: 'Für Agenturen mit vielen Kunden',
+        features: [
+            '20 Websites tracken',
+            '500 Keywords gesamt',
+            'Wöchentliches Ranking-Update',
+            'Alles aus Pro',
+            'Priorisierter Support',
+            'Unbegrenzter Verlauf',
+        ],
+    },
+]
 
 function PlanCard({plan, user, currentPlan, onSuccess}) {
     const router = useRouter()
@@ -255,10 +304,6 @@ export default function PricingPage() {
                     <div className="relative z-10 max-w-6xl mx-auto">
                         <motion.div initial={{opacity: 0, y: 30}} animate={{opacity: 1, y: 0}}
                                     className="text-center mb-16">
-                            <div
-                                className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-violet-500/20 bg-violet-500/5 text-violet-400 text-xs font-medium mb-6">
-                                Einfache Preise
-                            </div>
                             <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-5">
                                 Kostenlos starten.<br/>
                                 <span
@@ -291,6 +336,84 @@ export default function PricingPage() {
                                   className="text-center text-sm text-slate-600 mt-10">
                             Bezahlung sicher über PayPal · Jederzeit kündbar · Keine Mindestlaufzeit
                         </motion.p>
+
+                        {/* SEO Tracking section */}
+                        <motion.div initial={{opacity: 0, y: 30}} whileInView={{opacity: 1, y: 0}} viewport={{once: true}}
+                                    className="mt-24">
+                            <div className="flex items-center gap-4 mb-10">
+                                <div className="flex-1 h-px bg-white/[0.06]"/>
+                                <div className="flex items-center gap-2 px-4 py-2 rounded-full border border-emerald-500/20 bg-emerald-500/5 text-emerald-400 text-xs font-semibold whitespace-nowrap">
+                                    <TrendingUp className="w-3.5 h-3.5"/>
+                                    SEO Keyword Tracking - Add-on
+                                </div>
+                                <div className="flex-1 h-px bg-white/[0.06]"/>
+                            </div>
+
+                            <div className="text-center mb-10">
+                                <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3">
+                                    Google-Rankings automatisch tracken
+                                </h2>
+                                <p className="text-slate-400 text-sm max-w-lg mx-auto">
+                                    Wöchentliche Ranking-Updates, Keyword-Ideen, Konkurrenzanalyse und Backlink-Profil - unabhängig vom Audit-Plan buchbar.
+                                </p>
+                            </div>
+
+                            <div className="grid md:grid-cols-3 gap-6 items-start">
+                                {SEO_PLANS.map((plan, i) => (
+                                    <motion.div key={plan.id}
+                                        initial={{opacity: 0, y: 20}} whileInView={{opacity: 1, y: 0}}
+                                        viewport={{once: true}} transition={{delay: i * 0.1}}
+                                        className={`relative flex flex-col rounded-2xl p-6 sm:p-8 border transition-all duration-300 ${
+                                            plan.highlight
+                                                ? 'bg-linear-to-b from-emerald-600/10 to-transparent border-emerald-500/30 shadow-2xl shadow-emerald-500/10'
+                                                : 'bg-white/[0.02] border-white/[0.06]'
+                                        }`}>
+                                        {plan.badge && (
+                                            <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-linear-to-r from-emerald-600 to-teal-600 rounded-full text-xs font-semibold text-white shadow-lg whitespace-nowrap">
+                                                {plan.badge}
+                                            </div>
+                                        )}
+                                        <div className="mb-5">
+                                            <div className="flex items-center gap-2 mb-3">
+                                                <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${plan.highlight ? 'bg-emerald-500/20' : 'bg-white/5'}`}>
+                                                    <plan.icon className={`w-4 h-4 ${plan.highlight ? 'text-emerald-400' : 'text-slate-400'}`} strokeWidth={1.8}/>
+                                                </div>
+                                                <span className="text-sm font-semibold text-slate-400 uppercase tracking-wider">{plan.name}</span>
+                                            </div>
+                                            <div className="flex items-baseline gap-1 mb-1">
+                                                <span className="text-slate-400 text-lg">€</span>
+                                                <span className="text-4xl sm:text-5xl font-bold text-white">{plan.price}</span>
+                                            </div>
+                                            <div className="text-sm text-slate-500 mb-3">pro Monat</div>
+                                            <p className="text-sm text-slate-400">{plan.desc}</p>
+                                        </div>
+                                        <div className="space-y-3 mb-8 flex-1">
+                                            {plan.features.map(f => (
+                                                <div key={f} className="flex items-center gap-3 text-sm">
+                                                    <div className={`w-4 h-4 rounded-full flex items-center justify-center shrink-0 ${plan.highlight ? 'bg-emerald-500/20' : 'bg-white/5'}`}>
+                                                        <Check className={`w-2.5 h-2.5 ${plan.highlight ? 'text-emerald-400' : 'text-slate-400'}`} strokeWidth={3}/>
+                                                    </div>
+                                                    <span className="text-slate-300">{f}</span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                        <Link href="/seo/pricing"
+                                            className={`flex items-center justify-center gap-2 w-full py-3.5 text-sm font-semibold rounded-xl transition-all duration-200 ${
+                                                plan.highlight
+                                                    ? 'bg-linear-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white shadow-lg shadow-emerald-500/20'
+                                                    : 'border border-white/10 text-slate-300 hover:text-white hover:border-white/20 hover:bg-white/5'
+                                            }`}>
+                                            {plan.name} starten
+                                            <ArrowRight className="w-4 h-4"/>
+                                        </Link>
+                                    </motion.div>
+                                ))}
+                            </div>
+
+                            <p className="text-center text-sm text-slate-600 mt-8">
+                                SEO Tracking ist unabhängig vom Audit-Plan - kombinierbar mit Free, Pro und Agency.
+                            </p>
+                        </motion.div>
                     </div>
                 </div>
             </div>
