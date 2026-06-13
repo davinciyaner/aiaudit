@@ -1,5 +1,6 @@
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
+import SeoTrackingTeaser from './components/SeoTrackingTeaser'
 import SeoSection from './components/SeoSection'
 import GeoSection from './components/GeoSection'
 import PerformanceSection from './components/PerformanceSection'
@@ -78,6 +79,7 @@ export default function LandingPage() {
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
             <Navbar />
             <Hero />
+            <SeoTrackingTeaser />
             <SeoSection />
             <GeoSection />
             <PerformanceSection />
