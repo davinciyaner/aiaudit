@@ -8,7 +8,6 @@ import toast, {Toaster} from 'react-hot-toast'
 import {useRouter} from 'next/navigation'
 import Navbar from '../components/Navbar'
 
-9
 const PLANS = [
     {
         id: 'free',
@@ -24,7 +23,7 @@ const PLANS = [
             'GEO-Sichtbarkeit',
         ],
         cta: 'Kostenlos starten',
-        href: '/dashboard',
+        href: '/register',
     },
     {
         id: 'pro',

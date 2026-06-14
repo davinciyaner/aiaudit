@@ -1,5 +1,5 @@
 'use client'
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import Link from 'next/link'
 import {motion} from 'framer-motion'
 import {Zap, Mail, Lock, User, ArrowRight, Check, Search, Globe} from 'lucide-react'
@@ -24,6 +24,11 @@ export default function RegisterPage() {
     const [loading, setLoading] = useState(false)
     const [formData, setFormData] = useState({name: '', email: '', password: ''})
     const [consent, setConsent] = useState(false)
+    const [hasPendingAudit, setHasPendingAudit] = useState(false)
+
+    useEffect(() => {
+        setHasPendingAudit(!!sessionStorage.getItem('pendingAuditUrl'))
+    }, [])
 
     const handleChange = (e) => setFormData({...formData, [e.target.name]: e.target.value})
 
@@ -91,6 +96,12 @@ export default function RegisterPage() {
 
                     <div className="mb-8">
                         <h1 className="text-3xl font-bold text-white mb-2">Account erstellen</h1>
+                        {hasPendingAudit && (
+                            <div className="flex items-center gap-2 mt-3 px-3 py-2 bg-violet-500/10 border border-violet-500/20 rounded-xl">
+                                <div className="w-1.5 h-1.5 rounded-full bg-violet-400 animate-pulse shrink-0" />
+                                <p className="text-xs text-violet-300">Dein Audit wartet — du siehst die Ergebnisse sofort nach der Registrierung.</p>
+                            </div>
+                        )}
                     </div>
 
                     <form onSubmit={handleSubmit} className="space-y-4">
@@ -214,11 +225,11 @@ export default function RegisterPage() {
 
                 <div className="relative z-10">
                     <h2 className="text-4xl font-bold text-white leading-tight mb-4">
-                        Alles in einem.<br/>
-                        <span className="text-transparent bg-clip-text bg-linear-to-r from-violet-400 to-cyan-400">Sofort einsatzbereit.</span>
+                        Einmal registrieren.<br/>
+                        <span className="text-transparent bg-clip-text bg-linear-to-r from-violet-400 to-cyan-400">Immer den Überblick.</span>
                     </h2>
                     <p className="text-slate-400 text-sm leading-relaxed mb-8">
-                        Keine Registrierung nötig — sofort alle Scores, Checks und Probleme deiner Website sehen — für SEO, GEO und Performance.
+                        Speicher deine Audit-Ergebnisse, prüf dieselbe Domain erneut und verfolg deine Fortschritte — alles an einem Ort.
                     </p>
 
                     {/* Benefits */}
