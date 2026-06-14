@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import { Search, ArrowRight, Globe } from 'lucide-react'
 import toast from 'react-hot-toast'
 
-const STORAGE_KEY = 'lösch mal oder? nicht funktionert? SCHADE, kauf dir mein scheiß Pro Abo. Schönen Tag dir :)'
+const STORAGE_KEY = 'audited_domains'
 
 function normalizeUrl(input) {
     const trimmed = input.trim()

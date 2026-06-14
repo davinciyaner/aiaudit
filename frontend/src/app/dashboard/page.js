@@ -332,7 +332,7 @@ export default function Dashboard() {
                             <Link href="/register"
                                 className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white font-semibold rounded-xl transition-all shadow-lg shadow-violet-500/20"
                             >
-                                <UserPlus className="w-4 h-4" /> Keine Registrierung nötig
+                                <UserPlus className="w-4 h-4" /> Kostenlosen Account erstellen
                             </Link>
                             <Link href="/pricing"
                                 className="flex items-center gap-2 px-6 py-3 text-slate-300 hover:text-white border border-white/10 hover:border-violet-500/40 font-semibold rounded-xl transition-all text-sm"
@@ -358,11 +358,40 @@ export default function Dashboard() {
                             <ScoreCard label="GEO" score={audit?.geo?.score ?? 0} delay={0.3} />
                         </div>
 
+                        {/* REGISTRATION PROMPT — nur für anonyme Nutzer */}
+                        {!isLoggedIn && (
+                            <motion.div
+                                initial={{ opacity: 0, y: 12 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.4 }}
+                                className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 px-5 py-4 bg-violet-500/[0.07] border border-violet-500/20 rounded-2xl"
+                            >
+                                <div>
+                                    <p className="text-sm font-semibold text-white">
+                                        Ergebnisse speichern & erneut prüfen
+                                    </p>
+                                    <p className="text-xs text-slate-400 mt-0.5">
+                                        Kostenloser Account - kein Abo, keine Kreditkarte
+                                    </p>
+                                </div>
+                                <button
+                                    onClick={() => {
+                                        if (auditUrl) sessionStorage.setItem('pendingAuditUrl', auditUrl)
+                                        router.push('/register')
+                                    }}
+                                    className="shrink-0 flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white text-sm font-semibold rounded-xl transition-all shadow-lg shadow-violet-500/20 whitespace-nowrap"
+                                >
+                                    <UserPlus className="w-4 h-4" />
+                                    Gratis Account erstellen
+                                </button>
+                            </motion.div>
+                        )}
+
                         {/* FULL REPORT */}
                         {true && (
                             <>
                                 {/* AI REPORT — nur Pro/Agency */}
-                                {result.aiReport ? (
+                                {result.aiReport && (
                                     <Section title="AI Analysis & Recommendations" icon="🤖">
                                         <div
                                             className="text-slate-300 text-sm whitespace-pre-wrap break-words"
@@ -373,30 +402,6 @@ export default function Dashboard() {
                                             }}
                                         />
                                     </Section>
-                                ) : (
-                                    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-                                        className="relative overflow-hidden rounded-2xl border border-violet-500/25 bg-[#0d1117] p-6 sm:p-8 text-center">
-                                        <div className="pointer-events-none absolute -top-20 left-1/2 -translate-x-1/2 w-64 h-64 rounded-full bg-violet-600/8 blur-3xl" />
-                                        <div className="relative z-10">
-                                            <div className="w-12 h-12 rounded-2xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center mx-auto mb-4">
-                                                <Bot className="w-6 h-6 text-violet-400" />
-                                            </div>
-                                            <h3 className="text-lg font-bold text-white mb-2">KI-Bericht nur mit Pro</h3>
-                                            <p className="text-slate-400 text-sm mb-5 max-w-md mx-auto leading-relaxed">
-                                                Der KI-Bericht analysiert deine spezifischen Ergebnisse und liefert konkrete Fixes für deine Website - kein generisches "optimiere deinen Title-Tag".
-                                            </p>
-                                            <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                                                <Link href="/pricing"
-                                                    className="flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white font-semibold rounded-xl transition-all shadow-lg shadow-violet-500/20 text-sm">
-                                                    Jetzt auf Pro upgraden <ArrowRight className="w-4 h-4" />
-                                                </Link>
-                                                <Link href="/pricing"
-                                                    className="flex items-center justify-center gap-2 px-6 py-3 text-slate-400 hover:text-white border border-white/10 hover:border-white/20 rounded-xl transition-all text-sm">
-                                                    Preise ansehen
-                                                </Link>
-                                            </div>
-                                        </div>
-                                    </motion.div>
                                 )}
 
                                 {/* PERFORMANCE */}
@@ -585,6 +590,33 @@ export default function Dashboard() {
                                             </div>
                                         )}
                                     </Section>
+                                )}
+
+                                {/* AI REPORT UPSELL — nach den Issues, damit der Nutzer erst den Schmerz sieht */}
+                                {!result.aiReport && (
+                                    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+                                        className="relative overflow-hidden rounded-2xl border border-violet-500/25 bg-[#0d1117] p-6 sm:p-8 text-center">
+                                        <div className="pointer-events-none absolute -top-20 left-1/2 -translate-x-1/2 w-64 h-64 rounded-full bg-violet-600/8 blur-3xl" />
+                                        <div className="relative z-10">
+                                            <div className="w-12 h-12 rounded-2xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center mx-auto mb-4">
+                                                <Bot className="w-6 h-6 text-violet-400" />
+                                            </div>
+                                            <h3 className="text-lg font-bold text-white mb-2">Konkrete Fixes für jeden dieser Fehler</h3>
+                                            <p className="text-slate-400 text-sm mb-5 max-w-md mx-auto leading-relaxed">
+                                                Der KI-Bericht analysiert deine spezifischen Ergebnisse und liefert Schritt-für-Schritt-Fixes — kein generisches "optimiere deinen Title-Tag".
+                                            </p>
+                                            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                                                <Link href="/pricing"
+                                                    className="flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white font-semibold rounded-xl transition-all shadow-lg shadow-violet-500/20 text-sm">
+                                                    Pro für €29/Monat <ArrowRight className="w-4 h-4" />
+                                                </Link>
+                                                <Link href="/pricing"
+                                                    className="flex items-center justify-center gap-2 px-6 py-3 text-slate-400 hover:text-white border border-white/10 hover:border-white/20 rounded-xl transition-all text-sm">
+                                                    Alle Preise
+                                                </Link>
+                                            </div>
+                                        </div>
+                                    </motion.div>
                                 )}
 
                                 {/* PRO UPSELL — nur wenn nicht Pro */}
