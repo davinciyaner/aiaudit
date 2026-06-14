@@ -1,5 +1,7 @@
 /** @type {import('next').NextConfig} */
 
+const isDev = process.env.NODE_ENV === 'development'
+
 const securityHeaders = [
     { key: 'X-DNS-Prefetch-Control', value: 'on' },
     { key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains; preload' },
@@ -16,7 +18,7 @@ const securityHeaders = [
             "style-src 'self' 'unsafe-inline'",
             "img-src 'self' data: https: blob:",
             "font-src 'self' data:",
-            `connect-src 'self' http://localhost:3001 ${process.env.NEXT_PUBLIC_API_URL ? new URL(process.env.NEXT_PUBLIC_API_URL).origin : ''} https://api-m.sandbox.paypal.com https://api-m.paypal.com https://www.paypal.com https://www.googletagmanager.com https://www.google-analytics.com https://www.googleadservices.com https://stats.g.doubleclick.net https://www.google.com https://*.clarity.ms https://pagead2.googlesyndication.com`,
+            `connect-src 'self' ${isDev ? 'http://localhost:3001' : ''} ${process.env.NEXT_PUBLIC_API_URL ? new URL(process.env.NEXT_PUBLIC_API_URL).origin : ''} https://api-m.sandbox.paypal.com https://api-m.paypal.com https://www.paypal.com https://www.googletagmanager.com https://www.google-analytics.com https://www.googleadservices.com https://stats.g.doubleclick.net https://www.google.com https://*.clarity.ms https://pagead2.googlesyndication.com`,
             "frame-src https://www.paypal.com https://www.sandbox.paypal.com",
             "object-src 'none'",
             "base-uri 'self'",

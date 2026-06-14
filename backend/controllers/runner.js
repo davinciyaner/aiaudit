@@ -17,10 +17,20 @@ const PRIVATE_HOST_RE = [
     /^169\.254\./,
     /^fd[0-9a-f]{2}:/i,
     /^fe80:/i,
+    /^::ffff:/i,   // IPv4-mapped IPv6 (z.B. ::ffff:127.0.0.1)
 ]
 
+// Cloud-Metadata-Hostnamen (IP-Adresse 169.254.169.254 ist bereits über PRIVATE_HOST_RE abgedeckt)
+const METADATA_HOSTS = new Set([
+    'metadata.google.internal',       // GCP
+    'metadata.goog',                  // GCP (alternative)
+    'instance-data',                  // einige Cloud-Anbieter
+    'instance-data.ec2.internal',     // AWS
+])
+
 function isPrivateHost(hostname) {
-    return PRIVATE_HOST_RE.some(r => r.test(hostname))
+    const h = hostname.toLowerCase()
+    return PRIVATE_HOST_RE.some(r => r.test(h)) || METADATA_HOSTS.has(h)
 }
 
 async function crawlSite(page, startUrl) {

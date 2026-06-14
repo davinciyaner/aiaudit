@@ -54,16 +54,25 @@ function validateURL(url) {
     }
     const host = parsed.hostname.toLowerCase();
     const blocked = [
-        /^localhost$/,
+        /^localhost$/i,
         /^127\./,
         /^10\./,
         /^192\.168\./,
         /^172\.(1[6-9]|2\d|3[01])\./,
         /^::1$/,
         /^0\.0\.0\.0$/,
-        /^169\.254\./,  // link-local
+        /^169\.254\./,
+        /^fd[0-9a-f]{2}:/i,
+        /^fe80:/i,
+        /^::ffff:/i,    // IPv4-mapped IPv6
     ];
-    if (blocked.some(r => r.test(host))) {
+    const metadataHosts = new Set([
+        'metadata.google.internal',
+        'metadata.goog',
+        'instance-data',
+        'instance-data.ec2.internal',
+    ]);
+    if (blocked.some(r => r.test(host)) || metadataHosts.has(host)) {
         throw new Error("Private oder lokale URLs sind nicht erlaubt");
     }
 
