@@ -148,6 +148,45 @@ export async function getCompetitors(domain, location = 'Germany', language = 'd
     }))
 }
 
+// ─── Content Gap ─────────────────────────────────────────────────────────────
+
+export async function getContentGap(competitorDomain, trackedKeywords, location = 'Germany', language = 'de') {
+    if (!LOGIN || !PASSWORD) return []
+
+    const data = await dfsPost('/v3/dataforseo_labs/google/keywords_for_site/live', [{
+        target: competitorDomain,
+        location_name: location,
+        language_code: language,
+        ignore_synonyms: true,
+        include_subdomains: false,
+        include_serp_info: true,
+        limit: 100,
+    }])
+
+    const task = data.tasks?.[0]
+    if (task?.status_code !== 20000) {
+        console.warn('[seoService] getContentGap Fehler:', task?.status_code, task?.status_message)
+        console.warn('[seoService] getContentGap Response:', JSON.stringify(data).slice(0, 600))
+        return []
+    }
+
+    const tracked = new Set(trackedKeywords.map(k => k.toLowerCase()))
+
+    const items = task.result?.[0]?.items || []
+
+    return items
+        .filter(item => item.keyword && !tracked.has(item.keyword.toLowerCase()))
+        .sort((a, b) => (b.keyword_info?.search_volume ?? 0) - (a.keyword_info?.search_volume ?? 0))
+        .slice(0, 30)
+        .map(item => ({
+            keyword:            item.keyword,
+            searchVolume:       item.keyword_info?.search_volume ?? null,
+            competition:        item.keyword_info?.competition_level ?? null,
+            cpc:                item.keyword_info?.cpc ?? null,
+            competitorPosition: item.ranked_serp_element?.serp_item?.rank_absolute ?? null,
+        }))
+}
+
 // ─── Backlinks ────────────────────────────────────────────────────────────────
 
 export async function getBacklinkSummary(domain) {

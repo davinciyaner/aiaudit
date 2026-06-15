@@ -1,10 +1,10 @@
 'use client'
-import { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
     ArrowLeft, TrendingUp, TrendingDown, Minus, Plus, Trash2,
     Loader2, RefreshCw, Globe, X, Lightbulb, Users, Link2,
-    ExternalLink, ChevronUp, ChevronDown,
+    ExternalLink, ChevronUp, ChevronDown, GitCompare, Check, Lock,
 } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter, useParams } from 'next/navigation'
@@ -57,16 +57,115 @@ function EmptyTab({ icon: Icon, text }) {
     )
 }
 
+// ─── Sparkline Chart ──────────────────────────────────────────────────────────
+
+function SparklineChart({ history }) {
+    const valid = history.filter(h => h.position != null)
+    if (valid.length < 2) return (
+        <p className="text-xs text-slate-600 py-2">Noch nicht genug Daten für einen Verlauf. Mindestens 2 Checks benötigt.</p>
+    )
+
+    const W = 600, H = 100
+    const padL = 38, padR = 12, padT = 18, padB = 26
+    const chartW = W - padL - padR
+    const chartH = H - padT - padB
+
+    const positions = valid.map(h => h.position)
+    const rawMin = Math.min(...positions)
+    const rawMax = Math.max(...positions)
+    const span   = Math.max(rawMax - rawMin, 15)
+    const minPos = Math.max(1, rawMin - Math.round(span * 0.2))
+    const maxPos = rawMax + Math.round(span * 0.2)
+    const range  = maxPos - minPos
+
+    const n   = history.length
+    const xOf = (i) => padL + (i / (n - 1)) * chartW
+    const yOf = (pos) => padT + ((pos - minPos) / range) * chartH
+
+    const colorOf = (pos) => {
+        if (pos == null) return '#475569'
+        if (pos <= 3)   return '#10b981'
+        if (pos <= 10)  return '#14b8a6'
+        if (pos <= 30)  return '#f59e0b'
+        return '#64748b'
+    }
+
+    // Build polyline segments, skipping null gaps
+    const segments = []
+    let seg = []
+    history.forEach((h, i) => {
+        if (h.position != null) {
+            seg.push([xOf(i), yOf(h.position)])
+        } else {
+            if (seg.length) { segments.push(seg); seg = [] }
+        }
+    })
+    if (seg.length) segments.push(seg)
+
+    // Y axis labels at top, mid, bottom
+    const yTicks = [minPos, Math.round((minPos + maxPos) / 2), maxPos]
+
+    return (
+        <svg viewBox={`0 0 ${W} ${H}`} width="100%" height="100" preserveAspectRatio="xMidYMid meet" className="overflow-visible">
+            {/* Y-grid + labels */}
+            {yTicks.map(tick => {
+                const y = yOf(tick)
+                return (
+                    <g key={tick}>
+                        <line x1={padL} y1={y} x2={W - padR} y2={y}
+                            stroke="rgba(255,255,255,0.04)" strokeWidth="1" />
+                        <text x={padL - 5} y={y + 3.5} textAnchor="end"
+                            fontSize="8" fill="#334155" fontFamily="system-ui">{tick}</text>
+                    </g>
+                )
+            })}
+
+            {/* Polyline segments */}
+            {segments.map((s, si) => s.length > 1 && (
+                <polyline key={si}
+                    points={s.map(([x, y]) => `${x},${y}`).join(' ')}
+                    fill="none" stroke="#10b981" strokeWidth="2"
+                    strokeLinecap="round" strokeLinejoin="round" opacity="0.7" />
+            ))}
+
+            {/* Dots + labels + dates */}
+            {history.map((h, i) => {
+                const x    = xOf(i)
+                const y    = h.position != null ? yOf(h.position) : padT + chartH + 6
+                const col  = colorOf(h.position)
+                const date = new Date(h.checkedAt).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit' })
+                return (
+                    <g key={i}>
+                        <circle cx={x} cy={y} r="3.5" fill={col} />
+                        {h.position != null ? (
+                            <text x={x} y={y - 7} textAnchor="middle"
+                                fontSize="8.5" fill={col} fontWeight="700" fontFamily="system-ui">
+                                #{h.position}
+                            </text>
+                        ) : (
+                            <text x={x} y={y - 3} textAnchor="middle"
+                                fontSize="7" fill="#475569" fontFamily="system-ui">—</text>
+                        )}
+                        <text x={x} y={H - 2} textAnchor="middle"
+                            fontSize="7.5" fill="#334155" fontFamily="system-ui">{date}</text>
+                    </g>
+                )
+            })}
+        </svg>
+    )
+}
+
 // ─── Rankings Tab ─────────────────────────────────────────────────────────────
 
 function RankingsTab({ siteId, site, onSiteUpdated }) {
-    const [rankings, setRankings]     = useState([])
-    const [loading, setLoading]       = useState(true)
-    const [checking, setChecking]     = useState(false)
-    const [showAdd, setShowAdd]       = useState(false)
+    const [rankings, setRankings]       = useState([])
+    const [loading, setLoading]         = useState(true)
+    const [checking, setChecking]       = useState(false)
+    const [showAdd, setShowAdd]         = useState(false)
     const [newKeywords, setNewKeywords] = useState('')
-    const [addingKws, setAddingKws]   = useState(false)
-    const [selected, setSelected]     = useState(new Set())
+    const [addingKws, setAddingKws]     = useState(false)
+    const [selected, setSelected]       = useState(new Set())
+    const [expandedKw, setExpandedKw]   = useState(null)
 
     const fetchRankings = useCallback(async () => {
         try {
@@ -141,6 +240,8 @@ function RankingsTab({ siteId, site, onSiteUpdated }) {
         const next = new Set(prev); next.has(kw) ? next.delete(kw) : next.add(kw); return next
     })
 
+    const toggleExpand = (kw) => setExpandedKw(prev => prev === kw ? null : kw)
+
     return (
         <div>
             {/* Toolbar */}
@@ -210,30 +311,54 @@ function RankingsTab({ siteId, site, onSiteUpdated }) {
                                 </tr>
                             </thead>
                             <tbody>
-                                {rankings.map(({ keyword, current, change }) => (
-                                    <tr key={keyword} onClick={() => toggleSelect(keyword)}
-                                        className={`border-b border-white/[0.04] last:border-0 cursor-pointer transition-colors ${selected.has(keyword) ? 'bg-red-500/5' : 'hover:bg-white/[0.02]'}`}>
-                                        <td className="px-5 py-3.5">
-                                            <div className={`w-3.5 h-3.5 rounded border transition-all ${selected.has(keyword) ? 'bg-red-500/40 border-red-500/60' : 'border-white/15'}`} />
-                                        </td>
-                                        <td className="px-5 py-3.5"><span className="text-sm text-slate-200">{keyword}</span></td>
-                                        <td className="px-5 py-3.5"><PositionCell position={current?.position} /></td>
-                                        <td className="px-5 py-3.5"><ChangeCell change={change} /></td>
-                                        <td className="px-5 py-3.5 hidden sm:table-cell">
-                                            {current?.url ? (
-                                                <a href={current.url} target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()}
-                                                    className="text-xs text-slate-500 hover:text-emerald-400 transition-colors truncate max-w-[180px] block">
-                                                    {current.url.replace(/^https?:\/\//, '')}
-                                                </a>
-                                            ) : <span className="text-xs text-slate-700">—</span>}
-                                        </td>
-                                        <td className="px-5 py-3.5 hidden md:table-cell">
-                                            {current?.checkedAt
-                                                ? <span className="text-xs text-slate-600">{new Date(current.checkedAt).toLocaleDateString('de-DE')}</span>
-                                                : <span className="text-xs text-slate-700">—</span>}
-                                        </td>
-                                    </tr>
-                                ))}
+                                {rankings.map(({ keyword, current, change, history }) => {
+                                    const isExpanded = expandedKw === keyword
+                                    const isSelected = selected.has(keyword)
+                                    const hasHistory = history?.length >= 2
+                                    return (
+                                        <React.Fragment key={keyword}>
+                                            <tr
+                                                className={`border-b border-white/[0.04] cursor-pointer transition-colors ${isSelected ? 'bg-red-500/5' : isExpanded ? 'bg-white/[0.03]' : 'hover:bg-white/[0.02]'} ${!isExpanded ? 'last:border-0' : ''}`}>
+                                                <td className="px-5 py-3.5" onClick={(e) => { e.stopPropagation(); toggleSelect(keyword) }}>
+                                                    <div className={`w-3.5 h-3.5 rounded border transition-all ${isSelected ? 'bg-red-500/40 border-red-500/60' : 'border-white/15'}`} />
+                                                </td>
+                                                <td className="px-5 py-3.5" onClick={() => hasHistory && toggleExpand(keyword)}>
+                                                    <div className="flex items-center gap-2">
+                                                        <span className="text-sm text-slate-200">{keyword}</span>
+                                                        {hasHistory && (
+                                                            <span className={`transition-colors ${isExpanded ? 'text-emerald-400' : 'text-slate-700 hover:text-slate-500'}`}>
+                                                                <TrendingUp className="w-3 h-3" />
+                                                            </span>
+                                                        )}
+                                                    </div>
+                                                </td>
+                                                <td className="px-5 py-3.5" onClick={() => hasHistory && toggleExpand(keyword)}><PositionCell position={current?.position} /></td>
+                                                <td className="px-5 py-3.5" onClick={() => hasHistory && toggleExpand(keyword)}><ChangeCell change={change} /></td>
+                                                <td className="px-5 py-3.5 hidden sm:table-cell" onClick={() => hasHistory && toggleExpand(keyword)}>
+                                                    {current?.url ? (
+                                                        <a href={current.url} target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()}
+                                                            className="text-xs text-slate-500 hover:text-emerald-400 transition-colors truncate max-w-[180px] block">
+                                                            {current.url.replace(/^https?:\/\//, '')}
+                                                        </a>
+                                                    ) : <span className="text-xs text-slate-700">—</span>}
+                                                </td>
+                                                <td className="px-5 py-3.5 hidden md:table-cell" onClick={() => hasHistory && toggleExpand(keyword)}>
+                                                    {current?.checkedAt
+                                                        ? <span className="text-xs text-slate-600">{new Date(current.checkedAt).toLocaleDateString('de-DE')}</span>
+                                                        : <span className="text-xs text-slate-700">—</span>}
+                                                </td>
+                                            </tr>
+                                            {isExpanded && (
+                                                <tr className="border-b border-white/[0.04] last:border-0">
+                                                    <td colSpan={6} className="px-5 py-4 bg-white/[0.01]">
+                                                        <p className="text-xs text-slate-500 mb-3 uppercase tracking-wider font-semibold">Verlauf — {keyword}</p>
+                                                        <SparklineChart history={history} />
+                                                    </td>
+                                                </tr>
+                                            )}
+                                        </React.Fragment>
+                                    )
+                                })}
                             </tbody>
                         </table>
                     </div>
@@ -521,31 +646,247 @@ function BacklinksTab({ siteId }) {
     )
 }
 
+// ─── Content Gap Tab ─────────────────────────────────────────────────────────
+
+function ContentGapTab({ siteId, plan }) {
+    const [competitor, setCompetitor]     = useState('')
+    const [loading, setLoading]           = useState(false)
+    const [result, setResult]             = useState(null)
+    const [adding, setAdding]             = useState(new Set())
+    const [added, setAdded]               = useState(new Set())
+    const [limitReached, setLimitReached] = useState(null) // { used, limit }
+
+    const maxVolume = result?.gap?.length
+        ? Math.max(...result.gap.map(g => g.searchVolume || 0))
+        : 0
+
+    const handleAnalyse = async (e) => {
+        e.preventDefault()
+        const domain = competitor.trim().replace(/^https?:\/\//, '').replace(/^www\./, '').split('/')[0]
+        if (!domain) return
+        setLoading(true)
+        setResult(null)
+        setLimitReached(null)
+        setAdded(new Set())
+        try {
+            const token = localStorage.getItem('token')
+            const res = await fetch(
+                `${process.env.NEXT_PUBLIC_API_URL}/seo/sites/${siteId}/content-gap?competitor=${encodeURIComponent(domain)}`,
+                { headers: { Authorization: `Bearer ${token}` } }
+            )
+            const d = await res.json()
+            if (res.status === 429 && d.error === 'monthly_limit_reached') { setLimitReached({ used: d.used, limit: d.limit }); return }
+            if (res.status === 429) throw new Error(d.error || 'Zu viele Anfragen — bitte warte eine Minute.')
+            if (!res.ok) throw new Error(d.error)
+            setResult(d)
+        } catch (err) { toast.error(err.message || 'Fehler bei der Analyse') }
+        finally { setLoading(false) }
+    }
+
+    const handleAddKeyword = async (keyword) => {
+        setAdding(prev => new Set(prev).add(keyword))
+        try {
+            const token = localStorage.getItem('token')
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/seo/sites/${siteId}/keywords`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+                body: JSON.stringify({ keywords: [keyword] }),
+            })
+            const d = await res.json()
+            if (!res.ok) throw new Error(d.error)
+            setAdded(prev => new Set(prev).add(keyword))
+            toast.success(`"${keyword}" wird jetzt getrackt`)
+        } catch (err) { toast.error(err.message || 'Fehler') }
+        finally { setAdding(prev => { const n = new Set(prev); n.delete(keyword); return n }) }
+    }
+
+    if (plan === 'einsteiger') return (
+        <div className="flex flex-col items-center justify-center py-20 gap-5">
+            <div className="w-14 h-14 rounded-2xl bg-emerald-500/10 border border-emerald-500/15 flex items-center justify-center">
+                <Lock className="w-6 h-6 text-emerald-400" />
+            </div>
+            <div className="text-center">
+                <h3 className="text-lg font-bold text-white mb-2">Content Gap Analyse</h3>
+                <p className="text-sm text-slate-500 max-w-sm">
+                    Finde Keywords, für die dein Konkurrent rankt — aber du nicht.<br />
+                    Verfügbar ab <strong className="text-white">Pro (€79/Monat)</strong> · 100 Analysen/Monat.
+                </p>
+            </div>
+            <Link href="/seo/pricing"
+                className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-sm font-semibold rounded-xl transition-all">
+                Auf Pro upgraden →
+            </Link>
+        </div>
+    )
+
+    const monthlyLimit = plan === 'expert' ? 300 : 100
+
+    return (
+        <div className="space-y-6">
+            {/* Input + usage counter */}
+            <div className="bg-[#0d1117] border border-white/[0.06] rounded-2xl p-5">
+                <div className="flex items-center justify-between mb-3">
+                    <p className="text-sm text-slate-400">
+                        Gib eine Konkurrenz-Domain ein — wir zeigen dir Keywords, für die dein Konkurrent rankt, du aber noch nicht trackst.
+                    </p>
+                    {result && (
+                        <span className="text-xs text-slate-600 whitespace-nowrap ml-4">
+                            {result.used}/{result.limit} diesen Monat
+                        </span>
+                    )}
+                </div>
+                <form onSubmit={handleAnalyse} className="flex gap-3">
+                    <input
+                        value={competitor}
+                        onChange={e => setCompetitor(e.target.value)}
+                        placeholder="konkurrent.de"
+                        className="flex-1 bg-white/3 border border-white/10 focus:border-emerald-500/50 rounded-xl px-4 py-2.5 text-white placeholder:text-slate-600 outline-none text-sm"
+                    />
+                    <button type="submit" disabled={loading || !competitor.trim()}
+                        className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-sm font-semibold rounded-xl transition-all disabled:opacity-50 whitespace-nowrap">
+                        {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <GitCompare className="w-4 h-4" />}
+                        {loading ? 'Analysiere…' : 'Gap analysieren'}
+                    </button>
+                </form>
+            </div>
+
+            {/* Limit reached */}
+            {limitReached && (
+                <div className="flex flex-col items-center justify-center py-12 gap-4 bg-[#0d1117] border border-amber-500/15 rounded-2xl">
+                    <div className="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center">
+                        <Lock className="w-5 h-5 text-amber-400" />
+                    </div>
+                    <div className="text-center">
+                        <p className="text-sm font-semibold text-white mb-1">Monatliches Limit erreicht</p>
+                        <p className="text-xs text-slate-500">
+                            Du hast {limitReached.limit} von {limitReached.limit} Content Gap Analysen diesen Monat verwendet.<br />
+                            {plan === 'pro'
+                                ? 'Upgrade auf Expert für 300 Analysen/Monat.'
+                                : 'Das Limit wird am 1. des nächsten Monats zurückgesetzt.'}
+                        </p>
+                    </div>
+                    {plan === 'pro' && (
+                        <Link href="/seo/pricing"
+                            className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-sm font-semibold rounded-xl transition-all">
+                            Auf Expert upgraden →
+                        </Link>
+                    )}
+                </div>
+            )}
+
+            {/* Results */}
+            {result && (
+                <div>
+                    {result.gap.length === 0 ? (
+                        <div className="flex flex-col items-center justify-center py-16 gap-3">
+                            <GitCompare className="w-8 h-8 text-slate-700" />
+                            <span className="text-sm text-slate-500">Kein Gap gefunden — du trackst bereits alle Top-Keywords von {result.competitor}.</span>
+                        </div>
+                    ) : (
+                        <>
+                            <div className="flex items-center justify-between mb-3">
+                                <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wider">
+                                    {result.gap.length} Keywords — {result.competitor} rankt dafür, du nicht
+                                </h3>
+                                <span className="text-xs text-slate-600">Sortiert nach Suchvolumen</span>
+                            </div>
+                            <div className="bg-[#0d1117] border border-emerald-500/10 rounded-2xl overflow-hidden">
+                                <div className="overflow-x-auto">
+                                    <table className="w-full">
+                                        <thead>
+                                            <tr className="border-b border-white/[0.05]">
+                                                <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Keyword</th>
+                                                <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Volumen/Mo</th>
+                                                <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider hidden sm:table-cell">Konkurrent</th>
+                                                <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider hidden sm:table-cell">Wettbewerb</th>
+                                                <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider hidden md:table-cell">CPC</th>
+                                                <th className="px-5 py-3" />
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {result.gap.map(item => {
+                                                const isAdded  = added.has(item.keyword)
+                                                const isAdding = adding.has(item.keyword)
+                                                return (
+                                                    <tr key={item.keyword} className="border-b border-white/[0.04] last:border-0 hover:bg-white/[0.02] transition-colors">
+                                                        <td className="px-5 py-3.5"><span className="text-sm text-slate-200 font-medium">{item.keyword}</span></td>
+                                                        <td className="px-5 py-3.5"><VolumeBar value={item.searchVolume} max={maxVolume} /></td>
+                                                        <td className="px-5 py-3.5 hidden sm:table-cell"><PositionCell position={item.competitorPosition} /></td>
+                                                        <td className="px-5 py-3.5 hidden sm:table-cell">
+                                                            <span className={`text-xs font-medium ${item.competition === 'HIGH' ? 'text-red-400' : item.competition === 'MEDIUM' ? 'text-amber-400' : 'text-emerald-400'}`}>
+                                                                {item.competition || '—'}
+                                                            </span>
+                                                        </td>
+                                                        <td className="px-5 py-3.5 hidden md:table-cell">
+                                                            <span className="text-xs text-slate-500">{item.cpc ? `€${item.cpc.toFixed(2)}` : '—'}</span>
+                                                        </td>
+                                                        <td className="px-5 py-3.5 text-right">
+                                                            {isAdded ? (
+                                                                <span className="flex items-center justify-end gap-1 text-xs text-emerald-400 font-semibold">
+                                                                    <Check className="w-3.5 h-3.5" />Getrackt
+                                                                </span>
+                                                            ) : (
+                                                                <button onClick={() => handleAddKeyword(item.keyword)} disabled={isAdding}
+                                                                    className="flex items-center gap-1 ml-auto px-2.5 py-1.5 text-xs font-semibold rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/20 transition-all disabled:opacity-50 whitespace-nowrap">
+                                                                    {isAdding ? <Loader2 className="w-3 h-3 animate-spin" /> : <Plus className="w-3 h-3" />}
+                                                                    Tracken
+                                                                </button>
+                                                            )}
+                                                        </td>
+                                                    </tr>
+                                                )
+                                            })}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <button onClick={handleAnalyse} disabled={loading}
+                                className="mt-4 flex items-center gap-2 text-xs text-slate-600 hover:text-slate-400 transition-colors">
+                                <RefreshCw className={`w-3 h-3 ${loading ? 'animate-spin' : ''}`} />
+                                Neu laden
+                            </button>
+                        </>
+                    )}
+                </div>
+            )}
+        </div>
+    )
+}
+
 // ─── Main Page ────────────────────────────────────────────────────────────────
 
 const TABS = [
-    { id: 'rankings',  label: 'Rankings',       icon: TrendingUp },
-    { id: 'ideas',     label: 'Keyword-Ideen',  icon: Lightbulb },
-    { id: 'competitors', label: 'Konkurrenten', icon: Users },
-    { id: 'backlinks', label: 'Backlinks',       icon: Link2 },
+    { id: 'rankings',    label: 'Rankings',       icon: TrendingUp },
+    { id: 'ideas',       label: 'Keyword-Ideen',  icon: Lightbulb },
+    { id: 'gap',         label: 'Content Gap',    icon: GitCompare },
+    { id: 'competitors', label: 'Konkurrenten',   icon: Users },
+    { id: 'backlinks',   label: 'Backlinks',      icon: Link2 },
 ]
 
 export default function SeoSitePage() {
     const router     = useRouter()
     const { siteId } = useParams()
     const [site, setSite]       = useState(null)
+    const [plan, setPlan]       = useState(null)
     const [loading, setLoading] = useState(true)
     const [tab, setTab]         = useState('rankings')
 
     const fetchSite = useCallback(async () => {
         try {
             const token = localStorage.getItem('token')
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/seo/sites/${siteId}`, {
-                headers: { Authorization: `Bearer ${token}` },
-            })
-            const data = await res.json()
-            if (!res.ok) throw new Error(data.error)
-            setSite(data.site)
+            const [siteRes, planRes] = await Promise.all([
+                fetch(`${process.env.NEXT_PUBLIC_API_URL}/seo/sites/${siteId}`, {
+                    headers: { Authorization: `Bearer ${token}` },
+                }),
+                fetch(`${process.env.NEXT_PUBLIC_API_URL}/seo/plan`, {
+                    headers: { Authorization: `Bearer ${token}` },
+                }),
+            ])
+            const siteData = await siteRes.json()
+            const planData = await planRes.json()
+            if (!siteRes.ok) throw new Error(siteData.error)
+            setSite(siteData.site)
+            setPlan(planData.plan || null)
         } catch { toast.error('Website nicht gefunden') }
         finally { setLoading(false) }
     }, [siteId])
@@ -602,10 +943,11 @@ export default function SeoSitePage() {
                 </div>
 
                 {/* Tab Content */}
-                {tab === 'rankings'     && <RankingsTab siteId={siteId} site={site} onSiteUpdated={fetchSite} />}
-                {tab === 'ideas'        && <KeywordIdeasTab siteId={siteId} />}
-                {tab === 'competitors'  && <CompetitorsTab siteId={siteId} />}
-                {tab === 'backlinks'    && <BacklinksTab siteId={siteId} />}
+                {tab === 'rankings'    && <RankingsTab siteId={siteId} site={site} onSiteUpdated={fetchSite} />}
+                {tab === 'ideas'       && <KeywordIdeasTab siteId={siteId} />}
+                {tab === 'gap'         && <ContentGapTab siteId={siteId} plan={plan} />}
+                {tab === 'competitors' && <CompetitorsTab siteId={siteId} />}
+                {tab === 'backlinks'   && <BacklinksTab siteId={siteId} />}
             </div>
         </div>
     )

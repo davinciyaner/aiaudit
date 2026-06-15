@@ -1,7 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { Check, TrendingUp, Zap, Star, Building2, LogIn, Loader2 } from 'lucide-react'
+import { Check, TrendingUp, Zap, Star, Building2, LogIn, Loader2, Lock } from 'lucide-react'
 import Link from 'next/link'
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js'
 import toast, { Toaster } from 'react-hot-toast'
@@ -20,9 +20,13 @@ const PLANS = [
             '3 Websites tracken',
             '50 Keywords gesamt',
             'Wöchentliches Ranking-Update',
-            'Google-Positionen verfolgen',
-            'Positionsveränderung anzeigen',
-            '8 Wochen Verlauf',
+            'Ranking-Verlauf (8 Wochen)',
+            'Keyword-Ideen & Suchvolumen',
+            'E-Mail Alerts bei großen Einbrüchen',
+            'Konkurrenten- & Backlink-Analyse',
+        ],
+        locked: [
+            'Content Gap Analyse (ab Pro)',
         ],
         cta: 'Einsteiger starten',
         planEnvKey: 'NEXT_PUBLIC_PAYPAL_PLAN_ID_SEO_EINSTEIGER',
@@ -32,7 +36,7 @@ const PLANS = [
         name: 'Pro',
         price: 79,
         period: 'pro Monat',
-        desc: 'Für Freelancer und wachsende Agenturen',
+        desc: 'Für Freelancer und wachsende Unternehmen',
         icon: Star,
         badge: 'Beliebteste',
         highlight: true,
@@ -40,9 +44,11 @@ const PLANS = [
             '10 Websites tracken',
             '200 Keywords gesamt',
             'Wöchentliches Ranking-Update',
-            'Alles aus Einsteiger',
-            'Keyword-Verlauf & Trends',
-            '6 Monate Verlauf',
+            'Ranking-Verlauf (6 Monate)',
+            'Keyword-Ideen & Suchvolumen',
+            'E-Mail Alerts ab 5 Positionen',
+            'Konkurrenten- & Backlink-Analyse',
+            'Content Gap Analyse (100×/Monat)',
         ],
         cta: 'Pro starten',
         planEnvKey: 'NEXT_PUBLIC_PAYPAL_PLAN_ID_SEO_PRO',
@@ -58,9 +64,12 @@ const PLANS = [
             '20 Websites tracken',
             '500 Keywords gesamt',
             'Wöchentliches Ranking-Update',
-            'Alles aus Pro',
+            'Ranking-Verlauf unbegrenzt',
+            'Keyword-Ideen & Suchvolumen',
+            'E-Mail Alerts ab 3 Positionen',
+            'Konkurrenten- & Backlink-Analyse',
+            'Content Gap Analyse (300×/Monat)',
             'Priorisierter Support',
-            'Unbegrenzter Verlauf',
         ],
         cta: 'Expert starten',
         planEnvKey: 'NEXT_PUBLIC_PAYPAL_PLAN_ID_SEO_EXPERT',
@@ -121,6 +130,14 @@ function PlanCard({ plan, user, currentPlan, onSuccess }) {
                             <Check className={`w-2.5 h-2.5 ${plan.highlight ? 'text-emerald-400' : 'text-slate-400'}`} strokeWidth={3} />
                         </div>
                         <span className="text-slate-300">{f}</span>
+                    </div>
+                ))}
+                {plan.locked?.map(f => (
+                    <div key={f} className="flex items-center gap-3 text-sm opacity-40">
+                        <div className="w-4 h-4 rounded-full flex items-center justify-center shrink-0 bg-white/5">
+                            <Lock className="w-2.5 h-2.5 text-slate-500" strokeWidth={3} />
+                        </div>
+                        <span className="text-slate-500 line-through">{f}</span>
                     </div>
                 ))}
             </div>
