@@ -1,12 +1,16 @@
 import SeoTrackedSite from '../models/seo_tracked_site.js'
 import SeoKeywordRanking from '../models/seo_keyword_ranking.js'
 import ProductSubscription from '../models/product_subscription.js'
-import { checkSiteRankings, getKeywordIdeas, getCompetitors, getBacklinkSummary } from '../services/seoService.js'
+import User from '../models/auth_model.js'
+import { checkSiteRankings, getKeywordIdeas, getCompetitors, getBacklinkSummary, getContentGap } from '../services/seoService.js'
+import SeoUsage from '../models/seo_usage.js'
+import { sendSeoRankingAlert } from '../utils/mailer.js'
+import { detectRankingChanges, ALERT_DROP_THRESHOLD } from '../jobs/seoTrackingJob.js'
 
 const PLAN_LIMITS = {
-    einsteiger: { maxSites: 3,  maxKeywords: 50  },
-    pro:        { maxSites: 10, maxKeywords: 200 },
-    expert:     { maxSites: 20, maxKeywords: 500 },
+    einsteiger: { maxSites: 3,  maxKeywords: 50,  historyWeeks: 8,   contentGapPerMonth: 0   },
+    pro:        { maxSites: 10, maxKeywords: 200, historyWeeks: 26,  contentGapPerMonth: 100 },
+    expert:     { maxSites: 20, maxKeywords: 500, historyWeeks: 999, contentGapPerMonth: 300 },
 }
 
 async function getSeoPlan(userId) {
@@ -219,12 +223,15 @@ export async function removeKeywords(req, res) {
 // GET /api/seo/sites/:id/rankings
 export async function getRankings(req, res) {
     try {
+        const plan = await getSeoPlan(req.userId)
+        const historyLimit = PLAN_LIMITS[plan]?.historyWeeks ?? 8
+
         const site = await SeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId }).lean()
         if (!site) return res.status(404).json({ error: 'Website nicht gefunden' })
 
         const rankings = await Promise.all(site.keywords.map(async (keyword) => {
             const history = await SeoKeywordRanking.find({ siteId: site._id, keyword })
-                .sort({ checkedAt: -1 }).limit(8).lean()
+                .sort({ checkedAt: -1 }).limit(historyLimit).lean()
 
             const current  = history[0] || null
             const previous = history[1] || null
@@ -248,6 +255,14 @@ export async function triggerCheck(req, res) {
         if (!site) return res.status(404).json({ error: 'Website nicht gefunden' })
         if (!site.keywords.length) return res.status(400).json({ error: 'Keine Keywords hinterlegt' })
 
+        // Load previous rankings before the new check
+        const previousMap = {}
+        for (const kw of site.keywords) {
+            const prev = await SeoKeywordRanking.findOne({ siteId: site._id, keyword: kw })
+                .sort({ checkedAt: -1 }).lean()
+            if (prev) previousMap[kw] = prev.position
+        }
+
         const results = await checkSiteRankings(site)
 
         await SeoKeywordRanking.insertMany(results.map(r => ({
@@ -260,6 +275,23 @@ export async function triggerCheck(req, res) {
         })))
 
         await SeoTrackedSite.updateOne({ _id: site._id }, { lastChecked: new Date() })
+
+        // Send alert if meaningful changes detected
+        if (Object.keys(previousMap).length > 0) {
+            const plan = await getSeoPlan(req.userId)
+            const dropThreshold = ALERT_DROP_THRESHOLD[plan] ?? 5
+            const { gains, losses } = detectRankingChanges(results, previousMap, dropThreshold)
+            if (gains.length || losses.length) {
+                try {
+                    const user = await User.findById(req.userId).lean()
+                    if (user?.email) {
+                        await sendSeoRankingAlert({ email: user.email, domain: site.domain, gains, losses })
+                    }
+                } catch (alertErr) {
+                    console.error('SEO alert fehlgeschlagen:', alertErr.message)
+                }
+            }
+        }
 
         res.json({ results, checkedAt: new Date() })
     } catch (err) {
@@ -295,6 +327,49 @@ export async function getCompetitorsForSite(req, res) {
 
         const competitors = await getCompetitors(site.domain, site.location, site.language)
         res.json({ competitors })
+    } catch (err) {
+        res.status(500).json({ error: err.message })
+    }
+}
+
+// GET /api/seo/sites/:id/content-gap?competitor=example.com
+export async function getContentGapForSite(req, res) {
+    try {
+        const plan = await getSeoPlan(req.userId)
+        if (!plan) return res.status(403).json({ error: 'Kein aktives SEO-Tracking Abo' })
+        if (plan === 'einsteiger') return res.status(403).json({ error: 'content_gap_locked', requiredPlan: 'pro' })
+
+        const monthlyLimit = PLAN_LIMITS[plan]?.contentGapPerMonth ?? 0
+        const month = new Date().toISOString().slice(0, 7)
+        const existing = await SeoUsage.findOne({ userId: req.userId, feature: 'content_gap', month }).lean()
+        const used = existing?.count ?? 0
+        if (used >= monthlyLimit) {
+            return res.status(429).json({ error: 'monthly_limit_reached', limit: monthlyLimit, used })
+        }
+
+        // Increment usage before the (expensive) API call
+        await SeoUsage.findOneAndUpdate(
+            { userId: req.userId, feature: 'content_gap', month },
+            { $inc: { count: 1 } },
+            { upsert: true }
+        )
+
+        const { competitor } = req.query
+        if (!competitor) return res.status(400).json({ error: 'competitor-Parameter erforderlich' })
+
+        let competitorDomain
+        try {
+            const parsed = new URL(competitor.startsWith('http') ? competitor : `https://${competitor}`)
+            competitorDomain = parsed.hostname.toLowerCase().replace(/^www\./, '')
+        } catch {
+            return res.status(400).json({ error: 'Ungültige Konkurrenz-Domain' })
+        }
+
+        const site = await SeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId }).lean()
+        if (!site) return res.status(404).json({ error: 'Website nicht gefunden' })
+
+        const gap = await getContentGap(competitorDomain, site.keywords || [], site.location, site.language)
+        res.json({ competitor: competitorDomain, gap, used: used + 1, limit: monthlyLimit })
     } catch (err) {
         res.status(500).json({ error: err.message })
     }
