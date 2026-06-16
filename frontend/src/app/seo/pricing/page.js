@@ -253,7 +253,7 @@ export default function SeoPricingPage() {
                         <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-16">
                             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-emerald-500/20 bg-emerald-500/5 text-emerald-400 text-xs font-medium mb-6">
                                 <TrendingUp className="w-3.5 h-3.5" />
-                                SEO Keyword Tracking
+                                SEO Automatisierung
                             </div>
                             <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-5">
                                 Deine Rankings.<br />

@@ -55,7 +55,7 @@ export async function subscribePlan(req, res) {
 export async function getSites(req, res) {
     try {
         const plan = await getSeoPlan(req.userId)
-        if (!plan) return res.status(403).json({ error: 'Kein aktives SEO-Tracking Abo' })
+        if (!plan) return res.status(403).json({ error: 'Kein aktives SEO-Automatisierung Abo' })
 
         const sites = await SeoTrackedSite.find({ userId: req.userId, isActive: true }).lean()
 
@@ -109,7 +109,7 @@ export async function addSite(req, res) {
         if (!domain) return res.status(400).json({ error: 'Domain erforderlich' })
 
         const plan = await getSeoPlan(req.userId)
-        if (!plan) return res.status(403).json({ error: 'Kein aktives SEO-Tracking Abo' })
+        if (!plan) return res.status(403).json({ error: 'Kein aktives SEO-Automatisierung Abo' })
 
         const limits = PLAN_LIMITS[plan]
 
@@ -175,7 +175,7 @@ export async function addKeywords(req, res) {
         if (!Array.isArray(keywords) || !keywords.length) return res.status(400).json({ error: 'keywords[] erforderlich' })
 
         const plan = await getSeoPlan(req.userId)
-        if (!plan) return res.status(403).json({ error: 'Kein aktives SEO-Tracking Abo' })
+        if (!plan) return res.status(403).json({ error: 'Kein aktives SEO-Automatisierung Abo' })
 
         const site = await SeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId })
         if (!site) return res.status(404).json({ error: 'Website nicht gefunden' })
@@ -303,7 +303,7 @@ export async function triggerCheck(req, res) {
 export async function getKeywordIdeasForSite(req, res) {
     try {
         const plan = await getSeoPlan(req.userId)
-        if (!plan) return res.status(403).json({ error: 'Kein aktives SEO-Tracking Abo' })
+        if (!plan) return res.status(403).json({ error: 'Kein aktives SEO-Automatisierung Abo' })
 
         const site = await SeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId }).lean()
         if (!site) return res.status(404).json({ error: 'Website nicht gefunden' })
@@ -320,7 +320,7 @@ export async function getKeywordIdeasForSite(req, res) {
 export async function getCompetitorsForSite(req, res) {
     try {
         const plan = await getSeoPlan(req.userId)
-        if (!plan) return res.status(403).json({ error: 'Kein aktives SEO-Tracking Abo' })
+        if (!plan) return res.status(403).json({ error: 'Kein aktives SEO-Automatisierung Abo' })
 
         const site = await SeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId }).lean()
         if (!site) return res.status(404).json({ error: 'Website nicht gefunden' })
@@ -336,7 +336,7 @@ export async function getCompetitorsForSite(req, res) {
 export async function getContentGapForSite(req, res) {
     try {
         const plan = await getSeoPlan(req.userId)
-        if (!plan) return res.status(403).json({ error: 'Kein aktives SEO-Tracking Abo' })
+        if (!plan) return res.status(403).json({ error: 'Kein aktives SEO-Automatisierung Abo' })
         if (plan === 'einsteiger') return res.status(403).json({ error: 'content_gap_locked', requiredPlan: 'pro' })
 
         const monthlyLimit = PLAN_LIMITS[plan]?.contentGapPerMonth ?? 0
@@ -379,7 +379,7 @@ export async function getContentGapForSite(req, res) {
 export async function getBacklinksForSite(req, res) {
     try {
         const plan = await getSeoPlan(req.userId)
-        if (!plan) return res.status(403).json({ error: 'Kein aktives SEO-Tracking Abo' })
+        if (!plan) return res.status(403).json({ error: 'Kein aktives SEO-Automatisierung Abo' })
 
         const site = await SeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId }).lean()
         if (!site) return res.status(404).json({ error: 'Website nicht gefunden' })

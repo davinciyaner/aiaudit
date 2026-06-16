@@ -7,6 +7,7 @@ const userSchema = new mongoose.Schema({
     password: { type: String, required: true },
     resetToken: { type: String },
     resetTokenExpiry: { type: Date },
+    marketingConsent: { type: Boolean, default: false },
 }, { timestamps: true })
 
 export default mongoose.model("User", userSchema)

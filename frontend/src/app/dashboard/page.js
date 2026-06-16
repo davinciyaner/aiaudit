@@ -622,7 +622,7 @@ export default function Dashboard() {
                                 {/* PRO UPSELL — nur wenn nicht Pro */}
                                 {!isPro && <ReauditCTA />}
 
-                                {/* SEO TRACKING UPSELL */}
+                                {/* SEO AUTOMATISIERUNG UPSELL */}
                                     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}
                                         className="rounded-2xl border border-emerald-500/20 bg-emerald-500/[0.03] p-5">
                                         <div className="flex items-start gap-3 mb-4">
@@ -631,7 +631,7 @@ export default function Dashboard() {
                                             </div>
                                             <div>
                                                 <span className="text-xs font-semibold text-emerald-400 uppercase tracking-wider">Add-on</span>
-                                                <h3 className="text-sm font-bold text-white">SEO Tracking</h3>
+                                                <h3 className="text-sm font-bold text-white">SEO Automatisierung</h3>
                                             </div>
                                         </div>
                                         <ul className="space-y-1.5 mb-4">
