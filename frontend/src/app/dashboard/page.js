@@ -90,6 +90,7 @@ export default function Dashboard() {
     const [isLoggedIn, setIsLoggedIn] = useState(false)
     const [userName, setUserName] = useState('')
     const [menuOpen, setMenuOpen] = useState(false)
+    const [showRegisterModal, setShowRegisterModal] = useState(false)
     const menuRef = useRef(null)
 
     useEffect(() => {
@@ -160,6 +161,10 @@ export default function Dashboard() {
     const handleComplete = (data) => {
         setLoading(false)
         setResult(data || null)
+        if (data && !data.limitReached && !data.domainLimitReached) {
+            const token = localStorage.getItem('token')
+            if (!token) setTimeout(() => setShowRegisterModal(true), 2500)
+        }
     }
 
     const audit = result?.auditData
@@ -358,34 +363,6 @@ export default function Dashboard() {
                             <ScoreCard label="GEO" score={audit?.geo?.score ?? 0} delay={0.3} />
                         </div>
 
-                        {/* REGISTRATION PROMPT — nur für anonyme Nutzer */}
-                        {!isLoggedIn && (
-                            <motion.div
-                                initial={{ opacity: 0, y: 12 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.4 }}
-                                className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 px-5 py-4 bg-violet-500/[0.07] border border-violet-500/20 rounded-2xl"
-                            >
-                                <div>
-                                    <p className="text-sm font-semibold text-white">
-                                        Ergebnisse speichern & erneut prüfen
-                                    </p>
-                                    <p className="text-xs text-slate-400 mt-0.5">
-                                        Kostenloser Account - kein Abo, keine Kreditkarte
-                                    </p>
-                                </div>
-                                <button
-                                    onClick={() => {
-                                        if (auditUrl) sessionStorage.setItem('pendingAuditUrl', auditUrl)
-                                        router.push('/register')
-                                    }}
-                                    className="shrink-0 flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white text-sm font-semibold rounded-xl transition-all shadow-lg shadow-violet-500/20 whitespace-nowrap"
-                                >
-                                    <UserPlus className="w-4 h-4" />
-                                    Gratis Account erstellen
-                                </button>
-                            </motion.div>
-                        )}
 
                         {/* FULL REPORT */}
                         {true && (
@@ -705,6 +682,74 @@ export default function Dashboard() {
                     reportId={result.report?._id}
                 />
             )}
+
+            {/* REGISTER MODAL — anonymous users, 2.5s nach Audit */}
+            <AnimatePresence>
+                {showRegisterModal && (
+                    <motion.div
+                        initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                        className="fixed inset-0 z-50 flex items-center justify-center px-4"
+                        style={{ background: 'rgba(5,8,15,0.75)', backdropFilter: 'blur(8px)' }}
+                        onClick={() => setShowRegisterModal(false)}
+                    >
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.95, y: 16 }}
+                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                            exit={{ opacity: 0, scale: 0.95, y: 16 }}
+                            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+                            className="relative w-full max-w-md bg-[#0d1117] border border-white/10 rounded-2xl p-6 shadow-2xl"
+                            onClick={e => e.stopPropagation()}
+                        >
+                            <button
+                                onClick={() => setShowRegisterModal(false)}
+                                className="absolute top-4 right-4 text-slate-500 hover:text-slate-300 transition-colors text-lg leading-none"
+                            >✕</button>
+
+                            <div className="mb-5">
+                                <div className="w-10 h-10 rounded-xl bg-violet-500/15 border border-violet-500/20 flex items-center justify-center mb-4">
+                                    <UserPlus className="w-5 h-5 text-violet-400" />
+                                </div>
+                                <h2 className="text-lg font-bold text-white mb-1">Ergebnisse speichern</h2>
+                                <p className="text-sm text-slate-400">
+                                    Erstelle einen kostenlosen Account und behalte deine Audits — kein Abo, keine Kreditkarte.
+                                </p>
+                            </div>
+
+                            <ul className="space-y-2 mb-6">
+                                {[
+                                    'Audit-Verlauf & Vergleiche',
+                                    'Erneut prüfen mit einem Klick',
+                                    '1 Audit pro Monat kostenlos',
+                                ].map(f => (
+                                    <li key={f} className="flex items-center gap-2.5 text-sm text-slate-300">
+                                        <span className="w-4 h-4 rounded-full bg-emerald-500/15 flex items-center justify-center shrink-0">
+                                            <span className="text-emerald-400 text-[10px]">✓</span>
+                                        </span>
+                                        {f}
+                                    </li>
+                                ))}
+                            </ul>
+
+                            <button
+                                onClick={() => {
+                                    if (auditUrl) sessionStorage.setItem('pendingAuditUrl', auditUrl)
+                                    router.push('/register')
+                                }}
+                                className="flex items-center justify-center gap-2 w-full py-3 bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white font-semibold rounded-xl transition-all shadow-lg shadow-violet-500/20 mb-3"
+                            >
+                                <UserPlus className="w-4 h-4" />
+                                Gratis Account erstellen
+                            </button>
+                            <button
+                                onClick={() => setShowRegisterModal(false)}
+                                className="w-full py-2.5 text-sm text-slate-500 hover:text-slate-300 transition-colors"
+                            >
+                                Später
+                            </button>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </div>
     )
 }
