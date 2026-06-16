@@ -99,7 +99,6 @@ export default function RegisterPage() {
                         <h1 className="text-3xl font-bold text-white mb-2">Account erstellen</h1>
                         {hasPendingAudit && (
                             <div className="flex items-center gap-2 mt-3 px-3 py-2 bg-violet-500/10 border border-violet-500/20 rounded-xl">
-                                <div className="w-1.5 h-1.5 rounded-full bg-violet-400 animate-pulse shrink-0" />
                                 <p className="text-xs text-violet-300">Dein Audit wartet — du siehst die Ergebnisse sofort nach der Registrierung.</p>
                             </div>
                         )}
