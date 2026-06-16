@@ -3,14 +3,14 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 export async function register(req, res) {
-    const { name, email, password } = req.body
+    const { name, email, password, marketingConsent } = req.body
 
     const existing = await UserModel.findOne({ email })
     if (existing) {
         return res.status(400).json({ error: "Email already exists" })
     }
     const hash = await bcrypt.hash(password, 10)
-    const user = await UserModel.create({ name, email, password: hash })
+    const user = await UserModel.create({ name, email, password: hash, marketingConsent: !!marketingConsent })
 
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES })
     res.json({ token, user: { name: user.name, email: user.email } })

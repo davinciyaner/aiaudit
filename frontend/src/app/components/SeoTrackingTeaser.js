@@ -341,7 +341,7 @@ export default function SeoTrackingTeaser() {
 
                     {/* Footer bar */}
                     <div className="px-5 py-3 border-t border-white/[0.05] flex items-center justify-between bg-white/[0.01]">
-                        <span className="text-[11px] text-slate-700">250 von 500 Keywords · meine-website.de · AuditAI SEO Tracking</span>
+                        <span className="text-[11px] text-slate-700">250 von 500 Keywords · meine-website.de · AuditAI SEO Automatisierung</span>
                         <span className="text-[11px] text-emerald-600 font-medium cursor-default">Alle 500 anzeigen →</span>
                     </div>
                 </motion.div>
@@ -432,7 +432,7 @@ export default function SeoTrackingTeaser() {
                     className="flex flex-wrap items-center gap-3">
                     <Link href="/seo/pricing"
                         className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-emerald-500/20">
-                        SEO Tracking starten
+                        SEO Automatisierung starten
                         <ArrowRight className="w-4 h-4" />
                     </Link>
                     <Link href="/dashboard"

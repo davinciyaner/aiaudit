@@ -274,7 +274,7 @@ export default function SeoDashboardPage() {
                     <div>
                         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-emerald-500/20 bg-emerald-500/5 text-emerald-400 text-xs font-medium mb-3">
                             <TrendingUp className="w-3 h-3" />
-                            SEO Tracking · {plan ? plan.charAt(0).toUpperCase() + plan.slice(1) : ''}-Plan
+                            SEO Automatisierung · {plan ? plan.charAt(0).toUpperCase() + plan.slice(1) : ''}-Plan
                         </div>
                         <h1 className="text-2xl sm:text-3xl font-bold text-white">Keyword Rankings</h1>
                     </div>

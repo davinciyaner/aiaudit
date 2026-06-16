@@ -82,9 +82,9 @@ export default function AgbPage() {
                             </p>
                         </Sub>
 
-                        <Sub title="2.2 SEO Tracking">
+                        <Sub title="2.2 SEO Automatisierung">
                             <p>
-                                SEO Tracking ist ein optionaler Zusatzdienst, der für eingetragene Domains und Keywords wöchentlich automatisierte Google-Ranking-Checks durchführt und folgende Daten bereitstellt:
+                                SEO Automatisierung ist ein optionaler Zusatzdienst, der für eingetragene Domains und Keywords wöchentlich automatisierte Google-Ranking-Checks durchführt und folgende Daten bereitstellt:
                             </p>
                             <ul className="list-disc list-inside space-y-1 ml-2">
                                 <li>Aktuelle Google-Ranking-Positionen (Top 100) pro Keyword und Domain</li>
@@ -97,7 +97,7 @@ export default function AgbPage() {
                                 Ranking-Daten werden über die DataForSEO API abgerufen (siehe Datenschutzerklärung, Abschnitt 5a). Der Anbieter übernimmt keine Gewähr für die Vollständigkeit oder Aktualität der Daten. Keywords und Domains, für die keine Ranking-Position in den Top 100 ermittelt wurde, werden als „nicht gefunden" ausgegeben.
                             </p>
                             <p>
-                                Für SEO Tracking gelten ergänzend die Bestimmungen in § 5.
+                                Für SEO Automatisierung gelten ergänzend die Bestimmungen in § 5.
                             </p>
                         </Sub>
 
@@ -128,7 +128,7 @@ export default function AgbPage() {
                             </p>
                             <ul className="list-disc list-inside space-y-1 ml-2">
                                 <li>Website-Audit: <a href="/pricing" className="text-violet-400 hover:text-violet-300">sitecheckai.dev/pricing</a></li>
-                                <li>SEO Tracking: <a href="/seo/pricing" className="text-violet-400 hover:text-violet-300">sitecheckai.dev/seo/pricing</a></li>
+                                <li>SEO Automatisierung: <a href="/seo/pricing" className="text-violet-400 hover:text-violet-300">sitecheckai.dev/seo/pricing</a></li>
                             </ul>
                             <p>
                             Es gilt die zum Zeitpunkt der Bestellung gültige Preisliste.
@@ -146,9 +146,9 @@ export default function AgbPage() {
                         </Sub>
                     </Section>
 
-                    <Section title="§ 5 Pflichten des Nutzers beim SEO Tracking">
+                    <Section title="§ 5 Pflichten des Nutzers bei der SEO Automatisierung">
                         <Highlight>
-                            <strong>Wichtig — Nutzungsberechtigung für SEO Tracking:</strong> Der Nutzer darf ausschließlich Domains in das SEO Tracking aufnehmen, für die er eine entsprechende Berechtigung besitzt. Dies ist der Fall, wenn der Nutzer:
+                            <strong>Wichtig — Nutzungsberechtigung für SEO Automatisierung:</strong> Der Nutzer darf ausschließlich Domains in die SEO Automatisierung aufnehmen, für die er eine entsprechende Berechtigung besitzt. Dies ist der Fall, wenn der Nutzer:
                             <ul className="list-disc list-inside space-y-1 ml-2 mt-2">
                                 <li>Eigentümer der jeweiligen Domain ist,</li>
                                 <li>im Auftrag des Domain-Inhabers handelt und eine ausdrückliche Genehmigung besitzt, oder</li>
@@ -180,7 +180,7 @@ export default function AgbPage() {
 
                         <Sub title="5.3 Freistellung">
                             <p>
-                                Der Nutzer stellt den Anbieter von sämtlichen Ansprüchen Dritter frei, die aus einer vertragswidrigen Nutzung des SEO Trackings entstehen — insbesondere aus dem unberechtigten Tracking fremder Domains.
+                                Der Nutzer stellt den Anbieter von sämtlichen Ansprüchen Dritter frei, die aus einer vertragswidrigen Nutzung der SEO Automatisierung entstehen — insbesondere aus dem unberechtigten Tracking fremder Domains.
                             </p>
                         </Sub>
                     </Section>
@@ -226,14 +226,14 @@ export default function AgbPage() {
                             <li>Die Richtigkeit, Vollständigkeit oder Aktualität von KI-generierten Audit-Ergebnissen</li>
                             <li>Entscheidungen, die der Nutzer auf Basis von Analyseergebnissen trifft</li>
                             <li>Ausfälle von Drittdiensten (PayPal, Anthropic, MongoDB, Vercel)</li>
-                            <li>Schäden, die durch eine vertragswidrige Nutzung des SEO Trackings entstehen, insbesondere durch das Tracking nicht autorisierter Domains</li>
+                            <li>Schäden, die durch eine vertragswidrige Nutzung der SEO Automatisierung entstehen, insbesondere durch das Tracking nicht autorisierter Domains</li>
                             <li>Ausfälle, Datenlücken oder fehlerhafte Daten der DataForSEO API (DataForSEO Ltd., Vilnius, Litauen)</li>
                         </ul>
                     </Section>
 
                     <Section title="§ 8 Datenschutz">
                         <p>
-                            Der Umgang mit personenbezogenen Daten richtet sich nach der <a href="/datenschutz" className="text-violet-400 hover:text-violet-300">Datenschutzerklärung</a>. Sofern der Nutzer im Rahmen des SEO Trackings personenbezogene Daten verarbeitet (z.B. Websites, auf denen Besucherdaten erfasst werden), gilt ergänzend der <a href="/avv" className="text-violet-400 hover:text-violet-300">Auftragsverarbeitungsvertrag (AVV)</a>.
+                            Der Umgang mit personenbezogenen Daten richtet sich nach der <a href="/datenschutz" className="text-violet-400 hover:text-violet-300">Datenschutzerklärung</a>. Sofern der Nutzer im Rahmen der SEO Automatisierung personenbezogene Daten verarbeitet (z.B. Websites, auf denen Besucherdaten erfasst werden), gilt ergänzend der <a href="/avv" className="text-violet-400 hover:text-violet-300">Auftragsverarbeitungsvertrag (AVV)</a>.
                         </p>
                     </Section>
 

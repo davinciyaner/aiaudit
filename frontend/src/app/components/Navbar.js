@@ -14,7 +14,7 @@ const NAV_ITEMS = [
         label: 'SEO',
         items: [
             { icon: Search, label: 'Einmal-Audit', desc: 'SEO-Score & Fehler aufdecken', href: '/dashboard' },
-            { icon: TrendingUp, label: 'SEO Tracking', desc: 'Wöchentliche Google-Rankings', href: '/seo/dashboard', accent: 'emerald' },
+            { icon: TrendingUp, label: 'SEO Automatisierung', desc: 'Wöchentliche Google-Rankings', href: '/seo/dashboard', accent: 'emerald' },
             { icon: CreditCard, label: 'Tracking Preise', desc: '3 Pläne ab €29/Monat', href: '/seo/pricing' },
             { icon: BookOpen, label: 'SEO-Fehler vermeiden', desc: 'Leitfaden aus der Praxis', href: '/blog/seo-test-haeufige-fehler' },
         ],
@@ -263,7 +263,7 @@ export default function Navbar() {
                                                     <User className="w-3.5 h-3.5 text-slate-500" /> Mein Profil
                                                 </Link>
                                                 <div className="my-1 border-t border-white/5" />
-                                                <p className="px-3 pt-1 pb-0.5 text-[10px] text-slate-600 font-semibold uppercase tracking-wider">SEO Tracking</p>
+                                                <p className="px-3 pt-1 pb-0.5 text-[10px] text-slate-600 font-semibold uppercase tracking-wider">SEO Automatisierung</p>
                                                 <Link href="/seo/dashboard" onClick={() => setUserDropdownOpen(false)}
                                                     className="flex items-center gap-2.5 px-3 py-2 text-sm text-slate-300 hover:text-white hover:bg-white/5 rounded-lg transition-all">
                                                     <TrendingUp className="w-3.5 h-3.5 text-emerald-400" /> Rankings
@@ -340,7 +340,7 @@ export default function Navbar() {
                                 </Link>
                                 <Link href="/seo/dashboard" onClick={() => setMobileOpen(false)}
                                     className="flex items-center gap-2 px-4 py-3 text-sm text-slate-300 hover:text-white rounded-lg hover:bg-white/5 transition-all">
-                                    <TrendingUp className="w-4 h-4 text-emerald-400" /> SEO Tracking
+                                    <TrendingUp className="w-4 h-4 text-emerald-400" /> SEO Automatisierung
                                 </Link>
                                 <button onClick={handleLogout}
                                     className="w-full flex items-center gap-2 px-4 py-3 text-sm text-slate-400 hover:text-red-400 rounded-lg hover:bg-red-500/5 transition-all">

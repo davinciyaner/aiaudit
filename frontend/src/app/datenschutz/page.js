@@ -85,9 +85,9 @@ export default function DatenschutzPage() {
                             </p>
                         </Sub>
 
-                        <Sub title="2.3 SEO Tracking-Daten">
+                        <Sub title="2.3 SEO Automatisierungsdaten">
                             <p>
-                                Nutzer des SEO Trackings tragen Domains und Keywords ein, für die wöchentliche Google-Ranking-Positionen abgerufen werden. Dabei werden folgende Daten verarbeitet und gespeichert:
+                                Nutzer der SEO Automatisierung tragen Domains und Keywords ein, für die wöchentliche Google-Ranking-Positionen abgerufen werden. Dabei werden folgende Daten verarbeitet und gespeichert:
                             </p>
                             <ul className="list-disc list-inside space-y-1 ml-2">
                                 <li>Domain-Name der getrackten Website</li>
@@ -220,7 +220,7 @@ export default function DatenschutzPage() {
 
                     <Section title="5a. Nutzung der DataForSEO API">
                         <p>
-                            AuditAI nutzt die <strong className="text-slate-300">DataForSEO API</strong> zur Ermittlung von Google-Suchmaschinenrankings im Rahmen des SEO-Tracking-Dienstes.
+                            AuditAI nutzt die <strong className="text-slate-300">DataForSEO API</strong> zur Ermittlung von Google-Suchmaschinenrankings im Rahmen der SEO-Automatisierung.
                         </p>
                         <p>
                             Anbieter: DataForSEO Ltd., Vilnius, Litauen (EU).
@@ -240,7 +240,7 @@ export default function DatenschutzPage() {
                             Da DataForSEO als EU-Anbieter operiert, ist kein Drittlandtransfer erforderlich. Weitere Informationen: <a href="https://dataforseo.com/privacy-policy" className="text-violet-400 hover:text-violet-300" target="_blank" rel="noopener noreferrer">DataForSEO Privacy Policy</a>
                         </p>
                         <p>
-                            <strong className="text-slate-300">Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung — der Ranking-Check ist Bestandteil des angebotenen SEO-Tracking-Dienstes).
+                            <strong className="text-slate-300">Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung — der Ranking-Check ist Bestandteil der angebotenen SEO-Automatisierung).
                         </p>
                     </Section>
 

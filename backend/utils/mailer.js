@@ -553,7 +553,7 @@ export async function sendSeoRankingAlert({ email, domain, gains, losses }) {
             </td>
           </tr></table>
           <hr style="border:none;border-top:1px solid rgba(255,255,255,0.06);margin:28px 0;"/>
-          <p style="margin:0;font-size:13px;color:#64748b;">Dein AuditAI SEO-Tracking</p>
+          <p style="margin:0;font-size:13px;color:#64748b;">Dein AuditAI SEO-Automatisierung</p>
         </td></tr>
         <tr><td align="center" style="padding-top:24px;">
           <p style="margin:0;font-size:11px;color:#334155;">Diese E-Mail wurde automatisch von deinem wöchentlichen SEO-Check ausgelöst.</p>

@@ -336,14 +336,14 @@ export default function PricingPage() {
                             Bezahlung sicher über PayPal · Jederzeit kündbar · Keine Mindestlaufzeit
                         </motion.p>
 
-                        {/* SEO Tracking section */}
+                        {/* SEO Automatisierung section */}
                         <motion.div initial={{opacity: 0, y: 30}} whileInView={{opacity: 1, y: 0}} viewport={{once: true}}
                                     className="mt-24">
                             <div className="flex items-center gap-4 mb-10">
                                 <div className="flex-1 h-px bg-white/[0.06]"/>
                                 <div className="flex items-center gap-2 px-4 py-2 rounded-full border border-emerald-500/20 bg-emerald-500/5 text-emerald-400 text-xs font-semibold whitespace-nowrap">
                                     <TrendingUp className="w-3.5 h-3.5"/>
-                                    SEO Keyword Tracking - Add-on
+                                    SEO Automatisierung - Add-on
                                 </div>
                                 <div className="flex-1 h-px bg-white/[0.06]"/>
                             </div>
@@ -410,7 +410,7 @@ export default function PricingPage() {
                             </div>
 
                             <p className="text-center text-sm text-slate-600 mt-8">
-                                SEO Tracking ist unabhängig vom Audit-Plan - kombinierbar mit Free, Pro und Agency.
+                                SEO Automatisierung ist unabhängig vom Audit-Plan - kombinierbar mit Free, Pro und Agency.
                             </p>
                         </motion.div>
                     </div>

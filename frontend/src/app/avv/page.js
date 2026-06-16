@@ -55,7 +55,7 @@ export default function AvvPage() {
                             Dieser Auftragsverarbeitungsvertrag (AVV) regelt die datenschutzrechtliche Beziehung zwischen dem Nutzer von AuditAI (nachfolgend <strong className="text-slate-300">„Verantwortlicher"</strong>) und dem Anbieter des Dienstes (nachfolgend <strong className="text-slate-300">„Auftragsverarbeiter"</strong>) gemäß Art. 28 DSGVO.
                         </p>
                         <p>
-                            Dieser AVV gilt automatisch als geschlossen, sobald der Nutzer kostenpflichtige Dienste von AuditAI — insbesondere das SEO Tracking — in Anspruch nimmt, bei deren Nutzung personenbezogene Daten im Auftrag des Nutzers verarbeitet werden. Durch die Nutzung des Dienstes erklärt der Nutzer sein Einverständnis mit den Bedingungen dieses AVV.
+                            Dieser AVV gilt automatisch als geschlossen, sobald der Nutzer kostenpflichtige Dienste von AuditAI — insbesondere die SEO Automatisierung — in Anspruch nimmt, bei deren Nutzung personenbezogene Daten im Auftrag des Nutzers verarbeitet werden. Durch die Nutzung des Dienstes erklärt der Nutzer sein Einverständnis mit den Bedingungen dieses AVV.
                         </p>
                         <p className="bg-white/2 border border-white/5 rounded-xl p-4 not-prose text-sm">
                             <strong className="text-slate-300">Auftragsverarbeiter:</strong><br />
@@ -71,14 +71,14 @@ export default function AvvPage() {
                             Gegenstand der Auftragsverarbeitung ist die Erbringung der in den AGB und auf der Produktseite beschriebenen Dienstleistungen, soweit dabei personenbezogene Daten im Auftrag des Verantwortlichen verarbeitet werden. Dies betrifft insbesondere:
                         </p>
                         <ul className="list-disc list-inside space-y-1 ml-2">
-                            <li>Speicherung der vom Verantwortlichen eingetragenen Domains, Keywords und der dazugehörigen Google-Ranking-Positionen (SEO Tracking)</li>
+                            <li>Speicherung der vom Verantwortlichen eingetragenen Domains, Keywords und der dazugehörigen Google-Ranking-Positionen (SEO Automatisierung)</li>
                             <li>Abruf von Ranking-, Keyword- und Backlink-Daten über die DataForSEO API im Auftrag des Verantwortlichen</li>
                         </ul>
                         <p>
                             Die Verarbeitung erfolgt für die Dauer des aktiven Abonnements zuzüglich einer Löschfrist von 30 Tagen nach Vertragsende.
                         </p>
 
-                        <Sub title="Verarbeitungsübersicht SEO Tracking">
+                        <Sub title="Verarbeitungsübersicht SEO Automatisierung">
                             <div className="bg-white/2 border border-white/5 rounded-xl p-4">
                                 <TableRow label="Art der Daten" value="Domains, Keywords, Google-Ranking-Positionen (Top 100), Ranking-URLs, Backlink-Zusammenfassungen, Keyword-Suchvolumina" />
                                 <TableRow label="Zweck" value="Wöchentliches Tracking von Google-Rankings für eingetragene Domains und Keywords; Keyword-Analyse; Wettbewerbsanalyse" />
@@ -130,7 +130,7 @@ export default function AvvPage() {
                             </div>
                             <div className="border-t border-white/5 pt-3">
                                 <strong className="text-slate-300">DataForSEO Ltd.</strong><br />
-                                <span className="text-slate-500">Zweck: Abruf von Google-Ranking-Daten, Keyword-Suchvolumina, Wettbewerbs- und Backlink-Daten für SEO Tracking · Standort: Vilnius, Litauen (EU) · Übermittelte Daten: Keyword, Standortname, Sprachcode — keine personenbezogenen Daten der Endnutzer</span>
+                                <span className="text-slate-500">Zweck: Abruf von Google-Ranking-Daten, Keyword-Suchvolumina, Wettbewerbs- und Backlink-Daten für SEO Automatisierung · Standort: Vilnius, Litauen (EU) · Übermittelte Daten: Keyword, Standortname, Sprachcode — keine personenbezogenen Daten der Endnutzer</span>
                             </div>
                         </div>
                         <p>
@@ -161,10 +161,10 @@ export default function AvvPage() {
 
                     <Section title="§ 7 Löschung und Rückgabe der Daten">
                         <p>
-                            Nach Beendigung des Vertragsverhältnisses werden alle im Rahmen der Auftragsverarbeitung gespeicherten Daten des Verantwortlichen — darunter SEO-Tracking-Daten (Domains, Keywords, Ranking-Positionen) — innerhalb von 30 Tagen automatisch gelöscht, sofern keine gesetzliche Aufbewahrungspflicht entgegensteht.
+                            Nach Beendigung des Vertragsverhältnisses werden alle im Rahmen der Auftragsverarbeitung gespeicherten Daten des Verantwortlichen — darunter SEO-Automatisierungsdaten (Domains, Keywords, Ranking-Positionen) — innerhalb von 30 Tagen automatisch gelöscht, sofern keine gesetzliche Aufbewahrungspflicht entgegensteht.
                         </p>
                         <p>
-                            Der Verantwortliche kann vor Vertragsende einen Datenexport seiner SEO-Tracking-Daten per E-Mail an <a href="mailto:finnpaustian94@gmail.com" className="text-violet-400 hover:text-violet-300">finnpaustian94@gmail.com</a> anfordern.
+                            Der Verantwortliche kann vor Vertragsende einen Datenexport seiner SEO-Automatisierungsdaten per E-Mail an <a href="mailto:finnpaustian94@gmail.com" className="text-violet-400 hover:text-violet-300">finnpaustian94@gmail.com</a> anfordern.
                         </p>
                     </Section>
 

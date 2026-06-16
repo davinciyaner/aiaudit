@@ -24,6 +24,7 @@ export default function RegisterPage() {
     const [loading, setLoading] = useState(false)
     const [formData, setFormData] = useState({name: '', email: '', password: ''})
     const [consent, setConsent] = useState(false)
+    const [marketingConsent, setMarketingConsent] = useState(false)
     const [hasPendingAudit, setHasPendingAudit] = useState(false)
 
     useEffect(() => {
@@ -39,7 +40,7 @@ export default function RegisterPage() {
             const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(formData)
+                body: JSON.stringify({...formData, marketingConsent})
             })
             const data = await response.json()
             if (!response.ok) throw new Error(data.error || 'Registrierung fehlgeschlagen')
@@ -166,6 +167,24 @@ export default function RegisterPage() {
                                 und die{' '}
                                 <Link href="/datenschutz" target="_blank" className="text-violet-400 hover:text-violet-300 underline underline-offset-2">Datenschutzerklärung</Link>{' '}
                                 gelesen und stimme diesen zu.
+                            </span>
+                        </label>
+
+                        <label className="flex items-start gap-3 cursor-pointer group">
+                            <div
+                                onClick={() => setMarketingConsent(v => !v)}
+                                className={`mt-0.5 w-4 h-4 rounded flex items-center justify-center shrink-0 border transition-all ${
+                                    marketingConsent ? 'bg-violet-600 border-violet-600' : 'border-white/20 bg-white/5 group-hover:border-white/40'
+                                }`}
+                            >
+                                {marketingConsent && (
+                                    <svg className="w-2.5 h-2.5 text-white" fill="none" viewBox="0 0 10 8" stroke="currentColor" strokeWidth={2.5}>
+                                        <path d="M1 4l3 3 5-6" strokeLinecap="round" strokeLinejoin="round"/>
+                                    </svg>
+                                )}
+                            </div>
+                            <span className="text-xs text-slate-400 leading-relaxed">
+                                Ich möchte per E-Mail über neue Features und Angebote informiert werden.
                             </span>
                         </label>
 
