@@ -284,7 +284,7 @@ export async function triggerCheck(req, res) {
             if (gains.length || losses.length) {
                 try {
                     const user = await User.findById(req.userId).lean()
-                    if (user?.email) {
+                    if (user?.email && user.seoEmailAlerts !== false) {
                         await sendSeoRankingAlert({ email: user.email, domain: site.domain, gains, losses })
                     }
                 } catch (alertErr) {
@@ -386,6 +386,29 @@ export async function getBacklinksForSite(req, res) {
 
         const summary = await getBacklinkSummary(site.domain)
         res.json({ summary })
+    } catch (err) {
+        res.status(500).json({ error: err.message })
+    }
+}
+
+// GET /api/seo/alert-settings
+export async function getAlertSettings(req, res) {
+    try {
+        const user = await User.findById(req.userId).lean()
+        if (!user) return res.status(404).json({ error: 'Nutzer nicht gefunden' })
+        res.json({ seoEmailAlerts: user.seoEmailAlerts !== false })
+    } catch (err) {
+        res.status(500).json({ error: err.message })
+    }
+}
+
+// PATCH /api/seo/alert-settings
+export async function updateAlertSettings(req, res) {
+    try {
+        const { seoEmailAlerts } = req.body
+        if (typeof seoEmailAlerts !== 'boolean') return res.status(400).json({ error: 'seoEmailAlerts muss ein Boolean sein' })
+        await User.findByIdAndUpdate(req.userId, { seoEmailAlerts })
+        res.json({ success: true, seoEmailAlerts })
     } catch (err) {
         res.status(500).json({ error: err.message })
     }

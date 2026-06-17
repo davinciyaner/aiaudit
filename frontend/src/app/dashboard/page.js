@@ -48,6 +48,48 @@ function IssueItem({ text, type = 'error' }) {
     )
 }
 
+const ANON_VISIBLE = 3
+
+function LockedIssues({ count, type = 'error', onRegister }) {
+    if (count <= 0) return null
+    const fakeTexts = [
+        'Weiteres kritisches Problem auf dieser Seite gefunden.',
+        'Fehler beeinträchtigt deine Google-Sichtbarkeit.',
+        'Problem mit hoher Priorität erkannt.',
+    ]
+    const styles = {
+        error: 'bg-red-500/10 border-red-500/20 text-red-400',
+        warn: 'bg-amber-500/10 border-amber-500/20 text-amber-400',
+    }
+    const icons = { error: XCircle, warn: AlertTriangle }
+    const Icon = icons[type] || XCircle
+    const preview = Math.min(count, 2)
+
+    return (
+        <div className="relative mt-2">
+            <div className="space-y-2 select-none pointer-events-none" style={{ filter: 'blur(5px)', opacity: 0.45 }}>
+                {Array.from({ length: preview }).map((_, i) => (
+                    <div key={i} className={`flex items-start gap-3 px-4 py-3 rounded-xl border text-sm ${styles[type]}`}>
+                        <Icon className="w-4 h-4 shrink-0 mt-0.5" strokeWidth={1.8} />
+                        {fakeTexts[i % fakeTexts.length]}
+                    </div>
+                ))}
+            </div>
+            <div className="absolute inset-0 flex flex-col items-center justify-center rounded-xl"
+                style={{ background: 'linear-gradient(to top, #080b14 40%, transparent)' }}>
+                <div className="flex flex-col items-center gap-1.5 pb-1">
+                    <Lock className="w-3.5 h-3.5 text-slate-500" />
+                    <p className="text-xs font-semibold text-slate-300">+{count} weitere Problem{count !== 1 ? 'e' : ''} versteckt</p>
+                    <button onClick={onRegister}
+                        className="text-xs font-semibold text-violet-400 hover:text-violet-300 underline underline-offset-2 transition-colors">
+                        Kostenlos registrieren um alle zu sehen →
+                    </button>
+                </div>
+            </div>
+        </div>
+    )
+}
+
 function Section({ title, icon, children, defaultOpen = true }) {
     const [open, setOpen] = useState(defaultOpen)
 
@@ -169,6 +211,12 @@ export default function Dashboard() {
 
     const audit = result?.auditData
     const isPro = !!result?.aiReport
+    const totalIssues = (audit?.performance?.issues?.length ?? 0) + (audit?.seo?.issues?.length ?? 0) + (audit?.geo?.issues?.length ?? 0)
+
+    const openRegisterModal = () => {
+        if (auditUrl) sessionStorage.setItem('pendingAuditUrl', auditUrl)
+        setShowRegisterModal(true)
+    }
 
     return (
         <div className="min-h-screen bg-[#080b14]">
@@ -384,10 +432,15 @@ export default function Dashboard() {
                                 {/* PERFORMANCE */}
                                 <Section title="Performance" icon="⚡">
                                     <div className="space-y-2">
-                                        {audit?.performance?.issues?.map((issue, i) => (
+                                        {(isLoggedIn ? audit?.performance?.issues : audit?.performance?.issues?.slice(0, ANON_VISIBLE))?.map((issue, i) => (
                                             <IssueItem key={i} text={issue} type="warn" />
                                         ))}
                                     </div>
+                                    <LockedIssues
+                                        count={isLoggedIn ? 0 : Math.max(0, (audit?.performance?.issues?.length ?? 0) - ANON_VISIBLE)}
+                                        type="warn"
+                                        onRegister={openRegisterModal}
+                                    />
                                 </Section>
 
                                 {/* SEO */}
@@ -444,7 +497,7 @@ export default function Dashboard() {
                                     {/* Issues + Empfehlungen (nur Pro) */}
                                     {audit?.seo?.issues?.length > 0 ? (
                                         <div className="space-y-3">
-                                            {audit.seo.issues.map((issue, i) => (
+                                            {(isLoggedIn ? audit.seo.issues : audit.seo.issues.slice(0, ANON_VISIBLE)).map((issue, i) => (
                                                 <div key={i} className="space-y-1.5">
                                                     <IssueItem text={issue} type="error" />
                                                     {isPro && audit.seo.suggestions?.[i] && (
@@ -454,6 +507,11 @@ export default function Dashboard() {
                                                     )}
                                                 </div>
                                             ))}
+                                            <LockedIssues
+                                                count={isLoggedIn ? 0 : Math.max(0, audit.seo.issues.length - ANON_VISIBLE)}
+                                                type="error"
+                                                onRegister={openRegisterModal}
+                                            />
                                         </div>
                                     ) : (
                                         <div className="text-center py-4 text-emerald-400 text-sm">
@@ -517,7 +575,7 @@ export default function Dashboard() {
                                         {/* Issues + Empfehlungen (nur Pro) */}
                                         {audit.geo.issues?.length > 0 ? (
                                             <div className="space-y-3 mb-5">
-                                                {audit.geo.issues.map((issue, i) => (
+                                                {(isLoggedIn ? audit.geo.issues : audit.geo.issues.slice(0, ANON_VISIBLE)).map((issue, i) => (
                                                     <div key={i} className="space-y-1.5">
                                                         <IssueItem text={issue} type="error" />
                                                         {isPro && audit.geo.suggestions?.[i] && (
@@ -527,6 +585,11 @@ export default function Dashboard() {
                                                         )}
                                                     </div>
                                                 ))}
+                                                <LockedIssues
+                                                    count={isLoggedIn ? 0 : Math.max(0, audit.geo.issues.length - ANON_VISIBLE)}
+                                                    type="error"
+                                                    onRegister={openRegisterModal}
+                                                />
                                             </div>
                                         ) : (
                                             <div className="text-center py-4 text-emerald-400 text-sm mb-4">
@@ -739,12 +802,6 @@ export default function Dashboard() {
                             >
                                 <UserPlus className="w-4 h-4" />
                                 Gratis Account erstellen
-                            </button>
-                            <button
-                                onClick={() => setShowRegisterModal(false)}
-                                className="w-full py-2.5 text-sm text-slate-500 hover:text-slate-300 transition-colors"
-                            >
-                                Später
                             </button>
                         </motion.div>
                     </motion.div>
