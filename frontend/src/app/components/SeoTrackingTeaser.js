@@ -3,20 +3,22 @@ import { motion } from 'framer-motion'
 import {
     TrendingUp, TrendingDown, Minus, ArrowRight, Bell,
     RefreshCw, Search, Globe, BarChart2, Zap, Lightbulb,
-    Users, Link2, ChevronUp, ChevronDown,
+    Users, Link2, ChevronUp, ChevronDown, Download, Check, Settings,
 } from 'lucide-react'
 import Link from 'next/link'
 
 // ─── Mock data ────────────────────────────────────────────────────────────────
 
 const RANKINGS = [
-    { keyword: 'seo test kostenlos',     pos: 3,  prev: 7,  vol: '8.1K', url: 'sitecheckai.dev' },
-    { keyword: 'website audit tool',     pos: 11, prev: 11, vol: '4.3K', url: 'sitecheckai.dev/audit' },
-    { keyword: 'core web vitals check',  pos: 6,  prev: 14, vol: '2.7K', url: 'sitecheckai.dev' },
-    { keyword: 'seo analyse online',     pos: 18, prev: 9,  vol: '5.2K', url: 'sitecheckai.dev/blog/seo' },
-    { keyword: 'meta description prüfen',pos: 2,  prev: 5,  vol: '1.9K', url: 'sitecheckai.dev' },
-    { keyword: 'lighthouse alternative', pos: 7,  prev: 7,  vol: '3.4K', url: 'sitecheckai.dev' },
+    { keyword: 'seo test kostenlos',     pos: 3,  prev: 7,  vol: '8.1K', url: 'sitecheckai.dev',          ctr: '11%' },
+    { keyword: 'website audit tool',     pos: 11, prev: 11, vol: '4.3K', url: 'sitecheckai.dev/audit',     ctr: '1%'  },
+    { keyword: 'core web vitals check',  pos: 6,  prev: 14, vol: '2.7K', url: 'sitecheckai.dev',          ctr: '5%'  },
+    { keyword: 'seo analyse online',     pos: 18, prev: 9,  vol: '5.2K', url: 'sitecheckai.dev/blog/seo', ctr: '1%'  },
+    { keyword: 'meta description prüfen',pos: 2,  prev: 5,  vol: '1.9K', url: 'sitecheckai.dev',          ctr: '15%' },
+    { keyword: 'lighthouse alternative', pos: 7,  prev: 7,  vol: '3.4K', url: 'sitecheckai.dev',          ctr: '4%'  },
 ]
+
+const MOCK_FILTERS = ['Alle', 'Top 3', 'Top 10', '↑ Gestiegen', '↓ Gefallen']
 
 const IDEAS = [
     { keyword: 'seo check tool kostenlos', vol: '12.4K', comp: 'HIGH',   cpc: '2.40' },
@@ -44,10 +46,11 @@ const BACKLINKS = [
 ]
 
 const TABS = [
-    { id: 'rankings',     label: 'Rankings',      icon: TrendingUp },
-    { id: 'ideas',        label: 'Keyword-Ideen', icon: Lightbulb },
-    { id: 'competitors',  label: 'Konkurrenten',  icon: Users },
-    { id: 'backlinks',    label: 'Backlinks',      icon: Link2 },
+    { id: 'rankings',     label: 'Rankings',        icon: TrendingUp },
+    { id: 'ideas',        label: 'Keyword-Ideen',   icon: Lightbulb },
+    { id: 'competitors',  label: 'Konkurrenten',    icon: Users },
+    { id: 'backlinks',    label: 'Backlinks',        icon: Link2 },
+    { id: 'settings',     label: 'Einstellungen',   icon: Settings },
 ]
 
 const BENEFITS = [
@@ -68,8 +71,8 @@ const BENEFITS = [
     },
     {
         icon: Bell, color: '#10b981',
-        title: 'Backlinks & Alerts',
-        desc: 'Backlink-Profil deiner Domain auf einen Blick. Bei starken Rankingverlusten bekommst du sofort eine E-Mail.',
+        title: 'Alerts & CSV-Export',
+        desc: 'E-Mail-Benachrichtigung bei Rankingverlusten — konfigurierbar. Rankings als CSV exportieren, wann immer du willst.',
     },
 ]
 
@@ -115,37 +118,56 @@ function VolumeBar({ value, max }) {
 
 function RankingsPanel() {
     return (
-        <div className="overflow-x-auto">
-            <table className="w-full">
-                <thead>
-                    <tr className="border-b border-white/[0.05]">
-                        {['Keyword', 'Position', 'Änderung', 'Volumen', 'URL'].map(h => (
-                            <th key={h} className="px-5 py-3 text-left text-[10px] font-semibold text-slate-600 uppercase tracking-wider whitespace-nowrap">{h}</th>
-                        ))}
-                    </tr>
-                </thead>
-                <tbody>
-                    {RANKINGS.map((r, i) => (
-                        <tr key={i} className="border-b border-white/[0.04] last:border-0 hover:bg-white/[0.02] transition-colors">
-                            <td className="px-5 py-3.5">
-                                <span className="text-sm text-slate-200">{r.keyword}</span>
-                            </td>
-                            <td className="px-5 py-3.5">
-                                <span className={`text-sm font-bold ${PosColor(r.pos)}`}>#{r.pos}</span>
-                            </td>
-                            <td className="px-5 py-3.5">
-                                <Delta pos={r.pos} prev={r.prev} />
-                            </td>
-                            <td className="px-5 py-3.5">
-                                <span className="text-xs text-slate-400">{r.vol}</span>
-                            </td>
-                            <td className="px-5 py-3.5">
-                                <span className="text-xs text-slate-600 truncate block max-w-[160px]">{r.url}</span>
-                            </td>
+        <div>
+            {/* Filter pills */}
+            <div className="flex items-center gap-1.5 px-5 pt-4 pb-3 flex-wrap">
+                {MOCK_FILTERS.map((f, i) => (
+                    <span key={f} className={`px-3 py-1 text-xs font-semibold rounded-lg border cursor-default ${
+                        i === 0
+                            ? 'bg-emerald-500/15 border-emerald-500/30 text-emerald-400'
+                            : 'bg-white/4 border-white/8 text-slate-500'
+                    }`}>{f}</span>
+                ))}
+                <span className="text-xs text-slate-600 ml-1">6 Keywords</span>
+                <div className="ml-auto flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-slate-400 text-xs font-semibold cursor-default">
+                    <Download className="w-3 h-3" />CSV
+                </div>
+            </div>
+            <div className="overflow-x-auto">
+                <table className="w-full">
+                    <thead>
+                        <tr className="border-b border-white/[0.05]">
+                            {['Keyword', 'Position', 'Änderung', 'CTR (est.)', 'Volumen', 'URL'].map(h => (
+                                <th key={h} className="px-5 py-3 text-left text-[10px] font-semibold text-slate-600 uppercase tracking-wider whitespace-nowrap">{h}</th>
+                            ))}
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {RANKINGS.map((r, i) => (
+                            <tr key={i} className="border-b border-white/[0.04] last:border-0 hover:bg-white/[0.02] transition-colors">
+                                <td className="px-5 py-3.5">
+                                    <span className="text-sm text-slate-200">{r.keyword}</span>
+                                </td>
+                                <td className="px-5 py-3.5">
+                                    <span className={`text-sm font-bold ${PosColor(r.pos)}`}>#{r.pos}</span>
+                                </td>
+                                <td className="px-5 py-3.5">
+                                    <Delta pos={r.pos} prev={r.prev} />
+                                </td>
+                                <td className="px-5 py-3.5">
+                                    <span className="text-xs text-slate-400">{r.ctr}</span>
+                                </td>
+                                <td className="px-5 py-3.5">
+                                    <span className="text-xs text-slate-400">{r.vol}</span>
+                                </td>
+                                <td className="px-5 py-3.5">
+                                    <span className="text-xs text-slate-600 truncate block max-w-[140px]">{r.url}</span>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
         </div>
     )
 }
@@ -160,7 +182,7 @@ function IdeasPanel() {
             <table className="w-full">
                 <thead>
                     <tr className="border-b border-white/[0.05]">
-                        {['Keyword', 'Volumen/Monat', 'Wettbewerb', 'CPC'].map(h => (
+                        {['Keyword', 'Volumen/Monat', 'Wettbewerb', 'CPC', ''].map(h => (
                             <th key={h} className="px-5 py-3 text-left text-[10px] font-semibold text-slate-600 uppercase tracking-wider whitespace-nowrap">{h}</th>
                         ))}
                     </tr>
@@ -179,6 +201,17 @@ function IdeasPanel() {
                             </td>
                             <td className="px-5 py-3.5">
                                 <span className="text-xs text-slate-400">€{r.cpc}</span>
+                            </td>
+                            <td className="px-5 py-3.5">
+                                {i === 1 ? (
+                                    <span className="flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 cursor-default">
+                                        <Check className="w-3 h-3" />Getrackt
+                                    </span>
+                                ) : (
+                                    <span className="flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold bg-white/5 text-slate-400 border border-white/10 cursor-default">
+                                        <TrendingUp className="w-3 h-3" />Tracken
+                                    </span>
+                                )}
                             </td>
                         </tr>
                     ))}
@@ -363,6 +396,15 @@ export default function SeoTrackingTeaser() {
                                     <div className="flex items-center gap-2 shrink-0">
                                         <span className={`text-[10px] font-semibold ${CompColor(r.comp)}`}>{r.comp}</span>
                                         <span className="text-[10px] text-slate-500">{r.vol}</span>
+                                        {i === 1 ? (
+                                            <span className="flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[10px] font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 cursor-default">
+                                                <Check className="w-2.5 h-2.5" />
+                                            </span>
+                                        ) : (
+                                            <span className="flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[10px] font-semibold bg-white/5 text-slate-500 border border-white/10 cursor-default">
+                                                <TrendingUp className="w-2.5 h-2.5" />
+                                            </span>
+                                        )}
                                     </div>
                                 </div>
                             ))}

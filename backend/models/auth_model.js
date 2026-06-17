@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema({
     resetToken: { type: String },
     resetTokenExpiry: { type: Date },
     marketingConsent: { type: Boolean, default: false },
+    seoEmailAlerts: { type: Boolean, default: true },
 }, { timestamps: true })
 
 export default mongoose.model("User", userSchema)

@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import {
     ArrowLeft, TrendingUp, TrendingDown, Minus, Plus, Trash2,
     Loader2, RefreshCw, Globe, X, Lightbulb, Users, Link2,
-    ExternalLink, ChevronUp, ChevronDown, GitCompare, Check, Lock,
+    ExternalLink, ChevronUp, ChevronDown, GitCompare, Check, Lock, Download, Bell, Settings,
 } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter, useParams } from 'next/navigation'
@@ -155,6 +155,24 @@ function SparklineChart({ history }) {
     )
 }
 
+// ─── CTR Helper ──────────────────────────────────────────────────────────────
+
+const CTR_RATES = [28, 15, 11, 8, 7, 5, 4, 3, 3, 2]
+function getCTR(pos) {
+    if (!pos) return null
+    if (pos <= 10) return CTR_RATES[pos - 1]
+    if (pos <= 20) return 1
+    return 0.5
+}
+
+const FILTERS = [
+    { id: 'alle',      label: 'Alle' },
+    { id: 'top3',      label: 'Top 3' },
+    { id: 'top10',     label: 'Top 10' },
+    { id: 'gestiegen', label: '↑ Gestiegen' },
+    { id: 'gefallen',  label: '↓ Gefallen' },
+]
+
 // ─── Rankings Tab ─────────────────────────────────────────────────────────────
 
 function RankingsTab({ siteId, site, onSiteUpdated }) {
@@ -166,6 +184,7 @@ function RankingsTab({ siteId, site, onSiteUpdated }) {
     const [addingKws, setAddingKws]     = useState(false)
     const [selected, setSelected]       = useState(new Set())
     const [expandedKw, setExpandedKw]   = useState(null)
+    const [filter, setFilter]           = useState('alle')
 
     const fetchRankings = useCallback(async () => {
         try {
@@ -242,20 +261,54 @@ function RankingsTab({ siteId, site, onSiteUpdated }) {
 
     const toggleExpand = (kw) => setExpandedKw(prev => prev === kw ? null : kw)
 
+    const filteredRankings = rankings.filter(r => {
+        if (filter === 'top3')      return r.current?.position != null && r.current.position <= 3
+        if (filter === 'top10')     return r.current?.position != null && r.current.position <= 10
+        if (filter === 'gestiegen') return r.change > 0
+        if (filter === 'gefallen')  return r.change < 0
+        return true
+    })
+
+    const exportCSV = () => {
+        const headers = ['Keyword', 'Position', 'Änderung', 'CTR (est. %)', 'URL', 'Datum']
+        const rows = rankings.map(({ keyword, current, change }) => [
+            keyword,
+            current?.position ?? '',
+            change ?? '',
+            current?.position ? getCTR(current.position) + '%' : '',
+            current?.url ?? '',
+            current?.checkedAt ? new Date(current.checkedAt).toLocaleDateString('de-DE') : '',
+        ])
+        const csv = [headers, ...rows].map(r => r.map(v => `"${v}"`).join(',')).join('\n')
+        const blob = new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8;' })
+        const url = URL.createObjectURL(blob)
+        const a = document.createElement('a')
+        a.href = url
+        a.download = `rankings-${site?.domain ?? 'export'}-${new Date().toISOString().slice(0, 10)}.csv`
+        a.click()
+        URL.revokeObjectURL(url)
+    }
+
     return (
         <div>
             {/* Toolbar */}
-            <div className="flex items-center justify-between gap-3 mb-5 flex-wrap">
+            <div className="flex items-center justify-between gap-3 mb-4 flex-wrap">
                 <div className="text-sm text-slate-500">
                     {site?.lastChecked
                         ? `Zuletzt: ${new Date(site.lastChecked).toLocaleString('de-DE', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' })}`
                         : 'Noch nicht geprüft'}
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 flex-wrap">
                     {selected.size > 0 && (
                         <button onClick={handleRemoveSelected}
                             className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl border border-red-500/20 text-red-400 hover:bg-red-500/10 transition-all">
                             <Trash2 className="w-3.5 h-3.5" />{selected.size} entfernen
+                        </button>
+                    )}
+                    {rankings.length > 0 && (
+                        <button onClick={exportCSV}
+                            className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 transition-all">
+                            <Download className="w-3.5 h-3.5" />CSV
                         </button>
                     )}
                     <button onClick={() => setShowAdd(v => !v)}
@@ -269,6 +322,23 @@ function RankingsTab({ siteId, site, onSiteUpdated }) {
                     </button>
                 </div>
             </div>
+
+            {/* Quick-Filter */}
+            {rankings.length > 0 && (
+                <div className="flex items-center gap-1.5 mb-5 flex-wrap">
+                    {FILTERS.map(f => (
+                        <button key={f.id} onClick={() => setFilter(f.id)}
+                            className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${
+                                filter === f.id
+                                    ? 'bg-emerald-500/15 border border-emerald-500/30 text-emerald-400'
+                                    : 'bg-white/4 border border-white/8 text-slate-500 hover:text-slate-300 hover:bg-white/8'
+                            }`}>
+                            {f.label}
+                        </button>
+                    ))}
+                    <span className="text-xs text-slate-600 ml-1">{filteredRankings.length} Keywords</span>
+                </div>
+            )}
 
             {/* Add Keywords */}
             <AnimatePresence>
@@ -296,6 +366,8 @@ function RankingsTab({ siteId, site, onSiteUpdated }) {
             {/* Table */}
             {loading ? <LoadingTab /> : rankings.length === 0 ? (
                 <EmptyTab icon={TrendingUp} text="Noch keine Keywords. Füge Keywords hinzu und starte einen Check." />
+            ) : filteredRankings.length === 0 ? (
+                <EmptyTab icon={TrendingUp} text={`Keine Keywords für Filter "${FILTERS.find(f => f.id === filter)?.label}".`} />
             ) : (
                 <div className="bg-[#0d1117] border border-white/[0.06] rounded-2xl overflow-hidden">
                     <div className="overflow-x-auto">
@@ -306,12 +378,13 @@ function RankingsTab({ siteId, site, onSiteUpdated }) {
                                     <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Keyword</th>
                                     <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Position</th>
                                     <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Änderung</th>
+                                    <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider hidden sm:table-cell">CTR (est.)</th>
                                     <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider hidden sm:table-cell">URL</th>
                                     <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider hidden md:table-cell">Datum</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {rankings.map(({ keyword, current, change, history }) => {
+                                {filteredRankings.map(({ keyword, current, change, history }) => {
                                     const isExpanded = expandedKw === keyword
                                     const isSelected = selected.has(keyword)
                                     const hasHistory = history?.length >= 2
@@ -335,6 +408,13 @@ function RankingsTab({ siteId, site, onSiteUpdated }) {
                                                 <td className="px-5 py-3.5" onClick={() => hasHistory && toggleExpand(keyword)}><PositionCell position={current?.position} /></td>
                                                 <td className="px-5 py-3.5" onClick={() => hasHistory && toggleExpand(keyword)}><ChangeCell change={change} /></td>
                                                 <td className="px-5 py-3.5 hidden sm:table-cell" onClick={() => hasHistory && toggleExpand(keyword)}>
+                                                    {current?.position ? (
+                                                        <span className="text-xs font-semibold text-slate-300">
+                                                            ~{getCTR(current.position)}%
+                                                        </span>
+                                                    ) : <span className="text-xs text-slate-700">—</span>}
+                                                </td>
+                                                <td className="px-5 py-3.5 hidden sm:table-cell" onClick={() => hasHistory && toggleExpand(keyword)}>
                                                     {current?.url ? (
                                                         <a href={current.url} target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()}
                                                             className="text-xs text-slate-500 hover:text-emerald-400 transition-colors truncate max-w-[180px] block">
@@ -350,7 +430,7 @@ function RankingsTab({ siteId, site, onSiteUpdated }) {
                                             </tr>
                                             {isExpanded && (
                                                 <tr className="border-b border-white/[0.04] last:border-0">
-                                                    <td colSpan={6} className="px-5 py-4 bg-white/[0.01]">
+                                                    <td colSpan={7} className="px-5 py-4 bg-white/[0.01]">
                                                         <p className="text-xs text-slate-500 mb-3 uppercase tracking-wider font-semibold">Verlauf — {keyword}</p>
                                                         <SparklineChart history={history} />
                                                     </td>
@@ -374,6 +454,25 @@ function KeywordIdeasTab({ siteId }) {
     const [data, setData]       = useState(null)
     const [loading, setLoading] = useState(false)
     const [loaded, setLoaded]   = useState(false)
+    const [adding, setAdding]   = useState(new Set())
+    const [added, setAdded]     = useState(new Set())
+
+    const handleAddKeyword = async (keyword) => {
+        setAdding(prev => new Set(prev).add(keyword))
+        try {
+            const token = localStorage.getItem('token')
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/seo/sites/${siteId}/keywords`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+                body: JSON.stringify({ keywords: [keyword] }),
+            })
+            const d = await res.json()
+            if (!res.ok) throw new Error(d.error)
+            setAdded(prev => new Set(prev).add(keyword))
+            toast.success(`"${keyword}" wird jetzt getrackt`)
+        } catch (err) { toast.error(err.message || 'Fehler') }
+        finally { setAdding(prev => { const n = new Set(prev); n.delete(keyword); return n }) }
+    }
 
     const fetch_ = async () => {
         setLoading(true)
@@ -419,6 +518,7 @@ function KeywordIdeasTab({ siteId }) {
                                     <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Volumen/Monat</th>
                                     <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider hidden sm:table-cell">Wettbewerb</th>
                                     <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider hidden sm:table-cell">CPC</th>
+                                    <th className="px-5 py-3" />
                                 </tr>
                             </thead>
                             <tbody>
@@ -434,6 +534,17 @@ function KeywordIdeasTab({ siteId }) {
                                         </td>
                                         <td className="px-5 py-3 hidden sm:table-cell">
                                             <span className="text-xs text-slate-500">{item.cpc ? `€${item.cpc.toFixed(2)}` : '—'}</span>
+                                        </td>
+                                        <td className="px-5 py-3">
+                                            <button onClick={() => handleAddKeyword(item.keyword)} disabled={adding.has(item.keyword) || added.has(item.keyword)}
+                                                className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold transition-all ${
+                                                    added.has(item.keyword)
+                                                        ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 cursor-default'
+                                                        : 'bg-white/5 hover:bg-emerald-500/10 text-slate-400 hover:text-emerald-400 border border-white/10 hover:border-emerald-500/20'
+                                                }`}>
+                                                {adding.has(item.keyword) ? <Loader2 className="w-3 h-3 animate-spin" /> : added.has(item.keyword) ? <Check className="w-3 h-3" /> : <Plus className="w-3 h-3" />}
+                                                {added.has(item.keyword) ? 'Getrackt' : 'Tracken'}
+                                            </button>
                                         </td>
                                     </tr>
                                 ))}
@@ -455,6 +566,7 @@ function KeywordIdeasTab({ siteId }) {
                                     <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Volumen/Monat</th>
                                     <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider hidden sm:table-cell">Wettbewerb</th>
                                     <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider hidden sm:table-cell">CPC</th>
+                                    <th className="px-5 py-3" />
                                 </tr>
                             </thead>
                             <tbody>
@@ -472,6 +584,17 @@ function KeywordIdeasTab({ siteId }) {
                                         </td>
                                         <td className="px-5 py-3 hidden sm:table-cell">
                                             <span className="text-xs text-slate-500">{item.cpc ? `€${item.cpc.toFixed(2)}` : '—'}</span>
+                                        </td>
+                                        <td className="px-5 py-3">
+                                            <button onClick={() => handleAddKeyword(item.keyword)} disabled={adding.has(item.keyword) || added.has(item.keyword)}
+                                                className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold transition-all ${
+                                                    added.has(item.keyword)
+                                                        ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 cursor-default'
+                                                        : 'bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/20'
+                                                }`}>
+                                                {adding.has(item.keyword) ? <Loader2 className="w-3 h-3 animate-spin" /> : added.has(item.keyword) ? <Check className="w-3 h-3" /> : <Plus className="w-3 h-3" />}
+                                                {added.has(item.keyword) ? 'Getrackt' : 'Tracken'}
+                                            </button>
                                         </td>
                                     </tr>
                                 ))}
@@ -853,6 +976,106 @@ function ContentGapTab({ siteId, plan }) {
     )
 }
 
+// ─── Settings Tab ────────────────────────────────────────────────────────────
+
+function SettingsTab({ siteId }) {
+    const [alertsEnabled, setAlertsEnabled] = useState(true)
+    const [loading, setLoading] = useState(true)
+    const [saving, setSaving] = useState(false)
+
+    useEffect(() => {
+        const token = localStorage.getItem('token')
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/seo/alert-settings`, {
+            headers: { Authorization: `Bearer ${token}` },
+        })
+            .then(r => r.json())
+            .then(d => { if (typeof d.seoEmailAlerts === 'boolean') setAlertsEnabled(d.seoEmailAlerts) })
+            .catch(() => {})
+            .finally(() => setLoading(false))
+    }, [])
+
+    async function toggleAlerts() {
+        setSaving(true)
+        try {
+            const token = localStorage.getItem('token')
+            const next = !alertsEnabled
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/seo/alert-settings`, {
+                method: 'PATCH',
+                headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+                body: JSON.stringify({ seoEmailAlerts: next }),
+            })
+            if (res.ok) setAlertsEnabled(next)
+        } catch {}
+        finally { setSaving(false) }
+    }
+
+    if (loading) return <LoadingTab />
+
+    return (
+        <div className="max-w-lg space-y-4">
+            {/* Email alerts card */}
+            <div className="bg-white/[0.03] border border-white/[0.07] rounded-2xl p-6">
+                <div className="flex items-center gap-3 mb-4">
+                    <div className="w-9 h-9 rounded-xl bg-emerald-500/10 border border-emerald-500/15 flex items-center justify-center">
+                        <Bell className="w-4 h-4 text-emerald-400" />
+                    </div>
+                    <div>
+                        <h3 className="text-sm font-semibold text-white">E-Mail-Alerts</h3>
+                        <p className="text-xs text-slate-500 mt-0.5">Werde benachrichtigt, wenn sich Rankings ändern</p>
+                    </div>
+                </div>
+
+                <div className="space-y-3 mb-5">
+                    <div className="flex items-start gap-2.5">
+                        <div className="w-4 h-4 rounded-full bg-emerald-500/15 border border-emerald-500/25 flex items-center justify-center shrink-0 mt-0.5">
+                            <Check className="w-2.5 h-2.5 text-emerald-400" strokeWidth={3} />
+                        </div>
+                        <p className="text-xs text-slate-400">Automatischer wöchentlicher Check (montags)</p>
+                    </div>
+                    <div className="flex items-start gap-2.5">
+                        <div className="w-4 h-4 rounded-full bg-emerald-500/15 border border-emerald-500/25 flex items-center justify-center shrink-0 mt-0.5">
+                            <Check className="w-2.5 h-2.5 text-emerald-400" strokeWidth={3} />
+                        </div>
+                        <p className="text-xs text-slate-400">Alert bei signifikanten Verlusten <span className="text-slate-600">(Einsteiger: ±10, Pro: ±5, Expert: ±3 Positionen)</span></p>
+                    </div>
+                    <div className="flex items-start gap-2.5">
+                        <div className="w-4 h-4 rounded-full bg-emerald-500/15 border border-emerald-500/25 flex items-center justify-center shrink-0 mt-0.5">
+                            <Check className="w-2.5 h-2.5 text-emerald-400" strokeWidth={3} />
+                        </div>
+                        <p className="text-xs text-slate-400">Alert bei Verbesserungen — neu in Top 10 oder +5 Positionen</p>
+                    </div>
+                </div>
+
+                <button
+                    onClick={toggleAlerts}
+                    disabled={saving}
+                    className={`flex items-center justify-between w-full px-4 py-3 rounded-xl border transition-all ${
+                        alertsEnabled
+                            ? 'bg-emerald-500/10 border-emerald-500/20 hover:bg-emerald-500/15'
+                            : 'bg-white/[0.03] border-white/10 hover:border-white/15'
+                    }`}
+                >
+                    <div className="flex items-center gap-3">
+                        <Bell className={`w-4 h-4 ${alertsEnabled ? 'text-emerald-400' : 'text-slate-600'}`} />
+                        <span className={`text-sm font-medium ${alertsEnabled ? 'text-emerald-300' : 'text-slate-500'}`}>
+                            Ranking-Alerts per E-Mail
+                        </span>
+                    </div>
+                    <div className={`relative w-10 h-5 rounded-full transition-colors shrink-0 ${alertsEnabled ? 'bg-emerald-500' : 'bg-white/10'}`}>
+                        <div className={`absolute top-0.5 w-4 h-4 rounded-full bg-white shadow transition-transform ${alertsEnabled ? 'translate-x-5' : 'translate-x-0.5'}`} />
+                    </div>
+                </button>
+
+                <p className="text-xs text-slate-600 mt-3">
+                    {alertsEnabled
+                        ? 'Du erhältst E-Mails sobald ein manueller oder wöchentlicher Check relevante Änderungen erkennt.'
+                        : 'Alerts sind deaktiviert — du erhältst keine E-Mails bei Ranking-Änderungen.'}
+                </p>
+            </div>
+        </div>
+    )
+}
+
 // ─── Main Page ────────────────────────────────────────────────────────────────
 
 const TABS = [
@@ -861,6 +1084,7 @@ const TABS = [
     { id: 'gap',         label: 'Content Gap',    icon: GitCompare },
     { id: 'competitors', label: 'Konkurrenten',   icon: Users },
     { id: 'backlinks',   label: 'Backlinks',      icon: Link2 },
+    { id: 'settings',    label: 'Einstellungen',  icon: Settings },
 ]
 
 export default function SeoSitePage() {
@@ -948,6 +1172,7 @@ export default function SeoSitePage() {
                 {tab === 'gap'         && <ContentGapTab siteId={siteId} plan={plan} />}
                 {tab === 'competitors' && <CompetitorsTab siteId={siteId} />}
                 {tab === 'backlinks'   && <BacklinksTab siteId={siteId} />}
+                {tab === 'settings'    && <SettingsTab siteId={siteId} />}
             </div>
         </div>
     )

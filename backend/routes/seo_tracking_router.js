@@ -7,6 +7,7 @@ import {
     addKeywords, removeKeywords,
     getRankings, triggerCheck,
     getKeywordIdeasForSite, getCompetitorsForSite, getBacklinksForSite, getContentGapForSite,
+    getAlertSettings, updateAlertSettings,
 } from '../controllers/seo_tracking.js'
 
 const checkRateLimit = rateLimit({
@@ -33,6 +34,9 @@ router.use(apiRateLimit)
 
 router.get('/plan', getPlan)
 router.post('/subscribe', subscribePlan)
+
+router.get('/alert-settings', getAlertSettings)
+router.patch('/alert-settings', updateAlertSettings)
 
 router.get('/sites', getSites)
 router.post('/sites', addSite)

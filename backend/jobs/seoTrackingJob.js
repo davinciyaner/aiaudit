@@ -81,7 +81,7 @@ async function runWeeklySeoChecks() {
                     if (gains.length || losses.length) {
                         try {
                             const user = await User.findById(site.userId).lean()
-                            if (user?.email) {
+                            if (user?.email && user.seoEmailAlerts !== false) {
                                 await sendSeoRankingAlert({
                                     email: user.email,
                                     domain: site.domain,
