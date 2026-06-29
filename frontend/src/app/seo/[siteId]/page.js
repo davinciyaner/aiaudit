@@ -5,6 +5,7 @@ import {
     ArrowLeft, TrendingUp, TrendingDown, Minus, Plus, Trash2,
     Loader2, RefreshCw, Globe, X, Lightbulb, Users, Link2,
     ExternalLink, ChevronUp, ChevronDown, GitCompare, Check, Lock, Download, Bell, Settings,
+    FileText, Copy,
 } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter, useParams } from 'next/navigation'
@@ -173,10 +174,251 @@ const FILTERS = [
     { id: 'gefallen',  label: '↓ Gefallen' },
 ]
 
+const DIFFICULTY_COLORS = {
+    low:    { text: 'text-emerald-400', bg: 'bg-emerald-500/10 border-emerald-500/20', label: 'Gering' },
+    medium: { text: 'text-amber-400',   bg: 'bg-amber-500/10 border-amber-500/20',     label: 'Medium' },
+    high:   { text: 'text-red-400',     bg: 'bg-red-500/10 border-red-500/20',         label: 'Schwer' },
+}
+
+function DifficultyBadge({ difficulty }) {
+    const key = (difficulty || '').toLowerCase()
+    const cfg = DIFFICULTY_COLORS[key] || { text: 'text-slate-400', bg: '', label: difficulty || '—' }
+    return <span className={`text-xs font-semibold px-2 py-0.5 rounded-md border ${cfg.bg} ${cfg.text}`}>{cfg.label}</span>
+}
+
+function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).catch(() => {})
+}
+
+// ─── Inline Insight Panel ─────────────────────────────────────────────────────
+
+function InsightPanel({ insight, keyword, siteId, onRefreshed }) {
+    const [copied,      setCopied]      = useState(null)
+    const [refreshing,  setRefreshing]  = useState(false)
+
+    const copy = (text, key) => {
+        copyToClipboard(text)
+        setCopied(key)
+        setTimeout(() => setCopied(null), 1500)
+    }
+
+    const handleRefresh = async () => {
+        setRefreshing(true)
+        try {
+            const token = localStorage.getItem('token')
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/seo/sites/${siteId}/insights/refresh`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+                body: JSON.stringify({ keyword }),
+            })
+            const data = await res.json()
+            if (res.status === 429 && data.error === 'monthly_limit_reached') {
+                toast.error(`Monatliches Limit erreicht (${data.limit} Refreshes). Upgrade für mehr.`)
+                return
+            }
+            if (!res.ok) { toast.error(data.error || 'Fehler'); return }
+            onRefreshed()
+        } catch { toast.error('Fehler beim Neu-Generieren') }
+        finally { setRefreshing(false) }
+    }
+
+    const isPending = !insight || insight.status === 'pending'
+    const isError   = insight?.status === 'error'
+
+    const refreshBtn = (
+        <button onClick={handleRefresh} disabled={refreshing}
+            className="flex items-center gap-1 text-xs text-slate-600 hover:text-emerald-400 transition-colors disabled:opacity-40">
+            <RefreshCw className={`w-3 h-3 ${refreshing ? 'animate-spin' : ''}`} />
+            {refreshing ? 'Läuft…' : 'Neu generieren'}
+        </button>
+    )
+
+    if (isPending) return (
+        <div className="flex items-center gap-2 py-2 text-sm text-slate-600">
+            <Loader2 className="w-3.5 h-3.5 animate-spin text-emerald-500/50" />
+            Content-Plan wird im Hintergrund generiert…
+        </div>
+    )
+
+    if (isError) return (
+        <div className="flex items-center gap-3 py-2">
+            <span className="text-sm text-slate-600">Generierung fehlgeschlagen.</span>
+            {refreshBtn}
+        </div>
+    )
+
+    const { content, backlinks } = insight
+
+    return (
+        <div className="space-y-5">
+            {/* Content Plan */}
+            {content && (
+                <div>
+                    <div className="flex items-center justify-between mb-3">
+                        <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
+                            <FileText className="w-3 h-3" />Content-Plan
+                        </span>
+                        {refreshBtn}
+                    </div>
+                    <div className="grid sm:grid-cols-2 gap-2.5">
+                        {/* Title */}
+                        <div className="bg-white/[0.03] border border-white/[0.05] rounded-xl p-3">
+                            <div className="flex items-center justify-between mb-1.5">
+                                <span className="text-[10px] font-semibold text-slate-600 uppercase tracking-wider">H1 Titel</span>
+                                <button onClick={() => copy(content.title, 'title')} className="flex items-center gap-1 text-[10px] text-slate-600 hover:text-emerald-400 transition-colors">
+                                    {copied === 'title' ? <Check className="w-2.5 h-2.5" /> : <Copy className="w-2.5 h-2.5" />}
+                                    {copied === 'title' ? 'Kopiert' : 'Kopieren'}
+                                </button>
+                            </div>
+                            <p className="text-sm text-white font-medium leading-snug">{content.title}</p>
+                        </div>
+
+                        {/* Meta */}
+                        <div className="bg-white/[0.03] border border-white/[0.05] rounded-xl p-3">
+                            <div className="flex items-center justify-between mb-1.5">
+                                <span className="text-[10px] font-semibold text-slate-600 uppercase tracking-wider">Meta Description</span>
+                                <div className="flex items-center gap-2">
+                                    <span className="text-[10px] text-slate-700">{content.metaDescription?.length || 0}/155</span>
+                                    <button onClick={() => copy(content.metaDescription, 'meta')} className="flex items-center gap-1 text-[10px] text-slate-600 hover:text-emerald-400 transition-colors">
+                                        {copied === 'meta' ? <Check className="w-2.5 h-2.5" /> : <Copy className="w-2.5 h-2.5" />}
+                                        {copied === 'meta' ? 'Kopiert' : 'Kopieren'}
+                                    </button>
+                                </div>
+                            </div>
+                            <p className="text-xs text-slate-400 leading-relaxed">{content.metaDescription}</p>
+                        </div>
+
+                        {/* Slug */}
+                        <div className="bg-white/[0.03] border border-white/[0.05] rounded-xl p-3">
+                            <div className="flex items-center justify-between mb-1.5">
+                                <span className="text-[10px] font-semibold text-slate-600 uppercase tracking-wider">URL Slug</span>
+                                <button onClick={() => copy(content.slug, 'slug')} className="flex items-center gap-1 text-[10px] text-slate-600 hover:text-emerald-400 transition-colors">
+                                    {copied === 'slug' ? <Check className="w-2.5 h-2.5" /> : <Copy className="w-2.5 h-2.5" />}
+                                    {copied === 'slug' ? 'Kopiert' : 'Kopieren'}
+                                </button>
+                            </div>
+                            <p className="text-xs text-emerald-400 font-mono">/{content.slug}</p>
+                        </div>
+
+                        {/* Intro */}
+                        {content.intro && (
+                            <div className="bg-white/[0.03] border border-white/[0.05] rounded-xl p-3">
+                                <div className="flex items-center justify-between mb-1.5">
+                                    <span className="text-[10px] font-semibold text-slate-600 uppercase tracking-wider">Einleitung</span>
+                                    <button onClick={() => copy(content.intro, 'intro')} className="flex items-center gap-1 text-[10px] text-slate-600 hover:text-emerald-400 transition-colors">
+                                        {copied === 'intro' ? <Check className="w-2.5 h-2.5" /> : <Copy className="w-2.5 h-2.5" />}
+                                        {copied === 'intro' ? 'Kopiert' : 'Kopieren'}
+                                    </button>
+                                </div>
+                                <p className="text-xs text-slate-400 leading-relaxed line-clamp-3">{content.intro}</p>
+                            </div>
+                        )}
+                    </div>
+
+                    {/* Outline */}
+                    {content.outline?.length > 0 && (
+                        <div className="mt-2.5 bg-white/[0.02] border border-white/[0.04] rounded-xl p-3">
+                            <div className="flex items-center justify-between mb-2">
+                                <span className="text-[10px] font-semibold text-slate-600 uppercase tracking-wider">Artikel-Gliederung</span>
+                                <button onClick={() => copy(content.outline.map((o, i) => `${i+1}. ${o.h2}\n   ${o.description}`).join('\n'), 'outline')}
+                                    className="flex items-center gap-1 text-[10px] text-slate-600 hover:text-emerald-400 transition-colors">
+                                    {copied === 'outline' ? <Check className="w-2.5 h-2.5" /> : <Copy className="w-2.5 h-2.5" />}
+                                    {copied === 'outline' ? 'Kopiert' : 'Kopieren'}
+                                </button>
+                            </div>
+                            <div className="space-y-1.5">
+                                {content.outline.map((item, i) => (
+                                    <div key={i} className="flex gap-2">
+                                        <span className="text-[10px] font-bold text-emerald-500/50 shrink-0 mt-0.5">H2</span>
+                                        <div>
+                                            <p className="text-xs font-semibold text-slate-200">{item.h2}</p>
+                                            <p className="text-[11px] text-slate-600">{item.description}</p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Key Points */}
+                    {content.keyPoints?.length > 0 && (
+                        <div className="mt-2.5 bg-white/[0.02] border border-white/[0.04] rounded-xl p-3">
+                            <span className="text-[10px] font-semibold text-slate-600 uppercase tracking-wider block mb-2">Wichtige Inhaltspunkte</span>
+                            <div className="grid sm:grid-cols-2 gap-1">
+                                {content.keyPoints.map((p, i) => (
+                                    <div key={i} className="flex items-start gap-2">
+                                        <Check className="w-3 h-3 text-emerald-500/50 shrink-0 mt-0.5" strokeWidth={3} />
+                                        <span className="text-xs text-slate-400">{p}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+                </div>
+            )}
+
+            {/* Backlinks */}
+            {backlinks && (
+                <div>
+                    <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider flex items-center gap-1.5 mb-3">
+                        <Link2 className="w-3 h-3" />Backlink-Strategie
+                    </span>
+
+                    {backlinks.strategies?.length > 0 && (
+                        <div className="space-y-1.5 mb-3">
+                            {backlinks.strategies.map((s, i) => (
+                                <div key={i} className="bg-white/[0.02] border border-white/[0.04] rounded-xl px-3 py-2.5 flex gap-3 items-start">
+                                    <div className="flex-1">
+                                        <div className="flex items-center gap-2 mb-0.5">
+                                            <span className="text-xs font-semibold text-white">{s.type}</span>
+                                            <DifficultyBadge difficulty={s.difficulty} />
+                                        </div>
+                                        <p className="text-[11px] text-slate-500">{s.description}</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+
+                    {backlinks.targetSites?.length > 0 && (
+                        <div className="bg-white/[0.02] border border-white/[0.04] rounded-xl overflow-hidden mb-2.5">
+                            <div className="px-3 py-2 border-b border-white/[0.03]">
+                                <span className="text-[10px] font-semibold text-slate-600 uppercase tracking-wider">Ziel-Webseiten</span>
+                            </div>
+                            {backlinks.targetSites.map((ts, i) => (
+                                <div key={i} className={`px-3 py-2.5 ${i < backlinks.targetSites.length - 1 ? 'border-b border-white/[0.03]' : ''}`}>
+                                    <span className="text-xs font-semibold text-slate-300">{ts.type}</span>
+                                    {ts.example && <span className="text-[11px] text-slate-600 ml-2">{ts.example}</span>}
+                                    <p className="text-[11px] text-slate-500 mt-0.5">{ts.why}</p>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+
+                    {backlinks.linkbaitIdeas?.length > 0 && (
+                        <div className="bg-white/[0.02] border border-white/[0.04] rounded-xl p-3">
+                            <span className="text-[10px] font-semibold text-slate-600 uppercase tracking-wider block mb-2">Linkbait-Ideen</span>
+                            <div className="space-y-1.5">
+                                {backlinks.linkbaitIdeas.map((idea, i) => (
+                                    <div key={i} className="flex items-start gap-2">
+                                        <span className="text-[10px] font-bold text-emerald-500/50 shrink-0 w-4 mt-0.5">{i + 1}.</span>
+                                        <span className="text-xs text-slate-400">{idea}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+                </div>
+            )}
+        </div>
+    )
+}
+
 // ─── Rankings Tab ─────────────────────────────────────────────────────────────
 
 function RankingsTab({ siteId, site, onSiteUpdated }) {
     const [rankings, setRankings]       = useState([])
+    const [insights, setInsights]       = useState({})
     const [loading, setLoading]         = useState(true)
     const [checking, setChecking]       = useState(false)
     const [showAdd, setShowAdd]         = useState(false)
@@ -185,6 +427,17 @@ function RankingsTab({ siteId, site, onSiteUpdated }) {
     const [selected, setSelected]       = useState(new Set())
     const [expandedKw, setExpandedKw]   = useState(null)
     const [filter, setFilter]           = useState('alle')
+
+    const fetchInsights = useCallback(async () => {
+        try {
+            const token = localStorage.getItem('token')
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/seo/sites/${siteId}/insights`, {
+                headers: { Authorization: `Bearer ${token}` },
+            })
+            const data = await res.json()
+            if (res.ok) setInsights(data.insightsMap || {})
+        } catch { /* silent */ }
+    }, [siteId])
 
     const fetchRankings = useCallback(async () => {
         try {
@@ -199,7 +452,18 @@ function RankingsTab({ siteId, site, onSiteUpdated }) {
         finally { setLoading(false) }
     }, [siteId])
 
-    useEffect(() => { fetchRankings() }, [fetchRankings])
+    useEffect(() => {
+        fetchRankings()
+        fetchInsights()
+    }, [fetchRankings, fetchInsights])
+
+    // Poll for pending insights
+    useEffect(() => {
+        const hasPending = Object.values(insights).some(i => i.status === 'pending')
+        if (!hasPending) return
+        const timer = setInterval(fetchInsights, 8000)
+        return () => clearInterval(timer)
+    }, [insights, fetchInsights])
 
     const handleCheck = async () => {
         setChecking(true)
@@ -230,10 +494,11 @@ function RankingsTab({ siteId, site, onSiteUpdated }) {
             })
             const data = await res.json()
             if (!res.ok) throw new Error(data.error)
-            toast.success(`${data.added} Keyword${data.added !== 1 ? 's' : ''} hinzugefügt`)
+            toast.success(`${data.added} Keyword${data.added !== 1 ? 's' : ''} hinzugefügt — Insights werden generiert`)
             setNewKeywords(''); setShowAdd(false)
             onSiteUpdated()
             await fetchRankings()
+            setTimeout(fetchInsights, 3000)
         } catch (err) { toast.error(err.message || 'Fehler') }
         finally { setAddingKws(false) }
     }
@@ -385,44 +650,47 @@ function RankingsTab({ siteId, site, onSiteUpdated }) {
                             </thead>
                             <tbody>
                                 {filteredRankings.map(({ keyword, current, change, history }) => {
-                                    const isExpanded = expandedKw === keyword
-                                    const isSelected = selected.has(keyword)
-                                    const hasHistory = history?.length >= 2
+                                    const isExpanded  = expandedKw === keyword
+                                    const isSelected  = selected.has(keyword)
+                                    const hasHistory  = history?.length >= 2
+                                    const insight     = insights[keyword]
+                                    const insightDone = insight?.status === 'done'
+                                    const insightPending = insight?.status === 'pending' || (!insight && Object.keys(insights).length > 0)
                                     return (
                                         <React.Fragment key={keyword}>
-                                            <tr
+                                            <tr onClick={() => toggleExpand(keyword)}
                                                 className={`border-b border-white/[0.04] cursor-pointer transition-colors ${isSelected ? 'bg-red-500/5' : isExpanded ? 'bg-white/[0.03]' : 'hover:bg-white/[0.02]'} ${!isExpanded ? 'last:border-0' : ''}`}>
-                                                <td className="px-5 py-3.5" onClick={(e) => { e.stopPropagation(); toggleSelect(keyword) }}>
+                                                <td className="px-5 py-3.5" onClick={e => { e.stopPropagation(); toggleSelect(keyword) }}>
                                                     <div className={`w-3.5 h-3.5 rounded border transition-all ${isSelected ? 'bg-red-500/40 border-red-500/60' : 'border-white/15'}`} />
                                                 </td>
-                                                <td className="px-5 py-3.5" onClick={() => hasHistory && toggleExpand(keyword)}>
+                                                <td className="px-5 py-3.5">
                                                     <div className="flex items-center gap-2">
                                                         <span className="text-sm text-slate-200">{keyword}</span>
-                                                        {hasHistory && (
-                                                            <span className={`transition-colors ${isExpanded ? 'text-emerald-400' : 'text-slate-700 hover:text-slate-500'}`}>
-                                                                <TrendingUp className="w-3 h-3" />
+                                                        {insightDone && <span className="w-1.5 h-1.5 rounded-full bg-emerald-500/70 shrink-0" title="Content-Plan verfügbar" />}
+                                                        {insightPending && <Loader2 className="w-2.5 h-2.5 text-slate-600 animate-spin shrink-0" />}
+                                                        {(hasHistory || insightDone) && (
+                                                            <span className={`transition-colors ${isExpanded ? 'text-emerald-400' : 'text-slate-700'}`}>
+                                                                {isExpanded ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
                                                             </span>
                                                         )}
                                                     </div>
                                                 </td>
-                                                <td className="px-5 py-3.5" onClick={() => hasHistory && toggleExpand(keyword)}><PositionCell position={current?.position} /></td>
-                                                <td className="px-5 py-3.5" onClick={() => hasHistory && toggleExpand(keyword)}><ChangeCell change={change} /></td>
-                                                <td className="px-5 py-3.5 hidden sm:table-cell" onClick={() => hasHistory && toggleExpand(keyword)}>
+                                                <td className="px-5 py-3.5"><PositionCell position={current?.position} /></td>
+                                                <td className="px-5 py-3.5"><ChangeCell change={change} /></td>
+                                                <td className="px-5 py-3.5 hidden sm:table-cell">
                                                     {current?.position ? (
-                                                        <span className="text-xs font-semibold text-slate-300">
-                                                            ~{getCTR(current.position)}%
-                                                        </span>
+                                                        <span className="text-xs font-semibold text-slate-300">~{getCTR(current.position)}%</span>
                                                     ) : <span className="text-xs text-slate-700">—</span>}
                                                 </td>
-                                                <td className="px-5 py-3.5 hidden sm:table-cell" onClick={() => hasHistory && toggleExpand(keyword)}>
-                                                    {current?.url ? (
+                                                <td className="px-5 py-3.5 hidden sm:table-cell">
+                                                    {current?.url && /^https?:\/\//.test(current.url) ? (
                                                         <a href={current.url} target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()}
                                                             className="text-xs text-slate-500 hover:text-emerald-400 transition-colors truncate max-w-[180px] block">
                                                             {current.url.replace(/^https?:\/\//, '')}
                                                         </a>
                                                     ) : <span className="text-xs text-slate-700">—</span>}
                                                 </td>
-                                                <td className="px-5 py-3.5 hidden md:table-cell" onClick={() => hasHistory && toggleExpand(keyword)}>
+                                                <td className="px-5 py-3.5 hidden md:table-cell">
                                                     {current?.checkedAt
                                                         ? <span className="text-xs text-slate-600">{new Date(current.checkedAt).toLocaleDateString('de-DE')}</span>
                                                         : <span className="text-xs text-slate-700">—</span>}
@@ -430,9 +698,22 @@ function RankingsTab({ siteId, site, onSiteUpdated }) {
                                             </tr>
                                             {isExpanded && (
                                                 <tr className="border-b border-white/[0.04] last:border-0">
-                                                    <td colSpan={7} className="px-5 py-4 bg-white/[0.01]">
-                                                        <p className="text-xs text-slate-500 mb-3 uppercase tracking-wider font-semibold">Verlauf — {keyword}</p>
-                                                        <SparklineChart history={history} />
+                                                    <td colSpan={7} className="px-5 py-5 bg-white/[0.01]">
+                                                        {hasHistory && (
+                                                            <div className="mb-5">
+                                                                <p className="text-xs text-slate-500 mb-3 uppercase tracking-wider font-semibold">Verlauf — {keyword}</p>
+                                                                <SparklineChart history={history} />
+                                                            </div>
+                                                        )}
+                                                        <InsightPanel
+                                                            insight={insight}
+                                                            keyword={keyword}
+                                                            siteId={siteId}
+                                                            onRefreshed={() => {
+                                                                setInsights(prev => ({ ...prev, [keyword]: { status: 'pending' } }))
+                                                                setTimeout(fetchInsights, 3000)
+                                                            }}
+                                                        />
                                                     </td>
                                                 </tr>
                                             )}
@@ -450,12 +731,20 @@ function RankingsTab({ siteId, site, onSiteUpdated }) {
 
 // ─── Keyword-Ideen Tab ────────────────────────────────────────────────────────
 
+const DIFF_FILTERS = [
+    { id: 'ALL',    label: 'Alle' },
+    { id: 'LOW',    label: 'Gering' },
+    { id: 'MEDIUM', label: 'Medium' },
+    { id: 'HIGH',   label: 'Schwer' },
+]
+
 function KeywordIdeasTab({ siteId }) {
-    const [data, setData]       = useState(null)
-    const [loading, setLoading] = useState(false)
-    const [loaded, setLoaded]   = useState(false)
-    const [adding, setAdding]   = useState(new Set())
-    const [added, setAdded]     = useState(new Set())
+    const [data, setData]             = useState(null)
+    const [loading, setLoading]       = useState(false)
+    const [loaded, setLoaded]         = useState(false)
+    const [adding, setAdding]         = useState(new Set())
+    const [added, setAdded]           = useState(new Set())
+    const [diffFilter, setDiffFilter] = useState('ALL')
 
     const handleAddKeyword = async (keyword) => {
         setAdding(prev => new Set(prev).add(keyword))
@@ -492,6 +781,10 @@ function KeywordIdeasTab({ siteId }) {
         ...[...( data.volumes || []), ...(data.ideas || [])].map(i => i.searchVolume || 0)
     ) : 0
 
+    const filterByDiff = (items) => diffFilter === 'ALL' ? items : (items || []).filter(i => (i.competition || '').toUpperCase() === diffFilter)
+    const filteredVolumes = filterByDiff(data?.volumes)
+    const filteredIdeas   = filterByDiff(data?.ideas)
+
     if (!loaded) return (
         <div className="flex flex-col items-center justify-center py-20 gap-4">
             <Lightbulb className="w-10 h-10 text-emerald-500/30" />
@@ -506,10 +799,33 @@ function KeywordIdeasTab({ siteId }) {
 
     return (
         <div className="space-y-6">
+            {/* Difficulty filter */}
+            <div className="flex items-center gap-2 flex-wrap">
+                <span className="text-xs text-slate-500 font-medium">Wettbewerb:</span>
+                {DIFF_FILTERS.map(f => (
+                    <button key={f.id} onClick={() => setDiffFilter(f.id)}
+                        className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all border ${
+                            diffFilter === f.id
+                                ? f.id === 'LOW'    ? 'bg-emerald-500/15 border-emerald-500/30 text-emerald-400'
+                                : f.id === 'MEDIUM' ? 'bg-amber-500/15 border-amber-500/30 text-amber-400'
+                                : f.id === 'HIGH'   ? 'bg-red-500/15 border-red-500/30 text-red-400'
+                                : 'bg-emerald-500/15 border-emerald-500/30 text-emerald-400'
+                                : 'bg-white/4 border-white/8 text-slate-500 hover:text-slate-300 hover:bg-white/8'
+                        }`}>
+                        {f.label}
+                    </button>
+                ))}
+            </div>
+
             {/* Existing keywords with volumes */}
             {data.volumes?.length > 0 && (
                 <div>
-                    <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-3">Deine Keywords — Suchvolumen</h3>
+                    <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-3">
+                        Deine Keywords — Suchvolumen
+                        {diffFilter !== 'ALL' && filteredVolumes?.length !== data.volumes.length && (
+                            <span className="ml-2 text-slate-600 font-normal normal-case">{filteredVolumes?.length} von {data.volumes.length}</span>
+                        )}
+                    </h3>
                     <div className="bg-[#0d1117] border border-white/[0.06] rounded-2xl overflow-hidden">
                         <table className="w-full">
                             <thead>
@@ -522,15 +838,14 @@ function KeywordIdeasTab({ siteId }) {
                                 </tr>
                             </thead>
                             <tbody>
-                                {data.volumes.map(item => (
+                                {(filteredVolumes || []).length === 0 ? (
+                                    <tr><td colSpan={5} className="px-5 py-8 text-center text-sm text-slate-600">Keine Keywords mit diesem Wettbewerb-Level.</td></tr>
+                                ) : (filteredVolumes || []).map(item => (
                                     <tr key={item.keyword} className="border-b border-white/[0.04] last:border-0">
                                         <td className="px-5 py-3"><span className="text-sm text-slate-200">{item.keyword}</span></td>
                                         <td className="px-5 py-3"><VolumeBar value={item.searchVolume} max={maxVolume} /></td>
                                         <td className="px-5 py-3 hidden sm:table-cell">
-                                            <span className={`text-xs font-medium ${
-                                                item.competition === 'HIGH' ? 'text-red-400' :
-                                                item.competition === 'MEDIUM' ? 'text-amber-400' : 'text-emerald-400'
-                                            }`}>{item.competition || '—'}</span>
+                                            <DifficultyBadge difficulty={(item.competition || 'low').toLowerCase()} />
                                         </td>
                                         <td className="px-5 py-3 hidden sm:table-cell">
                                             <span className="text-xs text-slate-500">{item.cpc ? `€${item.cpc.toFixed(2)}` : '—'}</span>
@@ -557,7 +872,12 @@ function KeywordIdeasTab({ siteId }) {
             {/* Keyword ideas */}
             {data.ideas?.length > 0 && (
                 <div>
-                    <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-3">Neue Keyword-Ideen</h3>
+                    <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-3">
+                        Neue Keyword-Ideen
+                        {diffFilter !== 'ALL' && filteredIdeas?.length !== data.ideas.length && (
+                            <span className="ml-2 text-slate-600 font-normal normal-case">{filteredIdeas?.length} von {data.ideas.length}</span>
+                        )}
+                    </h3>
                     <div className="bg-[#0d1117] border border-emerald-500/10 rounded-2xl overflow-hidden">
                         <table className="w-full">
                             <thead>
@@ -570,17 +890,16 @@ function KeywordIdeasTab({ siteId }) {
                                 </tr>
                             </thead>
                             <tbody>
-                                {data.ideas.map(item => (
+                                {(filteredIdeas || []).length === 0 ? (
+                                    <tr><td colSpan={5} className="px-5 py-8 text-center text-sm text-slate-600">Keine Ideen mit diesem Wettbewerb-Level.</td></tr>
+                                ) : (filteredIdeas || []).map(item => (
                                     <tr key={item.keyword} className="border-b border-white/[0.04] last:border-0 hover:bg-emerald-500/[0.03] transition-colors">
                                         <td className="px-5 py-3">
                                             <span className="text-sm text-emerald-300 font-medium">{item.keyword}</span>
                                         </td>
                                         <td className="px-5 py-3"><VolumeBar value={item.searchVolume} max={maxVolume} /></td>
                                         <td className="px-5 py-3 hidden sm:table-cell">
-                                            <span className={`text-xs font-medium ${
-                                                item.competition === 'HIGH' ? 'text-red-400' :
-                                                item.competition === 'MEDIUM' ? 'text-amber-400' : 'text-emerald-400'
-                                            }`}>{item.competition || '—'}</span>
+                                            <DifficultyBadge difficulty={(item.competition || 'low').toLowerCase()} />
                                         </td>
                                         <td className="px-5 py-3 hidden sm:table-cell">
                                             <span className="text-xs text-slate-500">{item.cpc ? `€${item.cpc.toFixed(2)}` : '—'}</span>
@@ -603,7 +922,6 @@ function KeywordIdeasTab({ siteId }) {
                     </div>
                 </div>
             )}
-
             <button onClick={fetch_} disabled={loading}
                 className="flex items-center gap-2 text-xs text-slate-600 hover:text-slate-400 transition-colors">
                 <RefreshCw className={`w-3 h-3 ${loading ? 'animate-spin' : ''}`} />

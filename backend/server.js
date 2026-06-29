@@ -15,7 +15,9 @@ import supportRouter from "./routes/support_router.js"
 import feedbackRouter from "./routes/feedback_router.js";
 import landingFeedbackRouter from "./routes/landing_feedback_router.js";
 import seoTrackingRouter from "./routes/seo_tracking_router.js";
+import geoRouter from "./routes/geo_router.js";
 import { startSeoTrackingJob } from "./jobs/seoTrackingJob.js";
+import { startGeoTrackingJob } from "./jobs/geoTrackingJob.js";
 
 const app = express();
 
@@ -51,6 +53,7 @@ app.use("/api/support", supportRouter)
 app.use("/api/feedback", feedbackRouter);
 app.use("/api/landing-feedback", landingFeedbackRouter);
 app.use("/api/seo", seoTrackingRouter);
+app.use("/api/geo", geoRouter);
 app.use("/reports", express.static("reports"));
 
 app.get("/health", (req, res) => {
@@ -70,5 +73,6 @@ app.use((err, req, res, _next) => {
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
     console.log(`Server läuft auf Port ${PORT}`);
-    startSeoTrackingJob();
+    startSeoTrackingJob()
+    startGeoTrackingJob()
 });

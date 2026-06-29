@@ -8,6 +8,8 @@ import {
     getRankings, triggerCheck,
     getKeywordIdeasForSite, getCompetitorsForSite, getBacklinksForSite, getContentGapForSite,
     getAlertSettings, updateAlertSettings,
+    generateContent, generateBacklinkIdeasForKeyword,
+    getInsights, refreshInsight,
 } from '../controllers/seo_tracking.js'
 
 const checkRateLimit = rateLimit({
@@ -53,5 +55,11 @@ router.get('/sites/:id/keyword-ideas', checkRateLimit, getKeywordIdeasForSite)
 router.get('/sites/:id/competitors', checkRateLimit, getCompetitorsForSite)
 router.get('/sites/:id/backlinks', checkRateLimit, getBacklinksForSite)
 router.get('/sites/:id/content-gap', checkRateLimit, getContentGapForSite)
+
+router.post('/sites/:id/keyword-content', checkRateLimit, generateContent)
+router.post('/sites/:id/backlink-ideas', checkRateLimit, generateBacklinkIdeasForKeyword)
+
+router.get('/sites/:id/insights', getInsights)
+router.post('/sites/:id/insights/refresh', checkRateLimit, refreshInsight)
 
 export default router

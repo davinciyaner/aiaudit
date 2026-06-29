@@ -1,6 +1,12 @@
+import Anthropic from '@anthropic-ai/sdk'
+import { jsonrepair } from 'jsonrepair'
+import SeoKeywordInsight from '../models/seo_keyword_insight.js'
+
 // DataForSEO API — DATAFORSEO_LOGIN + DATAFORSEO_PASSWORD in .env setzen
 const LOGIN    = process.env.DATAFORSEO_LOGIN
 const PASSWORD = process.env.DATAFORSEO_PASSWORD
+
+const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
 
 function auth() {
     return Buffer.from(`${LOGIN}:${PASSWORD}`).toString('base64')
@@ -210,4 +216,128 @@ export async function getBacklinkSummary(domain) {
         rank:              r.rank,
         firstSeen:         r.first_seen,
     }
+}
+
+// ─── AI Content & Backlink Generation ────────────────────────────────────────
+
+function parseClaudeJSON(text) {
+    const start = text.indexOf('{')
+    const end   = text.lastIndexOf('}')
+    if (start === -1 || end === -1) throw new Error('Kein JSON-Objekt in der Antwort gefunden')
+    const extracted = text.slice(start, end + 1)
+    try {
+        return JSON.parse(extracted)
+    } catch {
+        // jsonrepair handles all common Claude JSON issues: unescaped quotes, trailing
+        // commas, escaped closing quotes, single-quoted strings, etc.
+        const repaired = jsonrepair(extracted)
+        return JSON.parse(repaired)
+    }
+}
+
+export async function generateKeywordContent(keyword, domain, language = 'de') {
+    const langLabel = language === 'de' ? 'Deutsch' : 'English'
+    const msg = await anthropic.messages.create({
+        model: 'claude-sonnet-4-6',
+        max_tokens: 1500,
+        messages: [{
+            role: 'user',
+            content: `Du bist ein SEO-Experte. Erstelle einen Content-Plan auf ${langLabel}.
+
+Domain: ${domain}
+Keyword: "${keyword}"
+
+Antworte NUR mit einem validen JSON-Objekt — kein Markdown, keine Erklärungen.
+WICHTIG: Verwende KEINE Anführungszeichen innerhalb von String-Werten. Kein \" in Strings.
+Alle Strings einzeilig (keine Zeilenumbrüche).
+
+{"title":"...","metaDescription":"...","slug":"...","outline":[{"h2":"...","description":"..."}],"intro":"...","keyPoints":["...","..."]}
+
+- title: keyword am Anfang, max 65 Zeichen
+- metaDescription: keyword enthalten, max 155 Zeichen
+- slug: nur Kleinbuchstaben und Bindestriche
+- outline: 4-6 Einträge
+- intro: 2-3 Sätze als einzelne Zeile
+- keyPoints: 4-6 Punkte`,
+        }],
+    })
+    return parseClaudeJSON(msg.content[0].text)
+}
+
+// ─── Automated Insight Generation ────────────────────────────────────────────
+
+export async function generateInsightsForKeywords(site, keywords) {
+    for (const keyword of keywords) {
+        try {
+            await SeoKeywordInsight.findOneAndUpdate(
+                { siteId: site._id, keyword },
+                { $setOnInsert: { userId: site.userId, status: 'pending' } },
+                { upsert: true, new: false }
+            )
+            const [contentResult, backlinkResult] = await Promise.allSettled([
+                generateKeywordContent(keyword, site.domain, site.language || 'de'),
+                generateBacklinkIdeas(keyword, site.domain, site.language || 'de'),
+            ])
+            await SeoKeywordInsight.findOneAndUpdate(
+                { siteId: site._id, keyword },
+                {
+                    userId:      site.userId,
+                    content:     contentResult.status  === 'fulfilled' ? contentResult.value  : null,
+                    backlinks:   backlinkResult.status === 'fulfilled' ? backlinkResult.value : null,
+                    status:      (contentResult.status === 'fulfilled' || backlinkResult.status === 'fulfilled') ? 'done' : 'error',
+                    generatedAt: new Date(),
+                },
+                { upsert: true }
+            )
+            console.log(`[seoService] Insight generiert für "${keyword}" (${site.domain})`)
+        } catch (err) {
+            console.error(`[seoService] Insight fehlgeschlagen für "${keyword}":`, err.message)
+            await SeoKeywordInsight.findOneAndUpdate(
+                { siteId: site._id, keyword },
+                { userId: site.userId, status: 'error', generatedAt: new Date() },
+                { upsert: true }
+            )
+        }
+        await new Promise(r => setTimeout(r, 1200))
+    }
+}
+
+export async function refreshStaleInsights(site) {
+    const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
+    const existing = await SeoKeywordInsight.find({ siteId: site._id }).lean()
+    const existingSet = new Set(existing.map(e => e.keyword))
+
+    const staleKws  = existing
+        .filter(e => e.status === 'error' || !e.generatedAt || e.generatedAt < weekAgo)
+        .map(e => e.keyword)
+    const missingKws = site.keywords.filter(kw => !existingSet.has(kw))
+
+    const toGenerate = [...new Set([...staleKws, ...missingKws])]
+    if (toGenerate.length) await generateInsightsForKeywords(site, toGenerate)
+}
+
+export async function generateBacklinkIdeas(keyword, domain, language = 'de') {
+    const langLabel = language === 'de' ? 'Deutsch' : 'English'
+    const msg = await anthropic.messages.create({
+        model: 'claude-sonnet-4-6',
+        max_tokens: 1000,
+        messages: [{
+            role: 'user',
+            content: `Du bist ein SEO-Backlink-Stratege. Erstelle Backlink-Möglichkeiten auf ${langLabel}.
+
+Domain: ${domain}
+Keyword: "${keyword}"
+
+Antworte NUR mit einem validen JSON-Objekt — kein Markdown, keine Erklärungen.
+WICHTIG: Verwende KEINE Anführungszeichen innerhalb von String-Werten. Kein \" in Strings.
+Alle Strings einzeilig (keine Zeilenumbrüche).
+
+{"strategies":[{"type":"...","description":"...","difficulty":"low"}],"targetSites":[{"type":"...","example":"...","why":"..."}],"linkbaitIdeas":["...","..."]}
+
+- strategies: 3-5 Einträge, difficulty ist "low", "medium" oder "high"
+- targetSites: 4-6 Einträge
+- linkbaitIdeas: 3-4 Einträge`,
+        }],
+    })
+    return parseClaudeJSON(msg.content[0].text)
 }
