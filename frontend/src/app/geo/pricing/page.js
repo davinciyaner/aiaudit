@@ -254,9 +254,14 @@ export default function GeoPricingPage() {
                                 Wirst du von KI<br />
                                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-purple-400">empfohlen?</span>
                             </h1>
-                            <p className="text-lg text-slate-400 max-w-xl mx-auto">
+                            <p className="text-lg text-slate-400 max-w-xl mx-auto mb-6">
                                 Tracke ob Claude und ChatGPT deine Domain erwähnen — wöchentlich automatisch.
                             </p>
+                            <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-violet-500/20 bg-violet-500/5 text-sm">
+                                <span className="text-violet-300 font-semibold">14 Tage kostenlos testen</span>
+                                <span className="text-slate-600">·</span>
+                                <span className="text-slate-400">danach automatisch verlängerbar · jederzeit kündbar</span>
+                            </div>
                         </motion.div>
 
                         {loading ? (
@@ -279,7 +284,7 @@ export default function GeoPricingPage() {
 
                         <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}
                             className="text-center text-sm text-slate-600 mt-10">
-                            Bezahlung sicher über PayPal · Jederzeit kündbar · Keine Mindestlaufzeit
+                            14 Tage kostenlos testen · nach dem Testzeitraum automatische Abbuchung · jederzeit kündbar · Bezahlung über PayPal
                         </motion.p>
                     </div>
                 </div>
