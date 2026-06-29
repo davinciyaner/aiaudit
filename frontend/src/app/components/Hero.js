@@ -6,9 +6,9 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
 const PRO_FEATURES = [
-    { icon: Bot,    label: 'KI-Bericht',         desc: 'Vollständige KI-Analyse',    color: 'text-violet-400', bg: 'bg-violet-500/10', border: 'border-violet-500/20' },
-    { icon: Search, label: 'Fehler fixen',        desc: 'Schritt-für-Schritt-Fixes',  color: 'text-cyan-400',   bg: 'bg-cyan-500/10',   border: 'border-cyan-500/20'   },
-    { icon: Camera, label: 'Screenshots',         desc: 'Desktop & Mobile',           color: 'text-emerald-400',bg: 'bg-emerald-500/10',border: 'border-emerald-500/20'},
+    { icon: Bot, label: 'KI-Bericht', desc: 'Vollständige KI-Analyse', color: 'text-violet-400', bg: 'bg-violet-500/10', border: 'border-violet-500/20' },
+    { icon: Search, label: 'Fehler fixen', desc: 'Schritt-für-Schritt-Fixes', color: 'text-cyan-400', bg: 'bg-cyan-500/10', border: 'border-cyan-500/20' },
+    { icon: Camera, label: 'Screenshots', desc: 'Desktop & Mobile', color: 'text-emerald-400', bg: 'bg-emerald-500/10', border: 'border-emerald-500/20' },
 ]
 
 const STATS = [
@@ -23,7 +23,6 @@ const AVATARS = [
     { letter: 'S', color: '#d97706' },
 ]
 
-// --- Audit Demo ---
 const BEFORE_SCORES = [
     { label: 'Overall', score: 34, color: '#ef4444' },
     { label: 'SEO',     score: 52, color: '#ef4444' },
@@ -123,7 +122,6 @@ function AuditDemo() {
 
     return (
         <div className="bg-[#0d1117] border border-white/10 rounded-2xl overflow-hidden shadow-2xl">
-            {/* Browser chrome */}
             <div className="flex items-center gap-2 px-4 py-3 border-b border-white/5 bg-white/2">
                 <div className="flex gap-1.5 shrink-0">
                     <div className="w-3 h-3 rounded-full bg-red-500/60" />
@@ -153,16 +151,12 @@ function AuditDemo() {
                 </div>
             </div>
 
-            {/* Step label */}
             <div className="px-5 pt-3 pb-0">
                 <div className="text-[10px] uppercase tracking-widest font-semibold text-slate-600">{step.label}</div>
             </div>
 
-            {/* Animated content */}
             <div className="p-5 pt-2 min-h-[340px]">
                 <AnimatePresence mode="wait">
-
-                    {/* ① Ausgangslage */}
                     {step.id === 'before' && (
                         <motion.div key="before"
                             initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
@@ -178,7 +172,6 @@ function AuditDemo() {
                         </motion.div>
                     )}
 
-                    {/* ② KI scannt */}
                     {step.id === 'scan' && (
                         <motion.div key="scan"
                             initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
@@ -226,7 +219,6 @@ function AuditDemo() {
                         </motion.div>
                     )}
 
-                    {/* ③ Scores nach Optimierung */}
                     {step.id === 'after' && (
                         <motion.div key="after"
                             initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
@@ -246,7 +238,6 @@ function AuditDemo() {
                         </motion.div>
                     )}
 
-                    {/* ④ KI-Bericht */}
                     {step.id === 'ki-bericht' && (
                         <motion.div key="ki-bericht"
                             initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
@@ -276,7 +267,6 @@ function AuditDemo() {
                         </motion.div>
                     )}
 
-                    {/* ⑤ Fehler fixen — Fix-Guide aus dem Bericht */}
                     {step.id === 'fixes' && (
                         <motion.div key="fixes"
                             initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
@@ -309,7 +299,6 @@ function AuditDemo() {
                         </motion.div>
                     )}
 
-                    {/* ⑥ Screenshots */}
                     {step.id === 'screenshots' && (
                         <motion.div key="screenshots"
                             initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
@@ -320,7 +309,6 @@ function AuditDemo() {
                                 <span className="ml-auto text-[9px] font-bold px-1.5 py-0.5 rounded bg-violet-500/20 text-violet-400">PRO</span>
                             </div>
                             <div className="grid grid-cols-5 gap-3 mb-3">
-                                {/* Desktop */}
                                 <motion.div className="col-span-3" initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }}>
                                     <div className="text-[9px] text-slate-600 mb-1.5 uppercase tracking-wider">Desktop</div>
                                     <div className="rounded-xl border border-white/10 overflow-hidden bg-[#080b14]">
@@ -343,7 +331,6 @@ function AuditDemo() {
                                         </div>
                                     </div>
                                 </motion.div>
-                                {/* Mobile */}
                                 <motion.div className="col-span-2" initial={{ opacity: 0, x: 8 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.4 }}>
                                     <div className="text-[9px] text-slate-600 mb-1.5 uppercase tracking-wider">Mobile</div>
                                     <div className="rounded-xl border border-white/10 overflow-hidden bg-[#080b14]">
@@ -414,7 +401,6 @@ export default function Hero() {
         <AnimatePresence>
             {showStickyBar && (
                 <>
-                    {/* Mobile: bar am unteren Bildschirmrand */}
                     <motion.div
                         key="sticky-bottom"
                         initial={{ y: 80, opacity: 0 }}
@@ -465,7 +451,6 @@ export default function Hero() {
                         </div>
                     </motion.div>
 
-                    {/* Desktop: bar unter der Navbar */}
                     <motion.div
                         key="sticky-top"
                         initial={{ y: -64, opacity: 0 }}
@@ -508,7 +493,6 @@ export default function Hero() {
         </AnimatePresence>
 
         <section ref={heroRef} className="relative min-h-screen flex items-center pt-20 overflow-hidden">
-            {/* Background */}
             <div className="absolute inset-0">
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[600px] rounded-full blur-3xl"
                     style={{ background: 'radial-gradient(ellipse, rgba(124,58,237,0.18) 0%, rgba(124,58,237,0.04) 50%, transparent 70%)' }} />
@@ -522,9 +506,7 @@ export default function Hero() {
                 <div className="max-w-7xl mx-auto px-5 sm:px-8 py-10 sm:py-20">
                     <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
 
-                        {/* Left column */}
                         <div>
-                            {/* Social proof badge */}
                             <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
                                 className="flex items-center gap-3 mb-6">
                                 <div className="flex -space-x-1.5">
@@ -537,12 +519,11 @@ export default function Hero() {
                                     ))}
                                 </div>
                                 <div className="flex items-center gap-1.5 text-xs text-slate-400">
-                                    <span className="text-white font-semibold">70+</span>
+                                    <span className="text-white font-semibold">80+</span>
                                     <span>Websites bereits analysiert</span>
                                 </div>
                             </motion.div>
 
-                            {/* Headline */}
                             <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.1 }}
                                 className="text-3xl sm:text-5xl lg:text-7xl font-bold leading-[1.1] sm:leading-none tracking-tight mb-3 sm:mb-6">
                                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 via-purple-400 to-cyan-400">
@@ -551,10 +532,8 @@ export default function Hero() {
                                 Website-Audit in 60 Sekunden.
                             </motion.h1>
 
-                            {/* Form + Pro teaser */}
                             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.3 }}
                                 className="mb-5 sm:mb-8">
-                                {/* Form */}
                                 <label className="block text-sm text-slate-300 font-medium mb-2">
                                     Deine Website-Adresse eingeben:
                                 </label>
@@ -602,7 +581,6 @@ export default function Hero() {
                                     )}
                                 </AnimatePresence>
 
-                                {/* Pro Teaser Card */}
                                 <div className="rounded-xl border border-white/8 bg-white/[0.02] p-4">
                                     <div className="flex items-center gap-2 mb-3">
                                         <span className="text-xs font-semibold text-violet-400">Jetzt Pro holen</span>
@@ -631,7 +609,6 @@ export default function Hero() {
                                 </div>
                             </motion.div>
 
-                            {/* Stats */}
                             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}
                                 className="flex items-center gap-6 sm:gap-8">
                                 {STATS.map((s, i) => (
@@ -646,7 +623,6 @@ export default function Hero() {
                             </motion.div>
                         </div>
 
-                        {/* Right column — Demo */}
                         <motion.div initial={{ opacity: 0, x: 40 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.3 }} className="relative">
                             <AuditDemo />
                             <div className="absolute -inset-4 rounded-3xl blur-2xl -z-10 bg-violet-500/6" />
