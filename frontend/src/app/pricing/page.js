@@ -477,9 +477,14 @@ export default function PricingPage() {
                                 <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3">
                                     Wirst du von KI empfohlen?
                                 </h2>
-                                <p className="text-slate-400 text-sm max-w-lg mx-auto">
+                                <p className="text-slate-400 text-sm max-w-lg mx-auto mb-4">
                                     Tracke automatisch ob Claude und ChatGPT deine Domain bei relevanten Anfragen erwähnen — wöchentlich und auf Abruf.
                                 </p>
+                                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-violet-500/20 bg-violet-500/5 text-xs">
+                                    <span className="text-violet-300 font-semibold">14 Tage kostenlos testen</span>
+                                    <span className="text-slate-600">·</span>
+                                    <span className="text-slate-400">danach automatisch verlängerbar · jederzeit kündbar</span>
+                                </div>
                             </div>
 
                             <div className="grid md:grid-cols-3 gap-6 items-start">
@@ -535,7 +540,7 @@ export default function PricingPage() {
                             </div>
 
                             <p className="text-center text-sm text-slate-600 mt-8">
-                                GEO Automatisierung ist unabhängig vom Audit-Plan - kombinierbar mit Free, Pro und Agency.
+                                14 Tage kostenlos · danach automatische Abbuchung · jederzeit kündbar · GEO Automatisierung ist unabhängig vom Audit-Plan buchbar.
                             </p>
                         </motion.div>
                     </div>
