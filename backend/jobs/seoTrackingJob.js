@@ -3,7 +3,7 @@ import SeoTrackedSite from '../models/seo_tracked_site.js'
 import SeoKeywordRanking from '../models/seo_keyword_ranking.js'
 import ProductSubscription from '../models/product_subscription.js'
 import User from '../models/auth_model.js'
-import { checkSiteRankings } from '../services/seoService.js'
+import { checkSiteRankings, refreshStaleInsights } from '../services/seoService.js'
 import { sendSeoRankingAlert } from '../utils/mailer.js'
 
 export const ALERT_DROP_THRESHOLD = {
@@ -104,6 +104,16 @@ async function runWeeklySeoChecks() {
         }
 
         console.log(`SEO wöchentlicher Check abgeschlossen (${sites.length} Sites)`)
+
+        // Refresh stale insights after rankings are done (Montag 04:30+)
+        for (const site of sites) {
+            try {
+                await refreshStaleInsights(site)
+            } catch (err) {
+                console.error(`[seo] Insight-Refresh fehlgeschlagen für ${site.domain}:`, err.message)
+            }
+            await new Promise(r => setTimeout(r, 500))
+        }
     } catch (err) {
         console.error('runWeeklySeoChecks Fehler:', err.message)
     }

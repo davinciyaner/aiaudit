@@ -23,7 +23,8 @@ const NAV_ITEMS = [
         key: 'geo',
         label: 'GEO',
         items: [
-            { icon: Globe, label: 'GEO-Analyse', desc: 'KI-Sichtbarkeit messen', href: '/dashboard' },
+            { icon: Globe, label: 'GEO Automatisierung', desc: 'KI-Erwähnungen tracken', href: '/geo/dashboard', accent: 'violet' },
+            { icon: CreditCard, label: 'GEO Preise', desc: '3 Pläne ab €4,99/Monat', href: '/geo/pricing' },
             { icon: BookOpen, label: 'GEO-Optimierung 2026', desc: 'Tipps für KI-Suchen', href: '/blog/geo-optimierung-2026' },
         ],
     },
@@ -63,10 +64,10 @@ function NavDropdown({ item, isOpen, onOpen, onClose }) {
                         <div className="p-1.5 space-y-0.5">
                             {item.items.map(sub => {
                                 const a = sub.accent
-                                const hoverBg   = a === 'red' ? 'hover:bg-red-500/5' : a === 'emerald' ? 'hover:bg-emerald-500/5' : 'hover:bg-white/5'
-                                const iconBg    = a === 'red' ? 'bg-red-500/10' : a === 'emerald' ? 'bg-emerald-500/10' : 'bg-white/5 group-hover:bg-white/8'
-                                const iconColor = a === 'red' ? 'text-red-400' : a === 'emerald' ? 'text-emerald-400' : 'text-slate-400'
-                                const textColor = a === 'red' ? 'text-red-400' : a === 'emerald' ? 'text-emerald-400' : 'text-slate-200 group-hover:text-white'
+                                const hoverBg   = a === 'red' ? 'hover:bg-red-500/5' : a === 'emerald' ? 'hover:bg-emerald-500/5' : a === 'violet' ? 'hover:bg-violet-500/5' : 'hover:bg-white/5'
+                                const iconBg    = a === 'red' ? 'bg-red-500/10' : a === 'emerald' ? 'bg-emerald-500/10' : a === 'violet' ? 'bg-violet-500/10' : 'bg-white/5 group-hover:bg-white/8'
+                                const iconColor = a === 'red' ? 'text-red-400' : a === 'emerald' ? 'text-emerald-400' : a === 'violet' ? 'text-violet-400' : 'text-slate-400'
+                                const textColor = a === 'red' ? 'text-red-400' : a === 'emerald' ? 'text-emerald-400' : a === 'violet' ? 'text-violet-400' : 'text-slate-200 group-hover:text-white'
                                 return (
                                 <Link key={sub.href} href={sub.href} onClick={onClose}
                                     className={`flex items-start gap-3 px-3 py-2.5 rounded-lg transition-all group ${hoverBg}`}
@@ -117,6 +118,8 @@ function MobileAccordion({ item, isOpen, onToggle, onClose }) {
                                     ? 'text-red-400 hover:text-red-300 hover:bg-red-500/5'
                                     : a === 'emerald'
                                     ? 'text-emerald-400 hover:text-emerald-300 hover:bg-emerald-500/5'
+                                    : a === 'violet'
+                                    ? 'text-violet-400 hover:text-violet-300 hover:bg-violet-500/5'
                                     : 'text-slate-400 hover:text-white hover:bg-white/5'
                                 return (
                                 <Link key={sub.href} href={sub.href} onClick={onClose}
@@ -273,6 +276,16 @@ export default function Navbar() {
                                                     <CreditCard className="w-3.5 h-3.5 text-slate-500" /> Tracking Preise
                                                 </Link>
                                                 <div className="my-1 border-t border-white/5" />
+                                                <p className="px-3 pt-1 pb-0.5 text-[10px] text-slate-600 font-semibold uppercase tracking-wider">GEO Automatisierung</p>
+                                                <Link href="/geo/dashboard" onClick={() => setUserDropdownOpen(false)}
+                                                    className="flex items-center gap-2.5 px-3 py-2 text-sm text-slate-300 hover:text-white hover:bg-white/5 rounded-lg transition-all">
+                                                    <Globe className="w-3.5 h-3.5 text-violet-400" /> KI-Tracking
+                                                </Link>
+                                                <Link href="/geo/pricing" onClick={() => setUserDropdownOpen(false)}
+                                                    className="flex items-center gap-2.5 px-3 py-2 text-sm text-slate-300 hover:text-white hover:bg-white/5 rounded-lg transition-all">
+                                                    <CreditCard className="w-3.5 h-3.5 text-slate-500" /> GEO Preise
+                                                </Link>
+                                                <div className="my-1 border-t border-white/5" />
                                                 <button onClick={handleLogout}
                                                     className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-slate-400 hover:text-red-400 hover:bg-red-500/5 rounded-lg transition-all">
                                                     <LogOut className="w-3.5 h-3.5" /> Abmelden
@@ -341,6 +354,10 @@ export default function Navbar() {
                                 <Link href="/seo/dashboard" onClick={() => setMobileOpen(false)}
                                     className="flex items-center gap-2 px-4 py-3 text-sm text-slate-300 hover:text-white rounded-lg hover:bg-white/5 transition-all">
                                     <TrendingUp className="w-4 h-4 text-emerald-400" /> SEO Automatisierung
+                                </Link>
+                                <Link href="/geo/dashboard" onClick={() => setMobileOpen(false)}
+                                    className="flex items-center gap-2 px-4 py-3 text-sm text-slate-300 hover:text-white rounded-lg hover:bg-white/5 transition-all">
+                                    <Globe className="w-4 h-4 text-violet-400" /> GEO Automatisierung
                                 </Link>
                                 <button onClick={handleLogout}
                                     className="w-full flex items-center gap-2 px-4 py-3 text-sm text-slate-400 hover:text-red-400 rounded-lg hover:bg-red-500/5 transition-all">

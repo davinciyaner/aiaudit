@@ -1,8 +1,9 @@
 import SeoTrackedSite from '../models/seo_tracked_site.js'
 import SeoKeywordRanking from '../models/seo_keyword_ranking.js'
+import SeoKeywordInsight from '../models/seo_keyword_insight.js'
 import ProductSubscription from '../models/product_subscription.js'
 import User from '../models/auth_model.js'
-import { checkSiteRankings, getKeywordIdeas, getCompetitors, getBacklinkSummary, getContentGap } from '../services/seoService.js'
+import { checkSiteRankings, getKeywordIdeas, getCompetitors, getBacklinkSummary, getContentGap, generateKeywordContent, generateBacklinkIdeas, generateInsightsForKeywords } from '../services/seoService.js'
 import SeoUsage from '../models/seo_usage.js'
 import { sendSeoRankingAlert } from '../utils/mailer.js'
 import { detectRankingChanges, ALERT_DROP_THRESHOLD } from '../jobs/seoTrackingJob.js'
@@ -144,6 +145,12 @@ export async function addSite(req, res) {
             language,
         })
 
+        if (uniqueKeywords.length) {
+            generateInsightsForKeywords(site, uniqueKeywords).catch(err =>
+                console.error('[seo] Hintergrund-Insight-Generierung fehlgeschlagen:', err.message)
+            )
+        }
+
         res.status(201).json({ site })
     } catch (err) {
         if (err.code === 11000) return res.status(409).json({ error: 'Website wird bereits getrackt' })
@@ -196,6 +203,12 @@ export async function addKeywords(req, res) {
         site.keywords.push(...newKws)
         await site.save()
 
+        if (newKws.length) {
+            generateInsightsForKeywords(site, newKws).catch(err =>
+                console.error('[seo] Hintergrund-Insight-Generierung fehlgeschlagen:', err.message)
+            )
+        }
+
         res.json({ site, added: newKws.length })
     } catch (err) {
         res.status(500).json({ error: err.message })
@@ -211,8 +224,13 @@ export async function removeKeywords(req, res) {
         const site = await SeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId })
         if (!site) return res.status(404).json({ error: 'Website nicht gefunden' })
 
+        const removed = site.keywords.filter(k => keywords.includes(k))
         site.keywords = site.keywords.filter(k => !keywords.includes(k))
         await site.save()
+
+        if (removed.length) {
+            await SeoKeywordInsight.deleteMany({ siteId: site._id, keyword: { $in: removed } })
+        }
 
         res.json({ site })
     } catch (err) {
@@ -397,6 +415,111 @@ export async function getAlertSettings(req, res) {
         const user = await User.findById(req.userId).lean()
         if (!user) return res.status(404).json({ error: 'Nutzer nicht gefunden' })
         res.json({ seoEmailAlerts: user.seoEmailAlerts !== false })
+    } catch (err) {
+        res.status(500).json({ error: err.message })
+    }
+}
+
+// GET /api/seo/sites/:id/insights
+export async function getInsights(req, res) {
+    try {
+        const site = await SeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId }).lean()
+        if (!site) return res.status(404).json({ error: 'Website nicht gefunden' })
+
+        const insights = await SeoKeywordInsight.find({ siteId: site._id }).lean()
+        const insightsMap = {}
+        for (const i of insights) insightsMap[i.keyword] = i
+
+        res.json({ insightsMap })
+    } catch (err) {
+        res.status(500).json({ error: err.message })
+    }
+}
+
+const INSIGHT_REFRESH_LIMITS = {
+    einsteiger: 10,
+    pro:        100,
+    expert:     Infinity,
+}
+
+// POST /api/seo/sites/:id/insights/refresh
+export async function refreshInsight(req, res) {
+    try {
+        const { keyword } = req.body
+        if (!keyword) return res.status(400).json({ error: 'keyword erforderlich' })
+
+        const plan = await getSeoPlan(req.userId)
+        if (!plan) return res.status(403).json({ error: 'Kein aktives SEO-Automatisierung Abo' })
+
+        const site = await SeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId }).lean()
+        if (!site) return res.status(404).json({ error: 'Website nicht gefunden' })
+
+        if (!site.keywords.includes(keyword)) return res.status(400).json({ error: 'Keyword gehört nicht zu dieser Website' })
+
+        const monthlyLimit = INSIGHT_REFRESH_LIMITS[plan] ?? 10
+        if (monthlyLimit !== Infinity) {
+            const month = new Date().toISOString().slice(0, 7)
+            const usage = await SeoUsage.findOne({ userId: req.userId, feature: 'insight_refresh', month }).lean()
+            const used = usage?.count ?? 0
+            if (used >= monthlyLimit) {
+                return res.status(429).json({ error: 'monthly_limit_reached', limit: monthlyLimit, used })
+            }
+            await SeoUsage.findOneAndUpdate(
+                { userId: req.userId, feature: 'insight_refresh', month },
+                { $inc: { count: 1 } },
+                { upsert: true }
+            )
+        }
+
+        await SeoKeywordInsight.findOneAndUpdate(
+            { siteId: site._id, keyword },
+            { status: 'pending', generatedAt: null },
+            { upsert: true }
+        )
+
+        generateInsightsForKeywords(site, [keyword]).catch(err =>
+            console.error('[seo] Refresh-Insight fehlgeschlagen:', err.message)
+        )
+
+        res.json({ success: true, status: 'pending' })
+    } catch (err) {
+        res.status(500).json({ error: err.message })
+    }
+}
+
+// POST /api/seo/sites/:id/keyword-content
+export async function generateContent(req, res) {
+    try {
+        const { keyword } = req.body
+        if (!keyword) return res.status(400).json({ error: 'keyword erforderlich' })
+
+        const plan = await getSeoPlan(req.userId)
+        if (!plan) return res.status(403).json({ error: 'Kein aktives SEO-Automatisierung Abo' })
+
+        const site = await SeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId }).lean()
+        if (!site) return res.status(404).json({ error: 'Website nicht gefunden' })
+
+        const content = await generateKeywordContent(keyword, site.domain, site.language)
+        res.json({ content })
+    } catch (err) {
+        res.status(500).json({ error: err.message })
+    }
+}
+
+// POST /api/seo/sites/:id/backlink-ideas
+export async function generateBacklinkIdeasForKeyword(req, res) {
+    try {
+        const { keyword } = req.body
+        if (!keyword) return res.status(400).json({ error: 'keyword erforderlich' })
+
+        const plan = await getSeoPlan(req.userId)
+        if (!plan) return res.status(403).json({ error: 'Kein aktives SEO-Automatisierung Abo' })
+
+        const site = await SeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId }).lean()
+        if (!site) return res.status(404).json({ error: 'Website nicht gefunden' })
+
+        const ideas = await generateBacklinkIdeas(keyword, site.domain, site.language)
+        res.json({ ideas })
     } catch (err) {
         res.status(500).json({ error: err.message })
     }

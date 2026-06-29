@@ -1,7 +1,7 @@
 'use client'
 import {useState, useEffect} from 'react'
 import {motion} from 'framer-motion'
-import {Check, Zap, Crown, Building2, LogIn, Loader2, TrendingUp, Star, ArrowRight} from 'lucide-react'
+import {Check, Zap, Crown, Building2, LogIn, Loader2, TrendingUp, Star, ArrowRight, Sparkles} from 'lucide-react'
 import Link from 'next/link'
 import {PayPalScriptProvider, PayPalButtons} from '@paypal/react-paypal-js'
 import toast, {Toaster} from 'react-hot-toast'
@@ -111,6 +111,53 @@ const SEO_PLANS = [
             'Alles aus Pro',
             'Priorisierter Support',
             'Unbegrenzter Verlauf',
+        ],
+    },
+]
+
+const GEO_PLANS = [
+    {
+        id: 'einsteiger',
+        name: 'Einsteiger',
+        price: '4,99',
+        icon: Zap,
+        desc: 'Für Einzelpersonen und erste Schritte',
+        features: [
+            '1 Website tracken',
+            '10 Keywords',
+            'Claude AI Tracking',
+            'Wöchentlicher Auto-Check',
+            '2 manuelle Checks pro Monat',
+        ],
+    },
+    {
+        id: 'pro',
+        name: 'Pro',
+        price: '9,99',
+        icon: Star,
+        badge: 'Beliebteste',
+        highlight: true,
+        desc: 'Für Freelancer und kleine Agenturen',
+        features: [
+            '3 Websites tracken',
+            '30 Keywords',
+            'Claude + ChatGPT Tracking',
+            'Wöchentlicher Auto-Check',
+            '8 manuelle Checks pro Monat',
+        ],
+    },
+    {
+        id: 'expert',
+        name: 'Expert',
+        price: '19,99',
+        icon: Building2,
+        desc: 'Für Agenturen mit vielen Kunden',
+        features: [
+            '10 Websites tracken',
+            '100 Keywords',
+            'Claude + ChatGPT Tracking',
+            'Wöchentlicher Auto-Check',
+            '20 manuelle Checks pro Monat',
         ],
     },
 ]
@@ -411,6 +458,84 @@ export default function PricingPage() {
 
                             <p className="text-center text-sm text-slate-600 mt-8">
                                 SEO Automatisierung ist unabhängig vom Audit-Plan - kombinierbar mit Free, Pro und Agency.
+                            </p>
+                        </motion.div>
+
+                        {/* GEO Automatisierung section */}
+                        <motion.div initial={{opacity: 0, y: 30}} whileInView={{opacity: 1, y: 0}} viewport={{once: true}}
+                                    className="mt-20">
+                            <div className="flex items-center gap-4 mb-10">
+                                <div className="flex-1 h-px bg-white/[0.06]"/>
+                                <div className="flex items-center gap-2 px-4 py-2 rounded-full border border-violet-500/20 bg-violet-500/5 text-violet-400 text-xs font-semibold whitespace-nowrap">
+                                    <Sparkles className="w-3.5 h-3.5"/>
+                                    GEO Automatisierung - Add-on
+                                </div>
+                                <div className="flex-1 h-px bg-white/[0.06]"/>
+                            </div>
+
+                            <div className="text-center mb-10">
+                                <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3">
+                                    Wirst du von KI empfohlen?
+                                </h2>
+                                <p className="text-slate-400 text-sm max-w-lg mx-auto">
+                                    Tracke automatisch ob Claude und ChatGPT deine Domain bei relevanten Anfragen erwähnen — wöchentlich und auf Abruf.
+                                </p>
+                            </div>
+
+                            <div className="grid md:grid-cols-3 gap-6 items-start">
+                                {GEO_PLANS.map((plan, i) => (
+                                    <motion.div key={plan.id}
+                                        initial={{opacity: 0, y: 20}} whileInView={{opacity: 1, y: 0}}
+                                        viewport={{once: true}} transition={{delay: i * 0.1}}
+                                        className={`relative flex flex-col rounded-2xl p-6 sm:p-8 border transition-all duration-300 ${
+                                            plan.highlight
+                                                ? 'bg-linear-to-b from-violet-600/10 to-transparent border-violet-500/30 shadow-2xl shadow-violet-500/10'
+                                                : 'bg-white/[0.02] border-white/[0.06]'
+                                        }`}>
+                                        {plan.badge && (
+                                            <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-linear-to-r from-violet-600 to-purple-600 rounded-full text-xs font-semibold text-white shadow-lg whitespace-nowrap">
+                                                {plan.badge}
+                                            </div>
+                                        )}
+                                        <div className="mb-5">
+                                            <div className="flex items-center gap-2 mb-3">
+                                                <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${plan.highlight ? 'bg-violet-500/20' : 'bg-white/5'}`}>
+                                                    <plan.icon className={`w-4 h-4 ${plan.highlight ? 'text-violet-400' : 'text-slate-400'}`} strokeWidth={1.8}/>
+                                                </div>
+                                                <span className="text-sm font-semibold text-slate-400 uppercase tracking-wider">{plan.name}</span>
+                                            </div>
+                                            <div className="flex items-baseline gap-1 mb-1">
+                                                <span className="text-slate-400 text-lg">€</span>
+                                                <span className="text-4xl sm:text-5xl font-bold text-white">{plan.price}</span>
+                                            </div>
+                                            <div className="text-sm text-slate-500 mb-3">pro Monat · inkl. MwSt.</div>
+                                            <p className="text-sm text-slate-400">{plan.desc}</p>
+                                        </div>
+                                        <div className="space-y-3 mb-8 flex-1">
+                                            {plan.features.map(f => (
+                                                <div key={f} className="flex items-center gap-3 text-sm">
+                                                    <div className={`w-4 h-4 rounded-full flex items-center justify-center shrink-0 ${plan.highlight ? 'bg-violet-500/20' : 'bg-white/5'}`}>
+                                                        <Check className={`w-2.5 h-2.5 ${plan.highlight ? 'text-violet-400' : 'text-slate-400'}`} strokeWidth={3}/>
+                                                    </div>
+                                                    <span className="text-slate-300">{f}</span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                        <Link href="/geo/pricing"
+                                            className={`flex items-center justify-center gap-2 w-full py-3.5 text-sm font-semibold rounded-xl transition-all duration-200 ${
+                                                plan.highlight
+                                                    ? 'bg-linear-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white shadow-lg shadow-violet-500/20'
+                                                    : 'border border-white/10 text-slate-300 hover:text-white hover:border-white/20 hover:bg-white/5'
+                                            }`}>
+                                            {plan.name} starten
+                                            <ArrowRight className="w-4 h-4"/>
+                                        </Link>
+                                    </motion.div>
+                                ))}
+                            </div>
+
+                            <p className="text-center text-sm text-slate-600 mt-8">
+                                GEO Automatisierung ist unabhängig vom Audit-Plan - kombinierbar mit Free, Pro und Agency.
                             </p>
                         </motion.div>
                     </div>

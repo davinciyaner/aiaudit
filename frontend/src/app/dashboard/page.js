@@ -422,6 +422,7 @@ export default function Dashboard() {
                                             className="text-slate-300 text-sm whitespace-pre-wrap break-words"
                                             dangerouslySetInnerHTML={{
                                                 __html: (result.aiReport || '')
+                                                    .replace(/[<>&"']/g, c => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;', "'": '&#039;' }[c]))
                                                     .replace(/\*\*(.*?)\*\*/g, '<strong class="text-white">$1</strong>')
                                                     .replace(/\n/g, '<br/>'),
                                             }}
