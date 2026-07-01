@@ -12,10 +12,9 @@ const PLANS = [
     {
         id: 'einsteiger',
         name: 'Einsteiger',
-        price: 29,
+        price: 19,
         period: 'pro Monat',
         desc: 'Für Einzelpersonen und kleine Projekte',
-        icon: Zap,
         features: [
             '3 Websites tracken',
             '50 Keywords gesamt',
@@ -34,11 +33,9 @@ const PLANS = [
     {
         id: 'pro',
         name: 'Pro',
-        price: 79,
+        price: 59,
         period: 'pro Monat',
         desc: 'Für Freelancer und wachsende Unternehmen',
-        icon: Star,
-        badge: 'Beliebteste',
         highlight: true,
         features: [
             '10 Websites tracken',
@@ -59,7 +56,6 @@ const PLANS = [
         price: 149,
         period: 'pro Monat',
         desc: 'Für Agenturen mit vielen Kunden',
-        icon: Building2,
         features: [
             '20 Websites tracken',
             '500 Keywords gesamt',
@@ -96,11 +92,6 @@ function PlanCard({ plan, user, currentPlan, onSuccess }) {
                     : 'bg-white/[0.02] border-white/[0.06]'
             }`}
         >
-            {plan.badge && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-full text-xs font-semibold text-white shadow-lg whitespace-nowrap">
-                    {plan.badge}
-                </div>
-            )}
 
             {currentPlan === plan.id && (
                 <div className="absolute -top-3 right-6 px-3 py-1 bg-emerald-500/20 border border-emerald-500/30 rounded-full text-xs font-semibold text-emerald-400">
@@ -110,14 +101,11 @@ function PlanCard({ plan, user, currentPlan, onSuccess }) {
 
             <div className="mb-6">
                 <div className="flex items-center gap-2 mb-3">
-                    <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${plan.highlight ? 'bg-emerald-500/20' : 'bg-white/5'}`}>
-                        <plan.icon className={`w-4 h-4 ${plan.highlight ? 'text-emerald-400' : 'text-slate-400'}`} strokeWidth={1.8} />
-                    </div>
                     <span className="text-sm font-semibold text-slate-400 uppercase tracking-wider">{plan.name}</span>
                 </div>
                 <div className="flex items-baseline gap-1 mb-1">
-                    <span className="text-slate-400 text-lg">€</span>
                     <span className="text-5xl font-bold text-white">{plan.price}</span>
+                    <span className="text-slate-400 text-lg">€</span>
                 </div>
                 <div className="text-sm text-slate-500 mb-3">{plan.period}</div>
                 <p className="text-sm text-slate-400">{plan.desc}</p>
@@ -251,17 +239,16 @@ export default function SeoPricingPage() {
 
                     <div className="relative z-10 max-w-6xl mx-auto">
                         <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-16">
-                            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-emerald-500/20 bg-emerald-500/5 text-emerald-400 text-xs font-medium mb-6">
-                                <TrendingUp className="w-3.5 h-3.5" />
-                                SEO Automatisierung
-                            </div>
                             <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-5">
                                 Deine Rankings.<br />
                                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-400">Immer im Blick.</span>
                             </h1>
-                            <p className="text-lg text-slate-400 max-w-xl mx-auto">
-                                Verfolge wöchentlich deine Google-Positionen. Sieh sofort, wenn du aufsteigst — oder fällst.
+                            <p className="text-lg text-slate-400 max-w-xl mx-auto mb-6">
+                                Verfolge wöchentlich deine Google-Positionen. Sieh sofort, wenn du aufsteigst oder fällst.
                             </p>
+                            <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-emerald-500/20 bg-emerald-500/5 text-sm">
+                                <span className="text-emerald-300 font-semibold">14 Tage kostenlos testen</span>
+                            </div>
                         </motion.div>
 
                         {loading ? (
@@ -284,7 +271,7 @@ export default function SeoPricingPage() {
 
                         <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}
                             className="text-center text-sm text-slate-600 mt-10">
-                            Bezahlung sicher über PayPal · Jederzeit kündbar · Keine Mindestlaufzeit
+                            14 Tage kostenlos testen nach dem Testzeitraum automatische Abbuchung jederzeit kündbar Bezahlung über PayPal
                         </motion.p>
                     </div>
                 </div>
