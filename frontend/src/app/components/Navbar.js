@@ -15,7 +15,7 @@ const NAV_ITEMS = [
         items: [
             { icon: Search, label: 'Einmal-Audit', desc: 'SEO-Score & Fehler aufdecken', href: '/dashboard' },
             { icon: TrendingUp, label: 'SEO Automatisierung', desc: 'Wöchentliche Google-Rankings', href: '/seo/dashboard', accent: 'emerald' },
-            { icon: CreditCard, label: 'Tracking Preise', desc: '3 Pläne ab €29/Monat', href: '/seo/pricing' },
+            { icon: CreditCard, label: 'Tracking Preise', desc: '3 Pläne ab 19€/Monat', href: '/seo/pricing' },
             { icon: BookOpen, label: 'SEO-Fehler vermeiden', desc: 'Leitfaden aus der Praxis', href: '/blog/seo-test-haeufige-fehler' },
         ],
     },
@@ -24,7 +24,7 @@ const NAV_ITEMS = [
         label: 'GEO',
         items: [
             { icon: Globe, label: 'GEO Automatisierung', desc: 'KI-Erwähnungen tracken', href: '/geo/dashboard', accent: 'violet' },
-            { icon: CreditCard, label: 'GEO Preise', desc: '3 Pläne ab €4,99/Monat', href: '/geo/pricing' },
+            { icon: CreditCard, label: 'GEO Preise', desc: '3 Pläne ab 4,99€/Monat', href: '/geo/pricing' },
             { icon: BookOpen, label: 'GEO-Optimierung 2026', desc: 'Tipps für KI-Suchen', href: '/blog/geo-optimierung-2026' },
         ],
     },

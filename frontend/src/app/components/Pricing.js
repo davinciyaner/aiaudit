@@ -55,11 +55,28 @@ export default function Pricing() {
                         </div>
                         <div>
                             <div className="text-sm font-semibold text-white">Google-Rankings automatisch tracken</div>
-                            <div className="text-xs text-slate-500 mt-0.5">Wöchentliche Ranking-Updates, Keyword-Ideen & Konkurrenzanalyse — ab €29/Monat</div>
+                            <div className="text-xs text-slate-500 mt-0.5">Wöchentliche Ranking-Updates, Keyword-Ideen & Konkurrenzanalyse - ab 19€/Monat</div>
                         </div>
                     </div>
                     <Link href="/seo/pricing"
                         className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-600/20 hover:bg-emerald-600/30 border border-emerald-500/25 text-emerald-400 text-xs font-semibold transition-all duration-200 shrink-0 whitespace-nowrap">
+                        Mehr erfahren <ArrowRight className="w-3.5 h-3.5" />
+                    </Link>
+                </motion.div>
+
+                <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+                            className="mb-10 flex items-center justify-between gap-4 px-5 py-4 rounded-2xl border border-violet-500/30 bg-violet-500/10">
+                    <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-lg bg-emerald-500/15 border border-emerald-500/20 flex items-center justify-center shrink-0">
+                            <TrendingUp className="w-4 h-4 text-emerald-400" strokeWidth={1.8} />
+                        </div>
+                        <div>
+                            <div className="text-sm font-semibold text-white">KI Sichtbarkeit automatisch tracken</div>
+                            <div className="text-xs text-slate-500 mt-0.5">Wöchentliche Updates, Claude + ChatGPT Tracking & Mention Verlauf - ab 4,99€/Monat</div>
+                        </div>
+                    </div>
+                    <Link href="/geo/pricing"
+                          className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-600/20 hover:bg-emerald-600/30 border border-emerald-500/25 text-emerald-400 text-xs font-semibold transition-all duration-200 shrink-0 whitespace-nowrap">
                         Mehr erfahren <ArrowRight className="w-3.5 h-3.5" />
                     </Link>
                 </motion.div>
@@ -87,8 +104,8 @@ export default function Pricing() {
                                     <span className="text-sm font-semibold text-slate-400 uppercase tracking-wider">{plan.name}</span>
                                 </div>
                                 <div className="flex items-baseline gap-1 mb-1">
-                                    <span className="text-slate-400 text-lg">€</span>
                                     <span className="text-4xl sm:text-5xl font-bold text-white">{plan.price}</span>
+                                    <span className="text-slate-400 text-lg">€</span>
                                 </div>
                                 <div className="text-sm text-slate-500 mb-3">{plan.period}</div>
                                 <p className="text-sm text-slate-400">{plan.desc}</p>

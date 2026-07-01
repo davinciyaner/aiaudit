@@ -111,10 +111,10 @@ function PlanCard({ plan, user, currentPlan, onSuccess }) {
                     <span className="text-sm font-semibold text-slate-400 uppercase tracking-wider">{plan.name}</span>
                 </div>
                 <div className="flex items-baseline gap-1 mb-1">
-                    <span className="text-slate-400 text-lg">€</span>
                     <span className="text-5xl font-bold text-white">{plan.price}</span>
+                    <span className="text-slate-400 text-lg">€</span>
                 </div>
-                <div className="text-sm text-slate-500 mb-3">{plan.period} · inkl. MwSt.</div>
+                <div className="text-sm text-slate-500 mb-3">{plan.period} inkl. MwSt.</div>
                 <p className="text-sm text-slate-400">{plan.desc}</p>
             </div>
 

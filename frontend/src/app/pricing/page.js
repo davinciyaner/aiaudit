@@ -15,7 +15,6 @@ const PLANS = [
         price: 0,
         period: 'für immer',
         desc: 'Zum Ausprobieren von AuditAI',
-        icon: Zap,
         features: [
             '1 Audit pro Monat',
             'SEO-Score & Analyse',
@@ -31,8 +30,6 @@ const PLANS = [
         price: 29,
         period: 'pro Monat',
         desc: 'Für Freelancer und kleine Agenturen',
-        icon: Crown,
-        badge: 'Beliebteste',
         highlight: true,
         features: [
             '10 Audits pro Monat',
@@ -50,7 +47,6 @@ const PLANS = [
         price: 99,
         period: 'pro Monat',
         desc: 'Für Teams mit mehreren Kunden',
-        icon: Building2,
         features: [
             'Unbegrenzte Audits',
             'Alles aus Pro',
@@ -70,8 +66,7 @@ const SEO_PLANS = [
     {
         id: 'einsteiger',
         name: 'Einsteiger',
-        price: 29,
-        icon: Zap,
+        price: 19,
         desc: 'Für Einzelpersonen und kleine Projekte',
         features: [
             '3 Websites tracken',
@@ -84,9 +79,7 @@ const SEO_PLANS = [
     {
         id: 'pro',
         name: 'Pro',
-        price: 79,
-        icon: Star,
-        badge: 'Beliebteste',
+        price: 59,
         highlight: true,
         desc: 'Für Freelancer und wachsende Agenturen',
         features: [
@@ -102,7 +95,6 @@ const SEO_PLANS = [
         id: 'expert',
         name: 'Expert',
         price: 149,
-        icon: Building2,
         desc: 'Für Agenturen mit vielen Kunden',
         features: [
             '20 Websites tracken',
@@ -120,7 +112,6 @@ const GEO_PLANS = [
         id: 'einsteiger',
         name: 'Einsteiger',
         price: '4,99',
-        icon: Zap,
         desc: 'Für Einzelpersonen und erste Schritte',
         features: [
             '1 Website tracken',
@@ -134,7 +125,6 @@ const GEO_PLANS = [
         id: 'pro',
         name: 'Pro',
         price: '9,99',
-        icon: Star,
         badge: 'Beliebteste',
         highlight: true,
         desc: 'Für Freelancer und kleine Agenturen',
@@ -150,7 +140,6 @@ const GEO_PLANS = [
         id: 'expert',
         name: 'Expert',
         price: '19,99',
-        icon: Building2,
         desc: 'Für Agenturen mit vielen Kunden',
         features: [
             '10 Websites tracken',
@@ -194,16 +183,11 @@ function PlanCard({plan, user, currentPlan, onSuccess}) {
 
             <div className="mb-6">
                 <div className="flex items-center gap-2 mb-3">
-                    <div
-                        className={`w-8 h-8 rounded-lg flex items-center justify-center ${plan.highlight ? 'bg-violet-500/20' : 'bg-white/5'}`}>
-                        <plan.icon className={`w-4 h-4 ${plan.highlight ? 'text-violet-400' : 'text-slate-400'}`}
-                                   strokeWidth={1.8}/>
-                    </div>
                     <span className="text-sm font-semibold text-slate-400 uppercase tracking-wider">{plan.name}</span>
                 </div>
                 <div className="flex items-baseline gap-1 mb-1">
-                    <span className="text-slate-400 text-lg">€</span>
                     <span className="text-5xl font-bold text-white">{plan.price}</span>
+                    <span className="text-slate-400 text-lg">€</span>
                 </div>
                 <div className="text-sm text-slate-500 mb-3">{plan.period}</div>
                 <p className="text-sm text-slate-400">{plan.desc}</p>
@@ -380,7 +364,7 @@ export default function PricingPage() {
 
                         <motion.p initial={{opacity: 0}} animate={{opacity: 1}} transition={{delay: 0.5}}
                                   className="text-center text-sm text-slate-600 mt-10">
-                            Bezahlung sicher über PayPal · Jederzeit kündbar · Keine Mindestlaufzeit
+                            Bezahlung sicher über PayPal - Jederzeit kündbar - Keine Mindestlaufzeit
                         </motion.p>
 
                         {/* SEO Automatisierung section */}
@@ -389,8 +373,7 @@ export default function PricingPage() {
                             <div className="flex items-center gap-4 mb-10">
                                 <div className="flex-1 h-px bg-white/[0.06]"/>
                                 <div className="flex items-center gap-2 px-4 py-2 rounded-full border border-emerald-500/20 bg-emerald-500/5 text-emerald-400 text-xs font-semibold whitespace-nowrap">
-                                    <TrendingUp className="w-3.5 h-3.5"/>
-                                    SEO Automatisierung - Add-on
+                                    SEO Automatisierung
                                 </div>
                                 <div className="flex-1 h-px bg-white/[0.06]"/>
                             </div>
@@ -399,9 +382,12 @@ export default function PricingPage() {
                                 <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3">
                                     Google-Rankings automatisch tracken
                                 </h2>
-                                <p className="text-slate-400 text-sm max-w-lg mx-auto">
+                                <p className="text-slate-400 text-sm max-w-lg mx-auto mb-4">
                                     Wöchentliche Ranking-Updates, Keyword-Ideen, Konkurrenzanalyse und Backlink-Profil - unabhängig vom Audit-Plan buchbar.
                                 </p>
+                                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-violet-500/20 bg-violet-500/5 text-xs">
+                                    <span className="text-violet-300 font-semibold">14 Tage kostenlos testen</span>
+                                </div>
                             </div>
 
                             <div className="grid md:grid-cols-3 gap-6 items-start">
@@ -421,14 +407,11 @@ export default function PricingPage() {
                                         )}
                                         <div className="mb-5">
                                             <div className="flex items-center gap-2 mb-3">
-                                                <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${plan.highlight ? 'bg-emerald-500/20' : 'bg-white/5'}`}>
-                                                    <plan.icon className={`w-4 h-4 ${plan.highlight ? 'text-emerald-400' : 'text-slate-400'}`} strokeWidth={1.8}/>
-                                                </div>
                                                 <span className="text-sm font-semibold text-slate-400 uppercase tracking-wider">{plan.name}</span>
                                             </div>
                                             <div className="flex items-baseline gap-1 mb-1">
-                                                <span className="text-slate-400 text-lg">€</span>
                                                 <span className="text-4xl sm:text-5xl font-bold text-white">{plan.price}</span>
+                                                <span className="text-slate-400 text-lg">€</span>
                                             </div>
                                             <div className="text-sm text-slate-500 mb-3">pro Monat</div>
                                             <p className="text-sm text-slate-400">{plan.desc}</p>
@@ -457,7 +440,7 @@ export default function PricingPage() {
                             </div>
 
                             <p className="text-center text-sm text-slate-600 mt-8">
-                                SEO Automatisierung ist unabhängig vom Audit-Plan - kombinierbar mit Free, Pro und Agency.
+                                14 Tage kostenlos - danach automatische Abbuchung - jederzeit kündbar
                             </p>
                         </motion.div>
 
@@ -467,8 +450,7 @@ export default function PricingPage() {
                             <div className="flex items-center gap-4 mb-10">
                                 <div className="flex-1 h-px bg-white/[0.06]"/>
                                 <div className="flex items-center gap-2 px-4 py-2 rounded-full border border-violet-500/20 bg-violet-500/5 text-violet-400 text-xs font-semibold whitespace-nowrap">
-                                    <Sparkles className="w-3.5 h-3.5"/>
-                                    GEO Automatisierung - Add-on
+                                    GEO Automatisierung
                                 </div>
                                 <div className="flex-1 h-px bg-white/[0.06]"/>
                             </div>
@@ -478,12 +460,10 @@ export default function PricingPage() {
                                     Wirst du von KI empfohlen?
                                 </h2>
                                 <p className="text-slate-400 text-sm max-w-lg mx-auto mb-4">
-                                    Tracke automatisch ob Claude und ChatGPT deine Domain bei relevanten Anfragen erwähnen — wöchentlich und auf Abruf.
+                                    Tracke automatisch ob Claude und ChatGPT deine Domain bei relevanten Anfragen erwähnen - wöchentlich und auf Abruf.
                                 </p>
                                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-violet-500/20 bg-violet-500/5 text-xs">
                                     <span className="text-violet-300 font-semibold">14 Tage kostenlos testen</span>
-                                    <span className="text-slate-600">·</span>
-                                    <span className="text-slate-400">danach automatisch verlängerbar · jederzeit kündbar</span>
                                 </div>
                             </div>
 
@@ -497,23 +477,15 @@ export default function PricingPage() {
                                                 ? 'bg-linear-to-b from-violet-600/10 to-transparent border-violet-500/30 shadow-2xl shadow-violet-500/10'
                                                 : 'bg-white/[0.02] border-white/[0.06]'
                                         }`}>
-                                        {plan.badge && (
-                                            <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-linear-to-r from-violet-600 to-purple-600 rounded-full text-xs font-semibold text-white shadow-lg whitespace-nowrap">
-                                                {plan.badge}
-                                            </div>
-                                        )}
                                         <div className="mb-5">
                                             <div className="flex items-center gap-2 mb-3">
-                                                <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${plan.highlight ? 'bg-violet-500/20' : 'bg-white/5'}`}>
-                                                    <plan.icon className={`w-4 h-4 ${plan.highlight ? 'text-violet-400' : 'text-slate-400'}`} strokeWidth={1.8}/>
-                                                </div>
                                                 <span className="text-sm font-semibold text-slate-400 uppercase tracking-wider">{plan.name}</span>
                                             </div>
                                             <div className="flex items-baseline gap-1 mb-1">
-                                                <span className="text-slate-400 text-lg">€</span>
                                                 <span className="text-4xl sm:text-5xl font-bold text-white">{plan.price}</span>
+                                                <span className="text-slate-400 text-lg">€</span>
                                             </div>
-                                            <div className="text-sm text-slate-500 mb-3">pro Monat · inkl. MwSt.</div>
+                                            <div className="text-sm text-slate-500 mb-3">pro Monat inkl. MwSt.</div>
                                             <p className="text-sm text-slate-400">{plan.desc}</p>
                                         </div>
                                         <div className="space-y-3 mb-8 flex-1">
@@ -540,7 +512,7 @@ export default function PricingPage() {
                             </div>
 
                             <p className="text-center text-sm text-slate-600 mt-8">
-                                14 Tage kostenlos · danach automatische Abbuchung · jederzeit kündbar · GEO Automatisierung ist unabhängig vom Audit-Plan buchbar.
+                                14 Tage kostenlos - danach automatische Abbuchung - jederzeit kündbar
                             </p>
                         </motion.div>
                     </div>
