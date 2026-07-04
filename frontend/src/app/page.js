@@ -14,12 +14,12 @@ import LandingFeedback from './components/LandingFeedback'
 import FAQ from './components/FAQ'
 
 export const metadata = {
-    title: 'Website prüfen & SEO-Test kostenlos – Audit in 60s | AuditAI',
-    description: 'SEO, Performance & KI-Sichtbarkeit in 60 Sekunden prüfen. Kostenloser Website-Audit mit konkreten Fixes.',
-    keywords: 'seo test, seo test kostenlos, seo check, website seo check, kostenloser seo check, seo analyse kostenlos, website audit kostenlos, SEO analyse tool, performance test, core web vitals test, GEO optimierung, website checker, lighthouse alternative 2026',
+    title: 'SEO Automatisierung & KI-Sichtbarkeit prüfen – Audit in 60s | AuditAI',
+    description: 'Kostenloser Website-Audit für SEO-Automatisierung & KI-Sichtbarkeit in 60 Sekunden: Title-Tags, Core Web Vitals und Sichtbarkeit bei ChatGPT, Claude & Perplexity prüfen.',
+    keywords: 'seo automatisierung, ki sichtbarkeit, seo test, seo test kostenlos, seo check, website seo check, kostenloser seo check, seo analyse kostenlos, website audit kostenlos, SEO analyse tool, performance test, core web vitals test, GEO optimierung, website checker, lighthouse alternative 2026',
     openGraph: {
-        title: 'Kostenloser SEO-Test & Website-Audit in 60 Sekunden | AuditAI',
-        description: 'SEO-Test, Performance & KI-Sichtbarkeit — ein vollständiger Website-Audit mit konkreten Fixes. Kostenlos starten.',
+        title: 'SEO Automatisierung & KI-Sichtbarkeit prüfen | AuditAI',
+        description: 'SEO-Automatisierung, Performance & KI-Sichtbarkeit — ein vollständiger Website-Audit mit konkreten Fixes. Kostenlos starten.',
         url: 'https://www.sitecheckai.dev',
         siteName: 'AuditAI',
         type: 'website',
@@ -27,8 +27,8 @@ export const metadata = {
     },
     twitter: {
         card: 'summary_large_image',
-        title: 'Kostenloser SEO-Test & Website-Audit | AuditAI',
-        description: 'Website prüfen: SEO, Performance & KI-Sichtbarkeit in 60 Sekunden. Kostenlos starten. KI-Report ab Pro.',
+        title: 'SEO Automatisierung & KI-Sichtbarkeit prüfen | AuditAI',
+        description: 'Website prüfen: SEO-Automatisierung, Performance & KI-Sichtbarkeit in 60 Sekunden. Kostenlos starten. KI-Report ab Pro.',
     },
     robots: { index: true, follow: true, googleBot: { index: true, follow: true } },
     alternates: { canonical: 'https://www.sitecheckai.dev' },

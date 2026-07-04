@@ -7,11 +7,11 @@ import CookieBanner from './components/CookieBanner'
 export const metadata = {
     metadataBase: new URL('https://www.sitecheckai.dev'),
     title: {
-        default: 'Kostenloser SEO-Test & Website-Audit | AuditAI',
+        default: 'SEO Automatisierung & KI-Sichtbarkeit | AuditAI',
         template: '%s | AuditAI',
     },
-    description: 'Kostenloser SEO-Test in unter 60 Sekunden: Title-Tags, Meta-Descriptions, H1-Tags und Core Web Vitals prüfen. Vollständiger Website-Audit mit KI-Report und konkreten Fixes.',
-    keywords: 'seo test, seo test kostenlos, seo check, kostenloser seo check, website seo check, seo analyse kostenlos, website audit, core web vitals test, performance test, KI sichtbarkeit, GEO, llms.txt, website checker kostenlos',
+    description: 'Kostenloser SEO-Test in unter 60 Sekunden: SEO-Automatisierung, KI-Sichtbarkeit, Title-Tags, Meta-Descriptions und Core Web Vitals prüfen. Vollständiger Website-Audit mit KI-Report und konkreten Fixes.',
+    keywords: 'seo automatisierung, ki sichtbarkeit, seo test, seo test kostenlos, seo check, kostenloser seo check, website seo check, seo analyse kostenlos, website audit, core web vitals test, performance test, GEO, llms.txt, website checker kostenlos',
     authors: [{ name: 'AuditAI' }],
     creator: 'AuditAI',
     publisher: 'AuditAI',
@@ -76,27 +76,6 @@ export default function RootLayout({ children }) {
     return (
         <html lang="de" className="dark">
         <head>
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-            />
-            <script
-                dangerouslySetInnerHTML={{ __html: `
-                    window.dataLayer = window.dataLayer || [];
-                    function gtag(){dataLayer.push(arguments);}
-                    gtag('consent', 'default', {
-                        ad_storage: 'denied',
-                        analytics_storage: 'denied',
-                        wait_for_update: 500
-                    });
-                    try {
-                        var c = localStorage.getItem('cookie_consent');
-                        if (c === 'granted') {
-                            gtag('consent', 'update', { ad_storage: 'granted', analytics_storage: 'granted' });
-                        }
-                    } catch(e) {}
-                `}}
-            />
         </head>
         <body className="bg-[#080b14] text-white antialiased">
         {children}
@@ -106,6 +85,8 @@ export default function RootLayout({ children }) {
         />
         <Script id="google-gtag" strategy="afterInteractive">
             {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
                 gtag('js', new Date());
                 gtag('config', 'AW-691789119');
             `}
