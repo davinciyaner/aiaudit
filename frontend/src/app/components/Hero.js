@@ -23,344 +23,6 @@ const AVATARS = [
     { letter: 'S', color: '#d97706' },
 ]
 
-const BEFORE_SCORES = [
-    { label: 'Overall', score: 34, color: '#ef4444' },
-    { label: 'SEO',     score: 52, color: '#ef4444' },
-    { label: 'Perf',    score: 28, color: '#ef4444' },
-    { label: 'GEO',     score: 11, color: '#ef4444' },
-]
-const AFTER_SCORES = [
-    { label: 'Overall', score: 91, color: '#22c55e' },
-    { label: 'SEO',     score: 94, color: '#22c55e' },
-    { label: 'Perf',    score: 88, color: '#22c55e' },
-    { label: 'GEO',     score: 78, color: '#22c55e' },
-]
-const BEFORE_ISSUES = [
-    { type: 'error', text: 'H1-Tag fehlt auf der Startseite' },
-    { type: 'warn',  text: 'Ladezeit: 4.8s — Richtwert: 2.5s' },
-    { type: 'warn',  text: 'Meta-Description auf 4 Seiten leer' },
-    { type: 'error', text: 'llms.txt fehlt — KI ignoriert dich' },
-]
-const AFTER_ISSUES = [
-    { type: 'success', text: 'H1-Tag optimiert und keyword-reich' },
-    { type: 'success', text: 'Ladezeit: 4.8s → 1.8s' },
-    { type: 'success', text: 'GEO-Score: 11 → 78' },
-]
-const SCAN_MODULES = [
-    { label: 'SEO-Analyse',  color: '#10b981' },
-    { label: 'Performance',  color: '#f59e0b' },
-    { label: 'GEO-Analyse',  color: '#6366f1' },
-    { label: 'KI-Bericht',   color: '#7c3aed' },
-]
-const KI_FINDINGS = [
-    { severity: 'Kritisch',    color: '#ef4444', title: 'H1-Tag fehlt',          fix: 'Füge einen H1 mit Haupt-Keyword ein — genau einmal pro Seite.' },
-    { severity: 'Performance', color: '#f59e0b', title: 'Bilder unkomprimiert',  fix: 'hero.jpg (2.1 MB) auf WebP konvertieren → LCP sinkt von 4.2s auf ~1.1s.' },
-    { severity: 'GEO',         color: '#6366f1', title: 'llms.txt fehlt',        fix: 'Erstelle /llms.txt damit ChatGPT & Perplexity dich als Quelle zitieren.' },
-]
-const FIX_STEPS = [
-    { step: 1, title: 'index.html öffnen', detail: 'Suche nach dem öffnenden <body>-Tag deiner Startseite.' },
-    { step: 2, title: 'H1-Tag einfügen', detail: '<h1>SEO-Agentur Berlin – Firma XY</h1>', code: true },
-    { step: 3, title: 'Keyword prüfen', detail: 'Max. 60 Zeichen, enthält dein wichtigstes Keyword genau einmal.' },
-    { step: 4, title: 'Neuen Audit starten', detail: 'Score-Anstieg: SEO 52 → ~85 erwartet.' },
-]
-const DEMO_STEPS = [
-    { id: 'before',      label: 'Ausgangslage',   duration: 2800 },
-    { id: 'scan',        label: 'KI analysiert',  duration: 3500 },
-    { id: 'ki-bericht',  label: 'KI-Bericht',     duration: 4200 },
-    { id: 'fixes',       label: 'Fehler fixen',   duration: 4800 },
-    { id: 'screenshots', label: 'Screenshots',    duration: 3200 },
-    { id: 'after',       label: 'Nach Optimierung',duration: 2500 },
-]
-
-function ScoreRow({ scores }) {
-    return (
-        <div className="grid grid-cols-4 gap-1.5 sm:gap-2 mb-4">
-            {scores.map(({ label, score, color }) => (
-                <div key={label} className="rounded-xl p-2 sm:p-2.5 text-center border border-white/5 bg-white/[0.03]">
-                    <div className="text-lg sm:text-xl font-bold" style={{ color }}>{score}</div>
-                    <div className="text-[9px] text-slate-600 mt-0.5">{label}</div>
-                </div>
-            ))}
-        </div>
-    )
-}
-
-function IssueItem({ type, text }) {
-    return (
-        <div className={`flex items-start gap-2 px-3 py-2 rounded-lg text-[11px] ${
-            type === 'error' ? 'bg-red-500/10 text-red-400' :
-            type === 'warn'  ? 'bg-amber-500/10 text-amber-400' :
-                               'bg-emerald-500/10 text-emerald-400'
-        }`}>
-            <span className="shrink-0 mt-0.5">{type === 'error' ? '✕' : type === 'warn' ? '⚠' : '✓'}</span>
-            <span className="leading-relaxed">{text}</span>
-        </div>
-    )
-}
-
-function AuditDemo() {
-    const [stepIdx, setStepIdx] = useState(0)
-    const [scanProgress, setScanProgress] = useState([0, 0, 0, 0])
-
-    const step = DEMO_STEPS[stepIdx]
-
-    useEffect(() => {
-        const t = setTimeout(() => setStepIdx(i => (i + 1) % DEMO_STEPS.length), step.duration)
-        return () => clearTimeout(t)
-    }, [stepIdx, step.duration])
-
-    useEffect(() => {
-        if (step.id !== 'scan') { setScanProgress([0, 0, 0, 0]); return }
-        const targets = [92, 78, 85, 100]
-        const timers = targets.map((target, i) =>
-            setTimeout(() => setScanProgress(prev => prev.map((v, idx) => idx === i ? target : v)), 200 + i * 380)
-        )
-        return () => timers.forEach(clearTimeout)
-    }, [stepIdx])
-
-    const proLabel = ['ki-bericht', 'fixes', 'screenshots'].includes(step.id)
-
-    return (
-        <div className="bg-[#0d1117] border border-white/10 rounded-2xl overflow-hidden shadow-2xl">
-            <div className="flex items-center gap-2 px-4 py-3 border-b border-white/5 bg-white/2">
-                <div className="flex gap-1.5 shrink-0">
-                    <div className="w-3 h-3 rounded-full bg-red-500/60" />
-                    <div className="w-3 h-3 rounded-full bg-yellow-500/60" />
-                    <div className="w-3 h-3 rounded-full bg-green-500/60" />
-                </div>
-                <div className="flex-1 bg-white/5 rounded px-3 py-1 text-[10px] text-slate-500">sitecheckai.dev</div>
-                <div className="flex items-center gap-2 shrink-0">
-                    <AnimatePresence mode="wait">
-                        {proLabel && (
-                            <motion.div key="pro-badge"
-                                initial={{ opacity: 0, scale: 0.85 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.85 }}
-                                className="px-2 py-0.5 rounded-full bg-violet-500/15 border border-violet-500/25 text-[9px] font-bold text-violet-400 tracking-wide">
-                                PRO
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
-                    <div className="flex items-center gap-1">
-                        {DEMO_STEPS.map((_, i) => (
-                            <div key={i} className="h-1.5 rounded-full transition-all duration-500"
-                                style={{
-                                    width: i === stepIdx ? '18px' : '5px',
-                                    background: i === stepIdx ? '#7c3aed' : i < stepIdx ? 'rgba(124,58,237,0.35)' : 'rgba(255,255,255,0.07)'
-                                }} />
-                        ))}
-                    </div>
-                </div>
-            </div>
-
-            <div className="px-5 pt-3 pb-0">
-                <div className="text-[10px] uppercase tracking-widest font-semibold text-slate-600">{step.label}</div>
-            </div>
-
-            <div className="p-5 pt-2 min-h-[340px]">
-                <AnimatePresence mode="wait">
-                    {step.id === 'before' && (
-                        <motion.div key="before"
-                            initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
-                            transition={{ duration: 0.3 }}>
-                            <div className="flex items-center justify-between mb-3">
-                                <span className="text-[11px] text-slate-500">meine-website.de — aktueller Stand</span>
-                                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-red-500/15 text-red-400">VORHER</span>
-                            </div>
-                            <ScoreRow scores={BEFORE_SCORES} />
-                            <div className="space-y-1.5">
-                                {BEFORE_ISSUES.map((issue, i) => <IssueItem key={i} {...issue} />)}
-                            </div>
-                        </motion.div>
-                    )}
-
-                    {step.id === 'scan' && (
-                        <motion.div key="scan"
-                            initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
-                            transition={{ duration: 0.3 }}>
-                            <div className="flex items-center gap-2 mb-4">
-                                <span className="relative flex h-2 w-2">
-                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-violet-400 opacity-75" />
-                                    <span className="relative inline-flex rounded-full h-2 w-2 bg-violet-500" />
-                                </span>
-                                <span className="text-xs text-slate-300 font-medium">KI analysiert meine-website.de …</span>
-                            </div>
-                            <div className="space-y-3 mb-4">
-                                {SCAN_MODULES.map((mod, i) => (
-                                    <div key={i}>
-                                        <div className="flex justify-between mb-1">
-                                            <span className="text-[11px] text-slate-400">{mod.label}</span>
-                                            <span className="text-[11px] font-mono tabular-nums" style={{ color: mod.color }}>{scanProgress[i]}%</span>
-                                        </div>
-                                        <div className="h-1.5 bg-white/5 rounded-full overflow-hidden">
-                                            <div className="h-full rounded-full transition-all duration-1100 ease-out"
-                                                style={{ width: `${scanProgress[i]}%`, background: mod.color }} />
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                            <div className="border-t border-white/5 pt-3 space-y-2">
-                                <div className="text-[10px] text-slate-600 mb-1.5">Erste Funde:</div>
-                                {[
-                                    { severity: 'Kritisch', text: 'H1-Tag fehlt', color: '#ef4444' },
-                                    { severity: 'Warning',  text: 'Bilder unkomprimiert (2.1 MB)', color: '#f59e0b' },
-                                    { severity: 'GEO',      text: 'llms.txt nicht vorhanden', color: '#6366f1' },
-                                ].map((issue, i) => (
-                                    <motion.div key={i}
-                                        initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }}
-                                        transition={{ delay: 0.9 + i * 0.35 }}
-                                        className="flex items-center gap-2">
-                                        <span className="text-[10px] font-bold px-2 py-0.5 rounded shrink-0"
-                                            style={{ background: issue.color + '22', color: issue.color }}>
-                                            {issue.severity}
-                                        </span>
-                                        <span className="text-[11px] text-slate-400">{issue.text}</span>
-                                    </motion.div>
-                                ))}
-                            </div>
-                        </motion.div>
-                    )}
-
-                    {step.id === 'after' && (
-                        <motion.div key="after"
-                            initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
-                            transition={{ duration: 0.3 }}>
-                            <div className="flex items-center justify-between mb-3">
-                                <span className="text-[11px] text-slate-500">meine-website.de — nach Optimierung</span>
-                                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400">NACHHER</span>
-                            </div>
-                            <ScoreRow scores={AFTER_SCORES} />
-                            <div className="space-y-1.5">
-                                {AFTER_ISSUES.map((issue, i) => (
-                                    <motion.div key={i} initial={{ opacity: 0, x: -6 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.15 }}>
-                                        <IssueItem {...issue} />
-                                    </motion.div>
-                                ))}
-                            </div>
-                        </motion.div>
-                    )}
-
-                    {step.id === 'ki-bericht' && (
-                        <motion.div key="ki-bericht"
-                            initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
-                            transition={{ duration: 0.3 }}>
-                            <div className="flex items-center gap-2 mb-3">
-                                <Bot className="w-3.5 h-3.5 text-violet-400" />
-                                <span className="text-xs font-semibold text-white">KI-Bericht</span>
-                                <span className="ml-auto text-[9px] font-bold px-1.5 py-0.5 rounded bg-violet-500/20 text-violet-400">PRO</span>
-                            </div>
-                            <div className="space-y-2">
-                                {KI_FINDINGS.map((f, i) => (
-                                    <motion.div key={i}
-                                        initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }}
-                                        transition={{ delay: i * 0.35 }}
-                                        className="rounded-xl p-3 bg-white/[0.03] border border-white/5">
-                                        <div className="flex items-center gap-2 mb-1.5">
-                                            <span className="text-[10px] font-bold px-1.5 py-0.5 rounded"
-                                                style={{ background: f.color + '22', color: f.color }}>
-                                                {f.severity}
-                                            </span>
-                                            <span className="text-[11px] font-semibold text-slate-200">{f.title}</span>
-                                        </div>
-                                        <p className="text-[10px] text-slate-500 leading-relaxed">{f.fix}</p>
-                                    </motion.div>
-                                ))}
-                            </div>
-                        </motion.div>
-                    )}
-
-                    {step.id === 'fixes' && (
-                        <motion.div key="fixes"
-                            initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
-                            transition={{ duration: 0.3 }}>
-                            <div className="flex items-center gap-2 mb-1">
-                                <Search className="w-3.5 h-3.5 text-cyan-400" />
-                                <span className="text-xs font-semibold text-white">Fehler fixen</span>
-                                <span className="ml-auto text-[9px] font-bold px-1.5 py-0.5 rounded bg-violet-500/20 text-violet-400">PRO</span>
-                            </div>
-                            <p className="text-[10px] text-slate-500 mb-3">Fix-Anleitung: <span className="text-red-400">H1-Tag fehlt</span></p>
-                            <div className="space-y-2">
-                                {FIX_STEPS.map((s, i) => (
-                                    <motion.div key={i}
-                                        initial={{ opacity: 0, x: -6 }} animate={{ opacity: 1, x: 0 }}
-                                        transition={{ delay: i * 0.3 }}
-                                        className="flex gap-3 items-start">
-                                        <div className="w-5 h-5 rounded-full bg-violet-500/15 border border-violet-500/25 flex items-center justify-center shrink-0 mt-0.5">
-                                            <span className="text-[9px] font-bold text-violet-400">{s.step}</span>
-                                        </div>
-                                        <div className="flex-1 min-w-0">
-                                            <p className="text-[11px] font-semibold text-slate-200 mb-0.5">{s.title}</p>
-                                            {s.code
-                                                ? <code className="text-[10px] text-emerald-400 bg-emerald-500/8 border border-emerald-500/15 px-2 py-0.5 rounded font-mono block truncate">{s.detail}</code>
-                                                : <p className="text-[10px] text-slate-500 leading-relaxed">{s.detail}</p>
-                                            }
-                                        </div>
-                                    </motion.div>
-                                ))}
-                            </div>
-                        </motion.div>
-                    )}
-
-                    {step.id === 'screenshots' && (
-                        <motion.div key="screenshots"
-                            initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
-                            transition={{ duration: 0.3 }}>
-                            <div className="flex items-center gap-2 mb-3">
-                                <Camera className="w-3.5 h-3.5 text-emerald-400" />
-                                <span className="text-xs font-semibold text-white">Screenshots</span>
-                                <span className="ml-auto text-[9px] font-bold px-1.5 py-0.5 rounded bg-violet-500/20 text-violet-400">PRO</span>
-                            </div>
-                            <div className="grid grid-cols-5 gap-3 mb-3">
-                                <motion.div className="col-span-3" initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }}>
-                                    <div className="text-[9px] text-slate-600 mb-1.5 uppercase tracking-wider">Desktop</div>
-                                    <div className="rounded-xl border border-white/10 overflow-hidden bg-[#080b14]">
-                                        <div className="h-3.5 bg-white/3 flex items-center px-2 gap-1 border-b border-white/5">
-                                            <div className="w-1.5 h-1.5 rounded-full bg-red-500/50" />
-                                            <div className="w-1.5 h-1.5 rounded-full bg-yellow-500/50" />
-                                            <div className="w-1.5 h-1.5 rounded-full bg-green-500/50" />
-                                            <div className="flex-1 ml-1 h-1.5 rounded-full bg-white/5" />
-                                        </div>
-                                        <div className="p-2 space-y-1.5">
-                                            <div className="h-2.5 rounded bg-white/5 w-1/2" />
-                                            <div className="h-10 rounded-lg bg-gradient-to-br from-violet-500/20 to-cyan-500/10" />
-                                            <div className="h-2 rounded bg-white/5 w-3/4" />
-                                            <div className="h-2 rounded bg-white/5 w-1/2" />
-                                            <div className="grid grid-cols-3 gap-1 pt-1">
-                                                <div className="h-8 rounded-lg bg-white/4" />
-                                                <div className="h-8 rounded-lg bg-white/4" />
-                                                <div className="h-8 rounded-lg bg-white/4" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </motion.div>
-                                <motion.div className="col-span-2" initial={{ opacity: 0, x: 8 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.4 }}>
-                                    <div className="text-[9px] text-slate-600 mb-1.5 uppercase tracking-wider">Mobile</div>
-                                    <div className="rounded-xl border border-white/10 overflow-hidden bg-[#080b14]">
-                                        <div className="h-3.5 bg-white/3 flex items-center justify-center border-b border-white/5">
-                                            <div className="w-5 h-1 rounded-full bg-white/10" />
-                                        </div>
-                                        <div className="p-1.5 space-y-1">
-                                            <div className="h-2 rounded bg-white/5" />
-                                            <div className="h-9 rounded-lg bg-gradient-to-br from-violet-500/20 to-cyan-500/10" />
-                                            <div className="h-2 rounded bg-white/5" />
-                                            <div className="h-2 rounded bg-white/5 w-3/4" />
-                                            <div className="h-6 rounded-lg bg-white/4" />
-                                            <div className="h-6 rounded-lg bg-white/4" />
-                                        </div>
-                                    </div>
-                                </motion.div>
-                            </div>
-                            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.7 }}
-                                className="flex items-center gap-2 text-[10px] text-slate-600">
-                                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400/70 inline-block shrink-0" />
-                                Automatisch aufgenommen · Desktop &amp; Mobile immer synchron
-                            </motion.div>
-                        </motion.div>
-                    )}
-
-                </AnimatePresence>
-            </div>
-        </div>
-    )
-}
 
 export default function Hero() {
     const [heroUrl, setHeroUrl] = useState('')
@@ -416,7 +78,7 @@ export default function Hero() {
                                         initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
                                         transition={{ duration: 0.15 }}
                                         className="text-xs text-red-400 mb-1.5 flex items-center gap-1">
-                                        <span>👆</span> Bitte zuerst deine Website-Adresse eingeben
+                                        Bitte zuerst deine Website-Adresse eingeben
                                     </motion.p>
                                 ) : (
                                     <motion.p key="lbl"
@@ -504,7 +166,7 @@ export default function Hero() {
 
             <motion.div style={{ y: heroY, opacity: heroOpacity }} className="relative z-10 w-full">
                 <div className="max-w-7xl mx-auto px-5 sm:px-8 py-10 sm:py-20">
-                    <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+                    <div className="flex flex-col items-center text-center max-w-5xl mx-auto">
 
                         <div>
                             <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
@@ -532,8 +194,13 @@ export default function Hero() {
                                 Website-Audit in 60 Sekunden.
                             </motion.h1>
 
+                            <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }}
+                                className="text-sm sm:text-base text-slate-400 mb-5 sm:mb-6 max-w-3xl mx-auto">
+                                SEO-Automatisierung und KI-Sichtbarkeit deiner Website - verständlich analysiert in 60 Sekunden.
+                            </motion.p>
+
                             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.3 }}
-                                className="mb-5 sm:mb-8">
+                                className="mb-5 sm:mb-8 w-full max-w-2xl mx-auto">
                                 <label className="block text-sm text-slate-300 font-medium mb-2">
                                     Deine Website-Adresse eingeben:
                                 </label>
@@ -622,12 +289,6 @@ export default function Hero() {
                                 ))}
                             </motion.div>
                         </div>
-
-                        <motion.div initial={{ opacity: 0, x: 40 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.3 }} className="relative">
-                            <AuditDemo />
-                            <div className="absolute -inset-4 rounded-3xl blur-2xl -z-10 bg-violet-500/6" />
-                        </motion.div>
-
                     </div>
                 </div>
             </motion.div>
