@@ -91,7 +91,7 @@ export default function Hero() {
                                 )}
                             </AnimatePresence>
                             <form onSubmit={e => submitWithRef(e, stickyMobileRef)} className="flex items-center gap-2">
-                                <div className={`flex items-center gap-2 flex-1 px-3 py-3 border rounded-xl transition-all duration-200 ${
+                                <div className={`flex items-center gap-2 flex-1 px-3 py-3 border rounded-xl duration-200 ${
                                     showError ? 'bg-red-500/[0.06] border-red-500/40' : 'bg-white/[0.06] border-white/10 focus-within:border-violet-500/60 focus-within:bg-white/[0.08]'
                                 }`}>
                                     <Globe className={`w-4 h-4 shrink-0 ${showError ? 'text-red-400' : 'text-slate-400'}`} />
@@ -189,8 +189,8 @@ export default function Hero() {
 
                             <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.1 }}
                                 className="text-3xl sm:text-5xl lg:text-7xl font-bold leading-[1.1] sm:leading-none tracking-tight mb-3 sm:mb-6">
-                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 via-purple-400 to-cyan-400">
-                                    SEO, GEO & Performance.
+                                <span className="bg-clip-text bg-gradient-to-r">
+                                    SEO, GEO Automatisierung.
                                 </span><br />
                                 Website-Audit in 60 Sekunden.
                             </motion.h1>
