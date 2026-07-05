@@ -3,6 +3,10 @@ Allow: /
 Disallow: /api/
 Disallow: /dashboard
 Disallow: /profile
+Disallow: /seo/
+Allow: /seo/pricing
+Disallow: /geo/
+Allow: /geo/pricing
 
 # AI crawlers – explicitly allowed
 User-agent: GPTBot

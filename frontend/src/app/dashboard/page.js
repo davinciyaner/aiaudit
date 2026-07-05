@@ -1,9 +1,8 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
-    Zap,
     Download,
     RefreshCw,
     ExternalLink,
@@ -15,8 +14,6 @@ import {
     Lock,
     ArrowRight,
     UserPlus,
-    User,
-    LogOut,
     Bot,
     FileText,
     TrendingUp,
@@ -30,6 +27,7 @@ import AuditForm from '../components/AuditForm'
 import Loading from '../components/Loading'
 import ReauditCTA from '../components/ReauditCTA'
 import FeedbackWidget from '../components/FeedbackWidget'
+import Navbar from "@/app/components/Navbar";
 
 function IssueItem({ text, type = 'error' }) {
     const styles = {
@@ -130,33 +128,11 @@ export default function Dashboard() {
     const [auditUrl, setAuditUrl] = useState('')
     const [result, setResult] = useState(null)
     const [isLoggedIn, setIsLoggedIn] = useState(false)
-    const [userName, setUserName] = useState('')
-    const [menuOpen, setMenuOpen] = useState(false)
     const [showRegisterModal, setShowRegisterModal] = useState(false)
-    const menuRef = useRef(null)
-
-    useEffect(() => {
-        if (!menuOpen) return
-        const handler = (e) => { if (menuRef.current && !menuRef.current.contains(e.target)) setMenuOpen(false) }
-        document.addEventListener('mousedown', handler)
-        return () => document.removeEventListener('mousedown', handler)
-    }, [menuOpen])
-
-    const handleLogout = () => {
-        localStorage.removeItem('token')
-        localStorage.removeItem('user')
-        setIsLoggedIn(false)
-        setMenuOpen(false)
-        router.push('/')
-    }
 
     useEffect(() => {
         const token = localStorage.getItem('token')
         setIsLoggedIn(!!token)
-        try {
-            const stored = localStorage.getItem('user')
-            if (stored) setUserName(JSON.parse(stored).name || '')
-        } catch { /* ignore */ }
 
         const pending = sessionStorage.getItem('pendingAuditUrl')
         if (pending) {
@@ -232,85 +208,9 @@ export default function Dashboard() {
                 }}
             />
 
-            {/* NAVBAR */}
-            <nav className="sticky top-0 z-50 bg-[#080b14]/90 backdrop-blur-xl border-b border-white/5">
-                <div className="max-w-7xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between">
-                    <Link href="/" className="flex items-center gap-2">
-                        <div className="w-8 h-8 rounded-lg bg-linear-to-br from-violet-500 to-cyan-500 flex items-center justify-center">
-                            <Zap className="w-4 h-4 text-white" />
-                        </div>
-                        <span className="font-bold text-white">
-                            Audit<span className="text-cyan-400">AI</span>
-                        </span>
-                    </Link>
-                    <div className="flex items-center gap-2">
-                        {result && !result.limitReached && (
-                            <button
-                                onClick={() => { setResult(null); setLoading(false) }}
-                                className="flex items-center gap-2 px-4 py-2 text-sm text-slate-400 hover:text-white border border-white/10 rounded-xl"
-                            >
-                                <RefreshCw className="w-3.5 h-3.5" />
-                                <span className="hidden sm:inline">Neue Prüfung</span>
-                            </button>
-                        )}
+            <Navbar />
 
-                        {isLoggedIn ? (
-                            <div className="relative" ref={menuRef}>
-                                <button
-                                    onClick={() => setMenuOpen(o => !o)}
-                                    className="flex items-center gap-2 px-3 py-2 rounded-xl border border-white/10 hover:border-white/20 hover:bg-white/5 transition-all"
-                                >
-                                    <div className="w-6 h-6 rounded-lg bg-gradient-to-br from-violet-500 to-cyan-500 flex items-center justify-center text-white text-[10px] font-bold shrink-0">
-                                        {userName?.charAt(0)?.toUpperCase() || '?'}
-                                    </div>
-                                    <span className="text-sm text-slate-300 hidden sm:block max-w-[120px] truncate">{userName}</span>
-                                    <ChevronDown className={`w-3.5 h-3.5 text-slate-500 transition-transform ${menuOpen ? 'rotate-180' : ''}`} />
-                                </button>
-
-                                <AnimatePresence>
-                                    {menuOpen && (
-                                        <motion.div
-                                            initial={{ opacity: 0, y: -6, scale: 0.97 }}
-                                            animate={{ opacity: 1, y: 0, scale: 1 }}
-                                            exit={{ opacity: 0, y: -6, scale: 0.97 }}
-                                            transition={{ duration: 0.15 }}
-                                            className="absolute right-0 top-full mt-2 w-44 bg-[#0d1117] border border-white/10 rounded-xl shadow-2xl shadow-black/40 overflow-hidden z-50"
-                                        >
-                                            <Link
-                                                href="/profile"
-                                                onClick={() => setMenuOpen(false)}
-                                                className="flex items-center gap-2.5 px-4 py-3 text-sm text-slate-300 hover:text-white hover:bg-white/5 transition-colors"
-                                            >
-                                                <User className="w-4 h-4 text-slate-500" />
-                                                Mein Profil
-                                            </Link>
-                                            <div className="h-px bg-white/5 mx-3" />
-                                            <button
-                                                onClick={handleLogout}
-                                                className="w-full flex items-center gap-2.5 px-4 py-3 text-sm text-red-400 hover:text-red-300 hover:bg-red-500/5 transition-colors"
-                                            >
-                                                <LogOut className="w-4 h-4" />
-                                                Ausloggen
-                                            </button>
-                                        </motion.div>
-                                    )}
-                                </AnimatePresence>
-                            </div>
-                        ) : (
-                            <div className="flex items-center gap-2">
-                                <Link href="/login" className="px-4 py-2 text-sm text-slate-400 hover:text-white border border-white/10 hover:border-white/20 rounded-xl transition-all">
-                                    Einloggen
-                                </Link>
-                                <Link href="/register" className="px-4 py-2 text-sm text-white bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 rounded-xl transition-all font-semibold shadow-lg shadow-violet-500/20">
-                                    Registrieren
-                                </Link>
-                            </div>
-                        )}
-                    </div>
-                </div>
-            </nav>
-
-            <div className="max-w-5xl mx-auto px-4 sm:px-8 py-8 sm:py-12">
+            <div className="max-w-5xl mx-auto px-4 sm:px-8 pt-28 pb-8 sm:pb-12">
 
                 {/* HEADER */}
                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-10">
@@ -322,6 +222,15 @@ export default function Dashboard() {
                             ? `Resultate für ${result?.auditData?.url || auditUrl}`
                             : 'Gib deine URL ein und erhalte einen vollständigen AI Bericht'}
                     </p>
+                    {result && !result.limitReached && (
+                        <button
+                            onClick={() => { setResult(null); setLoading(false) }}
+                            className="mt-4 inline-flex items-center gap-2 px-4 py-2 text-sm text-slate-400 hover:text-white border border-white/10 hover:border-white/20 rounded-xl transition-all"
+                        >
+                            <RefreshCw className="w-3.5 h-3.5" />
+                            Neue Prüfung
+                        </button>
+                    )}
                 </motion.div>
 
                 {/* FORM */}
