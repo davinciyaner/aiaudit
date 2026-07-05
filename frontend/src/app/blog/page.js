@@ -10,6 +10,15 @@ export const metadata = {
 
 const ARTICLES = [
     {
+        slug: 'seo-geo-automatisierung',
+        title: 'SEO Automatisierung & GEO Automatisierung: Rankings und KI-Sichtbarkeit automatisch tracken',
+        description: 'Wie du Google-Rankings und KI-Sichtbarkeit bei ChatGPT & Claude wöchentlich automatisch trackst - statt manuell zu prüfen. Mit Preisen und Vergleich.',
+        category: 'SEO & GEO',
+        categoryColor: '#10b981',
+        date: '5. Juli 2026',
+        readTime: '10 min',
+    },
+    {
         slug: 'seo-test-haeufige-fehler',
         title: 'SEO-Test: Die 10 häufigsten Fehler die deinen Google-Rank kosten',
         description: 'Diese 10 SEO-Fehler machen die meisten Websites — und keiner merkt es. Mit kostenlosem SEO-Test-Tool checken und sofort beheben.',

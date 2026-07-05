@@ -1,15 +1,9 @@
 'use client'
 import { useRef, useState, useEffect } from 'react'
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
-import { ArrowRight, Globe, Search, Bot, Camera } from 'lucide-react'
+import { ArrowRight, Globe, Search, Bot, Camera, TrendingUp } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-
-const PRO_FEATURES = [
-    { icon: Bot, label: 'KI-Bericht', desc: 'Vollständige KI-Analyse', color: 'text-violet-400', bg: 'bg-violet-500/10', border: 'border-violet-500/20' },
-    { icon: Search, label: 'Fehler fixen', desc: 'Schritt-für-Schritt-Fixes', color: 'text-cyan-400', bg: 'bg-cyan-500/10', border: 'border-cyan-500/20' },
-    { icon: Camera, label: 'Screenshots', desc: 'Desktop & Mobile', color: 'text-emerald-400', bg: 'bg-emerald-500/10', border: 'border-emerald-500/20' },
-]
 
 const STATS = [
     { value: 'max. 60s', label: 'bis zum Bericht' },
@@ -48,6 +42,13 @@ export default function Hero() {
         window.addEventListener('scroll', handleScroll, { passive: true })
         return () => window.removeEventListener('scroll', handleScroll)
     }, [])
+
+    const goToAutomation = (e, dashboardHref, pricingHref) => {
+        if (!localStorage.getItem('user')) {
+            e.preventDefault()
+            router.push(pricingHref)
+        }
+    }
 
     const submitWithRef = (e, ref) => {
         e.preventDefault()
@@ -196,7 +197,7 @@ export default function Hero() {
 
                             <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }}
                                 className="text-sm sm:text-base text-slate-400 mb-5 sm:mb-6 max-w-3xl mx-auto">
-                                SEO-Automatisierung und KI-Sichtbarkeit deiner Website - verständlich analysiert in 60 Sekunden.
+                                SEO und KI-Sichtbarkeit deiner Website analysiert in 60 Sekunden.
                             </motion.p>
 
                             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.3 }}
@@ -248,32 +249,24 @@ export default function Hero() {
                                     )}
                                 </AnimatePresence>
 
-                                <div className="rounded-xl border border-white/8 bg-white/[0.02] p-4">
-                                    <div className="flex items-center gap-2 mb-3">
-                                        <span className="text-xs font-semibold text-violet-400">Jetzt Pro holen</span>
-                                        <div className="ml-auto flex items-baseline gap-1">
-                                            <span className="text-xs text-slate-500">ab</span>
-                                            <span className="text-sm font-bold text-white">€29</span>
-                                            <span className="text-xs text-slate-500">/Monat</span>
-                                        </div>
-                                    </div>
-                                    <div className="grid grid-cols-3 gap-2 mb-3">
-                                        {PRO_FEATURES.map(({ icon: Icon, label, desc, color, bg, border }) => (
-                                            <div key={label} className={`flex flex-col items-center text-center gap-1.5 p-2.5 rounded-lg border ${bg} ${border}`}>
-                                                <div className="w-7 h-7 rounded-lg flex items-center justify-center bg-black/20">
-                                                    <Icon className={`w-3.5 h-3.5 ${color}`} />
-                                                </div>
-                                                <span className="text-[11px] font-semibold text-slate-200 leading-tight">{label}</span>
-                                                <span className="text-[10px] text-slate-500 leading-tight">{desc}</span>
-                                            </div>
-                                        ))}
-                                    </div>
-                                    <Link href="/pricing"
-                                        className="flex items-center justify-center gap-1.5 w-full py-2.5 text-xs font-semibold bg-gradient-to-r from-violet-600/80 to-cyan-600/80 hover:from-violet-600 hover:to-cyan-600 text-white rounded-lg transition-all duration-200 shadow-md shadow-violet-500/10">
-                                        Pro holen
-                                        <ArrowRight className="w-3 h-3" />
+                                <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.4 }}
+                                    className="flex flex-wrap items-center justify-center gap-2">
+                                    <span className="text-md text-slate-300">Mehr als ein Einmal-Check:</span>
+                                    <Link href="/seo/dashboard"
+                                        onClick={e => goToAutomation(e, '/seo/dashboard', '/seo/pricing')}
+                                        className="group inline-flex items-center gap-1.5 pl-2.5 pr-2 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 hover:bg-emerald-500/15 hover:border-emerald-500/40 hover:scale-[1.03] transition-all duration-200">
+                                        <TrendingUp className="w-3 h-3 text-emerald-400" />
+                                        <span className="text-xs font-semibold text-emerald-300">SEO Automatisierung</span>
+                                        <ArrowRight className="w-3 h-3 text-emerald-400 group-hover:translate-x-0.5 transition-transform" />
                                     </Link>
-                                </div>
+                                    <Link href="/geo/dashboard"
+                                        onClick={e => goToAutomation(e, '/geo/dashboard', '/geo/pricing')}
+                                        className="group inline-flex items-center gap-1.5 pl-2.5 pr-2 py-1 rounded-full bg-violet-500/10 border border-violet-500/20 hover:bg-violet-500/15 hover:border-violet-500/40 hover:scale-[1.03] transition-all duration-200">
+                                        <Globe className="w-3 h-3 text-violet-400" />
+                                        <span className="text-xs font-semibold text-violet-300">GEO Automatisierung</span>
+                                        <ArrowRight className="w-3 h-3 text-violet-400 group-hover:translate-x-0.5 transition-transform" />
+                                    </Link>
+                                </motion.div>
                             </motion.div>
 
                             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}
