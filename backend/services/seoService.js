@@ -131,14 +131,21 @@ export async function getKeywordIdeas(keywords, location = 'Germany', language =
 export async function getCompetitors(domain, location = 'Germany', language = 'de') {
     if (!LOGIN || !PASSWORD) return []
 
-    const data = await dfsPost('/v3/domain_analytics/google/competitors_domain/live', [{
+    const data = await dfsPost('/v3/dataforseo_labs/google/competitors_domain/live', [{
         target: domain,
         location_name: location,
         language_code: language,
         limit: 10,
     }])
 
-    return (data.tasks?.[0]?.result?.[0]?.items || []).map(item => ({
+    const task = data.tasks?.[0]
+    if (task?.status_code !== 20000) {
+        console.warn('[seoService] getCompetitors Fehler:', task?.status_code, task?.status_message)
+        console.warn('[seoService] getCompetitors Response:', JSON.stringify(data).slice(0, 600))
+        return []
+    }
+
+    return (task.result?.[0]?.items || []).map(item => ({
         domain:             item.domain,
         intersections:      item.intersections,
         competitorMetrics: {

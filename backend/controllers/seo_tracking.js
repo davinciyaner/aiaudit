@@ -334,6 +334,8 @@ export async function getKeywordIdeasForSite(req, res) {
     }
 }
 
+const COMPETITORS_CACHE_MAX_AGE_MS = 6 * 24 * 60 * 60 * 1000 // 6 Tage (Job läuft wöchentlich)
+
 // GET /api/seo/sites/:id/competitors
 export async function getCompetitorsForSite(req, res) {
     try {
@@ -343,12 +345,21 @@ export async function getCompetitorsForSite(req, res) {
         const site = await SeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId }).lean()
         if (!site) return res.status(404).json({ error: 'Website nicht gefunden' })
 
+        const cache = site.competitorsCache
+        if (cache?.checkedAt && Date.now() - new Date(cache.checkedAt).getTime() < COMPETITORS_CACHE_MAX_AGE_MS) {
+            return res.json({ competitors: cache.data, checkedAt: cache.checkedAt, cached: true })
+        }
+
         const competitors = await getCompetitors(site.domain, site.location, site.language)
-        res.json({ competitors })
+        const checkedAt = new Date()
+        await SeoTrackedSite.updateOne({ _id: site._id }, { competitorsCache: { data: competitors, checkedAt } })
+        res.json({ competitors, checkedAt, cached: false })
     } catch (err) {
         res.status(500).json({ error: err.message })
     }
 }
+
+const CONTENT_GAP_CACHE_MAX_AGE_MS = 6 * 24 * 60 * 60 * 1000 // 6 Tage (Job läuft wöchentlich)
 
 // GET /api/seo/sites/:id/content-gap?competitor=example.com
 export async function getContentGapForSite(req, res) {
@@ -356,21 +367,6 @@ export async function getContentGapForSite(req, res) {
         const plan = await getSeoPlan(req.userId)
         if (!plan) return res.status(403).json({ error: 'Kein aktives SEO-Automatisierung Abo' })
         if (plan === 'einsteiger') return res.status(403).json({ error: 'content_gap_locked', requiredPlan: 'pro' })
-
-        const monthlyLimit = PLAN_LIMITS[plan]?.contentGapPerMonth ?? 0
-        const month = new Date().toISOString().slice(0, 7)
-        const existing = await SeoUsage.findOne({ userId: req.userId, feature: 'content_gap', month }).lean()
-        const used = existing?.count ?? 0
-        if (used >= monthlyLimit) {
-            return res.status(429).json({ error: 'monthly_limit_reached', limit: monthlyLimit, used })
-        }
-
-        // Increment usage before the (expensive) API call
-        await SeoUsage.findOneAndUpdate(
-            { userId: req.userId, feature: 'content_gap', month },
-            { $inc: { count: 1 } },
-            { upsert: true }
-        )
 
         const { competitor } = req.query
         if (!competitor) return res.status(400).json({ error: 'competitor-Parameter erforderlich' })
@@ -386,12 +382,43 @@ export async function getContentGapForSite(req, res) {
         const site = await SeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId }).lean()
         if (!site) return res.status(404).json({ error: 'Website nicht gefunden' })
 
+        const monthlyLimit = PLAN_LIMITS[plan]?.contentGapPerMonth ?? 0
+        const month = new Date().toISOString().slice(0, 7)
+        const existing = await SeoUsage.findOne({ userId: req.userId, feature: 'content_gap', month }).lean()
+        const used = existing?.count ?? 0
+
+        // Aus dem wöchentlichen Job gecachtes Ergebnis für denselben Konkurrenten wiederverwenden — kostenlos, kein Limit-Verbrauch
+        const cache = site.contentGapCache
+        if (
+            cache?.competitorDomain === competitorDomain &&
+            cache.checkedAt && Date.now() - new Date(cache.checkedAt).getTime() < CONTENT_GAP_CACHE_MAX_AGE_MS
+        ) {
+            return res.json({ competitor: competitorDomain, gap: cache.data, used, limit: monthlyLimit, cached: true })
+        }
+
+        if (used >= monthlyLimit) {
+            return res.status(429).json({ error: 'monthly_limit_reached', limit: monthlyLimit, used })
+        }
+
+        // Increment usage before the (expensive) API call
+        await SeoUsage.findOneAndUpdate(
+            { userId: req.userId, feature: 'content_gap', month },
+            { $inc: { count: 1 } },
+            { upsert: true }
+        )
+
         const gap = await getContentGap(competitorDomain, site.keywords || [], site.location, site.language)
-        res.json({ competitor: competitorDomain, gap, used: used + 1, limit: monthlyLimit })
+        await SeoTrackedSite.updateOne(
+            { _id: site._id },
+            { contentGapCache: { competitorDomain, data: gap, checkedAt: new Date() } }
+        )
+        res.json({ competitor: competitorDomain, gap, used: used + 1, limit: monthlyLimit, cached: false })
     } catch (err) {
         res.status(500).json({ error: err.message })
     }
 }
+
+const BACKLINKS_CACHE_MAX_AGE_MS = 28 * 24 * 60 * 60 * 1000 // 28 Tage (Job läuft monatlich)
 
 // GET /api/seo/sites/:id/backlinks
 export async function getBacklinksForSite(req, res) {
@@ -402,8 +429,15 @@ export async function getBacklinksForSite(req, res) {
         const site = await SeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId }).lean()
         if (!site) return res.status(404).json({ error: 'Website nicht gefunden' })
 
+        const cache = site.backlinksCache
+        if (cache?.checkedAt && Date.now() - new Date(cache.checkedAt).getTime() < BACKLINKS_CACHE_MAX_AGE_MS) {
+            return res.json({ summary: cache.data, checkedAt: cache.checkedAt, cached: true })
+        }
+
         const summary = await getBacklinkSummary(site.domain)
-        res.json({ summary })
+        const checkedAt = new Date()
+        await SeoTrackedSite.updateOne({ _id: site._id }, { backlinksCache: { data: summary, checkedAt } })
+        res.json({ summary, checkedAt, cached: false })
     } catch (err) {
         res.status(500).json({ error: err.message })
     }

@@ -182,7 +182,7 @@ export default function Hero() {
                                     ))}
                                 </div>
                                 <div className="flex items-center gap-1.5 text-xs text-slate-400">
-                                    <span className="text-white font-semibold">80+</span>
+                                    <span className="text-white font-semibold">100+</span>
                                     <span>Websites bereits analysiert</span>
                                 </div>
                             </motion.div>

@@ -1,7 +1,7 @@
 'use client'
 import {useState, useEffect} from 'react'
 import {motion} from 'framer-motion'
-import {Check, Zap, Crown, Building2, LogIn, Loader2, TrendingUp, Star, ArrowRight, Sparkles} from 'lucide-react'
+import {Check, Zap, Crown, Building2, LogIn, Loader2, TrendingUp, Star, ArrowRight, Sparkles, Lock} from 'lucide-react'
 import Link from 'next/link'
 import {PayPalScriptProvider, PayPalButtons} from '@paypal/react-paypal-js'
 import toast, {Toaster} from 'react-hot-toast'
@@ -72,8 +72,14 @@ const SEO_PLANS = [
             '3 Websites tracken',
             '50 Keywords gesamt',
             'Wöchentliches Ranking-Update',
-            'Positionsveränderung anzeigen',
-            '8 Wochen Verlauf',
+            'Ranking-Verlauf (8 Wochen)',
+            'Keyword-Ideen & Suchvolumen',
+            'E-Mail Alerts bei großen Einbrüchen',
+            'Konkurrenten-Analyse (automatisch, wöchentlich)',
+            'Backlink-Übersicht (automatisch, monatlich)',
+        ],
+        locked: [
+            'Content Gap Analyse (ab Pro)',
         ],
     },
     {
@@ -86,9 +92,12 @@ const SEO_PLANS = [
             '10 Websites tracken',
             '200 Keywords gesamt',
             'Wöchentliches Ranking-Update',
-            'Alles aus Einsteiger',
-            'Keyword-Verlauf & Trends',
-            '6 Monate Verlauf',
+            'Ranking-Verlauf (6 Monate)',
+            'Keyword-Ideen & Suchvolumen',
+            'E-Mail Alerts ab 5 Positionen',
+            'Konkurrenten-Analyse (automatisch, wöchentlich)',
+            'Backlink-Übersicht (automatisch, monatlich)',
+            'Content Gap Analyse — wöchentlich automatisch je Website, insgesamt bis zu 100 Abrufe/Monat',
         ],
     },
     {
@@ -100,9 +109,13 @@ const SEO_PLANS = [
             '20 Websites tracken',
             '500 Keywords gesamt',
             'Wöchentliches Ranking-Update',
-            'Alles aus Pro',
+            'Ranking-Verlauf unbegrenzt',
+            'Keyword-Ideen & Suchvolumen',
+            'E-Mail Alerts ab 3 Positionen',
+            'Konkurrenten-Analyse (automatisch, wöchentlich)',
+            'Backlink-Übersicht (automatisch, monatlich)',
+            'Content Gap Analyse — wöchentlich automatisch je Website, insgesamt bis zu 300 Abrufe/Monat',
             'Priorisierter Support',
-            'Unbegrenzter Verlauf',
         ],
     },
 ]
@@ -423,6 +436,14 @@ export default function PricingPage() {
                                                         <Check className={`w-2.5 h-2.5 ${plan.highlight ? 'text-emerald-400' : 'text-slate-400'}`} strokeWidth={3}/>
                                                     </div>
                                                     <span className="text-slate-300">{f}</span>
+                                                </div>
+                                            ))}
+                                            {plan.locked?.map(f => (
+                                                <div key={f} className="flex items-center gap-3 text-sm opacity-40">
+                                                    <div className="w-4 h-4 rounded-full flex items-center justify-center shrink-0 bg-white/5">
+                                                        <Lock className="w-2.5 h-2.5 text-slate-500" strokeWidth={3}/>
+                                                    </div>
+                                                    <span className="text-slate-500 line-through">{f}</span>
                                                 </div>
                                             ))}
                                         </div>

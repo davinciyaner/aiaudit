@@ -467,10 +467,11 @@ function passwordResetHtml(name, resetUrl) {
 </html>`
 }
 
-export async function sendSeoRankingAlert({ email, domain, gains, losses }) {
+export async function sendSeoRankingAlert({ email, domain, gains, losses, contentGap }) {
     const dashboardUrl = `${APP_URL}/seo/dashboard`
     const hasLosses = losses.length > 0
     const hasGains  = gains.length > 0
+    const gapKeywords = contentGap?.gap?.slice(0, 5) || []
 
     const lossRows = losses.map(({ keyword, from, to }) => `
       <tr>
@@ -506,6 +507,22 @@ export async function sendSeoRankingAlert({ email, domain, gains, losses }) {
           <th style="text-align:center;font-size:10px;color:#64748b;padding-bottom:6px;font-weight:600;text-transform:uppercase;">Jetzt</th>
         </tr></thead>
         <tbody>${gainRows}</tbody>
+      </table>` : ''
+
+    const gapRows = gapKeywords.map(({ keyword, searchVolume }) => `
+      <tr>
+        <td style="padding:6px 0;font-size:13px;color:#e2e8f0;">${keyword}</td>
+        <td style="padding:6px 0;font-size:13px;color:#94a3b8;text-align:right;">${searchVolume != null ? searchVolume.toLocaleString('de-DE') : '—'}</td>
+      </tr>`).join('')
+
+    const gapBlock = gapKeywords.length ? `
+      <p style="margin:${hasLosses || hasGains ? '20px' : '0'} 0 6px;font-size:11px;color:#94a3b8;text-transform:uppercase;letter-spacing:0.08em;font-weight:600;">Diese Keywords rankt ${contentGap.competitorDomain}, du nicht</p>
+      <table cellpadding="0" cellspacing="0" width="100%" style="background:rgba(96,165,250,0.05);border:1px solid rgba(96,165,250,0.15);border-radius:10px;padding:12px 16px;">
+        <thead><tr>
+          <th style="text-align:left;font-size:10px;color:#64748b;padding-bottom:6px;font-weight:600;text-transform:uppercase;">Keyword</th>
+          <th style="text-align:right;font-size:10px;color:#64748b;padding-bottom:6px;font-weight:600;text-transform:uppercase;">Suchvolumen</th>
+        </tr></thead>
+        <tbody>${gapRows}</tbody>
       </table>` : ''
 
     const headline = hasLosses && hasGains
@@ -544,6 +561,7 @@ export async function sendSeoRankingAlert({ email, domain, gains, losses }) {
           <div style="margin-bottom:24px;">
             ${lossBlock}
             ${gainBlock}
+            ${gapBlock}
           </div>
           <table cellpadding="0" cellspacing="0"><tr>
             <td style="background:linear-gradient(135deg,#059669,#0d9488);border-radius:12px;padding:1px;">
