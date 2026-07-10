@@ -10,6 +10,19 @@ const seoTrackedSiteSchema = new Schema({
     keywords:    [{ type: String }],
     isActive:    { type: Boolean, default: true },
     lastChecked: { type: Date },
+    competitorsCache: {
+        data:      [{ type: Schema.Types.Mixed }],
+        checkedAt: Date,
+    },
+    contentGapCache: {
+        competitorDomain: String,
+        data:             [{ type: Schema.Types.Mixed }],
+        checkedAt:        Date,
+    },
+    backlinksCache: {
+        data:      Schema.Types.Mixed,
+        checkedAt: Date,
+    },
 }, { timestamps: true })
 
 seoTrackedSiteSchema.index({ userId: 1, domain: 1 }, { unique: true })
