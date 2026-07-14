@@ -3,7 +3,7 @@ import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 
 export const metadata = {
-    title: 'Blog – SEO, GEO & Website-Optimierung | AuditAI',
+    title: 'Blog – SEO, GEO & Website-Optimierung',
     description: 'Praxisnahe Artikel über SEO, GEO-Optimierung und Performance. Lerne wie du deine Website für Google und KI-Modelle optimierst.',
     alternates: { canonical: 'https://www.sitecheckai.dev/blog' },
 }

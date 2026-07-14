@@ -3,7 +3,7 @@ import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
 
 export const metadata = {
-    title: 'SEO-Test: Die 10 häufigsten Fehler die deinen Google-Rank kosten | AuditAI',
+    title: 'SEO-Test: Die 10 häufigsten Fehler die deinen Google-Rank kosten',
     description: 'Diese 10 SEO-Fehler machen die meisten Websites - und keiner merkt es. Mit kostenlosem SEO-Test-Tool checken und sofort beheben.',
     keywords: 'seo test, seo fehler, seo check kostenlos, seo analyse, website seo prüfen, meta description fehlt, h1 tag, core web vitals',
     alternates: { canonical: 'https://www.sitecheckai.dev/blog/seo-test-haeufige-fehler' },

@@ -3,7 +3,7 @@ import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
 
 export const metadata = {
-    title: 'GEO-Optimierung 2026: So wirst du von ChatGPT und Claude empfohlen | AuditAI',
+    title: 'GEO-Optimierung 2026: So wirst du von ChatGPT und Claude empfohlen',
     description: 'GEO (Generative Engine Optimization) erklärt: Wie du deine Website optimierst damit ChatGPT, Claude und Perplexity sie als Quelle zitieren. Konkrete Checkliste mit 19 Signalen.',
     keywords: 'GEO Optimierung, Generative Engine Optimization, ChatGPT Sichtbarkeit, Claude Sichtbarkeit, llms.txt, KI Sichtbarkeit, GEO SEO Unterschied',
     alternates: { canonical: 'https://www.sitecheckai.dev/blog/geo-optimierung-2026' },
