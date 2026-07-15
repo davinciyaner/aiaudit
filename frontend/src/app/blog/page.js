@@ -10,6 +10,33 @@ export const metadata = {
 
 const ARTICLES = [
     {
+        slug: 'seo-tracking-manuell-vs-automatisiert',
+        title: 'Manuelles SEO-Tracking vs. automatisiert: Was lohnt sich wirklich?',
+        description: 'Manuelles SEO- und GEO-Tracking vs. Automatisierung im Vergleich: Zeitaufwand, Kosten und warum KI-Sichtbarkeit manuell kaum zuverlässig messbar ist.',
+        category: 'SEO & GEO',
+        categoryColor: '#10b981',
+        date: '15. Juli 2026',
+        readTime: '9 min',
+    },
+    {
+        slug: 'beste-seo-check-tools-2026',
+        title: 'Die besten kostenlosen SEO-Check-Tools 2026 im Vergleich',
+        description: '7 SEO-Check-Tools im Vergleich: kostenlose Version, Funktionsumfang, Limits und wer als einziges auch KI-Sichtbarkeit (GEO) prüft.',
+        category: 'Tools',
+        categoryColor: '#f59e0b',
+        date: '15. Juli 2026',
+        readTime: '10 min',
+    },
+    {
+        slug: 'seo-checkliste-2026',
+        title: 'SEO-Checkliste 2026: In 15 Minuten alle Fehler selbst finden',
+        description: 'Die komplette SEO-Checkliste 2026 zum Abhaken: 6 Phasen, 15 Minuten, alle wichtigen SEO- und GEO-Signale.',
+        category: 'SEO',
+        categoryColor: '#7c3aed',
+        date: '15. Juli 2026',
+        readTime: '7 min',
+    },
+    {
         slug: 'seo-geo-automatisierung',
         title: 'SEO Automatisierung & GEO Automatisierung: Rankings und KI-Sichtbarkeit automatisch tracken',
         description: 'Wie du Google-Rankings und KI-Sichtbarkeit bei ChatGPT & Claude wöchentlich automatisch trackst - statt manuell zu prüfen. Mit Preisen und Vergleich.',

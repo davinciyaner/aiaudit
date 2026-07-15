@@ -317,7 +317,7 @@ export default function SeoTestArtikelPage() {
                         Wie viele dieser Fehler hat deine Website?
                     </h2>
                     <p className="text-slate-400 text-sm mb-6 max-w-md mx-auto leading-relaxed">
-                        AuditAI prüft alle 14 SEO-Checks in unter 60 Sekunden - inklusive der 10 Fehler aus diesem Artikel. Keine Registrierung nötig und sofort loslegen.
+                        AuditAI prüft alle 14 SEO-Checks in unter 60 Sekunden - inklusive der 10 Fehler aus diesem Artikel. Start ohne Registrierung, für den vollständigen Report mit allen Scores meldest du dich kostenlos an.
                     </p>
                     <Link
                         href="/dashboard"
@@ -325,7 +325,28 @@ export default function SeoTestArtikelPage() {
                     >
                         SEO-Test jetzt starten
                     </Link>
-                    <div className="mt-3 text-xs text-slate-600">Kostenlose Registrierung · Keine Kreditkarte · 60 Sekunden</div>
+                    <div className="mt-3 text-xs text-slate-600">Ohne Registrierung starten · Voller Report kostenlos · 60 Sekunden</div>
+                </div>
+
+                {/* Cross-link to sibling post */}
+                <div className="mt-5 bg-white/[0.02] border border-white/[0.06] rounded-2xl p-6 sm:p-8">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 justify-between">
+                        <div>
+                            <span className="text-xs font-semibold text-violet-400 uppercase tracking-wider mb-1 block">Weiterlesen</span>
+                            <h3 className="text-base sm:text-lg font-bold text-white mb-2">
+                                Die SEO-Checkliste 2026 zum Abhaken
+                            </h3>
+                            <p className="text-slate-400 text-sm leading-relaxed max-w-md">
+                                Diese 10 Fehler in eine feste Prüfreihenfolge gebracht: 6 Phasen, 24 Punkte, 15 Minuten - inklusive GEO-Signalen für KI-Sichtbarkeit.
+                            </p>
+                        </div>
+                        <Link
+                            href="/blog/seo-checkliste-2026"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/[0.06] hover:bg-white/10 text-white text-sm font-semibold rounded-xl transition-all duration-200 shrink-0"
+                        >
+                            Checkliste öffnen
+                        </Link>
+                    </div>
                 </div>
 
                 {/* SEO AUTOMATISIERUNG CTA */}
