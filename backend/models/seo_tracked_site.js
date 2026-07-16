@@ -23,6 +23,8 @@ const seoTrackedSiteSchema = new Schema({
         data:      Schema.Types.Mixed,
         checkedAt: Date,
     },
+    sitemapKnownUrls:    [{ type: String }],
+    sitemapLastChecked:  { type: Date },
 }, { timestamps: true })
 
 seoTrackedSiteSchema.index({ userId: 1, domain: 1 }, { unique: true })

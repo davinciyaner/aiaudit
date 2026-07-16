@@ -4,10 +4,11 @@ import SeoKeywordRanking from '../models/seo_keyword_ranking.js'
 import ProductSubscription from '../models/product_subscription.js'
 import SeoUsage from '../models/seo_usage.js'
 import User from '../models/auth_model.js'
-import { checkSiteRankings, refreshStaleInsights, getCompetitors, getContentGap, getBacklinkSummary, generateInsightsForKeywords } from '../services/seoService.js'
-import { sendSeoRankingAlert } from '../utils/mailer.js'
+import { checkSiteRankings, refreshStaleInsights, getCompetitors, getContentGap, getBacklinkSummary, generateInsightsForKeywords, discoverKeywordsFromNewContent } from '../services/seoService.js'
+import { sendSeoRankingAlert, sendNewKeywordsAlert } from '../utils/mailer.js'
 
-const CONTENT_GAP_MONTHLY_LIMIT = { einsteiger: 0, pro: 100, expert: 300 }
+const CONTENT_GAP_MONTHLY_LIMIT  = { einsteiger: 0,  pro: 100, expert: 300 }
+const MAX_NEW_KEYWORDS_PER_PLAN  = { einsteiger: 10, pro: 30,  expert: 50  }
 
 async function refreshCompetitorsAndContentGap(site, plan) {
     try {
@@ -202,11 +203,50 @@ async function runMonthlyBacklinkChecks() {
     }
 }
 
+async function runSitemapDiscovery() {
+    try {
+        const activeSubs = await ProductSubscription.find({ product: 'seo', status: 'ACTIVE' }).lean()
+        if (!activeSubs.length) return
+
+        const activeUserIds = activeSubs.map(s => s.userId)
+        const sites = await SeoTrackedSite.find({ userId: { $in: activeUserIds }, isActive: true }).lean()
+
+        console.log(`[seo] Sitemap-Discovery: ${sites.length} Sites`)
+
+        for (const site of sites) {
+            try {
+                const sub           = activeSubs.find(s => s.userId.toString() === site.userId.toString())
+                const plan          = sub?.plan ?? 'einsteiger'
+                const maxNewKws     = MAX_NEW_KEYWORDS_PER_PLAN[plan] ?? 10
+
+                const { discovered } = await discoverKeywordsFromNewContent(site, maxNewKws)
+
+                if (discovered.length) {
+                    const user = await User.findById(site.userId).lean()
+                    if (user?.email && user.seoEmailAlerts !== false) {
+                        await sendNewKeywordsAlert({ email: user.email, domain: site.domain, keywords: discovered })
+                        console.log(`[seo] ${discovered.length} neue Keywords für ${site.domain} — Alert an ${user.email}`)
+                    }
+                }
+            } catch (err) {
+                console.error(`[seo] Sitemap-Discovery fehlgeschlagen für ${site.domain}:`, err.message)
+            }
+            await new Promise(r => setTimeout(r, 2000))
+        }
+
+        console.log('[seo] Sitemap-Discovery abgeschlossen')
+    } catch (err) {
+        console.error('[seo] runSitemapDiscovery Fehler:', err.message)
+    }
+}
+
 export function startSeoTrackingJob() {
     // Jeden Montag um 04:00 Uhr
     cron.schedule('0 4 * * 1', runWeeklySeoChecks)
     // Am 1. jedes Monats um 05:00 Uhr (teurer/seltener relevant als Rankings)
     cron.schedule('0 5 1 * *', runMonthlyBacklinkChecks)
+    // Mittwoch und Sonntag um 03:30 Uhr — neue Blog-Posts / Seiten entdecken
+    cron.schedule('30 3 * * 3,0', runSitemapDiscovery)
     console.log('SEO tracking job gestartet')
 }
 

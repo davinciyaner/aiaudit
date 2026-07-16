@@ -16,7 +16,7 @@ import feedbackRouter from "./routes/feedback_router.js";
 import landingFeedbackRouter from "./routes/landing_feedback_router.js";
 import seoTrackingRouter from "./routes/seo_tracking_router.js";
 import geoRouter from "./routes/geo_router.js";
-import { startSeoTrackingJob } from "./jobs/seoTrackingJob.js";
+import { startSeoTrackingJob, runWeeklySeoChecks } from "./jobs/seoTrackingJob.js";
 import { startGeoTrackingJob } from "./jobs/geoTrackingJob.js";
 
 const app = express();
@@ -55,6 +55,14 @@ app.use("/reports", express.static("reports"));
 app.get("/health", (req, res) => {
     res.json({ status: "ok" });
 });
+
+if (process.env.NODE_ENV !== "production") {
+    app.post("/dev/run-seo-check", async (req, res) => {
+        console.log("[dev] SEO Check manuell gestartet")
+        runWeeklySeoChecks().catch(err => console.error("[dev] SEO Check Fehler:", err.message))
+        res.json({ message: "SEO Check gestartet — siehe Logs" })
+    })
+}
 
 // Globaler Fehler-Handler — keine Stack Traces in Produktion
 app.use((err, req, res, _next) => {
