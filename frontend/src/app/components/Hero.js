@@ -244,7 +244,7 @@ export default function Hero() {
                                             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
                                             transition={{ duration: 0.15 }}
                                             className="text-xs text-slate-500 mb-4">
-                                            Kostenlos · Keine Registrierung nötig · 60 Sekunden
+                                            Kostenlos · Start ohne Anmeldung · 60 Sekunden
                                         </motion.p>
                                     )}
                                 </AnimatePresence>

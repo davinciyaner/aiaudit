@@ -142,7 +142,7 @@ export default function AuditForm({ onAuditStart, onAuditComplete, defaultUrl = 
                 </motion.button>
             </div>
             <p className="text-xs text-slate-600 text-center mt-3">
-                Kostenlos · Keine Registrierung nötig · Ergebnis in ~60 Sekunden
+                Kostenlos · Start ohne Anmeldung · Ergebnis in ~60 Sekunden
             </p>
         </form>
     )
