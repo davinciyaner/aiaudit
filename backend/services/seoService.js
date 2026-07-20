@@ -1,8 +1,9 @@
 import Anthropic from '@anthropic-ai/sdk'
 import { jsonrepair } from 'jsonrepair'
 import SeoKeywordInsight from '../models/seo_keyword_insight.js'
+import SeoTrackedSite from '../models/seo_tracked_site.js'
 
-// DataForSEO API — DATAFORSEO_LOGIN + DATAFORSEO_PASSWORD in .env setzen
+// DataForSEO API — DATAFORSEO_LOGIN + DATAFORSEO_PASSWORD in .env.local setzen
 const LOGIN    = process.env.DATAFORSEO_LOGIN
 const PASSWORD = process.env.DATAFORSEO_PASSWORD
 
@@ -321,6 +322,223 @@ export async function refreshStaleInsights(site) {
 
     const toGenerate = [...new Set([...staleKws, ...missingKws])]
     if (toGenerate.length) await generateInsightsForKeywords(site, toGenerate)
+}
+
+// ─── Sitemap-Based Keyword Discovery ─────────────────────────────────────────
+
+function parseSitemapEntries(xml) {
+    const entries = []
+    const urlBlocks = [...xml.matchAll(/<url>([\s\S]*?)<\/url>/g)]
+    for (const match of urlBlocks) {
+        const block = match[1]
+        const locMatch    = block.match(/<loc>\s*(.*?)\s*<\/loc>/)
+        const lastmodMatch = block.match(/<lastmod>\s*(.*?)\s*<\/lastmod>/)
+        if (locMatch) {
+            entries.push({
+                loc:     locMatch[1].trim(),
+                lastmod: lastmodMatch ? new Date(lastmodMatch[1].trim()) : null,
+            })
+        }
+    }
+    if (!entries.length) {
+        // Fallback: sitemap without <url> wrappers
+        const locs = [...xml.matchAll(/<loc>\s*(.*?)\s*<\/loc>/g)]
+        for (const m of locs) entries.push({ loc: m[1].trim(), lastmod: null })
+    }
+    return entries
+}
+
+async function fetchSitemapEntries(domain) {
+    const candidates = [
+        `https://${domain}/sitemap.xml`,
+        `https://www.${domain}/sitemap.xml`,
+        `https://${domain}/sitemap_index.xml`,
+    ]
+    for (const url of candidates) {
+        try {
+            const res = await fetch(url, { signal: AbortSignal.timeout(12000) })
+            if (!res.ok) continue
+            const xml = await res.text()
+            if (!xml.includes('<urlset') && !xml.includes('<sitemapindex')) continue
+
+            if (xml.includes('<sitemapindex')) {
+                const subUrls = [...xml.matchAll(/<loc>\s*(.*?)\s*<\/loc>/g)].map(m => m[1].trim())
+                const allEntries = []
+                for (const subUrl of subUrls.slice(0, 5)) {
+                    try {
+                        const subRes = await fetch(subUrl, { signal: AbortSignal.timeout(10000) })
+                        if (!subRes.ok) continue
+                        const subXml = await subRes.text()
+                        allEntries.push(...parseSitemapEntries(subXml))
+                    } catch { /* ignore individual sub-sitemap errors */ }
+                }
+                return allEntries
+            }
+            return parseSitemapEntries(xml)
+        } catch { /* try next candidate */ }
+    }
+    return []
+}
+
+async function scrapePageText(url) {
+    const res = await fetch(url, {
+        signal:  AbortSignal.timeout(12000),
+        headers: { 'User-Agent': 'AuditAI-SEO-Bot/1.0' },
+    })
+    if (!res.ok) return ''
+    const html = await res.text()
+    const titleMatch = html.match(/<title[^>]*>([\s\S]*?)<\/title>/i)
+    const title = titleMatch ? titleMatch[1].replace(/<[^>]+>/g, '').trim() : ''
+    const body = html
+        .replace(/<script[\s\S]*?<\/script>/gi, '')
+        .replace(/<style[\s\S]*?<\/style>/gi, '')
+        .replace(/<[^>]+>/g, ' ')
+        .replace(/&[a-z#0-9]+;/gi, ' ')
+        .replace(/\s+/g, ' ')
+        .trim()
+        .slice(0, 3000)
+    return title ? `${title}\n\n${body}` : body
+}
+
+async function extractKeywordsFromContent(text, domain, language = 'de') {
+    const langLabel = language === 'de' ? 'Deutsch' : 'English'
+    const msg = await anthropic.messages.create({
+        model:      'claude-haiku-4-5-20251001',
+        max_tokens: 300,
+        messages: [{
+            role:    'user',
+            content: `Du bist ein SEO-Experte. Extrahiere 5-8 relevante SEO-Keywords aus diesem Seiteninhalt auf ${langLabel}.
+
+Domain: ${domain}
+Inhalt: ${text.slice(0, 2000)}
+
+Antworte NUR mit einem JSON-Array — kein Markdown, keine Erklärungen.
+Beispiel: ["keyword eins","keyword zwei"]
+Regeln: 2-4 Wörter pro Keyword, Kleinschreibung, echte Suchbegriffe.`,
+        }],
+    })
+    const raw = msg.content[0].text.trim()
+    const start = raw.indexOf('[')
+    const end   = raw.lastIndexOf(']')
+    if (start === -1 || end === -1) return []
+    try {
+        const parsed = JSON.parse(raw.slice(start, end + 1))
+        return Array.isArray(parsed) ? parsed.filter(k => typeof k === 'string' && k.trim()) : []
+    } catch {
+        return []
+    }
+}
+
+function calculateTrend(monthlySearches) {
+    if (!Array.isArray(monthlySearches) || monthlySearches.length < 6) return 'neutral'
+    const sorted = [...monthlySearches].sort((a, b) =>
+        a.year !== b.year ? a.year - b.year : a.month - b.month
+    )
+    const avg = (arr) => arr.reduce((s, m) => s + (m.search_volume ?? 0), 0) / arr.length
+    const recent = avg(sorted.slice(-3))
+    const older  = avg(sorted.slice(-6, -3))
+    if (older === 0) return 'neutral'
+    const change = (recent - older) / older
+    if (change > 0.1)  return 'rising'
+    if (change < -0.1) return 'falling'
+    return 'neutral'
+}
+
+export async function discoverKeywordsFromNewContent(site, maxNewKeywords = 20) {
+    const entries = await fetchSitemapEntries(site.domain)
+    if (!entries.length) return { discovered: [], newUrls: [] }
+
+    const knownUrls = new Set(site.sitemapKnownUrls || [])
+    const allLocs   = entries.map(e => e.loc)
+
+    // First run: seed knownUrls without processing (avoid flooding with all pages)
+    if (!knownUrls.size) {
+        await SeoTrackedSite.updateOne(
+            { _id: site._id },
+            { sitemapKnownUrls: allLocs.slice(0, 500), sitemapLastChecked: new Date() }
+        )
+        return { discovered: [], newUrls: [] }
+    }
+
+    const newEntries = entries.filter(e => !knownUrls.has(e.loc))
+    if (!newEntries.length) {
+        await SeoTrackedSite.updateOne({ _id: site._id }, { sitemapLastChecked: new Date() })
+        return { discovered: [], newUrls: [] }
+    }
+
+    const existingKws    = new Set(site.keywords.map(k => k.toLowerCase()))
+    const candidateKwSet = new Set()
+
+    for (const entry of newEntries.slice(0, 10)) {
+        try {
+            const text = await scrapePageText(entry.loc)
+            if (!text || text.length < 100) continue
+            const kws = await extractKeywordsFromContent(text, site.domain, site.language || 'de')
+            kws.forEach(k => candidateKwSet.add(k.toLowerCase().trim()))
+            await new Promise(r => setTimeout(r, 500))
+        } catch (err) {
+            console.warn(`[seo] Sitemap-Scraping fehlgeschlagen für ${entry.loc}:`, err.message)
+        }
+    }
+
+    const newKws = [...candidateKwSet]
+        .filter(k => !existingKws.has(k))
+        .slice(0, maxNewKeywords)
+
+    // Save new known URLs regardless of whether we found keywords
+    const updatedKnown = [...new Set([...knownUrls, ...newEntries.map(e => e.loc)])].slice(-500)
+    await SeoTrackedSite.updateOne(
+        { _id: site._id },
+        { sitemapKnownUrls: updatedKnown, sitemapLastChecked: new Date() }
+    )
+
+    if (!newKws.length) return { discovered: [], newUrls: newEntries.map(e => e.loc) }
+
+    // Enrich with DataForSEO data
+    let enriched = newKws.map(k => ({ keyword: k, searchVolume: null, competition: null, cpc: null, trend: 'neutral' }))
+    if (isConfigured()) {
+        try {
+            const volumeData = await dfsPost('/v3/keywords_data/google_ads/search_volume/live', [{
+                keywords:      newKws.slice(0, 50),
+                location_name: site.location || 'Germany',
+                language_code: site.language  || 'de',
+            }])
+            const dataMap = {}
+            for (const item of volumeData.tasks?.[0]?.result || []) {
+                dataMap[(item.keyword || '').toLowerCase()] = item
+            }
+            enriched = newKws.map(k => {
+                const d = dataMap[k] || {}
+                return {
+                    keyword:      k,
+                    searchVolume: d.search_volume    ?? null,
+                    competition:  d.competition_level ?? (d.competition != null ? formatCompetitionLevel(d.competition) : null),
+                    cpc:          d.cpc              ?? null,
+                    trend:        calculateTrend(d.monthly_searches),
+                }
+            })
+        } catch (err) {
+            console.warn('[seo] DataForSEO Volumen-Daten fehlgeschlagen:', err.message)
+        }
+    }
+
+    // Add keywords to site
+    await SeoTrackedSite.updateOne(
+        { _id: site._id },
+        { $addToSet: { keywords: { $each: newKws } } }
+    )
+
+    // Generate insights in background
+    generateInsightsForKeywords({ ...site, keywords: [...site.keywords, ...newKws] }, newKws)
+        .catch(err => console.error('[seo] Sitemap-Discovery Insights fehlgeschlagen:', err.message))
+
+    return { discovered: enriched, newUrls: newEntries.map(e => e.loc) }
+}
+
+function formatCompetitionLevel(value) {
+    if (value < 0.33) return 'LOW'
+    if (value < 0.67) return 'MEDIUM'
+    return 'HIGH'
 }
 
 export async function generateBacklinkIdeas(keyword, domain, language = 'de') {
