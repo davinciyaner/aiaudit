@@ -22,9 +22,9 @@ const jsonLd = {
     headline: 'Manuelles SEO-Tracking vs. automatisiert: Was lohnt sich wirklich?',
     description: 'Manuelles SEO- und GEO-Tracking vs. Automatisierung im Vergleich: Zeitaufwand, Kosten und warum KI-Sichtbarkeit manuell kaum zuverlässig messbar ist.',
     image: 'https://www.sitecheckai.dev/blog/seo-tracking-manuell-vs-automatisiert/opengraph-image',
-    datePublished: '2026-07-15',
-    dateModified: '2026-07-15',
-    author: { '@type': 'Person', name: 'Finn Paustian' },
+    datePublished: '2026-07-15T09:00:00+02:00',
+    dateModified: '2026-07-15T09:00:00+02:00',
+    author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev' },
     publisher: {
         '@type': 'Organization',
         name: 'AuditAI',

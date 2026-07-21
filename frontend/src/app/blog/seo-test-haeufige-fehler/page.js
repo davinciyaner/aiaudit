@@ -22,9 +22,9 @@ const jsonLd = {
     headline: 'SEO-Test: Die 10 häufigsten Fehler die deinen Google-Rank kosten',
     description: 'Diese 10 SEO-Fehler machen die meisten Websites - und keiner merkt es.',
     image: 'https://www.sitecheckai.dev/blog/seo-test-haeufige-fehler/opengraph-image',
-    datePublished: '2026-06-10',
-    dateModified: '2026-06-10',
-    author: { '@type': 'Person', name: 'Finn Paustian' },
+    datePublished: '2026-06-10T09:00:00+02:00',
+    dateModified: '2026-06-10T09:00:00+02:00',
+    author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev' },
     publisher: {
         '@type': 'Organization',
         name: 'AuditAI',

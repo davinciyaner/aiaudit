@@ -22,9 +22,9 @@ const jsonLd = {
     headline: 'GEO-Optimierung 2026: So wirst du von ChatGPT und Claude empfohlen',
     description: 'GEO (Generative Engine Optimization) erklärt: Wie du deine Website optimierst damit ChatGPT, Claude und Perplexity sie als Quelle zitieren.',
     image: 'https://www.sitecheckai.dev/blog/geo-optimierung-2026/opengraph-image',
-    datePublished: '2026-06-10',
-    dateModified: '2026-06-10',
-    author: { '@type': 'Person', name: 'Finn Paustian' },
+    datePublished: '2026-06-10T09:00:00+02:00',
+    dateModified: '2026-06-10T09:00:00+02:00',
+    author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev' },
     publisher: {
         '@type': 'Organization',
         name: 'AuditAI',
@@ -39,9 +39,9 @@ const jsonLd = {
         { '@type': 'Thing', name: 'ChatGPT SEO' },
     ],
     mentions: [
-        { '@type': 'SoftwareApplication', name: 'ChatGPT', url: 'https://chat.openai.com' },
-        { '@type': 'SoftwareApplication', name: 'Claude', url: 'https://claude.ai' },
-        { '@type': 'SoftwareApplication', name: 'Perplexity', url: 'https://perplexity.ai' },
+        { '@type': 'Thing', name: 'ChatGPT', url: 'https://chat.openai.com' },
+        { '@type': 'Thing', name: 'Claude', url: 'https://claude.ai' },
+        { '@type': 'Thing', name: 'Perplexity', url: 'https://perplexity.ai' },
     ],
 }
 

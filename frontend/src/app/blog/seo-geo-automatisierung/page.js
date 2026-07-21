@@ -22,9 +22,9 @@ const jsonLd = {
     headline: 'SEO Automatisierung & GEO Automatisierung: Rankings und KI-Sichtbarkeit automatisch tracken',
     description: 'SEO Automatisierung und GEO Automatisierung erklärt: Wie du Google-Rankings und KI-Sichtbarkeit bei ChatGPT & Claude wöchentlich automatisch trackst.',
     image: 'https://www.sitecheckai.dev/blog/seo-geo-automatisierung/opengraph-image',
-    datePublished: '2026-07-05',
-    dateModified: '2026-07-05',
-    author: { '@type': 'Person', name: 'Finn Paustian' },
+    datePublished: '2026-07-05T09:00:00+02:00',
+    dateModified: '2026-07-05T09:00:00+02:00',
+    author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev' },
     publisher: {
         '@type': 'Organization',
         name: 'AuditAI',
@@ -39,8 +39,8 @@ const jsonLd = {
         { '@type': 'Thing', name: 'KI-Sichtbarkeit' },
     ],
     mentions: [
-        { '@type': 'SoftwareApplication', name: 'ChatGPT', url: 'https://chat.openai.com' },
-        { '@type': 'SoftwareApplication', name: 'Claude', url: 'https://claude.ai' },
+        { '@type': 'Thing', name: 'ChatGPT', url: 'https://chat.openai.com' },
+        { '@type': 'Thing', name: 'Claude', url: 'https://claude.ai' },
         { '@type': 'Organization', name: 'Google Search Console' },
     ],
 }
