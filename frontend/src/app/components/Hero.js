@@ -170,8 +170,7 @@ export default function Hero() {
                     <div className="flex flex-col items-center text-center max-w-5xl mx-auto">
 
                         <div>
-                            <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
-                                className="flex items-center gap-3 mb-6">
+                            <div className="flex items-center gap-3 mb-6">
                                 <div className="flex -space-x-1.5">
                                     {AVATARS.map(({ letter, color }) => (
                                         <div key={letter}
@@ -185,23 +184,20 @@ export default function Hero() {
                                     <span className="text-white font-semibold">100+</span>
                                     <span>Websites bereits analysiert</span>
                                 </div>
-                            </motion.div>
+                            </div>
 
-                            <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.1 }}
-                                className="text-3xl sm:text-5xl lg:text-7xl font-bold leading-[1.1] sm:leading-none tracking-tight mb-3 sm:mb-6">
+                            <h1 className="text-3xl sm:text-5xl lg:text-7xl font-bold leading-[1.1] sm:leading-none tracking-tight mb-3 sm:mb-6">
                                 <span className="bg-clip-text bg-gradient-to-r">
                                     SEO, GEO Automatisierung.
                                 </span><br />
                                 Website-Audit in 60 Sekunden.
-                            </motion.h1>
+                            </h1>
 
-                            <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }}
-                                className="text-sm sm:text-base text-slate-400 mb-5 sm:mb-6 max-w-3xl mx-auto">
+                            <p className="text-sm sm:text-base text-slate-400 mb-5 sm:mb-6 max-w-3xl mx-auto">
                                 SEO und KI-Sichtbarkeit deiner Website analysiert in 60 Sekunden.
-                            </motion.p>
+                            </p>
 
-                            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.3 }}
-                                className="mb-5 sm:mb-8 w-full max-w-2xl mx-auto">
+                            <div className="mb-5 sm:mb-8 w-full max-w-2xl mx-auto">
                                 <label className="block text-sm text-slate-300 font-medium mb-2">
                                     Deine Website-Adresse eingeben:
                                 </label>
@@ -231,7 +227,7 @@ export default function Hero() {
                                     </button>
                                 </form>
 
-                                <AnimatePresence mode="wait">
+                                <AnimatePresence mode="wait" initial={false}>
                                     {showError ? (
                                         <motion.p key="error"
                                             initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -4 }}
@@ -249,8 +245,7 @@ export default function Hero() {
                                     )}
                                 </AnimatePresence>
 
-                                <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.4 }}
-                                    className="flex flex-wrap items-center justify-center gap-2">
+                                <div className="flex flex-wrap items-center justify-center gap-2">
                                     <span className="text-md text-slate-300">Mehr als ein Einmal-Check:</span>
                                     <Link href="/seo/dashboard"
                                         onClick={e => goToAutomation(e, '/seo/dashboard', '/seo/pricing')}
@@ -266,11 +261,10 @@ export default function Hero() {
                                         <span className="text-xs font-semibold text-violet-300">GEO Automatisierung</span>
                                         <ArrowRight className="w-3 h-3 text-violet-400 group-hover:translate-x-0.5 transition-transform" />
                                     </Link>
-                                </motion.div>
-                            </motion.div>
+                                </div>
+                            </div>
 
-                            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}
-                                className="flex items-center gap-6 sm:gap-8">
+                            <div className="flex items-center gap-6 sm:gap-8">
                                 {STATS.map((s, i) => (
                                     <div key={i} className="flex items-center gap-6 sm:gap-8">
                                         <div>
@@ -280,7 +274,7 @@ export default function Hero() {
                                         {i < STATS.length - 1 && <div className="h-6 w-px bg-white/10" />}
                                     </div>
                                 ))}
-                            </motion.div>
+                            </div>
                         </div>
                     </div>
                 </div>

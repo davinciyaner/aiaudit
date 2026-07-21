@@ -63,7 +63,7 @@ const MOCK_RESULTS = [
 
 export default function GeoSection() {
     return (
-        <section id="geo" className="relative py-20 sm:py-28 bg-[#080b14]">
+        <section id="geo" className="relative py-20 sm:py-28 bg-[#080b14] overflow-hidden">
             <div className="absolute inset-0 pointer-events-none"
                 style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.012) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.012) 1px, transparent 1px)', backgroundSize: '60px 60px' }} />
             <div className="absolute top-0 right-0 w-[600px] h-[400px] rounded-full blur-3xl pointer-events-none"

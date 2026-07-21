@@ -46,6 +46,12 @@ const jsonLd = {
             name: 'AuditAI',
             url: 'https://www.sitecheckai.dev',
             description: 'KI-gestütztes Website-Audit-Tool für SEO, Performance und GEO-Sichtbarkeit.',
+            logo: {
+                '@type': 'ImageObject',
+                url: 'https://www.sitecheckai.dev/logo',
+                width: 512,
+                height: 512,
+            },
             sameAs: ['https://twitter.com/auditai'],
         },
         {

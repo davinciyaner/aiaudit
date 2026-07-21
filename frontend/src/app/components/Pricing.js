@@ -44,7 +44,7 @@ export default function Pricing() {
     return (
         <>
         <ScoreRegisterModal open={modalOpen} onClose={() => setModalOpen(false)} />
-        <section id="pricing" className="relative py-16 md:py-28 bg-[#05080f]">
+        <section id="pricing" className="relative py-16 md:py-28 bg-[#05080f] overflow-hidden">
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] rounded-full blur-3xl pointer-events-none" style={{ background: 'radial-gradient(ellipse, rgba(124,58,237,0.06) 0%, transparent 70%)' }} />
             <div className="relative z-10 max-w-6xl mx-auto px-5 sm:px-8">
                 <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
