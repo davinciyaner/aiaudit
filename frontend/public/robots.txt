@@ -41,4 +41,4 @@ Allow: /
 User-agent: cohere-ai
 Allow: /
 
-Sitemap: https://sitecheckai.dev/sitemap.xml
+Sitemap: https://www.sitecheckai.dev/sitemap.xml
