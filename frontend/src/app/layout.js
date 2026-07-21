@@ -42,7 +42,7 @@ const jsonLd = {
     '@graph': [
         {
             '@type': 'Organization',
-            '@id': 'https://www.sitecheckai.dev',
+            '@id': 'https://www.sitecheckai.dev/#organization',
             name: 'AuditAI',
             url: 'https://www.sitecheckai.dev',
             description: 'KI-gestütztes Website-Audit-Tool für SEO, Performance und GEO-Sichtbarkeit.',
