@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
@@ -268,6 +269,20 @@ export default function BesteSeoToolsPage() {
                                         <span className="text-slate-400">Umfang:</span> {t.scope}
                                     </p>
                                     <p className="text-sm text-slate-400 leading-relaxed">{t.note}</p>
+                                    {t.name === 'AuditAI' && (
+                                        <figure className="mt-4">
+                                            <Image
+                                                src="/blog/auditai-score-overview.png"
+                                                alt="AuditAI Score-Übersicht mit Overall-, SEO-, Performance- und GEO-Score aus einem echten Audit-Report"
+                                                width={960}
+                                                height={194}
+                                                className="w-full h-auto rounded-xl border border-white/[0.07]"
+                                            />
+                                            <figcaption className="text-xs text-slate-600 mt-2">
+                                                Die Score-Übersicht eines echten AuditAI-Reports: SEO, Performance und GEO in einer Ansicht.
+                                            </figcaption>
+                                        </figure>
+                                    )}
                                 </div>
                             ))}
                         </div>

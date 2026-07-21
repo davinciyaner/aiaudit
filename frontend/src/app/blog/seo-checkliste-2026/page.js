@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
@@ -215,6 +216,18 @@ export default function SeoChecklistePage() {
                     <section>
                         <h2 className="text-2xl font-bold text-white mb-2">Die Checkliste: 6 Phasen, 24 Punkte</h2>
                         <p className="text-slate-400 mb-6">Von oben nach unten durcharbeiten - jede Phase baut auf der vorherigen auf.</p>
+                        <figure className="mb-6">
+                            <Image
+                                src="/blog/auditai-seo-checks.png"
+                                alt="AuditAI Check-Grid zeigt bestandene und fehlgeschlagene Punkte wie Title-Tag, Meta Description, H1-Tag und Alt-Texte"
+                                width={910}
+                                height={103}
+                                className="w-full h-auto rounded-2xl border border-white/[0.07]"
+                            />
+                            <figcaption className="text-xs text-slate-600 mt-2">
+                                Genau diese Art von Punkten prüft AuditAI automatisch — grün bestanden, rot mit konkretem Fehlergrund.
+                            </figcaption>
+                        </figure>
                         <div className="space-y-5">
                             {PHASES.map((phase) => (
                                 <div key={phase.number} className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5 sm:p-6">

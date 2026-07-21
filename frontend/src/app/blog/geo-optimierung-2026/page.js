@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
@@ -91,6 +92,7 @@ const SIGNALS = [
         color: '#06b6d4',
         desc: 'Die wichtigste GEO-Datei. Erstelle eine Datei unter /llms.txt mit einer klaren Beschreibung deiner Website, deiner Produkte und deiner Kernaussagen. Strukturiere sie mit Markdown-Überschriften. Ergänze /llms-full.txt für eine ausführliche Version.',
         example: '# MeinTool\n> MeinTool ist ein X für Y, das Z in unter 60 Sekunden macht.',
+        source: { label: 'llms.txt-Spezifikation (llmstxt.org)', url: 'https://llmstxt.org' },
     },
     {
         number: '02',
@@ -98,6 +100,7 @@ const SIGNALS = [
         color: '#7c3aed',
         desc: 'JSON-LD im Head-Bereich deiner Seite. Mindestens Organization-Schema (Name, URL, Logo), FAQPage-Schema für häufige Fragen und je nach Website-Typ SoftwareApplication oder Product.',
         example: null,
+        source: { label: 'Offizielle Schema.org-Dokumentation', url: 'https://schema.org' },
     },
     {
         number: '03',
@@ -112,6 +115,7 @@ const SIGNALS = [
         color: '#f59e0b',
         desc: 'Viele Websites blockieren unwissentlich KI-Crawler. Stelle sicher dass GPTBot, ClaudeBot, anthropic-ai, PerplexityBot und YouBot in deiner robots.txt explizit erlaubt sind.',
         example: 'User-agent: GPTBot\nAllow: /\n\nUser-agent: ClaudeBot\nAllow: /',
+        source: { label: 'Offizielle Crawler-Doku: OpenAI GPTBot', url: 'https://developers.openai.com/api/docs/bots' },
     },
     {
         number: '05',
@@ -181,7 +185,7 @@ export default function GeoArtikelPage() {
                     <section>
                         <h2 className="text-2xl font-bold text-white mb-4">Was ist GEO-Optimierung?</h2>
                         <p>
-                            GEO steht für <strong className="text-white">Generative Engine Optimization</strong> - die Optimierung deiner Website für KI-Modelle wie ChatGPT, Claude, Perplexity, Gemini oder YouChat. Während SEO darauf abzielt in Googles Suchergebnissen weit oben zu erscheinen, sorgt GEO dafür, dass KI-Modelle deine Website als vertrauenswürdige Quelle erkennen und in ihren Antworten zitieren.
+                            GEO steht für <strong className="text-white">Generative Engine Optimization</strong> - die Optimierung deiner Website für KI-Modelle wie ChatGPT, Claude, Perplexity, Gemini oder YouChat. Der Begriff wurde 2023 in der <a href="https://arxiv.org/abs/2311.09735" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline underline-offset-2">GEO-Forschungsarbeit von Princeton, Georgia Tech und dem Allen Institute for AI</a> geprägt. Während SEO darauf abzielt in Googles Suchergebnissen weit oben zu erscheinen, sorgt GEO dafür, dass KI-Modelle deine Website als vertrauenswürdige Quelle erkennen und in ihren Antworten zitieren.
                         </p>
                         <p className="mt-4">
                             Der Unterschied ist fundamental: Google rankt nach Keywords, Backlinks und technischen Signalen. KI-Modelle hingegen suchen nach <strong className="text-white">strukturierten, zitierbaren Inhalten</strong>, klaren Entitätsdefinitionen und Vertrauenssignalen. Eine Website die bei Google auf Seite 1 rankt, kann für KI-Modelle trotzdem unsichtbar sein - und umgekehrt.
@@ -191,7 +195,7 @@ export default function GeoArtikelPage() {
                     <section>
                         <h2 className="text-2xl font-bold text-white mb-4">Warum GEO 2026 entscheidend ist</h2>
                         <p>
-                            ChatGPT hat über 200 Millionen wöchentliche Nutzer. Perplexity beantwortet täglich Millionen von Suchanfragen mit zitierten Quellen. Claude wird zunehmend in Business-Workflows eingesetzt. Immer mehr Menschen fragen nicht mehr Google - sie fragen eine KI.
+                            ChatGPT hat laut <a href="https://techcrunch.com/2026/02/27/chatgpt-reaches-900m-weekly-active-users" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline underline-offset-2">OpenAI-Angaben über 900 Millionen wöchentliche Nutzer</a> (Stand Februar 2026). Perplexity beantwortet täglich Millionen von Suchanfragen mit zitierten Quellen. Claude wird zunehmend in Business-Workflows eingesetzt. Immer mehr Menschen fragen nicht mehr Google - sie fragen eine KI.
                         </p>
                         <p className="mt-4">
                             Wer bei diesen Antworten nicht vorkommt, verliert sichtbar an Reichweite - selbst wenn Google-Rankings sich nicht verändern. Das ist der blinde Fleck der meisten SEO-Strategien in 2026.
@@ -237,6 +241,18 @@ export default function GeoArtikelPage() {
                     <section>
                         <h2 className="text-2xl font-bold text-white mb-2">Die 6 wichtigsten GEO-Signale</h2>
                         <p className="text-slate-400 mb-6">AuditAI prüft insgesamt 19 GEO-Signale. Das sind die sechs mit dem größten Einfluss:</p>
+                        <figure className="mb-6">
+                            <Image
+                                src="/blog/auditai-geo-report.png"
+                                alt="AuditAI GEO-Report zeigt geprüfte KI-Sichtbarkeits-Signale wie llms.txt, Organization-Schema, KI-Crawler-Erlaubnis und sitemap.xml"
+                                width={960}
+                                height={411}
+                                className="w-full h-auto rounded-2xl border border-white/[0.07]"
+                            />
+                            <figcaption className="text-xs text-slate-600 mt-2">
+                                Ein echter GEO-Score-Report aus AuditAI — alle 12 KI-Sichtbarkeits-Signale auf einen Blick, inklusive gefundenem Fehler.
+                            </figcaption>
+                        </figure>
                         <div className="space-y-4">
                             {SIGNALS.map((s) => (
                                 <div key={s.number} className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5">
@@ -249,6 +265,16 @@ export default function GeoArtikelPage() {
                                                 <pre className="mt-3 text-xs bg-white/[0.04] border border-white/[0.06] rounded-xl p-3 text-slate-400 font-mono overflow-x-auto">
                                                     {s.example}
                                                 </pre>
+                                            )}
+                                            {s.source && (
+                                                <a
+                                                    href={s.source.url}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="mt-3 inline-block text-xs text-cyan-400 hover:text-cyan-300 underline underline-offset-2"
+                                                >
+                                                    Quelle: {s.source.label} ↗
+                                                </a>
                                             )}
                                         </div>
                                     </div>

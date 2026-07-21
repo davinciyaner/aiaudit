@@ -151,10 +151,10 @@ export default function SeoGeoAutomatisierungPage() {
                     <section>
                         <h2 className="text-2xl font-bold text-white mb-4">Warum manuelles Prüfen 2026 nicht mehr reicht</h2>
                         <p>
-                            Ein Website-Audit ist eine Momentaufnahme. Er zeigt dir Fehler und Chancen genau in dem Moment, in dem du ihn ausführst. Das Problem: Google aktualisiert seinen Algorithmus laufend, Konkurrenten veröffentlichen neue Inhalte, und KI-Modelle wie ChatGPT und Claude ändern ständig, welche Quellen sie zitieren. Ein Zustand der heute gut aussieht, kann in vier Wochen unbemerkt schlechter geworden sein.
+                            Ein Website-Audit ist eine Momentaufnahme. Er zeigt dir Fehler und Chancen genau in dem Moment, in dem du ihn ausführst. Das Problem: Google aktualisiert seinen Algorithmus laufend, Konkurrenten veröffentlichen neue Inhalte, und KI-Modelle wie <a href="https://chatgpt.com" target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:text-emerald-300 underline underline-offset-2">ChatGPT</a> und <a href="https://claude.ai" target="_blank" rel="noopener noreferrer" className="text-violet-400 hover:text-violet-300 underline underline-offset-2">Claude</a> ändern ständig, welche Quellen sie zitieren. Ein Zustand der heute gut aussieht, kann in vier Wochen unbemerkt schlechter geworden sein.
                         </p>
                         <p className="mt-4">
-                            Manuell in der Google Search Console nachzusehen oder Dutzende Prompts in ChatGPT und Claude durchzutesten, kostet Zeit und wird in der Praxis selten regelmäßig gemacht. Genau hier setzen <strong className="text-white">SEO Automatisierung</strong> und <strong className="text-white">GEO Automatisierung</strong> an: laufendes Tracking statt einmaliger Prüfung.
+                            Manuell in der <a href="https://search.google.com/search-console/about" target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:text-emerald-300 underline underline-offset-2">Google Search Console</a> nachzusehen oder Dutzende Prompts in ChatGPT und Claude durchzutesten, kostet Zeit und wird in der Praxis selten regelmäßig gemacht. Genau hier setzen <strong className="text-white">SEO Automatisierung</strong> und <strong className="text-white">GEO Automatisierung</strong> an: laufendes Tracking statt einmaliger Prüfung.
                         </p>
                     </section>
 
@@ -176,7 +176,7 @@ export default function SeoGeoAutomatisierungPage() {
                     <section>
                         <h2 className="text-2xl font-bold text-white mb-4">GEO Automatisierung: KI-Sichtbarkeit bei ChatGPT und Claude tracken</h2>
                         <p>
-                            GEO Automatisierung überträgt dasselbe Prinzip auf KI-Sichtbarkeit. Statt einmalig zu prüfen ob ChatGPT oder Claude deine Website kennen, wird das wöchentlich automatisch erneut getestet - mit denselben Prompts, damit die Ergebnisse über Zeit vergleichbar bleiben.
+                            GEO Automatisierung überträgt dasselbe Prinzip auf KI-Sichtbarkeit - also darauf, wie oft KI-Modelle eine Website als Quelle zitieren (der Fachbegriff <a href="https://arxiv.org/abs/2311.09735" target="_blank" rel="noopener noreferrer" className="text-violet-400 hover:text-violet-300 underline underline-offset-2">Generative Engine Optimization</a> stammt aus einer 2023er Forschungsarbeit von Princeton, Georgia Tech und dem Allen Institute for AI). Statt einmalig zu prüfen ob ChatGPT oder Claude deine Website kennen, wird das wöchentlich automatisch erneut getestet - mit denselben Prompts, damit die Ergebnisse über Zeit vergleichbar bleiben.
                         </p>
                         <div className="grid sm:grid-cols-2 gap-4 mt-6">
                             {GEO_FEATURES.map(f => (
