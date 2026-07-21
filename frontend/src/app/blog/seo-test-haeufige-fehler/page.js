@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
@@ -242,6 +243,18 @@ export default function SeoTestArtikelPage() {
 
                     <section>
                         <h2 className="text-2xl font-bold text-white mb-6">Die 10 häufigsten SEO-Fehler</h2>
+                        <figure className="mb-6">
+                            <Image
+                                src="/blog/auditai-seo-issues.png"
+                                alt="AuditAI SEO-Report zeigt echte gefundene Fehler wie zu lange Title-Tags und zu lange Meta-Descriptions"
+                                width={926}
+                                height={168}
+                                className="w-full h-auto rounded-2xl border border-white/[0.07]"
+                            />
+                            <figcaption className="text-xs text-slate-600 mt-2">
+                                So markiert AuditAI erkannte Fehler in einem echten Report — hier Title-Tag- und Meta-Description-Probleme aus einem Live-Audit.
+                            </figcaption>
+                        </figure>
                         <div className="space-y-5">
                             {ERRORS.map((e) => (
                                 <div key={e.number} className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
