@@ -23,7 +23,7 @@ const jsonLd = {
     description: 'Manuelles SEO- und GEO-Tracking vs. Automatisierung im Vergleich: Zeitaufwand, Kosten und warum KI-Sichtbarkeit manuell kaum zuverlässig messbar ist.',
     image: 'https://www.sitecheckai.dev/blog/seo-tracking-manuell-vs-automatisiert/opengraph-image',
     datePublished: '2026-07-15T09:00:00+02:00',
-    dateModified: '2026-07-15T09:00:00+02:00',
+    dateModified: '2026-07-21T09:00:00+02:00',
     author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev/about' },
     publisher: {
         '@type': 'Organization',
@@ -65,10 +65,10 @@ const faqLd = {
         },
         {
             '@type': 'Question',
-            name: 'Was kostet automatisiertes SEO- und GEO-Tracking?',
+            name: 'Ab wann rechnet sich Automatisierung gegenüber manuellem Tracking?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'SEO Automatisierung startet bei 19 Euro pro Monat (3 Websites, 50 Keywords, wöchentliches Update). GEO Automatisierung startet bei 4,99 Euro pro Monat (1 Website, 10 Keywords, Claude-Tracking). Beide bieten 14 Tage kostenlose Testphase.',
+                text: 'Rechnest du deine eigene Zeit mit einem Stundensatz, kostet manuelles Tracking bei 60-90 Minuten pro Woche schnell mehr als die Tool-Kosten selbst: SEO-Automatisierung liegt ab 19 €/Monat, GEO-Automatisierung ab 4,99 €/Monat - beides mit 14 Tage kostenloser Testphase. Sobald du mehr als eine Website oder mehrere Keyword-Gruppen betreust, ist die gesparte Zeit in der Regel mehr wert als der Tool-Preis.',
             },
         },
     ],
@@ -223,17 +223,17 @@ export default function SeoTrackingVergleichPage() {
                         <div>
                             <span className="text-xs font-semibold text-emerald-400 uppercase tracking-wider mb-1 block">SEO Automatisierung</span>
                             <h3 className="text-base sm:text-lg font-bold text-white mb-2">
-                                Google-Rankings wöchentlich automatisch tracken
+                                Rechne dir die Zeitersparnis selbst aus
                             </h3>
                             <p className="text-slate-400 text-sm leading-relaxed max-w-md">
-                                Ab 19 €/Monat, 3 Websites, 50 Keywords, 14 Tage kostenlos testen.
+                                14 Tage kostenlos testen, ab 19 €/Monat - meist günstiger als die eigene gebundene Zeit.
                             </p>
                         </div>
                         <Link
                             href="/seo/pricing"
                             className="inline-flex items-center gap-2 px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-emerald-500/20 shrink-0"
                         >
-                            Jetzt SEO automatisieren
+                            SEO-Tracking testen
                         </Link>
                     </div>
                 </div>
@@ -244,17 +244,17 @@ export default function SeoTrackingVergleichPage() {
                         <div>
                             <span className="text-xs font-semibold text-violet-400 uppercase tracking-wider mb-1 block">GEO Automatisierung</span>
                             <h3 className="text-base sm:text-lg font-bold text-white mb-2">
-                                KI-Sichtbarkeit bei ChatGPT & Claude tracken
+                                Spar dir das wiederholte Prompt-Testen
                             </h3>
                             <p className="text-slate-400 text-sm leading-relaxed max-w-md">
-                                Ab 4,99 €/Monat, wöchentlicher Auto-Check, 14 Tage kostenlos testen.
+                                Ab 4,99 €/Monat übernimmt der wöchentliche Auto-Check das manuelle Nachfragen bei ChatGPT & Claude.
                             </p>
                         </div>
                         <Link
                             href="/geo/pricing"
                             className="inline-flex items-center gap-2 px-5 py-2.5 bg-violet-600 hover:bg-violet-500 text-white text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-violet-500/20 shrink-0"
                         >
-                            Jetzt GEO automatisieren
+                            GEO-Tracking testen
                         </Link>
                     </div>
                 </div>
