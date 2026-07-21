@@ -187,10 +187,7 @@ export default function Navbar() {
 
     return (
         <>
-            <motion.nav
-                initial={{ y: -60, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            <nav
                 className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
                     scrolled ? 'bg-[#05080f]/95 backdrop-blur-xl border-b border-white/5' : 'bg-transparent'
                 }`}
@@ -311,7 +308,7 @@ export default function Navbar() {
                         {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
                     </button>
                 </div>
-            </motion.nav>
+            </nav>
 
             {/* Mobile Menu */}
             <AnimatePresence>

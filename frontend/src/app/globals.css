@@ -6,11 +6,13 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
   background: #080b14;
   color: #e8e5e0;
+  overflow-x: hidden;
 }
 
 /* Gradient radial utility */

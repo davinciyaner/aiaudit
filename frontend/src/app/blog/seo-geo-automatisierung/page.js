@@ -21,10 +21,16 @@ const jsonLd = {
     '@type': 'Article',
     headline: 'SEO Automatisierung & GEO Automatisierung: Rankings und KI-Sichtbarkeit automatisch tracken',
     description: 'SEO Automatisierung und GEO Automatisierung erklärt: Wie du Google-Rankings und KI-Sichtbarkeit bei ChatGPT & Claude wöchentlich automatisch trackst.',
+    image: 'https://www.sitecheckai.dev/blog/seo-geo-automatisierung/opengraph-image',
     datePublished: '2026-07-05',
     dateModified: '2026-07-05',
     author: { '@type': 'Person', name: 'Finn Paustian' },
-    publisher: { '@type': 'Organization', name: 'AuditAI', url: 'https://www.sitecheckai.dev' },
+    publisher: {
+        '@type': 'Organization',
+        name: 'AuditAI',
+        url: 'https://www.sitecheckai.dev',
+        logo: { '@type': 'ImageObject', url: 'https://www.sitecheckai.dev/logo', width: 512, height: 512 },
+    },
     url: 'https://www.sitecheckai.dev/blog/seo-geo-automatisierung',
     mainEntityOfPage: 'https://www.sitecheckai.dev/blog/seo-geo-automatisierung',
     about: [

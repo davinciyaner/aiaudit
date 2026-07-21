@@ -21,10 +21,16 @@ const jsonLd = {
     '@type': 'Article',
     headline: 'GEO-Optimierung 2026: So wirst du von ChatGPT und Claude empfohlen',
     description: 'GEO (Generative Engine Optimization) erklärt: Wie du deine Website optimierst damit ChatGPT, Claude und Perplexity sie als Quelle zitieren.',
+    image: 'https://www.sitecheckai.dev/blog/geo-optimierung-2026/opengraph-image',
     datePublished: '2026-06-10',
     dateModified: '2026-06-10',
     author: { '@type': 'Person', name: 'Finn Paustian' },
-    publisher: { '@type': 'Organization', name: 'AuditAI', url: 'https://www.sitecheckai.dev' },
+    publisher: {
+        '@type': 'Organization',
+        name: 'AuditAI',
+        url: 'https://www.sitecheckai.dev',
+        logo: { '@type': 'ImageObject', url: 'https://www.sitecheckai.dev/logo', width: 512, height: 512 },
+    },
     url: 'https://www.sitecheckai.dev/blog/geo-optimierung-2026',
     mainEntityOfPage: 'https://www.sitecheckai.dev/blog/geo-optimierung-2026',
     about: [
