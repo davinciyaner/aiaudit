@@ -24,7 +24,7 @@ const jsonLd = {
     image: 'https://www.sitecheckai.dev/blog/beste-seo-check-tools-2026/opengraph-image',
     datePublished: '2026-07-15T09:00:00+02:00',
     dateModified: '2026-07-15T09:00:00+02:00',
-    author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev' },
+    author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev/about' },
     publisher: {
         '@type': 'Organization',
         name: 'AuditAI',
@@ -189,8 +189,10 @@ export default function BesteSeoToolsPage() {
                         Sieben Tools, ein Kriterium, das die meisten Vergleiche ignorieren: keines davon außer AuditAI prüft, ob deine Website überhaupt für ChatGPT, Perplexity und Google AI Overviews sichtbar ist. Hier der ehrliche Vergleich - inklusive Limits, Funktionsumfang und für wen sich welches Tool wirklich lohnt.
                     </p>
                     <div className="mt-5 flex items-center gap-2 text-xs text-slate-600">
-                        <div className="w-6 h-6 rounded-full bg-gradient-to-br from-violet-600 to-cyan-600 flex items-center justify-center text-white text-[10px] font-bold">F</div>
-                        <span>Finn Paustian</span>
+                        <Link href="/about" className="flex items-center gap-2 hover:text-slate-300 transition-colors">
+                            <div className="w-6 h-6 rounded-full bg-gradient-to-br from-violet-600 to-cyan-600 flex items-center justify-center text-white text-[10px] font-bold">F</div>
+                            <span>Finn Paustian</span>
+                        </Link>
                         <span>·</span>
                         <span>Gründer, AuditAI</span>
                     </div>

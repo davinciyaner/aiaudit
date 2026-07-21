@@ -24,7 +24,7 @@ const jsonLd = {
     image: 'https://www.sitecheckai.dev/blog/geo-optimierung-2026/opengraph-image',
     datePublished: '2026-06-10T09:00:00+02:00',
     dateModified: '2026-06-10T09:00:00+02:00',
-    author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev' },
+    author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev/about' },
     publisher: {
         '@type': 'Organization',
         name: 'AuditAI',
@@ -163,8 +163,10 @@ export default function GeoArtikelPage() {
                         Klassisches SEO optimiert für Google. Doch 2026 entscheiden KI-Modelle wie ChatGPT, Claude und Perplexity täglich welche Websites sie ihren Nutzern empfehlen - nach komplett anderen Regeln. Hier erfährst du wie GEO funktioniert und wie du deinen Score in 60 Minuten deutlich verbesserst.
                     </p>
                     <div className="mt-5 flex items-center gap-2 text-xs text-slate-600">
-                        <div className="w-6 h-6 rounded-full bg-gradient-to-br from-violet-600 to-cyan-600 flex items-center justify-center text-white text-[10px] font-bold">F</div>
-                        <span>Finn Paustian</span>
+                        <Link href="/about" className="flex items-center gap-2 hover:text-slate-300 transition-colors">
+                            <div className="w-6 h-6 rounded-full bg-gradient-to-br from-violet-600 to-cyan-600 flex items-center justify-center text-white text-[10px] font-bold">F</div>
+                            <span>Finn Paustian</span>
+                        </Link>
                         <span>·</span>
                         <span>Gründer, AuditAI</span>
                     </div>
