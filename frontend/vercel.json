@@ -1,0 +1,10 @@
+{
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "sitecheckai.dev" }],
+      "destination": "https://www.sitecheckai.dev/:path*",
+      "permanent": true
+    }
+  ]
+}

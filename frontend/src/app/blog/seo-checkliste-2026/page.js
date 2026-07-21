@@ -22,9 +22,9 @@ const jsonLd = {
     headline: 'SEO-Checkliste 2026: In 15 Minuten alle Fehler selbst finden',
     description: 'Die komplette SEO-Checkliste 2026 zum Abhaken: 6 Phasen, 15 Minuten, alle wichtigen SEO- und GEO-Signale.',
     image: 'https://www.sitecheckai.dev/blog/seo-checkliste-2026/opengraph-image',
-    datePublished: '2026-07-15',
-    dateModified: '2026-07-15',
-    author: { '@type': 'Person', name: 'Finn Paustian' },
+    datePublished: '2026-07-15T09:00:00+02:00',
+    dateModified: '2026-07-15T09:00:00+02:00',
+    author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev' },
     publisher: {
         '@type': 'Organization',
         name: 'AuditAI',

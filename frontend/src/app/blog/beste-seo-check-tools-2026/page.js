@@ -22,9 +22,9 @@ const jsonLd = {
     headline: 'Die besten kostenlosen SEO-Check-Tools 2026 im Vergleich',
     description: '7 SEO-Check-Tools im Vergleich: kostenlose Version, Funktionsumfang, Limits und wer als einziges auch KI-Sichtbarkeit (GEO) prüft.',
     image: 'https://www.sitecheckai.dev/blog/beste-seo-check-tools-2026/opengraph-image',
-    datePublished: '2026-07-15',
-    dateModified: '2026-07-15',
-    author: { '@type': 'Person', name: 'Finn Paustian' },
+    datePublished: '2026-07-15T09:00:00+02:00',
+    dateModified: '2026-07-15T09:00:00+02:00',
+    author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev' },
     publisher: {
         '@type': 'Organization',
         name: 'AuditAI',
