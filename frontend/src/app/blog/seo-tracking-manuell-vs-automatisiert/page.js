@@ -24,7 +24,7 @@ const jsonLd = {
     image: 'https://www.sitecheckai.dev/blog/seo-tracking-manuell-vs-automatisiert/opengraph-image',
     datePublished: '2026-07-15T09:00:00+02:00',
     dateModified: '2026-07-15T09:00:00+02:00',
-    author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev' },
+    author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev/about' },
     publisher: {
         '@type': 'Organization',
         name: 'AuditAI',
@@ -120,8 +120,10 @@ export default function SeoTrackingVergleichPage() {
                         Die Frage ist selten "SEO oder nicht" - sondern wie oft du wirklich nachsiehst. Ein ehrlicher Vergleich zwischen manuellem Tracking und Automatisierung, inklusive dem Punkt, an dem manuelles Tracking strukturell an seine Grenzen stößt: KI-Sichtbarkeit.
                     </p>
                     <div className="mt-5 flex items-center gap-2 text-xs text-slate-600">
-                        <div className="w-6 h-6 rounded-full bg-gradient-to-br from-violet-600 to-cyan-600 flex items-center justify-center text-white text-[10px] font-bold">F</div>
-                        <span>Finn Paustian</span>
+                        <Link href="/about" className="flex items-center gap-2 hover:text-slate-300 transition-colors">
+                            <div className="w-6 h-6 rounded-full bg-gradient-to-br from-violet-600 to-cyan-600 flex items-center justify-center text-white text-[10px] font-bold">F</div>
+                            <span>Finn Paustian</span>
+                        </Link>
                         <span>·</span>
                         <span>Gründer, AuditAI</span>
                     </div>
