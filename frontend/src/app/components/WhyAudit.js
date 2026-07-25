@@ -5,22 +5,25 @@ import Link from 'next/link'
 
 const STATS = [
     {
-        value: '91%',
-        label: 'aller Google-Klicks landen auf Seite 1',
-        sub: 'Seite 2 existiert für deine Kunden nicht.',
+        value: '27,6%',
+        label: 'aller Klicks gehen an Platz 1 der Google-Suche',
+        sub: 'Seite 2 existiert für deine Kunden praktisch nicht.',
         color: '#ef4444',
+        source: { label: 'Backlinko-Analyse von 4 Mio. Google-Suchergebnissen', url: 'https://backlinko.com/google-ctr-stats' },
     },
     {
-        value: '500+',
-        label: 'Algorithmus-Updates pro Jahr',
+        value: '3.200+',
+        label: 'Änderungen an Googles Suchsystemen pro Jahr',
         sub: 'Was gestern funktioniert hat, schadet dir vielleicht heute.',
         color: '#f59e0b',
+        source: { label: 'Google Search Central', url: 'https://developers.google.com/search/blog/2023/11/q-and-a-on-search-updates' },
     },
     {
         value: '53%',
         label: 'verlassen Seiten nach 3 Sekunden',
         sub: 'Ohne Audit weißt du nicht, ob du betroffen bist.',
         color: '#ef4444',
+        source: { label: 'Google: "The Need for Mobile Speed"', url: 'https://www.thinkwithgoogle.com/marketing-strategies/app-and-mobile/mobile-page-speed-new-industry-benchmarks/' },
     },
 ]
 
@@ -28,7 +31,7 @@ const DECAY_ITEMS = [
     {
         icon: TrendingDown,
         title: 'Rankings fallen ohne Vorwarnung',
-        desc: 'Google aktualisiert seinen Algorithmus hunderte Male im Jahr. Jede Änderung kann deine Position verschieben — du bekommst keine Benachrichtigung.',
+        desc: 'Google nimmt laut eigenen Angaben tausende Änderungen an seinen Suchsystemen pro Jahr vor. Jede Änderung kann deine Position verschieben — du bekommst keine Benachrichtigung.',
         color: '#ef4444',
     },
     {
@@ -79,6 +82,16 @@ export default function WhyAudit() {
                             <div>
                                 <div className="text-sm font-semibold text-white sm:mt-3 sm:mb-2 leading-snug">{s.label}</div>
                                 <div className="text-xs text-slate-500 leading-relaxed mt-0.5">{s.sub}</div>
+                                {s.source && (
+                                    <a
+                                        href={s.source.url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="block text-[10px] text-slate-600 hover:text-slate-400 underline underline-offset-2 mt-2 transition-colors"
+                                    >
+                                        Quelle: {s.source.label} ↗
+                                    </a>
+                                )}
                             </div>
                         </motion.div>
                     ))}

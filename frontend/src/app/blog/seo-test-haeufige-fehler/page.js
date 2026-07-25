@@ -24,7 +24,7 @@ const jsonLd = {
     description: 'Diese 10 SEO-Fehler machen die meisten Websites - und keiner merkt es.',
     image: 'https://www.sitecheckai.dev/blog/seo-test-haeufige-fehler/opengraph-image',
     datePublished: '2026-06-10T09:00:00+02:00',
-    dateModified: '2026-06-10T09:00:00+02:00',
+    dateModified: '2026-07-25T09:00:00+02:00',
     author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev/about' },
     publisher: {
         '@type': 'Organization',
@@ -104,6 +104,7 @@ const ERRORS = [
         impact: '53 % der Nutzer verlassen Seiten die länger als 3 Sekunden laden',
         desc: 'Core Web Vitals sind seit 2021 offizieller Google-Ranking-Faktor. Die drei Metriken - LCP (Largest Contentful Paint), FID/INP (Interaktivität) und CLS (Layout-Stabilität) - messen die wahrgenommene Ladegeschwindigkeit. Eine schlechte Ladezeit kostet Rankings und Nutzer gleichermaßen.',
         fix: 'Bilder komprimieren und in WebP konvertieren, Lazy Loading aktivieren, unnötige JavaScript-Dateien entfernen, Browser-Caching nutzen. TTFB (Time to First Byte) sollte unter 800ms liegen, FCP unter 1,8 Sekunden.',
+        source: { label: 'Google/Think with Google: "The Need for Mobile Speed"', url: 'https://www.thinkwithgoogle.com/marketing-strategies/app-and-mobile/mobile-page-speed-new-industry-benchmarks/' },
         stat: 'Websites mit einer Ladezeit unter 2 Sekunden ranken im Schnitt 2,5 Positionen höher als solche über 4 Sekunden.',
     },
     {
@@ -168,13 +169,13 @@ const ERRORS = [
     },
     {
         number: '10',
-        severity: 'Mittel',
-        severityColor: '#6366f1',
-        title: 'Fehlende Security-Header',
-        impact: 'Indirektes SEO-Signal: Sicherheit als Ranking-Faktor',
-        desc: 'HTTPS ist seit 2014 offizieller Google-Ranking-Faktor. Aber viele Websites vernachlässigen die Security-Header die darüber hinausgehen: HSTS, Content-Security-Policy, X-Frame-Options und X-Content-Type-Options. Diese sind zwar kein direkter Ranking-Faktor, aber sie sind Teil von Googles "Page Experience"-Bewertung und beeinflussen das Vertrauen der Nutzer.',
-        fix: 'Mindestens HTTPS, HSTS (Strict-Transport-Security), X-Frame-Options: SAMEORIGIN und X-Content-Type-Options: nosniff setzen. Diese Header werden im Server oder in next.config.js / vercel.json konfiguriert.',
-        stat: '78 % der Websites haben kritische Security-Header nicht gesetzt.',
+        severity: 'Hoch',
+        severityColor: '#f59e0b',
+        title: 'Versehentliches "noindex" auf wichtigen Seiten',
+        impact: 'Seite verschwindet komplett aus der Google-Suche',
+        desc: 'Ein einzelner robots-Meta-Tag mit "noindex" oder ein falsch gesetzter X-Robots-Tag in der Server-Antwort reicht aus, damit Google eine Seite komplett aus dem Index entfernt - unabhängig davon wie gut Title, Content oder Backlinks sind. Das passiert häufiger als man denkt: ein Staging-Flag, das nach dem Launch vergessen wird, ein CMS-Default oder ein Plugin-Update, das die Robots-Einstellung zurücksetzt.',
+        fix: 'Nach jedem Deployment die wichtigsten Seiten per URL-Inspection in der Google Search Console prüfen, oder automatisiert mit einem SEO-Test - AuditAI markiert versehentliches noindex sofort als kritischen Fehler.',
+        stat: null,
     },
 ]
 
@@ -231,12 +232,19 @@ export default function SeoTestArtikelPage() {
                             Ein SEO-Test ist eine systematische Analyse aller On-Page-Faktoren einer Website - also alles was du direkt kontrollieren kannst: Title-Tags, Meta-Descriptions, Überschriften, Ladezeit, Bilder, interne Links und technische Signale wie Canonical-Tags oder Structured Data.
                         </p>
                         <p className="mt-4">
-                            Der Unterschied zu einem einmaligen Setup: SEO verfällt. Google aktualisiert seinen Algorithmus über 500 Mal pro Jahr. Jeder neue Seiteninhalt, jedes Deployment kann neue Fehler einführen. Eine Seite die im Januar perfekt war, kann im Juni kritische SEO-Probleme haben - ohne dass sich irgendjemand bewusst etwas geändert hat.
+                            Der Unterschied zu einem einmaligen Setup: SEO verfällt. Google nimmt laut eigenen Angaben{' '}
+                            <a href="https://developers.google.com/search/blog/2023/11/q-and-a-on-search-updates" target="_blank" rel="noopener noreferrer" className="text-violet-400 hover:text-violet-300 underline underline-offset-2">
+                                tausende Änderungen an seinen Suchsystemen pro Jahr vor
+                            </a>{' '}
+                            (allein 2023 waren es laut Google über 3.200). Jeder neue Seiteninhalt, jedes Deployment kann zusätzlich neue Fehler einführen. Eine Seite die im Januar perfekt war, kann im Juni kritische SEO-Probleme haben - ohne dass sich irgendjemand bewusst etwas geändert hat.
                         </p>
                         <div className="bg-violet-500/8 border border-violet-500/20 rounded-2xl p-5 mt-5">
-                            <p className="text-sm text-violet-300 font-medium mb-1">91 % aller Google-Klicks gehen an Seite 1</p>
+                            <p className="text-sm text-violet-300 font-medium mb-1">Platz 1 bekommt im Schnitt 27,6 % aller Klicks</p>
                             <p className="text-sm text-slate-400">
-                                Wer auf Seite 2 landet, existiert für potenzielle Kunden praktisch nicht. Ein einziger behobener SEO-Fehler kann den Unterschied zwischen Seite 1 und Seite 2 ausmachen.
+                                Wer auf Seite 2 landet, existiert für potenzielle Kunden praktisch nicht - und schon der Sprung von Platz 5 auf Platz 1 vervielfacht den Traffic derselben Seite. Ein einziger behobener SEO-Fehler kann diesen Unterschied ausmachen.{' '}
+                                <a href="https://backlinko.com/google-ctr-stats" target="_blank" rel="noopener noreferrer" className="text-violet-400 hover:text-violet-300 underline underline-offset-2">
+                                    Quelle: Backlinko-Analyse von 4 Mio. Google-Suchergebnissen ↗
+                                </a>
                             </p>
                         </div>
                     </section>
@@ -275,6 +283,19 @@ export default function SeoTestArtikelPage() {
                                             {e.stat && (
                                                 <p className="text-xs text-slate-500 bg-white/[0.03] rounded-lg px-3 py-2 mb-3 border-l-2 border-slate-700">
                                                     {e.stat}
+                                                    {e.source && (
+                                                        <>
+                                                            {' '}
+                                                            <a
+                                                                href={e.source.url}
+                                                                target="_blank"
+                                                                rel="noopener noreferrer"
+                                                                className="text-violet-400 hover:text-violet-300 underline underline-offset-2"
+                                                            >
+                                                                Quelle: {e.source.label} ↗
+                                                            </a>
+                                                        </>
+                                                    )}
                                                 </p>
                                             )}
                                             <div className="bg-white/[0.03] border border-white/[0.05] rounded-xl p-3">
