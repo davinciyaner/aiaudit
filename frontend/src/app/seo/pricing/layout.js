@@ -12,6 +12,37 @@ export const metadata = {
     },
 }
 
+const faqJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+        {
+            '@type': 'Question',
+            name: 'Was kostet SEO Automatisierung?',
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'SEO Automatisierung bei AuditAI startet ab 19 €/Monat für 3 Websites und 50 Keywords mit wöchentlichem Ranking-Update. Der Pro-Plan (59 €/Monat) erweitert auf 10 Websites und 200 Keywords inkl. Content-Gap-Analyse, der Expert-Plan (149 €/Monat) deckt bis zu 20 Websites und 500 Keywords ab. Alle Pläne bieten 14 Tage kostenlose Testphase.',
+            },
+        },
+        {
+            '@type': 'Question',
+            name: 'Was ist der Unterschied zwischen einem einmaligen SEO-Audit und SEO Automatisierung?',
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Ein einmaliger SEO-Audit (Teil des kostenlosen AuditAI Website-Audits) zeigt deinen SEO-Score zu einem Zeitpunkt. SEO Automatisierung trackt wöchentlich automatisch deine Google-Rankings, Keyword-Ideen, Konkurrenzanalyse und Backlink-Übersicht - als laufenden Verlauf statt Einzelmessung.',
+            },
+        },
+        {
+            '@type': 'Question',
+            name: 'Gibt es eine kostenlose Testphase für SEO Automatisierung?',
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Ja, alle SEO-Automatisierung-Pläne bieten 14 Tage kostenlos testen, danach automatische Verlängerung über PayPal, jederzeit kündbar.',
+            },
+        },
+    ],
+}
+
 const seoJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'SoftwareApplication',
@@ -34,6 +65,10 @@ export default function SeoPricingLayout({ children }) {
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(seoJsonLd) }}
+            />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
             />
             {children}
         </>

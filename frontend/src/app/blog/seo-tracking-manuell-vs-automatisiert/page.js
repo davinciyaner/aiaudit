@@ -23,7 +23,7 @@ const jsonLd = {
     description: 'Manuelles SEO- und GEO-Tracking vs. Automatisierung im Vergleich: Zeitaufwand, Kosten und warum KI-Sichtbarkeit manuell kaum zuverlässig messbar ist.',
     image: 'https://www.sitecheckai.dev/blog/seo-tracking-manuell-vs-automatisiert/opengraph-image',
     datePublished: '2026-07-15T09:00:00+02:00',
-    dateModified: '2026-07-21T09:00:00+02:00',
+    dateModified: '2026-07-25T09:00:00+02:00',
     author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev/about' },
     publisher: {
         '@type': 'Organization',
@@ -199,7 +199,7 @@ export default function SeoTrackingVergleichPage() {
                             Ab dem Punkt, an dem du mehrere Keywords, mehrere Websites oder mehrere Kunden betreust, wächst der manuelle Aufwand linear mit - Automatisierung dagegen kaum. Für Agenturen und alle, die GEO ernsthaft verfolgen wollen, kommt ein zweiter Grund dazu: konsistentes GEO-Tracking ist manuell kaum durchzuhalten, weil es Wiederholung braucht, die bei Tagesgeschäft schnell hinten runterfällt.
                         </p>
                         <p className="mt-4">
-                            Mehr zum konkreten Funktionsumfang von SEO- und GEO Automatisierung: <Link href="/blog/seo-geo-automatisierung" className="text-emerald-400 hover:text-emerald-300 underline underline-offset-2">SEO Automatisierung & GEO Automatisierung erklärt</Link>.
+                            Mehr zum Unterschied zwischen einem klassischen SEO-Tool und einem AI-Tracker für KI-Sichtbarkeit: <Link href="/blog/seo-geo-automatisierung" className="text-emerald-400 hover:text-emerald-300 underline underline-offset-2">SEO Automatisierung & GEO Automatisierung erklärt</Link>.
                         </p>
                     </section>
 
