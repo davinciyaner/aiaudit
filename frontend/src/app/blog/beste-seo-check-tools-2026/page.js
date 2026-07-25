@@ -5,12 +5,12 @@ import Footer from '../../components/Footer'
 
 export const metadata = {
     title: 'Die besten kostenlosen SEO-Check-Tools 2026 im Vergleich',
-    description: '7 SEO-Check-Tools im Vergleich: kostenlose Version, Funktionsumfang, Limits und wer als einziges auch KI-Sichtbarkeit (GEO) prüft. Mit Entscheidungshilfe.',
+    description: '13 SEO-Check-Tools im Vergleich inkl. G2-/Capterra-/OMR-Bewertungen: kostenlose Version, Funktionsumfang, Limits und wer als einziges auch KI-Sichtbarkeit (GEO) prüft.',
     keywords: 'seo analyse kostenlos, seo check tool kostenlos, website audit tool kostenlos, kostenloser seo test, seo tool vergleich',
     alternates: { canonical: 'https://www.sitecheckai.dev/blog/beste-seo-check-tools-2026' },
     openGraph: {
         title: 'Die besten kostenlosen SEO-Check-Tools 2026 im Vergleich',
-        description: '7 SEO-Check-Tools im Vergleich - inklusive GEO-Check für KI-Sichtbarkeit.',
+        description: '13 SEO-Check-Tools im Vergleich mit echten G2-/Capterra-/OMR-Bewertungen - inklusive GEO-Check für KI-Sichtbarkeit.',
         url: 'https://www.sitecheckai.dev/blog/beste-seo-check-tools-2026',
         type: 'article',
         locale: 'de_DE',
@@ -21,10 +21,10 @@ const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: 'Die besten kostenlosen SEO-Check-Tools 2026 im Vergleich',
-    description: '7 SEO-Check-Tools im Vergleich: kostenlose Version, Funktionsumfang, Limits und wer als einziges auch KI-Sichtbarkeit (GEO) prüft.',
+    description: '13 SEO-Check-Tools im Vergleich inkl. G2-/Capterra-/OMR-Bewertungen: kostenlose Version, Funktionsumfang, Limits und wer als einziges auch KI-Sichtbarkeit (GEO) prüft.',
     image: 'https://www.sitecheckai.dev/blog/beste-seo-check-tools-2026/opengraph-image',
     datePublished: '2026-07-15T09:00:00+02:00',
-    dateModified: '2026-07-15T09:00:00+02:00',
+    dateModified: '2026-07-25T09:00:00+02:00',
     author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev/about' },
     publisher: {
         '@type': 'Organization',
@@ -81,86 +81,187 @@ const CRITERIA = [
     { label: 'GEO / KI-Sichtbarkeit', desc: 'Prüft das Tool llms.txt, Schema-Markup und ob KI-Crawler wie GPTBot oder ClaudeBot überhaupt zugelassen sind? Das ist 2026 der größte blinde Fleck der meisten Checker.' },
     { label: 'Limits der Gratis-Version', desc: 'Checks pro Tag/Monat, Anzahl geprüfter Seiten, ob ein Report als PDF exportierbar ist.' },
     { label: 'Handlungsempfehlungen', desc: 'Liefert das Tool nur eine Fehlerliste oder priorisierte, konkrete Fixes?' },
+    { label: 'Bewertungen', desc: 'Wie bewerten echte Nutzer das Tool auf unabhängigen Plattformen wie G2, Capterra oder OMR - und auf welcher Stichprobengröße basiert das?' },
 ]
 
 const TOOLS = [
     {
         name: 'AuditAI',
+        url: 'https://www.sitecheckai.dev',
         tag: 'SEO + Performance + GEO in einem Report',
         tagColor: '#7c3aed',
         free: 'Start ohne Registrierung, für vollen Report kostenloser Account (1 Audit/Monat)',
         scope: 'Bis zu 25 Unterseiten',
         categories: 'SEO, Performance, GEO',
         geo: true,
+        rating: null,
         note: 'Einziges Tool in diesem Vergleich, das SEO, Performance und GEO-Signale (llms.txt, KI-Crawler-Erlaubnis, Schema für KI-Zitate) in einem einzigen Report zusammenführt. Der Audit selbst läuft ohne Registrierung, für den vollständigen Report mit allen Scores braucht es einen kostenlosen Account. Pro-Plan ergänzt einen KI-generierten Report mit priorisierten Fixes.',
     },
     {
         name: 'Seobility',
+        url: 'https://www.seobility.net/de/',
         tag: 'Umfangreicher klassischer On-Page-Check',
         tagColor: '#06b6d4',
         free: 'Kostenlos mit Limit, kostenpflichtige Pläne für mehr Seiten',
         scope: 'Mehrere Unterseiten je nach Plan',
         categories: 'SEO, teilweise Performance',
         geo: false,
+        rating: { value: '4.6', count: 721, source: 'OMR', url: 'https://omr.com/de/reviews/product/seobility' },
         note: 'Sehr gründlicher On-Page-Check mit klarer Fehlerpriorisierung. Gut für klassisches SEO, aber kein Blick auf KI-Sichtbarkeit.',
     },
     {
         name: 'SEORCH',
+        url: 'https://seorch.de/',
         tag: 'Schneller Rundum-Check ohne Anmeldung',
         tagColor: '#10b981',
         free: 'Komplett kostenlos',
         scope: 'Einzelne URL',
         categories: 'SEO, Core Web Vitals, Mobile',
         geo: false,
+        rating: { note: 'Zu wenige Bewertungen (n=5, OMR)' },
         note: 'Deckt viele Faktoren ab und ist ohne Registrierung nutzbar. Kein mehrseitiges Crawling und keine GEO-Signale.',
     },
     {
         name: 'IONOS SEO Check',
+        url: 'https://www.ionos.de/tools/seo-check',
         tag: 'Einfacher Einstieg für kleine Websites',
         tagColor: '#f59e0b',
         free: 'Kostenlos',
         scope: 'Einzelne URL',
         categories: 'On-Page SEO, Social-SEO',
         geo: false,
+        rating: { note: 'Nicht gelistet' },
         note: 'Guter Einstiegspunkt, aber eingeschränkt auf Basis-Faktoren. Kein technischer Tiefencheck, keine Sicherheits- oder GEO-Prüfung.',
     },
     {
         name: 'SE Ranking Checker',
+        url: 'https://seranking.com/',
         tag: 'SEO-Suite mit KI-Suchtracking als Zusatzmodul',
         tagColor: '#ef4444',
         free: 'Kostenlose Checks mit Tageslimit, Vollzugang kostenpflichtig',
         scope: 'Skalierbar, aber kostenpflichtig',
         categories: 'SEO, Rank-Tracking, teils LLM-Monitoring',
         geo: 'teilweise',
+        rating: { value: '4.7', count: 297, source: 'Capterra', url: 'https://www.capterra.com/p/142169/SE-Ranking/reviews/' },
         note: 'Eine der wenigen etablierten Suiten mit Ansätzen für KI-Suchtracking - allerdings meist als separates, kostenpflichtiges Modul und nicht im kostenlosen Basis-Check enthalten.',
     },
     {
         name: 'Ahrefs Webmaster Tools',
+        url: 'https://ahrefs.com/webmaster-tools',
         tag: 'Technisches Crawling für die eigene Domain',
         tagColor: '#B07AA1',
         free: 'Kostenlos für verifizierte eigene Website',
         scope: 'Ganze Domain (nach Verifizierung)',
         categories: 'Technisches SEO, Backlinks',
         geo: false,
+        rating: { value: '4.7', count: 585, source: 'Capterra', url: 'https://www.capterra.com/p/176340/Ahrefs/reviews/' },
         note: 'Sehr solides technisches Crawling, erfordert aber Property-Verifizierung. Fokus auf klassisches SEO und Backlinks, keine GEO-Signale.',
     },
     {
         name: 'Semrush Site Audit (Free-Check)',
+        url: 'https://www.semrush.com/siteaudit/',
         tag: 'Bekannteste Suite, Gratis-Check stark limitiert',
         tagColor: '#59A14F',
         free: 'Wenige kostenlose Checks pro Tag',
         scope: 'Begrenzt in der Gratis-Version',
         categories: 'SEO, Performance',
         geo: false,
+        rating: { value: '4.6', count: 2323, source: 'Capterra', url: 'https://www.capterra.com/p/151962/SEMrush/' },
         note: 'Der volle Funktionsumfang (inkl. eigener AI-Search-Toolkits) liegt hinter einem kostenpflichtigen Plan. Der freie Site-Checker ist ein guter erster Eindruck, aber schnell limitiert.',
     },
+    {
+        name: 'Screaming Frog SEO Spider',
+        url: 'https://www.screamingfrog.co.uk/seo-spider/',
+        tag: 'Desktop-Crawler für tiefe technische Audits',
+        tagColor: '#8b5cf6',
+        free: 'Kostenlos bis 500 URLs pro Crawl, zeitlich unbegrenzt',
+        scope: 'Ganze Domain (Desktop-Software, bis 500 URLs gratis)',
+        categories: 'Technisches SEO, Crawling, Broken Links',
+        geo: false,
+        rating: { value: '4.6', count: 148, source: 'OMR', url: 'https://omr.com/de/reviews/product/screaming-frog-seo-spider' },
+        note: 'Der Industriestandard für technisches Crawling - findet defekte Links, Duplicate Content und Redirect-Ketten zuverlässiger als jeder Online-Checker. Muss installiert werden, keine Cloud-Version, keine GEO-Signale.',
+    },
+    {
+        name: 'Ryte',
+        url: 'https://en.ryte.com/',
+        tag: 'Deutsche SEO-Suite für Technik und Content',
+        tagColor: '#0ea5e9',
+        free: 'Kostenlos: 1 Projekt, bis 100 URLs, 1 Crawl pro Monat',
+        scope: '1 Projekt, bis 100 URLs (Gratis-Plan)',
+        categories: 'Technisches SEO, Content-Optimierung',
+        geo: false,
+        rating: { value: '4.1', count: 75, source: 'OMR', url: 'https://omr.com/de/reviews/product/ryte' },
+        note: 'Solide für technisches SEO und Content-Checks, aber die Gratis-Version erlaubt nur einen Crawl im Monat - für regelmäßige Kontrolle schnell zu wenig.',
+    },
+    {
+        name: 'Sistrix',
+        url: 'https://www.sistrix.de/',
+        tag: 'Marktführer für Sichtbarkeit und Rankings',
+        tagColor: '#f43f5e',
+        free: 'Keine dauerhaft kostenlose Vollversion, nur 14-Tage-Test + einzelne Gratis-Tools',
+        scope: '1 Domain, bis 100 Keywords (SISTRIX Smart, kostenlos)',
+        categories: 'Sichtbarkeitsindex, Rankings, Backlinks',
+        geo: false,
+        rating: { value: '4.3', count: 330, source: 'OMR', url: 'https://omr.com/de/reviews/product/sistrix' },
+        note: 'Der Referenzwert für Sichtbarkeit im deutschsprachigen Raum, aber kein klassischer On-Page-Checker und ohne kostenlosen vollständigen Website-Audit - eher etwas für laufendes Ranking-Monitoring als für einen einmaligen Check.',
+    },
+    {
+        name: 'Woorank',
+        url: 'https://www.woorank.com/',
+        tag: 'Marketing-Checkliste statt reiner SEO-Check',
+        tagColor: '#eab308',
+        free: '14-Tage-Test, kein dauerhaft kostenloser Plan',
+        scope: 'Einzelne URL pro Review',
+        categories: 'On-Page SEO, Social, Mobile, Marketing-Checkliste',
+        geo: false,
+        rating: { value: '4.4', count: 69, source: 'Capterra', url: 'https://www.capterra.com/p/176630/WooRank/reviews/' },
+        note: 'Breit angelegte Checkliste über SEO hinaus (Social, Mobile, Local), aber ohne dauerhaften Gratis-Zugang und ohne GEO-Signale.',
+    },
+    {
+        name: 'PageRangers',
+        url: 'https://www.pagerangers.com/',
+        tag: 'Deutsche All-in-one-Suite für den Mittelstand',
+        tagColor: '#22c55e',
+        free: 'Kein Gratis-Plan, nur 14-Tage-Testphase (danach ab ca. 17 €/Monat)',
+        scope: 'Ganze Domain (im Testzeitraum)',
+        categories: 'SEO-Suite, Content, Monitoring',
+        geo: false,
+        rating: { value: '4.5', count: 26, source: 'OMR', url: 'https://omr.com/de/reviews/product/pagerangers-seo-suite' },
+        note: 'Gut für Teams, die dauerhaft überwachen statt einmalig zu checken - aber ohne kostenlose Einstiegsoption und mit kleiner Bewertungsbasis.',
+    },
+    {
+        name: 'Ubersuggest',
+        url: 'https://neilpatel.com/ubersuggest/',
+        tag: 'Keyword-Tool mit Site-Audit-Zusatz',
+        tagColor: '#ec4899',
+        free: '3 Suchen/Tag, Site-Audit bis 150 Seiten, kein manuelles Recrawl',
+        scope: '1 Projekt, bis 150 Seiten pro Audit-Zyklus',
+        categories: 'Keyword-Recherche, Site-Audit',
+        geo: false,
+        rating: { value: '4.4', count: 93, source: 'Capterra', url: 'https://www.capterra.com/p/229169/Ubersuggest/reviews/' },
+        note: 'In erster Linie ein Keyword-Tool, der Site-Audit ist ein Zusatzfeature. Für einen reinen Tool-Vergleich eher zweite Wahl, aber wegen der Reichweite fast immer in Vergleichslisten vertreten.',
+    },
 ]
+
+const itemListLd = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'Die besten kostenlosen SEO-Check-Tools 2026',
+    numberOfItems: TOOLS.length,
+    itemListElement: TOOLS.map((t, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        name: t.name,
+        url: t.url,
+    })),
+}
 
 export default function BesteSeoToolsPage() {
     return (
         <main className="bg-[#05080f] min-h-screen">
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListLd) }} />
             <Navbar />
 
             <article className="max-w-3xl mx-auto px-5 sm:px-8 pt-32 pb-24">
@@ -181,13 +282,14 @@ export default function BesteSeoToolsPage() {
                             Tools
                         </span>
                         <span className="text-xs text-slate-600">15. Juli 2026</span>
-                        <span className="text-xs text-slate-600">· 10 min Lesezeit</span>
+                        <span className="text-xs text-slate-600">· Aktualisiert 25. Juli 2026</span>
+                        <span className="text-xs text-slate-600">· 13 min Lesezeit</span>
                     </div>
                     <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight tracking-tight mb-5">
                         Die besten kostenlosen SEO-Check-Tools 2026 im Vergleich
                     </h1>
                     <p className="text-lg text-slate-400 leading-relaxed">
-                        Sieben Tools, ein Kriterium, das die meisten Vergleiche ignorieren: keines davon außer AuditAI prüft, ob deine Website überhaupt für ChatGPT, Perplexity und Google AI Overviews sichtbar ist. Hier der ehrliche Vergleich - inklusive Limits, Funktionsumfang und für wen sich welches Tool wirklich lohnt.
+                        13 Tools, ein Kriterium, das die meisten Vergleiche ignorieren: kaum eines davon außer AuditAI prüft, ob deine Website überhaupt für ChatGPT, Perplexity und Google AI Overviews sichtbar ist. Hier der ehrliche Vergleich - inklusive Limits, Funktionsumfang, echten G2-/Capterra-/OMR-Bewertungen und für wen sich welches Tool wirklich lohnt.
                     </p>
                     <div className="mt-5 flex items-center gap-2 text-xs text-slate-600">
                         <Link href="/about" className="flex items-center gap-2 hover:text-slate-300 transition-colors">
@@ -206,7 +308,7 @@ export default function BesteSeoToolsPage() {
                     <section>
                         <h2 className="text-2xl font-bold text-white mb-4">Worauf du bei einem SEO-Check-Tool achten solltest</h2>
                         <p>
-                            Die meisten "SEO-Checker" prüfen im Kern dieselben zehn bis fünfzehn On-Page-Faktoren: Title-Tag, Meta-Description, H1, Alt-Texte, Ladezeit. Der Unterschied liegt selten in der Genauigkeit, sondern in fünf Punkten, die bestimmen, ob dir ein Tool wirklich weiterhilft.
+                            Die meisten "SEO-Checker" prüfen im Kern dieselben zehn bis fünfzehn On-Page-Faktoren: Title-Tag, Meta-Description, H1, Alt-Texte, Ladezeit. Der Unterschied liegt selten in der Genauigkeit, sondern in sechs Punkten, die bestimmen, ob dir ein Tool wirklich weiterhilft.
                         </p>
                         <div className="space-y-3 mt-5">
                             {CRITERIA.map((c) => (
@@ -222,15 +324,19 @@ export default function BesteSeoToolsPage() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-6">7 Tools im Vergleich</h2>
+                        <h2 className="text-2xl font-bold text-white mb-2">13 Tools im Vergleich</h2>
+                        <p className="text-sm text-slate-500 mb-6">
+                            Bewertungen stammen von G2, Capterra oder OMR - nur Werte mit ausreichender Stichprobe werden angezeigt, sonst steht hier ehrlich &quot;keine belastbare Bewertung&quot;.
+                        </p>
                         <div className="overflow-x-auto rounded-2xl border border-white/[0.07]">
-                            <table className="w-full text-sm min-w-[640px]">
+                            <table className="w-full text-sm min-w-[760px]">
                                 <thead>
                                     <tr className="border-b border-white/5 bg-white/[0.02]">
                                         <th className="text-left px-4 py-3 text-slate-400 font-semibold">Tool</th>
                                         <th className="text-left px-4 py-3 text-slate-400 font-semibold">Gratis-Version</th>
                                         <th className="text-left px-4 py-3 text-slate-400 font-semibold">Kategorien</th>
                                         <th className="text-left px-4 py-3 text-amber-400 font-semibold">GEO-Check</th>
+                                        <th className="text-left px-4 py-3 text-slate-400 font-semibold">Bewertung</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -243,6 +349,22 @@ export default function BesteSeoToolsPage() {
                                                 {t.geo === true && <span className="text-emerald-400 font-medium">✓ Ja</span>}
                                                 {t.geo === false && <span className="text-slate-600">✗ Nein</span>}
                                                 {t.geo === 'teilweise' && <span className="text-amber-400">teilweise</span>}
+                                            </td>
+                                            <td className="px-4 py-3 whitespace-nowrap">
+                                                {t.rating?.value ? (
+                                                    <a
+                                                        href={t.rating.url}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer nofollow"
+                                                        className="text-slate-300 hover:text-white underline decoration-slate-700 underline-offset-2"
+                                                    >
+                                                        {t.rating.value} ★ <span className="text-slate-500">({t.rating.count}, {t.rating.source})</span>
+                                                    </a>
+                                                ) : (
+                                                    <span className="text-slate-600" title={t.rating?.note || 'Neu am Markt'}>
+                                                        {t.rating?.note || 'Neu am Markt'}
+                                                    </span>
+                                                )}
                                             </td>
                                         </tr>
                                     ))}
@@ -257,13 +379,24 @@ export default function BesteSeoToolsPage() {
                             {TOOLS.map((t) => (
                                 <div key={t.name} className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
                                     <div className="flex flex-wrap items-center gap-2 mb-2">
-                                        <h3 className="font-semibold text-white">{t.name}</h3>
+                                        <h3 className="font-semibold text-white">
+                                            <a href={t.url} target="_blank" rel="noopener noreferrer nofollow" className="hover:text-violet-300 transition-colors">
+                                                {t.name}
+                                            </a>
+                                        </h3>
                                         <span
                                             className="text-[10px] font-semibold px-2 py-0.5 rounded-full"
                                             style={{ background: t.tagColor + '18', color: t.tagColor }}
                                         >
                                             {t.tag}
                                         </span>
+                                        {t.rating?.value ? (
+                                            <span className="text-[10px] font-medium text-slate-500">
+                                                {t.rating.value} ★ ({t.rating.count} Bewertungen, {t.rating.source})
+                                            </span>
+                                        ) : (
+                                            <span className="text-[10px] font-medium text-slate-600">{t.rating?.note || 'Neu am Markt'}</span>
+                                        )}
                                     </div>
                                     <p className="text-xs text-slate-500 mb-3">
                                         <span className="text-slate-400">Umfang:</span> {t.scope}
@@ -357,7 +490,7 @@ export default function BesteSeoToolsPage() {
                                 SEO-Checkliste 2026: In 15 Minuten alle Fehler selbst finden
                             </h3>
                             <p className="text-slate-400 text-sm leading-relaxed max-w-md">
-                                Statt ein Tool zu wählen, kannst du auch selbst prüfen: 6 Phasen, 24 Punkte zum Abhaken.
+                                Statt ein Tool zu wählen, kannst du auch selbst prüfen: 6 Phasen, 24 Punkte in fester Reihenfolge.
                             </p>
                         </div>
                         <Link

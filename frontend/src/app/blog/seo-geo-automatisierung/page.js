@@ -23,7 +23,7 @@ const jsonLd = {
     description: 'SEO Automatisierung und GEO Automatisierung erklärt: Wie du Google-Rankings und KI-Sichtbarkeit bei ChatGPT & Claude wöchentlich automatisch trackst.',
     image: 'https://www.sitecheckai.dev/blog/seo-geo-automatisierung/opengraph-image',
     datePublished: '2026-07-05T09:00:00+02:00',
-    dateModified: '2026-07-05T09:00:00+02:00',
+    dateModified: '2026-07-25T09:00:00+02:00',
     author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev/about' },
     publisher: {
         '@type': 'Organization',
@@ -149,7 +149,7 @@ export default function SeoGeoAutomatisierungPage() {
                 <div className="space-y-10 text-slate-300 leading-relaxed">
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">Warum manuelles Prüfen 2026 nicht mehr reicht</h2>
+                        <h2 className="text-2xl font-bold text-white mb-4">Warum reicht manuelles Prüfen 2026 nicht mehr aus?</h2>
                         <p>
                             Ein Website-Audit ist eine Momentaufnahme. Er zeigt dir Fehler und Chancen genau in dem Moment, in dem du ihn ausführst. Das Problem: Google aktualisiert seinen Algorithmus laufend, Konkurrenten veröffentlichen neue Inhalte, und KI-Modelle wie <a href="https://chatgpt.com" target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:text-emerald-300 underline underline-offset-2">ChatGPT</a> und <a href="https://claude.ai" target="_blank" rel="noopener noreferrer" className="text-violet-400 hover:text-violet-300 underline underline-offset-2">Claude</a> ändern ständig, welche Quellen sie zitieren. Ein Zustand der heute gut aussieht, kann in vier Wochen unbemerkt schlechter geworden sein.
                         </p>
@@ -159,7 +159,7 @@ export default function SeoGeoAutomatisierungPage() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">SEO Automatisierung: Google-Rankings die sich von selbst aktualisieren</h2>
+                        <h2 className="text-2xl font-bold text-white mb-4">Wie funktioniert SEO Automatisierung für Google-Rankings?</h2>
                         <p>
                             SEO Automatisierung trackt deine Google-Positionen für ausgewählte Keywords wöchentlich - automatisch, ohne dass du selbst nachsehen musst. Statt eines einmaligen SEO-Scores bekommst du einen Verlauf: welche Keywords steigen, welche fallen, und wo neue Chancen entstehen.
                         </p>
@@ -174,7 +174,7 @@ export default function SeoGeoAutomatisierungPage() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">GEO Automatisierung: KI-Sichtbarkeit bei ChatGPT und Claude tracken</h2>
+                        <h2 className="text-2xl font-bold text-white mb-4">Wie funktioniert GEO Automatisierung für KI-Sichtbarkeit?</h2>
                         <p>
                             GEO Automatisierung überträgt dasselbe Prinzip auf KI-Sichtbarkeit - also darauf, wie oft KI-Modelle eine Website als Quelle zitieren (der Fachbegriff <a href="https://arxiv.org/abs/2311.09735" target="_blank" rel="noopener noreferrer" className="text-violet-400 hover:text-violet-300 underline underline-offset-2">Generative Engine Optimization</a> stammt aus einer 2023er Forschungsarbeit von Princeton, Georgia Tech und dem Allen Institute for AI). Statt einmalig zu prüfen ob ChatGPT oder Claude deine Website kennen, wird das wöchentlich automatisch erneut getestet - mit denselben Prompts, damit die Ergebnisse über Zeit vergleichbar bleiben.
                         </p>
@@ -189,7 +189,7 @@ export default function SeoGeoAutomatisierungPage() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">SEO Automatisierung vs. GEO Automatisierung im Vergleich</h2>
+                        <h2 className="text-2xl font-bold text-white mb-4">Was ist der Unterschied zwischen SEO Automatisierung und GEO Automatisierung?</h2>
                         <div className="overflow-hidden rounded-2xl border border-white/[0.07]">
                             <table className="w-full text-sm">
                                 <thead>
