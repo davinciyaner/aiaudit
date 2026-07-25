@@ -67,6 +67,14 @@ const faqLd = {
         },
         {
             '@type': 'Question',
+            name: 'Was ist der Unterschied zwischen einem SEO-Tool und einem AI-Tracker?',
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Ein SEO-Tool wie SEO Automatisierung ist auf Google-Rankings ausgerichtet: Keyword-Positionen, Konkurrenzanalyse, Backlinks. Ein AI-Tracker wie GEO Automatisierung prüft stattdessen, ob KI-Modelle wie ChatGPT und Claude eine Website oder Marke in ihren Antworten erwähnen. Beide arbeiten wöchentlich automatisch, messen aber unterschiedliche Sichtbarkeit: Google-Rankings vs. Erwähnungen in KI-Antworten.',
+            },
+        },
+        {
+            '@type': 'Question',
             name: 'Was ist KI-Sichtbarkeit?',
             acceptedAnswer: {
                 '@type': 'Answer',
@@ -221,7 +229,7 @@ export default function SeoGeoAutomatisierungPage() {
                     <section>
                         <h2 className="text-2xl font-bold text-white mb-4">Brauchst du beides?</h2>
                         <p>
-                            SEO Automatisierung und GEO Automatisierung beantworten unterschiedliche Fragen. SEO Automatisierung zeigt, ob du bei Google gefunden wirst. GEO Automatisierung zeigt, ob du empfohlen wirst, wenn jemand ChatGPT oder Claude statt Google fragt. Beide Kanäle wachsen unabhängig voneinander - ein gutes Google-Ranking sagt nichts darüber aus, ob eine KI deine Website kennt, und umgekehrt.
+                            SEO Automatisierung und GEO Automatisierung beantworten unterschiedliche Fragen. SEO Automatisierung zeigt, ob du bei Google gefunden wirst. GEO Automatisierung zeigt, ob du empfohlen wirst, wenn jemand ChatGPT oder Claude statt Google fragt. Anders gesagt: SEO Automatisierung ist ein klassisches SEO-Tool für Google-Rankings, GEO Automatisierung ist ein AI-Tracker für KI-Sichtbarkeit. Beide Kanäle wachsen unabhängig voneinander - ein gutes Google-Ranking sagt nichts darüber aus, ob eine KI deine Website kennt, und umgekehrt.
                         </p>
                         <div className="bg-white/[0.03] border border-white/[0.07] rounded-2xl p-5 mt-5">
                             <p className="text-sm text-slate-300">

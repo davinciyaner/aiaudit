@@ -12,6 +12,37 @@ export const metadata = {
     },
 }
 
+const faqJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+        {
+            '@type': 'Question',
+            name: 'Was kostet ein GEO Audit bzw. GEO Automatisierung?',
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'GEO Automatisierung bei AuditAI startet ab 4,99 €/Monat für 1 Website und 10 Keywords mit wöchentlichem Claude-Tracking. Der Pro-Plan (9,99 €/Monat) ergänzt ChatGPT-Tracking für 3 Websites, der Expert-Plan (19,99 €/Monat) deckt bis zu 10 Websites ab. Alle Pläne bieten 14 Tage kostenlose Testphase.',
+            },
+        },
+        {
+            '@type': 'Question',
+            name: 'Was ist der Unterschied zwischen einem einmaligen GEO Audit und GEO Automatisierung?',
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Ein einmaliger GEO Audit (Teil des kostenlosen AuditAI Website-Audits) zeigt deinen GEO-Score zu einem Zeitpunkt. GEO Automatisierung prüft wöchentlich automatisch, ob ChatGPT und Claude deine Website erwähnen, und zeigt den Verlauf über Zeit statt einer Einzelmessung.',
+            },
+        },
+        {
+            '@type': 'Question',
+            name: 'Gibt es eine kostenlose Testphase für GEO Automatisierung?',
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Ja, alle GEO-Automatisierung-Pläne bieten 14 Tage kostenlos testen, danach automatische Verlängerung über PayPal, jederzeit kündbar.',
+            },
+        },
+    ],
+}
+
 const geoJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'SoftwareApplication',
@@ -34,6 +65,10 @@ export default function GeoPricingLayout({ children }) {
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(geoJsonLd) }}
+            />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
             />
             {children}
         </>

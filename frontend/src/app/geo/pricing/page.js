@@ -8,6 +8,21 @@ import toast, { Toaster } from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
 import Navbar from '../../components/Navbar'
 
+const FAQS = [
+    {
+        q: 'Was kostet ein GEO Audit bzw. GEO Automatisierung?',
+        a: 'GEO Automatisierung bei AuditAI startet ab 4,99 €/Monat für 1 Website und 10 Keywords mit wöchentlichem Claude-Tracking. Der Pro-Plan (9,99 €/Monat) ergänzt ChatGPT-Tracking für 3 Websites, der Expert-Plan (19,99 €/Monat) deckt bis zu 10 Websites ab. Alle Pläne bieten 14 Tage kostenlose Testphase.',
+    },
+    {
+        q: 'Was ist der Unterschied zwischen einem einmaligen GEO Audit und GEO Automatisierung?',
+        a: 'Ein einmaliger GEO Audit (Teil des kostenlosen AuditAI Website-Audits) zeigt deinen GEO-Score zu einem Zeitpunkt. GEO Automatisierung prüft wöchentlich automatisch, ob ChatGPT und Claude deine Website erwähnen, und zeigt den Verlauf über Zeit statt einer Einzelmessung.',
+    },
+    {
+        q: 'Gibt es eine kostenlose Testphase für GEO Automatisierung?',
+        a: 'Ja, alle GEO-Automatisierung-Pläne bieten 14 Tage kostenlos testen, danach automatische Verlängerung über PayPal, jederzeit kündbar.',
+    },
+]
+
 const PLANS = [
     {
         id: 'einsteiger',
@@ -264,6 +279,10 @@ export default function GeoPricingPage() {
                             </div>
                         </motion.div>
 
+                        <h2 className="text-xl sm:text-2xl font-bold text-white text-center mb-8">
+                            GEO Automatisierung Preise im Überblick
+                        </h2>
+
                         {loading ? (
                             <div className="flex justify-center py-20">
                                 <Loader2 className="w-8 h-8 text-violet-400 animate-spin" />
@@ -286,6 +305,21 @@ export default function GeoPricingPage() {
                             className="text-center text-sm text-slate-600 mt-10">
                             14 Tage kostenlos testen · nach dem Testzeitraum automatische Abbuchung · jederzeit kündbar · Bezahlung über PayPal
                         </motion.p>
+
+                        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+                            className="mt-20 max-w-2xl mx-auto">
+                            <h2 className="text-xl sm:text-2xl font-bold text-white text-center mb-8">
+                                Häufige Fragen zu GEO Automatisierung Preisen
+                            </h2>
+                            <div className="space-y-4">
+                                {FAQS.map((faq, i) => (
+                                    <div key={i} className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5">
+                                        <h3 className="font-semibold text-white mb-2 text-sm">{faq.q}</h3>
+                                        <p className="text-sm text-slate-400 leading-relaxed">{faq.a}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </motion.div>
                     </div>
                 </div>
             </div>

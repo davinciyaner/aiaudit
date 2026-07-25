@@ -8,6 +8,21 @@ import toast, { Toaster } from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
 import Navbar from '../../components/Navbar'
 
+const FAQS = [
+    {
+        q: 'Was kostet SEO Automatisierung?',
+        a: 'SEO Automatisierung bei AuditAI startet ab 19 €/Monat für 3 Websites und 50 Keywords mit wöchentlichem Ranking-Update. Der Pro-Plan (59 €/Monat) erweitert auf 10 Websites und 200 Keywords inkl. Content-Gap-Analyse, der Expert-Plan (149 €/Monat) deckt bis zu 20 Websites und 500 Keywords ab. Alle Pläne bieten 14 Tage kostenlose Testphase.',
+    },
+    {
+        q: 'Was ist der Unterschied zwischen einem einmaligen SEO-Audit und SEO Automatisierung?',
+        a: 'Ein einmaliger SEO-Audit (Teil des kostenlosen AuditAI Website-Audits) zeigt deinen SEO-Score zu einem Zeitpunkt. SEO Automatisierung trackt wöchentlich automatisch deine Google-Rankings, Keyword-Ideen, Konkurrenzanalyse und Backlink-Übersicht - als laufenden Verlauf statt Einzelmessung.',
+    },
+    {
+        q: 'Gibt es eine kostenlose Testphase für SEO Automatisierung?',
+        a: 'Ja, alle SEO-Automatisierung-Pläne bieten 14 Tage kostenlos testen, danach automatische Verlängerung über PayPal, jederzeit kündbar.',
+    },
+]
+
 const PLANS = [
     {
         id: 'einsteiger',
@@ -257,6 +272,10 @@ export default function SeoPricingPage() {
                             </div>
                         </motion.div>
 
+                        <h2 className="text-xl sm:text-2xl font-bold text-white text-center mb-8">
+                            SEO Automatisierung Preise im Überblick
+                        </h2>
+
                         {loading ? (
                             <div className="flex justify-center py-20">
                                 <Loader2 className="w-8 h-8 text-emerald-400 animate-spin" />
@@ -279,6 +298,21 @@ export default function SeoPricingPage() {
                             className="text-center text-sm text-slate-600 mt-10">
                             14 Tage kostenlos testen nach dem Testzeitraum automatische Abbuchung jederzeit kündbar Bezahlung über PayPal
                         </motion.p>
+
+                        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+                            className="mt-20 max-w-2xl mx-auto">
+                            <h2 className="text-xl sm:text-2xl font-bold text-white text-center mb-8">
+                                Häufige Fragen zu SEO Automatisierung Preisen
+                            </h2>
+                            <div className="space-y-4">
+                                {FAQS.map((faq, i) => (
+                                    <div key={i} className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5">
+                                        <h3 className="font-semibold text-white mb-2 text-sm">{faq.q}</h3>
+                                        <p className="text-sm text-slate-400 leading-relaxed">{faq.a}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </motion.div>
                     </div>
                 </div>
             </div>
