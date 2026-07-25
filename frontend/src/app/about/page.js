@@ -4,11 +4,11 @@ import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 
 export const metadata = {
-    title: 'Über mich – Finn Paustian, Gründer von AuditAI',
-    description: 'Finn Paustian hat AuditAI gebaut, um SEO- und GEO-Analyse zu automatisieren. Informatik-Studium, dutzende Fullstack-Projekte, ein Ein-Personen-Produkt.',
+    title: 'Über mich – Finn Paustian',
+    description: 'Finn Paustian hat AuditAI gebaut, um SEO- und GEO-Analyse zu automatisieren. Ausbildung zum Fachinformatiker, dutzende Fullstack-Projekte, ein Ein-Personen-Produkt.',
     alternates: { canonical: 'https://www.sitecheckai.dev/about' },
     openGraph: {
-        title: 'Über mich – Finn Paustian, Gründer von AuditAI',
+        title: 'Über mich – Finn Paustian',
         description: 'Warum ich AuditAI gebaut habe und wer dahintersteht.',
         url: 'https://www.sitecheckai.dev/about',
         type: 'profile',
@@ -20,12 +20,12 @@ const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'AboutPage',
     url: 'https://www.sitecheckai.dev/about',
-    name: 'Über mich – Finn Paustian, Gründer von AuditAI',
+    name: 'Über mich – Finn Paustian',
     mainEntity: {
         '@type': 'Person',
         name: 'Finn Paustian',
         jobTitle: 'Gründer & Entwickler',
-        description: 'Informatik-Absolvent und Fullstack-Entwickler. Hat AuditAI gebaut, um die zeitaufwändige manuelle SEO- und GEO-Analyse zu automatisieren.',
+        description: 'Auszubildener und Fullstack-Entwickler. Hat AuditAI gebaut, um die zeitaufwändige manuelle SEO- und GEO-Analyse zu automatisieren.',
         email: 'mailto:finnpaustian94@gmail.com',
         url: 'https://www.sitecheckai.dev/about',
         worksFor: {
@@ -37,7 +37,7 @@ const jsonLd = {
 }
 
 const FACTS = [
-    { icon: GraduationCap, label: 'Informatik studiert', color: '#7c3aed' },
+    { icon: GraduationCap, label: 'Ausbildung Fachinformatik für Anwendungsentwicklung', color: '#7c3aed' },
     { icon: Code2, label: 'Dutzende Fullstack-Websites gebaut', color: '#06b6d4' },
     { icon: Zap, label: 'AuditAI: Ein-Personen-Produkt', color: '#10b981' },
 ]
@@ -90,8 +90,8 @@ export default function AboutPage() {
                         das automatisiert.
                     </p>
                     <p>
-                        Ich habe Informatik studiert und in den letzten Jahren dutzende Fullstack-Websites programmiert.
-                        AuditAI ist dabei kein Studienprojekt, sondern ein laufendes Ein-Personen-Produkt - ich baue,
+                        Ich mache eine Ausbildung zum Fachinformatiker für Anwendungsentwicklung und habe in den letzten Jahren dutzende Fullstack-Websites programmiert.
+                        AuditAI ist Sideprojekt von mir - ich baue,
                         betreibe und warte es selbst.
                     </p>
 
