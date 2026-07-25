@@ -12,6 +12,30 @@ export const metadata = {
     },
 }
 
+const geoJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    '@id': 'https://www.sitecheckai.dev/geo/pricing#software',
+    name: 'AuditAI GEO Automatisierung',
+    url: 'https://www.sitecheckai.dev/geo/pricing',
+    applicationCategory: 'BusinessApplication',
+    operatingSystem: 'Web',
+    description: 'Wöchentliches Tracking, ob ChatGPT und Claude deine Domain bei relevanten Anfragen als Quelle nennen.',
+    offers: [
+        { '@type': 'Offer', name: 'Einsteiger', price: '4.99', priceCurrency: 'EUR', description: '1 Website, 10 Keywords, Claude-Tracking' },
+        { '@type': 'Offer', name: 'Pro', price: '9.99', priceCurrency: 'EUR', description: '3 Websites, 30 Keywords, Claude + ChatGPT Tracking' },
+        { '@type': 'Offer', name: 'Expert', price: '19.99', priceCurrency: 'EUR', description: '10 Websites, 100 Keywords, Claude + ChatGPT Tracking' },
+    ],
+}
+
 export default function GeoPricingLayout({ children }) {
-    return children
+    return (
+        <>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(geoJsonLd) }}
+            />
+            {children}
+        </>
+    )
 }

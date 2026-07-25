@@ -24,7 +24,7 @@ const jsonLd = {
     description: 'GEO (Generative Engine Optimization) erklärt: Wie du deine Website optimierst damit ChatGPT, Claude und Perplexity sie als Quelle zitieren.',
     image: 'https://www.sitecheckai.dev/blog/geo-optimierung-2026/opengraph-image',
     datePublished: '2026-06-10T09:00:00+02:00',
-    dateModified: '2026-06-10T09:00:00+02:00',
+    dateModified: '2026-07-25T09:00:00+02:00',
     author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev/about' },
     publisher: {
         '@type': 'Organization',
@@ -193,7 +193,7 @@ export default function GeoArtikelPage() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">Warum GEO 2026 entscheidend ist</h2>
+                        <h2 className="text-2xl font-bold text-white mb-4">Warum ist GEO 2026 entscheidend?</h2>
                         <p>
                             ChatGPT hat laut <a href="https://techcrunch.com/2026/02/27/chatgpt-reaches-900m-weekly-active-users" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline underline-offset-2">OpenAI-Angaben über 900 Millionen wöchentliche Nutzer</a> (Stand Februar 2026). Perplexity beantwortet täglich Millionen von Suchanfragen mit zitierten Quellen. Claude wird zunehmend in Business-Workflows eingesetzt. Immer mehr Menschen fragen nicht mehr Google - sie fragen eine KI.
                         </p>
@@ -209,7 +209,7 @@ export default function GeoArtikelPage() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">GEO vs. SEO: Die wichtigsten Unterschiede</h2>
+                        <h2 className="text-2xl font-bold text-white mb-4">GEO vs. SEO: Was ist der Unterschied?</h2>
                         <div className="overflow-hidden rounded-2xl border border-white/[0.07]">
                             <table className="w-full text-sm">
                                 <thead>
@@ -239,7 +239,7 @@ export default function GeoArtikelPage() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-2">Die 6 wichtigsten GEO-Signale</h2>
+                        <h2 className="text-2xl font-bold text-white mb-2">Was sind die 6 wichtigsten GEO-Signale?</h2>
                         <p className="text-slate-400 mb-6">AuditAI prüft insgesamt 19 GEO-Signale. Das sind die sechs mit dem größten Einfluss:</p>
                         <figure className="mb-6">
                             <Image
@@ -300,7 +300,7 @@ export default function GeoArtikelPage() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">GEO-Checkliste: 10 Quick-Wins</h2>
+                        <h2 className="text-2xl font-bold text-white mb-4">Welche 10 GEO-Quick-Wins solltest du zuerst umsetzen?</h2>
                         <div className="space-y-2">
                             {[
                                 ['llms.txt erstellen', '/llms.txt mit klarer Produktbeschreibung anlegen'],

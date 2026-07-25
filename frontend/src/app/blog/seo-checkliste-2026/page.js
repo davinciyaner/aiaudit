@@ -5,12 +5,12 @@ import Footer from '../../components/Footer'
 
 export const metadata = {
     title: 'SEO-Checkliste 2026: In 15 Minuten alle Fehler selbst finden',
-    description: 'Die komplette SEO-Checkliste 2026 zum Abhaken: 6 Phasen, 15 Minuten, alle wichtigen SEO- und GEO-Signale. Selbst prüfen oder automatisch mit AuditAI checken.',
+    description: 'Die komplette SEO-Checkliste 2026 in fester Reihenfolge: 6 Phasen, 15 Minuten, alle wichtigen SEO- und GEO-Signale. Selbst prüfen oder automatisch mit AuditAI checken.',
     keywords: 'seo checkliste 2026, seo checkliste, seo fehler checkliste, seo fehler finden, technische seo checkliste, seo test kostenlos',
     alternates: { canonical: 'https://www.sitecheckai.dev/blog/seo-checkliste-2026' },
     openGraph: {
         title: 'SEO-Checkliste 2026: In 15 Minuten alle Fehler selbst finden',
-        description: '6 Phasen, 15 Minuten, alle wichtigen SEO- und GEO-Signale zum Abhaken.',
+        description: '6 Phasen, 15 Minuten, alle wichtigen SEO- und GEO-Signale in fester Reihenfolge.',
         url: 'https://www.sitecheckai.dev/blog/seo-checkliste-2026',
         type: 'article',
         locale: 'de_DE',
@@ -21,10 +21,10 @@ const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: 'SEO-Checkliste 2026: In 15 Minuten alle Fehler selbst finden',
-    description: 'Die komplette SEO-Checkliste 2026 zum Abhaken: 6 Phasen, 15 Minuten, alle wichtigen SEO- und GEO-Signale.',
+    description: 'Die komplette SEO-Checkliste 2026 in fester Reihenfolge: 6 Phasen, 15 Minuten, alle wichtigen SEO- und GEO-Signale.',
     image: 'https://www.sitecheckai.dev/blog/seo-checkliste-2026/opengraph-image',
     datePublished: '2026-07-15T09:00:00+02:00',
-    dateModified: '2026-07-15T09:00:00+02:00',
+    dateModified: '2026-07-25T09:00:00+02:00',
     author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev/about' },
     publisher: {
         '@type': 'Organization',
@@ -61,7 +61,7 @@ const faqLd = {
             name: 'Was ist der Unterschied zwischen dieser Checkliste und den 10 häufigsten SEO-Fehlern?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'Der Artikel zu den 10 häufigsten SEO-Fehlern erklärt, warum bestimmte Probleme Rankings kosten und wie du sie behebst. Diese Checkliste ist der praktische Ablauf dazu - eine Reihenfolge zum Abhaken, mit der du in 15 Minuten selbst herausfindest, welche dieser Fehler auf deiner eigenen Seite vorkommen.',
+                text: 'Der Artikel zu den 10 häufigsten SEO-Fehlern erklärt, warum bestimmte Probleme Rankings kosten und wie du sie behebst. Diese Checkliste ist der praktische Ablauf dazu - eine feste Reihenfolge, mit der du in 15 Minuten selbst herausfindest, welche dieser Fehler auf deiner eigenen Seite vorkommen.',
             },
         },
         {
@@ -181,7 +181,7 @@ export default function SeoChecklistePage() {
                         SEO-Checkliste 2026: In 15 Minuten alle Fehler selbst finden
                     </h1>
                     <p className="text-lg text-slate-400 leading-relaxed">
-                        Keine Erklärungen, kein Drumherum - nur die Reihenfolge, in der du deine eigene Website in 15 Minuten selbst durchprüfst. Sechs Phasen, 24 Punkte zum Abhaken, inklusive der GEO-Signale die klassische Checklisten meistens vergessen.
+                        Keine Erklärungen, kein Drumherum - nur die Reihenfolge, in der du deine eigene Website in 15 Minuten selbst durchprüfst. Sechs Phasen, 24 Punkte, inklusive der GEO-Signale die klassische Checklisten meistens vergessen.
                     </p>
                     <div className="mt-5 flex items-center gap-2 text-xs text-slate-600">
                         <Link href="/about" className="flex items-center gap-2 hover:text-slate-300 transition-colors">
@@ -200,7 +200,7 @@ export default function SeoChecklistePage() {
                     <section>
                         <h2 className="text-2xl font-bold text-white mb-4">Warum eine Checkliste statt einer Erklärung?</h2>
                         <p>
-                            In unserem Artikel über die <Link href="/blog/seo-test-haeufige-fehler" className="text-violet-400 hover:text-violet-300 underline underline-offset-2">10 häufigsten SEO-Fehler</Link> erklären wir, warum einzelne Probleme Rankings kosten. Diese Checkliste geht den umgekehrten Weg: keine Theorie, sondern eine feste Reihenfolge zum Abhaken - so wie wir sie selbst vor jedem größeren Deployment durchgehen.
+                            In unserem Artikel über die <Link href="/blog/seo-test-haeufige-fehler" className="text-violet-400 hover:text-violet-300 underline underline-offset-2">10 häufigsten SEO-Fehler</Link> erklären wir, warum einzelne Probleme Rankings kosten. Diese Checkliste geht den umgekehrten Weg: keine Theorie, sondern eine feste Reihenfolge - so wie wir sie selbst vor jedem größeren Deployment durchgehen.
                         </p>
                         <p className="mt-4">
                             Die sechs Phasen sind bewusst nach Aufwand sortiert: Was am schnellsten geht, kommt zuerst. Wenn du nur 5 Minuten hast, mach zumindest Phase 1 und 2 - das sind die Punkte mit dem größten Hebel pro investierter Minute.
