@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
@@ -23,7 +24,7 @@ const jsonLd = {
     description: 'SEO Automatisierung und GEO Automatisierung erklärt: Wie du Google-Rankings und KI-Sichtbarkeit bei ChatGPT & Claude wöchentlich automatisch trackst.',
     image: 'https://www.sitecheckai.dev/blog/seo-geo-automatisierung/opengraph-image',
     datePublished: '2026-07-05T09:00:00+02:00',
-    dateModified: '2026-07-25T09:00:00+02:00',
+    dateModified: '2026-07-26T09:00:00+02:00',
     author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev/about' },
     publisher: {
         '@type': 'Organization',
@@ -42,6 +43,16 @@ const jsonLd = {
         { '@type': 'Thing', name: 'ChatGPT', url: 'https://chat.openai.com' },
         { '@type': 'Thing', name: 'Claude', url: 'https://claude.ai' },
         { '@type': 'Organization', name: 'Google Search Console' },
+    ],
+}
+
+const breadcrumbLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'AuditAI', item: 'https://www.sitecheckai.dev' },
+        { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.sitecheckai.dev/blog' },
+        { '@type': 'ListItem', position: 3, name: 'SEO & GEO Automatisierung', item: 'https://www.sitecheckai.dev/blog/seo-geo-automatisierung' },
     ],
 }
 
@@ -111,6 +122,7 @@ export default function SeoGeoAutomatisierungPage() {
         <main className="bg-[#05080f] min-h-screen">
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
             <Navbar />
 
             <article className="max-w-3xl mx-auto px-5 sm:px-8 pt-32 pb-24">
@@ -186,6 +198,18 @@ export default function SeoGeoAutomatisierungPage() {
                         <p>
                             GEO Automatisierung überträgt dasselbe Prinzip auf KI-Sichtbarkeit - also darauf, wie oft KI-Modelle eine Website als Quelle zitieren (der Fachbegriff <a href="https://arxiv.org/abs/2311.09735" target="_blank" rel="noopener noreferrer" className="text-violet-400 hover:text-violet-300 underline underline-offset-2">Generative Engine Optimization</a> stammt aus einer 2023er Forschungsarbeit von Princeton, Georgia Tech und dem Allen Institute for AI). Statt einmalig zu prüfen ob ChatGPT oder Claude deine Website kennen, wird das wöchentlich automatisch erneut getestet - mit denselben Prompts, damit die Ergebnisse über Zeit vergleichbar bleiben.
                         </p>
+                        <figure className="mt-6">
+                            <Image
+                                src="/blog/auditai-geo-report.png"
+                                alt="AuditAI GEO-Report zeigt geprüfte KI-Sichtbarkeits-Signale wie llms.txt, Organization-Schema, KI-Crawler-Erlaubnis und externe Quellenverweise"
+                                width={960}
+                                height={411}
+                                className="w-full h-auto rounded-2xl border border-white/[0.07]"
+                            />
+                            <figcaption className="text-xs text-slate-600 mt-2">
+                                So sieht der einmalige GEO-Signal-Check aus, auf dem GEO Automatisierung aufbaut. Der Unterschied: Bei GEO Automatisierung läuft genau diese Prüfung wöchentlich automatisch, statt nur einmal.
+                            </figcaption>
+                        </figure>
                         <div className="grid sm:grid-cols-2 gap-4 mt-6">
                             {GEO_FEATURES.map(f => (
                                 <div key={f.title} className="bg-violet-500/[0.04] border border-violet-500/15 rounded-2xl p-5">

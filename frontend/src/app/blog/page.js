@@ -8,7 +8,52 @@ export const metadata = {
     alternates: { canonical: 'https://www.sitecheckai.dev/blog' },
 }
 
+const breadcrumbLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'AuditAI', item: 'https://www.sitecheckai.dev' },
+        { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.sitecheckai.dev/blog' },
+    ],
+}
+
 const ARTICLES = [
+    {
+        slug: 'core-web-vitals-testen',
+        title: 'Core Web Vitals 2026: Verstehen und kostenlos testen',
+        description: 'LCP, INP und CLS erklärt - mit den offiziellen Google-Schwellenwerten. Plus: wie du sie in unter 2 Minuten kostenlos testest.',
+        category: 'Performance',
+        categoryColor: '#f59e0b',
+        date: '26. Juli 2026',
+        readTime: '8 min',
+    },
+    {
+        slug: 'seo-test-vs-agentur',
+        title: 'SEO-Test selbst machen oder Agentur beauftragen? Der ehrliche Kostenvergleich',
+        description: 'SEO-Audit selbst durchführen vs. SEO-Agentur beauftragen: Kosten, Leistungsumfang und für wen sich was lohnt - ohne Verkaufsrhetorik.',
+        category: 'SEO',
+        categoryColor: '#7c3aed',
+        date: '26. Juli 2026',
+        readTime: '8 min',
+    },
+    {
+        slug: 'llms-txt-erklaert',
+        title: 'llms.txt erklärt: Was es ist und wie du es richtig einrichtest',
+        description: 'Die robots.txt für KI-Modelle: Herkunft, Aufbau, Unterschied zu llms-full.txt und eine Schritt-für-Schritt-Anleitung zum Erstellen.',
+        category: 'GEO',
+        categoryColor: '#06b6d4',
+        date: '26. Juli 2026',
+        readTime: '7 min',
+    },
+    {
+        slug: 'schema-markup-ki-zitate',
+        title: 'Schema Markup für KI-Zitate: So wirst du für ChatGPT & Co. zitierfähig',
+        description: 'Die wichtigsten Schema-Typen für KI-Zitierbarkeit, kostenlose Test-Tools und der häufigste Fehler, der Rich Results kostet.',
+        category: 'GEO',
+        categoryColor: '#06b6d4',
+        date: '26. Juli 2026',
+        readTime: '7 min',
+    },
     {
         slug: 'seo-tracking-manuell-vs-automatisiert',
         title: 'Manuelles SEO-Tracking vs. automatisiert: Was lohnt sich wirklich?',
@@ -21,16 +66,16 @@ const ARTICLES = [
     {
         slug: 'beste-seo-check-tools-2026',
         title: 'Die besten kostenlosen SEO-Check-Tools 2026 im Vergleich',
-        description: '7 SEO-Check-Tools im Vergleich: kostenlose Version, Funktionsumfang, Limits und wer als einziges auch KI-Sichtbarkeit (GEO) prüft.',
+        description: '13 SEO-Check-Tools im Vergleich inkl. G2-/Capterra-/OMR-Bewertungen: kostenlose Version, Funktionsumfang, Limits und wer als einziges auch KI-Sichtbarkeit (GEO) prüft.',
         category: 'Tools',
         categoryColor: '#f59e0b',
         date: '15. Juli 2026',
-        readTime: '10 min',
+        readTime: '13 min',
     },
     {
         slug: 'seo-checkliste-2026',
         title: 'SEO-Checkliste 2026: In 15 Minuten alle Fehler selbst finden',
-        description: 'Die komplette SEO-Checkliste 2026 zum Abhaken: 6 Phasen, 15 Minuten, alle wichtigen SEO- und GEO-Signale.',
+        description: 'Die komplette SEO-Checkliste 2026 in fester Reihenfolge: 6 Phasen, 15 Minuten, alle wichtigen SEO- und GEO-Signale.',
         category: 'SEO',
         categoryColor: '#7c3aed',
         date: '15. Juli 2026',
@@ -68,6 +113,7 @@ const ARTICLES = [
 export default function BlogPage() {
     return (
         <main className="bg-[#05080f] min-h-screen">
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
             <Navbar />
             <div className="max-w-4xl mx-auto px-5 sm:px-8 pt-32 pb-24">
                 <div className="mb-12">

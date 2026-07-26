@@ -12,6 +12,7 @@ import Pricing from './components/Pricing'
 import Footer from './components/Footer'
 import LandingFeedback from './components/LandingFeedback'
 import FAQ from './components/FAQ'
+import { FAQS } from './components/faqData'
 
 export const metadata = {
     title: 'SEO Automatisierung & KI-Sichtbarkeit prüfen – Audit in 60s | AuditAI',
@@ -37,40 +38,11 @@ export const metadata = {
 const faqLd = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
-    mainEntity: [
-        {
-            '@type': 'Question',
-            name: 'Was prüft AuditAI genau?',
-            acceptedAnswer: {
-                '@type': 'Answer',
-                text: 'AuditAI analysiert deine Website in drei Bereichen: SEO (Title, Meta, Headings, Links), Performance (TTFB, FCP, Ladezeit) und GEO/KI-Sichtbarkeit (llms.txt, Schema.org, FAQ-Schema). Dazu generiert Claude AI einen vollständigen Bericht mit konkreten Fixes.',
-            },
-        },
-        {
-            '@type': 'Question',
-            name: 'Wie lange dauert ein Audit?',
-            acceptedAnswer: {
-                '@type': 'Answer',
-                text: 'Ein vollständiger Audit dauert in der Regel unter 60 Sekunden. Der KI-Report wird parallel zur technischen Analyse generiert.',
-            },
-        },
-        {
-            '@type': 'Question',
-            name: 'Was kostet AuditAI?',
-            acceptedAnswer: {
-                '@type': 'Answer',
-                text: 'Der Free-Plan ist kostenlos und enthält 1 Audit pro Monat mit SEO-Score, GEO-Sichtbarkeit und Performance-Metriken. Der KI-generierte Bericht mit konkreten Fixes ist ab dem Pro-Plan enthalten (€29/Monat, 10 Audits). Der Agency-Plan kostet €99/Monat (unbegrenzte Audits). Jederzeit kündbar.',
-            },
-        },
-        {
-            '@type': 'Question',
-            name: 'Was ist GEO und warum ist es wichtig?',
-            acceptedAnswer: {
-                '@type': 'Answer',
-                text: 'GEO steht für Generative Engine Optimization – die Sichtbarkeit deiner Website für KI-Modelle wie ChatGPT, Claude oder Perplexity. AuditAI prüft llms.txt, strukturierte Daten, FAQ-Schema und weitere Signale, die bestimmen ob KI-Modelle deine Website als Quelle zitieren.',
-            },
-        },
-    ],
+    mainEntity: FAQS.map(f => ({
+        '@type': 'Question',
+        name: f.q,
+        acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
 }
 
 export default function LandingPage() {

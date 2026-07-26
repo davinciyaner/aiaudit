@@ -26,7 +26,7 @@ const jsonLd = {
         name: 'Finn Paustian',
         jobTitle: 'Gründer & Entwickler',
         description: 'Auszubildener und Fullstack-Entwickler. Hat AuditAI gebaut, um die zeitaufwändige manuelle SEO- und GEO-Analyse zu automatisieren.',
-        email: 'mailto:finnpaustian94@gmail.com',
+        email: 'mailto:sitecheckai@gmail.com',
         url: 'https://www.sitecheckai.dev/about',
         worksFor: {
             '@type': 'Organization',
@@ -98,7 +98,7 @@ export default function AboutPage() {
                     <h2 className="text-xl font-bold text-white mb-3 mt-10">Kontakt</h2>
                     <p>
                         Fragen, Feedback oder einfach nur Hallo sagen:{' '}
-                        <a href="mailto:finnpaustian94@gmail.com" className="text-violet-400 hover:text-violet-300 inline-flex items-center gap-1.5">
+                        <a href="mailto:sitecheckai@gmail.com" className="text-violet-400 hover:text-violet-300 inline-flex items-center gap-1.5">
                             <Mail className="w-3.5 h-3.5" />
                             sitecheckai@gmail.com
                         </a>

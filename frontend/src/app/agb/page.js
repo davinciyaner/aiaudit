@@ -5,6 +5,7 @@ export const metadata = {
     title: 'Allgemeine Geschäftsbedingungen – AuditAI',
     description: 'AGB für die Nutzung von AuditAI.',
     robots: { index: false },
+    alternates: { canonical: 'https://www.sitecheckai.dev/agb' },
 }
 
 function Section({ title, children }) {
@@ -56,7 +57,7 @@ export default function AgbPage() {
                         <p className="bg-white/2 border border-white/5 rounded-xl p-4">
                             Finn Paustian<br />
                             Am Rund 6, 23566 Lübeck<br />
-                            E-Mail: <a href="mailto:finnpaustian94@gmail.com" className="text-violet-400 hover:text-violet-300">finnpaustian94@gmail.com</a><br />
+                            E-Mail: <a href="mailto:sitecheckai@gmail.com" className="text-violet-400 hover:text-violet-300">sitecheckai@gmail.com</a><br />
                             (nachfolgend „Anbieter")
                         </p>
                         <p>

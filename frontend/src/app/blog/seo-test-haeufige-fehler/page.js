@@ -24,7 +24,7 @@ const jsonLd = {
     description: 'Diese 10 SEO-Fehler machen die meisten Websites - und keiner merkt es.',
     image: 'https://www.sitecheckai.dev/blog/seo-test-haeufige-fehler/opengraph-image',
     datePublished: '2026-06-10T09:00:00+02:00',
-    dateModified: '2026-07-25T09:00:00+02:00',
+    dateModified: '2026-07-26T09:00:00+02:00',
     author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev/about' },
     publisher: {
         '@type': 'Organization',
@@ -34,6 +34,16 @@ const jsonLd = {
     },
     url: 'https://www.sitecheckai.dev/blog/seo-test-haeufige-fehler',
     mainEntityOfPage: 'https://www.sitecheckai.dev/blog/seo-test-haeufige-fehler',
+}
+
+const breadcrumbLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'AuditAI', item: 'https://www.sitecheckai.dev' },
+        { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.sitecheckai.dev/blog' },
+        { '@type': 'ListItem', position: 3, name: 'SEO-Test: Die 10 häufigsten Fehler', item: 'https://www.sitecheckai.dev/blog/seo-test-haeufige-fehler' },
+    ],
 }
 
 const faqLd = {
@@ -184,6 +194,7 @@ export default function SeoTestArtikelPage() {
         <main className="bg-[#05080f] min-h-screen">
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
             <Navbar />
 
             <article className="max-w-3xl mx-auto px-5 sm:px-8 pt-32 pb-24">
@@ -264,7 +275,65 @@ export default function SeoTestArtikelPage() {
                             </figcaption>
                         </figure>
                         <div className="space-y-5">
-                            {ERRORS.map((e) => (
+                            {ERRORS.slice(0, 6).map((e) => (
+                                <div key={e.number} className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
+                                    <div className="flex items-start gap-4">
+                                        <span className="text-[11px] font-bold font-mono shrink-0 mt-0.5 text-slate-600">{e.number}</span>
+                                        <div className="flex-1">
+                                            <div className="flex flex-wrap items-center gap-2 mb-2">
+                                                <h3 className="font-semibold text-white">{e.title}</h3>
+                                                <span
+                                                    className="text-[10px] font-semibold px-2 py-0.5 rounded-full"
+                                                    style={{ background: e.severityColor + '18', color: e.severityColor }}
+                                                >
+                                                    {e.severity}
+                                                </span>
+                                            </div>
+                                            <p className="text-xs text-slate-500 mb-3 italic">{e.impact}</p>
+                                            <p className="text-sm text-slate-400 leading-relaxed mb-3">{e.desc}</p>
+                                            {e.stat && (
+                                                <p className="text-xs text-slate-500 bg-white/[0.03] rounded-lg px-3 py-2 mb-3 border-l-2 border-slate-700">
+                                                    {e.stat}
+                                                    {e.source && (
+                                                        <>
+                                                            {' '}
+                                                            <a
+                                                                href={e.source.url}
+                                                                target="_blank"
+                                                                rel="noopener noreferrer"
+                                                                className="text-violet-400 hover:text-violet-300 underline underline-offset-2"
+                                                            >
+                                                                Quelle: {e.source.label} ↗
+                                                            </a>
+                                                        </>
+                                                    )}
+                                                </p>
+                                            )}
+                                            <div className="bg-white/[0.03] border border-white/[0.05] rounded-xl p-3">
+                                                <span className="text-[11px] font-semibold text-emerald-400 uppercase tracking-wider">Fix: </span>
+                                                <span className="text-xs text-slate-400 leading-relaxed">{e.fix}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+
+                        <figure className="my-6">
+                            <Image
+                                src="/blog/auditai-seo-checks.png"
+                                alt="AuditAI Check-Grid zeigt fehlgeschlagene Checks für Title-Tag (69 Zeichen) und Meta-Description (169 Zeichen) sowie bestandene Checks für H1-Tag, Alt-Texte, Canonical und Structured Data"
+                                width={910}
+                                height={103}
+                                className="w-full h-auto rounded-2xl border border-white/[0.07]"
+                            />
+                            <figcaption className="text-xs text-slate-600 mt-2">
+                                Derselbe Report, andere Website: Title-Tag (69 Zeichen, zu lang) und Meta-Description (169 Zeichen, zu lang) sind hier direkt als Fehler markiert - H1-Tag, Alt-Texte, Canonical und Structured Data waren in diesem Beispiel bereits sauber gesetzt.
+                            </figcaption>
+                        </figure>
+
+                        <div className="space-y-5">
+                            {ERRORS.slice(6).map((e) => (
                                 <div key={e.number} className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
                                     <div className="flex items-start gap-4">
                                         <span className="text-[11px] font-bold font-mono shrink-0 mt-0.5 text-slate-600">{e.number}</span>
@@ -361,6 +430,15 @@ export default function SeoTestArtikelPage() {
                     <p className="text-slate-400 text-sm mb-6 max-w-md mx-auto leading-relaxed">
                         AuditAI prüft alle 14 SEO-Checks in unter 60 Sekunden - inklusive der 10 Fehler aus diesem Artikel. Start ohne Registrierung, für den vollständigen Report mit allen Scores meldest du dich kostenlos an.
                     </p>
+                    <figure className="max-w-md mx-auto mb-6">
+                        <Image
+                            src="/blog/auditai-score-overview.png"
+                            alt="AuditAI Score-Übersicht mit Overall-Score 90, SEO-Score 78, Performance-Score 100 und GEO-Score 96"
+                            width={960}
+                            height={194}
+                            className="w-full h-auto rounded-xl border border-white/[0.07]"
+                        />
+                    </figure>
                     <Link
                         href="/dashboard"
                         className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-violet-500/20"
@@ -376,7 +454,7 @@ export default function SeoTestArtikelPage() {
                         <div>
                             <span className="text-xs font-semibold text-violet-400 uppercase tracking-wider mb-1 block">Weiterlesen</span>
                             <h3 className="text-base sm:text-lg font-bold text-white mb-2">
-                                Die SEO-Checkliste 2026 zum Abhaken
+                                Die SEO-Checkliste 2026 in 15 Minuten
                             </h3>
                             <p className="text-slate-400 text-sm leading-relaxed max-w-md">
                                 Diese 10 Fehler in eine feste Prüfreihenfolge gebracht: 6 Phasen, 24 Punkte, 15 Minuten - inklusive GEO-Signalen für KI-Sichtbarkeit.

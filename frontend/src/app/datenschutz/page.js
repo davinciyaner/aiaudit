@@ -5,6 +5,7 @@ export const metadata = {
     title: 'Datenschutzerklärung',
     description: 'Datenschutzerklärung für AuditAI gemäß DSGVO.',
     robots: { index: false },
+    alternates: { canonical: 'https://www.sitecheckai.dev/datenschutz' },
 }
 
 function Section({ title, children }) {
@@ -50,7 +51,7 @@ export default function DatenschutzPage() {
                             Am Rund 6<br />
                             23566 Lübeck<br />
                             Deutschland<br />
-                            E-Mail: <a href="mailto:finnpaustian94@gmail.com" className="text-violet-400 hover:text-violet-300">finnpaustian94@gmail.com</a>
+                            E-Mail: <a href="mailto:sitecheckai@gmail.com" className="text-violet-400 hover:text-violet-300">sitecheckai@gmail.com</a>
                         </p>
                     </Section>
 
@@ -373,7 +374,7 @@ export default function DatenschutzPage() {
                             <li><strong className="text-slate-300">Beschwerde</strong>: Du hast das Recht, Beschwerde bei einer Datenschutzaufsichtsbehörde einzulegen. Zuständig ist das Unabhängige Landeszentrum für Datenschutz Schleswig-Holstein (ULD), Holstenstraße 98, 24103 Kiel, <a href="https://www.datenschutzzentrum.de" className="text-violet-400 hover:text-violet-300" target="_blank" rel="noopener noreferrer">datenschutzzentrum.de</a>.</li>
                         </ul>
                         <p>
-                            Zur Ausübung dieser Rechte wende dich per E-Mail an: <a href="mailto:finnpaustian94@gmail.com" className="text-violet-400 hover:text-violet-300">finnpaustian94@gmail.com</a>. Anfragen werden innerhalb von 30 Tagen beantwortet.
+                            Zur Ausübung dieser Rechte wende dich per E-Mail an: <a href="mailto:sitecheckai@gmail.com" className="text-violet-400 hover:text-violet-300">sitecheckai@gmail.com</a>. Anfragen werden innerhalb von 30 Tagen beantwortet.
                         </p>
                     </Section>
 
