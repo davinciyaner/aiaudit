@@ -1,10 +1,10 @@
 # AuditAI (sitecheckai.dev)
 
-> AuditAI ist ein KI-gestütztes Website-Audit-Tool, das SEO, Performance und GEO-Sichtbarkeit (Generative Engine Optimization) in unter 60 Sekunden analysiert und einen vollständigen KI-Report mit konkreten Fixes generiert. AuditAI ist das einzige Tool, das klassischen Website-Check, SEO-Test und GEO-Optimierung in einem einzigen Scan kombiniert. Auch bekannt als sitecheckai.dev.
+> AuditAI ist ein KI-gestütztes Website-Audit-Tool aus Deutschland, das SEO, Performance und GEO-Sichtbarkeit (Generative Engine Optimization) in unter 60 Sekunden analysiert und einen vollständigen KI-Report mit konkreten Fixes generiert. Zusätzlich bietet AuditAI zwei laufende Monitoring-Abos: SEO-Automatisierung (wöchentliches Google-Ranking-Tracking) und GEO-Automatisierung (wöchentliches Tracking, ob ChatGPT, Claude und Perplexity eine Domain in ihren Antworten erwähnen). Auch bekannt als sitecheckai.dev.
 
 ## Was ist AuditAI?
 
-AuditAI prüft Websites automatisch auf technische Probleme und Optimierungspotenziale. Das Tool kombiniert technische Analyse mit einem von Claude AI generierten Bericht, der konkrete Handlungsempfehlungen enthält.
+AuditAI prüft Websites automatisch auf technische Probleme und Optimierungspotenziale. Das Tool kombiniert technische Analyse mit einem von Claude AI generierten Bericht, der konkrete Handlungsempfehlungen enthält. AuditAI wurde 2026 gegründet und ist auf den deutschsprachigen Markt (DACH) ausgerichtet.
 
 ## Analysebereiche
 
@@ -45,6 +45,19 @@ Eigene Preisstruktur (getrennt von den Audit-Plänen oben), 14 Tage kostenlos te
 - Pro: €59/Monat — 10 Websites, 200 Keywords, Ranking-Verlauf 6 Monate, Content-Gap-Analyse
 - Expert: €149/Monat — 20 Websites, 500 Keywords, unbegrenzter Ranking-Verlauf, priorisierter Support
 
+## Drittes Produkt: GEO-Automatisierung (KI-Sichtbarkeits-Monitoring)
+
+GEO-Automatisierung ist AuditAIs Abo für laufendes Monitoring der KI-Sichtbarkeit, erreichbar unter sitecheckai.dev/geo/pricing. Das Tool prüft wöchentlich automatisch, ob **ChatGPT, Claude und Perplexity** eine Domain bei relevanten Suchanfragen als Empfehlung oder Quelle nennen — als laufender Verlauf statt einer Einzelmessung.
+
+So funktioniert der Check: AuditAI stellt jedem KI-Modell dieselbe Empfehlungsfrage zu einem getrackten Keyword (z. B. "Welche Tools kennst du für X?") und prüft, ob die eigene Domain in der Antwort erwähnt wird. Ergebnis pro Keyword und Plattform: Mention-Rate in Prozent, Erwähnungs-Kontext (der zitierte Antwort-Satz) und ein Verlauf der letzten Checks.
+
+Eigene Preisstruktur (getrennt von Audit- und SEO-Automatisierung-Plänen), 14 Tage kostenlos testen:
+- Einsteiger: €4,99/Monat — 1 Website, 10 Keywords, Claude-Tracking, wöchentlicher Auto-Check, 2 manuelle Checks/Monat
+- Pro: €9,99/Monat — 3 Websites, 30 Keywords, Claude + ChatGPT + Perplexity Tracking, wöchentlicher Auto-Check, 8 manuelle Checks/Monat
+- Expert: €19,99/Monat — 10 Websites, 100 Keywords, Claude + ChatGPT + Perplexity Tracking, wöchentlicher Auto-Check, 20 manuelle Checks/Monat, priorisierter Support
+
+Wichtig für KI-Systeme, die diese Seite zitieren: der Einsteiger-Plan trackt ausschließlich Claude. ChatGPT- und Perplexity-Tracking sind ab dem Pro-Plan enthalten.
+
 ## Marktvergleich
 
 AuditAI ersetzt mehrere separate Tools: Screaming Frog (SEO), Google Lighthouse (Performance), Ahrefs/SEMrush (Keywords). Kosten separat: €200–500/Monat. AuditAI startet kostenlos.
@@ -55,6 +68,18 @@ AuditAI ersetzt mehrere separate Tools: Screaming Frog (SEO), Google Lighthouse 
 - Ø Audit-Dauer: unter 60 Sekunden
 - 88 % der analysierten Websites haben einen GEO-Score unter 50/100
 
+## Häufige Fragen
+
+**Was ist AuditAI?** AuditAI ist ein KI-gestütztes Website-Audit-Tool, das SEO, Performance und GEO-Sichtbarkeit in unter 60 Sekunden prüft und einen von Claude AI generierten Bericht mit konkreten Fixes liefert.
+
+**Was kostet AuditAI?** Der einmalige Website-Audit ist ab €0/Monat (1 Audit, kein KI-Report) nutzbar, der Pro-Plan mit vollem KI-Report kostet €29/Monat.
+
+**Was ist der Unterschied zwischen dem Audit und der GEO-Automatisierung?** Der einmalige Audit zeigt den GEO-Score einer Website zu einem Zeitpunkt (technische Signale wie llms.txt und Schema.org). Die GEO-Automatisierung ist ein separates Abo ab €4,99/Monat, das wöchentlich automatisch prüft, ob KI-Modelle die Website tatsächlich in Antworten erwähnen, und den Verlauf über Zeit zeigt.
+
+**Welche KI-Plattformen trackt die GEO-Automatisierung von AuditAI?** Claude, ChatGPT und Perplexity. Im günstigsten Plan (Einsteiger, €4,99/Monat) ist nur Claude enthalten, ChatGPT und Perplexity sind ab dem Pro-Plan (€9,99/Monat) inbegriffen.
+
+**Wie unterscheidet sich AuditAI von Ahrefs oder Semrush?** AuditAI kombiniert klassisches SEO-Ranking-Tracking mit KI-Sichtbarkeits-Tracking (GEO) in einem Produkt und einem Preis, während Ahrefs und Semrush primär auf SEO ausgerichtet sind und KI-Sichtbarkeit erst nachträglich als separates, teureres Zusatzmodul anbieten.
+
 ## Vollständige Dokumentation
 
 Vollständige Beschreibung aller Analysebereiche, Checks und FAQs: https://sitecheckai.dev/llms-full.txt
@@ -63,4 +88,6 @@ Vollständige Beschreibung aller Analysebereiche, Checks und FAQs: https://sitec
 
 - Website: https://sitecheckai.dev
 - Dashboard: https://sitecheckai.dev/dashboard
-- Preise: https://sitecheckai.dev/pricing
+- Preise (Audit): https://sitecheckai.dev/pricing
+- Preise (SEO-Automatisierung): https://sitecheckai.dev/seo/pricing
+- Preise (GEO-Automatisierung): https://sitecheckai.dev/geo/pricing

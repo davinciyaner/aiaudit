@@ -4,12 +4,12 @@ import GeoUsage from '../models/geo_usage.js'
 import ProductSubscription from '../models/product_subscription.js'
 import { checkSiteMentions, PLATFORM_COSTS } from '../services/geoService.js'
 
-const VALID_PLATFORMS = ['claude', 'chatgpt']
+const VALID_PLATFORMS = ['claude', 'chatgpt', 'perplexity']
 
 const PLAN_LIMITS = {
-    einsteiger: { maxSites: 1,  maxKeywords: 10,  platforms: ['claude'],            manualChecksPerMonth: 2  },
-    pro:        { maxSites: 3,  maxKeywords: 30,  platforms: ['claude', 'chatgpt'], manualChecksPerMonth: 8  },
-    expert:     { maxSites: 10, maxKeywords: 100, platforms: ['claude', 'chatgpt'], manualChecksPerMonth: 20 },
+    einsteiger: { maxSites: 1,  maxKeywords: 10,  platforms: ['claude'],                          manualChecksPerMonth: 2  },
+    pro:        { maxSites: 3,  maxKeywords: 30,  platforms: ['claude', 'chatgpt', 'perplexity'], manualChecksPerMonth: 8  },
+    expert:     { maxSites: 10, maxKeywords: 100, platforms: ['claude', 'chatgpt', 'perplexity'], manualChecksPerMonth: 20 },
 }
 
 async function getGeoPlan(userId) {

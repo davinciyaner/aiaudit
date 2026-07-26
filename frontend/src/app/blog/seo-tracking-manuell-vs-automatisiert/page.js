@@ -63,7 +63,7 @@ const faqLd = {
             name: 'Kann ich KI-Sichtbarkeit (GEO) manuell tracken?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'Technisch ja, praktisch kaum zuverlässig. Du müsstest dieselben Prompts wiederholt in ChatGPT und Claude eingeben und protokollieren, ob deine Marke erwähnt wird. Da KI-Antworten nicht deterministisch sind - dieselbe Frage liefert nicht immer dieselbe Antwort - braucht es mehrere Wiederholungen pro Woche, um einen verlässlichen Trend statt einer Zufallsmessung zu bekommen. Das lässt sich manuell kaum konsistent durchhalten.',
+                text: 'Technisch ja, praktisch kaum zuverlässig. Du müsstest dieselben Prompts wiederholt in ChatGPT, Claude und Perplexity eingeben und protokollieren, ob deine Marke erwähnt wird. Da KI-Antworten nicht deterministisch sind - dieselbe Frage liefert nicht immer dieselbe Antwort - braucht es mehrere Wiederholungen pro Woche, um einen verlässlichen Trend statt einer Zufallsmessung zu bekommen. Das lässt sich manuell kaum konsistent durchhalten.',
             },
         },
         {
@@ -153,7 +153,7 @@ export default function SeoTrackingVergleichPage() {
                             gehen, Positionen für die wichtigsten Keywords prüfen, kurz schauen wer auf den vorderen Plätzen mitkonkurriert, und vielleicht noch neue Keyword-Ideen recherchieren. Für eine Website mit einer überschaubaren Keyword-Liste ist das machbar - realistisch 60 bis 90 Minuten pro Woche, je nachdem wie gründlich.
                         </p>
                         <p className="mt-4">
-                            Bei KI-Sichtbarkeit wird es schwieriger. Manuell würdest du dieselben Fragen wiederholt in ChatGPT und Claude eingeben und protokollieren, ob deine Marke in der Antwort vorkommt. Das Problem:{' '}
+                            Bei KI-Sichtbarkeit wird es schwieriger. Manuell würdest du dieselben Fragen wiederholt in ChatGPT, Claude und Perplexity eingeben und protokollieren, ob deine Marke in der Antwort vorkommt. Das Problem:{' '}
                             <a href="https://developers.openai.com/api/docs/guides/advanced-usage" target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:text-emerald-300 underline underline-offset-2">KI-Modelle antworten laut OpenAIs eigener API-Dokumentation nicht deterministisch</a>. Dieselbe Frage kann heute eine andere Antwort liefern als gestern - eine einzelne Stichprobe sagt wenig aus, du bräuchtest mehrere Wiederholungen pro Woche für einen verlässlichen Trend statt einer Zufallsmessung.
                         </p>
                     </section>
@@ -161,7 +161,7 @@ export default function SeoTrackingVergleichPage() {
                     <section>
                         <h2 className="text-2xl font-bold text-white mb-4">Was Automatisierung konkret übernimmt</h2>
                         <p>
-                            Automatisiertes Tracking führt dieselben Checks strukturell jede Woche aus - unabhängig davon, ob gerade Zeit dafür da ist. Für SEO heißt das: Ranking-Positionen, Gewinner/Verlierer und Keyword-Ideen landen automatisch aufbereitet in einem Dashboard. Für GEO heißt das: dieselben Prompts werden wiederholt gegen ChatGPT und Claude getestet, sodass ein echter Verlauf statt einer Einzelmessung entsteht.
+                            Automatisiertes Tracking führt dieselben Checks strukturell jede Woche aus - unabhängig davon, ob gerade Zeit dafür da ist. Für SEO heißt das: Ranking-Positionen, Gewinner/Verlierer und Keyword-Ideen landen automatisch aufbereitet in einem Dashboard. Für GEO heißt das: dieselben Prompts werden wiederholt gegen ChatGPT, Claude und Perplexity getestet, sodass ein echter Verlauf statt einer Einzelmessung entsteht.
                         </p>
                         <p className="mt-4">
                             Der Unterschied ist weniger "besser" als "konsistenter". Ein manueller Check kann inhaltlich genauso gründlich sein - die Frage ist, ob er tatsächlich jede Woche passiert, auch wenn gerade andere Dinge dringender wirken.
@@ -274,7 +274,7 @@ export default function SeoTrackingVergleichPage() {
                                 Spar dir das wiederholte Prompt-Testen
                             </h3>
                             <p className="text-slate-400 text-sm leading-relaxed max-w-md">
-                                Ab 4,99 €/Monat übernimmt der wöchentliche Auto-Check das manuelle Nachfragen bei ChatGPT & Claude.
+                                Ab 4,99 €/Monat übernimmt der wöchentliche Auto-Check das manuelle Nachfragen bei ChatGPT, Claude & Perplexity.
                             </p>
                         </div>
                         <Link
