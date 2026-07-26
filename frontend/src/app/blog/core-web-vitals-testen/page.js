@@ -221,16 +221,16 @@ export default function CoreWebVitalsPage() {
                                     </div>
                                     <p className="text-sm text-slate-400 leading-relaxed mb-4">{v.measures}</p>
                                     <div className="grid grid-cols-3 gap-2 text-center">
-                                        <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-lg py-2">
-                                            <div className="text-[10px] text-emerald-400 font-semibold uppercase tracking-wider">Gut</div>
+                                        <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-lg py-2 px-1">
+                                            <div className="text-[8px] sm:text-[10px] text-emerald-400 font-semibold uppercase tracking-normal sm:tracking-wider leading-tight break-words">Gut</div>
                                             <div className="text-sm text-white font-mono mt-0.5">{v.good}</div>
                                         </div>
-                                        <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg py-2">
-                                            <div className="text-[10px] text-amber-400 font-semibold uppercase tracking-wider">Verbesserungswürdig</div>
+                                        <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg py-2 px-1">
+                                            <div className="text-[8px] sm:text-[10px] text-amber-400 font-semibold uppercase tracking-normal sm:tracking-wider leading-tight break-words">Verbesserungswürdig</div>
                                             <div className="text-sm text-white font-mono mt-0.5">{v.ok}</div>
                                         </div>
-                                        <div className="bg-red-500/10 border border-red-500/20 rounded-lg py-2">
-                                            <div className="text-[10px] text-red-400 font-semibold uppercase tracking-wider">Schlecht</div>
+                                        <div className="bg-red-500/10 border border-red-500/20 rounded-lg py-2 px-1">
+                                            <div className="text-[8px] sm:text-[10px] text-red-400 font-semibold uppercase tracking-normal sm:tracking-wider leading-tight break-words">Schlecht</div>
                                             <div className="text-sm text-white font-mono mt-0.5">{v.poor}</div>
                                         </div>
                                     </div>

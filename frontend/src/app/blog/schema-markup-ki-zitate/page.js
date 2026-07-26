@@ -250,6 +250,26 @@ export default function SchemaMarkupPage() {
                     </div>
                 </div>
 
+                <div className="mt-4 bg-white/[0.02] border border-white/[0.06] rounded-2xl p-6 sm:p-8">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 justify-between">
+                        <div>
+                            <span className="text-xs font-semibold text-cyan-400 uppercase tracking-wider mb-1 block">Weiterlesen</span>
+                            <h3 className="text-base sm:text-lg font-bold text-white mb-2">
+                                GEO-Optimierung 2026: So wirst du von ChatGPT und Claude empfohlen
+                            </h3>
+                            <p className="text-slate-400 text-sm leading-relaxed max-w-md">
+                                Schema Markup ist eines von fünf GEO-Signalen - hier siehst du das große Bild und wie die Signale zusammenspielen.
+                            </p>
+                        </div>
+                        <Link
+                            href="/blog/geo-optimierung-2026"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/[0.06] hover:bg-white/10 text-white text-sm font-semibold rounded-xl transition-all duration-200 shrink-0"
+                        >
+                            Artikel lesen
+                        </Link>
+                    </div>
+                </div>
+
                 {/* Back */}
                 <div className="mt-10 pt-8 border-t border-white/5">
                     <Link href="/blog" className="text-sm text-slate-500 hover:text-slate-300 transition-colors">
