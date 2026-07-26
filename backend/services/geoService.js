@@ -1,8 +1,9 @@
 import Anthropic from '@anthropic-ai/sdk'
 import OpenAI from 'openai'
 
-const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
-const openai    = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
+const anthropic  = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
+const openai     = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
+const perplexity = new OpenAI({ apiKey: process.env.perplexity_sitecheck, baseURL: 'https://api.perplexity.ai' })
 
 const MAX_SITES    = 5
 const MAX_KEYWORDS = 30
@@ -10,14 +11,16 @@ const MAX_KEYWORDS = 30
 export { MAX_SITES, MAX_KEYWORDS }
 
 export const PLATFORM_LABELS = {
-    claude:  'Claude',
-    chatgpt: 'ChatGPT',
+    claude:     'Claude',
+    chatgpt:    'ChatGPT',
+    perplexity: 'Perplexity',
 }
 
 // Cost per check in USD (approx 200 input + 400 output tokens)
 export const PLATFORM_COSTS = {
-    claude:  0.0066,  // Sonnet 4.6: $3/M in, $15/M out
-    chatgpt: 0.0045,  // GPT-4o: $2.50/M in, $10/M out
+    claude:     0.0066,  // Sonnet 4.6: $3/M in, $15/M out
+    chatgpt:    0.0045,  // GPT-4o: $2.50/M in, $10/M out
+    perplexity: 0.0056,  // Sonar: $1/M in+out, dominated by the ~$5/1000-request search fee
 }
 
 function buildQuery(keyword, language) {
@@ -56,9 +59,19 @@ async function checkWithChatGPT(keyword, domain, language) {
     return extractMention(res.choices[0].message.content, domain)
 }
 
+async function checkWithPerplexity(keyword, domain, language) {
+    const res = await perplexity.chat.completions.create({
+        model: 'sonar',
+        max_tokens: 400,
+        messages: [{ role: 'user', content: buildQuery(keyword, language) }],
+    })
+    return extractMention(res.choices[0].message.content, domain)
+}
+
 const PLATFORM_FNS = {
-    claude:  checkWithClaude,
-    chatgpt: checkWithChatGPT,
+    claude:     checkWithClaude,
+    chatgpt:    checkWithChatGPT,
+    perplexity: checkWithPerplexity,
 }
 
 export async function checkSiteMentions(site) {
