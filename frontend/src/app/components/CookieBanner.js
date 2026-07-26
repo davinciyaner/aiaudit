@@ -12,6 +12,18 @@ function loadClarity() {
     })(window, document, 'clarity', 'script', 'wwbww32zg0')
 }
 
+// Pushed directly onto dataLayer (not via window.gtag) so this works even if
+// gtag.js hasn't finished loading yet — same mechanism the gtag() stub uses internally.
+function updateConsent(granted) {
+    window.dataLayer = window.dataLayer || []
+    window.dataLayer.push(['consent', 'update', {
+        ad_storage: granted ? 'granted' : 'denied',
+        analytics_storage: granted ? 'granted' : 'denied',
+        ad_user_data: granted ? 'granted' : 'denied',
+        ad_personalization: granted ? 'granted' : 'denied',
+    }])
+}
+
 export default function CookieBanner() {
     const [visible, setVisible] = useState(false)
 
@@ -21,6 +33,7 @@ export default function CookieBanner() {
             if (!consent) {
                 setVisible(true)
             } else if (consent === 'granted') {
+                updateConsent(true)
                 loadClarity()
             }
         } catch (e) {}
@@ -28,12 +41,7 @@ export default function CookieBanner() {
 
     function accept() {
         try { localStorage.setItem('cookie_consent', 'granted') } catch (e) {}
-        if (typeof window.gtag === 'function') {
-            window.gtag('consent', 'update', {
-                ad_storage: 'granted',
-                analytics_storage: 'granted',
-            })
-        }
+        updateConsent(true)
         loadClarity()
         setVisible(false)
     }

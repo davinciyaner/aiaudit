@@ -92,7 +92,7 @@ const PLAN_IDS = {
     expert:     process.env.NEXT_PUBLIC_PAYPAL_PLAN_ID_GEO_EXPERT,
 }
 
-function PlanCard({ plan, user, currentPlan, onSuccess }) {
+function PlanCard({ plan, user, currentPlan, loading, onSuccess }) {
     const router = useRouter()
 
     return (
@@ -153,7 +153,11 @@ function PlanCard({ plan, user, currentPlan, onSuccess }) {
             </div>
 
             <div>
-                {currentPlan === plan.id ? (
+                {loading ? (
+                    <div className="flex items-center justify-center w-full py-3 rounded-xl border border-white/10">
+                        <Loader2 className="w-4 h-4 text-slate-500 animate-spin" />
+                    </div>
+                ) : currentPlan === plan.id ? (
                     <div className="block w-full py-3 text-center text-sm font-semibold rounded-xl border border-violet-500/20 text-violet-400 bg-violet-500/5">
                         Aktives Abo
                     </div>
@@ -240,13 +244,23 @@ export default function GeoPricingPage() {
         }
     }
 
+    const plansGrid = (
+        <div className="grid md:grid-cols-3 gap-6 items-start">
+            {PLANS.map(plan => (
+                <PlanCard
+                    key={plan.id}
+                    plan={plan}
+                    user={user}
+                    currentPlan={currentPlan}
+                    loading={loading}
+                    onSuccess={handleSuccess}
+                />
+            ))}
+        </div>
+    )
+
     return (
-        <PayPalScriptProvider options={{
-            clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || 'test',
-            vault: true,
-            intent: 'subscription',
-            currency: 'EUR',
-        }}>
+        <>
             <div className="min-h-screen bg-[#05080f]">
                 <Toaster position="top-right" toastOptions={{
                     style: { background: '#0d1117', color: '#fff', border: '1px solid rgba(255,255,255,0.08)' },
@@ -283,23 +297,16 @@ export default function GeoPricingPage() {
                             GEO Automatisierung Preise im Überblick
                         </h2>
 
-                        {loading ? (
-                            <div className="flex justify-center py-20">
-                                <Loader2 className="w-8 h-8 text-violet-400 animate-spin" />
-                            </div>
-                        ) : (
-                            <div className="grid md:grid-cols-3 gap-6 items-start">
-                                {PLANS.map(plan => (
-                                    <PlanCard
-                                        key={plan.id}
-                                        plan={plan}
-                                        user={user}
-                                        currentPlan={currentPlan}
-                                        onSuccess={handleSuccess}
-                                    />
-                                ))}
-                            </div>
-                        )}
+                        {user ? (
+                            <PayPalScriptProvider options={{
+                                clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || 'test',
+                                vault: true,
+                                intent: 'subscription',
+                                currency: 'EUR',
+                            }}>
+                                {plansGrid}
+                            </PayPalScriptProvider>
+                        ) : plansGrid}
 
                         <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}
                             className="text-center text-sm text-slate-600 mt-10">
@@ -323,6 +330,6 @@ export default function GeoPricingPage() {
                     </div>
                 </div>
             </div>
-        </PayPalScriptProvider>
+        </>
     )
 }

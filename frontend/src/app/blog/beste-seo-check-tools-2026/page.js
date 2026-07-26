@@ -24,7 +24,7 @@ const jsonLd = {
     description: '13 SEO-Check-Tools im Vergleich inkl. G2-/Capterra-/OMR-Bewertungen: kostenlose Version, Funktionsumfang, Limits und wer als einziges auch KI-Sichtbarkeit (GEO) prüft.',
     image: 'https://www.sitecheckai.dev/blog/beste-seo-check-tools-2026/opengraph-image',
     datePublished: '2026-07-15T09:00:00+02:00',
-    dateModified: '2026-07-25T09:00:00+02:00',
+    dateModified: '2026-07-26T09:00:00+02:00',
     author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev/about' },
     publisher: {
         '@type': 'Organization',
@@ -34,6 +34,16 @@ const jsonLd = {
     },
     url: 'https://www.sitecheckai.dev/blog/beste-seo-check-tools-2026',
     mainEntityOfPage: 'https://www.sitecheckai.dev/blog/beste-seo-check-tools-2026',
+}
+
+const breadcrumbLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'AuditAI', item: 'https://www.sitecheckai.dev' },
+        { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.sitecheckai.dev/blog' },
+        { '@type': 'ListItem', position: 3, name: 'Beste SEO-Check-Tools 2026', item: 'https://www.sitecheckai.dev/blog/beste-seo-check-tools-2026' },
+    ],
 }
 
 const faqLd = {
@@ -261,6 +271,7 @@ export default function BesteSeoToolsPage() {
         <main className="bg-[#05080f] min-h-screen">
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListLd) }} />
             <Navbar />
 
@@ -328,48 +339,54 @@ export default function BesteSeoToolsPage() {
                         <p className="text-sm text-slate-500 mb-6">
                             Bewertungen stammen von G2, Capterra oder OMR - nur Werte mit ausreichender Stichprobe werden angezeigt, sonst steht hier ehrlich &quot;keine belastbare Bewertung&quot;.
                         </p>
-                        <div className="overflow-x-auto rounded-2xl border border-white/[0.07]">
-                            <table className="w-full text-sm min-w-[760px]">
-                                <thead>
-                                    <tr className="border-b border-white/5 bg-white/[0.02]">
-                                        <th className="text-left px-4 py-3 text-slate-400 font-semibold">Tool</th>
-                                        <th className="text-left px-4 py-3 text-slate-400 font-semibold">Gratis-Version</th>
-                                        <th className="text-left px-4 py-3 text-slate-400 font-semibold">Kategorien</th>
-                                        <th className="text-left px-4 py-3 text-amber-400 font-semibold">GEO-Check</th>
-                                        <th className="text-left px-4 py-3 text-slate-400 font-semibold">Bewertung</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {TOOLS.map((t) => (
-                                        <tr key={t.name} className="border-b border-white/[0.04] last:border-0">
-                                            <td className="px-4 py-3 text-white font-medium whitespace-nowrap">{t.name}</td>
-                                            <td className="px-4 py-3 text-slate-400">{t.free}</td>
-                                            <td className="px-4 py-3 text-slate-400">{t.categories}</td>
-                                            <td className="px-4 py-3">
-                                                {t.geo === true && <span className="text-emerald-400 font-medium">✓ Ja</span>}
-                                                {t.geo === false && <span className="text-slate-600">✗ Nein</span>}
-                                                {t.geo === 'teilweise' && <span className="text-amber-400">teilweise</span>}
-                                            </td>
-                                            <td className="px-4 py-3 whitespace-nowrap">
-                                                {t.rating?.value ? (
-                                                    <a
-                                                        href={t.rating.url}
-                                                        target="_blank"
-                                                        rel="noopener noreferrer nofollow"
-                                                        className="text-slate-300 hover:text-white underline decoration-slate-700 underline-offset-2"
-                                                    >
-                                                        {t.rating.value} ★ <span className="text-slate-500">({t.rating.count}, {t.rating.source})</span>
-                                                    </a>
-                                                ) : (
-                                                    <span className="text-slate-600" title={t.rating?.note || 'Neu am Markt'}>
-                                                        {t.rating?.note || 'Neu am Markt'}
-                                                    </span>
-                                                )}
-                                            </td>
+                        <p className="sm:hidden text-xs text-amber-400/80 mb-2">
+                            → Tabelle nach links wischen für alle Spalten, inklusive Bewertung
+                        </p>
+                        <div className="relative">
+                            <div className="overflow-x-auto rounded-2xl border border-white/[0.07]">
+                                <table className="w-full text-sm min-w-[760px]">
+                                    <thead>
+                                        <tr className="border-b border-white/5 bg-white/[0.02]">
+                                            <th className="text-left px-4 py-3 text-slate-400 font-semibold">Tool</th>
+                                            <th className="text-left px-4 py-3 text-slate-400 font-semibold">Gratis-Version</th>
+                                            <th className="text-left px-4 py-3 text-slate-400 font-semibold">Kategorien</th>
+                                            <th className="text-left px-4 py-3 text-amber-400 font-semibold">GEO-Check</th>
+                                            <th className="text-left px-4 py-3 text-slate-400 font-semibold">Bewertung</th>
                                         </tr>
-                                    ))}
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        {TOOLS.map((t) => (
+                                            <tr key={t.name} className="border-b border-white/[0.04] last:border-0">
+                                                <td className="px-4 py-3 text-white font-medium whitespace-nowrap">{t.name}</td>
+                                                <td className="px-4 py-3 text-slate-400">{t.free}</td>
+                                                <td className="px-4 py-3 text-slate-400">{t.categories}</td>
+                                                <td className="px-4 py-3">
+                                                    {t.geo === true && <span className="text-emerald-400 font-medium">✓ Ja</span>}
+                                                    {t.geo === false && <span className="text-slate-600">✗ Nein</span>}
+                                                    {t.geo === 'teilweise' && <span className="text-amber-400">teilweise</span>}
+                                                </td>
+                                                <td className="px-4 py-3 whitespace-nowrap">
+                                                    {t.rating?.value ? (
+                                                        <a
+                                                            href={t.rating.url}
+                                                            target="_blank"
+                                                            rel="noopener noreferrer nofollow"
+                                                            className="text-slate-300 hover:text-white underline decoration-slate-700 underline-offset-2"
+                                                        >
+                                                            {t.rating.value} ★ <span className="text-slate-500">({t.rating.count}, {t.rating.source})</span>
+                                                        </a>
+                                                    ) : (
+                                                        <span className="text-slate-600" title={t.rating?.note || 'Neu am Markt'}>
+                                                            {t.rating?.note || 'Neu am Markt'}
+                                                        </span>
+                                                    )}
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div className="sm:hidden absolute top-0 right-0 bottom-0 w-8 bg-gradient-to-l from-[#05080f] to-transparent pointer-events-none rounded-r-2xl" />
                         </div>
                     </section>
 
@@ -427,7 +444,11 @@ export default function BesteSeoToolsPage() {
                             Die meisten der etablierten SEO-Checker wurden gebaut, lange bevor ChatGPT, Perplexity und Google AI Overviews relevante Trafficquellen wurden. Ihre Check-Listen sind auf klassische Google-Rankingfaktoren zugeschnitten - Title-Tags, Backlinks, Ladezeit. Das ist nicht falsch, aber unvollständig.
                         </p>
                         <p className="mt-4">
-                            KI-Sichtbarkeit hängt von anderen Signalen ab: Ist eine <code className="text-xs bg-white/[0.06] px-1.5 py-0.5 rounded">llms.txt</code> vorhanden? Dürfen GPTBot und ClaudeBot laut robots.txt überhaupt crawlen? Steht FAQ-Content nicht nur im JSON-LD, sondern auch sichtbar im HTML? Diese Punkte entscheiden, ob eine KI deine Website als Quelle zitiert - und tauchen in den meisten kostenlosen SEO-Checks schlicht nicht auf.
+                            KI-Sichtbarkeit hängt von anderen Signalen ab: Ist eine <code className="text-xs bg-white/[0.06] px-1.5 py-0.5 rounded">llms.txt</code> vorhanden? Dürfen{' '}
+                            <a href="https://developers.openai.com/api/docs/bots" target="_blank" rel="noopener noreferrer" className="text-amber-400 hover:text-amber-300 underline underline-offset-2">GPTBot</a>{' '}
+                            und{' '}
+                            <a href="https://support.claude.com/en/articles/8896518-does-anthropic-crawl-data-from-the-web-and-how-can-site-owners-block-the-crawler" target="_blank" rel="noopener noreferrer" className="text-amber-400 hover:text-amber-300 underline underline-offset-2">ClaudeBot</a>{' '}
+                            laut robots.txt überhaupt crawlen? Steht FAQ-Content nicht nur im JSON-LD, sondern auch sichtbar im HTML? Diese Punkte entscheiden, ob eine KI deine Website als Quelle zitiert - und tauchen in den meisten kostenlosen SEO-Checks schlicht nicht auf.
                         </p>
                         <div className="bg-amber-500/8 border border-amber-500/20 rounded-2xl p-5 mt-5">
                             <p className="text-sm text-amber-300 font-medium mb-1">Der praktische Unterschied</p>
@@ -447,6 +468,9 @@ export default function BesteSeoToolsPage() {
                         </p>
                         <p className="mt-4">
                             Die praktischste erste Frage: Willst du nur wissen, ob deine Website für Google okay aussieht - oder auch, ob sie für KI-Suchsysteme sichtbar ist? Für Ersteres reicht fast jedes Tool aus dieser Liste. Für Zweiteres bleiben aktuell nur sehr wenige Optionen.
+                        </p>
+                        <p className="mt-4">
+                            Und falls du überlegst, das Testen ganz outzusourcen: <Link href="/blog/seo-test-vs-agentur" className="text-amber-400 hover:text-amber-300 underline underline-offset-2">SEO-Test selbst machen oder Agentur beauftragen?</Link> - der ehrliche Kostenvergleich.
                         </p>
                     </section>
 

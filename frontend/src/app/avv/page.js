@@ -5,6 +5,7 @@ export const metadata = {
     title: 'Auftragsverarbeitungsvertrag – AuditAI',
     description: 'AVV gemäß Art. 28 DSGVO für die Nutzung von AuditAI.',
     robots: { index: false },
+    alternates: { canonical: 'https://www.sitecheckai.dev/avv' },
 }
 
 function Section({ title, children }) {
@@ -60,7 +61,7 @@ export default function AvvPage() {
                         <p className="bg-white/2 border border-white/5 rounded-xl p-4 not-prose text-sm">
                             <strong className="text-slate-300">Auftragsverarbeiter:</strong><br />
                             Finn Paustian, Am Rund 6, 23566 Lübeck<br />
-                            E-Mail: <a href="mailto:finnpaustian94@gmail.com" className="text-violet-400 hover:text-violet-300">finnpaustian94@gmail.com</a><br /><br />
+                            E-Mail: <a href="mailto:sitecheckai@gmail.com" className="text-violet-400 hover:text-violet-300">sitecheckai@gmail.com</a><br /><br />
                             <strong className="text-slate-300">Verantwortlicher:</strong><br />
                             Der jeweilige Nutzer des AuditAI-Dienstes (gemäß Registrierungsdaten)
                         </p>
@@ -143,7 +144,7 @@ export default function AvvPage() {
                             Der Auftragsverarbeiter unterstützt den Verantwortlichen bei der Erfüllung von Betroffenenanfragen (Art. 15–22 DSGVO) im Rahmen des Möglichen. Betroffenenanfragen, die direkt beim Auftragsverarbeiter eingehen, leitet dieser unverzüglich an den Verantwortlichen weiter.
                         </p>
                         <p>
-                            Zur Ausübung von Datenschutzrechten wende dich an: <a href="mailto:finnpaustian94@gmail.com" className="text-violet-400 hover:text-violet-300">finnpaustian94@gmail.com</a>
+                            Zur Ausübung von Datenschutzrechten wende dich an: <a href="mailto:sitecheckai@gmail.com" className="text-violet-400 hover:text-violet-300">sitecheckai@gmail.com</a>
                         </p>
                     </Section>
 
@@ -164,7 +165,7 @@ export default function AvvPage() {
                             Nach Beendigung des Vertragsverhältnisses werden alle im Rahmen der Auftragsverarbeitung gespeicherten Daten des Verantwortlichen — darunter SEO-Automatisierungsdaten (Domains, Keywords, Ranking-Positionen) — innerhalb von 30 Tagen automatisch gelöscht, sofern keine gesetzliche Aufbewahrungspflicht entgegensteht.
                         </p>
                         <p>
-                            Der Verantwortliche kann vor Vertragsende einen Datenexport seiner SEO-Automatisierungsdaten per E-Mail an <a href="mailto:finnpaustian94@gmail.com" className="text-violet-400 hover:text-violet-300">finnpaustian94@gmail.com</a> anfordern.
+                            Der Verantwortliche kann vor Vertragsende einen Datenexport seiner SEO-Automatisierungsdaten per E-Mail an <a href="mailto:sitecheckai@gmail.com" className="text-violet-400 hover:text-violet-300">sitecheckai@gmail.com</a> anfordern.
                         </p>
                     </Section>
 

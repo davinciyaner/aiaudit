@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
@@ -23,7 +24,7 @@ const jsonLd = {
     description: 'Manuelles SEO- und GEO-Tracking vs. Automatisierung im Vergleich: Zeitaufwand, Kosten und warum KI-Sichtbarkeit manuell kaum zuverlässig messbar ist.',
     image: 'https://www.sitecheckai.dev/blog/seo-tracking-manuell-vs-automatisiert/opengraph-image',
     datePublished: '2026-07-15T09:00:00+02:00',
-    dateModified: '2026-07-25T09:00:00+02:00',
+    dateModified: '2026-07-26T09:00:00+02:00',
     author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev/about' },
     publisher: {
         '@type': 'Organization',
@@ -33,6 +34,16 @@ const jsonLd = {
     },
     url: 'https://www.sitecheckai.dev/blog/seo-tracking-manuell-vs-automatisiert',
     mainEntityOfPage: 'https://www.sitecheckai.dev/blog/seo-tracking-manuell-vs-automatisiert',
+}
+
+const breadcrumbLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'AuditAI', item: 'https://www.sitecheckai.dev' },
+        { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.sitecheckai.dev/blog' },
+        { '@type': 'ListItem', position: 3, name: 'Manuell vs. automatisiert', item: 'https://www.sitecheckai.dev/blog/seo-tracking-manuell-vs-automatisiert' },
+    ],
 }
 
 const faqLd = {
@@ -88,6 +99,7 @@ export default function SeoTrackingVergleichPage() {
         <main className="bg-[#05080f] min-h-screen">
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
             <Navbar />
 
             <article className="max-w-3xl mx-auto px-5 sm:px-8 pt-32 pb-24">
@@ -136,10 +148,13 @@ export default function SeoTrackingVergleichPage() {
                     <section>
                         <h2 className="text-2xl font-bold text-white mb-4">Was manuelles Tracking konkret bedeutet</h2>
                         <p>
-                            Manuelles SEO-Tracking heißt: einmal pro Woche (realistisch eher unregelmäßiger) in die Google Search Console gehen, Positionen für die wichtigsten Keywords prüfen, kurz schauen wer auf den vorderen Plätzen mitkonkurriert, und vielleicht noch neue Keyword-Ideen recherchieren. Für eine Website mit einer überschaubaren Keyword-Liste ist das machbar - realistisch 60 bis 90 Minuten pro Woche, je nachdem wie gründlich.
+                            Manuelles SEO-Tracking heißt: einmal pro Woche (realistisch eher unregelmäßiger) in die{' '}
+                            <a href="https://search.google.com/search-console/about" target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:text-emerald-300 underline underline-offset-2">Google Search Console</a>{' '}
+                            gehen, Positionen für die wichtigsten Keywords prüfen, kurz schauen wer auf den vorderen Plätzen mitkonkurriert, und vielleicht noch neue Keyword-Ideen recherchieren. Für eine Website mit einer überschaubaren Keyword-Liste ist das machbar - realistisch 60 bis 90 Minuten pro Woche, je nachdem wie gründlich.
                         </p>
                         <p className="mt-4">
-                            Bei KI-Sichtbarkeit wird es schwieriger. Manuell würdest du dieselben Fragen wiederholt in ChatGPT und Claude eingeben und protokollieren, ob deine Marke in der Antwort vorkommt. Das Problem: KI-Modelle antworten nicht deterministisch. Dieselbe Frage kann heute eine andere Antwort liefern als gestern - eine einzelne Stichprobe sagt wenig aus, du bräuchtest mehrere Wiederholungen pro Woche für einen verlässlichen Trend statt einer Zufallsmessung.
+                            Bei KI-Sichtbarkeit wird es schwieriger. Manuell würdest du dieselben Fragen wiederholt in ChatGPT und Claude eingeben und protokollieren, ob deine Marke in der Antwort vorkommt. Das Problem:{' '}
+                            <a href="https://developers.openai.com/api/docs/guides/advanced-usage" target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:text-emerald-300 underline underline-offset-2">KI-Modelle antworten laut OpenAIs eigener API-Dokumentation nicht deterministisch</a>. Dieselbe Frage kann heute eine andere Antwort liefern als gestern - eine einzelne Stichprobe sagt wenig aus, du bräuchtest mehrere Wiederholungen pro Woche für einen verlässlichen Trend statt einer Zufallsmessung.
                         </p>
                     </section>
 
@@ -151,6 +166,18 @@ export default function SeoTrackingVergleichPage() {
                         <p className="mt-4">
                             Der Unterschied ist weniger "besser" als "konsistenter". Ein manueller Check kann inhaltlich genauso gründlich sein - die Frage ist, ob er tatsächlich jede Woche passiert, auch wenn gerade andere Dinge dringender wirken.
                         </p>
+                        <figure className="mt-6 max-w-md">
+                            <Image
+                                src="/blog/auditai-score-overview.png"
+                                alt="AuditAI Score-Übersicht mit Overall-, SEO-, Performance- und GEO-Score aus einem echten Audit-Report"
+                                width={960}
+                                height={194}
+                                className="w-full h-auto rounded-xl border border-white/[0.07]"
+                            />
+                            <figcaption className="text-xs text-slate-600 mt-2">
+                                Ein Score wie dieser ist die Momentaufnahme, die ein einmaliger Audit liefert. Der Unterschied zur Automatisierung: ob du diesen Snapshot einmal bekommst - oder jede Woche neu, ohne selbst nachzusehen.
+                            </figcaption>
+                        </figure>
                     </section>
 
                     <section>

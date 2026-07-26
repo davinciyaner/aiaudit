@@ -24,7 +24,7 @@ const jsonLd = {
     description: 'Die komplette SEO-Checkliste 2026 in fester Reihenfolge: 6 Phasen, 15 Minuten, alle wichtigen SEO- und GEO-Signale.',
     image: 'https://www.sitecheckai.dev/blog/seo-checkliste-2026/opengraph-image',
     datePublished: '2026-07-15T09:00:00+02:00',
-    dateModified: '2026-07-25T09:00:00+02:00',
+    dateModified: '2026-07-26T09:00:00+02:00',
     author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev/about' },
     publisher: {
         '@type': 'Organization',
@@ -34,6 +34,16 @@ const jsonLd = {
     },
     url: 'https://www.sitecheckai.dev/blog/seo-checkliste-2026',
     mainEntityOfPage: 'https://www.sitecheckai.dev/blog/seo-checkliste-2026',
+}
+
+const breadcrumbLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'AuditAI', item: 'https://www.sitecheckai.dev' },
+        { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.sitecheckai.dev/blog' },
+        { '@type': 'ListItem', position: 3, name: 'SEO-Checkliste 2026', item: 'https://www.sitecheckai.dev/blog/seo-checkliste-2026' },
+    ],
 }
 
 const faqLd = {
@@ -99,6 +109,7 @@ const PHASES = [
             { label: 'Genau ein H1-Tag pro Seite', hint: 'Enthält das primäre Keyword der Seite' },
             { label: 'Heading-Hierarchie ist sauber (H2 vor H3 vor H4)', hint: 'Keine Ebene wird übersprungen' },
         ],
+        source: { label: 'Google Search Central: Title-Links', url: 'https://developers.google.com/search/docs/appearance/title-link' },
     },
     {
         number: '03',
@@ -111,6 +122,8 @@ const PHASES = [
             { label: 'Bilder sind komprimiert und im WebP-Format', hint: 'Besonders Hero-Bilder und Produktbilder prüfen' },
             { label: 'Seite besteht den Mobile-Friendly-Test', hint: 'search.google.com/test/mobile-friendly' },
         ],
+        source: { label: 'Google Search Central: Core Web Vitals', url: 'https://developers.google.com/search/docs/appearance/core-web-vitals' },
+        internalLink: { label: 'LCP, INP & CLS im Detail erklärt', href: '/blog/core-web-vitals-testen' },
     },
     {
         number: '04',
@@ -135,6 +148,7 @@ const PHASES = [
             { label: 'Keine defekten internen Links oder 404-Seiten', hint: 'Wichtigste Klickpfade manuell durchklicken' },
             { label: 'Impressum und Datenschutzerklärung sind erreichbar', hint: 'E-E-A-T-Signal, besonders für Google und KI-Modelle' },
         ],
+        source: { label: 'Google Search Central Blog: HTTPS as a ranking signal', url: 'https://developers.google.com/search/blog/2014/08/https-as-ranking-signal' },
     },
     {
         number: '06',
@@ -155,6 +169,7 @@ export default function SeoChecklistePage() {
         <main className="bg-[#05080f] min-h-screen">
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
             <Navbar />
 
             <article className="max-w-3xl mx-auto px-5 sm:px-8 pt-32 pb-24">
@@ -255,6 +270,24 @@ export default function SeoChecklistePage() {
                                             </div>
                                         ))}
                                     </div>
+                                    {phase.source && (
+                                        <a
+                                            href={phase.source.url}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="mt-4 inline-block text-xs text-slate-600 hover:text-slate-400 underline underline-offset-2 transition-colors"
+                                        >
+                                            Quelle: {phase.source.label} ↗
+                                        </a>
+                                    )}
+                                    {phase.internalLink && (
+                                        <Link
+                                            href={phase.internalLink.href}
+                                            className="mt-4 ml-4 inline-block text-xs text-violet-400 hover:text-violet-300 underline underline-offset-2 transition-colors"
+                                        >
+                                            {phase.internalLink.label} →
+                                        </Link>
+                                    )}
                                 </div>
                             ))}
                         </div>

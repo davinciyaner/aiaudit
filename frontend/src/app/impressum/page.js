@@ -5,6 +5,7 @@ export const metadata = {
     title: 'Impressum',
     description: 'Impressum und rechtliche Angaben für AuditAI.',
     robots: { index: false },
+    alternates: { canonical: 'https://www.sitecheckai.dev/impressum' },
 }
 
 export default function ImpressumPage() {
@@ -36,7 +37,7 @@ export default function ImpressumPage() {
                     <section>
                         <h2 className="text-white font-semibold text-base mb-3">Kontakt</h2>
                         <p>
-                            E-Mail: <a href="mailto:finnpaustian94@gmail.com" className="text-violet-400 hover:text-violet-300">finnpaustian94@gmail.com</a><br />
+                            E-Mail: <a href="mailto:sitecheckai@gmail.com" className="text-violet-400 hover:text-violet-300">sitecheckai@gmail.com</a><br />
                             Telefon: 01752436318
                         </p>
                     </section>

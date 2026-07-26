@@ -167,7 +167,7 @@ const GEO_PLANS = [
     },
 ]
 
-function PlanCard({plan, user, currentPlan, onSuccess}) {
+function PlanCard({plan, user, currentPlan, loading, onSuccess}) {
     const router = useRouter()
     const isPaid = plan.id !== 'free'
     const isCurrentPlan = currentPlan === plan.id
@@ -228,6 +228,10 @@ function PlanCard({plan, user, currentPlan, onSuccess}) {
                           className="block w-full py-3 text-center text-sm font-semibold rounded-xl border border-white/10 text-slate-300 hover:text-white hover:border-white/20 hover:bg-white/5 transition-all duration-200">
                         {plan.cta}
                     </Link>
+                ) : loading ? (
+                    <div className="flex items-center justify-center w-full py-3 rounded-xl border border-white/10">
+                        <Loader2 className="w-4 h-4 text-slate-500 animate-spin"/>
+                    </div>
                 ) : isCurrentPlan ? (
                     <div
                         className="block w-full py-3 text-center text-sm font-semibold rounded-xl border border-emerald-500/20 text-emerald-400 bg-emerald-500/5">
@@ -324,13 +328,23 @@ export default function PricingPage() {
         }
     }
 
+    const plansGrid = (
+        <div className="grid md:grid-cols-3 gap-6 items-start">
+            {PLANS.map(plan => (
+                <PlanCard
+                    key={plan.id}
+                    plan={plan}
+                    user={user}
+                    currentPlan={currentPlan}
+                    loading={loading}
+                    onSuccess={handleSuccess}
+                />
+            ))}
+        </div>
+    )
+
     return (
-        <PayPalScriptProvider options={{
-            clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || 'test',
-            vault: true,
-            intent: 'subscription',
-            currency: 'EUR',
-        }}>
+        <>
             <div className="min-h-screen bg-[#05080f]">
                 <Toaster position="top-right" toastOptions={{
                     style: {
@@ -360,23 +374,16 @@ export default function PricingPage() {
                             </p>
                         </motion.div>
 
-                        {loading ? (
-                            <div className="flex justify-center py-20">
-                                <Loader2 className="w-8 h-8 text-violet-400 animate-spin"/>
-                            </div>
-                        ) : (
-                            <div className="grid md:grid-cols-3 gap-6 items-start">
-                                {PLANS.map(plan => (
-                                    <PlanCard
-                                        key={plan.id}
-                                        plan={plan}
-                                        user={user}
-                                        currentPlan={currentPlan}
-                                        onSuccess={handleSuccess}
-                                    />
-                                ))}
-                            </div>
-                        )}
+                        {user ? (
+                            <PayPalScriptProvider options={{
+                                clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || 'test',
+                                vault: true,
+                                intent: 'subscription',
+                                currency: 'EUR',
+                            }}>
+                                {plansGrid}
+                            </PayPalScriptProvider>
+                        ) : plansGrid}
 
                         <motion.p initial={{opacity: 0}} animate={{opacity: 1}} transition={{delay: 0.5}}
                                   className="text-center text-sm text-slate-600 mt-10">
@@ -542,6 +549,6 @@ export default function PricingPage() {
                     </div>
                 </div>
             </div>
-        </PayPalScriptProvider>
+        </>
     )
 }

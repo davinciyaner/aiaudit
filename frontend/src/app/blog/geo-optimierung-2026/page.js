@@ -24,7 +24,7 @@ const jsonLd = {
     description: 'GEO (Generative Engine Optimization) erklärt: Wie du deine Website optimierst damit ChatGPT, Claude und Perplexity sie als Quelle zitieren.',
     image: 'https://www.sitecheckai.dev/blog/geo-optimierung-2026/opengraph-image',
     datePublished: '2026-06-10T09:00:00+02:00',
-    dateModified: '2026-07-25T09:00:00+02:00',
+    dateModified: '2026-07-26T09:00:00+02:00',
     author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev/about' },
     publisher: {
         '@type': 'Organization',
@@ -43,6 +43,16 @@ const jsonLd = {
         { '@type': 'Thing', name: 'ChatGPT', url: 'https://chat.openai.com' },
         { '@type': 'Thing', name: 'Claude', url: 'https://claude.ai' },
         { '@type': 'Thing', name: 'Perplexity', url: 'https://perplexity.ai' },
+    ],
+}
+
+const breadcrumbLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'AuditAI', item: 'https://www.sitecheckai.dev' },
+        { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.sitecheckai.dev/blog' },
+        { '@type': 'ListItem', position: 3, name: 'GEO-Optimierung 2026', item: 'https://www.sitecheckai.dev/blog/geo-optimierung-2026' },
     ],
 }
 
@@ -93,6 +103,7 @@ const SIGNALS = [
         desc: 'Die wichtigste GEO-Datei. Erstelle eine Datei unter /llms.txt mit einer klaren Beschreibung deiner Website, deiner Produkte und deiner Kernaussagen. Strukturiere sie mit Markdown-Überschriften. Ergänze /llms-full.txt für eine ausführliche Version.',
         example: '# MeinTool\n> MeinTool ist ein X für Y, das Z in unter 60 Sekunden macht.',
         source: { label: 'llms.txt-Spezifikation (llmstxt.org)', url: 'https://llmstxt.org' },
+        internalLink: { label: 'llms.txt ausführlich erklärt', href: '/blog/llms-txt-erklaert' },
     },
     {
         number: '02',
@@ -101,6 +112,7 @@ const SIGNALS = [
         desc: 'JSON-LD im Head-Bereich deiner Seite. Mindestens Organization-Schema (Name, URL, Logo), FAQPage-Schema für häufige Fragen und je nach Website-Typ SoftwareApplication oder Product.',
         example: null,
         source: { label: 'Offizielle Schema.org-Dokumentation', url: 'https://schema.org' },
+        internalLink: { label: 'Schema Markup für KI-Zitate im Detail', href: '/blog/schema-markup-ki-zitate' },
     },
     {
         number: '03',
@@ -138,6 +150,7 @@ export default function GeoArtikelPage() {
         <main className="bg-[#05080f] min-h-screen">
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
             <Navbar />
 
             <article className="max-w-3xl mx-auto px-5 sm:px-8 pt-32 pb-24">
@@ -275,6 +288,14 @@ export default function GeoArtikelPage() {
                                                 >
                                                     Quelle: {s.source.label} ↗
                                                 </a>
+                                            )}
+                                            {s.internalLink && (
+                                                <Link
+                                                    href={s.internalLink.href}
+                                                    className="mt-3 ml-4 inline-block text-xs text-violet-400 hover:text-violet-300 underline underline-offset-2"
+                                                >
+                                                    {s.internalLink.label} →
+                                                </Link>
                                             )}
                                         </div>
                                     </div>

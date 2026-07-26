@@ -5,6 +5,7 @@ export const metadata = {
     title: 'Nutzungsbedingungen – AuditAI',
     description: 'Nutzungsbedingungen für die Nutzung von AuditAI.',
     robots: { index: false },
+    alternates: { canonical: 'https://www.sitecheckai.dev/nutzungsbedingungen' },
 }
 
 function Section({ title, children }) {
@@ -148,7 +149,7 @@ export default function NutzungsbedingungenPage() {
                             Es gilt das Recht der Bundesrepublik Deutschland. Für Verbraucher gilt dies nur, sofern dadurch keine zwingenden Verbraucherschutzbestimmungen des Aufenthaltslandes eingeschränkt werden.
                         </p>
                         <p>
-                            Bei Fragen oder Beschwerden: <a href="mailto:finnpaustian94@gmail.com" className="text-violet-400 hover:text-violet-300">finnpaustian94@gmail.com</a>
+                            Bei Fragen oder Beschwerden: <a href="mailto:sitecheckai@gmail.com" className="text-violet-400 hover:text-violet-300">sitecheckai@gmail.com</a>
                         </p>
                     </Section>
 
