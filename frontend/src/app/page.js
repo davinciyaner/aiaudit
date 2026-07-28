@@ -16,7 +16,7 @@ import { FAQS } from './components/faqData'
 
 export const metadata = {
     title: 'SEO Automatisierung & KI-Sichtbarkeit prüfen – Audit in 60s | AuditAI',
-    description: 'Kostenloser Website-Audit für SEO-Automatisierung & KI-Sichtbarkeit in 60 Sekunden: Title-Tags, Core Web Vitals und Sichtbarkeit bei ChatGPT, Claude & Perplexity prüfen.',
+    description: 'Kostenloser Website-Audit für SEO-Automatisierung & KI-Sichtbarkeit in 60 Sekunden: Title-Tags, Core Web Vitals und Sichtbarkeit bei ChatGPT, Claude, Perplexity & Google AI Overview prüfen.',
     keywords: 'seo automatisierung, ki sichtbarkeit, seo test, seo test kostenlos, seo check, website seo check, kostenloser seo check, seo analyse kostenlos, website audit kostenlos, SEO analyse tool, performance test, core web vitals test, GEO optimierung, website checker, lighthouse alternative 2026',
     openGraph: {
         title: 'SEO Automatisierung & KI-Sichtbarkeit prüfen | AuditAI',

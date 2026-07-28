@@ -93,12 +93,13 @@ function SiteCard({ site, onDelete }) {
 }
 
 const PLATFORMS = [
-    { id: 'claude',     label: 'Claude',     sub: 'claude.ai',       color: 'violet' },
-    { id: 'chatgpt',    label: 'ChatGPT',    sub: 'chat.openai.com', color: 'green'  },
-    { id: 'perplexity', label: 'Perplexity', sub: 'perplexity.ai',   color: 'teal'   },
+    { id: 'claude',     label: 'Claude',             sub: 'claude.ai',       color: 'violet' },
+    { id: 'chatgpt',    label: 'ChatGPT',            sub: 'chat.openai.com', color: 'green'  },
+    { id: 'perplexity', label: 'Perplexity',         sub: 'perplexity.ai',   color: 'teal'   },
+    { id: 'google_aio', label: 'Google AI Overview', sub: 'google.com',      color: 'blue'   },
 ]
 
-const COST_PER_CHECK = { claude: 0.0066, chatgpt: 0.0045, perplexity: 0.0056 }
+const COST_PER_CHECK = { claude: 0.0066, chatgpt: 0.0045, perplexity: 0.0056, google_aio: 0.0026 }
 
 function calcCost(keywords, platforms) {
     const checks = keywords * platforms.length * 4
@@ -109,7 +110,7 @@ function calcCost(keywords, platforms) {
 function AddSiteModal({ slotsLeft, onClose, onAdded }) {
     const [domain, setDomain]             = useState('')
     const [keywordsText, setKeywordsText] = useState('')
-    const [selectedPlatforms, setSelectedPlatforms] = useState(['claude', 'chatgpt', 'perplexity'])
+    const [selectedPlatforms, setSelectedPlatforms] = useState(['claude', 'chatgpt', 'perplexity', 'google_aio'])
     const [loading, setLoading]           = useState(false)
 
     const togglePlatform = (id) => {
@@ -319,7 +320,7 @@ export default function GeoDashboardPage() {
                 <div>
                     <h2 className="text-2xl font-bold text-white mb-2">GEO Automatisierung</h2>
                     <p className="text-slate-500 text-sm max-w-sm">
-                        Tracke ob Claude, ChatGPT und Perplexity deine Domain empfehlen — wöchentlich automatisch.
+                        Tracke ob Claude, ChatGPT, Perplexity und Google AI Overview deine Domain empfehlen — wöchentlich automatisch.
                         Wähle einen Plan um zu starten.
                     </p>
                 </div>
@@ -389,7 +390,7 @@ export default function GeoDashboardPage() {
                 <div className="bg-violet-500/5 border border-violet-500/15 rounded-2xl p-4 mb-8 flex items-start gap-3">
                     <Sparkles className="w-4 h-4 text-violet-400 shrink-0 mt-0.5" />
                     <p className="text-xs text-slate-400 leading-relaxed">
-                        GEO Tracking prüft, ob Claude, ChatGPT und Perplexity deine Domain bei relevanten Suchanfragen erwähnen.
+                        GEO Tracking prüft, ob Claude, ChatGPT, Perplexity und Google AI Overview deine Domain bei relevanten Suchanfragen erwähnen.
                         Je mehr Keywords KI-Systeme mit deiner Seite assoziieren, desto besser ist deine GEO-Sichtbarkeit.
                         Checks laufen wöchentlich automatisch oder manuell auf Abruf.
                     </p>

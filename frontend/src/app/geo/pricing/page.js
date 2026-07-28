@@ -11,11 +11,15 @@ import Navbar from '../../components/Navbar'
 const FAQS = [
     {
         q: 'Was kostet ein GEO Audit bzw. GEO Automatisierung?',
-        a: 'GEO Automatisierung bei AuditAI startet ab 4,99 €/Monat für 1 Website und 10 Keywords mit wöchentlichem Claude-Tracking. Der Pro-Plan (9,99 €/Monat) ergänzt ChatGPT- und Perplexity-Tracking für 3 Websites, der Expert-Plan (19,99 €/Monat) deckt bis zu 10 Websites ab. Alle Pläne bieten 14 Tage kostenlose Testphase.',
+        a: 'GEO Automatisierung bei AuditAI startet ab 4,99 €/Monat für 1 Website und 10 Keywords mit wöchentlichem Claude-Tracking. Der Pro-Plan (9,99 €/Monat) ergänzt ChatGPT-, Perplexity- und Google-AI-Overview-Tracking für 3 Websites sowie 2 Prompt-Varianten pro Keyword, der Expert-Plan (19,99 €/Monat) deckt bis zu 10 Websites ab. Alle Pläne bieten 14 Tage kostenlose Testphase.',
     },
     {
         q: 'Was ist der Unterschied zwischen einem einmaligen GEO Audit und GEO Automatisierung?',
-        a: 'Ein einmaliger GEO Audit (Teil des kostenlosen AuditAI Website-Audits) zeigt deinen GEO-Score zu einem Zeitpunkt. GEO Automatisierung prüft wöchentlich automatisch, ob ChatGPT, Claude und Perplexity deine Website erwähnen, und zeigt den Verlauf über Zeit statt einer Einzelmessung.',
+        a: 'Ein einmaliger GEO Audit (Teil des kostenlosen AuditAI Website-Audits) zeigt deinen GEO-Score zu einem Zeitpunkt. GEO Automatisierung prüft wöchentlich automatisch, ob ChatGPT, Claude, Perplexity und Google AI Overview deine Website erwähnen, und zeigt den Verlauf über Zeit statt einer Einzelmessung.',
+    },
+    {
+        q: 'Was sind Prompt-Varianten und wozu brauche ich mehrere?',
+        a: 'Reale Nutzer fragen KI-Systeme auf sehr unterschiedliche Art — mal empfehlungsorientiert ("Welches Tool kennst du für X?"), mal vergleichend ("Was ist das beste Tool für X im Vergleich?"). Ab dem Pro-Plan prüft AuditAI pro Keyword beide Varianten separat, damit du siehst, bei welcher Art von Anfrage du erwähnt wirst und bei welcher nicht.',
     },
     {
         q: 'Gibt es eine kostenlose Testphase für GEO Automatisierung?',
@@ -42,6 +46,8 @@ const PLANS = [
         locked: [
             'ChatGPT Tracking (ab Pro)',
             'Perplexity Tracking (ab Pro)',
+            'Google AI Overview Tracking (ab Pro)',
+            '2 Prompt-Varianten pro Keyword (ab Pro)',
         ],
         cta: 'Einsteiger starten',
         planEnvKey: 'NEXT_PUBLIC_PAYPAL_PLAN_ID_GEO_EINSTEIGER',
@@ -58,7 +64,8 @@ const PLANS = [
         features: [
             '3 Websites tracken',
             '30 Keywords',
-            'Claude + ChatGPT + Perplexity Tracking',
+            'Claude + ChatGPT + Perplexity + Google AI Overview Tracking',
+            '2 Prompt-Varianten pro Keyword (Empfehlung + Vergleich)',
             'Wöchentlicher Auto-Check',
             '8 manuelle Checks pro Monat',
             'Mention-Verlauf',
@@ -76,7 +83,8 @@ const PLANS = [
         features: [
             '10 Websites tracken',
             '100 Keywords',
-            'Claude + ChatGPT + Perplexity Tracking',
+            'Claude + ChatGPT + Perplexity + Google AI Overview Tracking',
+            '2 Prompt-Varianten pro Keyword (Empfehlung + Vergleich)',
             'Wöchentlicher Auto-Check',
             '20 manuelle Checks pro Monat',
             'Mention-Verlauf',
@@ -285,7 +293,7 @@ export default function GeoPricingPage() {
                                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-purple-400">empfohlen?</span>
                             </h1>
                             <p className="text-lg text-slate-400 max-w-xl mx-auto mb-6">
-                                Tracke ob Claude, ChatGPT und Perplexity deine Domain erwähnen — wöchentlich automatisch.
+                                Tracke ob Claude, ChatGPT, Perplexity und Google AI Overview deine Domain erwähnen — wöchentlich automatisch.
                             </p>
                             <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-violet-500/20 bg-violet-500/5 text-sm">
                                 <span className="text-violet-300 font-semibold">14 Tage kostenlos testen</span>

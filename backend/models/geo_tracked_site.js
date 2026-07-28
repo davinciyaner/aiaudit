@@ -7,8 +7,11 @@ const geoTrackedSiteSchema = new Schema({
     keywords:    [{ type: String }],
     language:    { type: String, default: 'de' },
     platforms:   { type: [String], default: ['claude'] },
+    promptVariants: { type: Number, default: 1 },
     isActive:    { type: Boolean, default: true },
     lastChecked: { type: Date },
+    checkStatus:    { type: String, enum: ['idle', 'running', 'failed'], default: 'idle' },
+    checkStartedAt: { type: Date },
 }, { timestamps: true })
 
 geoTrackedSiteSchema.index({ userId: 1, domain: 1 }, { unique: true })

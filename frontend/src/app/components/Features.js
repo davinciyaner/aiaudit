@@ -6,7 +6,7 @@ const FEATURES = [
     { icon: Brain, title: 'KI-Analyse', desc: 'Spezifischer Bericht mit konkreten Fixes für deine Seite — keine generischen Tipps.', color: '#7c3aed' },
     { icon: Search, title: 'SEO Vollanalyse', desc: 'Title, Meta, H1–H6, Canonical, OG-Tags, Structured Data, Links, Alt-Texte.', color: '#10b981' },
     { icon: Zap, title: 'Core Web Vitals', desc: 'TTFB, FCP, DOM Load, Full Load mit Farbkodierung gegen Google-Richtwerte.', color: '#f59e0b' },
-    { icon: Globe, title: 'GEO — KI-Sichtbarkeit', desc: 'Auffindbarkeit für ChatGPT, Claude & Perplexity: llms.txt, Schema.org, FAQ-Markup.', color: '#6366f1' },
+    { icon: Globe, title: 'GEO — KI-Sichtbarkeit', desc: 'Auffindbarkeit für ChatGPT, Claude, Perplexity & Google AI Overview: llms.txt, Schema.org, FAQ-Markup.', color: '#6366f1' },
     { icon: Key, title: 'Keyword Intelligence', desc: 'Top-Keywords, Dichte, schwache Keywords erkennen und Alternativen vorschlagen.', color: '#a78bfa' },
     { icon: Camera, title: 'Mobile & Desktop', desc: 'Screenshots auf 1280px und 390px — siehst genau was deine Nutzer sehen.', color: '#06b6d4' },
     { icon: TrendingUp, title: 'Aktions-Scores 0–100', desc: 'Jede Kategorie mit Score — du weißt immer was als nächstes zu tun ist.', color: '#22c55e' },

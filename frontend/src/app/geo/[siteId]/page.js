@@ -11,27 +11,184 @@ import toast, { Toaster } from 'react-hot-toast'
 import Navbar from '../../components/Navbar'
 
 const PLATFORM_META = {
-    claude:     { label: 'Claude',     color: 'text-violet-400', bg: 'bg-violet-500/10', border: 'border-violet-500/20' },
-    chatgpt:    { label: 'ChatGPT',    color: 'text-green-400',  bg: 'bg-green-500/10',  border: 'border-green-500/20'  },
-    perplexity: { label: 'Perplexity', color: 'text-teal-400',   bg: 'bg-teal-500/10',   border: 'border-teal-500/20'   },
+    claude:     { label: 'Claude',             color: 'text-violet-400', bg: 'bg-violet-500/10', border: 'border-violet-500/20' },
+    chatgpt:    { label: 'ChatGPT',            color: 'text-green-400',  bg: 'bg-green-500/10',  border: 'border-green-500/20'  },
+    perplexity: { label: 'Perplexity',         color: 'text-teal-400',   bg: 'bg-teal-500/10',   border: 'border-teal-500/20'   },
+    google_aio: { label: 'Google AI Overview', color: 'text-blue-400',   bg: 'bg-blue-500/10',   border: 'border-blue-500/20'   },
 }
 
 // Cost per check in USD (200 input + 400 output tokens)
-const COST_PER_CHECK = { claude: 0.0066, chatgpt: 0.0045, perplexity: 0.0056 }
+const COST_PER_CHECK = { claude: 0.0066, chatgpt: 0.0045, perplexity: 0.0056, google_aio: 0.0026 }
 
 // Mirrors backend PLAN_LIMITS[plan].platforms (geo_tracking.js)
 const PLAN_PLATFORMS = {
     einsteiger: ['claude'],
-    pro:        ['claude', 'chatgpt', 'perplexity'],
-    expert:     ['claude', 'chatgpt', 'perplexity'],
+    pro:        ['claude', 'chatgpt', 'perplexity', 'google_aio'],
+    expert:     ['claude', 'chatgpt', 'perplexity', 'google_aio'],
 }
-const ALL_PLATFORMS = ['claude', 'chatgpt', 'perplexity']
+const ALL_PLATFORMS = ['claude', 'chatgpt', 'perplexity', 'google_aio']
+
+const INTENT_META = {
+    empfehlung: { label: 'Empfehlung' },
+    vergleich:  { label: 'Vergleich' },
+}
+
+function aggregateMention(checks, platform, intents) {
+    const docs = intents.map(i => checks?.[platform]?.[i]).filter(Boolean)
+    if (!docs.length) return null
+    return docs.some(d => d.mentioned)
+}
 
 function MentionBadge({ mentioned }) {
     if (mentioned == null) return <span className="text-xs text-slate-600">—</span>
     return mentioned
         ? <span className="inline-flex items-center gap-1 text-xs font-semibold text-violet-400 bg-violet-500/10 border border-violet-500/20 px-2 py-0.5 rounded-md"><Check className="w-3 h-3" />Ja</span>
         : <span className="inline-flex items-center gap-1 text-xs font-semibold text-slate-500 bg-white/5 border border-white/10 px-2 py-0.5 rounded-md"><X className="w-3 h-3 opacity-50" />Nein</span>
+}
+
+function SentimentBadge({ sentiment }) {
+    const meta = {
+        positive: { label: 'Positiv', color: 'text-emerald-400', bg: 'bg-emerald-500/10', border: 'border-emerald-500/20' },
+        neutral:  { label: 'Neutral', color: 'text-slate-400',   bg: 'bg-white/5',         border: 'border-white/10'    },
+        negative: { label: 'Negativ', color: 'text-red-400',     bg: 'bg-red-500/10',      border: 'border-red-500/20'  },
+    }[sentiment]
+    if (!meta) return null
+    return (
+        <span className={`inline-flex items-center text-[10px] font-semibold px-1.5 py-0.5 rounded ml-1.5 ${meta.color} ${meta.bg} border ${meta.border}`}>
+            {meta.label}
+        </span>
+    )
+}
+
+function CompetitorsPanel({ siteId }) {
+    const [data, setData]       = useState(null)
+    const [loading, setLoading] = useState(true)
+    const [expanded, setExpanded] = useState(false)
+
+    useEffect(() => {
+        const token = localStorage.getItem('token')
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/geo/sites/${siteId}/competitors`, {
+            headers: { Authorization: `Bearer ${token}` },
+        })
+            .then(res => res.json())
+            .then(setData)
+            .catch(() => {})
+            .finally(() => setLoading(false))
+    }, [siteId])
+
+    if (loading || !data?.competitors?.length) return null
+
+    const visible = expanded ? data.competitors : data.competitors.slice(0, 5)
+
+    return (
+        <div className="bg-[#0d1117] border border-white/[0.06] rounded-2xl p-5 mb-6">
+            <div className="flex items-center justify-between mb-4">
+                <h3 className="text-sm font-semibold text-white">Wer wird sonst noch genannt (Share of Voice)</h3>
+                <span className="text-xs text-slate-600">{data.totalCitations} Zitate insgesamt</span>
+            </div>
+            <div className="space-y-2.5">
+                {visible.map((c, i) => (
+                    <div key={c.domain} className="flex items-center gap-3">
+                        <span className="text-xs text-slate-600 w-5 text-right shrink-0">{i + 1}.</span>
+                        <div className="flex-1 min-w-0">
+                            <a href={`https://${c.domain}`} target="_blank" rel="noopener noreferrer"
+                                className="text-sm text-slate-200 hover:text-violet-400 truncate block">{c.domain}</a>
+                            {c.title && <div className="text-[11px] text-slate-600 truncate">{c.title}</div>}
+                        </div>
+                        <div className="w-20 shrink-0 hidden sm:block">
+                            <div className="h-1.5 bg-white/5 rounded-full overflow-hidden">
+                                <div className="h-full bg-violet-500 rounded-full" style={{ width: `${Math.min(c.share * 4, 100)}%` }} />
+                            </div>
+                        </div>
+                        <span className="text-xs font-semibold text-violet-400 w-12 text-right shrink-0">{c.share}%</span>
+                        <span className="text-xs text-slate-600 w-8 text-right shrink-0">{c.count}×</span>
+                    </div>
+                ))}
+            </div>
+            {data.competitors.length > 5 && (
+                <button onClick={() => setExpanded(v => !v)}
+                    className="mt-3 text-xs text-violet-400 hover:text-violet-300">
+                    {expanded ? 'Weniger anzeigen' : `Alle ${data.competitors.length} anzeigen`}
+                </button>
+            )}
+        </div>
+    )
+}
+
+function CitationAnalysis({ url }) {
+    const [loading, setLoading]   = useState(false)
+    const [analysis, setAnalysis] = useState(null)
+    const [error, setError]       = useState(null)
+
+    const handleAnalyze = async () => {
+        setLoading(true)
+        setError(null)
+        try {
+            const token = localStorage.getItem('token')
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/geo/analyze-citation`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+                body: JSON.stringify({ url }),
+            })
+            const d = await res.json()
+            if (!res.ok) throw new Error(d.error)
+            setAnalysis(d.analysis)
+        } catch (err) {
+            setError(err.message || 'Analyse fehlgeschlagen')
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    if (analysis) {
+        const c = analysis.checks
+        const rows = [
+            [`${c.wordCount} Wörter`, true],
+            ['FAQ-Schema', c.hasFAQ],
+            ['Structured Data', c.hasStructuredData],
+            ['Klare Definition', c.hasDirectDefinition],
+            ['Konkrete Zahlen', c.hasStatistics],
+            ['Autor-Info', c.hasAuthorInfo],
+        ]
+        return (
+            <div className="mt-1.5 p-2.5 bg-white/[0.03] border border-white/10 rounded-lg">
+                <div className="text-xs font-semibold text-white mb-1.5">GEO-Score: {analysis.score}/100</div>
+                <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-[11px] text-slate-400">
+                    {rows.map(([label, ok], i) => (
+                        <span key={i} className={ok === true && i === 0 ? '' : ok ? 'text-emerald-400' : 'text-slate-500'}>
+                            {i === 0 ? label : `${ok ? '✓' : '✗'} ${label}`}
+                        </span>
+                    ))}
+                </div>
+            </div>
+        )
+    }
+
+    return (
+        <button onClick={handleAnalyze} disabled={loading}
+            className="text-[11px] text-violet-400 hover:text-violet-300 underline underline-offset-2 disabled:opacity-50 disabled:no-underline">
+            {loading ? 'Analysiere…' : error ? `Fehler — nochmal versuchen` : 'Warum wird das zitiert?'}
+        </button>
+    )
+}
+
+function CitationList({ citations }) {
+    if (!citations?.length) return null
+    return (
+        <div className="mt-2 space-y-2">
+            <p className="text-[10px] uppercase tracking-wider text-slate-600 font-semibold">Zitierte Quellen ({citations.length})</p>
+            {citations.slice(0, 5).map((cit, idx) => (
+                <div key={idx} className="text-xs">
+                    <a href={cit.url} target="_blank" rel="noopener noreferrer"
+                        className="text-slate-400 hover:text-slate-200 underline underline-offset-2">
+                        {cit.domain}
+                    </a>
+                    {cit.title && <span className="text-slate-600"> — {cit.title}</span>}
+                    <div><CitationAnalysis url={cit.url} /></div>
+                </div>
+            ))}
+        </div>
+    )
 }
 
 function HistoryDots({ history }) {
@@ -112,6 +269,25 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
 
     useEffect(() => { fetchResults() }, [fetchResults])
 
+    const CHECK_ERROR_MESSAGES = {
+        check_already_running: 'Es läuft bereits ein Check für diese Website — bitte warten.',
+        monthly_limit_reached: 'Monatliches Limit an manuellen Checks erreicht.',
+    }
+
+    // Check läuft im Hintergrund weiter (siehe triggerCheck-Umbau) — hier nur pollen, bis checkStatus wieder 'idle'/'failed' ist.
+    const pollUntilDone = async () => {
+        const token = localStorage.getItem('token')
+        for (let i = 0; i < 300; i++) { // Sicherheitslimit, deckt auch sehr große Expert-Sites locker ab
+            await new Promise(r => setTimeout(r, 4000))
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/geo/sites/${siteId}`, {
+                headers: { Authorization: `Bearer ${token}` },
+            })
+            const d = await res.json()
+            if (d.site?.checkStatus !== 'running') return d.site?.checkStatus
+        }
+        return 'timeout'
+    }
+
     const handleCheck = async () => {
         setChecking(true)
         try {
@@ -120,13 +296,31 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
                 method: 'POST', headers: { Authorization: `Bearer ${token}` },
             })
             const d = await res.json()
-            if (!res.ok) throw new Error(d.error)
-            toast.success('Check abgeschlossen')
+            if (!res.ok) throw new Error(CHECK_ERROR_MESSAGES[d.error] || d.error)
+
+            const finalStatus = await pollUntilDone()
+            if (finalStatus === 'failed') toast.error('Check fehlgeschlagen — bitte später erneut versuchen.')
+            else if (finalStatus === 'timeout') toast.error('Check läuft ungewöhnlich lange — Ergebnis später prüfen.')
+            else toast.success('Check abgeschlossen')
+
             await fetchResults()
             onSiteUpdated()
         } catch (err) { toast.error(err.message || 'Fehler') }
         finally { setChecking(false) }
     }
+
+    // Falls beim Laden der Seite schon ein Check läuft (z.B. Reload während "Jetzt prüfen"), Polling fortsetzen.
+    useEffect(() => {
+        if (site?.checkStatus !== 'running' || checking) return
+        setChecking(true)
+        pollUntilDone()
+            .then(finalStatus => {
+                if (finalStatus === 'failed') toast.error('Check fehlgeschlagen — bitte später erneut versuchen.')
+                return fetchResults()
+            })
+            .finally(() => setChecking(false))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [site?.checkStatus])
 
     const handleAddKeywords = async (e) => {
         e.preventDefault()
@@ -171,17 +365,20 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
     })
 
     const results = data?.results || []
+    const intents = data?.intents?.length ? data.intents : ['empfehlung']
 
     const filtered = results.filter(r => {
-        if (filter === 'erwaehnt') return platforms.some(p => r.checks?.[p]?.mentioned === true)
-        if (filter === 'nicht')    return platforms.every(p => r.checks?.[p]?.mentioned === false)
-        if (filter === 'ungetestet') return platforms.every(p => r.checks?.[p] == null)
+        if (filter === 'erwaehnt') return platforms.some(p => aggregateMention(r.checks, p, intents) === true)
+        if (filter === 'nicht')    return platforms.every(p => aggregateMention(r.checks, p, intents) === false)
+        if (filter === 'ungetestet') return platforms.every(p => aggregateMention(r.checks, p, intents) == null)
         return true
     })
 
-    const totalChecks = platforms.length * (site?.keywords?.length || 0)
+    const totalChecks = platforms.length * intents.length * (site?.keywords?.length || 0)
+    const estSeconds   = totalChecks * 6.4 // Ø-Dauer pro Check, live gemessen
+    const estLabel      = estSeconds >= 90 ? `~${Math.round(estSeconds / 60)} Min.` : `~${Math.round(estSeconds)}s`
     const checkLabel  = checking
-        ? `Prüfe ${totalChecks} Checks (${platforms.length} Plattform${platforms.length > 1 ? 'en' : ''}…)`
+        ? `Läuft im Hintergrund (${totalChecks} Checks, ${estLabel})…`
         : 'Jetzt prüfen'
 
     return (
@@ -202,6 +399,8 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
                 </div>
             )}
 
+            <CompetitorsPanel siteId={siteId} />
+
             {/* Plattform-Badges */}
             <div className="flex items-center gap-2 mb-5 flex-wrap">
                 {platforms.map(p => {
@@ -216,6 +415,9 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
                     className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold text-slate-500 hover:text-slate-300 bg-white/4 hover:bg-white/8 border border-white/8 transition-all">
                     <Settings2 className="w-3 h-3" />Bearbeiten
                 </button>
+                {intents.length > 1 && (
+                    <span className="text-xs text-slate-600">· {intents.length} Prompt-Varianten pro Keyword ({intents.map(i => INTENT_META[i]?.label || i).join(', ')})</span>
+                )}
             </div>
 
             {/* Plattformen bearbeiten */}
@@ -374,9 +576,9 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
                                 {filtered.map(({ keyword, checks, history }) => {
                                     const isSelected = selected.has(keyword)
                                     const isExpanded = expanded === keyword
-                                    const hasContext = platforms.some(p => checks?.[p]?.context)
+                                    const hasDetail = intents.length > 1 || platforms.some(p => intents.some(i => checks?.[p]?.[i]?.context || checks?.[p]?.[i]?.citations?.length))
                                     const latestDate = platforms
-                                        .map(p => checks?.[p]?.checkedAt)
+                                        .flatMap(p => intents.map(i => checks?.[p]?.[i]?.checkedAt))
                                         .filter(Boolean)
                                         .sort()
                                         .pop()
@@ -387,10 +589,10 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
                                                 <td className="px-5 py-3.5 cursor-pointer" onClick={() => toggleSelect(keyword)}>
                                                     <div className={`w-3.5 h-3.5 rounded border transition-all ${isSelected ? 'bg-red-500/40 border-red-500/60' : 'border-white/15'}`} />
                                                 </td>
-                                                <td className="px-5 py-3.5 cursor-pointer" onClick={() => hasContext && setExpanded(prev => prev === keyword ? null : keyword)}>
+                                                <td className="px-5 py-3.5 cursor-pointer" onClick={() => hasDetail && setExpanded(prev => prev === keyword ? null : keyword)}>
                                                     <div className="flex items-center gap-2">
                                                         <span className="text-sm text-slate-200">{keyword}</span>
-                                                        {hasContext && (
+                                                        {hasDetail && (
                                                             <span className={`transition-colors ${isExpanded ? 'text-violet-400' : 'text-slate-700'}`}>
                                                                 {isExpanded ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
                                                             </span>
@@ -399,7 +601,7 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
                                                 </td>
                                                 {platforms.map(p => (
                                                     <td key={p} className="px-4 py-3.5">
-                                                        <MentionBadge mentioned={checks?.[p]?.mentioned} />
+                                                        <MentionBadge mentioned={aggregateMention(checks, p, intents)} />
                                                     </td>
                                                 ))}
                                                 <td className="px-5 py-3.5 hidden sm:table-cell">
@@ -414,13 +616,34 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
                                             {isExpanded && (
                                                 <tr className="border-b border-white/[0.04] last:border-0">
                                                     <td colSpan={3 + platforms.length} className="px-5 py-4 bg-white/[0.01]">
-                                                        <div className="space-y-3">
-                                                            {platforms.filter(p => checks?.[p]?.context).map(p => {
+                                                        <div className="space-y-4">
+                                                            {platforms.filter(p => intents.some(i => checks?.[p]?.[i])).map(p => {
                                                                 const m = PLATFORM_META[p]
                                                                 return (
                                                                     <div key={p}>
-                                                                        <p className={`text-xs uppercase tracking-wider font-semibold mb-1 ${m.color}`}>{m.label}</p>
-                                                                        <p className="text-sm text-slate-300 italic leading-relaxed">&ldquo;{checks[p].context}&rdquo;</p>
+                                                                        <p className={`text-xs uppercase tracking-wider font-semibold mb-2 ${m.color}`}>{m.label}</p>
+                                                                        <div className="space-y-2 pl-3 border-l-2 border-white/10">
+                                                                            {intents.filter(i => checks?.[p]?.[i]).map(i => {
+                                                                                const c = checks[p][i]
+                                                                                return (
+                                                                                    <div key={i} className="flex items-start gap-3">
+                                                                                        {intents.length > 1 && (
+                                                                                            <span className="text-[10px] uppercase tracking-wider text-slate-500 font-semibold mt-1 w-20 shrink-0">
+                                                                                                {INTENT_META[i]?.label || i}
+                                                                                            </span>
+                                                                                        )}
+                                                                                        <div className="flex-1 min-w-0">
+                                                                                            <MentionBadge mentioned={c.mentioned} />
+                                                                                            <SentimentBadge sentiment={c.sentiment} />
+                                                                                            {c.context && (
+                                                                                                <p className="text-sm text-slate-300 italic leading-relaxed mt-1">&ldquo;{c.context}&rdquo;</p>
+                                                                                            )}
+                                                                                            <CitationList citations={c.citations} />
+                                                                                        </div>
+                                                                                    </div>
+                                                                                )
+                                                                            })}
+                                                                        </div>
                                                                     </div>
                                                                 )
                                                             })}

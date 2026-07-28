@@ -84,7 +84,7 @@ const ARTICLES = [
     {
         slug: 'seo-geo-automatisierung',
         title: 'SEO Automatisierung & GEO Automatisierung: Rankings und KI-Sichtbarkeit automatisch tracken',
-        description: 'Wie du Google-Rankings und KI-Sichtbarkeit bei ChatGPT, Claude & Perplexity wöchentlich automatisch trackst - statt manuell zu prüfen. Mit Preisen und Vergleich.',
+        description: 'Wie du Google-Rankings und KI-Sichtbarkeit bei ChatGPT, Claude, Perplexity & Google AI Overview wöchentlich automatisch trackst - statt manuell zu prüfen. Mit Preisen und Vergleich.',
         category: 'SEO & GEO',
         categoryColor: '#10b981',
         date: '5. Juli 2026',
@@ -102,7 +102,7 @@ const ARTICLES = [
     {
         slug: 'geo-optimierung-2026',
         title: 'GEO-Optimierung 2026: So wirst du von ChatGPT und Claude empfohlen',
-        description: 'GEO (Generative Engine Optimization) erklärt: Wie du deine Website optimierst damit ChatGPT, Claude und Perplexity sie als Quelle zitieren. Mit konkreter Checkliste.',
+        description: 'GEO (Generative Engine Optimization) erklärt: Wie du deine Website optimierst damit ChatGPT, Claude, Perplexity und Google AI Overview sie als Quelle zitieren. Mit konkreter Checkliste.',
         category: 'GEO',
         categoryColor: '#06b6d4',
         date: '10. Juni 2026',

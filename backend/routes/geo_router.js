@@ -6,6 +6,7 @@ import {
     getSites, getSite, addSite, deleteSite,
     addKeywords, removeKeywords,
     getResults, triggerCheck, updatePlatforms,
+    analyzeCitation, getCompetitors,
 } from '../controllers/geo_tracking.js'
 
 const checkRateLimit = rateLimit({
@@ -43,6 +44,8 @@ router.delete('/sites/:id/keywords', removeKeywords)
 router.patch('/sites/:id/platforms', updatePlatforms)
 
 router.get('/sites/:id/results',         getResults)
+router.get('/sites/:id/competitors',     getCompetitors)
 router.post('/sites/:id/check', checkRateLimit, triggerCheck)
+router.post('/analyze-citation', analyzeCitation)
 
 export default router
