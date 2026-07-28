@@ -1,3 +1,5 @@
+import dns from 'dns'
+import net from 'net'
 import GeoTrackedSite from '../models/geo_tracked_site.js'
 import GeoMentionCheck from '../models/geo_mention_check.js'
 import GeoUsage from '../models/geo_usage.js'
@@ -403,6 +405,65 @@ export async function triggerCheck(req, res) {
 const CITATION_ANALYSIS_CACHE = new Map() // url -> { data, expiresAt }
 const CITATION_CACHE_TTL_MS = 24 * 60 * 60 * 1000
 
+// SSRF-Schutz: die URL kommt vom Nutzer (Zitat aus einer KI-Antwort) — ohne IP-Prüfung könnte der Server
+// als Proxy missbraucht werden, um interne Adressen abzufragen (localhost, private Netze, Cloud-Metadata
+// wie 169.254.169.254). Prüft alle DNS-Antworten, nicht nur die erste (verhindert DNS-Rebinding-Tricks).
+function isPrivateOrReservedIp(ip) {
+    if (net.isIP(ip) === 4) {
+        const [a, b] = ip.split('.').map(Number)
+        if (a === 10) return true                      // 10.0.0.0/8
+        if (a === 127) return true                      // Loopback
+        if (a === 0) return true                         // 0.0.0.0/8
+        if (a === 169 && b === 254) return true          // Link-local, inkl. Cloud-Metadata
+        if (a === 172 && b >= 16 && b <= 31) return true  // 172.16.0.0/12
+        if (a === 192 && b === 168) return true           // 192.168.0.0/16
+        if (a === 100 && b >= 64 && b <= 127) return true // 100.64.0.0/10 (CGNAT)
+        if (a >= 224) return true                          // Multicast/reserviert
+        return false
+    }
+    if (net.isIP(ip) === 6) {
+        const lower = ip.toLowerCase()
+        if (lower === '::1' || lower === '::') return true
+        if (lower.startsWith('fe8') || lower.startsWith('fe9') || lower.startsWith('fea') || lower.startsWith('feb')) return true // fe80::/10
+        if (lower.startsWith('fc') || lower.startsWith('fd')) return true // fc00::/7 (Unique Local)
+        const v4Mapped = lower.match(/^::ffff:(\d+\.\d+\.\d+\.\d+)$/)
+        if (v4Mapped) return isPrivateOrReservedIp(v4Mapped[1])
+        return false
+    }
+    return true // unbekanntes Format -> sicherheitshalber blocken
+}
+
+async function assertPublicUrl(url) {
+    const parsed = new URL(url)
+    if (!['http:', 'https:'].includes(parsed.protocol)) throw new Error('Nur http/https erlaubt')
+    if (parsed.hostname === 'localhost') throw new Error('Interne Adressen sind nicht erlaubt')
+
+    const addresses = await dns.promises.lookup(parsed.hostname, { all: true })
+    if (!addresses.length) throw new Error('Domain konnte nicht aufgelöst werden')
+    if (addresses.some(a => isPrivateOrReservedIp(a.address))) {
+        throw new Error('Interne/private Adressen sind nicht erlaubt')
+    }
+    return parsed
+}
+
+// Redirects manuell folgen statt fetch()s eingebautem Verhalten zu vertrauen — sonst könnte eine anfangs
+// öffentliche URL auf eine interne Adresse weiterleiten und die Prüfung oben umgehen.
+async function fetchPublicUrl(url, options, maxRedirects = 3) {
+    let currentUrl = url
+    for (let i = 0; i <= maxRedirects; i++) {
+        await assertPublicUrl(currentUrl)
+        const res = await fetch(currentUrl, { ...options, redirect: 'manual' })
+        if ([301, 302, 303, 307, 308].includes(res.status)) {
+            const location = res.headers.get('location')
+            if (!location) throw new Error('Weiterleitung ohne Ziel-URL')
+            currentUrl = new URL(location, currentUrl).toString()
+            continue
+        }
+        return res
+    }
+    throw new Error('Zu viele Weiterleitungen')
+}
+
 // POST /api/geo/analyze-citation  { url }
 export async function analyzeCitation(req, res) {
     try {
@@ -412,12 +473,10 @@ export async function analyzeCitation(req, res) {
         const { url } = req.body
         if (!url) return res.status(400).json({ error: 'url erforderlich' })
 
-        let parsed
         try {
-            parsed = new URL(url)
-            if (!['http:', 'https:'].includes(parsed.protocol)) throw new Error('invalid protocol')
-        } catch {
-            return res.status(400).json({ error: 'Ungültige URL' })
+            await assertPublicUrl(url)
+        } catch (err) {
+            return res.status(400).json({ error: err.message || 'Ungültige URL' })
         }
 
         const cached = CITATION_ANALYSIS_CACHE.get(url)
@@ -425,10 +484,15 @@ export async function analyzeCitation(req, res) {
             return res.json({ analysis: cached.data, cached: true })
         }
 
-        const pageRes = await fetch(url, {
-            signal: AbortSignal.timeout(10000),
-            headers: { 'User-Agent': 'AuditAI-GEO-Bot/1.0' },
-        })
+        let pageRes
+        try {
+            pageRes = await fetchPublicUrl(url, {
+                signal: AbortSignal.timeout(10000),
+                headers: { 'User-Agent': 'AuditAI-GEO-Bot/1.0' },
+            })
+        } catch (err) {
+            return res.status(400).json({ error: err.message || 'Seite konnte nicht abgerufen werden' })
+        }
         if (!pageRes.ok) return res.status(502).json({ error: `Seite antwortete mit Status ${pageRes.status}` })
 
         const html = await pageRes.text()
