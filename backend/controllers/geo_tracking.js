@@ -1,5 +1,6 @@
 import dns from 'dns'
 import net from 'net'
+import { Agent } from 'undici'
 import GeoTrackedSite from '../models/geo_tracked_site.js'
 import GeoMentionCheck from '../models/geo_mention_check.js'
 import GeoUsage from '../models/geo_usage.js'
@@ -446,23 +447,22 @@ async function assertPublicUrl(url) {
     return parsed
 }
 
-// Redirects manuell folgen statt fetch()s eingebautem Verhalten zu vertrauen — sonst könnte eine anfangs
-// öffentliche URL auf eine interne Adresse weiterleiten und die Prüfung oben umgehen.
-async function fetchPublicUrl(url, options, maxRedirects = 3) {
-    let currentUrl = url
-    for (let i = 0; i <= maxRedirects; i++) {
-        await assertPublicUrl(currentUrl)
-        const res = await fetch(currentUrl, { ...options, redirect: 'manual' })
-        if ([301, 302, 303, 307, 308].includes(res.status)) {
-            const location = res.headers.get('location')
-            if (!location) throw new Error('Weiterleitung ohne Ziel-URL')
-            currentUrl = new URL(location, currentUrl).toString()
-            continue
-        }
-        return res
-    }
-    throw new Error('Zu viele Weiterleitungen')
+// assertPublicUrl() oben prüft einmalig vorab per eigenem dns.lookup() — der tatsächliche fetch() löst den
+// Hostnamen aber selbst NOCHMAL auf, was ein zeitliches Fenster für DNS-Rebinding öffnet (Angreifer liefert
+// beim ersten Lookup eine öffentliche IP, beim zweiten eine interne). Dieser Dispatcher validiert stattdessen
+// bei jeder tatsächlichen Verbindung selbst — inklusive automatisch bei jedem Redirect-Sprung, da fetch()
+// pro Redirect-Ziel erneut über denselben Dispatcher verbindet.
+function safeLookup(hostname, options, callback) {
+    dns.lookup(hostname, { all: true }, (err, addresses) => {
+        if (err) return callback(err)
+        const unsafe = addresses.find(a => isPrivateOrReservedIp(a.address))
+        if (unsafe) return callback(new Error(`Interne/private Adresse blockiert: ${unsafe.address}`))
+        if (options?.all) return callback(null, addresses)
+        callback(null, addresses[0].address, addresses[0].family)
+    })
 }
+
+const safeDispatcher = new Agent({ connect: { lookup: safeLookup } })
 
 // POST /api/geo/analyze-citation  { url }
 export async function analyzeCitation(req, res) {
@@ -486,9 +486,10 @@ export async function analyzeCitation(req, res) {
 
         let pageRes
         try {
-            pageRes = await fetchPublicUrl(url, {
+            pageRes = await fetch(url, {
                 signal: AbortSignal.timeout(10000),
                 headers: { 'User-Agent': 'AuditAI-GEO-Bot/1.0' },
+                dispatcher: safeDispatcher,
             })
         } catch (err) {
             return res.status(400).json({ error: err.message || 'Seite konnte nicht abgerufen werden' })
