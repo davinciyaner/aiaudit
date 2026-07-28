@@ -2,14 +2,15 @@ import GeoTrackedSite from '../models/geo_tracked_site.js'
 import GeoMentionCheck from '../models/geo_mention_check.js'
 import GeoUsage from '../models/geo_usage.js'
 import ProductSubscription from '../models/product_subscription.js'
-import { checkSiteMentions, PLATFORM_COSTS } from '../services/geoService.js'
+import { checkSiteMentions, PLATFORM_COSTS, PROMPT_INTENTS } from '../services/geoService.js'
+import { analyzeGEO } from './geo.js'
 
-const VALID_PLATFORMS = ['claude', 'chatgpt', 'perplexity']
+const VALID_PLATFORMS = ['claude', 'chatgpt', 'perplexity', 'google_aio']
 
 const PLAN_LIMITS = {
-    einsteiger: { maxSites: 1,  maxKeywords: 10,  platforms: ['claude'],                          manualChecksPerMonth: 2  },
-    pro:        { maxSites: 3,  maxKeywords: 30,  platforms: ['claude', 'chatgpt', 'perplexity'], manualChecksPerMonth: 8  },
-    expert:     { maxSites: 10, maxKeywords: 100, platforms: ['claude', 'chatgpt', 'perplexity'], manualChecksPerMonth: 20 },
+    einsteiger: { maxSites: 1,  maxKeywords: 10,  platforms: ['claude'],                                      manualChecksPerMonth: 2,  promptVariants: 1 },
+    pro:        { maxSites: 3,  maxKeywords: 30,  platforms: ['claude', 'chatgpt', 'perplexity', 'google_aio'], manualChecksPerMonth: 8,  promptVariants: 2 },
+    expert:     { maxSites: 10, maxKeywords: 100, platforms: ['claude', 'chatgpt', 'perplexity', 'google_aio'], manualChecksPerMonth: 20, promptVariants: 2 },
 }
 
 async function getGeoPlan(userId) {
@@ -22,10 +23,22 @@ async function countTotalKeywords(userId) {
     return sites.reduce((sum, s) => sum + (s.keywords?.length || 0), 0)
 }
 
-function calcMonthlyCost(keywords, platforms) {
-    const checksPerMonth = keywords * platforms.length * 4
+function calcMonthlyCost(keywords, platforms, variantCount = 1) {
+    const checksPerMonth = keywords * platforms.length * variantCount * 4
     const costPerCheck = platforms.reduce((sum, p) => sum + (PLATFORM_COSTS[p] || 0), 0) / platforms.length
     return Math.round(checksPerMonth * costPerCheck * 100) / 100
+}
+
+function activeIntents(promptVariants = 1) {
+    return PROMPT_INTENTS.slice(0, Math.max(1, Math.min(promptVariants, PROMPT_INTENTS.length)))
+}
+
+// Checks von vor der Prompt-Varianten-Einführung haben kein promptIntent-Feld gesetzt (weder 'empfehlung'
+// noch der Schema-Default, da der nur bei neu erstellten Dokumenten greift). Damit alte Check-Historie nicht
+// unsichtbar wird, zählt "kein Feld gesetzt" für die 'empfehlung'-Variante als Treffer — MongoDB behandelt
+// eine Query nach null ohnehin als "Feld ist null ODER fehlt".
+function intentQuery(promptIntent) {
+    return promptIntent === 'empfehlung' ? { $in: ['empfehlung', null] } : promptIntent
 }
 
 // GET /api/geo/plan
@@ -68,15 +81,19 @@ export async function getSites(req, res) {
         const enriched = await Promise.all(sites.map(async (site) => {
             if (!site.keywords?.length) return { ...site, mentionRate: null, mentionedCount: 0, checkedCount: 0 }
             const platforms = site.platforms?.length ? site.platforms : ['claude']
+            const intents = activeIntents(site.promptVariants)
 
+            // "gecheckt"/"erwähnt" pro Keyword×Plattform gilt, wenn mindestens eine Prompt-Variante einen Treffer hat
             let totalChecked = 0, totalMentioned = 0
             await Promise.all(site.keywords.map(async (keyword) => {
                 await Promise.all(platforms.map(async (platform) => {
-                    const latest = await GeoMentionCheck.findOne({ siteId: site._id, keyword, platform })
-                        .sort({ checkedAt: -1 }).lean()
-                    if (latest) {
+                    const docs = await Promise.all(intents.map(promptIntent =>
+                        GeoMentionCheck.findOne({ siteId: site._id, keyword, platform, promptIntent: intentQuery(promptIntent) }).sort({ checkedAt: -1 }).lean()
+                    ))
+                    const found = docs.filter(Boolean)
+                    if (found.length) {
                         totalChecked++
-                        if (latest.mentioned) totalMentioned++
+                        if (found.some(d => d.mentioned)) totalMentioned++
                     }
                 }))
             }))
@@ -152,6 +169,7 @@ export async function addSite(req, res) {
             keywords: uniqueKeywords,
             language,
             platforms: allowedPlatforms,
+            promptVariants: limits.promptVariants,
         })
 
         res.status(201).json({ site })
@@ -252,7 +270,7 @@ export async function updatePlatforms(req, res) {
         )
         if (!site) return res.status(404).json({ error: 'Website nicht gefunden' })
 
-        const monthlyCost = calcMonthlyCost(site.keywords.length, allowedPlatforms)
+        const monthlyCost = calcMonthlyCost(site.keywords.length, allowedPlatforms, site.promptVariants)
         res.json({ site, monthlyCost })
     } catch (err) {
         res.status(500).json({ error: err.message })
@@ -269,38 +287,73 @@ export async function getResults(req, res) {
         if (!site) return res.status(404).json({ error: 'Website nicht gefunden' })
 
         const platforms = site.platforms?.length ? site.platforms : ['claude']
+        const intents = activeIntents(site.promptVariants)
 
         const results = await Promise.all(site.keywords.map(async (keyword) => {
             const checks = {}
             await Promise.all(platforms.map(async (platform) => {
-                checks[platform] = await GeoMentionCheck.findOne({ siteId: site._id, keyword, platform })
-                    .sort({ checkedAt: -1 }).lean()
+                checks[platform] = {}
+                await Promise.all(intents.map(async (promptIntent) => {
+                    checks[platform][promptIntent] = await GeoMentionCheck.findOne({ siteId: site._id, keyword, platform, promptIntent: intentQuery(promptIntent) })
+                        .sort({ checkedAt: -1 }).lean()
+                }))
             }))
             const history = await GeoMentionCheck.find({ siteId: site._id, keyword })
-                .sort({ checkedAt: -1 }).limit(24).lean()
+                .sort({ checkedAt: -1 }).limit(24 * intents.length).lean()
             return { keyword, checks, history: history.reverse() }
         }))
 
+        // "erwähnt" pro Keyword×Plattform gilt, wenn mindestens eine Prompt-Variante einen Treffer hat
         let totalChecked = 0, totalMentioned = 0
         results.forEach(r => {
             platforms.forEach(p => {
-                if (r.checks[p] != null) {
+                const docs = intents.map(i => r.checks[p][i]).filter(Boolean)
+                if (docs.length) {
                     totalChecked++
-                    if (r.checks[p].mentioned) totalMentioned++
+                    if (docs.some(d => d.mentioned)) totalMentioned++
                 }
             })
         })
         const mentionRate = totalChecked > 0 ? Math.round((totalMentioned / totalChecked) * 100) : null
-        const monthlyCost = calcMonthlyCost(site.keywords.length, platforms)
+        const monthlyCost = calcMonthlyCost(site.keywords.length, platforms, site.promptVariants)
 
         const month = new Date().toISOString().slice(0, 7)
         const usage = await GeoUsage.findOne({ userId: req.userId, feature: 'manual_check', month }).lean()
         const manualChecksUsed = usage?.count ?? 0
         const manualChecksLimit = PLAN_LIMITS[plan].manualChecksPerMonth
 
-        res.json({ site, results, mentionRate, mentionedCount: totalMentioned, checkedCount: totalChecked, monthlyCost, manualChecksUsed, manualChecksLimit })
+        res.json({ site, results, intents, mentionRate, mentionedCount: totalMentioned, checkedCount: totalChecked, monthlyCost, manualChecksUsed, manualChecksLimit })
     } catch (err) {
         res.status(500).json({ error: err.message })
+    }
+}
+
+// Deutlich über der erwarteten Maximaldauer (siehe Live-Messung: ~6,4s/Check) — falls ein Server-Neustart
+// mitten im Check passiert, würde checkStatus sonst für immer auf 'running' hängen bleiben.
+const STALE_CHECK_MS = 20 * 60 * 1000
+
+// Läuft nach dem Response weiter im Hintergrund — kein HTTP-Timeout-Risiko mehr bei vielen Keywords/Plattformen/Varianten.
+async function runCheckInBackground(site, userId) {
+    try {
+        const results = await checkSiteMentions(site, site.promptVariants)
+
+        await GeoMentionCheck.insertMany(results.map(r => ({
+            siteId:       site._id,
+            userId,
+            keyword:      r.keyword,
+            platform:     r.platform,
+            promptIntent: r.promptIntent,
+            mentioned:    r.mentioned,
+            context:      r.context,
+            citations:    r.citations || [],
+            sentiment:    r.sentiment || null,
+            checkedAt:    new Date(),
+        })))
+
+        await GeoTrackedSite.updateOne({ _id: site._id }, { lastChecked: new Date(), checkStatus: 'idle' })
+    } catch (err) {
+        console.error(`[geo] Hintergrund-Check fehlgeschlagen für ${site.domain}:`, err.message)
+        await GeoTrackedSite.updateOne({ _id: site._id }, { checkStatus: 'failed' })
     }
 }
 
@@ -313,6 +366,12 @@ export async function triggerCheck(req, res) {
         const site = await GeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId })
         if (!site) return res.status(404).json({ error: 'Website nicht gefunden' })
         if (!site.keywords.length) return res.status(400).json({ error: 'Keine Keywords hinterlegt' })
+
+        const isStale = site.checkStatus === 'running' && site.checkStartedAt
+            && (Date.now() - site.checkStartedAt.getTime() > STALE_CHECK_MS)
+        if (site.checkStatus === 'running' && !isStale) {
+            return res.status(409).json({ error: 'check_already_running', startedAt: site.checkStartedAt })
+        }
 
         const month = new Date().toISOString().slice(0, 7)
         const manualLimit = PLAN_LIMITS[plan].manualChecksPerMonth
@@ -328,21 +387,108 @@ export async function triggerCheck(req, res) {
             { upsert: true }
         )
 
-        const results = await checkSiteMentions(site)
+        site.checkStatus = 'running'
+        site.checkStartedAt = new Date()
+        await site.save()
 
-        await GeoMentionCheck.insertMany(results.map(r => ({
-            siteId:    site._id,
-            userId:    req.userId,
-            keyword:   r.keyword,
-            platform:  r.platform,
-            mentioned: r.mentioned,
-            context:   r.context,
-            checkedAt: new Date(),
-        })))
+        runCheckInBackground(site, req.userId) // bewusst nicht awaited
 
-        await GeoTrackedSite.updateOne({ _id: site._id }, { lastChecked: new Date() })
+        res.status(202).json({ status: 'running', startedAt: site.checkStartedAt })
+    } catch (err) {
+        res.status(500).json({ error: err.message })
+    }
+}
 
-        res.json({ results, checkedAt: new Date() })
+// On-demand statt automatisch bei jedem Check — verhindert, dass sich die Kosten mit der Zitat-Anzahl multiplizieren.
+const CITATION_ANALYSIS_CACHE = new Map() // url -> { data, expiresAt }
+const CITATION_CACHE_TTL_MS = 24 * 60 * 60 * 1000
+
+// POST /api/geo/analyze-citation  { url }
+export async function analyzeCitation(req, res) {
+    try {
+        const plan = await getGeoPlan(req.userId)
+        if (!plan) return res.status(403).json({ error: 'Kein aktives GEO-Automatisierung Abo' })
+
+        const { url } = req.body
+        if (!url) return res.status(400).json({ error: 'url erforderlich' })
+
+        let parsed
+        try {
+            parsed = new URL(url)
+            if (!['http:', 'https:'].includes(parsed.protocol)) throw new Error('invalid protocol')
+        } catch {
+            return res.status(400).json({ error: 'Ungültige URL' })
+        }
+
+        const cached = CITATION_ANALYSIS_CACHE.get(url)
+        if (cached && cached.expiresAt > Date.now()) {
+            return res.json({ analysis: cached.data, cached: true })
+        }
+
+        const pageRes = await fetch(url, {
+            signal: AbortSignal.timeout(10000),
+            headers: { 'User-Agent': 'AuditAI-GEO-Bot/1.0' },
+        })
+        if (!pageRes.ok) return res.status(502).json({ error: `Seite antwortete mit Status ${pageRes.status}` })
+
+        const html = await pageRes.text()
+        const analysis = await analyzeGEO(url, html)
+
+        CITATION_ANALYSIS_CACHE.set(url, { data: analysis, expiresAt: Date.now() + CITATION_CACHE_TTL_MS })
+
+        res.json({ analysis, cached: false })
+    } catch (err) {
+        res.status(500).json({ error: err.message })
+    }
+}
+
+// GET /api/geo/sites/:id/competitors — Share of Voice: welche Domains werden über alle Checks
+// hinweg am häufigsten mitgenannt (nicht nur ob die eigene Domain erwähnt wird).
+export async function getCompetitors(req, res) {
+    try {
+        const plan = await getGeoPlan(req.userId)
+        if (!plan) return res.status(403).json({ error: 'Kein aktives GEO-Automatisierung Abo' })
+
+        const site = await GeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId }).lean()
+        if (!site) return res.status(404).json({ error: 'Website nicht gefunden' })
+
+        const normalizedOwnDomain = site.domain.replace(/^www\./, '').toLowerCase()
+
+        const [byDomain, totalAgg] = await Promise.all([
+            GeoMentionCheck.aggregate([
+                { $match: { siteId: site._id } },
+                { $unwind: '$citations' },
+                { $match: {
+                    'citations.domain': { $ne: null, $nin: [normalizedOwnDomain] },
+                } },
+                { $group: {
+                    _id: '$citations.domain',
+                    count: { $sum: 1 },
+                    platforms: { $addToSet: '$platform' },
+                    lastSeen: { $max: '$checkedAt' },
+                    sampleTitle: { $first: '$citations.title' },
+                } },
+                { $sort: { count: -1 } },
+                { $limit: 20 },
+            ]),
+            GeoMentionCheck.aggregate([
+                { $match: { siteId: site._id } },
+                { $unwind: '$citations' },
+                { $count: 'total' },
+            ]),
+        ])
+
+        const total = totalAgg[0]?.total || 0
+        const competitors = byDomain.map(c => ({
+            domain: c._id,
+            count: c.count,
+            share: total > 0 ? Math.round((c.count / total) * 1000) / 10 : 0,
+            platforms: c.platforms,
+            lastSeen: c.lastSeen,
+            title: c.sampleTitle,
+        }))
+
+        res.json({ competitors, totalCitations: total })
     } catch (err) {
         res.status(500).json({ error: err.message })
     }

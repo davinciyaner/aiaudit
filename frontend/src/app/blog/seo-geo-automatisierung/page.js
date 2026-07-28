@@ -5,12 +5,12 @@ import Footer from '../../components/Footer'
 
 export const metadata = {
     title: 'SEO Automatisierung & GEO Automatisierung: Rankings und KI-Sichtbarkeit automatisch tracken',
-    description: 'SEO Automatisierung und GEO Automatisierung erklärt: Wie du Google-Rankings und KI-Sichtbarkeit bei ChatGPT, Claude & Perplexity wöchentlich automatisch trackst - statt manuell zu prüfen. Mit Preisen und Vergleich.',
+    description: 'SEO Automatisierung und GEO Automatisierung erklärt: Wie du Google-Rankings und KI-Sichtbarkeit bei ChatGPT, Claude, Perplexity & Google AI Overview wöchentlich automatisch trackst - statt manuell zu prüfen. Mit Preisen und Vergleich.',
     keywords: 'seo automatisierung, geo automatisierung, ki sichtbarkeit, seo automatisierung tool, geo automatisierung tool, ranking tracking automatisch, google rankings automatisch tracken, chatgpt sichtbarkeit tracken, ki sichtbarkeit prüfen, automatisiertes seo tracking, keyword tracking automatisch, seo monitoring tool',
     alternates: { canonical: 'https://www.sitecheckai.dev/blog/seo-geo-automatisierung' },
     openGraph: {
         title: 'SEO Automatisierung & GEO Automatisierung: Rankings und KI-Sichtbarkeit automatisch tracken',
-        description: 'Wie du Google-Rankings und KI-Sichtbarkeit bei ChatGPT, Claude & Perplexity wöchentlich automatisch trackst - statt manuell zu prüfen.',
+        description: 'Wie du Google-Rankings und KI-Sichtbarkeit bei ChatGPT, Claude, Perplexity & Google AI Overview wöchentlich automatisch trackst - statt manuell zu prüfen.',
         url: 'https://www.sitecheckai.dev/blog/seo-geo-automatisierung',
         type: 'article',
         locale: 'de_DE',
@@ -21,10 +21,10 @@ const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: 'SEO Automatisierung & GEO Automatisierung: Rankings und KI-Sichtbarkeit automatisch tracken',
-    description: 'SEO Automatisierung und GEO Automatisierung erklärt: Wie du Google-Rankings und KI-Sichtbarkeit bei ChatGPT, Claude & Perplexity wöchentlich automatisch trackst.',
+    description: 'SEO Automatisierung und GEO Automatisierung erklärt: Wie du Google-Rankings und KI-Sichtbarkeit bei ChatGPT, Claude, Perplexity & Google AI Overview wöchentlich automatisch trackst.',
     image: 'https://www.sitecheckai.dev/blog/seo-geo-automatisierung/opengraph-image',
     datePublished: '2026-07-05T09:00:00+02:00',
-    dateModified: '2026-07-26T09:00:00+02:00',
+    dateModified: '2026-07-27T09:00:00+02:00',
     author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev/about' },
     publisher: {
         '@type': 'Organization',
@@ -73,7 +73,7 @@ const faqLd = {
             name: 'Was ist GEO Automatisierung?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'GEO Automatisierung (Generative Engine Optimization) prüft wöchentlich automatisch, ob KI-Modelle wie ChatGPT, Claude und Perplexity deine Website oder Marke in ihren Antworten erwähnen. Statt manuell Dutzende Prompts in verschiedenen KI-Tools zu testen, trackt die Automatisierung deine KI-Sichtbarkeit kontinuierlich und zeigt den Verlauf über Zeit.',
+                text: 'GEO Automatisierung (Generative Engine Optimization) prüft wöchentlich automatisch, ob KI-Modelle wie ChatGPT, Claude, Perplexity und Google AI Overview deine Website oder Marke in ihren Antworten erwähnen. Statt manuell Dutzende Prompts in verschiedenen KI-Tools zu testen, trackt die Automatisierung deine KI-Sichtbarkeit kontinuierlich und zeigt den Verlauf über Zeit.',
             },
         },
         {
@@ -81,7 +81,7 @@ const faqLd = {
             name: 'Was ist der Unterschied zwischen einem SEO-Tool und einem AI-Tracker?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'Ein SEO-Tool wie SEO Automatisierung ist auf Google-Rankings ausgerichtet: Keyword-Positionen, Konkurrenzanalyse, Backlinks. Ein AI-Tracker wie GEO Automatisierung prüft stattdessen, ob KI-Modelle wie ChatGPT, Claude und Perplexity eine Website oder Marke in ihren Antworten erwähnen. Beide arbeiten wöchentlich automatisch, messen aber unterschiedliche Sichtbarkeit: Google-Rankings vs. Erwähnungen in KI-Antworten.',
+                text: 'Ein SEO-Tool wie SEO Automatisierung ist auf Google-Rankings ausgerichtet: Keyword-Positionen, Konkurrenzanalyse, Backlinks. Ein AI-Tracker wie GEO Automatisierung prüft stattdessen, ob KI-Modelle wie ChatGPT, Claude, Perplexity und Google AI Overview eine Website oder Marke in ihren Antworten erwähnen. Beide arbeiten wöchentlich automatisch, messen aber unterschiedliche Sichtbarkeit: Google-Rankings vs. Erwähnungen in KI-Antworten.',
             },
         },
         {
@@ -89,7 +89,7 @@ const faqLd = {
             name: 'Was ist KI-Sichtbarkeit?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'KI-Sichtbarkeit beschreibt, wie oft und wie prominent eine Website oder Marke in den Antworten von KI-Modellen wie ChatGPT, Claude oder Perplexity erwähnt wird. Sie ist das GEO-Äquivalent zu Google-Rankings im klassischen SEO - nur dass die "Suchergebnisseite" eine generierte Antwort statt einer Liste von Links ist.',
+                text: 'KI-Sichtbarkeit beschreibt, wie oft und wie prominent eine Website oder Marke in den Antworten von KI-Modellen wie ChatGPT, Claude, Perplexity oder Google AI Overview erwähnt wird. Sie ist das GEO-Äquivalent zu Google-Rankings im klassischen SEO - nur dass die "Suchergebnisseite" eine generierte Antwort statt einer Liste von Links ist.',
             },
         },
         {
@@ -111,8 +111,8 @@ const SEO_FEATURES = [
 ]
 
 const GEO_FEATURES = [
-    { title: 'Wöchentlicher KI-Check', desc: 'Automatischer Check, ob ChatGPT, Claude und Perplexity deine Domain bei relevanten Prompts erwähnen.' },
-    { title: 'Claude + ChatGPT + Perplexity Tracking', desc: 'Ab dem Pro-Plan werden alle drei Modelle parallel getrackt, im Einsteiger-Plan Claude allein.' },
+    { title: 'Wöchentlicher KI-Check', desc: 'Automatischer Check, ob ChatGPT, Claude, Perplexity und Google AI Overview deine Domain bei relevanten Prompts erwähnen.' },
+    { title: 'Claude + ChatGPT + Perplexity + Google AI Overview Tracking', desc: 'Ab dem Pro-Plan werden alle vier Plattformen parallel getrackt, im Einsteiger-Plan Claude allein.' },
     { title: 'Mention-Verlauf', desc: 'Verlauf über Zeit statt Einzelmessung - so erkennst du ob deine GEO-Signale wirken.' },
     { title: 'Mehrere Websites & Keywords', desc: 'Von 1 Website / 10 Keywords im Einsteiger-Plan bis 10 Websites / 100 Keywords im Expert-Plan.' },
 ]
@@ -174,7 +174,7 @@ export default function SeoGeoAutomatisierungPage() {
                             Ein Website-Audit ist eine Momentaufnahme. Er zeigt dir Fehler und Chancen genau in dem Moment, in dem du ihn ausführst. Das Problem: Google aktualisiert seinen Algorithmus laufend, Konkurrenten veröffentlichen neue Inhalte, und KI-Modelle wie <a href="https://chatgpt.com" target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:text-emerald-300 underline underline-offset-2">ChatGPT</a> und <a href="https://claude.ai" target="_blank" rel="noopener noreferrer" className="text-violet-400 hover:text-violet-300 underline underline-offset-2">Claude</a> ändern ständig, welche Quellen sie zitieren. Ein Zustand der heute gut aussieht, kann in vier Wochen unbemerkt schlechter geworden sein.
                         </p>
                         <p className="mt-4">
-                            Manuell in der <a href="https://search.google.com/search-console/about" target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:text-emerald-300 underline underline-offset-2">Google Search Console</a> nachzusehen oder Dutzende Prompts in ChatGPT und Claude durchzutesten, kostet Zeit und wird in der Praxis selten regelmäßig gemacht. Genau hier setzen <strong className="text-white">SEO Automatisierung</strong> und <strong className="text-white">GEO Automatisierung</strong> an: laufendes Tracking statt einmaliger Prüfung.
+                            Manuell in der <a href="https://search.google.com/search-console/about" target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:text-emerald-300 underline underline-offset-2">Google Search Console</a> nachzusehen oder Dutzende Prompts in ChatGPT, Claude, Perplexity und Google AI Overview durchzutesten, kostet Zeit und wird in der Praxis selten regelmäßig gemacht. Genau hier setzen <strong className="text-white">SEO Automatisierung</strong> und <strong className="text-white">GEO Automatisierung</strong> an: laufendes Tracking statt einmaliger Prüfung.
                         </p>
                     </section>
 
@@ -233,7 +233,7 @@ export default function SeoGeoAutomatisierungPage() {
                                 </thead>
                                 <tbody>
                                     {[
-                                        ['Was wird getrackt', 'Google-Ranking-Positionen', 'Erwähnungen bei ChatGPT, Claude & Perplexity'],
+                                        ['Was wird getrackt', 'Google-Ranking-Positionen', 'Erwähnungen bei ChatGPT, Claude, Perplexity & Google AI Overview'],
                                         ['Frequenz', 'Wöchentlich automatisch', 'Wöchentlich automatisch'],
                                         ['Zusatz-Daten', 'Keyword-Ideen, Konkurrenz, Backlinks', 'Mention-Verlauf pro Modell'],
                                         ['Einstiegspreis', 'ab 19 €/Monat', 'ab 4,99 €/Monat'],
@@ -324,7 +324,7 @@ export default function SeoGeoAutomatisierungPage() {
                         <div>
                             <span className="text-xs font-semibold text-violet-400 uppercase tracking-wider mb-1 block">GEO Automatisierung</span>
                             <h3 className="text-base sm:text-lg font-bold text-white mb-2">
-                                KI-Sichtbarkeit bei ChatGPT, Claude & Perplexity tracken
+                                KI-Sichtbarkeit bei ChatGPT, Claude, Perplexity & Google AI Overview tracken
                             </h3>
                             <p className="text-slate-400 text-sm leading-relaxed max-w-md">
                                 Ab 4,99 €/Monat, wöchentlicher Auto-Check, 14 Tage kostenlos testen.

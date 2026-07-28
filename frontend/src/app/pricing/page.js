@@ -147,7 +147,8 @@ const GEO_PLANS = [
         features: [
             '3 Websites tracken',
             '30 Keywords',
-            'Claude + ChatGPT + Perplexity Tracking',
+            'Claude + ChatGPT + Perplexity + Google AI Overview Tracking',
+            '2 Prompt-Varianten pro Keyword',
             'Wöchentlicher Auto-Check',
             '8 manuelle Checks pro Monat',
         ],
@@ -160,7 +161,8 @@ const GEO_PLANS = [
         features: [
             '10 Websites tracken',
             '100 Keywords',
-            'Claude + ChatGPT + Perplexity Tracking',
+            'Claude + ChatGPT + Perplexity + Google AI Overview Tracking',
+            '2 Prompt-Varianten pro Keyword',
             'Wöchentlicher Auto-Check',
             '20 manuelle Checks pro Monat',
         ],
@@ -491,7 +493,7 @@ export default function PricingPage() {
                                     Wirst du von KI empfohlen?
                                 </h2>
                                 <p className="text-slate-400 text-sm max-w-lg mx-auto mb-4">
-                                    Tracke automatisch ob Claude, ChatGPT und Perplexity deine Domain bei relevanten Anfragen erwähnen - wöchentlich und auf Abruf.
+                                    Tracke automatisch ob Claude, ChatGPT, Perplexity und Google AI Overview deine Domain bei relevanten Anfragen erwähnen - wöchentlich und auf Abruf.
                                 </p>
                                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-violet-500/20 bg-violet-500/5 text-xs">
                                     <span className="text-violet-300 font-semibold">14 Tage kostenlos testen</span>

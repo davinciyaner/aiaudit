@@ -20,16 +20,19 @@ async function runWeeklyGeoChecks() {
 
         for (const site of sites) {
             try {
-                const results = await checkSiteMentions(site)
+                const results = await checkSiteMentions(site, site.promptVariants)
 
                 await GeoMentionCheck.insertMany(results.map(r => ({
-                    siteId:    site._id,
-                    userId:    site.userId,
-                    keyword:   r.keyword,
-                    platform:  r.platform,
-                    mentioned: r.mentioned,
-                    context:   r.context,
-                    checkedAt: new Date(),
+                    siteId:       site._id,
+                    userId:       site.userId,
+                    keyword:      r.keyword,
+                    platform:     r.platform,
+                    promptIntent: r.promptIntent,
+                    mentioned:    r.mentioned,
+                    context:      r.context,
+                    citations:    r.citations || [],
+                    sentiment:    r.sentiment || null,
+                    checkedAt:    new Date(),
                 })))
 
                 await GeoTrackedSite.updateOne({ _id: site._id }, { lastChecked: new Date() })

@@ -1,6 +1,6 @@
 # AuditAI (sitecheckai.dev)
 
-> AuditAI ist ein KI-gestütztes Website-Audit-Tool, das SEO, Performance und GEO-Sichtbarkeit (Generative Engine Optimization) in unter 60 Sekunden analysiert und einen vollständigen KI-Report mit konkreten Handlungsempfehlungen generiert. Zusätzlich zum einmaligen Audit bietet AuditAI zwei laufende Monitoring-Abos: SEO-Automatisierung (wöchentliches Google-Ranking-Tracking) und GEO-Automatisierung (wöchentliches Tracking, ob ChatGPT, Claude und Perplexity eine Domain in ihren Antworten erwähnen). Auch bekannt unter dem Domainnamen sitecheckai.dev.
+> AuditAI ist ein KI-gestütztes Website-Audit-Tool, das SEO, Performance und GEO-Sichtbarkeit (Generative Engine Optimization) in unter 60 Sekunden analysiert und einen vollständigen KI-Report mit konkreten Handlungsempfehlungen generiert. Zusätzlich zum einmaligen Audit bietet AuditAI zwei laufende Monitoring-Abos: SEO-Automatisierung (wöchentliches Google-Ranking-Tracking) und GEO-Automatisierung (wöchentliches Tracking, ob ChatGPT, Claude, Perplexity und Google AI Overview eine Domain in ihren Antworten erwähnen). Auch bekannt unter dem Domainnamen sitecheckai.dev.
 
 ## Produkt
 
@@ -87,18 +87,19 @@ Zusätzlich zum einmaligen Audit bietet AuditAI unter sitecheckai.dev/seo ein se
 Zusätzlich zum einmaligen Audit und zur SEO-Automatisierung bietet AuditAI unter sitecheckai.dev/geo ein drittes, eigenständiges Abo-Produkt: laufendes Monitoring der KI-Sichtbarkeit. Das Tool prüft wöchentlich automatisch, ob KI-Modelle eine Website oder Marke in ihren Antworten auf reale Nutzeranfragen erwähnen — als Verlauf über Zeit statt einer manuellen Einzelmessung.
 
 ### Funktionen
-- **Wöchentlicher KI-Check**: für jedes getrackte Keyword wird dieselbe Empfehlungsfrage (z. B. "Welche Tools kennst du für X? Nenne konkrete Domains.") an jede aktive Plattform gestellt. Die Antwort wird nach dem Domainnamen durchsucht; bei Treffer wird zusätzlich der zitierte Antwort-Satz als Kontext gespeichert.
-- **Plattform-Abdeckung**: Claude, ChatGPT und Perplexity. Der Einsteiger-Plan trackt ausschließlich Claude; ChatGPT und Perplexity sind ab dem Pro-Plan enthalten.
-- **Mention-Rate & Verlauf**: pro Website und Keyword wird die Erwähnungsquote in Prozent berechnet und die letzten 24 Checks als Verlauf angezeigt, damit sich Fortschritt oder Rückgang über Zeit erkennen lässt.
+- **Wöchentlicher KI-Check**: für Claude, ChatGPT und Perplexity wird für jedes getrackte Keyword dieselbe Empfehlungsfrage (z. B. "Welche Tools kennst du für X? Nenne konkrete Domains.") an das Modell gestellt; die Antwort wird nach dem Domainnamen durchsucht, bei Treffer wird zusätzlich der zitierte Antwort-Satz als Kontext gespeichert. Für Google AI Overview wird stattdessen die reale Google-Suche zum Keyword abgefragt (über die DataForSEO SERP API) und geprüft, ob die eigene Domain unter den zitierten Quellen der KI-Zusammenfassung auftaucht.
+- **Plattform-Abdeckung**: Claude, ChatGPT, Perplexity und Google AI Overview. Der Einsteiger-Plan trackt ausschließlich Claude; die übrigen drei Plattformen sind ab dem Pro-Plan enthalten.
+- **Prompt-Varianten**: ab dem Pro-Plan wird jedes Keyword in zwei unterschiedlich formulierten Anfragen geprüft — "Empfehlung" (z. B. "Welche Tools kennst du für X?") und "Vergleich" (z. B. "Was ist das beste Tool für X im Vergleich?"). Grund: reale Nutzeranfragen an KI-Systeme unterscheiden sich stark nach Intent, und eine Domain kann bei der einen Frageart erwähnt werden, bei der anderen nicht. Der Einsteiger-Plan nutzt nur die Empfehlungs-Variante.
+- **Mention-Rate & Verlauf**: pro Website, Keyword und Prompt-Variante wird die Erwähnungsquote in Prozent berechnet und die letzten Checks als Verlauf angezeigt, damit sich Fortschritt oder Rückgang über Zeit erkennen lässt.
 - **Manuelle Checks auf Abruf**: zusätzlich zum wöchentlichen Auto-Check ist ein begrenztes Kontingent an sofortigen manuellen Checks pro Monat enthalten (planabhängig: 2/8/20).
 - **Mehrere Websites & Keywords**: von 1 Website / 10 Keywords im Einsteiger-Plan bis 10 Websites / 100 Keywords im Expert-Plan.
 
 ### Preise (GEO-Automatisierung, separat von Audit- und SEO-Automatisierung-Plänen)
-| Plan | Preis | Websites | Keywords | Plattformen | Manuelle Checks/Monat |
-|---|---|---|---|---|---|
-| Einsteiger | €4,99/Monat | 1 | 10 | Claude | 2 |
-| Pro | €9,99/Monat | 3 | 30 | Claude + ChatGPT + Perplexity | 8 |
-| Expert | €19,99/Monat | 10 | 100 | Claude + ChatGPT + Perplexity | 20 |
+| Plan | Preis | Websites | Keywords | Plattformen | Prompt-Varianten | Manuelle Checks/Monat |
+|---|---|---|---|---|---|---|
+| Einsteiger | €4,99/Monat | 1 | 10 | Claude | 1 | 2 |
+| Pro | €9,99/Monat | 3 | 30 | Claude + ChatGPT + Perplexity + Google AI Overview | 2 | 8 |
+| Expert | €19,99/Monat | 10 | 100 | Claude + ChatGPT + Perplexity + Google AI Overview | 2 | 20 |
 
 14 Tage kostenlos testen, danach automatische Abbuchung über PayPal, jederzeit kündbar.
 
@@ -148,10 +149,13 @@ Die häufigsten Quick-Wins: Title-Tag auf 50–60 Zeichen optimieren, Meta-Descr
 Ja, der Free-Plan ist dauerhaft kostenlos mit 1 Audit pro Monat inklusive SEO-Score, GEO-Sichtbarkeit und Performance-Metriken. Der KI-generierte Bericht mit konkreten Fixes ist ab dem Pro-Plan verfügbar. Kein Trial, keine Kreditkarte erforderlich.
 
 **Was ist der Unterschied zwischen dem einmaligen GEO-Audit und der GEO-Automatisierung?**
-Der einmalige Audit (Teil des kostenlosen Website-Audits) zeigt den GEO-Score einer Website zu einem Zeitpunkt anhand technischer Signale wie llms.txt und Schema.org. Die GEO-Automatisierung ist ein separates Abo ab €4,99/Monat, das wöchentlich automatisch prüft, ob Claude, ChatGPT und Perplexity die Website tatsächlich in ihren Antworten erwähnen, und den Verlauf über Zeit zeigt statt einer Einzelmessung.
+Der einmalige Audit (Teil des kostenlosen Website-Audits) zeigt den GEO-Score einer Website zu einem Zeitpunkt anhand technischer Signale wie llms.txt und Schema.org. Die GEO-Automatisierung ist ein separates Abo ab €4,99/Monat, das wöchentlich automatisch prüft, ob Claude, ChatGPT, Perplexity und Google AI Overview die Website tatsächlich in ihren Antworten erwähnen, und den Verlauf über Zeit zeigt statt einer Einzelmessung.
 
 **Welche KI-Plattformen trackt die GEO-Automatisierung von AuditAI?**
-Claude, ChatGPT und Perplexity. Im Einsteiger-Plan (€4,99/Monat) ist ausschließlich Claude enthalten. ChatGPT- und Perplexity-Tracking sind ab dem Pro-Plan (€9,99/Monat) inbegriffen.
+Claude, ChatGPT, Perplexity und Google AI Overview. Im Einsteiger-Plan (€4,99/Monat) ist ausschließlich Claude enthalten. Die übrigen drei Plattformen sind ab dem Pro-Plan (€9,99/Monat) inbegriffen.
+
+**Prüft AuditAI mehrere Frageformulierungen pro Keyword?**
+Ja, ab dem Pro-Plan wird jedes Keyword in zwei Prompt-Varianten geprüft — Empfehlung und Vergleich — da eine Domain je nach Art der Nutzeranfrage unterschiedlich oft erwähnt wird. Der Einsteiger-Plan nutzt nur die Empfehlungs-Variante.
 
 ## Technische Details
 

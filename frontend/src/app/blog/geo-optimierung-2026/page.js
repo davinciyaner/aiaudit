@@ -5,7 +5,7 @@ import Footer from '../../components/Footer'
 
 export const metadata = {
     title: 'GEO-Optimierung 2026: So wirst du von ChatGPT und Claude empfohlen',
-    description: 'GEO (Generative Engine Optimization) erklärt: Wie du deine Website optimierst damit ChatGPT, Claude und Perplexity sie als Quelle zitieren. Konkrete Checkliste mit 19 Signalen.',
+    description: 'GEO (Generative Engine Optimization) erklärt: Wie du deine Website optimierst damit ChatGPT, Claude, Perplexity und Google AI Overview sie als Quelle zitieren. Konkrete Checkliste mit 19 Signalen.',
     keywords: 'GEO Optimierung, Generative Engine Optimization, ChatGPT Sichtbarkeit, Claude Sichtbarkeit, llms.txt, KI Sichtbarkeit, GEO SEO Unterschied',
     alternates: { canonical: 'https://www.sitecheckai.dev/blog/geo-optimierung-2026' },
     openGraph: {
@@ -21,7 +21,7 @@ const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: 'GEO-Optimierung 2026: So wirst du von ChatGPT und Claude empfohlen',
-    description: 'GEO (Generative Engine Optimization) erklärt: Wie du deine Website optimierst damit ChatGPT, Claude und Perplexity sie als Quelle zitieren.',
+    description: 'GEO (Generative Engine Optimization) erklärt: Wie du deine Website optimierst damit ChatGPT, Claude, Perplexity und Google AI Overview sie als Quelle zitieren.',
     image: 'https://www.sitecheckai.dev/blog/geo-optimierung-2026/opengraph-image',
     datePublished: '2026-06-10T09:00:00+02:00',
     dateModified: '2026-07-26T09:00:00+02:00',
@@ -177,7 +177,7 @@ export default function GeoArtikelPage() {
                         GEO-Optimierung 2026: So wirst du von ChatGPT und Claude empfohlen
                     </h1>
                     <p className="text-lg text-slate-400 leading-relaxed">
-                        Klassisches SEO optimiert für Google. Doch 2026 entscheiden KI-Modelle wie ChatGPT, Claude und Perplexity täglich welche Websites sie ihren Nutzern empfehlen - nach komplett anderen Regeln. Hier erfährst du wie GEO funktioniert und wie du deinen Score in 60 Minuten deutlich verbesserst.
+                        Klassisches SEO optimiert für Google. Doch 2026 entscheiden KI-Modelle wie ChatGPT, Claude, Perplexity und Google AI Overview täglich welche Websites sie ihren Nutzern empfehlen - nach komplett anderen Regeln. Hier erfährst du wie GEO funktioniert und wie du deinen Score in 60 Minuten deutlich verbesserst.
                     </p>
                     <div className="mt-5 flex items-center gap-2 text-xs text-slate-600">
                         <Link href="/about" className="flex items-center gap-2 hover:text-slate-300 transition-colors">

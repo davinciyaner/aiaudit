@@ -72,7 +72,7 @@ export default function Pricing() {
                         </div>
                         <div>
                             <div className="text-sm font-semibold text-white">KI Sichtbarkeit automatisch tracken</div>
-                            <div className="text-xs text-slate-500 mt-0.5">Wöchentliche Updates, Claude + ChatGPT + Perplexity Tracking & Mention Verlauf - ab 4,99€/Monat</div>
+                            <div className="text-xs text-slate-500 mt-0.5">Wöchentliche Updates, Claude + ChatGPT + Perplexity + Google AI Overview Tracking, 2 Prompt-Varianten & Mention Verlauf - ab 4,99€/Monat</div>
                         </div>
                     </div>
                     <Link href="/geo/pricing"

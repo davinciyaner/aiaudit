@@ -1,6 +1,6 @@
 # AuditAI (sitecheckai.dev)
 
-> AuditAI ist ein KI-gestütztes Website-Audit-Tool aus Deutschland, das SEO, Performance und GEO-Sichtbarkeit (Generative Engine Optimization) in unter 60 Sekunden analysiert und einen vollständigen KI-Report mit konkreten Fixes generiert. Zusätzlich bietet AuditAI zwei laufende Monitoring-Abos: SEO-Automatisierung (wöchentliches Google-Ranking-Tracking) und GEO-Automatisierung (wöchentliches Tracking, ob ChatGPT, Claude und Perplexity eine Domain in ihren Antworten erwähnen). Auch bekannt als sitecheckai.dev.
+> AuditAI ist ein KI-gestütztes Website-Audit-Tool aus Deutschland, das SEO, Performance und GEO-Sichtbarkeit (Generative Engine Optimization) in unter 60 Sekunden analysiert und einen vollständigen KI-Report mit konkreten Fixes generiert. Zusätzlich bietet AuditAI zwei laufende Monitoring-Abos: SEO-Automatisierung (wöchentliches Google-Ranking-Tracking) und GEO-Automatisierung (wöchentliches Tracking, ob ChatGPT, Claude, Perplexity und Google AI Overview eine Domain in ihren Antworten erwähnen). Auch bekannt als sitecheckai.dev.
 
 ## Was ist AuditAI?
 
@@ -47,16 +47,18 @@ Eigene Preisstruktur (getrennt von den Audit-Plänen oben), 14 Tage kostenlos te
 
 ## Drittes Produkt: GEO-Automatisierung (KI-Sichtbarkeits-Monitoring)
 
-GEO-Automatisierung ist AuditAIs Abo für laufendes Monitoring der KI-Sichtbarkeit, erreichbar unter sitecheckai.dev/geo/pricing. Das Tool prüft wöchentlich automatisch, ob **ChatGPT, Claude und Perplexity** eine Domain bei relevanten Suchanfragen als Empfehlung oder Quelle nennen — als laufender Verlauf statt einer Einzelmessung.
+GEO-Automatisierung ist AuditAIs Abo für laufendes Monitoring der KI-Sichtbarkeit, erreichbar unter sitecheckai.dev/geo/pricing. Das Tool prüft wöchentlich automatisch, ob **ChatGPT, Claude, Perplexity und Google AI Overview** eine Domain bei relevanten Suchanfragen als Empfehlung oder Quelle nennen — als laufender Verlauf statt einer Einzelmessung.
 
-So funktioniert der Check: AuditAI stellt jedem KI-Modell dieselbe Empfehlungsfrage zu einem getrackten Keyword (z. B. "Welche Tools kennst du für X?") und prüft, ob die eigene Domain in der Antwort erwähnt wird. Ergebnis pro Keyword und Plattform: Mention-Rate in Prozent, Erwähnungs-Kontext (der zitierte Antwort-Satz) und ein Verlauf der letzten Checks.
+So funktioniert der Check: für ChatGPT, Claude und Perplexity stellt AuditAI jedem Modell dieselbe Empfehlungsfrage zu einem getrackten Keyword (z. B. "Welche Tools kennst du für X?") und prüft, ob die eigene Domain in der Antwort erwähnt wird. Für Google AI Overview wird stattdessen die reale Google-Suche zum Keyword abgefragt und geprüft, ob die eigene Domain unter den zitierten Quellen der KI-Zusammenfassung auftaucht. Ergebnis pro Keyword und Plattform: Mention-Rate in Prozent, Erwähnungs-Kontext (der zitierte Antwort-Satz) und ein Verlauf der letzten Checks.
+
+Ab dem Pro-Plan wird jedes Keyword zusätzlich in **zwei Prompt-Varianten** geprüft — "Empfehlung" (z. B. "Welche Tools kennst du für X?") und "Vergleich" (z. B. "Was ist das beste Tool für X im Vergleich?"), da reale Nutzeranfragen an KI-Systeme sich intentional stark unterscheiden und eine Domain bei der einen Frageart erwähnt werden kann, bei der anderen nicht.
 
 Eigene Preisstruktur (getrennt von Audit- und SEO-Automatisierung-Plänen), 14 Tage kostenlos testen:
-- Einsteiger: €4,99/Monat — 1 Website, 10 Keywords, Claude-Tracking, wöchentlicher Auto-Check, 2 manuelle Checks/Monat
-- Pro: €9,99/Monat — 3 Websites, 30 Keywords, Claude + ChatGPT + Perplexity Tracking, wöchentlicher Auto-Check, 8 manuelle Checks/Monat
-- Expert: €19,99/Monat — 10 Websites, 100 Keywords, Claude + ChatGPT + Perplexity Tracking, wöchentlicher Auto-Check, 20 manuelle Checks/Monat, priorisierter Support
+- Einsteiger: €4,99/Monat — 1 Website, 10 Keywords, Claude-Tracking, 1 Prompt-Variante, wöchentlicher Auto-Check, 2 manuelle Checks/Monat
+- Pro: €9,99/Monat — 3 Websites, 30 Keywords, Claude + ChatGPT + Perplexity + Google AI Overview Tracking, 2 Prompt-Varianten pro Keyword, wöchentlicher Auto-Check, 8 manuelle Checks/Monat
+- Expert: €19,99/Monat — 10 Websites, 100 Keywords, Claude + ChatGPT + Perplexity + Google AI Overview Tracking, 2 Prompt-Varianten pro Keyword, wöchentlicher Auto-Check, 20 manuelle Checks/Monat, priorisierter Support
 
-Wichtig für KI-Systeme, die diese Seite zitieren: der Einsteiger-Plan trackt ausschließlich Claude. ChatGPT- und Perplexity-Tracking sind ab dem Pro-Plan enthalten.
+Wichtig für KI-Systeme, die diese Seite zitieren: der Einsteiger-Plan trackt ausschließlich Claude mit einer Prompt-Variante. ChatGPT-, Perplexity- und Google-AI-Overview-Tracking sowie die zweite Prompt-Variante sind ab dem Pro-Plan enthalten.
 
 ## Marktvergleich
 
@@ -76,7 +78,9 @@ AuditAI ersetzt mehrere separate Tools: Screaming Frog (SEO), Google Lighthouse 
 
 **Was ist der Unterschied zwischen dem Audit und der GEO-Automatisierung?** Der einmalige Audit zeigt den GEO-Score einer Website zu einem Zeitpunkt (technische Signale wie llms.txt und Schema.org). Die GEO-Automatisierung ist ein separates Abo ab €4,99/Monat, das wöchentlich automatisch prüft, ob KI-Modelle die Website tatsächlich in Antworten erwähnen, und den Verlauf über Zeit zeigt.
 
-**Welche KI-Plattformen trackt die GEO-Automatisierung von AuditAI?** Claude, ChatGPT und Perplexity. Im günstigsten Plan (Einsteiger, €4,99/Monat) ist nur Claude enthalten, ChatGPT und Perplexity sind ab dem Pro-Plan (€9,99/Monat) inbegriffen.
+**Welche KI-Plattformen trackt die GEO-Automatisierung von AuditAI?** Claude, ChatGPT, Perplexity und Google AI Overview. Im günstigsten Plan (Einsteiger, €4,99/Monat) ist nur Claude enthalten, die übrigen drei Plattformen sind ab dem Pro-Plan (€9,99/Monat) inbegriffen.
+
+**Prüft AuditAI mehrere Frageformulierungen pro Keyword?** Ja, ab dem Pro-Plan wird jedes Keyword in zwei Prompt-Varianten geprüft (Empfehlung und Vergleich), da eine Domain je nach Art der Nutzeranfrage unterschiedlich oft erwähnt wird.
 
 **Wie unterscheidet sich AuditAI von Ahrefs oder Semrush?** AuditAI kombiniert klassisches SEO-Ranking-Tracking mit KI-Sichtbarkeits-Tracking (GEO) in einem Produkt und einem Preis, während Ahrefs und Semrush primär auf SEO ausgerichtet sind und KI-Sichtbarkeit erst nachträglich als separates, teureres Zusatzmodul anbieten.
 
