@@ -1,6 +1,7 @@
 import dns from 'dns'
 import net from 'net'
-import { Agent } from 'undici'
+import http from 'http'
+import https from 'https'
 import GeoTrackedSite from '../models/geo_tracked_site.js'
 import GeoMentionCheck from '../models/geo_mention_check.js'
 import GeoUsage from '../models/geo_usage.js'
@@ -447,11 +448,11 @@ async function assertPublicUrl(url) {
     return parsed
 }
 
-// assertPublicUrl() oben prüft einmalig vorab per eigenem dns.lookup() — der tatsächliche fetch() löst den
-// Hostnamen aber selbst NOCHMAL auf, was ein zeitliches Fenster für DNS-Rebinding öffnet (Angreifer liefert
-// beim ersten Lookup eine öffentliche IP, beim zweiten eine interne). Dieser Dispatcher validiert stattdessen
-// bei jeder tatsächlichen Verbindung selbst — inklusive automatisch bei jedem Redirect-Sprung, da fetch()
-// pro Redirect-Ziel erneut über denselben Dispatcher verbindet.
+// dns.lookup()-kompatible Funktion, die Node.js' eingebaute 'lookup'-Option von http.request/https.request
+// nutzt — die tatsächliche Verbindung löst den Hostnamen darüber auf, NICHT über eine separate, zweite
+// Anfrage wie es fetch() intern täte. Damit gibt es kein Zeitfenster zwischen Prüfung und Verbindung mehr,
+// in dem ein Angreifer per DNS-Rebinding eine andere (interne) IP unterschieben könnte. Keine externe
+// Abhängigkeit nötig — reine Node-Bordmittel.
 function safeLookup(hostname, options, callback) {
     dns.lookup(hostname, { all: true }, (err, addresses) => {
         if (err) return callback(err)
@@ -462,7 +463,47 @@ function safeLookup(hostname, options, callback) {
     })
 }
 
-const safeDispatcher = new Agent({ connect: { lookup: safeLookup } })
+// Ersetzt fetch() komplett durch Node-Bordmittel (http/https), damit die 'lookup'-Option greift — fetch()
+// (Node-eigenes undici) erlaubt das nicht ohne einen externen Dispatcher. Folgt Redirects manuell, jeder
+// Sprung läuft erneut durch safeLookup.
+function fetchSafely(url, { headers = {}, timeoutMs = 10000, maxRedirects = 3 } = {}) {
+    return new Promise((resolve, reject) => {
+        function makeRequest(currentUrl, redirectsLeft) {
+            let parsed
+            try {
+                parsed = new URL(currentUrl)
+            } catch {
+                return reject(new Error('Ungültige URL'))
+            }
+            if (!['http:', 'https:'].includes(parsed.protocol)) return reject(new Error('Nur http/https erlaubt'))
+            if (parsed.hostname === 'localhost') return reject(new Error('Interne Adressen sind nicht erlaubt'))
+
+            const lib = parsed.protocol === 'https:' ? https : http
+            const req = lib.get(currentUrl, { headers, lookup: safeLookup, timeout: timeoutMs }, (response) => {
+                const status = response.statusCode
+                if ([301, 302, 303, 307, 308].includes(status)) {
+                    response.resume() // Body verwerfen, wird bei Redirect nicht gebraucht
+                    if (redirectsLeft <= 0) return reject(new Error('Zu viele Weiterleitungen'))
+                    const location = response.headers.location
+                    if (!location) return reject(new Error('Weiterleitung ohne Ziel-URL'))
+                    return makeRequest(new URL(location, currentUrl).toString(), redirectsLeft - 1)
+                }
+                let body = ''
+                response.setEncoding('utf8')
+                response.on('data', chunk => { body += chunk })
+                response.on('end', () => resolve({
+                    ok: status >= 200 && status < 300,
+                    status,
+                    text: async () => body,
+                }))
+                response.on('error', reject)
+            })
+            req.on('timeout', () => req.destroy(new Error('Zeitüberschreitung beim Abruf')))
+            req.on('error', reject)
+        }
+        makeRequest(url, maxRedirects)
+    })
+}
 
 // POST /api/geo/analyze-citation  { url }
 export async function analyzeCitation(req, res) {
@@ -486,10 +527,9 @@ export async function analyzeCitation(req, res) {
 
         let pageRes
         try {
-            pageRes = await fetch(url, {
-                signal: AbortSignal.timeout(10000),
+            pageRes = await fetchSafely(url, {
                 headers: { 'User-Agent': 'AuditAI-GEO-Bot/1.0' },
-                dispatcher: safeDispatcher,
+                timeoutMs: 10000,
             })
         } catch (err) {
             return res.status(400).json({ error: err.message || 'Seite konnte nicht abgerufen werden' })
