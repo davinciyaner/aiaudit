@@ -606,3 +606,35 @@ export async function getCompetitors(req, res) {
         res.status(500).json({ error: err.message })
     }
 }
+
+
+export async function getMentionHistory(req, res) {
+    try {
+        const plan = await getGeoPlan(req.userId)
+        if (!plan) return res.status(403).json({ error: 'Kein aktives GEO-Automatisierung Abo' })
+
+        const site = await GeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId }).lean()
+        if (!site) return res.status(404).json({ error: 'Website nicht gefunden' })
+
+        const byDay = await GeoMentionCheck.aggregate([
+            { $match: { siteId: site._id } },
+            { $group: {
+                _id: { $dateToString: { format: '%Y-%m-%d', date: '$checkedAt' } },
+                checked: { $sum: 1 },
+                mentioned: { $sum: { $cond: ['$mentioned', 1, 0] } },
+            } },
+            { $sort: { _id: 1 } },
+        ])
+
+        const history = byDay.map(d => ({
+            date: d._id,
+            checked: d.checked,
+            mentioned: d.mentioned,
+            rate: d.checked > 0 ? Math.round((d.mentioned / d.checked) * 1000) / 10 : 0,
+        }))
+
+        res.json({ history })
+    } catch (err) {
+        res.status(500).json({ error: err.message })
+    }
+}

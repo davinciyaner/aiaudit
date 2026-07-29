@@ -191,6 +191,85 @@ function CitationList({ citations }) {
     )
 }
 
+function MentionHistoryChart({ siteId }) {
+    const [history, setHistory] = useState(null)
+    const [loading, setLoading] = useState(true)
+    const [hover, setHover]     = useState(null)
+
+    useEffect(() => {
+        const token = localStorage.getItem('token')
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/geo/sites/${siteId}/history`, {
+            headers: { Authorization: `Bearer ${token}` },
+        })
+            .then(res => res.json())
+            .then(d => setHistory(d.history || []))
+            .catch(() => setHistory([]))
+            .finally(() => setLoading(false))
+    }, [siteId])
+
+    if (loading || !history?.length) return null
+
+    const W = 640, H = 180, padL = 34, padR = 12, padT = 12, padB = 24
+    const plotW = W - padL - padR, plotH = H - padT - padB
+    const n = history.length
+    const xAt = (i) => n <= 1 ? padL : padL + (plotW * i) / (n - 1)
+    const yAt = (rate) => padT + plotH * (1 - rate / 100)
+
+    const points = history.map((h, i) => `${xAt(i)},${yAt(h.rate)}`).join(' ')
+    const formatDate = (iso) => new Date(iso).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit' })
+
+    return (
+        <div className="bg-[#0d1117] border border-white/[0.06] rounded-2xl p-5 mb-6">
+            <div className="flex items-center justify-between mb-4">
+                <h3 className="text-sm font-semibold text-white">Mention-Rate Verlauf</h3>
+                <span className="text-xs text-slate-600">{n} Check{n !== 1 ? 's' : ''} aufgezeichnet</span>
+            </div>
+
+            <div className="relative">
+                <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-auto" preserveAspectRatio="xMidYMid meet">
+                    {[0, 25, 50, 75, 100].map(v => (
+                        <g key={v}>
+                            <line x1={padL} x2={W - padR} y1={yAt(v)} y2={yAt(v)} stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
+                            <text x={padL - 8} y={yAt(v) + 3} textAnchor="end" fontSize="9" fill="#64748b">{v}%</text>
+                        </g>
+                    ))}
+
+                    {history.map((h, i) => {
+                        if (n > 1 && i !== 0 && i !== n - 1 && i % Math.ceil(n / 6) !== 0) return null
+                        return (
+                            <text key={i} x={xAt(i)} y={H - 6} textAnchor="middle" fontSize="9" fill="#64748b">
+                                {formatDate(h.date)}
+                            </text>
+                        )
+                    })}
+
+                    {n > 1 && (
+                        <polyline points={points} fill="none" stroke="#a78bfa" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    )}
+                    {history.map((h, i) => (
+                        <circle key={i} cx={xAt(i)} cy={yAt(h.rate)} r={hover === i ? 5 : 3.5}
+                            fill="#a78bfa" stroke="#0d1117" strokeWidth="2"
+                            style={{ cursor: 'pointer' }}
+                            onMouseEnter={() => setHover(i)} onMouseLeave={() => setHover(null)} />
+                    ))}
+                </svg>
+
+                {hover != null && (
+                    <div className="absolute px-2.5 py-1.5 bg-[#161c2e] border border-white/10 rounded-lg text-xs pointer-events-none shadow-lg"
+                        style={{
+                            left: `${(xAt(hover) / W) * 100}%`,
+                            top: `${(yAt(history[hover].rate) / H) * 100}%`,
+                            transform: 'translate(-50%, -130%)',
+                        }}>
+                        <div className="text-slate-500">{formatDate(history[hover].date)}</div>
+                        <div className="text-white font-semibold">{history[hover].rate}% &middot; {history[hover].mentioned}/{history[hover].checked}</div>
+                    </div>
+                )}
+            </div>
+        </div>
+    )
+}
+
 function HistoryDots({ history }) {
     if (!history?.length) return null
     return (
@@ -399,6 +478,7 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
                 </div>
             )}
 
+            <MentionHistoryChart siteId={siteId} />
             <CompetitorsPanel siteId={siteId} />
 
             {/* Plattform-Badges */}

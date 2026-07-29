@@ -559,6 +559,35 @@ export async function generateBacklinkIdeasForKeyword(req, res) {
     }
 }
 
+// GET /api/seo/sites/:id/history — Durchschnittsposition pro Tag über alle Keywords hinweg,
+// als Zeitreihe für die Verlaufs-Visualisierung im Dashboard.
+export async function getRankingHistory(req, res) {
+    try {
+        const site = await SeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId }).lean()
+        if (!site) return res.status(404).json({ error: 'Website nicht gefunden' })
+
+        const byDay = await SeoKeywordRanking.aggregate([
+            { $match: { siteId: site._id, position: { $ne: null } } },
+            { $group: {
+                _id: { $dateToString: { format: '%Y-%m-%d', date: '$checkedAt' } },
+                avgPosition: { $avg: '$position' },
+                keywordsRanked: { $sum: 1 },
+            } },
+            { $sort: { _id: 1 } },
+        ])
+
+        const history = byDay.map(d => ({
+            date: d._id,
+            avgPosition: Math.round(d.avgPosition * 10) / 10,
+            keywordsRanked: d.keywordsRanked,
+        }))
+
+        res.json({ history })
+    } catch (err) {
+        res.status(500).json({ error: err.message })
+    }
+}
+
 // PATCH /api/seo/alert-settings
 export async function updateAlertSettings(req, res) {
     try {
