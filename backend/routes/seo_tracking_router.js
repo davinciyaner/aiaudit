@@ -5,7 +5,7 @@ import {
     getPlan, subscribePlan,
     getSites, addSite, getSite, deleteSite,
     addKeywords, removeKeywords,
-    getRankings, triggerCheck,
+    getRankings, getRankingHistory, triggerCheck,
     getKeywordIdeasForSite, getCompetitorsForSite, getBacklinksForSite, getContentGapForSite,
     getAlertSettings, updateAlertSettings,
     generateContent, generateBacklinkIdeasForKeyword,
@@ -49,6 +49,7 @@ router.post('/sites/:id/keywords', addKeywords)
 router.delete('/sites/:id/keywords', removeKeywords)
 
 router.get('/sites/:id/rankings', getRankings)
+router.get('/sites/:id/history',  getRankingHistory)
 router.post('/sites/:id/check', checkRateLimit, triggerCheck)
 
 router.get('/sites/:id/keyword-ideas', checkRateLimit, getKeywordIdeasForSite)

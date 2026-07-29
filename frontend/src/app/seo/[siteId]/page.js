@@ -414,7 +414,96 @@ function InsightPanel({ insight, keyword, siteId, onRefreshed }) {
     )
 }
 
-// ─── Rankings Tab ─────────────────────────────────────────────────────────────
+
+function RankingHistoryChart({ siteId }) {
+    const [history, setHistory] = useState(null)
+    const [loading, setLoading] = useState(true)
+    const [hover, setHover]     = useState(null)
+
+    useEffect(() => {
+        const token = localStorage.getItem('token')
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/seo/sites/${siteId}/history`, {
+            headers: { Authorization: `Bearer ${token}` },
+        })
+            .then(res => res.json())
+            .then(d => setHistory(d.history || []))
+            .catch(() => setHistory([]))
+            .finally(() => setLoading(false))
+    }, [siteId])
+
+    if (loading || !history?.length) return null
+
+    const W = 640, H = 180, padL = 34, padR = 12, padT = 12, padB = 24
+    const plotW = W - padL - padR, plotH = H - padT - padB
+    const n = history.length
+
+    const positions = history.map(h => h.avgPosition)
+    const rawMin = Math.min(...positions)
+    const rawMax = Math.max(...positions)
+    const span   = Math.max(rawMax - rawMin, 10)
+    const minPos = Math.max(1, Math.floor(rawMin - span * 0.15))
+    const maxPos = Math.ceil(rawMax + span * 0.15)
+    const range  = maxPos - minPos
+
+    const xAt = (i) => n <= 1 ? padL : padL + (plotW * i) / (n - 1)
+    // Niedrigere Position = besser -> oben im Chart (Y invertiert)
+    const yAt = (pos) => padT + plotH * (1 - (pos - minPos) / range)
+
+    const points = history.map((h, i) => `${xAt(i)},${yAt(h.avgPosition)}`).join(' ')
+    const formatDate = (iso) => new Date(iso).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit' })
+    const yTicks = [minPos, Math.round((minPos + maxPos) / 2), maxPos]
+
+    return (
+        <div className="bg-[#0d1117] border border-white/[0.06] rounded-2xl p-5 mb-6">
+            <div className="flex items-center justify-between mb-4">
+                <h3 className="text-sm font-semibold text-white">Ø Position Verlauf</h3>
+                <span className="text-xs text-slate-600">{n} Check{n !== 1 ? 's' : ''} aufgezeichnet</span>
+            </div>
+
+            <div className="relative">
+                <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-auto" preserveAspectRatio="xMidYMid meet">
+                    {yTicks.map(v => (
+                        <g key={v}>
+                            <line x1={padL} x2={W - padR} y1={yAt(v)} y2={yAt(v)} stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
+                            <text x={padL - 8} y={yAt(v) + 3} textAnchor="end" fontSize="9" fill="#64748b">#{v}</text>
+                        </g>
+                    ))}
+
+                    {history.map((h, i) => {
+                        if (n > 1 && i !== 0 && i !== n - 1 && i % Math.ceil(n / 6) !== 0) return null
+                        return (
+                            <text key={i} x={xAt(i)} y={H - 6} textAnchor="middle" fontSize="9" fill="#64748b">
+                                {formatDate(h.date)}
+                            </text>
+                        )
+                    })}
+
+                    {n > 1 && (
+                        <polyline points={points} fill="none" stroke="#34d399" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    )}
+                    {history.map((h, i) => (
+                        <circle key={i} cx={xAt(i)} cy={yAt(h.avgPosition)} r={hover === i ? 5 : 3.5}
+                            fill="#34d399" stroke="#0d1117" strokeWidth="2"
+                            style={{ cursor: 'pointer' }}
+                            onMouseEnter={() => setHover(i)} onMouseLeave={() => setHover(null)} />
+                    ))}
+                </svg>
+
+                {hover != null && (
+                    <div className="absolute px-2.5 py-1.5 bg-[#161c2e] border border-white/10 rounded-lg text-xs pointer-events-none shadow-lg"
+                        style={{
+                            left: `${(xAt(hover) / W) * 100}%`,
+                            top: `${(yAt(history[hover].avgPosition) / H) * 100}%`,
+                            transform: 'translate(-50%, -130%)',
+                        }}>
+                        <div className="text-slate-500">{formatDate(history[hover].date)}</div>
+                        <div className="text-white font-semibold">Ø #{history[hover].avgPosition} &middot; {history[hover].keywordsRanked} Keywords</div>
+                    </div>
+                )}
+            </div>
+        </div>
+    )
+}
 
 function RankingsTab({ siteId, site, onSiteUpdated }) {
     const [rankings, setRankings]       = useState([])
@@ -556,6 +645,8 @@ function RankingsTab({ siteId, site, onSiteUpdated }) {
 
     return (
         <div>
+            <RankingHistoryChart siteId={siteId} />
+
             {/* Toolbar */}
             <div className="flex items-center justify-between gap-3 mb-4 flex-wrap">
                 <div className="text-sm text-slate-500">
