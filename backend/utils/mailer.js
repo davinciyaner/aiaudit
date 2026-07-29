@@ -584,6 +584,102 @@ export async function sendSeoRankingAlert({ email, domain, gains, losses, conten
     })
 }
 
+const GEO_PLATFORM_LABELS = { claude: 'Claude', chatgpt: 'ChatGPT', perplexity: 'Perplexity', google_aio: 'Google AI Overview' }
+const GEO_INTENT_LABELS   = { empfehlung: 'Empfehlung', vergleich: 'Vergleich' }
+
+export async function sendGeoRankingAlert({ email, domain, gains, losses }) {
+    const dashboardUrl = `${APP_URL}/geo/dashboard`
+    const hasLosses = losses.length > 0
+    const hasGains  = gains.length > 0
+
+    const label = ({ keyword, platform, promptIntent }) => {
+        const plat = GEO_PLATFORM_LABELS[platform] || platform
+        const intent = GEO_INTENT_LABELS[promptIntent]
+        return intent ? `${keyword} &middot; ${plat} (${intent})` : `${keyword} &middot; ${plat}`
+    }
+
+    const lossRows = losses.map(l => `
+      <tr>
+        <td style="padding:6px 0;font-size:13px;color:#e2e8f0;">${label(l)}</td>
+        <td style="padding:6px 0;font-size:13px;color:#f87171;text-align:right;font-weight:700;">Nicht mehr erwähnt</td>
+      </tr>`).join('')
+
+    const gainRows = gains.map(g => `
+      <tr>
+        <td style="padding:6px 0;font-size:13px;color:#e2e8f0;">${label(g)}</td>
+        <td style="padding:6px 0;font-size:13px;color:#34d399;text-align:right;font-weight:700;">Neu erwähnt</td>
+      </tr>`).join('')
+
+    const lossBlock = hasLosses ? `
+      <p style="margin:0 0 6px;font-size:11px;color:#94a3b8;text-transform:uppercase;letter-spacing:0.08em;font-weight:600;">Nicht mehr erwähnt</p>
+      <table cellpadding="0" cellspacing="0" width="100%" style="background:rgba(239,68,68,0.05);border:1px solid rgba(239,68,68,0.15);border-radius:10px;padding:12px 16px;margin-bottom:${hasGains ? '16px' : '0'};">
+        <tbody>${lossRows}</tbody>
+      </table>` : ''
+
+    const gainBlock = hasGains ? `
+      <p style="margin:0 0 6px;font-size:11px;color:#94a3b8;text-transform:uppercase;letter-spacing:0.08em;font-weight:600;">Neu erwähnt</p>
+      <table cellpadding="0" cellspacing="0" width="100%" style="background:rgba(139,92,246,0.05);border:1px solid rgba(139,92,246,0.15);border-radius:10px;padding:12px 16px;">
+        <tbody>${gainRows}</tbody>
+      </table>` : ''
+
+    const headline = hasLosses && hasGains
+        ? `Gemischte KI-Sichtbarkeit für ${domain}`
+        : hasLosses
+            ? `KI-Sichtbarkeit gesunken bei ${domain}`
+            : `Neue KI-Erwähnungen für ${domain}`
+
+    await transporter.sendMail({
+        from: process.env.SMTP_FROM || process.env.SMTP_USER,
+        to: email,
+        subject: hasLosses
+            ? `Achtung: KI-Erwähnungen verloren bei ${domain}`
+            : `Gute Nachrichten: Neue KI-Erwähnungen bei ${domain}`,
+        html: `<!DOCTYPE html>
+<html lang="de">
+<head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/></head>
+<body style="margin:0;padding:0;background:#05080f;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#05080f;padding:40px 20px;">
+    <tr><td align="center">
+      <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
+        <tr><td align="center" style="padding-bottom:32px;">
+          <table cellpadding="0" cellspacing="0"><tr>
+            <td style="background:linear-gradient(135deg,#7c3aed,#9333ea);border-radius:12px;width:40px;height:40px;text-align:center;vertical-align:middle;">
+              <span style="color:#fff;font-size:18px;font-weight:bold;">&#x2728;</span>
+            </td>
+            <td style="padding-left:10px;vertical-align:middle;">
+              <span style="color:#ffffff;font-size:20px;font-weight:700;">Audit<span style="color:#a78bfa;">AI</span></span>
+            </td>
+          </tr></table>
+        </td></tr>
+        <tr><td style="background:#0d1117;border:1px solid rgba(255,255,255,0.07);border-radius:20px;padding:36px 40px;">
+          <p style="margin:0 0 4px;font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.1em;">GEO Sichtbarkeits-Alert</p>
+          <p style="margin:0 0 6px;font-size:22px;font-weight:700;color:#ffffff;">${headline}</p>
+          <p style="margin:0 0 28px;font-size:14px;color:#64748b;">${domain} &middot; Wöchentlicher Check</p>
+          <div style="margin-bottom:24px;">
+            ${lossBlock}
+            ${gainBlock}
+          </div>
+          <table cellpadding="0" cellspacing="0"><tr>
+            <td style="background:linear-gradient(135deg,#7c3aed,#9333ea);border-radius:12px;padding:1px;">
+              <a href="${dashboardUrl}" style="display:block;background:#0d1117;border-radius:11px;padding:12px 28px;font-size:14px;font-weight:600;color:#ffffff;text-decoration:none;">
+                KI-Sichtbarkeit ansehen &rarr;
+              </a>
+            </td>
+          </tr></table>
+          <hr style="border:none;border-top:1px solid rgba(255,255,255,0.06);margin:28px 0;"/>
+          <p style="margin:0;font-size:13px;color:#64748b;">Deine AuditAI GEO-Automatisierung</p>
+        </td></tr>
+        <tr><td align="center" style="padding-top:24px;">
+          <p style="margin:0;font-size:11px;color:#334155;">Diese E-Mail wurde automatisch von deinem wöchentlichen GEO-Check ausgelöst.</p>
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`,
+    })
+}
+
 export async function sendNewKeywordsAlert({ email, domain, keywords }) {
     const dashboardUrl = `${APP_URL}/seo/dashboard`
     await transporter.sendMail({

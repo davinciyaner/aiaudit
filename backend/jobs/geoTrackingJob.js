@@ -2,7 +2,25 @@ import cron from 'node-cron'
 import GeoTrackedSite from '../models/geo_tracked_site.js'
 import GeoMentionCheck from '../models/geo_mention_check.js'
 import ProductSubscription from '../models/product_subscription.js'
+import User from '../models/auth_model.js'
 import { checkSiteMentions } from '../services/geoService.js'
+import { sendGeoRankingAlert } from '../utils/mailer.js'
+
+const mentionKey = (r) => `${r.keyword} ${r.platform} ${r.promptIntent}`
+
+export function detectMentionChanges(newResults, previousMap) {
+    const gains  = []
+    const losses = []
+    for (const r of newResults) {
+        const prevMentioned = previousMap[mentionKey(r)]
+        if (prevMentioned == null) continue
+        if (prevMentioned === r.mentioned) continue
+
+        if (r.mentioned) gains.push({ keyword: r.keyword, platform: r.platform, promptIntent: r.promptIntent })
+        else losses.push({ keyword: r.keyword, platform: r.platform, promptIntent: r.promptIntent })
+    }
+    return { gains, losses }
+}
 
 async function runWeeklyGeoChecks() {
     try {
@@ -20,6 +38,16 @@ async function runWeeklyGeoChecks() {
 
         for (const site of sites) {
             try {
+                const platforms = site.platforms?.length ? site.platforms : ['claude']
+                const previousMap = {}
+                for (const kw of site.keywords) {
+                    for (const platform of platforms) {
+                        const prev = await GeoMentionCheck.findOne({ siteId: site._id, keyword: kw, platform })
+                            .sort({ checkedAt: -1 }).lean()
+                        if (prev) previousMap[`${kw} ${platform} ${prev.promptIntent}`] = prev.mentioned
+                    }
+                }
+
                 const results = await checkSiteMentions(site, site.promptVariants)
 
                 await GeoMentionCheck.insertMany(results.map(r => ({
@@ -38,6 +66,22 @@ async function runWeeklyGeoChecks() {
                 await GeoTrackedSite.updateOne({ _id: site._id }, { lastChecked: new Date() })
                 const mentioned = results.filter(r => r.mentioned).length
                 console.log(`GEO check abgeschlossen: ${site.domain} (${results.length} Checks, ${mentioned} erwähnt)`)
+
+                if (Object.keys(previousMap).length > 0) {
+                    const { gains, losses } = detectMentionChanges(results, previousMap)
+
+                    if (gains.length || losses.length) {
+                        try {
+                            const user = await User.findById(site.userId).lean()
+                            if (user?.email && user.geoEmailAlerts !== false) {
+                                await sendGeoRankingAlert({ email: user.email, domain: site.domain, gains, losses })
+                                console.log(`GEO alert gesendet an ${user.email} für ${site.domain} (${losses.length} Verluste, ${gains.length} Gewinne)`)
+                            }
+                        } catch (alertErr) {
+                            console.error(`GEO alert fehlgeschlagen für ${site.domain}:`, alertErr.message)
+                        }
+                    }
+                }
             } catch (err) {
                 console.error(`GEO check fehlgeschlagen für ${site.domain}:`, err.message)
             }
@@ -55,3 +99,5 @@ export function startGeoTrackingJob() {
     cron.schedule('0 5 * * 1', runWeeklyGeoChecks)
     console.log('GEO tracking job gestartet')
 }
+
+export { runWeeklyGeoChecks }
