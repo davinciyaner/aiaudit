@@ -10,6 +10,10 @@ import { checkSiteMentions, PLATFORM_COSTS, PROMPT_INTENTS } from '../services/g
 import { analyzeGEO } from './geo.js'
 
 const VALID_PLATFORMS = ['claude', 'chatgpt', 'perplexity', 'google_aio']
+const ALLOWED_CITATION_HOSTNAMES = new Set([
+    'example.com',
+    'www.example.com',
+])
 
 const PLAN_LIMITS = {
     einsteiger: { maxSites: 1,  maxKeywords: 10,  platforms: ['claude'],                                      manualChecksPerMonth: 2,  promptVariants: 1 },
@@ -476,7 +480,11 @@ function fetchSafely(url, { headers = {}, timeoutMs = 10000, maxRedirects = 3 } 
                 return reject(new Error('Ungültige URL'))
             }
             if (!['http:', 'https:'].includes(parsed.protocol)) return reject(new Error('Nur http/https erlaubt'))
-            if (parsed.hostname === 'localhost') return reject(new Error('Interne Adressen sind nicht erlaubt'))
+            const hostname = parsed.hostname.toLowerCase()
+            if (hostname === 'localhost') return reject(new Error('Interne Adressen sind nicht erlaubt'))
+            if (!ALLOWED_CITATION_HOSTNAMES.has(hostname)) {
+                return reject(new Error('Ziel-Host ist nicht erlaubt'))
+            }
 
             const lib = parsed.protocol === 'https:' ? https : http
             const req = lib.get(currentUrl, { headers, lookup: safeLookup, timeout: timeoutMs }, (response) => {
