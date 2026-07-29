@@ -9,6 +9,7 @@ const userSchema = new mongoose.Schema({
     resetTokenExpiry: { type: Date },
     marketingConsent: { type: Boolean, default: false },
     seoEmailAlerts: { type: Boolean, default: true },
+    geoEmailAlerts: { type: Boolean, default: true },
 }, { timestamps: true })
 
 export default mongoose.model("User", userSchema)
