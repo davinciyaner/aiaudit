@@ -23,7 +23,7 @@ const jsonLd = {
     description: 'Schema Markup (JSON-LD) einfach erklärt: die wichtigsten Typen für KI-Zitierbarkeit, kostenlose Test-Tools und der häufigste Fehler, der Rich Results kostet.',
     image: 'https://www.sitecheckai.dev/blog/schema-markup-ki-zitate/opengraph-image',
     datePublished: '2026-07-26T09:00:00+02:00',
-    dateModified: '2026-07-26T09:00:00+02:00',
+    dateModified: '2026-07-30T09:00:00+02:00',
     author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev/about' },
     publisher: {
         '@type': 'Organization',
@@ -119,6 +119,7 @@ export default function SchemaMarkupPage() {
                         </span>
                         <span className="text-xs text-slate-600">26. Juli 2026</span>
                         <span className="text-xs text-slate-600">· 7 min Lesezeit</span>
+                        <span className="text-xs text-slate-600">· Aktualisiert am 30. Juli 2026</span>
                     </div>
                     <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight tracking-tight mb-5">
                         Schema Markup für KI-Zitate: So wirst du für ChatGPT & Co. zitierfähig
@@ -150,7 +151,11 @@ export default function SchemaMarkupPage() {
                             , die eine standardisierte Sprache (schema.org) nutzt, um Inhalte maschinenlesbar zu beschreiben - meist unsichtbar im <code className="text-xs bg-white/[0.06] px-1.5 py-0.5 rounded">&lt;head&gt;</code>-Bereich eingebettet. Statt dass eine KI aus Fließtext erraten muss, wer der Autor eines Artikels ist oder was ein Produkt kostet, steht es explizit und eindeutig im Markup.
                         </p>
                         <p className="mt-4">
-                            Für klassisches SEO ermöglicht Schema Markup Rich Results - Sternebewertungen, FAQ-Boxen, Preisangaben direkt in den Suchergebnissen. Für GEO ist der Effekt ähnlich, aber noch direkter: KI-Modelle nutzen strukturierte Daten, um Fakten präzise zu extrahieren, statt sie aus mehrdeutigem Text zu interpretieren.
+                            Für klassisches SEO ermöglicht Schema Markup Rich Results - Sternebewertungen, FAQ-Boxen, Preisangaben direkt in den Suchergebnissen. Für{' '}
+                            <Link href="/blog/geo-optimierung-2026" className="text-cyan-400 hover:text-cyan-300 underline underline-offset-2">GEO</Link>
+                            {' '}ist der Effekt ähnlich, aber noch direkter: KI-Modelle nutzen strukturierte Daten, um Fakten präzise zu extrahieren, statt sie aus mehrdeutigem Text zu interpretieren. Zusammen mit{' '}
+                            <Link href="/blog/llms-txt-erklaert" className="text-cyan-400 hover:text-cyan-300 underline underline-offset-2">llms.txt</Link>
+                            {' '}ist es eines der zwei zentralen technischen GEO-Fundamente.
                         </p>
                     </section>
 
@@ -185,7 +190,7 @@ export default function SchemaMarkupPage() {
                     <section>
                         <h2 className="text-2xl font-bold text-white mb-4">Der häufigste Fehler: Schema, das nicht zum sichtbaren Inhalt passt</h2>
                         <p>
-                            Ein überraschend häufiger Fehler, auch bei technisch versierten Teams: Das FAQ-Schema im JSON-LD listet andere oder mehr Fragen, als tatsächlich sichtbar auf der Seite stehen. Das passiert leicht, wenn FAQ-Content und Schema an zwei getrennten Stellen im Code gepflegt werden und bei einer Content-Änderung nur eine der beiden Stellen aktualisiert wird.
+                            Ein Fehler, der uns in Audits auch bei technisch versierten Teams immer wieder auffällt: Das FAQ-Schema im JSON-LD listet andere oder mehr Fragen, als tatsächlich sichtbar auf der Seite stehen. Das passiert leicht, wenn FAQ-Content und Schema an zwei getrennten Stellen im Code gepflegt werden und bei einer Content-Änderung nur eine der beiden Stellen aktualisiert wird.
                         </p>
                         <p className="mt-4">
                             Das Problem: Sowohl Google als auch KI-Modelle gleichen strukturierte Daten mit dem sichtbaren HTML ab. Eine Abweichung bedeutet nicht nur, dass die zusätzlichen Schema-Fragen wirkungslos bleiben - Google wertet eklatante Diskrepanzen zwischen Markup und sichtbarem Inhalt explizit als Richtlinienverstoß.

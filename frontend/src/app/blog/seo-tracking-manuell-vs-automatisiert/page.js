@@ -24,7 +24,7 @@ const jsonLd = {
     description: 'Manuelles SEO- und GEO-Tracking vs. Automatisierung im Vergleich: Zeitaufwand, Kosten und warum KI-Sichtbarkeit manuell kaum zuverlässig messbar ist.',
     image: 'https://www.sitecheckai.dev/blog/seo-tracking-manuell-vs-automatisiert/opengraph-image',
     datePublished: '2026-07-15T09:00:00+02:00',
-    dateModified: '2026-07-26T09:00:00+02:00',
+    dateModified: '2026-07-30T09:00:00+02:00',
     author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev/about' },
     publisher: {
         '@type': 'Organization',
@@ -124,6 +124,7 @@ export default function SeoTrackingVergleichPage() {
                         </span>
                         <span className="text-xs text-slate-600">15. Juli 2026</span>
                         <span className="text-xs text-slate-600">· 9 min Lesezeit</span>
+                        <span className="text-xs text-slate-600">· Aktualisiert am 30. Juli 2026</span>
                     </div>
                     <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight tracking-tight mb-5">
                         Manuelles SEO-Tracking vs. automatisiert: Was lohnt sich wirklich?
@@ -150,7 +151,10 @@ export default function SeoTrackingVergleichPage() {
                         <p>
                             Manuelles SEO-Tracking heißt: einmal pro Woche (realistisch eher unregelmäßiger) in die{' '}
                             <a href="https://search.google.com/search-console/about" target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:text-emerald-300 underline underline-offset-2">Google Search Console</a>{' '}
-                            gehen, Positionen für die wichtigsten Keywords prüfen, kurz schauen wer auf den vorderen Plätzen mitkonkurriert, und vielleicht noch neue Keyword-Ideen recherchieren. Für eine Website mit einer überschaubaren Keyword-Liste ist das machbar - realistisch 60 bis 90 Minuten pro Woche, je nachdem wie gründlich.
+                            gehen, Positionen für die wichtigsten Keywords prüfen, kurz schauen wer auf den vorderen Plätzen mitkonkurriert, und vielleicht noch neue Keyword-Ideen recherchieren. Für eine Website mit einer überschaubaren Keyword-Liste ist das machbar - realistisch 60 bis 90 Minuten pro Woche, je nachdem wie gründlich (die feste Reihenfolge dafür steht in unserer{' '}
+                            <Link href="/blog/seo-checkliste-2026" className="text-emerald-400 hover:text-emerald-300 underline underline-offset-2">
+                                SEO-Checkliste 2026
+                            </Link>).
                         </p>
                         <p className="mt-4">
                             Bei KI-Sichtbarkeit wird es schwieriger. Manuell würdest du dieselben Fragen wiederholt in ChatGPT, Claude, Perplexity und Google AI Overview eingeben und protokollieren, ob deine Marke in der Antwort vorkommt. Das Problem:{' '}

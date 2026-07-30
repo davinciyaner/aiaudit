@@ -23,7 +23,7 @@ const jsonLd = {
     description: 'SEO-Audit selbst durchführen vs. SEO-Agentur beauftragen: Kosten, was jede Option wirklich abdeckt, und für wen sich was lohnt.',
     image: 'https://www.sitecheckai.dev/blog/seo-test-vs-agentur/opengraph-image',
     datePublished: '2026-07-26T09:00:00+02:00',
-    dateModified: '2026-07-26T09:00:00+02:00',
+    dateModified: '2026-07-30T09:00:00+02:00',
     author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev/about' },
     publisher: {
         '@type': 'Organization',
@@ -136,6 +136,7 @@ export default function SeoTestVsAgenturPage() {
                         </span>
                         <span className="text-xs text-slate-600">26. Juli 2026</span>
                         <span className="text-xs text-slate-600">· 8 min Lesezeit</span>
+                        <span className="text-xs text-slate-600">· Aktualisiert am 30. Juli 2026</span>
                     </div>
                     <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight tracking-tight mb-5">
                         SEO-Test selbst machen oder Agentur beauftragen?
@@ -178,7 +179,10 @@ export default function SeoTestVsAgenturPage() {
                     <section>
                         <h2 className="text-2xl font-bold text-white mb-4">Was ein automatisierter SEO-Test abdeckt - und was nicht</h2>
                         <p>
-                            Ein Tool wie AuditAI ist ein Diagnose-Instrument, keine Ersatz-Agentur. Es findet technische Probleme automatisch und wiederholt - schreibt aber keine Inhalte und baut keine Backlinks auf.
+                            Ein Tool wie AuditAI ist ein Diagnose-Instrument, keine Ersatz-Agentur. Es findet technische Probleme automatisch und wiederholt - schreibt aber keine Inhalte und baut keine Backlinks auf. Welche Fehler das konkret sind, steht mit Zahlen und Fix-Anleitung in unserem Artikel zu den{' '}
+                            <Link href="/blog/seo-test-haeufige-fehler" className="text-amber-400 hover:text-amber-300 underline underline-offset-2">
+                                10 häufigsten SEO-Fehlern
+                            </Link>.
                         </p>
                         <div className="space-y-3 mt-5">
                             {TEST_SCOPE.map((s) => (

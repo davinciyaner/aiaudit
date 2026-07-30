@@ -24,7 +24,7 @@ const jsonLd = {
     description: 'GEO (Generative Engine Optimization) erklärt: Wie du deine Website optimierst damit ChatGPT, Claude, Perplexity und Google AI Overview sie als Quelle zitieren.',
     image: 'https://www.sitecheckai.dev/blog/geo-optimierung-2026/opengraph-image',
     datePublished: '2026-06-10T09:00:00+02:00',
-    dateModified: '2026-07-26T09:00:00+02:00',
+    dateModified: '2026-07-30T09:00:00+02:00',
     author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev/about' },
     publisher: {
         '@type': 'Organization',
@@ -95,6 +95,26 @@ const faqLd = {
     ],
 }
 
+const howToLd = {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name: 'GEO-Optimierung: Die 10 wichtigsten Quick-Wins umsetzen',
+    description: 'Die zehn GEO-Quick-Wins in der Reihenfolge, in der sie zuerst umgesetzt werden sollten.',
+    totalTime: 'PT60M',
+    step: [
+        { '@type': 'HowToStep', name: 'llms.txt erstellen', text: '/llms.txt mit klarer Produktbeschreibung anlegen.' },
+        { '@type': 'HowToStep', name: 'llms-full.txt erstellen', text: 'Ausführliche Version mit Preisen, Features, FAQs.' },
+        { '@type': 'HowToStep', name: 'Organization Schema', text: 'JSON-LD mit Name, URL, Logo, sameAs einbinden.' },
+        { '@type': 'HowToStep', name: 'FAQ Schema + HTML-Content', text: 'Fragen im JSON-LD UND als sichtbarer Text auf der Seite.' },
+        { '@type': 'HowToStep', name: 'KI-Crawler erlauben', text: 'GPTBot, ClaudeBot, anthropic-ai, PerplexityBot in robots.txt zulassen.' },
+        { '@type': 'HowToStep', name: 'Sitemap aktuell halten', text: 'Alle relevanten Seiten in sitemap.xml eintragen.' },
+        { '@type': 'HowToStep', name: 'Klare Produktdefinition', text: '"X ist Y für Z" in den ersten 100 Wörtern der Homepage.' },
+        { '@type': 'HowToStep', name: 'Zahlen & Statistiken', text: 'Konkrete Daten liefern, die KI-Modelle gerne zitieren.' },
+        { '@type': 'HowToStep', name: 'About/Founder-Seite', text: 'Wer steckt dahinter - E-E-A-T-Signal für KI-Modelle.' },
+        { '@type': 'HowToStep', name: 'Externe Quellenverweise', text: 'Links zu autoritären Quellen wie Google, OWASP oder Schema.org setzen.' },
+    ],
+}
+
 const SIGNALS = [
     {
         number: '01',
@@ -150,6 +170,7 @@ export default function GeoArtikelPage() {
         <main className="bg-[#05080f] min-h-screen">
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
             <Navbar />
 
@@ -172,6 +193,7 @@ export default function GeoArtikelPage() {
                         </span>
                         <span className="text-xs text-slate-600">10. Juni 2026</span>
                         <span className="text-xs text-slate-600">· 8 min Lesezeit</span>
+                        <span className="text-xs text-slate-600">· Aktualisiert am 30. Juli 2026</span>
                     </div>
                     <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight tracking-tight mb-5">
                         GEO-Optimierung 2026: So wirst du von ChatGPT und Claude empfohlen
@@ -195,7 +217,26 @@ export default function GeoArtikelPage() {
                 {/* Content */}
                 <div className="prose prose-invert prose-slate max-w-none space-y-10 text-slate-300 leading-relaxed">
 
-                    <section>
+                    <nav aria-label="Inhaltsverzeichnis" className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
+                        <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">In diesem Artikel</p>
+                        <ol className="grid sm:grid-cols-2 gap-x-6 gap-y-1.5 text-sm">
+                            <li><a href="#was-ist-geo" className="text-slate-400 hover:text-cyan-300 transition-colors">Was ist GEO-Optimierung?</a></li>
+                            <li><a href="#warum-geo" className="text-slate-400 hover:text-cyan-300 transition-colors">Warum ist GEO 2026 entscheidend?</a></li>
+                            <li><a href="#geo-vs-seo" className="text-slate-400 hover:text-cyan-300 transition-colors">GEO vs. SEO im Vergleich</a></li>
+                            {SIGNALS.map((s) => (
+                                <li key={s.number}>
+                                    <a href={`#signal-${s.number}`} className="text-slate-400 hover:text-cyan-300 transition-colors">
+                                        <span className="font-mono text-slate-600 mr-1.5">{s.number}</span>{s.title}
+                                    </a>
+                                </li>
+                            ))}
+                            <li><a href="#ki-modelle" className="text-slate-400 hover:text-cyan-300 transition-colors">Welche KI-Modelle profitieren von GEO?</a></li>
+                            <li><a href="#quick-wins" className="text-slate-400 hover:text-cyan-300 transition-colors">10 GEO-Quick-Wins</a></li>
+                            <li><a href="#faq" className="text-slate-400 hover:text-cyan-300 transition-colors">Häufige Fragen</a></li>
+                        </ol>
+                    </nav>
+
+                    <section id="was-ist-geo" className="scroll-mt-28">
                         <h2 className="text-2xl font-bold text-white mb-4">Was ist GEO-Optimierung?</h2>
                         <p>
                             GEO steht für <strong className="text-white">Generative Engine Optimization</strong> - die Optimierung deiner Website für KI-Modelle wie ChatGPT, Claude, Perplexity, Gemini oder YouChat. Der Begriff wurde 2023 in der <a href="https://arxiv.org/abs/2311.09735" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline underline-offset-2">GEO-Forschungsarbeit von Princeton, Georgia Tech und dem Allen Institute for AI</a> geprägt. Während SEO darauf abzielt in Googles Suchergebnissen weit oben zu erscheinen, sorgt GEO dafür, dass KI-Modelle deine Website als vertrauenswürdige Quelle erkennen und in ihren Antworten zitieren.
@@ -205,10 +246,10 @@ export default function GeoArtikelPage() {
                         </p>
                     </section>
 
-                    <section>
+                    <section id="warum-geo" className="scroll-mt-28">
                         <h2 className="text-2xl font-bold text-white mb-4">Warum ist GEO 2026 entscheidend?</h2>
                         <p>
-                            ChatGPT hat laut <a href="https://techcrunch.com/2026/02/27/chatgpt-reaches-900m-weekly-active-users" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline underline-offset-2">OpenAI-Angaben über 900 Millionen wöchentliche Nutzer</a> (Stand Februar 2026). Perplexity beantwortet täglich Millionen von Suchanfragen mit zitierten Quellen. Claude wird zunehmend in Business-Workflows eingesetzt. Immer mehr Menschen fragen nicht mehr Google - sie fragen eine KI.
+                            ChatGPT hat laut <a href="https://techcrunch.com/2026/02/27/chatgpt-reaches-900m-weekly-active-users" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline underline-offset-2">OpenAI-Angaben über 900 Millionen wöchentliche Nutzer</a> (Stand Februar 2026). Perplexity liefert als Antwortmaschine direkt zitierte Quellen statt einer Linkliste und wächst weiter rapide. Claude wird zunehmend in Business-Workflows eingesetzt. Immer mehr Menschen fragen nicht mehr Google - sie fragen eine KI.
                         </p>
                         <p className="mt-4">
                             Wer bei diesen Antworten nicht vorkommt, verliert sichtbar an Reichweite - selbst wenn Google-Rankings sich nicht verändern. Das ist der blinde Fleck der meisten SEO-Strategien in 2026.
@@ -221,7 +262,7 @@ export default function GeoArtikelPage() {
                         </div>
                     </section>
 
-                    <section>
+                    <section id="geo-vs-seo" className="scroll-mt-28">
                         <h2 className="text-2xl font-bold text-white mb-4">GEO vs. SEO: Was ist der Unterschied?</h2>
                         <div className="overflow-hidden rounded-2xl border border-white/[0.07]">
                             <table className="w-full text-sm">
@@ -268,7 +309,7 @@ export default function GeoArtikelPage() {
                         </figure>
                         <div className="space-y-4">
                             {SIGNALS.map((s) => (
-                                <div key={s.number} className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5">
+                                <div key={s.number} id={`signal-${s.number}`} className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5 scroll-mt-28">
                                     <div className="flex items-start gap-4">
                                         <span className="text-[11px] font-bold font-mono shrink-0 mt-0.5" style={{ color: s.color }}>{s.number}</span>
                                         <div className="flex-1">
@@ -304,7 +345,7 @@ export default function GeoArtikelPage() {
                         </div>
                     </section>
 
-                    <section>
+                    <section id="ki-modelle" className="scroll-mt-28">
                         <h2 className="text-2xl font-bold text-white mb-4">Welche KI-Modelle profitieren von GEO?</h2>
                         <p>
                             Nicht alle KI-Modelle funktionieren gleich. Es gibt zwei grundlegende Typen:
@@ -320,7 +361,7 @@ export default function GeoArtikelPage() {
                         </p>
                     </section>
 
-                    <section>
+                    <section id="quick-wins" className="scroll-mt-28">
                         <h2 className="text-2xl font-bold text-white mb-4">Welche 10 GEO-Quick-Wins solltest du zuerst umsetzen?</h2>
                         <div className="space-y-2">
                             {[
@@ -348,7 +389,7 @@ export default function GeoArtikelPage() {
                         </div>
                     </section>
 
-                    <section>
+                    <section id="faq" className="scroll-mt-28">
                         <h2 className="text-2xl font-bold text-white mb-4">Häufige Fragen zu GEO</h2>
                         <div className="space-y-4">
                             {[

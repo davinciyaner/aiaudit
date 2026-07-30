@@ -23,7 +23,7 @@ const jsonLd = {
     description: 'llms.txt einfach erklärt: die robots.txt für KI-Modelle. Herkunft, Aufbau, Unterschied zu llms-full.txt und eine Schritt-für-Schritt-Anleitung.',
     image: 'https://www.sitecheckai.dev/blog/llms-txt-erklaert/opengraph-image',
     datePublished: '2026-07-26T09:00:00+02:00',
-    dateModified: '2026-07-26T09:00:00+02:00',
+    dateModified: '2026-07-30T09:00:00+02:00',
     author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev/about' },
     publisher: {
         '@type': 'Organization',
@@ -91,6 +91,21 @@ const STRUCTURE = [
     { part: '## Optional', desc: 'Ein Abschnitt für weniger wichtige Links, die KI-Modelle bei Bedarf überspringen können.' },
 ]
 
+const howToLd = {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name: 'Eine llms.txt erstellen',
+    description: 'Die Struktur einer llms.txt-Datei Schritt für Schritt aufgebaut, laut llmstxt.org-Spezifikation.',
+    totalTime: 'PT10M',
+    step: [
+        { '@type': 'HowToStep', name: 'Projektname als H1', text: 'Ein H1 mit dem Namen deiner Website oder deines Produkts - Pflichtfeld laut Spezifikation.' },
+        { '@type': 'HowToStep', name: 'Kurzbeschreibung als Blockquote', text: 'Ein Blockquote-Absatz: was die Website ist, in ein bis zwei Sätzen, ohne Marketing-Floskeln.' },
+        { '@type': 'HowToStep', name: 'Abschnitte mit Links', text: 'Frei wählbare H2-Überschriften (z. B. "Docs", "Preise", "API") mit Markdown-Links zu den wichtigsten Unterseiten.' },
+        { '@type': 'HowToStep', name: 'Optional-Abschnitt', text: 'Ein Abschnitt für weniger wichtige Links, die KI-Modelle bei Bedarf überspringen können.' },
+        { '@type': 'HowToStep', name: 'Unter /llms.txt veröffentlichen', text: 'Datei öffentlich und ohne Login im Root-Verzeichnis der Domain bereitstellen, im validen Markdown-Format.' },
+    ],
+}
+
 const MISTAKES = [
     { title: 'Marketing-Text statt Fakten', desc: 'llms.txt sollte präzise und faktisch sein - "X ist ein Y für Z, das A macht" statt Werbesprache. KI-Modelle extrahieren daraus direkte Aussagen.' },
     { title: 'Datei blockiert oder hinter Login', desc: 'llms.txt muss öffentlich ohne Authentifizierung erreichbar sein - sonst können KI-Crawler es gar nicht lesen.' },
@@ -103,6 +118,7 @@ export default function LlmsTxtPage() {
         <main className="bg-[#05080f] min-h-screen">
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
             <Navbar />
 
@@ -125,6 +141,7 @@ export default function LlmsTxtPage() {
                         </span>
                         <span className="text-xs text-slate-600">26. Juli 2026</span>
                         <span className="text-xs text-slate-600">· 7 min Lesezeit</span>
+                        <span className="text-xs text-slate-600">· Aktualisiert am 30. Juli 2026</span>
                     </div>
                     <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight tracking-tight mb-5">
                         llms.txt erklärt: Was es ist und wie du es richtig einrichtest
@@ -166,7 +183,13 @@ export default function LlmsTxtPage() {
                             Viele KI-Crawler lesen llms.txt als erste Orientierung, bevor sie den Rest der Website crawlen - ähnlich wie Googlebot zuerst robots.txt und sitemap.xml prüft. Eine gepflegte llms.txt erhöht die Wahrscheinlichkeit, dass ein KI-Modell deine Produktdefinition korrekt versteht, statt sie aus fragmentierten HTML-Schnipseln zu erraten.
                         </p>
                         <p className="mt-4">
-                            Wichtig für die Einordnung: llms.txt ist kein offizieller Standard von Google, OpenAI oder Anthropic und garantiert keine Zitate. Es ist ein freiwilliger, offener Vorschlag - aber einer, den immer mehr Dokumentations-Plattformen und Tools übernehmen, weil er strukturell Sinn ergibt.
+                            Wichtig für die Einordnung: llms.txt ist kein offizieller Standard von Google, OpenAI oder Anthropic und garantiert keine Zitate. Es ist ein freiwilliger, offener Vorschlag - aber einer, den immer mehr Dokumentations-Plattformen und Tools übernehmen, weil er strukturell Sinn ergibt. Es ist nur eines von mehreren GEO-Signalen - die vollständige Übersicht steht in unserem Artikel zur{' '}
+                            <Link href="/blog/geo-optimierung-2026" className="text-cyan-400 hover:text-cyan-300 underline underline-offset-2">
+                                GEO-Optimierung 2026
+                            </Link>, zusammen mit{' '}
+                            <Link href="/blog/schema-markup-ki-zitate" className="text-cyan-400 hover:text-cyan-300 underline underline-offset-2">
+                                Schema Markup für KI-Zitate
+                            </Link>.
                         </p>
                     </section>
 
