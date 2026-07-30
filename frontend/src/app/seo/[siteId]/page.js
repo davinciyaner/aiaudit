@@ -879,7 +879,7 @@ function KeywordIdeasTab({ siteId }) {
     if (!loaded) return (
         <div className="flex flex-col items-center justify-center py-20 gap-4">
             <Lightbulb className="w-10 h-10 text-emerald-500/30" />
-            <p className="text-slate-500 text-sm text-center">Suchvolumen deiner Keywords + 20 neue Keyword-Ideen<br/>laden (DataForSEO Credits werden verbraucht)</p>
+            <p className="text-slate-500 text-sm text-center">Suchvolumen deiner Keywords + 20 neue Keyword-Ideen laden</p>
             <button onClick={fetch_} disabled={loading}
                 className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-sm font-semibold rounded-xl transition-all disabled:opacity-50">
                 {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Lightbulb className="w-4 h-4" />}

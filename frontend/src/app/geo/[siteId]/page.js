@@ -65,9 +65,14 @@ const CORRELATION_VERDICT_META = {
     neither:  { label: 'Beides fehlt',    color: 'text-slate-500',   bg: 'bg-white/5',        border: 'border-white/10'      },
 }
 
+// Muss mit SEO_VISIBLE_THRESHOLD in backend/controllers/geo_tracking.js übereinstimmen — eine
+// Position kann existieren (z.B. #91), zählt aber erst ab hier als "bei Google auffindbar" (Seite 1-2).
+const SEO_VISIBLE_THRESHOLD = 20
+
 function CorrelationPanel({ siteId }) {
     const [data, setData]       = useState(null)
     const [loading, setLoading] = useState(true)
+    const [expanded, setExpanded] = useState(false)
 
     useEffect(() => {
         const token = localStorage.getItem('token')
@@ -106,6 +111,8 @@ function CorrelationPanel({ siteId }) {
         )
     }
 
+    const visible = expanded ? data.matched : data.matched.slice(0, 3)
+
     return (
         <div className="bg-[#0d1117] border border-white/[0.06] rounded-2xl p-5 mb-6">
             <div className="flex items-center justify-between mb-4">
@@ -123,12 +130,23 @@ function CorrelationPanel({ siteId }) {
                         </tr>
                     </thead>
                     <tbody>
-                        {data.matched.map(m => {
+                        {visible.map(m => {
                             const v = CORRELATION_VERDICT_META[m.verdict]
+                            const seoVisible = m.seoPosition != null && m.seoPosition <= SEO_VISIBLE_THRESHOLD
                             return (
                                 <tr key={m.keyword} className="border-b border-white/[0.04] last:border-0">
                                     <td className="py-2.5 pr-3 text-slate-200">{m.keyword}</td>
-                                    <td className="py-2.5 pr-3 text-slate-400">{m.seoPosition != null ? `#${m.seoPosition}` : '—'}</td>
+                                    <td className="py-2.5 pr-3">
+                                        {m.seoPosition == null ? (
+                                            <span className="text-slate-600">—</span>
+                                        ) : seoVisible ? (
+                                            <span className="text-emerald-400 font-semibold">#{m.seoPosition}</span>
+                                        ) : (
+                                            <span className="text-slate-600" title={`Position ${m.seoPosition} — außerhalb der ersten 20 Ergebnisse, praktisch nicht auffindbar`}>
+                                                #{m.seoPosition} <span className="text-[10px]">(nicht sichtbar)</span>
+                                            </span>
+                                        )}
+                                    </td>
                                     <td className="py-2.5 pr-3 text-slate-400">{m.geoChecked ? (m.geoMentioned ? 'Ja' : 'Nein') : '—'}</td>
                                     <td className="py-2.5">
                                         <span className={`inline-flex text-xs font-semibold px-2 py-0.5 rounded-md border ${v.color} ${v.bg} ${v.border}`}>{v.label}</span>
@@ -138,6 +156,106 @@ function CorrelationPanel({ siteId }) {
                         })}
                     </tbody>
                 </table>
+            </div>
+            {data.matched.length > 3 && (
+                <button onClick={() => setExpanded(v => !v)}
+                    className="mt-3 text-xs text-violet-400 hover:text-violet-300">
+                    {expanded ? 'Weniger anzeigen' : `Alle ${data.matched.length} anzeigen`}
+                </button>
+            )}
+        </div>
+    )
+}
+
+// Schlägt SEO-Keywords vor, die noch nicht im GEO-Tracking sind — schließt die Lücke, die
+// CorrelationPanel aufzeigt (wenig Überschneidung = die Korrelation liefert kaum echte Insights).
+function KeywordSuggestionsPanel({ siteId, onAdded }) {
+    const [suggestions, setSuggestions] = useState(null)
+    const [loading, setLoading]         = useState(true)
+    const [selected, setSelected]       = useState(new Set())
+    const [adding, setAdding]           = useState(false)
+
+    const fetchSuggestions = useCallback(async () => {
+        const token = localStorage.getItem('token')
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/geo/sites/${siteId}/keyword-suggestions`, {
+            headers: { Authorization: `Bearer ${token}` },
+        })
+        const d = await res.json()
+        const list = res.ok ? (d.suggestions || []) : []
+        setSuggestions(list)
+        setSelected(new Set(list)) // standardmäßig alle vorausgewählt — Nutzer kann gezielt abwählen
+        setLoading(false)
+    }, [siteId])
+
+    useEffect(() => { fetchSuggestions() }, [fetchSuggestions])
+
+    const toggle = (kw) => setSelected(prev => {
+        const next = new Set(prev); next.has(kw) ? next.delete(kw) : next.add(kw); return next
+    })
+
+    const addKeywords = async (keywords) => {
+        if (!keywords.length) return
+        setAdding(true)
+        try {
+            const token = localStorage.getItem('token')
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/geo/sites/${siteId}/keywords`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+                body: JSON.stringify({ keywords }),
+            })
+            const d = await res.json()
+            if (!res.ok) throw new Error(d.error)
+            toast.success(`${d.added} Keyword${d.added !== 1 ? 's' : ''} zu GEO hinzugefügt`)
+            onAdded?.()
+            await fetchSuggestions() // Liste aktualisiert sich automatisch, da weniger seoOnlyKeywords übrig sind
+        } catch (err) {
+            toast.error(err.message || 'Fehler beim Hinzufügen')
+        } finally {
+            setAdding(false)
+        }
+    }
+
+    if (loading || !suggestions?.length) return null
+
+    return (
+        <div className="bg-[#0d1117] border border-white/[0.06] rounded-2xl p-5 mb-6">
+            <div className="flex items-center justify-between mb-1.5">
+                <h3 className="text-sm font-semibold text-white">SEO-Keywords für GEO vorschlagen</h3>
+                <span className="text-xs text-slate-600">{suggestions.length} Vorschläge</span>
+            </div>
+            <p className="text-xs text-slate-500 leading-relaxed mb-4">
+                Diese Keywords werden bereits bei SEO-Automatisierung getrackt und eignen sich als KI-Empfehlungsfrage. Wähle aus, welche zusätzlich bei GEO getrackt werden sollen.
+            </p>
+
+            <div className="space-y-1.5 mb-4 max-h-64 overflow-y-auto pr-1">
+                {suggestions.map(kw => {
+                    const checked = selected.has(kw)
+                    return (
+                        <button key={kw} type="button" onClick={() => toggle(kw)}
+                            className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-lg border text-left transition-all ${
+                                checked
+                                    ? 'bg-violet-500/10 border-violet-500/25 text-white'
+                                    : 'bg-white/[0.02] border-white/8 text-slate-500 hover:border-white/15'
+                            }`}>
+                            <div className={`w-3.5 h-3.5 rounded border shrink-0 flex items-center justify-center ${checked ? 'bg-violet-500 border-violet-500' : 'border-white/20'}`}>
+                                {checked && <Check className="w-2.5 h-2.5 text-white" strokeWidth={3.5} />}
+                            </div>
+                            <span className="text-sm">{kw}</span>
+                        </button>
+                    )
+                })}
+            </div>
+
+            <div className="flex items-center gap-2 flex-wrap">
+                <button onClick={() => addKeywords([...selected])} disabled={adding || !selected.size}
+                    className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white transition-all disabled:opacity-50">
+                    {adding ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Plus className="w-3.5 h-3.5" />}
+                    Ausgewählte hinzufügen ({selected.size})
+                </button>
+                <button onClick={() => addKeywords(suggestions)} disabled={adding}
+                    className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 transition-all disabled:opacity-50">
+                    Alle {suggestions.length} übernehmen
+                </button>
             </div>
         </div>
     )
@@ -563,6 +681,7 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
 
             <MentionHistoryChart siteId={siteId} />
             <CorrelationPanel siteId={siteId} />
+            <KeywordSuggestionsPanel siteId={siteId} onAdded={onSiteUpdated} />
             <CompetitorsPanel siteId={siteId} />
 
             {/* Plattform-Badges */}

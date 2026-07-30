@@ -1,5 +1,6 @@
 import Anthropic from '@anthropic-ai/sdk'
 import OpenAI from 'openai'
+import { jsonrepair } from 'jsonrepair'
 
 const anthropic  = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
 const openai     = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
@@ -238,27 +239,84 @@ const PLATFORM_FNS = {
     google_aio: checkWithGoogleAIOverview,
 }
 
+async function checkOneCombination(site, keyword, platform, intent) {
+    const fn = PLATFORM_FNS[platform]
+    if (!fn) return null
+    try {
+        const result = await fn(keyword, site.domain, site.language, intent)
+        const sentiment = result.mentioned ? await classifySentiment(result.context, site.domain) : null
+        return { keyword, platform, promptIntent: intent, ...result, sentiment }
+    } catch (err) {
+        console.error(`[geoService] ${platform}/${intent} Fehler bei "${keyword}":`, err.message)
+        return { keyword, platform, promptIntent: intent, mentioned: false, context: null, citations: [], sentiment: null }
+    }
+}
+
+// Plattformen sind unabhängige APIs mit eigenen Rate-Limits (Anthropic, OpenAI, Perplexity,
+// DataForSEO) — laufen pro Keyword+Variante parallel statt nacheinander. Mehrere Keyword+Varianten-
+// Kombinationen laufen ebenfalls gleichzeitig, aber mit einem Limit, damit kein einzelner Anbieter
+// zu viele parallele Anfragen gleichzeitig bekommt (Rate-Limit-Risiko).
+const CHECK_CONCURRENCY = 5
+
 export async function checkSiteMentions(site, variantCount = 1) {
     const platforms = site.platforms?.length ? site.platforms : ['claude']
     const intents = PROMPT_INTENTS.slice(0, Math.max(1, Math.min(variantCount, PROMPT_INTENTS.length)))
-    const results = []
 
+    const combos = []
     for (const keyword of site.keywords) {
-        for (const platform of platforms) {
-            const fn = PLATFORM_FNS[platform]
-            if (!fn) continue
-            for (const intent of intents) {
-                try {
-                    const result = await fn(keyword, site.domain, site.language, intent)
-                    const sentiment = result.mentioned ? await classifySentiment(result.context, site.domain) : null
-                    results.push({ keyword, platform, promptIntent: intent, ...result, sentiment })
-                } catch (err) {
-                    console.error(`[geoService] ${platform}/${intent} Fehler bei "${keyword}":`, err.message)
-                    results.push({ keyword, platform, promptIntent: intent, mentioned: false, context: null, citations: [], sentiment: null })
-                }
-                await new Promise(r => setTimeout(r, 300))
-            }
+        for (const intent of intents) {
+            combos.push({ keyword, intent })
         }
     }
+
+    const results = []
+    for (let i = 0; i < combos.length; i += CHECK_CONCURRENCY) {
+        const batch = combos.slice(i, i + CHECK_CONCURRENCY)
+        const batchResults = await Promise.all(batch.map(async ({ keyword, intent }) => {
+            const perPlatform = await Promise.all(
+                platforms.map(platform => checkOneCombination(site, keyword, platform, intent))
+            )
+            return perPlatform.filter(Boolean)
+        }))
+        results.push(...batchResults.flat())
+    }
     return results
+}
+
+// Ein gebündelter Call für die ganze Liste statt pro Keyword — SEO-Keywords sind oft enge
+// Rechercheanfragen ("keyword analyse durchführen"), die niemand einer KI als Empfehlungsfrage
+// stellen würde. Filtert auf Keywords, die als "Welches Tool empfiehlst du für X?"-Anfrage plausibel sind.
+export async function classifyGeoSuitableKeywords(keywords, language = 'de') {
+    if (!keywords.length) return []
+
+    const langLabel = language === 'de' ? 'Deutsch' : 'English'
+    const msg = await anthropic.messages.create({
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 1500,
+        messages: [{
+            role: 'user',
+            content: `Hier ist eine Liste von SEO-Keywords auf ${langLabel}. Wähle NUR die Keywords aus, die jemand realistisch als Empfehlungsfrage an ein KI-Modell wie ChatGPT stellen würde (z.B. "Welches Tool empfiehlst du für X?", "Was ist die beste Alternative zu X?"). Lass enge, technische Rechercheanfragen weg, die man nur bei Google eingibt, aber nie einer KI stellt (z.B. spezifische Metriken, Anleitungen, reine Informationsbegriffe ohne Produkt-/Tool-Bezug).
+
+Keywords:
+${keywords.map(k => `- ${k}`).join('\n')}
+
+Antworte NUR mit einem JSON-Objekt in diesem Format, ohne weiteren Text: {"suitable": ["keyword1", "keyword2"]}`,
+        }],
+    })
+
+    const text = msg.content[0]?.text || ''
+    const start = text.indexOf('{')
+    const end   = text.lastIndexOf('}')
+    if (start === -1 || end === -1) return []
+
+    const extracted = text.slice(start, end + 1)
+    let parsed
+    try {
+        parsed = JSON.parse(extracted)
+    } catch {
+        parsed = JSON.parse(jsonrepair(extracted))
+    }
+
+    const suitable = new Set((parsed.suitable || []).map(k => k.toLowerCase().trim()))
+    return keywords.filter(k => suitable.has(k.toLowerCase().trim()))
 }
