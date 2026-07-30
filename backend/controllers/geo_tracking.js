@@ -9,6 +9,12 @@ import { analyzeGEO } from './geo.js'
 import { assertPublicHttpsUrl, fetchSafely } from '../utils/safeFetch.js'
 
 const VALID_PLATFORMS = ['claude', 'chatgpt', 'perplexity', 'google_aio']
+const ALLOWED_CITATION_HOSTS = ['example.com']
+
+function isAllowedCitationHost(hostname) {
+    const lowerHost = hostname.toLowerCase()
+    return ALLOWED_CITATION_HOSTS.some(allowed => lowerHost === allowed || lowerHost.endsWith(`.${allowed}`))
+}
 
 const PLAN_LIMITS = {
     einsteiger: { maxSites: 1,  maxKeywords: 10,  platforms: ['claude'],                                      manualChecksPerMonth: 2,  promptVariants: 1 },
@@ -423,20 +429,26 @@ export async function analyzeCitation(req, res) {
         const { url } = req.body
         if (!url) return res.status(400).json({ error: 'url erforderlich' })
 
+        let parsedUrl
         try {
-            await assertPublicHttpsUrl(url)
+            parsedUrl = await assertPublicHttpsUrl(url)
         } catch (err) {
             return res.status(400).json({ error: err.message || 'Ungültige URL' })
         }
 
-        const cached = CITATION_ANALYSIS_CACHE.get(url)
+        if (!isAllowedCitationHost(parsedUrl.hostname)) {
+            return res.status(400).json({ error: 'Ziel-Domain ist nicht erlaubt' })
+        }
+
+        const normalizedUrl = parsedUrl.toString()
+        const cached = CITATION_ANALYSIS_CACHE.get(normalizedUrl)
         if (cached && cached.expiresAt > Date.now()) {
             return res.json({ analysis: cached.data, cached: true })
         }
 
         let pageRes
         try {
-            pageRes = await fetchSafely(url, {
+            pageRes = await fetchSafely(normalizedUrl, {
                 headers: { 'User-Agent': 'AuditAI-GEO-Bot/1.0' },
                 timeoutMs: 10000,
             })
@@ -446,9 +458,9 @@ export async function analyzeCitation(req, res) {
         if (!pageRes.ok) return res.status(502).json({ error: `Seite antwortete mit Status ${pageRes.status}` })
 
         const html = await pageRes.text()
-        const analysis = await analyzeGEO(url, html)
+        const analysis = await analyzeGEO(normalizedUrl, html)
 
-        CITATION_ANALYSIS_CACHE.set(url, { data: analysis, expiresAt: Date.now() + CITATION_CACHE_TTL_MS })
+        CITATION_ANALYSIS_CACHE.set(normalizedUrl, { data: analysis, expiresAt: Date.now() + CITATION_CACHE_TTL_MS })
 
         res.json({ analysis, cached: false })
     } catch (err) {
