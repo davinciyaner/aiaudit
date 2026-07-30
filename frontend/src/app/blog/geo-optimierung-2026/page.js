@@ -6,7 +6,7 @@ import Footer from '../../components/Footer'
 export const metadata = {
     title: 'GEO-Optimierung 2026: So wirst du von ChatGPT und Claude empfohlen',
     description: 'GEO (Generative Engine Optimization) erklärt: Wie du deine Website optimierst damit ChatGPT, Claude, Perplexity und Google AI Overview sie als Quelle zitieren. Konkrete Checkliste mit 19 Signalen.',
-    keywords: 'GEO Optimierung, Generative Engine Optimization, ChatGPT Sichtbarkeit, Claude Sichtbarkeit, llms.txt, KI Sichtbarkeit, GEO SEO Unterschied',
+    keywords: 'GEO Optimierung, Generative Engine Optimization, ChatGPT SEO, KI Suchmaschinenoptimierung, ChatGPT Sichtbarkeit, Claude Sichtbarkeit, llms.txt, KI Sichtbarkeit, GEO SEO Unterschied',
     alternates: { canonical: 'https://www.sitecheckai.dev/blog/geo-optimierung-2026' },
     openGraph: {
         title: 'GEO-Optimierung 2026: So wirst du von ChatGPT und Claude empfohlen',
@@ -82,6 +82,14 @@ const faqLd = {
             acceptedAnswer: {
                 '@type': 'Answer',
                 text: 'llms.txt ist eine Textdatei im Root-Verzeichnis einer Website (ähnlich wie robots.txt), die speziell für KI-Modelle und Large Language Models lesbar ist. Sie beschreibt in strukturierter Form was die Website ist, was sie anbietet und welche Inhalte für KI-Crawler relevant sind. Viele KI-Crawler lesen llms.txt als erste Orientierung über eine Website.',
+            },
+        },
+        {
+            '@type': 'Question',
+            name: 'Was ist ChatGPT SEO?',
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: '"ChatGPT SEO" ist eine umgangssprachliche Bezeichnung für GEO (Generative Engine Optimization) mit Fokus auf ChatGPT konkret - also die Optimierung einer Website, damit ChatGPT sie in seinen Antworten erwähnt oder empfiehlt. Fachlich ist GEO der breitere Begriff, da er alle KI-Modelle (ChatGPT, Claude, Perplexity, Google AI Overview) abdeckt, aber die Techniken dahinter sind identisch: strukturierte Daten, llms.txt, klare Produktdefinitionen und zitierbare Fakten.',
             },
         },
         {
@@ -220,7 +228,7 @@ export default function GeoArtikelPage() {
                     <nav aria-label="Inhaltsverzeichnis" className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
                         <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">In diesem Artikel</p>
                         <ol className="grid sm:grid-cols-2 gap-x-6 gap-y-1.5 text-sm">
-                            <li><a href="#was-ist-geo" className="text-slate-400 hover:text-cyan-300 transition-colors">Was ist GEO-Optimierung?</a></li>
+                            <li><a href="#was-ist-geo" className="text-slate-400 hover:text-cyan-300 transition-colors">Was ist GEO-Optimierung (Generative Engine Optimization)?</a></li>
                             <li><a href="#warum-geo" className="text-slate-400 hover:text-cyan-300 transition-colors">Warum ist GEO 2026 entscheidend?</a></li>
                             <li><a href="#geo-vs-seo" className="text-slate-400 hover:text-cyan-300 transition-colors">GEO vs. SEO im Vergleich</a></li>
                             {SIGNALS.map((s) => (
@@ -237,9 +245,9 @@ export default function GeoArtikelPage() {
                     </nav>
 
                     <section id="was-ist-geo" className="scroll-mt-28">
-                        <h2 className="text-2xl font-bold text-white mb-4">Was ist GEO-Optimierung?</h2>
+                        <h2 className="text-2xl font-bold text-white mb-4">Was ist GEO-Optimierung (Generative Engine Optimization)?</h2>
                         <p>
-                            GEO steht für <strong className="text-white">Generative Engine Optimization</strong> - die Optimierung deiner Website für KI-Modelle wie ChatGPT, Claude, Perplexity, Gemini oder YouChat. Der Begriff wurde 2023 in der <a href="https://arxiv.org/abs/2311.09735" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline underline-offset-2">GEO-Forschungsarbeit von Princeton, Georgia Tech und dem Allen Institute for AI</a> geprägt. Während SEO darauf abzielt in Googles Suchergebnissen weit oben zu erscheinen, sorgt GEO dafür, dass KI-Modelle deine Website als vertrauenswürdige Quelle erkennen und in ihren Antworten zitieren.
+                            GEO steht für <strong className="text-white">Generative Engine Optimization</strong> (manchmal auch als KI-Suchmaschinenoptimierung oder ChatGPT SEO bezeichnet) - die Optimierung deiner Website für KI-Modelle wie ChatGPT, Claude, Perplexity, Gemini oder YouChat. Der Begriff wurde 2023 in der <a href="https://arxiv.org/abs/2311.09735" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline underline-offset-2">GEO-Forschungsarbeit von Princeton, Georgia Tech und dem Allen Institute for AI</a> geprägt. Während SEO darauf abzielt in Googles Suchergebnissen weit oben zu erscheinen, sorgt GEO dafür, dass KI-Modelle deine Website als vertrauenswürdige Quelle erkennen und in ihren Antworten zitieren.
                         </p>
                         <p className="mt-4">
                             Der Unterschied ist fundamental: Google rankt nach Keywords, Backlinks und technischen Signalen. KI-Modelle hingegen suchen nach <strong className="text-white">strukturierten, zitierbaren Inhalten</strong>, klaren Entitätsdefinitionen und Vertrauenssignalen. Eine Website die bei Google auf Seite 1 rankt, kann für KI-Modelle trotzdem unsichtbar sein - und umgekehrt.
@@ -404,6 +412,10 @@ export default function GeoArtikelPage() {
                                 {
                                     q: 'Was ist llms.txt und warum ist es wichtig?',
                                     a: 'llms.txt ist eine Textdatei im Root-Verzeichnis einer Website (ähnlich wie robots.txt), die speziell für KI-Modelle lesbar ist. Sie beschreibt was die Website ist, was sie anbietet und welche Inhalte für KI-Crawler relevant sind. Viele KI-Crawler lesen llms.txt als erste Orientierung.',
+                                },
+                                {
+                                    q: 'Was ist ChatGPT SEO?',
+                                    a: '"ChatGPT SEO" ist eine umgangssprachliche Bezeichnung für GEO mit Fokus auf ChatGPT konkret - die Optimierung einer Website, damit ChatGPT sie in Antworten erwähnt oder empfiehlt. Fachlich ist GEO der breitere Begriff für alle KI-Modelle, die Techniken dahinter sind aber identisch: strukturierte Daten, llms.txt, klare Produktdefinitionen und zitierbare Fakten.',
                                 },
                                 {
                                     q: 'Wie lange dauert es bis GEO-Optimierung wirkt?',
