@@ -1,19 +1,14 @@
-import dns from 'dns'
-import net from 'net'
-import http from 'http'
-import https from 'https'
 import GeoTrackedSite from '../models/geo_tracked_site.js'
 import GeoMentionCheck from '../models/geo_mention_check.js'
 import GeoUsage from '../models/geo_usage.js'
 import ProductSubscription from '../models/product_subscription.js'
+import SeoTrackedSite from '../models/seo_tracked_site.js'
+import SeoKeywordRanking from '../models/seo_keyword_ranking.js'
 import { checkSiteMentions, PLATFORM_COSTS, PROMPT_INTENTS } from '../services/geoService.js'
 import { analyzeGEO } from './geo.js'
+import { assertPublicHttpsUrl, fetchSafely } from '../utils/safeFetch.js'
 
 const VALID_PLATFORMS = ['claude', 'chatgpt', 'perplexity', 'google_aio']
-const ALLOWED_CITATION_HOSTNAMES = new Set([
-    'example.com',
-    'www.example.com',
-])
 
 const PLAN_LIMITS = {
     einsteiger: { maxSites: 1,  maxKeywords: 10,  platforms: ['claude'],                                      manualChecksPerMonth: 2,  promptVariants: 1 },
@@ -164,6 +159,14 @@ export async function addSite(req, res) {
             normalizedDomain = parsed.hostname.toLowerCase().replace(/^www\./, '')
         } catch {
             return res.status(400).json({ error: 'Ungültige Domain' })
+        }
+
+        // SSRF-Härtung: verhindert, dass überhaupt erst eine interne/private Domain gespeichert wird
+        // (die später vom wöchentlichen Audit-Re-Check automatisch abgerufen würde).
+        try {
+            await assertPublicHttpsUrl(`https://${normalizedDomain}`)
+        } catch (err) {
+            return res.status(400).json({ error: err.message || 'Domain nicht erlaubt' })
         }
 
         const uniqueKeywords = [...new Set(
@@ -411,108 +414,6 @@ export async function triggerCheck(req, res) {
 const CITATION_ANALYSIS_CACHE = new Map() // url -> { data, expiresAt }
 const CITATION_CACHE_TTL_MS = 24 * 60 * 60 * 1000
 
-// SSRF-Schutz: die URL kommt vom Nutzer (Zitat aus einer KI-Antwort) — ohne IP-Prüfung könnte der Server
-// als Proxy missbraucht werden, um interne Adressen abzufragen (localhost, private Netze, Cloud-Metadata
-// wie 169.254.169.254). Prüft alle DNS-Antworten, nicht nur die erste (verhindert DNS-Rebinding-Tricks).
-function isPrivateOrReservedIp(ip) {
-    if (net.isIP(ip) === 4) {
-        const [a, b] = ip.split('.').map(Number)
-        if (a === 10) return true                      // 10.0.0.0/8
-        if (a === 127) return true                      // Loopback
-        if (a === 0) return true                         // 0.0.0.0/8
-        if (a === 169 && b === 254) return true          // Link-local, inkl. Cloud-Metadata
-        if (a === 172 && b >= 16 && b <= 31) return true  // 172.16.0.0/12
-        if (a === 192 && b === 168) return true           // 192.168.0.0/16
-        if (a === 100 && b >= 64 && b <= 127) return true // 100.64.0.0/10 (CGNAT)
-        if (a >= 224) return true                          // Multicast/reserviert
-        return false
-    }
-    if (net.isIP(ip) === 6) {
-        const lower = ip.toLowerCase()
-        if (lower === '::1' || lower === '::') return true
-        if (lower.startsWith('fe8') || lower.startsWith('fe9') || lower.startsWith('fea') || lower.startsWith('feb')) return true // fe80::/10
-        if (lower.startsWith('fc') || lower.startsWith('fd')) return true // fc00::/7 (Unique Local)
-        const v4Mapped = lower.match(/^::ffff:(\d+\.\d+\.\d+\.\d+)$/)
-        if (v4Mapped) return isPrivateOrReservedIp(v4Mapped[1])
-        return false
-    }
-    return true // unbekanntes Format -> sicherheitshalber blocken
-}
-
-async function assertPublicUrl(url) {
-    const parsed = new URL(url)
-    if (!['http:', 'https:'].includes(parsed.protocol)) throw new Error('Nur http/https erlaubt')
-    if (parsed.hostname === 'localhost') throw new Error('Interne Adressen sind nicht erlaubt')
-
-    const addresses = await dns.promises.lookup(parsed.hostname, { all: true })
-    if (!addresses.length) throw new Error('Domain konnte nicht aufgelöst werden')
-    if (addresses.some(a => isPrivateOrReservedIp(a.address))) {
-        throw new Error('Interne/private Adressen sind nicht erlaubt')
-    }
-    return parsed
-}
-
-// dns.lookup()-kompatible Funktion, die Node.js' eingebaute 'lookup'-Option von http.request/https.request
-// nutzt — die tatsächliche Verbindung löst den Hostnamen darüber auf, NICHT über eine separate, zweite
-// Anfrage wie es fetch() intern täte. Damit gibt es kein Zeitfenster zwischen Prüfung und Verbindung mehr,
-// in dem ein Angreifer per DNS-Rebinding eine andere (interne) IP unterschieben könnte. Keine externe
-// Abhängigkeit nötig — reine Node-Bordmittel.
-function safeLookup(hostname, options, callback) {
-    dns.lookup(hostname, { all: true }, (err, addresses) => {
-        if (err) return callback(err)
-        const unsafe = addresses.find(a => isPrivateOrReservedIp(a.address))
-        if (unsafe) return callback(new Error(`Interne/private Adresse blockiert: ${unsafe.address}`))
-        if (options?.all) return callback(null, addresses)
-        callback(null, addresses[0].address, addresses[0].family)
-    })
-}
-
-// Ersetzt fetch() komplett durch Node-Bordmittel (http/https), damit die 'lookup'-Option greift — fetch()
-// (Node-eigenes undici) erlaubt das nicht ohne einen externen Dispatcher. Folgt Redirects manuell, jeder
-// Sprung läuft erneut durch safeLookup.
-function fetchSafely(url, { headers = {}, timeoutMs = 10000, maxRedirects = 3 } = {}) {
-    return new Promise((resolve, reject) => {
-        function makeRequest(currentUrl, redirectsLeft) {
-            let parsed
-            try {
-                parsed = new URL(currentUrl)
-            } catch {
-                return reject(new Error('Ungültige URL'))
-            }
-            if (!['http:', 'https:'].includes(parsed.protocol)) return reject(new Error('Nur http/https erlaubt'))
-            const hostname = parsed.hostname.toLowerCase()
-            if (hostname === 'localhost') return reject(new Error('Interne Adressen sind nicht erlaubt'))
-            if (!ALLOWED_CITATION_HOSTNAMES.has(hostname)) {
-                return reject(new Error('Ziel-Host ist nicht erlaubt'))
-            }
-
-            const lib = parsed.protocol === 'https:' ? https : http
-            const req = lib.get(currentUrl, { headers, lookup: safeLookup, timeout: timeoutMs }, (response) => {
-                const status = response.statusCode
-                if ([301, 302, 303, 307, 308].includes(status)) {
-                    response.resume() // Body verwerfen, wird bei Redirect nicht gebraucht
-                    if (redirectsLeft <= 0) return reject(new Error('Zu viele Weiterleitungen'))
-                    const location = response.headers.location
-                    if (!location) return reject(new Error('Weiterleitung ohne Ziel-URL'))
-                    return makeRequest(new URL(location, currentUrl).toString(), redirectsLeft - 1)
-                }
-                let body = ''
-                response.setEncoding('utf8')
-                response.on('data', chunk => { body += chunk })
-                response.on('end', () => resolve({
-                    ok: status >= 200 && status < 300,
-                    status,
-                    text: async () => body,
-                }))
-                response.on('error', reject)
-            })
-            req.on('timeout', () => req.destroy(new Error('Zeitüberschreitung beim Abruf')))
-            req.on('error', reject)
-        }
-        makeRequest(url, maxRedirects)
-    })
-}
-
 // POST /api/geo/analyze-citation  { url }
 export async function analyzeCitation(req, res) {
     try {
@@ -523,7 +424,7 @@ export async function analyzeCitation(req, res) {
         if (!url) return res.status(400).json({ error: 'url erforderlich' })
 
         try {
-            await assertPublicUrl(url)
+            await assertPublicHttpsUrl(url)
         } catch (err) {
             return res.status(400).json({ error: err.message || 'Ungültige URL' })
         }
@@ -634,6 +535,79 @@ export async function getMentionHistory(req, res) {
         }))
 
         res.json({ history })
+    } catch (err) {
+        res.status(500).json({ error: err.message })
+    }
+}
+
+// Ab dieser Position gilt ein Keyword als "sichtbar" bei Google (oberhalb: Seite 1-2).
+const SEO_VISIBLE_THRESHOLD = 20
+
+// GET /api/geo/sites/:id/correlation — der strukturelle Vorteil gegenüber reinen GEO-Trackern:
+// SEO-Ranking und GEO-Erwähnung stammen aus demselben System und lassen sich pro Keyword
+// gegenüberstellen ("rankt bei Google, wird aber nie von ChatGPT genannt" — oder umgekehrt).
+// Setzt voraus, dass für dieselbe Domain desselben Nutzers auch ein SEO-Automatisierung-Abo läuft.
+export async function getCorrelation(req, res) {
+    try {
+        const plan = await getGeoPlan(req.userId)
+        if (!plan) return res.status(403).json({ error: 'Kein aktives GEO-Automatisierung Abo' })
+
+        const geoSite = await GeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId }).lean()
+        if (!geoSite) return res.status(404).json({ error: 'Website nicht gefunden' })
+
+        // SeoTrackedSite normalisiert die Domain nicht um www — beim Vergleich beide Seiten angleichen.
+        const normalizedDomain = geoSite.domain.replace(/^www\./, '').toLowerCase()
+        const seoSites = await SeoTrackedSite.find({ userId: req.userId, isActive: true }).lean()
+        const seoSite = seoSites.find(s => s.domain.replace(/^www\./, '').toLowerCase() === normalizedDomain)
+
+        if (!seoSite) {
+            return res.json({ linked: false, matched: [], seoOnlyKeywords: [], geoOnlyKeywords: [] })
+        }
+
+        const geoKeywordSet = new Set(geoSite.keywords)
+        const seoKeywordSet = new Set(seoSite.keywords)
+        const overlap = geoSite.keywords.filter(kw => seoKeywordSet.has(kw))
+
+        const geoPlatforms = geoSite.platforms?.length ? geoSite.platforms : ['claude']
+        const intents = activeIntents(geoSite.promptVariants)
+
+        const matched = await Promise.all(overlap.map(async (keyword) => {
+            const seoRank = await SeoKeywordRanking.findOne({ siteId: seoSite._id, keyword })
+                .sort({ checkedAt: -1 }).lean()
+
+            const geoDocs = await Promise.all(geoPlatforms.flatMap(platform =>
+                intents.map(promptIntent =>
+                    GeoMentionCheck.findOne({ siteId: geoSite._id, keyword, platform, promptIntent: intentQuery(promptIntent) })
+                        .sort({ checkedAt: -1 }).lean()
+                )
+            ))
+            const geoMentioned = geoDocs.some(d => d?.mentioned)
+            const geoChecked = geoDocs.some(Boolean)
+
+            const seoVisible = seoRank?.position != null && seoRank.position <= SEO_VISIBLE_THRESHOLD
+
+            let verdict = 'neither'
+            if (seoVisible && geoMentioned) verdict = 'both'
+            else if (seoVisible && !geoMentioned) verdict = 'seo_only'
+            else if (!seoVisible && geoMentioned) verdict = 'geo_only'
+
+            return {
+                keyword,
+                seoPosition: seoRank?.position ?? null,
+                seoCheckedAt: seoRank?.checkedAt ?? null,
+                geoMentioned,
+                geoChecked,
+                verdict,
+            }
+        }))
+
+        res.json({
+            linked: true,
+            seoSiteId: seoSite._id,
+            matched,
+            seoOnlyKeywords: seoSite.keywords.filter(kw => !geoKeywordSet.has(kw)),
+            geoOnlyKeywords: geoSite.keywords.filter(kw => !seoKeywordSet.has(kw)),
+        })
     } catch (err) {
         res.status(500).json({ error: err.message })
     }

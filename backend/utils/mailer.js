@@ -587,7 +587,10 @@ export async function sendSeoRankingAlert({ email, domain, gains, losses, conten
 const GEO_PLATFORM_LABELS = { claude: 'Claude', chatgpt: 'ChatGPT', perplexity: 'Perplexity', google_aio: 'Google AI Overview' }
 const GEO_INTENT_LABELS   = { empfehlung: 'Empfehlung', vergleich: 'Vergleich' }
 
-export async function sendGeoRankingAlert({ email, domain, gains, losses }) {
+const PRIORITY_LABELS = { critical: 'Kritisch', high: 'Wichtig', medium: 'Mittel' }
+const PRIORITY_COLORS = { critical: '#f87171', high: '#fbbf24', medium: '#94a3b8' }
+
+export async function sendGeoRankingAlert({ email, domain, gains, losses, possibleCauses }) {
     const dashboardUrl = `${APP_URL}/geo/dashboard`
     const hasLosses = losses.length > 0
     const hasGains  = gains.length > 0
@@ -621,6 +624,26 @@ export async function sendGeoRankingAlert({ email, domain, gains, losses }) {
       <table cellpadding="0" cellspacing="0" width="100%" style="background:rgba(139,92,246,0.05);border:1px solid rgba(139,92,246,0.15);border-radius:10px;padding:12px 16px;">
         <tbody>${gainRows}</tbody>
       </table>` : ''
+
+    // Bewusst als "möglicher Grund" formuliert, nicht als bewiesene Ursache — der Audit-Re-Check läuft
+    // zeitgleich mit dem Verlust, beweist aber keine Kausalität (siehe geoTrackingJob.js: getPossibleCauses).
+    const causeRows = (possibleCauses?.findings || []).map(f => `
+      <tr>
+        <td style="padding:6px 0 6px 0;font-size:13px;color:#e2e8f0;vertical-align:top;">
+          <span style="display:inline-block;font-size:10px;font-weight:700;color:${PRIORITY_COLORS[f.priority] || '#94a3b8'};text-transform:uppercase;letter-spacing:0.04em;margin-bottom:2px;">${PRIORITY_LABELS[f.priority] || f.priority}</span><br/>
+          ${f.title}
+        </td>
+      </tr>`).join('')
+
+    const causeBlock = possibleCauses?.findings?.length ? `
+      <p style="margin:20px 0 6px;font-size:11px;color:#94a3b8;text-transform:uppercase;letter-spacing:0.08em;font-weight:600;">Mögliche Gründe (aktueller technischer Zustand, kein Beweis)</p>
+      <table cellpadding="0" cellspacing="0" width="100%" style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:12px 16px;">
+        <tbody>${causeRows}</tbody>
+      </table>
+      <p style="margin:8px 0 0;font-size:11px;color:#64748b;line-height:1.5;">
+        Diese Punkte stammen aus einem aktuellen technischen Check deiner Domain und wurden zeitgleich mit dem Erwähnungsverlust festgestellt.
+        Das ist kein Beweis für den tatsächlichen Grund — nur ein plausibler Ansatzpunkt.
+      </p>` : ''
 
     const headline = hasLosses && hasGains
         ? `Gemischte KI-Sichtbarkeit für ${domain}`
@@ -658,6 +681,7 @@ export async function sendGeoRankingAlert({ email, domain, gains, losses }) {
           <div style="margin-bottom:24px;">
             ${lossBlock}
             ${gainBlock}
+            ${causeBlock}
           </div>
           <table cellpadding="0" cellspacing="0"><tr>
             <td style="background:linear-gradient(135deg,#7c3aed,#9333ea);border-radius:12px;padding:1px;">

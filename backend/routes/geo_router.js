@@ -6,7 +6,7 @@ import {
     getSites, getSite, addSite, deleteSite,
     addKeywords, removeKeywords,
     getResults, triggerCheck, updatePlatforms,
-    analyzeCitation, getCompetitors, getMentionHistory,
+    analyzeCitation, getCompetitors, getMentionHistory, getCorrelation,
 } from '../controllers/geo_tracking.js'
 
 const checkRateLimit = rateLimit({
@@ -46,6 +46,7 @@ router.patch('/sites/:id/platforms', updatePlatforms)
 router.get('/sites/:id/results',         getResults)
 router.get('/sites/:id/competitors',     getCompetitors)
 router.get('/sites/:id/history',         getMentionHistory)
+router.get('/sites/:id/correlation',     getCorrelation)
 router.post('/sites/:id/check', checkRateLimit, triggerCheck)
 router.post('/analyze-citation', analyzeCitation)
 

@@ -5,6 +5,33 @@ import ProductSubscription from '../models/product_subscription.js'
 import User from '../models/auth_model.js'
 import { checkSiteMentions } from '../services/geoService.js'
 import { sendGeoRankingAlert } from '../utils/mailer.js'
+import { fetchSafely } from '../utils/safeFetch.js'
+import { analyzeGEO } from '../controllers/geo.js'
+
+const PRIORITY_WEIGHT = { critical: 0, high: 1, medium: 2 }
+
+// Läuft nur bei tatsächlichen Erwähnungsverlusten, nicht bei jedem Check — bewusst kein Beleg für
+// Kausalität ("das war die Ursache"), sondern eine zeitgleiche Momentaufnahme der aktuellen technischen
+// GEO-Schwachstellen der Domain ("das sind mögliche Gründe, die dazu beitragen könnten").
+async function getPossibleCauses(domain) {
+    try {
+        const url = `https://${domain}`
+        const pageRes = await fetchSafely(url, { headers: { 'User-Agent': 'AuditAI-GEO-Bot/1.0' }, timeoutMs: 10000 })
+        if (!pageRes.ok) return null
+
+        const html = await pageRes.text()
+        const analysis = await analyzeGEO(url, html)
+
+        const topFindings = [...(analysis.recommendations || [])]
+            .sort((a, b) => (PRIORITY_WEIGHT[a.priority] ?? 9) - (PRIORITY_WEIGHT[b.priority] ?? 9))
+            .slice(0, 3)
+
+        return { score: analysis.score, findings: topFindings }
+    } catch (err) {
+        console.error(`[geo] Audit-Re-Check fehlgeschlagen für ${domain}:`, err.message)
+        return null
+    }
+}
 
 const mentionKey = (r) => `${r.keyword} ${r.platform} ${r.promptIntent}`
 
@@ -74,7 +101,8 @@ async function runWeeklyGeoChecks() {
                         try {
                             const user = await User.findById(site.userId).lean()
                             if (user?.email && user.geoEmailAlerts !== false) {
-                                await sendGeoRankingAlert({ email: user.email, domain: site.domain, gains, losses })
+                                const possibleCauses = losses.length ? await getPossibleCauses(site.domain) : null
+                                await sendGeoRankingAlert({ email: user.email, domain: site.domain, gains, losses, possibleCauses })
                                 console.log(`GEO alert gesendet an ${user.email} für ${site.domain} (${losses.length} Verluste, ${gains.length} Gewinne)`)
                             }
                         } catch (alertErr) {
