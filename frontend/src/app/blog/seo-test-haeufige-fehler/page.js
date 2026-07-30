@@ -24,7 +24,7 @@ const jsonLd = {
     description: 'Diese 10 SEO-Fehler machen die meisten Websites - und keiner merkt es.',
     image: 'https://www.sitecheckai.dev/blog/seo-test-haeufige-fehler/opengraph-image',
     datePublished: '2026-06-10T09:00:00+02:00',
-    dateModified: '2026-07-26T09:00:00+02:00',
+    dateModified: '2026-07-30T09:00:00+02:00',
     author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev/about' },
     publisher: {
         '@type': 'Organization',
@@ -85,6 +85,26 @@ const faqLd = {
     ],
 }
 
+const howToLd = {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name: 'Wie du einen SEO-Test auf deiner Website durchführst',
+    description: 'Die zentralen On-Page-Faktoren prüfen, die am häufigsten Rankings kosten.',
+    totalTime: 'PT15M',
+    step: [
+        { '@type': 'HowToStep', name: 'Meta-Description prüfen', text: 'Prüfe, ob jede Seite eine individuelle Meta-Description mit 120–160 Zeichen hat.', url: 'https://www.sitecheckai.dev/blog/seo-test-haeufige-fehler#fehler-01' },
+        { '@type': 'HowToStep', name: 'H1-Tag prüfen', text: 'Stelle sicher, dass jede Seite genau einen H1-Tag mit dem primären Keyword hat.', url: 'https://www.sitecheckai.dev/blog/seo-test-haeufige-fehler#fehler-02' },
+        { '@type': 'HowToStep', name: 'Ladezeit messen', text: 'Miss Core Web Vitals (LCP, INP, CLS) und TTFB in den Chrome DevTools oder per automatisiertem Test.', url: 'https://www.sitecheckai.dev/blog/seo-test-haeufige-fehler#fehler-03' },
+        { '@type': 'HowToStep', name: 'Bild-Alt-Texte prüfen', text: 'Kontrolliere, ob alle inhaltlichen Bilder einen beschreibenden Alt-Text haben.', url: 'https://www.sitecheckai.dev/blog/seo-test-haeufige-fehler#fehler-04' },
+        { '@type': 'HowToStep', name: 'Canonical-Tag prüfen', text: 'Prüfe, ob jede Seite einen korrekten self-referencing Canonical-Tag hat.', url: 'https://www.sitecheckai.dev/blog/seo-test-haeufige-fehler#fehler-05' },
+        { '@type': 'HowToStep', name: 'Title-Tag prüfen', text: 'Kontrolliere Länge (50–60 Zeichen) und Einzigartigkeit jedes Title-Tags.', url: 'https://www.sitecheckai.dev/blog/seo-test-haeufige-fehler#fehler-06' },
+        { '@type': 'HowToStep', name: 'Open-Graph-Tags prüfen', text: 'Prüfe og:title, og:description und og:image auf jeder Seite.', url: 'https://www.sitecheckai.dev/blog/seo-test-haeufige-fehler#fehler-07' },
+        { '@type': 'HowToStep', name: 'Content-Umfang prüfen', text: 'Stelle sicher, dass wichtige Seiten mindestens 300 Wörter relevanten Content haben.', url: 'https://www.sitecheckai.dev/blog/seo-test-haeufige-fehler#fehler-08' },
+        { '@type': 'HowToStep', name: 'Structured Data prüfen', text: 'Prüfe, ob Organization-, WebSite- und ggf. Article- oder FAQPage-Schema als JSON-LD vorhanden ist.', url: 'https://www.sitecheckai.dev/blog/seo-test-haeufige-fehler#fehler-09' },
+        { '@type': 'HowToStep', name: 'Indexierbarkeit prüfen', text: 'Prüfe wichtige Seiten per URL-Inspection in der Google Search Console auf versehentliches noindex.', url: 'https://www.sitecheckai.dev/blog/seo-test-haeufige-fehler#fehler-10' },
+    ],
+}
+
 const ERRORS = [
     {
         number: '01',
@@ -94,7 +114,8 @@ const ERRORS = [
         impact: 'Direkt messbar: niedrigere CTR in den Suchergebnissen',
         desc: 'Die Meta-Description ist der Text der unter deinem Seitentitel in Google erscheint. Google nutzt sie zwar nicht direkt als Ranking-Faktor - aber sie bestimmt, ob jemand auf dein Ergebnis klickt oder das der Konkurrenz. Fehlt sie, generiert Google einen eigenen Ausschnitt aus dem Seitentext, der selten überzeugend ist.',
         fix: 'Schreibe für jede Seite eine individuelle Meta-Description mit 120–160 Zeichen. Nenne das Hauptkeyword der Seite, formuliere einen klaren Mehrwert und schließe mit einem indirekten Call-to-Action.',
-        stat: '62 % der Websites haben fehlende oder identische Meta-Descriptions auf mehreren Seiten.',
+        stat: '72,9 % aller Websites haben laut einer Ahrefs-Analyse von über 1 Million Domains keine Meta-Description gesetzt.',
+        source: { label: 'Ahrefs: "We Studied Over 1 Million Domains to Find the Most Common Technical SEO Issues"', url: 'https://ahrefs.com/blog/site-audit-study/' },
     },
     {
         number: '02',
@@ -104,7 +125,8 @@ const ERRORS = [
         impact: 'Direkt: Google versteht das Thema der Seite nicht klar',
         desc: 'Der H1-Tag ist das stärkste On-Page-SEO-Signal nach dem Title-Tag. Google nutzt ihn um das Hauptthema einer Seite zu identifizieren. Viele Websites haben entweder keinen H1, mehrere H1s auf einer Seite, oder einen H1 der das Haupt-Keyword nicht enthält.',
         fix: 'Genau ein H1-Tag pro Seite. Er muss das primäre Keyword der Seite enthalten, natürlich klingen und den Inhalt der Seite treffend beschreiben. Der H1 darf - und sollte - sich vom Title-Tag unterscheiden.',
-        stat: '41 % der analysierten Websites haben keinen oder einen nicht-keyword-reichen H1.',
+        stat: '59,5 % der Websites haben laut derselben Ahrefs-Analyse gar keinen H1-Tag gesetzt.',
+        source: { label: 'Ahrefs: "We Studied Over 1 Million Domains to Find the Most Common Technical SEO Issues"', url: 'https://ahrefs.com/blog/site-audit-study/' },
     },
     {
         number: '03',
@@ -125,7 +147,8 @@ const ERRORS = [
         impact: 'Verlorene Ranking-Chancen in der Google-Bildersuche',
         desc: 'Alt-Texte beschreiben Bilder für Suchmaschinen und Screenreader. Google kann Bilder zwar zunehmend selbst interpretieren, aber ein präziser Alt-Text ist nach wie vor ein direktes SEO-Signal. Fehlen Alt-Texte auf vielen Bildern, verlierst du sowohl Accessibility-Punkte als auch Ranking-Chancen in der Bildersuche.',
         fix: 'Jedes inhaltliche Bild braucht einen beschreibenden Alt-Text der das Bild konkret beschreibt - ohne "Bild von" oder "Foto von". Dekorative Bilder erhalten ein leeres alt-Attribut (alt="").',
-        stat: 'Im Durchschnitt haben 78 % der Bilder auf deutschen Unternehmenswebsites keinen oder einen leeren Alt-Text.',
+        stat: '80,4 % der Websites haben laut derselben Ahrefs-Analyse fehlende Alt-Attribute bei Bildern.',
+        source: { label: 'Ahrefs: "We Studied Over 1 Million Domains to Find the Most Common Technical SEO Issues"', url: 'https://ahrefs.com/blog/site-audit-study/' },
     },
     {
         number: '05',
@@ -185,6 +208,7 @@ const ERRORS = [
         impact: 'Seite verschwindet komplett aus der Google-Suche',
         desc: 'Ein einzelner robots-Meta-Tag mit "noindex" oder ein falsch gesetzter X-Robots-Tag in der Server-Antwort reicht aus, damit Google eine Seite komplett aus dem Index entfernt - unabhängig davon wie gut Title, Content oder Backlinks sind. Das passiert häufiger als man denkt: ein Staging-Flag, das nach dem Launch vergessen wird, ein CMS-Default oder ein Plugin-Update, das die Robots-Einstellung zurücksetzt.',
         fix: 'Nach jedem Deployment die wichtigsten Seiten per URL-Inspection in der Google Search Console prüfen, oder automatisiert mit einem SEO-Test - AuditAI markiert versehentliches noindex sofort als kritischen Fehler.',
+        ctaLink: '/dashboard',
         stat: null,
     },
 ]
@@ -194,6 +218,7 @@ export default function SeoTestArtikelPage() {
         <main className="bg-[#05080f] min-h-screen">
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
             <Navbar />
 
@@ -216,6 +241,7 @@ export default function SeoTestArtikelPage() {
                         </span>
                         <span className="text-xs text-slate-600">10. Juni 2026</span>
                         <span className="text-xs text-slate-600">· 9 min Lesezeit</span>
+                        <span className="text-xs text-slate-600">· Aktualisiert am 30. Juli 2026</span>
                     </div>
                     <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight tracking-tight mb-5">
                         SEO-Test: Die 10 häufigsten Fehler die deinen Google-Rank kosten
@@ -260,6 +286,25 @@ export default function SeoTestArtikelPage() {
                         </div>
                     </section>
 
+                    <nav aria-label="Inhaltsverzeichnis" className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
+                        <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">In diesem Artikel</p>
+                        <ol className="grid sm:grid-cols-2 gap-x-6 gap-y-1.5 text-sm">
+                            {ERRORS.map((e) => (
+                                <li key={e.number}>
+                                    <a href={`#fehler-${e.number}`} className="text-slate-400 hover:text-violet-300 transition-colors">
+                                        <span className="font-mono text-slate-600 mr-1.5">{e.number}</span>{e.title}
+                                    </a>
+                                </li>
+                            ))}
+                            <li>
+                                <a href="#wie-durchfuehren" className="text-slate-400 hover:text-violet-300 transition-colors">Wie führe ich einen SEO-Test durch?</a>
+                            </li>
+                            <li>
+                                <a href="#faq" className="text-slate-400 hover:text-violet-300 transition-colors">Häufige Fragen</a>
+                            </li>
+                        </ol>
+                    </nav>
+
                     <section>
                         <h2 className="text-2xl font-bold text-white mb-6">Die 10 häufigsten SEO-Fehler</h2>
                         <figure className="mb-6">
@@ -276,7 +321,7 @@ export default function SeoTestArtikelPage() {
                         </figure>
                         <div className="space-y-5">
                             {ERRORS.slice(0, 6).map((e) => (
-                                <div key={e.number} className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
+                                <div key={e.number} id={`fehler-${e.number}`} className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5 sm:p-6 scroll-mt-28">
                                     <div className="flex items-start gap-4">
                                         <span className="text-[11px] font-bold font-mono shrink-0 mt-0.5 text-slate-600">{e.number}</span>
                                         <div className="flex-1">
@@ -311,7 +356,17 @@ export default function SeoTestArtikelPage() {
                                             )}
                                             <div className="bg-white/[0.03] border border-white/[0.05] rounded-xl p-3">
                                                 <span className="text-[11px] font-semibold text-emerald-400 uppercase tracking-wider">Fix: </span>
-                                                <span className="text-xs text-slate-400 leading-relaxed">{e.fix}</span>
+                                                <span className="text-xs text-slate-400 leading-relaxed">
+                                                    {e.fix}
+                                                    {e.ctaLink && (
+                                                        <>
+                                                            {' '}
+                                                            <Link href={e.ctaLink} className="text-violet-400 hover:text-violet-300 underline underline-offset-2">
+                                                                Jetzt automatisiert prüfen ↗
+                                                            </Link>
+                                                        </>
+                                                    )}
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
@@ -334,7 +389,7 @@ export default function SeoTestArtikelPage() {
 
                         <div className="space-y-5">
                             {ERRORS.slice(6).map((e) => (
-                                <div key={e.number} className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
+                                <div key={e.number} id={`fehler-${e.number}`} className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5 sm:p-6 scroll-mt-28">
                                     <div className="flex items-start gap-4">
                                         <span className="text-[11px] font-bold font-mono shrink-0 mt-0.5 text-slate-600">{e.number}</span>
                                         <div className="flex-1">
@@ -369,7 +424,17 @@ export default function SeoTestArtikelPage() {
                                             )}
                                             <div className="bg-white/[0.03] border border-white/[0.05] rounded-xl p-3">
                                                 <span className="text-[11px] font-semibold text-emerald-400 uppercase tracking-wider">Fix: </span>
-                                                <span className="text-xs text-slate-400 leading-relaxed">{e.fix}</span>
+                                                <span className="text-xs text-slate-400 leading-relaxed">
+                                                    {e.fix}
+                                                    {e.ctaLink && (
+                                                        <>
+                                                            {' '}
+                                                            <Link href={e.ctaLink} className="text-violet-400 hover:text-violet-300 underline underline-offset-2">
+                                                                Jetzt automatisiert prüfen ↗
+                                                            </Link>
+                                                        </>
+                                                    )}
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
@@ -378,10 +443,13 @@ export default function SeoTestArtikelPage() {
                         </div>
                     </section>
 
-                    <section>
+                    <section id="wie-durchfuehren" className="scroll-mt-28">
                         <h2 className="text-2xl font-bold text-white mb-4">Wie führe ich einen SEO-Test durch?</h2>
                         <p>
-                            Du kannst SEO-Fehler manuell prüfen - Title-Tag im Browser-Tab lesen, Quelltext nach Meta-Tags durchsuchen, Ladezeit in Chrome DevTools messen. Das dauert pro Seite 15–30 Minuten, ist fehleranfällig und skaliert nicht auf mehrere Seiten oder regelmäßige Checks.
+                            Du kannst SEO-Fehler manuell prüfen - Title-Tag im Browser-Tab lesen, Quelltext nach Meta-Tags durchsuchen, Ladezeit in Chrome DevTools messen. Das dauert pro Seite 15–30 Minuten, ist fehleranfällig und skaliert nicht auf mehrere Seiten oder regelmäßige Checks. Eine feste Prüfreihenfolge für den manuellen Weg findest du in der{' '}
+                            <Link href="/blog/seo-checkliste-2026" className="text-violet-400 hover:text-violet-300 underline underline-offset-2">
+                                SEO-Checkliste 2026
+                            </Link>.
                         </p>
                         <p className="mt-4">
                             Das Problem mit manuellen Checks: du prüfst nie die komplette Website. Die meisten SEO-Fehler sitzen nicht auf der Startseite - sie stecken auf Unterseiten, in Produktpages oder in Blogartikeln die niemand mehr aktiv bearbeitet. Ein automatisierter SEO-Test crawlt bis zu 25 Seiten gleichzeitig und findet genau diese versteckten Probleme.
@@ -391,7 +459,7 @@ export default function SeoTestArtikelPage() {
                         </p>
                     </section>
 
-                    <section>
+                    <section id="faq" className="scroll-mt-28">
                         <h2 className="text-2xl font-bold text-white mb-4">Häufige Fragen zum SEO-Test</h2>
                         <div className="space-y-4">
                             {[

@@ -122,7 +122,8 @@ Kosten alternativer Tools: €200–500/Monat. AuditAI startet kostenlos.
 
 - 100+ Audits seit Launch 2026
 - Ø Audit-Dauer: unter 60 Sekunden
-- Häufigste Funde in analysierten Websites: fehlende oder zu kurze Meta-Descriptions (62 %), kein H1-Tag (41 %), GEO-Score unter 50/100 (88 %)
+- Häufigste Funde in analysierten Websites: GEO-Score unter 50/100 (88 %)
+- Laut einer Ahrefs-Analyse von über 1 Million Domains (2023) fehlt bei 72,9 % die Meta-Description und bei 59,5 % der H1-Tag - Fehler, die AuditAI automatisch erkennt (Quelle: ahrefs.com/blog/site-audit-study)
 
 ## Preise
 

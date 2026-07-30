@@ -24,7 +24,7 @@ const jsonLd = {
     description: 'SEO Automatisierung und GEO Automatisierung erklärt: Wie du Google-Rankings und KI-Sichtbarkeit bei ChatGPT, Claude, Perplexity & Google AI Overview wöchentlich automatisch trackst.',
     image: 'https://www.sitecheckai.dev/blog/seo-geo-automatisierung/opengraph-image',
     datePublished: '2026-07-05T09:00:00+02:00',
-    dateModified: '2026-07-27T09:00:00+02:00',
+    dateModified: '2026-07-30T09:00:00+02:00',
     author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev/about' },
     publisher: {
         '@type': 'Organization',
@@ -147,6 +147,7 @@ export default function SeoGeoAutomatisierungPage() {
                         </span>
                         <span className="text-xs text-slate-600">5. Juli 2026</span>
                         <span className="text-xs text-slate-600">· 10 min Lesezeit</span>
+                        <span className="text-xs text-slate-600">· Aktualisiert am 30. Juli 2026</span>
                     </div>
                     <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight tracking-tight mb-5">
                         SEO Automatisierung & GEO Automatisierung: Rankings und KI-Sichtbarkeit automatisch tracken
@@ -174,7 +175,10 @@ export default function SeoGeoAutomatisierungPage() {
                             Ein Website-Audit ist eine Momentaufnahme. Er zeigt dir Fehler und Chancen genau in dem Moment, in dem du ihn ausführst. Das Problem: Google aktualisiert seinen Algorithmus laufend, Konkurrenten veröffentlichen neue Inhalte, und KI-Modelle wie <a href="https://chatgpt.com" target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:text-emerald-300 underline underline-offset-2">ChatGPT</a> und <a href="https://claude.ai" target="_blank" rel="noopener noreferrer" className="text-violet-400 hover:text-violet-300 underline underline-offset-2">Claude</a> ändern ständig, welche Quellen sie zitieren. Ein Zustand der heute gut aussieht, kann in vier Wochen unbemerkt schlechter geworden sein.
                         </p>
                         <p className="mt-4">
-                            Manuell in der <a href="https://search.google.com/search-console/about" target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:text-emerald-300 underline underline-offset-2">Google Search Console</a> nachzusehen oder Dutzende Prompts in ChatGPT, Claude, Perplexity und Google AI Overview durchzutesten, kostet Zeit und wird in der Praxis selten regelmäßig gemacht. Genau hier setzen <strong className="text-white">SEO Automatisierung</strong> und <strong className="text-white">GEO Automatisierung</strong> an: laufendes Tracking statt einmaliger Prüfung.
+                            Manuell in der <a href="https://search.google.com/search-console/about" target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:text-emerald-300 underline underline-offset-2">Google Search Console</a> nachzusehen oder Dutzende Prompts in ChatGPT, Claude, Perplexity und Google AI Overview durchzutesten, kostet Zeit und wird in der Praxis selten regelmäßig gemacht. Genau hier setzen <strong className="text-white">SEO Automatisierung</strong> und <strong className="text-white">GEO Automatisierung</strong> an: laufendes Tracking statt einmaliger Prüfung. Für den einmaligen Einstieg reicht dagegen die manuelle{' '}
+                            <Link href="/blog/seo-checkliste-2026" className="text-emerald-400 hover:text-emerald-300 underline underline-offset-2">
+                                SEO-Checkliste 2026
+                            </Link>.
                         </p>
                     </section>
 
@@ -253,7 +257,10 @@ export default function SeoGeoAutomatisierungPage() {
                     <section>
                         <h2 className="text-2xl font-bold text-white mb-4">Brauchst du beides?</h2>
                         <p>
-                            SEO Automatisierung und GEO Automatisierung beantworten unterschiedliche Fragen. SEO Automatisierung zeigt, ob du bei Google gefunden wirst. GEO Automatisierung zeigt, ob du empfohlen wirst, wenn jemand ChatGPT oder Claude statt Google fragt. Anders gesagt: SEO Automatisierung ist ein klassisches SEO-Tool für Google-Rankings, GEO Automatisierung ist ein AI-Tracker für KI-Sichtbarkeit. Beide Kanäle wachsen unabhängig voneinander - ein gutes Google-Ranking sagt nichts darüber aus, ob eine KI deine Website kennt, und umgekehrt.
+                            SEO Automatisierung und GEO Automatisierung beantworten unterschiedliche Fragen. SEO Automatisierung zeigt, ob du bei Google gefunden wirst. GEO Automatisierung zeigt, ob du empfohlen wirst, wenn jemand ChatGPT oder Claude statt Google fragt. Anders gesagt: SEO Automatisierung ist ein klassisches SEO-Tool für Google-Rankings, GEO Automatisierung ist ein AI-Tracker für KI-Sichtbarkeit. Beide Kanäle wachsen unabhängig voneinander - ein gutes Google-Ranking sagt nichts darüber aus, ob eine KI deine Website kennt, und umgekehrt. Was GEO technisch dafür braucht, steht im Detail in unserem Artikel zur{' '}
+                            <Link href="/blog/geo-optimierung-2026" className="text-violet-400 hover:text-violet-300 underline underline-offset-2">
+                                GEO-Optimierung 2026
+                            </Link>.
                         </p>
                         <div className="bg-white/[0.03] border border-white/[0.07] rounded-2xl p-5 mt-5">
                             <p className="text-sm text-slate-300">

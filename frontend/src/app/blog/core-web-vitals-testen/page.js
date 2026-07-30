@@ -23,7 +23,7 @@ const jsonLd = {
     description: 'Core Web Vitals einfach erklärt: LCP, INP und CLS mit den offiziellen Google-Schwellenwerten. Plus: wie du sie kostenlos testest.',
     image: 'https://www.sitecheckai.dev/blog/core-web-vitals-testen/opengraph-image',
     datePublished: '2026-07-26T09:00:00+02:00',
-    dateModified: '2026-07-26T09:00:00+02:00',
+    dateModified: '2026-07-30T09:00:00+02:00',
     author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev/about' },
     publisher: {
         '@type': 'Organization',
@@ -174,6 +174,7 @@ export default function CoreWebVitalsPage() {
                         </span>
                         <span className="text-xs text-slate-600">26. Juli 2026</span>
                         <span className="text-xs text-slate-600">· 8 min Lesezeit</span>
+                        <span className="text-xs text-slate-600">· Aktualisiert am 30. Juli 2026</span>
                     </div>
                     <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight tracking-tight mb-5">
                         Core Web Vitals 2026: Verstehen und kostenlos testen
@@ -205,7 +206,10 @@ export default function CoreWebVitalsPage() {
                             einsetzt, um zu messen, wie eine Website sich für echte Nutzer anfühlt - nicht nur wie schnell sie technisch lädt, sondern wie schnell sie nutzbar wirkt. Seit 2021 fließen sie direkt in Rankings ein, als Teil dessen, was Google "Page Experience" nennt.
                         </p>
                         <p className="mt-4">
-                            Der entscheidende Unterschied zu älteren Ladezeit-Metriken: Core Web Vitals werden nicht nur im Labor gemessen (Lighthouse-Simulation), sondern auch als echte Felddaten aus dem Chrome-Browser realer Besucher erhoben. Eine Seite kann im Labortest gut abschneiden und trotzdem bei echten Nutzern schlecht performen, wenn diese langsamere Geräte oder Verbindungen haben.
+                            Der entscheidende Unterschied zu älteren Ladezeit-Metriken: Core Web Vitals werden nicht nur im Labor gemessen (Lighthouse-Simulation), sondern auch als echte Felddaten aus dem Chrome-Browser realer Besucher erhoben. Eine Seite kann im Labortest gut abschneiden und trotzdem bei echten Nutzern schlecht performen, wenn diese langsamere Geräte oder Verbindungen haben. Wie stark schlechte Ladezeit sich auf Rankings auswirkt, zeigen wir mit Zahlen in unserem Artikel zu den{' '}
+                            <Link href="/blog/seo-test-haeufige-fehler" className="text-amber-400 hover:text-amber-300 underline underline-offset-2">
+                                10 häufigsten SEO-Fehlern
+                            </Link>.
                         </p>
                     </section>
 

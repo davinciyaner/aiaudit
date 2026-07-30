@@ -24,7 +24,7 @@ const jsonLd = {
     description: 'Die komplette SEO-Checkliste 2026 in fester Reihenfolge: 6 Phasen, 15 Minuten, alle wichtigen SEO- und GEO-Signale.',
     image: 'https://www.sitecheckai.dev/blog/seo-checkliste-2026/opengraph-image',
     datePublished: '2026-07-15T09:00:00+02:00',
-    dateModified: '2026-07-26T09:00:00+02:00',
+    dateModified: '2026-07-30T09:00:00+02:00',
     author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev/about' },
     publisher: {
         '@type': 'Organization',
@@ -82,6 +82,22 @@ const faqLd = {
                 text: 'Für eine einzelne Seite reicht die manuelle Checkliste. Sobald du mehrere Seiten, regelmäßige Deployments oder mehrere Domains betreust, wird der manuelle Aufwand schnell unrealistisch. Ein automatisierter SEO-Test wie AuditAI prüft dieselben Punkte auf bis zu 25 Unterseiten gleichzeitig - inklusive GEO-Signalen, die in klassischen Checklisten oft fehlen.',
             },
         },
+    ],
+}
+
+const howToLd = {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name: 'SEO-Checkliste 2026: Die eigene Website in 6 Phasen selbst prüfen',
+    description: 'Sechs Phasen, 24 Punkte, feste Reihenfolge - vom größten Hebel pro Minute bis zum GEO-Bonus-Check.',
+    totalTime: 'PT15M',
+    step: [
+        { '@type': 'HowToStep', name: 'Crawlability & Indexierung', text: 'robots.txt, noindex-Direktiven, XML-Sitemap und Crawling-Fehler in der Search Console prüfen.', url: 'https://www.sitecheckai.dev/blog/seo-checkliste-2026#phase-01' },
+        { '@type': 'HowToStep', name: 'Meta-Grundlagen', text: 'Title-Tag, Meta-Description, H1-Tag und Heading-Hierarchie prüfen.', url: 'https://www.sitecheckai.dev/blog/seo-checkliste-2026#phase-02' },
+        { '@type': 'HowToStep', name: 'Ladezeit & Core Web Vitals', text: 'PageSpeed-Score, LCP, Bildkomprimierung und Mobile-Friendly-Test prüfen.', url: 'https://www.sitecheckai.dev/blog/seo-checkliste-2026#phase-03' },
+        { '@type': 'HowToStep', name: 'Content & interne Struktur', text: 'Wortanzahl, interne Links, Duplicate Content und Canonical-Tag prüfen.', url: 'https://www.sitecheckai.dev/blog/seo-checkliste-2026#phase-04' },
+        { '@type': 'HowToStep', name: 'Technisches Vertrauen & Security', text: 'HTTPS, HSTS-Header, defekte Links, Impressum und Datenschutzerklärung prüfen.', url: 'https://www.sitecheckai.dev/blog/seo-checkliste-2026#phase-05' },
+        { '@type': 'HowToStep', name: 'GEO-Bonus-Check: KI-Sichtbarkeit', text: 'llms.txt, Organization- und FAQPage-Schema sowie KI-Crawler-Erlaubnis in robots.txt prüfen.', url: 'https://www.sitecheckai.dev/blog/seo-checkliste-2026#phase-06' },
     ],
 }
 
@@ -169,6 +185,7 @@ export default function SeoChecklistePage() {
         <main className="bg-[#05080f] min-h-screen">
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
             <Navbar />
 
@@ -191,6 +208,7 @@ export default function SeoChecklistePage() {
                         </span>
                         <span className="text-xs text-slate-600">15. Juli 2026</span>
                         <span className="text-xs text-slate-600">· 7 min Lesezeit</span>
+                        <span className="text-xs text-slate-600">· Aktualisiert am 30. Juli 2026</span>
                     </div>
                     <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight tracking-tight mb-5">
                         SEO-Checkliste 2026: In 15 Minuten alle Fehler selbst finden
@@ -228,6 +246,25 @@ export default function SeoChecklistePage() {
                         </div>
                     </section>
 
+                    <nav aria-label="Inhaltsverzeichnis" className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
+                        <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">In diesem Artikel</p>
+                        <ol className="grid sm:grid-cols-2 gap-x-6 gap-y-1.5 text-sm">
+                            {PHASES.map((phase) => (
+                                <li key={phase.number}>
+                                    <a href={`#phase-${phase.number}`} className="text-slate-400 hover:text-violet-300 transition-colors">
+                                        <span className="font-mono text-slate-600 mr-1.5">{phase.number}</span>{phase.title}
+                                    </a>
+                                </li>
+                            ))}
+                            <li>
+                                <a href="#was-tun" className="text-slate-400 hover:text-violet-300 transition-colors">Was tun, wenn du Fehler findest?</a>
+                            </li>
+                            <li>
+                                <a href="#faq" className="text-slate-400 hover:text-violet-300 transition-colors">Häufige Fragen</a>
+                            </li>
+                        </ol>
+                    </nav>
+
                     <section>
                         <h2 className="text-2xl font-bold text-white mb-2">Die Checkliste: 6 Phasen, 24 Punkte</h2>
                         <p className="text-slate-400 mb-6">Von oben nach unten durcharbeiten - jede Phase baut auf der vorherigen auf.</p>
@@ -245,7 +282,7 @@ export default function SeoChecklistePage() {
                         </figure>
                         <div className="space-y-5">
                             {PHASES.map((phase) => (
-                                <div key={phase.number} className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
+                                <div key={phase.number} id={`phase-${phase.number}`} className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5 sm:p-6 scroll-mt-28">
                                     <div className="flex items-center gap-3 mb-4">
                                         <span className="text-[11px] font-bold font-mono shrink-0 text-slate-600">{phase.number}</span>
                                         <h3 className="font-semibold text-white flex-1">{phase.title}</h3>
@@ -293,7 +330,7 @@ export default function SeoChecklistePage() {
                         </div>
                     </section>
 
-                    <section>
+                    <section id="was-tun" className="scroll-mt-28">
                         <h2 className="text-2xl font-bold text-white mb-4">Was tun, wenn du Fehler findest?</h2>
                         <p>
                             Priorisiere nach Phase, nicht nach Anzahl. Ein fehlender Title-Tag (Phase 2) wiegt schwerer als drei fehlende Alt-Texte (Phase 4). Behebe Phase 1 und 2 immer zuerst - ohne saubere Indexierung und Meta-Daten bringt der Rest wenig.
@@ -303,7 +340,7 @@ export default function SeoChecklistePage() {
                         </p>
                     </section>
 
-                    <section>
+                    <section id="faq" className="scroll-mt-28">
                         <h2 className="text-2xl font-bold text-white mb-4">Häufige Fragen zur SEO-Checkliste</h2>
                         <div className="space-y-4">
                             {faqLd.mainEntity.map((faq, i) => (
