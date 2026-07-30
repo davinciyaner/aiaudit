@@ -6,7 +6,7 @@ import Footer from '../../components/Footer'
 export const metadata = {
     title: 'SEO Automatisierung & GEO Automatisierung: Rankings und KI-Sichtbarkeit automatisch tracken',
     description: 'SEO Automatisierung und GEO Automatisierung erklärt: Wie du Google-Rankings und KI-Sichtbarkeit bei ChatGPT, Claude, Perplexity & Google AI Overview wöchentlich automatisch trackst - statt manuell zu prüfen. Mit Preisen und Vergleich.',
-    keywords: 'seo automatisierung, geo automatisierung, ki sichtbarkeit, seo automatisierung tool, geo automatisierung tool, ranking tracking automatisch, google rankings automatisch tracken, chatgpt sichtbarkeit tracken, ki sichtbarkeit prüfen, automatisiertes seo tracking, keyword tracking automatisch, seo monitoring tool',
+    keywords: 'seo automatisierung, geo automatisierung, ki sichtbarkeit, ki sichtbarkeit messen, seo automatisierung tool, geo automatisierung tool, ranking tracking automatisch, google rankings automatisch tracken, chatgpt sichtbarkeit tracken, ki sichtbarkeit prüfen, automatisiertes seo tracking, keyword tracking automatisch, seo monitoring tool',
     alternates: { canonical: 'https://www.sitecheckai.dev/blog/seo-geo-automatisierung' },
     openGraph: {
         title: 'SEO Automatisierung & GEO Automatisierung: Rankings und KI-Sichtbarkeit automatisch tracken',
@@ -90,6 +90,14 @@ const faqLd = {
             acceptedAnswer: {
                 '@type': 'Answer',
                 text: 'KI-Sichtbarkeit beschreibt, wie oft und wie prominent eine Website oder Marke in den Antworten von KI-Modellen wie ChatGPT, Claude, Perplexity oder Google AI Overview erwähnt wird. Sie ist das GEO-Äquivalent zu Google-Rankings im klassischen SEO - nur dass die "Suchergebnisseite" eine generierte Antwort statt einer Liste von Links ist.',
+            },
+        },
+        {
+            '@type': 'Question',
+            name: 'Wie kann ich KI-Sichtbarkeit messen?',
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'KI-Sichtbarkeit lässt sich messen, indem man wiederholt dieselben Prompts an ChatGPT, Claude, Perplexity und Google AI Overview stellt und protokolliert, ob und wie oft die eigene Domain in den Antworten erwähnt wird - als Mention-Rate in Prozent pro Keyword und Plattform. Da KI-Antworten nicht deterministisch sind, braucht eine verlässliche Messung mehrere Wiederholungen über Zeit statt einer Einzelmessung, was GEO Automatisierung wöchentlich automatisch übernimmt.',
             },
         },
         {
@@ -200,7 +208,7 @@ export default function SeoGeoAutomatisierungPage() {
                     <section>
                         <h2 className="text-2xl font-bold text-white mb-4">Wie funktioniert GEO Automatisierung für KI-Sichtbarkeit?</h2>
                         <p>
-                            GEO Automatisierung überträgt dasselbe Prinzip auf KI-Sichtbarkeit - also darauf, wie oft KI-Modelle eine Website als Quelle zitieren (der Fachbegriff <a href="https://arxiv.org/abs/2311.09735" target="_blank" rel="noopener noreferrer" className="text-violet-400 hover:text-violet-300 underline underline-offset-2">Generative Engine Optimization</a> stammt aus einer 2023er Forschungsarbeit von Princeton, Georgia Tech und dem Allen Institute for AI). Statt einmalig zu prüfen ob ChatGPT oder Claude deine Website kennen, wird das wöchentlich automatisch erneut getestet - mit denselben Prompts, damit die Ergebnisse über Zeit vergleichbar bleiben.
+                            GEO Automatisierung überträgt dasselbe Prinzip darauf, KI-Sichtbarkeit zu messen - also darauf, wie oft KI-Modelle eine Website als Quelle zitieren (der Fachbegriff <a href="https://arxiv.org/abs/2311.09735" target="_blank" rel="noopener noreferrer" className="text-violet-400 hover:text-violet-300 underline underline-offset-2">Generative Engine Optimization</a> stammt aus einer 2023er Forschungsarbeit von Princeton, Georgia Tech und dem Allen Institute for AI). Statt einmalig zu prüfen ob ChatGPT oder Claude deine Website kennen, wird das wöchentlich automatisch erneut getestet - mit denselben Prompts, damit die Ergebnisse über Zeit vergleichbar bleiben.
                         </p>
                         <figure className="mt-6">
                             <Image
