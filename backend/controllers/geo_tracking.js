@@ -4,7 +4,7 @@ import GeoUsage from '../models/geo_usage.js'
 import ProductSubscription from '../models/product_subscription.js'
 import SeoTrackedSite from '../models/seo_tracked_site.js'
 import SeoKeywordRanking from '../models/seo_keyword_ranking.js'
-import { checkSiteMentions, PLATFORM_COSTS, PROMPT_INTENTS } from '../services/geoService.js'
+import { checkSiteMentions, PLATFORM_COSTS, PROMPT_INTENTS, classifyGeoSuitableKeywords } from '../services/geoService.js'
 import { analyzeGEO } from './geo.js'
 import { assertPublicHttpsUrl, fetchSafely } from '../utils/safeFetch.js'
 
@@ -543,6 +543,14 @@ export async function getMentionHistory(req, res) {
 // Ab dieser Position gilt ein Keyword als "sichtbar" bei Google (oberhalb: Seite 1-2).
 const SEO_VISIBLE_THRESHOLD = 20
 
+// SeoTrackedSite normalisiert die Domain nicht um www — beim Vergleich beide Seiten angleichen.
+// Geteilt zwischen getCorrelation und getKeywordSuggestions, damit die Zuordnungslogik nur einmal existiert.
+async function findLinkedSeoSite(userId, geoDomain) {
+    const normalizedDomain = geoDomain.replace(/^www\./, '').toLowerCase()
+    const seoSites = await SeoTrackedSite.find({ userId, isActive: true }).lean()
+    return seoSites.find(s => s.domain.replace(/^www\./, '').toLowerCase() === normalizedDomain) || null
+}
+
 // GET /api/geo/sites/:id/correlation — der strukturelle Vorteil gegenüber reinen GEO-Trackern:
 // SEO-Ranking und GEO-Erwähnung stammen aus demselben System und lassen sich pro Keyword
 // gegenüberstellen ("rankt bei Google, wird aber nie von ChatGPT genannt" — oder umgekehrt).
@@ -555,10 +563,7 @@ export async function getCorrelation(req, res) {
         const geoSite = await GeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId }).lean()
         if (!geoSite) return res.status(404).json({ error: 'Website nicht gefunden' })
 
-        // SeoTrackedSite normalisiert die Domain nicht um www — beim Vergleich beide Seiten angleichen.
-        const normalizedDomain = geoSite.domain.replace(/^www\./, '').toLowerCase()
-        const seoSites = await SeoTrackedSite.find({ userId: req.userId, isActive: true }).lean()
-        const seoSite = seoSites.find(s => s.domain.replace(/^www\./, '').toLowerCase() === normalizedDomain)
+        const seoSite = await findLinkedSeoSite(req.userId, geoSite.domain)
 
         if (!seoSite) {
             return res.json({ linked: false, matched: [], seoOnlyKeywords: [], geoOnlyKeywords: [] })
@@ -608,6 +613,48 @@ export async function getCorrelation(req, res) {
             seoOnlyKeywords: seoSite.keywords.filter(kw => !geoKeywordSet.has(kw)),
             geoOnlyKeywords: geoSite.keywords.filter(kw => !seoKeywordSet.has(kw)),
         })
+    } catch (err) {
+        res.status(500).json({ error: err.message })
+    }
+}
+
+// Ein Call pro Site pro Tag reicht — die SEO-Keyword-Liste ändert sich selten, und die Klassifizierung
+// ist bewusst kein Live-Signal, das bei jedem Seitenaufruf neu berechnet werden muss.
+const KEYWORD_SUGGESTIONS_CACHE = new Map() // geoSiteId -> { data, expiresAt }
+const SUGGESTIONS_CACHE_TTL_MS = 24 * 60 * 60 * 1000
+
+// GET /api/geo/sites/:id/keyword-suggestions — schlägt SEO-Keywords vor, die noch nicht im
+// GEO-Tracking sind, gefiltert auf empfehlungsfähige Begriffe (kein 1:1-Import der ganzen Liste,
+// da viele SEO-Keywords enge Rechercheanfragen sind, die niemand einer KI stellen würde).
+export async function getKeywordSuggestions(req, res) {
+    try {
+        const plan = await getGeoPlan(req.userId)
+        if (!plan) return res.status(403).json({ error: 'Kein aktives GEO-Automatisierung Abo' })
+
+        const geoSite = await GeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId }).lean()
+        if (!geoSite) return res.status(404).json({ error: 'Website nicht gefunden' })
+
+        const seoSite = await findLinkedSeoSite(req.userId, geoSite.domain)
+        if (!seoSite) {
+            return res.json({ linked: false, suggestions: [] })
+        }
+
+        const geoKeywordSet = new Set(geoSite.keywords)
+        const seoOnlyKeywords = seoSite.keywords.filter(kw => !geoKeywordSet.has(kw))
+        if (!seoOnlyKeywords.length) {
+            return res.json({ linked: true, suggestions: [] })
+        }
+
+        const cacheKey = String(geoSite._id)
+        const cached = KEYWORD_SUGGESTIONS_CACHE.get(cacheKey)
+        if (cached && cached.expiresAt > Date.now() && cached.sourceCount === seoOnlyKeywords.length) {
+            return res.json({ linked: true, suggestions: cached.data, cached: true })
+        }
+
+        const suggestions = await classifyGeoSuitableKeywords(seoOnlyKeywords, geoSite.language)
+        KEYWORD_SUGGESTIONS_CACHE.set(cacheKey, { data: suggestions, expiresAt: Date.now() + SUGGESTIONS_CACHE_TTL_MS, sourceCount: seoOnlyKeywords.length })
+
+        res.json({ linked: true, suggestions, cached: false })
     } catch (err) {
         res.status(500).json({ error: err.message })
     }
