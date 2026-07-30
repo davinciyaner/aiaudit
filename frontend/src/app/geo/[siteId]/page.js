@@ -17,10 +17,8 @@ const PLATFORM_META = {
     google_aio: { label: 'Google AI Overview', color: 'text-blue-400',   bg: 'bg-blue-500/10',   border: 'border-blue-500/20'   },
 }
 
-// Cost per check in USD (200 input + 400 output tokens)
 const COST_PER_CHECK = { claude: 0.0066, chatgpt: 0.0045, perplexity: 0.0056, google_aio: 0.0026 }
 
-// Mirrors backend PLAN_LIMITS[plan].platforms (geo_tracking.js)
 const PLAN_PLATFORMS = {
     einsteiger: ['claude'],
     pro:        ['claude', 'chatgpt', 'perplexity', 'google_aio'],
@@ -57,6 +55,91 @@ function SentimentBadge({ sentiment }) {
         <span className={`inline-flex items-center text-[10px] font-semibold px-1.5 py-0.5 rounded ml-1.5 ${meta.color} ${meta.bg} border ${meta.border}`}>
             {meta.label}
         </span>
+    )
+}
+
+const CORRELATION_VERDICT_META = {
+    both:     { label: 'Beides sichtbar', color: 'text-emerald-400', bg: 'bg-emerald-500/10', border: 'border-emerald-500/20' },
+    seo_only: { label: 'Nur Google',      color: 'text-amber-400',   bg: 'bg-amber-500/10',   border: 'border-amber-500/20'  },
+    geo_only: { label: 'Nur KI',          color: 'text-blue-400',    bg: 'bg-blue-500/10',    border: 'border-blue-500/20'   },
+    neither:  { label: 'Beides fehlt',    color: 'text-slate-500',   bg: 'bg-white/5',        border: 'border-white/10'      },
+}
+
+function CorrelationPanel({ siteId }) {
+    const [data, setData]       = useState(null)
+    const [loading, setLoading] = useState(true)
+
+    useEffect(() => {
+        const token = localStorage.getItem('token')
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/geo/sites/${siteId}/correlation`, {
+            headers: { Authorization: `Bearer ${token}` },
+        })
+            .then(res => res.json())
+            .then(setData)
+            .catch(() => {})
+            .finally(() => setLoading(false))
+    }, [siteId])
+
+    if (loading || !data) return null
+
+    if (!data.linked) {
+        return (
+            <div className="bg-[#0d1117] border border-dashed border-white/10 rounded-2xl p-5 mb-6">
+                <h3 className="text-sm font-semibold text-white mb-1.5">SEO-Ranking + KI-Erwähnung vergleichen</h3>
+                <p className="text-xs text-slate-500 leading-relaxed">
+                    Für diese Domain läuft noch keine SEO-Automatisierung. Sobald beide Produkte dieselbe Domain tracken, zeigt AuditAI hier direkt,
+                    ob eine Seite bei Google rankt, aber nie von KI-Modellen genannt wird — oder umgekehrt.
+                </p>
+            </div>
+        )
+    }
+
+    if (!data.matched.length) {
+        return (
+            <div className="bg-[#0d1117] border border-dashed border-white/10 rounded-2xl p-5 mb-6">
+                <h3 className="text-sm font-semibold text-white mb-1.5">SEO-Ranking + KI-Erwähnung vergleichen</h3>
+                <p className="text-xs text-slate-500 leading-relaxed">
+                    Keine gemeinsamen Keywords zwischen SEO- und GEO-Tracking ({data.seoOnlyKeywords.length} nur SEO, {data.geoOnlyKeywords.length} nur GEO).
+                    Füge dieselben Keywords in beiden Produkten hinzu, um Google-Ranking und KI-Erwähnung nebeneinander zu sehen.
+                </p>
+            </div>
+        )
+    }
+
+    return (
+        <div className="bg-[#0d1117] border border-white/[0.06] rounded-2xl p-5 mb-6">
+            <div className="flex items-center justify-between mb-4">
+                <h3 className="text-sm font-semibold text-white">SEO-Ranking + KI-Erwähnung</h3>
+                <span className="text-xs text-slate-600">{data.matched.length} gemeinsame Keywords</span>
+            </div>
+            <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                    <thead>
+                        <tr className="border-b border-white/[0.05]">
+                            <th className="text-left text-xs text-slate-500 font-semibold uppercase tracking-wider pb-2">Keyword</th>
+                            <th className="text-left text-xs text-slate-500 font-semibold uppercase tracking-wider pb-2">Google</th>
+                            <th className="text-left text-xs text-slate-500 font-semibold uppercase tracking-wider pb-2">KI-Erwähnung</th>
+                            <th className="text-left text-xs text-slate-500 font-semibold uppercase tracking-wider pb-2">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {data.matched.map(m => {
+                            const v = CORRELATION_VERDICT_META[m.verdict]
+                            return (
+                                <tr key={m.keyword} className="border-b border-white/[0.04] last:border-0">
+                                    <td className="py-2.5 pr-3 text-slate-200">{m.keyword}</td>
+                                    <td className="py-2.5 pr-3 text-slate-400">{m.seoPosition != null ? `#${m.seoPosition}` : '—'}</td>
+                                    <td className="py-2.5 pr-3 text-slate-400">{m.geoChecked ? (m.geoMentioned ? 'Ja' : 'Nein') : '—'}</td>
+                                    <td className="py-2.5">
+                                        <span className={`inline-flex text-xs font-semibold px-2 py-0.5 rounded-md border ${v.color} ${v.bg} ${v.border}`}>{v.label}</span>
+                                    </td>
+                                </tr>
+                            )
+                        })}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     )
 }
 
@@ -479,6 +562,7 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
             )}
 
             <MentionHistoryChart siteId={siteId} />
+            <CorrelationPanel siteId={siteId} />
             <CompetitorsPanel siteId={siteId} />
 
             {/* Plattform-Badges */}
