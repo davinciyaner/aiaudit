@@ -4,13 +4,13 @@ import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
 
 export const metadata = {
-    title: 'GEO-Optimierung 2026: So wirst du von ChatGPT und Claude empfohlen',
-    description: 'GEO (Generative Engine Optimization) erklärt: Wie du deine Website optimierst damit ChatGPT, Claude, Perplexity und Google AI Overview sie als Quelle zitieren. Konkrete Checkliste mit 19 Signalen.',
-    keywords: 'GEO Optimierung, Generative Engine Optimization, ChatGPT SEO, KI Suchmaschinenoptimierung, ChatGPT Sichtbarkeit, Claude Sichtbarkeit, llms.txt, KI Sichtbarkeit, GEO SEO Unterschied',
+    title: 'Was ist GEO? Generative Engine Optimization einfach erklärt (+ Checkliste 2026)',
+    description: 'GEO (Generative Engine Optimization) bezeichnet die Optimierung von Content für KI-Antworten wie ChatGPT, Claude und Google AI Overview. Definition, Unterschied zu SEO und 19-Punkte-Checkliste.',
+    keywords: 'was ist geo, GEO Optimierung, Generative Engine Optimization, ChatGPT SEO, KI Suchmaschinenoptimierung, ChatGPT Sichtbarkeit, Claude Sichtbarkeit, llms.txt, KI Sichtbarkeit, GEO SEO Unterschied',
     alternates: { canonical: 'https://www.sitecheckai.dev/blog/geo-optimierung-2026' },
     openGraph: {
-        title: 'GEO-Optimierung 2026: So wirst du von ChatGPT und Claude empfohlen',
-        description: 'Wie du deine Website für KI-Modelle optimierst. Mit konkreter Checkliste und GEO-Score-Tool.',
+        title: 'Was ist GEO? Generative Engine Optimization einfach erklärt (+ Checkliste 2026)',
+        description: 'GEO (Generative Engine Optimization) erklärt: Definition, Unterschied zu SEO und konkrete Checkliste mit 19 Signalen für ChatGPT, Claude und Google AI Overview.',
         url: 'https://www.sitecheckai.dev/blog/geo-optimierung-2026',
         type: 'article',
         locale: 'de_DE',
@@ -20,8 +20,8 @@ export const metadata = {
 const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
-    headline: 'GEO-Optimierung 2026: So wirst du von ChatGPT und Claude empfohlen',
-    description: 'GEO (Generative Engine Optimization) erklärt: Wie du deine Website optimierst damit ChatGPT, Claude, Perplexity und Google AI Overview sie als Quelle zitieren.',
+    headline: 'Was ist GEO? Generative Engine Optimization einfach erklärt (+ Checkliste 2026)',
+    description: 'GEO (Generative Engine Optimization) bezeichnet die Optimierung von Content für KI-Antworten wie ChatGPT, Claude und Google AI Overview. Definition, Unterschied zu SEO und 19-Punkte-Checkliste.',
     image: 'https://www.sitecheckai.dev/blog/geo-optimierung-2026/opengraph-image',
     datePublished: '2026-06-10T09:00:00+02:00',
     dateModified: '2026-07-30T09:00:00+02:00',
@@ -52,7 +52,7 @@ const breadcrumbLd = {
     itemListElement: [
         { '@type': 'ListItem', position: 1, name: 'AuditAI', item: 'https://www.sitecheckai.dev' },
         { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.sitecheckai.dev/blog' },
-        { '@type': 'ListItem', position: 3, name: 'GEO-Optimierung 2026', item: 'https://www.sitecheckai.dev/blog/geo-optimierung-2026' },
+        { '@type': 'ListItem', position: 3, name: 'Was ist GEO?', item: 'https://www.sitecheckai.dev/blog/geo-optimierung-2026' },
     ],
 }
 
@@ -190,7 +190,7 @@ export default function GeoArtikelPage() {
                     <span>/</span>
                     <Link href="/blog" className="hover:text-slate-400 transition-colors">Blog</Link>
                     <span>/</span>
-                    <span className="text-slate-500">GEO-Optimierung 2026</span>
+                    <span className="text-slate-500">Was ist GEO?</span>
                 </div>
 
                 {/* Header */}
@@ -204,7 +204,7 @@ export default function GeoArtikelPage() {
                         <span className="text-xs text-slate-600">· Aktualisiert am 30. Juli 2026</span>
                     </div>
                     <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight tracking-tight mb-5">
-                        GEO-Optimierung 2026: So wirst du von ChatGPT und Claude empfohlen
+                        Was ist GEO? Generative Engine Optimization einfach erklärt
                     </h1>
                     <p className="text-lg text-slate-400 leading-relaxed">
                         Klassisches SEO optimiert für Google. Doch 2026 entscheiden KI-Modelle wie ChatGPT, Claude, Perplexity und Google AI Overview täglich welche Websites sie ihren Nutzern empfehlen - nach komplett anderen Regeln. Hier erfährst du wie GEO funktioniert und wie du deinen Score in 60 Minuten deutlich verbesserst.
