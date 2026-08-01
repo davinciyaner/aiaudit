@@ -13,12 +13,14 @@ function normalizeUrl(input) {
     return 'https://' + trimmed
 }
 
-function validateDomainOnly(input) {
+function validateDomainOnly(input, locale = 'de') {
     if (!input.trim()) return null
     try {
         const parsed = new URL(input.startsWith('http') ? input : `https://${input}`)
         if ((parsed.pathname && parsed.pathname !== '/') || parsed.search || parsed.hash) {
-            return 'Bitte nur die Domain eingeben (z.B. example.com) – keine Pfade, Parameter oder Tokens.'
+            return locale === 'en'
+                ? 'Please enter only the domain (e.g. example.com) – no paths, parameters, or tokens.'
+                : 'Bitte nur die Domain eingeben (z.B. example.com) – keine Pfade, Parameter oder Tokens.'
         }
         return null
     } catch {
@@ -45,7 +47,7 @@ function saveAuditedDomain(domain) {
     }
 }
 
-export default function AuditForm({ onAuditStart, onAuditComplete, defaultUrl = '', onRequiresAuth }) {
+export default function AuditForm({ onAuditStart, onAuditComplete, defaultUrl = '', onRequiresAuth, locale = 'de' }) {
     const [url, setUrl] = useState(defaultUrl)
     const [loading, setLoading] = useState(false)
 
@@ -53,9 +55,9 @@ export default function AuditForm({ onAuditStart, onAuditComplete, defaultUrl = 
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        if (!url.trim()) return toast.error('Bitte eine URL eingeben')
+        if (!url.trim()) return toast.error(locale === 'en' ? 'Please enter a URL' : 'Bitte eine URL eingeben')
 
-        const domainError = validateDomainOnly(url)
+        const domainError = validateDomainOnly(url, locale)
         if (domainError) return toast.error(domainError)
 
         const auditUrl = normalized
@@ -72,7 +74,7 @@ export default function AuditForm({ onAuditStart, onAuditComplete, defaultUrl = 
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/audit`, {
                 method: 'POST',
                 headers,
-                body: JSON.stringify({ url: auditUrl })
+                body: JSON.stringify({ url: auditUrl, language: locale })
             })
 
             if (res.status === 429) {
@@ -88,16 +90,16 @@ export default function AuditForm({ onAuditStart, onAuditComplete, defaultUrl = 
                 }
             }
 
-            if (!res.ok) throw new Error('Audit fehlgeschlagen')
+            if (!res.ok) throw new Error(locale === 'en' ? 'Audit failed' : 'Audit fehlgeschlagen')
 
             const data = await res.json()
 
             if (!token && domain) saveAuditedDomain(domain)
 
             onAuditComplete?.(data)
-            toast.success('Audit abgeschlossen!')
+            toast.success(locale === 'en' ? 'Audit complete!' : 'Audit abgeschlossen!')
         } catch (err) {
-            toast.error(err.message || 'Fehler beim Audit')
+            toast.error(err.message || (locale === 'en' ? 'Error running audit' : 'Fehler beim Audit'))
             onAuditComplete?.(null)
         } finally {
             setLoading(false)
@@ -135,14 +137,14 @@ export default function AuditForm({ onAuditStart, onAuditComplete, defaultUrl = 
                     className="flex items-center gap-2 px-6 py-3 bg-linear-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 disabled:opacity-50 disabled:cursor-not-allowed text-white text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-violet-500/20 shrink-0"
                 >
                     {loading ? (
-                        <><div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />Analysiert...</>
+                        <><div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />{locale === 'en' ? 'Analyzing...' : 'Analysiert...'}</>
                     ) : (
-                        <><Search className="w-4 h-4" />Jetzt prüfen<ArrowRight className="w-3.5 h-3.5" /></>
+                        <><Search className="w-4 h-4" />{locale === 'en' ? 'Check now' : 'Jetzt prüfen'}<ArrowRight className="w-3.5 h-3.5" /></>
                     )}
                 </motion.button>
             </div>
             <p className="text-xs text-slate-600 text-center mt-3">
-                Kostenlos · Start ohne Anmeldung · Ergebnis in ~60 Sekunden
+                {locale === 'en' ? 'Free · No sign-up required · Results in ~60 seconds' : 'Kostenlos · Start ohne Anmeldung · Ergebnis in ~60 Sekunden'}
             </p>
         </form>
     )

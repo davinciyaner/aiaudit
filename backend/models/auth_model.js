@@ -10,6 +10,7 @@ const userSchema = new mongoose.Schema({
     marketingConsent: { type: Boolean, default: false },
     seoEmailAlerts: { type: Boolean, default: true },
     geoEmailAlerts: { type: Boolean, default: true },
+    language: { type: String, enum: ['de', 'en'], default: 'de' },
 }, { timestamps: true })
 
 export default mongoose.model("User", userSchema)

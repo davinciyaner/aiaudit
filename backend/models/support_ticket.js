@@ -11,6 +11,7 @@ const supportTicketSchema = new mongoose.Schema({
         enum: ['open', 'in_progress', 'closed'],
         default: 'open',
     },
+    language: { type: String, enum: ['de', 'en'], default: 'de' },
 }, { timestamps: true })
 
 export default mongoose.model('SupportTicket', supportTicketSchema)

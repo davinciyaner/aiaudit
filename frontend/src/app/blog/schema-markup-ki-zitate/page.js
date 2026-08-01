@@ -6,7 +6,13 @@ export const metadata = {
     title: 'Schema Markup für KI-Zitate: So wirst du für ChatGPT & Co. zitierfähig',
     description: 'Schema Markup (JSON-LD) einfach erklärt: die wichtigsten Typen für KI-Zitierbarkeit, kostenlose Test-Tools und der häufigste Fehler, der Rich Results kostet.',
     keywords: 'schema markup, structured data prüfen kostenlos, schema markup ki, json-ld generator, faq schema, organization schema, rich results test',
-    alternates: { canonical: 'https://www.sitecheckai.dev/blog/schema-markup-ki-zitate' },
+    alternates: {
+        canonical: 'https://www.sitecheckai.dev/blog/schema-markup-ki-zitate',
+        languages: {
+            'de-DE': 'https://www.sitecheckai.dev/blog/schema-markup-ki-zitate',
+            'en-US': 'https://www.sitecheckai.dev/en/blog/schema-markup-ai-citations',
+        },
+    },
     openGraph: {
         title: 'Schema Markup für KI-Zitate: So wirst du für ChatGPT & Co. zitierfähig',
         description: 'Die wichtigsten Schema-Typen für KI-Zitierbarkeit, kostenlose Test-Tools und der häufigste Fehler.',

@@ -24,7 +24,7 @@ function updateConsent(granted) {
     }])
 }
 
-export default function CookieBanner() {
+export default function CookieBanner({ locale = 'de' }) {
     const [visible, setVisible] = useState(false)
 
     useEffect(() => {
@@ -61,33 +61,51 @@ export default function CookieBanner() {
                     transition={{ duration: 0.3, ease: 'easeOut' }}
                     className="fixed bottom-4 left-4 right-4 z-50 max-w-lg mx-auto"
                     role="dialog"
-                    aria-label="Cookie-Einwilligung"
+                    aria-label={locale === 'en' ? 'Cookie consent' : 'Cookie-Einwilligung'}
                 >
                     <div className="bg-[#0d1117] border border-white/10 rounded-2xl p-5 shadow-2xl shadow-black/60">
-                        <p className="text-xs text-slate-500 uppercase tracking-wider font-semibold mb-2">Cookie-Einstellungen</p>
-                        <p className="text-sm text-slate-300 leading-relaxed">
-                            Wir verwenden <strong className="text-slate-200">Analyse- und Marketing-Cookies</strong> von{' '}
-                            <strong className="text-slate-200">Microsoft Clarity</strong> (Heatmaps & Sitzungsaufzeichnungen) und{' '}
-                            <strong className="text-slate-200">Google Ads</strong> (Conversion-Tracking). Technisch notwendige Daten (Login-Session) werden unabhängig von deiner Wahl gespeichert.
-                        </p>
-                        <p className="text-xs text-slate-500 mt-2">
-                            Du kannst ablehnen — die Website funktioniert vollständig ohne diese Cookies.{' '}
-                            <Link href="/datenschutz" className="text-violet-400 hover:text-violet-300 underline underline-offset-2 transition-colors">
-                                Datenschutzerklärung
-                            </Link>
-                        </p>
+                        <p className="text-xs text-slate-500 uppercase tracking-wider font-semibold mb-2">{locale === 'en' ? 'Cookie settings' : 'Cookie-Einstellungen'}</p>
+                        {locale === 'en' ? (
+                            <>
+                                <p className="text-sm text-slate-300 leading-relaxed">
+                                    We use <strong className="text-slate-200">analytics and marketing cookies</strong> from{' '}
+                                    <strong className="text-slate-200">Microsoft Clarity</strong> (heatmaps & session recordings) and{' '}
+                                    <strong className="text-slate-200">Google Ads</strong> (conversion tracking). Technically necessary data (login session) is stored regardless of your choice.
+                                </p>
+                                <p className="text-xs text-slate-500 mt-2">
+                                    You can decline — the website works fully without these cookies.{' '}
+                                    <Link href="/datenschutz" className="text-violet-400 hover:text-violet-300 underline underline-offset-2 transition-colors">
+                                        Privacy Policy
+                                    </Link>
+                                </p>
+                            </>
+                        ) : (
+                            <>
+                                <p className="text-sm text-slate-300 leading-relaxed">
+                                    Wir verwenden <strong className="text-slate-200">Analyse- und Marketing-Cookies</strong> von{' '}
+                                    <strong className="text-slate-200">Microsoft Clarity</strong> (Heatmaps & Sitzungsaufzeichnungen) und{' '}
+                                    <strong className="text-slate-200">Google Ads</strong> (Conversion-Tracking). Technisch notwendige Daten (Login-Session) werden unabhängig von deiner Wahl gespeichert.
+                                </p>
+                                <p className="text-xs text-slate-500 mt-2">
+                                    Du kannst ablehnen — die Website funktioniert vollständig ohne diese Cookies.{' '}
+                                    <Link href="/datenschutz" className="text-violet-400 hover:text-violet-300 underline underline-offset-2 transition-colors">
+                                        Datenschutzerklärung
+                                    </Link>
+                                </p>
+                            </>
+                        )}
                         <div className="flex gap-3 mt-4">
                             <button
                                 onClick={accept}
                                 className="flex-1 bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white text-sm font-semibold py-2.5 rounded-xl transition-all"
                             >
-                                Akzeptieren
+                                {locale === 'en' ? 'Accept' : 'Akzeptieren'}
                             </button>
                             <button
                                 onClick={decline}
                                 className="flex-1 bg-white/5 hover:bg-white/10 text-slate-300 text-sm font-semibold py-2.5 rounded-xl border border-white/10 transition-all"
                             >
-                                Ablehnen
+                                {locale === 'en' ? 'Decline' : 'Ablehnen'}
                             </button>
                         </div>
                     </div>

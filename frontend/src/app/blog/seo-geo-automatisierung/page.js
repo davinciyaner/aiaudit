@@ -7,7 +7,13 @@ export const metadata = {
     title: 'SEO Automatisierung & GEO Automatisierung: Rankings und KI-Sichtbarkeit automatisch tracken',
     description: 'SEO Automatisierung und GEO Automatisierung erklärt: Wie du Google-Rankings und KI-Sichtbarkeit bei ChatGPT, Claude, Perplexity & Google AI Overview wöchentlich automatisch trackst - statt manuell zu prüfen. Mit Preisen und Vergleich.',
     keywords: 'seo automatisierung, geo automatisierung, ki sichtbarkeit, ki sichtbarkeit messen, seo automatisierung tool, geo automatisierung tool, ranking tracking automatisch, google rankings automatisch tracken, chatgpt sichtbarkeit tracken, ki sichtbarkeit prüfen, automatisiertes seo tracking, keyword tracking automatisch, seo monitoring tool',
-    alternates: { canonical: 'https://www.sitecheckai.dev/blog/seo-geo-automatisierung' },
+    alternates: {
+        canonical: 'https://www.sitecheckai.dev/blog/seo-geo-automatisierung',
+        languages: {
+            'de-DE': 'https://www.sitecheckai.dev/blog/seo-geo-automatisierung',
+            'en-US': 'https://www.sitecheckai.dev/en/blog/seo-geo-automation',
+        },
+    },
     openGraph: {
         title: 'SEO Automatisierung & GEO Automatisierung: Rankings und KI-Sichtbarkeit automatisch tracken',
         description: 'Wie du Google-Rankings und KI-Sichtbarkeit bei ChatGPT, Claude, Perplexity & Google AI Overview wöchentlich automatisch trackst - statt manuell zu prüfen.',

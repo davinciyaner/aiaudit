@@ -32,7 +32,14 @@ export const metadata = {
         description: 'Website prüfen: SEO-Automatisierung, Performance & KI-Sichtbarkeit in 60 Sekunden. Kostenlos starten. KI-Report ab Pro.',
     },
     robots: { index: true, follow: true, googleBot: { index: true, follow: true } },
-    alternates: { canonical: 'https://www.sitecheckai.dev' },
+    alternates: {
+        canonical: 'https://www.sitecheckai.dev',
+        languages: {
+            'de-DE': 'https://www.sitecheckai.dev',
+            'en-US': 'https://www.sitecheckai.dev/en',
+            'x-default': 'https://www.sitecheckai.dev',
+        },
+    },
 }
 
 const faqLd = {

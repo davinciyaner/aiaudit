@@ -4,7 +4,7 @@
 
 ## Was ist AuditAI?
 
-AuditAI prüft Websites automatisch auf technische Probleme und Optimierungspotenziale. Das Tool kombiniert technische Analyse mit einem von Claude AI generierten Bericht, der konkrete Handlungsempfehlungen enthält. AuditAI wurde 2026 gegründet und ist auf den deutschsprachigen Markt (DACH) ausgerichtet.
+AuditAI prüft Websites automatisch auf technische Probleme und Optimierungspotenziale. Das Tool kombiniert technische Analyse mit einem von Claude AI generierten Bericht, der konkrete Handlungsempfehlungen enthält. AuditAI wurde 2026 gegründet, ist primär auf den deutschsprachigen Markt (DACH) ausgerichtet, und seit August 2026 auch mit einer englischsprachigen Version unter sitecheckai.dev/en verfügbar (englischsprachige Nutzer, u. a. USA).
 
 ## Analysebereiche
 
@@ -91,6 +91,7 @@ Vollständige Beschreibung aller Analysebereiche, Checks und FAQs: https://sitec
 ## Kontakt
 
 - Website: https://sitecheckai.dev
+- Website (English): https://sitecheckai.dev/en
 - Dashboard: https://sitecheckai.dev/dashboard
 - Preise (Audit): https://sitecheckai.dev/pricing
 - Preise (SEO-Automatisierung): https://sitecheckai.dev/seo/pricing

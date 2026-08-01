@@ -5,16 +5,18 @@ import crypto from "crypto";
 import User from "../models/auth_model.js";
 import bcrypt from "bcrypt";
 import {sendAdminNewUser, sendPasswordReset, sendWelcome} from "../utils/mailer.js";
+import { t } from "../utils/i18n/errors.js";
 
 const router = Router();
 
 
 router.post("/register", async (req, res) => {
-    const { name, email, password } = req.body;
+    const { name, email, password, language } = req.body;
+    const userLanguage = language === "en" ? "en" : "de";
 
     if (!name || !email || !password) {
         return res.status(400).json({
-            error: "Name, Email und Passwort sind erforderlich"
+            error: t("NAME_EMAIL_PASSWORD_REQUIRED", req.language)
         });
     }
 
@@ -23,13 +25,13 @@ router.post("/register", async (req, res) => {
 
         if (existingUser) {
             return res.status(400).json({
-                error: "User existiert bereits"
+                error: t("USER_EXISTS", req.language)
             });
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        const user = await User.create({ name, email, password: hashedPassword });
+        const user = await User.create({ name, email, password: hashedPassword, language: userLanguage });
 
         const token = jwt.sign(
             { id: user._id },
@@ -38,7 +40,7 @@ router.post("/register", async (req, res) => {
         );
 
         sendAdminNewUser({ name: user.name, email: user.email }).catch(() => {});
-        sendWelcome({ name: user.name, email: user.email }).catch(() => {});
+        sendWelcome({ name: user.name, email: user.email, language: user.language }).catch(() => {});
 
         res.json({
             success: true,
@@ -57,7 +59,7 @@ router.post("/login", async (req, res) => {
 
     if (!email || !password) {
         return res.status(400).json({
-            error: "Email und Passwort sind erforderlich"
+            error: t("EMAIL_PASSWORD_REQUIRED", req.language)
         });
     }
 
@@ -66,7 +68,7 @@ router.post("/login", async (req, res) => {
 
         if (!user) {
             return res.status(400).json({
-                error: "User nicht gefunden"
+                error: t("USER_NOT_FOUND", req.language)
             });
         }
 
@@ -74,7 +76,7 @@ router.post("/login", async (req, res) => {
 
         if (!isMatch) {
             return res.status(400).json({
-                error: "Falsches Passwort"
+                error: t("WRONG_PASSWORD", req.language)
             });
         }
 
@@ -98,7 +100,7 @@ router.post("/login", async (req, res) => {
 
 router.post("/forgot-password", async (req, res) => {
     const { email } = req.body;
-    if (!email) return res.status(400).json({ error: "E-Mail ist erforderlich" });
+    if (!email) return res.status(400).json({ error: t("EMAIL_REQUIRED", req.language) });
 
     try {
         const user = await User.findOne({ email });
@@ -110,7 +112,7 @@ router.post("/forgot-password", async (req, res) => {
         user.resetTokenExpiry = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
         await user.save();
 
-        await sendPasswordReset({ name: user.name, email: user.email, token: rawToken });dev
+        await sendPasswordReset({ name: user.name, email: user.email, token: rawToken, language: user.language });
         res.json({ success: true });
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -120,8 +122,8 @@ router.post("/forgot-password", async (req, res) => {
 
 router.post("/reset-password", async (req, res) => {
     const { token, password } = req.body;
-    if (!token || !password) return res.status(400).json({ error: "Token und Passwort sind erforderlich" });
-    if (password.length < 6) return res.status(400).json({ error: "Passwort muss mindestens 6 Zeichen haben" });
+    if (!token || !password) return res.status(400).json({ error: t("TOKEN_PASSWORD_REQUIRED", req.language) });
+    if (password.length < 6) return res.status(400).json({ error: t("PASSWORD_TOO_SHORT", req.language) });
 
     try {
         const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
@@ -130,7 +132,7 @@ router.post("/reset-password", async (req, res) => {
             resetTokenExpiry: { $gt: new Date() },
         });
 
-        if (!user) return res.status(400).json({ error: "Link ungültig oder abgelaufen" });
+        if (!user) return res.status(400).json({ error: t("LINK_INVALID_OR_EXPIRED", req.language) });
 
         await User.updateOne(
             { _id: user._id },
@@ -149,7 +151,7 @@ router.get("/me", async (req, res) => {
         const token = req.headers.authorization?.split(" ")[1];
 
         if (!token) {
-            return res.status(401).json({ error: "Kein Token" });
+            return res.status(401).json({ error: t("NO_TOKEN", req.language) });
         }
 
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
@@ -159,7 +161,7 @@ router.get("/me", async (req, res) => {
         res.json(user);
 
     } catch (err) {
-        res.status(401).json({ error: "Ungültiger Token" });
+        res.status(401).json({ error: t("INVALID_TOKEN", req.language) });
     }
 });
 

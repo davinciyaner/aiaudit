@@ -29,7 +29,7 @@ export async function captureSubscription(req, res) {
         const sub = await ppRes.json()
 
         if (!['ACTIVE', 'APPROVAL_PENDING'].includes(sub.status)) {
-            return res.status(400).json({ error: `PayPal Subscription nicht aktiv (Status: ${sub.status})` })
+            return res.status(400).json({ error: req.language === 'en' ? `PayPal subscription not active (status: ${sub.status})` : `PayPal Subscription nicht aktiv (Status: ${sub.status})` })
         }
 
         await Subscription.findOneAndUpdate(
@@ -38,10 +38,10 @@ export async function captureSubscription(req, res) {
             { upsert: true }
         )
 
-        const user = await User.findById(userId).select('name email').lean()
+        const user = await User.findById(userId).select('name email language').lean()
         if (user) {
             sendAdminNewSubscription({ name: user.name, email: user.email, plan }).catch(() => {})
-            sendSubscriptionConfirmation({ name: user.name, email: user.email, plan }).catch(() => {})
+            sendSubscriptionConfirmation({ name: user.name, email: user.email, plan, language: user.language }).catch(() => {})
         }
 
         res.json({ success: true, plan })
@@ -63,7 +63,7 @@ export async function getStatus(req, res) {
 export async function cancelSubscription(req, res) {
     try {
         const sub = await Subscription.findOne({ userId: req.userId })
-        if (!sub) return res.status(404).json({ error: 'Kein aktives Abo gefunden' })
+        if (!sub) return res.status(404).json({ error: req.language === 'en' ? 'No active subscription found' : 'Kein aktives Abo gefunden' })
 
         const token = await getPayPalToken()
         await fetch(`${process.env.PAYPAL_BASE_URL}/v1/billing/subscriptions/${sub.paypalSubscriptionId}/cancel`, {
@@ -109,7 +109,7 @@ export async function downloadInvoice(req, res) {
             Subscription.findOne({ userId: req.userId }),
             User.findById(req.userId).select('name email'),
         ])
-        if (!sub) return res.status(404).json({ error: 'Kein Abo gefunden' })
+        if (!sub) return res.status(404).json({ error: req.language === 'en' ? 'No subscription found' : 'Kein Abo gefunden' })
 
         const token = await getPayPalToken()
         const endTime = new Date().toISOString()
@@ -121,7 +121,7 @@ export async function downloadInvoice(req, res) {
         )
         const data = await ppRes.json()
         const transaction = data.transactions?.find(t => t.id === transactionId)
-        if (!transaction) return res.status(404).json({ error: 'Transaktion nicht gefunden' })
+        if (!transaction) return res.status(404).json({ error: req.language === 'en' ? 'Transaction not found' : 'Transaktion nicht gefunden' })
 
         const html = generateInvoiceHTML(transaction, user, sub.plan)
         const pdf = await renderToPDF(html)

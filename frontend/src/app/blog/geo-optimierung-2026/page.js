@@ -7,7 +7,13 @@ export const metadata = {
     title: 'Was ist GEO? Generative Engine Optimization einfach erklärt (+ Checkliste 2026)',
     description: 'GEO (Generative Engine Optimization) bezeichnet die Optimierung von Content für KI-Antworten wie ChatGPT, Claude und Google AI Overview. Definition, Unterschied zu SEO und 19-Punkte-Checkliste.',
     keywords: 'was ist geo, GEO Optimierung, Generative Engine Optimization, ChatGPT SEO, KI Suchmaschinenoptimierung, ChatGPT Sichtbarkeit, Claude Sichtbarkeit, llms.txt, KI Sichtbarkeit, GEO SEO Unterschied',
-    alternates: { canonical: 'https://www.sitecheckai.dev/blog/geo-optimierung-2026' },
+    alternates: {
+        canonical: 'https://www.sitecheckai.dev/blog/geo-optimierung-2026',
+        languages: {
+            'de-DE': 'https://www.sitecheckai.dev/blog/geo-optimierung-2026',
+            'en-US': 'https://www.sitecheckai.dev/en/blog/what-is-geo',
+        },
+    },
     openGraph: {
         title: 'Was ist GEO? Generative Engine Optimization einfach erklärt (+ Checkliste 2026)',
         description: 'GEO (Generative Engine Optimization) erklärt: Definition, Unterschied zu SEO und konkrete Checkliste mit 19 Signalen für ChatGPT, Claude und Google AI Overview.',

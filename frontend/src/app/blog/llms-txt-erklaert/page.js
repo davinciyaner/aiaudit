@@ -6,7 +6,13 @@ export const metadata = {
     title: 'llms.txt erklärt: Was es ist und wie du es richtig einrichtest',
     description: 'llms.txt einfach erklärt: die robots.txt für KI-Modelle. Herkunft, Aufbau, Unterschied zu llms-full.txt und eine Schritt-für-Schritt-Anleitung zum Erstellen.',
     keywords: 'llms.txt, llms.txt was ist das, llms.txt erstellen, llms-full.txt, ai crawler datei, llms.txt beispiel, llms.txt generator',
-    alternates: { canonical: 'https://www.sitecheckai.dev/blog/llms-txt-erklaert' },
+    alternates: {
+        canonical: 'https://www.sitecheckai.dev/blog/llms-txt-erklaert',
+        languages: {
+            'de-DE': 'https://www.sitecheckai.dev/blog/llms-txt-erklaert',
+            'en-US': 'https://www.sitecheckai.dev/en/blog/llms-txt-explained',
+        },
+    },
     openGraph: {
         title: 'llms.txt erklärt: Was es ist und wie du es richtig einrichtest',
         description: 'Die robots.txt für KI-Modelle: Herkunft, Aufbau und Schritt-für-Schritt-Anleitung.',

@@ -3,8 +3,9 @@ import { useState } from 'react'
 import { Zap } from 'lucide-react'
 import Link from 'next/link'
 import SupportModal from './SupportModal'
+import { t } from '../../lib/i18n/dictionaries'
 
-const COLUMNS = [
+const COLUMNS_DE = [
     {
         heading: 'Produkt',
         links: [
@@ -34,7 +35,38 @@ const COLUMNS = [
     },
 ]
 
-export default function Footer() {
+const COLUMNS_EN = [
+    {
+        heading: 'Product',
+        links: [
+            { label: 'Features', href: '#features' },
+            { label: 'Pricing', href: '#pricing' },
+            { label: 'Dashboard', href: '/en/dashboard' },
+            { label: 'About', href: '/en/about' },
+        ],
+    },
+    {
+        heading: 'Blog',
+        links: [
+            { label: 'All Articles', href: '/en/blog' },
+            { label: 'SEO Test', href: '/en/blog/common-seo-mistakes' },
+            { label: 'GEO Optimization', href: '/en/blog/what-is-geo' },
+        ],
+    },
+    {
+        heading: 'Legal',
+        links: [
+            { label: 'Imprint', href: '/impressum' },
+            { label: 'Terms of Service', href: '/nutzungsbedingungen' },
+            { label: 'Privacy Policy', href: '/datenschutz' },
+            { label: 'Terms & Conditions', href: '/agb' },
+            { label: 'DPA', href: '/avv' },
+        ],
+    },
+]
+
+export default function Footer({ locale = 'de' }) {
+    const COLUMNS = locale === 'en' ? COLUMNS_EN : COLUMNS_DE
     const [supportOpen, setSupportOpen] = useState(false)
 
     return (
@@ -47,7 +79,7 @@ export default function Footer() {
 
                         {/* Brand */}
                         <div className="col-span-2 sm:col-span-1">
-                            <Link href="/" className="inline-flex items-center gap-2.5 mb-3">
+                            <Link href={locale === 'en' ? '/en' : '/'} className="inline-flex items-center gap-2.5 mb-3">
                                 <div className="w-7 h-7 rounded-lg bg-linear-to-br from-violet-500 to-cyan-500 flex items-center justify-center">
                                     <Zap className="w-3.5 h-3.5 text-white" strokeWidth={2.5} />
                                 </div>
@@ -56,7 +88,7 @@ export default function Footer() {
                                 </span>
                             </Link>
                             <p className="text-xs text-slate-600 leading-relaxed max-w-[180px]">
-                                SEO, GEO & Performance - in 60 Sekunden.
+                                {t(locale, 'footer.tagline')}
                             </p>
                         </div>
 
@@ -84,18 +116,18 @@ export default function Footer() {
 
                     {/* Bottom: Divider + Copyright + Support */}
                     <div className="mt-12 pt-6 border-t border-white/[0.04] flex flex-col sm:flex-row items-center justify-between gap-3">
-                        <p className="text-xs text-slate-700">© 2026 AuditAI. Alle Rechte vorbehalten.</p>
+                        <p className="text-xs text-slate-700">{t(locale, 'footer.copyright')}</p>
                         <button
                             onClick={() => setSupportOpen(true)}
                             className="text-xs text-slate-600 hover:text-slate-400 transition-colors"
                         >
-                            Support kontaktieren
+                            {t(locale, 'footer.support')}
                         </button>
                     </div>
                 </div>
             </footer>
 
-            <SupportModal open={supportOpen} onClose={() => setSupportOpen(false)} />
+            <SupportModal open={supportOpen} onClose={() => setSupportOpen(false)} locale={locale} />
         </>
     )
 }

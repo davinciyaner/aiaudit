@@ -13,8 +13,26 @@ const transporter = nodemailer.createTransport({
 });
 
 export async function sendTicketStatusChanged(ticket, newStatus) {
+    const language = ticket.language === 'en' ? 'en' : 'de'
     const statusUrl = `${APP_URL}/support/${ticket.ticketNumber}`
-    const configs = {
+    const configs = language === 'en' ? {
+        in_progress: {
+            subject: `[${ticket.ticketNumber}] We're on it`,
+            headline: "We're on it!",
+            body: 'Sorry for the inconvenience — we\'ve received your ticket and are working on it as quickly as possible. A team member has already taken over your request and is working on a solution.',
+            statusLabel: 'In progress',
+            statusColor: '#3b82f6',
+            dotColor: '#3b82f6',
+        },
+        closed: {
+            subject: `[${ticket.ticketNumber}] Your ticket has been closed`,
+            headline: 'Ticket closed ✓',
+            body: 'Your support ticket has been successfully handled and closed. We hope we could help. If you have further questions, feel free to open a new ticket anytime.',
+            statusLabel: 'Closed',
+            statusColor: '#10b981',
+            dotColor: '#10b981',
+        },
+    } : {
         in_progress: {
             subject: `[${ticket.ticketNumber}] Wir kümmern uns um dein Anliegen`,
             headline: 'Wir sind dran!',
@@ -38,12 +56,65 @@ export async function sendTicketStatusChanged(ticket, newStatus) {
         from: process.env.SMTP_FROM || process.env.SMTP_USER,
         to: ticket.email,
         subject: cfg.subject,
-        text: `Hallo ${ticket.name},\n\n${cfg.body}\n\nTicketnummer: ${ticket.ticketNumber}\nBetreff: ${ticket.subject}\n\nStatus verfolgen: ${statusUrl}\n\nDein AuditAI Team`,
-        html: ticketStatusChangedHtml(ticket, cfg, statusUrl),
+        text: language === 'en'
+            ? `Hi ${ticket.name},\n\n${cfg.body}\n\nTicket number: ${ticket.ticketNumber}\nSubject: ${ticket.subject}\n\nTrack status: ${statusUrl}\n\nYour AuditAI Team`
+            : `Hallo ${ticket.name},\n\n${cfg.body}\n\nTicketnummer: ${ticket.ticketNumber}\nBetreff: ${ticket.subject}\n\nStatus verfolgen: ${statusUrl}\n\nDein AuditAI Team`,
+        html: ticketStatusChangedHtml(ticket, cfg, statusUrl, language),
     })
 }
 
-function ticketStatusChangedHtml(ticket, cfg, statusUrl) {
+function ticketStatusChangedHtml(ticket, cfg, statusUrl, language = 'de') {
+    if (language === 'en') {
+        return `<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/></head>
+<body style="margin:0;padding:0;background:#05080f;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#05080f;padding:40px 20px;">
+    <tr><td align="center">
+      <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
+        <tr><td align="center" style="padding-bottom:32px;">
+          <table cellpadding="0" cellspacing="0"><tr>
+            <td style="background:linear-gradient(135deg,#7c3aed,#06b6d4);border-radius:12px;width:40px;height:40px;text-align:center;vertical-align:middle;">
+              <span style="color:#fff;font-size:18px;font-weight:bold;">&#x26A1;</span>
+            </td>
+            <td style="padding-left:10px;vertical-align:middle;">
+              <span style="color:#ffffff;font-size:20px;font-weight:700;">Audit<span style="color:#22d3ee;">AI</span></span>
+            </td>
+          </tr></table>
+        </td></tr>
+        <tr><td style="background:#0d1117;border:1px solid rgba(255,255,255,0.07);border-radius:20px;padding:40px;">
+          <p style="margin:0 0 6px;font-size:24px;font-weight:700;color:#ffffff;">${cfg.headline}</p>
+          <p style="margin:0 0 28px;font-size:15px;color:#94a3b8;line-height:1.6;">Hi ${ticket.name}, ${cfg.body}</p>
+          <table cellpadding="0" cellspacing="0" width="100%" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:20px;margin-bottom:28px;">
+            <tr><td>
+              <p style="margin:0 0 4px;font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;">Ticket number</p>
+              <p style="margin:0 0 16px;font-size:16px;font-weight:700;color:#a78bfa;letter-spacing:0.05em;">${ticket.ticketNumber}</p>
+              <p style="margin:0 0 4px;font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;">Subject</p>
+              <p style="margin:0 0 16px;font-size:14px;color:#e2e8f0;">${ticket.subject}</p>
+              <p style="margin:0 0 4px;font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;">Status</p>
+              <p style="margin:0;font-size:13px;color:${cfg.statusColor};font-weight:600;">&#x25CF; ${cfg.statusLabel}</p>
+            </td></tr>
+          </table>
+          <table cellpadding="0" cellspacing="0"><tr>
+            <td style="background:linear-gradient(135deg,#7c3aed,#06b6d4);border-radius:12px;padding:1px;">
+              <a href="${statusUrl}" style="display:block;background:#0d1117;border-radius:11px;padding:12px 28px;font-size:14px;font-weight:600;color:#ffffff;text-decoration:none;">
+                View ticket &rarr;
+              </a>
+            </td>
+          </tr></table>
+          <hr style="border:none;border-top:1px solid rgba(255,255,255,0.06);margin:28px 0;"/>
+          <p style="margin:0;font-size:14px;color:#64748b;">Talk soon,<br/><strong style="color:#94a3b8;">Your AuditAI Support Team</strong></p>
+        </td></tr>
+        <tr><td align="center" style="padding-top:24px;">
+          <p style="margin:0;font-size:11px;color:#334155;">You're receiving this email because you opened a support ticket on <a href="${APP_URL}" style="color:#475569;text-decoration:none;">sitecheckai.dev</a>.</p>
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`
+    }
+
     return `<!DOCTYPE html>
 <html lang="de">
 <head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/></head>
@@ -95,13 +166,18 @@ function ticketStatusChangedHtml(ticket, cfg, statusUrl) {
 }
 
 export async function sendTicketCreatedUser(ticket) {
+    const language = ticket.language === 'en' ? 'en' : 'de'
     const statusUrl = `${APP_URL}/support/${ticket.ticketNumber}`
     await transporter.sendMail({
         from: process.env.SMTP_FROM || process.env.SMTP_USER,
         to: ticket.email,
-        subject: `[${ticket.ticketNumber}] Dein Support-Ticket wurde erstellt`,
-        text: `Hallo ${ticket.name},\n\ndein Ticket "${ticket.subject}" wurde erfolgreich erstellt.\nTicketnummer: ${ticket.ticketNumber}\n\nStatus prüfen: ${statusUrl}\n\nWir melden uns so schnell wie möglich.\n\nDein AuditAI Team`,
-        html: ticketUserHtml(ticket, statusUrl),
+        subject: language === 'en'
+            ? `[${ticket.ticketNumber}] Your support ticket has been created`
+            : `[${ticket.ticketNumber}] Dein Support-Ticket wurde erstellt`,
+        text: language === 'en'
+            ? `Hi ${ticket.name},\n\nyour ticket "${ticket.subject}" has been created successfully.\nTicket number: ${ticket.ticketNumber}\n\nCheck status: ${statusUrl}\n\nWe'll get back to you as soon as possible.\n\nYour AuditAI Team`
+            : `Hallo ${ticket.name},\n\ndein Ticket "${ticket.subject}" wurde erfolgreich erstellt.\nTicketnummer: ${ticket.ticketNumber}\n\nStatus prüfen: ${statusUrl}\n\nWir melden uns so schnell wie möglich.\n\nDein AuditAI Team`,
+        html: ticketUserHtml(ticket, statusUrl, language),
     })
 }
 
@@ -117,7 +193,58 @@ export async function sendTicketCreatedAdmin(ticket) {
     })
 }
 
-function ticketUserHtml(ticket, statusUrl) {
+function ticketUserHtml(ticket, statusUrl, language = 'de') {
+    if (language === 'en') {
+        return `<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/></head>
+<body style="margin:0;padding:0;background:#05080f;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#05080f;padding:40px 20px;">
+    <tr><td align="center">
+      <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
+        <tr><td align="center" style="padding-bottom:32px;">
+          <table cellpadding="0" cellspacing="0"><tr>
+            <td style="background:linear-gradient(135deg,#7c3aed,#06b6d4);border-radius:12px;width:40px;height:40px;text-align:center;vertical-align:middle;">
+              <span style="color:#fff;font-size:18px;font-weight:bold;">&#x26A1;</span>
+            </td>
+            <td style="padding-left:10px;vertical-align:middle;">
+              <span style="color:#ffffff;font-size:20px;font-weight:700;">Audit<span style="color:#22d3ee;">AI</span></span>
+            </td>
+          </tr></table>
+        </td></tr>
+        <tr><td style="background:#0d1117;border:1px solid rgba(255,255,255,0.07);border-radius:20px;padding:40px;">
+          <p style="margin:0 0 6px;font-size:24px;font-weight:700;color:#ffffff;">Ticket created &#x2713;</p>
+          <p style="margin:0 0 28px;font-size:15px;color:#94a3b8;line-height:1.6;">Hi ${ticket.name}, we've received your request and will get back to you as soon as possible.</p>
+          <table cellpadding="0" cellspacing="0" width="100%" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:20px;margin-bottom:28px;">
+            <tr><td>
+              <p style="margin:0 0 4px;font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;">Ticket number</p>
+              <p style="margin:0 0 16px;font-size:18px;font-weight:700;color:#a78bfa;letter-spacing:0.05em;">${ticket.ticketNumber}</p>
+              <p style="margin:0 0 4px;font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;">Subject</p>
+              <p style="margin:0 0 16px;font-size:14px;color:#e2e8f0;">${ticket.subject}</p>
+              <p style="margin:0 0 4px;font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;">Status</p>
+              <p style="margin:0;font-size:13px;color:#f59e0b;font-weight:600;">&#x25CF; Waiting for support</p>
+            </td></tr>
+          </table>
+          <table cellpadding="0" cellspacing="0"><tr>
+            <td style="background:linear-gradient(135deg,#7c3aed,#06b6d4);border-radius:12px;padding:1px;">
+              <a href="${statusUrl}" style="display:block;background:#0d1117;border-radius:11px;padding:12px 28px;font-size:14px;font-weight:600;color:#ffffff;text-decoration:none;">
+                Track status &rarr;
+              </a>
+            </td>
+          </tr></table>
+          <hr style="border:none;border-top:1px solid rgba(255,255,255,0.06);margin:28px 0;"/>
+          <p style="margin:0;font-size:14px;color:#64748b;">Talk soon,<br/><strong style="color:#94a3b8;">Your AuditAI Support Team</strong></p>
+        </td></tr>
+        <tr><td align="center" style="padding-top:24px;">
+          <p style="margin:0;font-size:11px;color:#334155;">You're receiving this email because you opened a support ticket on <a href="${APP_URL}" style="color:#475569;text-decoration:none;">sitecheckai.dev</a>.</p>
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`
+    }
+
     return `<!DOCTYPE html>
 <html lang="de">
 <head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/></head>
@@ -204,28 +331,86 @@ function ticketAdminHtml(ticket, adminUrl) {
 </html>`
 }
 
-export async function sendWelcome({ name, email }) {
+export async function sendWelcome({ name, email, language = 'de' }) {
     await transporter.sendMail({
         from: process.env.SMTP_FROM || process.env.SMTP_USER,
         to: email,
-        subject: 'Willkommen bei AuditAI!',
-        html: welcomeHtml(name),
+        subject: language === 'en' ? 'Welcome to AuditAI!' : 'Willkommen bei AuditAI!',
+        html: welcomeHtml(name, language),
     })
 }
 
-export async function sendSubscriptionConfirmation({ name, email, plan }) {
+export async function sendSubscriptionConfirmation({ name, email, plan, language = 'de' }) {
     const planLabel = plan === 'agency' ? 'Agency' : 'Pro'
-    const planPrice = plan === 'agency' ? '€99/Monat' : '€29/Monat'
-    const auditLimit = plan === 'agency' ? 'unbegrenzte Audits' : '10 Audits pro Monat'
+    const planPrice = language === 'en'
+        ? (plan === 'agency' ? '€99/month' : '€29/month')
+        : (plan === 'agency' ? '€99/Monat' : '€29/Monat')
+    const auditLimit = language === 'en'
+        ? (plan === 'agency' ? 'unlimited audits' : '10 audits per month')
+        : (plan === 'agency' ? 'unbegrenzte Audits' : '10 Audits pro Monat')
     await transporter.sendMail({
         from: process.env.SMTP_FROM || process.env.SMTP_USER,
         to: email,
-        subject: `Dein AuditAI ${planLabel}-Abo ist aktiv`,
-        html: subscriptionConfirmHtml(name, planLabel, planPrice, auditLimit),
+        subject: language === 'en'
+            ? `Your AuditAI ${planLabel} subscription is active`
+            : `Dein AuditAI ${planLabel}-Abo ist aktiv`,
+        html: subscriptionConfirmHtml(name, planLabel, planPrice, auditLimit, language),
     })
 }
 
-function welcomeHtml(name) {
+function welcomeHtml(name, language = 'de') {
+    if (language === 'en') {
+        return `<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/></head>
+<body style="margin:0;padding:0;background:#05080f;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#05080f;padding:40px 20px;">
+    <tr><td align="center">
+      <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
+        <tr><td align="center" style="padding-bottom:32px;">
+          <table cellpadding="0" cellspacing="0"><tr>
+            <td style="background:linear-gradient(135deg,#7c3aed,#06b6d4);border-radius:12px;width:40px;height:40px;text-align:center;vertical-align:middle;">
+              <span style="color:#fff;font-size:18px;font-weight:bold;">&#x26A1;</span>
+            </td>
+            <td style="padding-left:10px;vertical-align:middle;">
+              <span style="color:#ffffff;font-size:20px;font-weight:700;">Audit<span style="color:#22d3ee;">AI</span></span>
+            </td>
+          </tr></table>
+        </td></tr>
+        <tr><td style="background:#0d1117;border:1px solid rgba(255,255,255,0.07);border-radius:20px;padding:40px;">
+          <p style="margin:0 0 8px;font-size:24px;font-weight:700;color:#ffffff;">Welcome, ${name}!</p>
+          <p style="margin:0 0 28px;font-size:15px;color:#94a3b8;line-height:1.6;">
+            Glad to have you. With AuditAI you can analyze your website for SEO, GEO, security, and performance &mdash; in seconds.
+          </p>
+          <table cellpadding="0" cellspacing="0" width="100%" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:20px;margin-bottom:28px;">
+            <tr><td>
+              <p style="margin:0 0 12px;font-size:13px;color:#64748b;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;">What to expect</p>
+              <p style="margin:0 0 8px;font-size:14px;color:#e2e8f0;">&#x26A1; &nbsp;SEO analysis &mdash; meta tags, structure, keywords</p>
+              <p style="margin:0 0 8px;font-size:14px;color:#e2e8f0;">&#x1F680; &nbsp;Performance &mdash; load times and Core Web Vitals</p>
+              <p style="margin:0 0 8px;font-size:14px;color:#e2e8f0;">&#x1F512; &nbsp;Security &mdash; headers, vulnerabilities</p>
+              <p style="margin:0;font-size:14px;color:#e2e8f0;">&#x1F916; &nbsp;GEO &mdash; your website's AI visibility</p>
+            </td></tr>
+          </table>
+          <table cellpadding="0" cellspacing="0"><tr>
+            <td style="background:linear-gradient(135deg,#7c3aed,#06b6d4);border-radius:12px;padding:1px;">
+              <a href="${APP_URL}/dashboard" style="display:block;background:#0d1117;border-radius:11px;padding:12px 28px;font-size:14px;font-weight:600;color:#ffffff;text-decoration:none;">
+                Go to dashboard &rarr;
+              </a>
+            </td>
+          </tr></table>
+          <hr style="border:none;border-top:1px solid rgba(255,255,255,0.06);margin:28px 0;"/>
+          <p style="margin:0;font-size:14px;color:#64748b;">Good luck,<br/><strong style="color:#94a3b8;">Your AuditAI Team</strong></p>
+        </td></tr>
+        <tr><td align="center" style="padding-top:24px;">
+          <p style="margin:0;font-size:11px;color:#334155;">You're receiving this email because you signed up at <a href="${APP_URL}" style="color:#475569;text-decoration:none;">sitecheckai.dev</a>.</p>
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`
+    }
+
     return `<!DOCTYPE html>
 <html lang="de">
 <head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/></head>
@@ -277,7 +462,60 @@ function welcomeHtml(name) {
 </html>`
 }
 
-function subscriptionConfirmHtml(name, planLabel, planPrice, auditLimit) {
+function subscriptionConfirmHtml(name, planLabel, planPrice, auditLimit, language = 'de') {
+    if (language === 'en') {
+        return `<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/></head>
+<body style="margin:0;padding:0;background:#05080f;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#05080f;padding:40px 20px;">
+    <tr><td align="center">
+      <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
+        <tr><td align="center" style="padding-bottom:32px;">
+          <table cellpadding="0" cellspacing="0"><tr>
+            <td style="background:linear-gradient(135deg,#7c3aed,#06b6d4);border-radius:12px;width:40px;height:40px;text-align:center;vertical-align:middle;">
+              <span style="color:#fff;font-size:18px;font-weight:bold;">&#x26A1;</span>
+            </td>
+            <td style="padding-left:10px;vertical-align:middle;">
+              <span style="color:#ffffff;font-size:20px;font-weight:700;">Audit<span style="color:#22d3ee;">AI</span></span>
+            </td>
+          </tr></table>
+        </td></tr>
+        <tr><td style="background:#0d1117;border:1px solid rgba(255,255,255,0.07);border-radius:20px;padding:40px;">
+          <p style="margin:0 0 8px;font-size:24px;font-weight:700;color:#ffffff;">Thank you, ${name}!</p>
+          <p style="margin:0 0 28px;font-size:15px;color:#94a3b8;line-height:1.6;">
+            Your <strong style="color:#a78bfa;">${planLabel} subscription</strong> is now active. We're excited to welcome you as a ${planLabel} member.
+          </p>
+          <table cellpadding="0" cellspacing="0" width="100%" style="background:rgba(124,58,237,0.08);border:1px solid rgba(124,58,237,0.2);border-radius:12px;padding:20px;margin-bottom:28px;">
+            <tr><td>
+              <p style="margin:0 0 4px;font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;">Your plan</p>
+              <p style="margin:0 0 16px;font-size:18px;font-weight:700;color:#a78bfa;">${planLabel} &middot; ${planPrice}</p>
+              <p style="margin:0 0 4px;font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;">Included</p>
+              <p style="margin:0 0 8px;font-size:14px;color:#e2e8f0;">&#x2713; &nbsp;${auditLimit}</p>
+              <p style="margin:0 0 8px;font-size:14px;color:#e2e8f0;">&#x2713; &nbsp;AI analysis with a detailed report</p>
+              <p style="margin:0;font-size:14px;color:#e2e8f0;">&#x2713; &nbsp;PDF export</p>
+            </td></tr>
+          </table>
+          <table cellpadding="0" cellspacing="0"><tr>
+            <td style="background:linear-gradient(135deg,#7c3aed,#06b6d4);border-radius:12px;padding:1px;">
+              <a href="${APP_URL}/dashboard" style="display:block;background:#0d1117;border-radius:11px;padding:12px 28px;font-size:14px;font-weight:600;color:#ffffff;text-decoration:none;">
+                Start an audit now &rarr;
+              </a>
+            </td>
+          </tr></table>
+          <hr style="border:none;border-top:1px solid rgba(255,255,255,0.06);margin:28px 0;"/>
+          <p style="margin:0;font-size:14px;color:#64748b;">Congratulations and good luck,<br/><strong style="color:#94a3b8;">Your AuditAI Team</strong></p>
+        </td></tr>
+        <tr><td align="center" style="padding-top:24px;">
+          <p style="margin:0;font-size:11px;color:#334155;">You're receiving this email because you subscribed on <a href="${APP_URL}" style="color:#475569;text-decoration:none;">sitecheckai.dev</a>.</p>
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`
+    }
+
     return `<!DOCTYPE html>
 <html lang="de">
 <head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/></head>
@@ -405,18 +643,72 @@ function adminNotifyHtml(title, rows) {
 </html>`
 }
 
-export async function sendPasswordReset({ name, email, token }) {
+export async function sendPasswordReset({ name, email, token, language = 'de' }) {
     const resetUrl = `${APP_URL}/reset-password?token=${token}`
+    const isEn = language === 'en'
     await transporter.sendMail({
         from: process.env.SMTP_FROM || process.env.SMTP_USER,
         to: email,
-        subject: 'Passwort zurücksetzen — AuditAI',
-        text: `Hallo ${name},\n\ndu hast angefordert, dein Passwort zurückzusetzen.\n\nKlicke auf diesen Link (gültig für 1 Stunde):\n${resetUrl}\n\nFalls du das nicht angefordert hast, kannst du diese E-Mail ignorieren.\n\nDein AuditAI Team`,
-        html: passwordResetHtml(name, resetUrl),
+        subject: isEn ? 'Reset your password — AuditAI' : 'Passwort zurücksetzen — AuditAI',
+        text: isEn
+            ? `Hi ${name},\n\nyou requested to reset your password.\n\nClick this link (valid for 1 hour):\n${resetUrl}\n\nIf you didn't request this, you can ignore this email.\n\nYour AuditAI Team`
+            : `Hallo ${name},\n\ndu hast angefordert, dein Passwort zurückzusetzen.\n\nKlicke auf diesen Link (gültig für 1 Stunde):\n${resetUrl}\n\nFalls du das nicht angefordert hast, kannst du diese E-Mail ignorieren.\n\nDein AuditAI Team`,
+        html: passwordResetHtml(name, resetUrl, language),
     })
 }
 
-function passwordResetHtml(name, resetUrl) {
+function passwordResetHtml(name, resetUrl, language = 'de') {
+    if (language === 'en') {
+        return `<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/></head>
+<body style="margin:0;padding:0;background:#05080f;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#05080f;padding:40px 20px;">
+    <tr><td align="center">
+      <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
+        <tr><td align="center" style="padding-bottom:32px;">
+          <table cellpadding="0" cellspacing="0"><tr>
+            <td style="background:linear-gradient(135deg,#7c3aed,#06b6d4);border-radius:12px;width:40px;height:40px;text-align:center;vertical-align:middle;">
+              <span style="color:#fff;font-size:18px;font-weight:bold;">&#x26A1;</span>
+            </td>
+            <td style="padding-left:10px;vertical-align:middle;">
+              <span style="color:#ffffff;font-size:20px;font-weight:700;">Audit<span style="color:#22d3ee;">AI</span></span>
+            </td>
+          </tr></table>
+        </td></tr>
+        <tr><td style="background:#0d1117;border:1px solid rgba(255,255,255,0.07);border-radius:20px;padding:40px;">
+          <p style="margin:0 0 8px;font-size:24px;font-weight:700;color:#ffffff;">Reset your password</p>
+          <p style="margin:0 0 28px;font-size:15px;color:#94a3b8;line-height:1.6;">
+            Hi ${name}, you requested to reset your password. Click the button below &mdash; the link is <strong style="color:#ffffff;">valid for 1 hour</strong>.
+          </p>
+          <table cellpadding="0" cellspacing="0" style="margin-bottom:28px;"><tr>
+            <td style="background:linear-gradient(135deg,#7c3aed,#06b6d4);border-radius:12px;padding:1px;">
+              <a href="${resetUrl}" style="display:block;background:#0d1117;border-radius:11px;padding:14px 32px;font-size:15px;font-weight:600;color:#ffffff;text-decoration:none;">
+                Set new password &rarr;
+              </a>
+            </td>
+          </tr></table>
+          <table cellpadding="0" cellspacing="0" width="100%" style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);border-radius:12px;padding:16px;margin-bottom:24px;">
+            <tr><td>
+              <p style="margin:0 0 6px;font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;">If the button doesn't work</p>
+              <p style="margin:0;font-size:12px;color:#475569;word-break:break-all;">${resetUrl}</p>
+            </td></tr>
+          </table>
+          <hr style="border:none;border-top:1px solid rgba(255,255,255,0.06);margin:24px 0;"/>
+          <p style="margin:0;font-size:13px;color:#64748b;">If you didn't request a password reset, you can ignore this email &mdash; your password stays unchanged.</p>
+          <hr style="border:none;border-top:1px solid rgba(255,255,255,0.06);margin:24px 0;"/>
+          <p style="margin:0;font-size:14px;color:#64748b;">Your AuditAI Team</p>
+        </td></tr>
+        <tr><td align="center" style="padding-top:24px;">
+          <p style="margin:0;font-size:11px;color:#334155;">You're receiving this email because a password reset was requested for your account on <a href="${APP_URL}" style="color:#475569;text-decoration:none;">sitecheckai.dev</a>.</p>
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`
+    }
+
     return `<!DOCTYPE html>
 <html lang="de">
 <head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/></head>
@@ -467,11 +759,28 @@ function passwordResetHtml(name, resetUrl) {
 </html>`
 }
 
-export async function sendSeoRankingAlert({ email, domain, gains, losses, contentGap }) {
+export async function sendSeoRankingAlert({ email, domain, gains, losses, contentGap, language = 'de' }) {
+    const en = language === 'en'
     const dashboardUrl = `${APP_URL}/seo/dashboard`
     const hasLosses = losses.length > 0
     const hasGains  = gains.length > 0
     const gapKeywords = contentGap?.gap?.slice(0, 5) || []
+
+    const T = en ? {
+        worse: 'Dropped', better: 'Improved', keyword: 'Keyword', before: 'Before', now: 'Now',
+        gapHeading: (d) => `${d} ranks for these keywords, you don't`, volume: 'Search Volume',
+        mixed: (d) => `Mixed ranking signals for ${d}`, dropped: (d) => `Ranking drops for ${d}`, newTop: (d) => `New top positions for ${d}`,
+        subjWarn: (d) => `Heads up: ranking changes for ${d}`, subjGood: (d) => `Good news: ranking improvements for ${d}`,
+        alertLabel: 'SEO Ranking Alert', weeklyCheck: 'Weekly check', viewRankings: 'View rankings',
+        footer1: 'Your AuditAI SEO Automation', footer2: 'This email was triggered automatically by your weekly SEO check.',
+    } : {
+        worse: 'Verschlechtert', better: 'Verbessert', keyword: 'Keyword', before: 'Vorher', now: 'Jetzt',
+        gapHeading: (d) => `Diese Keywords rankt ${d}, du nicht`, volume: 'Suchvolumen',
+        mixed: (d) => `Gemischte Ranking-Signale für ${d}`, dropped: (d) => `Ranking-Verluste bei ${d}`, newTop: (d) => `Neue Top-Positionen bei ${d}`,
+        subjWarn: (d) => `Achtung: Ranking-Änderungen bei ${d}`, subjGood: (d) => `Gute Nachrichten: Ranking-Verbesserungen bei ${d}`,
+        alertLabel: 'SEO Ranking-Alert', weeklyCheck: 'Wöchentlicher Check', viewRankings: 'Rankings ansehen',
+        footer1: 'Dein AuditAI SEO-Automatisierung', footer2: 'Diese E-Mail wurde automatisch von deinem wöchentlichen SEO-Check ausgelöst.',
+    }
 
     const lossRows = losses.map(({ keyword, from, to }) => `
       <tr>
@@ -488,23 +797,23 @@ export async function sendSeoRankingAlert({ email, domain, gains, losses, conten
       </tr>`).join('')
 
     const lossBlock = hasLosses ? `
-      <p style="margin:0 0 6px;font-size:11px;color:#94a3b8;text-transform:uppercase;letter-spacing:0.08em;font-weight:600;">Verschlechtert</p>
+      <p style="margin:0 0 6px;font-size:11px;color:#94a3b8;text-transform:uppercase;letter-spacing:0.08em;font-weight:600;">${T.worse}</p>
       <table cellpadding="0" cellspacing="0" width="100%" style="background:rgba(239,68,68,0.05);border:1px solid rgba(239,68,68,0.15);border-radius:10px;padding:12px 16px;margin-bottom:${hasGains ? '16px' : '0'};">
         <thead><tr>
-          <th style="text-align:left;font-size:10px;color:#64748b;padding-bottom:6px;font-weight:600;text-transform:uppercase;">Keyword</th>
-          <th style="text-align:center;font-size:10px;color:#64748b;padding-bottom:6px;font-weight:600;text-transform:uppercase;">Vorher</th>
-          <th style="text-align:center;font-size:10px;color:#64748b;padding-bottom:6px;font-weight:600;text-transform:uppercase;">Jetzt</th>
+          <th style="text-align:left;font-size:10px;color:#64748b;padding-bottom:6px;font-weight:600;text-transform:uppercase;">${T.keyword}</th>
+          <th style="text-align:center;font-size:10px;color:#64748b;padding-bottom:6px;font-weight:600;text-transform:uppercase;">${T.before}</th>
+          <th style="text-align:center;font-size:10px;color:#64748b;padding-bottom:6px;font-weight:600;text-transform:uppercase;">${T.now}</th>
         </tr></thead>
         <tbody>${lossRows}</tbody>
       </table>` : ''
 
     const gainBlock = hasGains ? `
-      <p style="margin:0 0 6px;font-size:11px;color:#94a3b8;text-transform:uppercase;letter-spacing:0.08em;font-weight:600;">Verbessert</p>
+      <p style="margin:0 0 6px;font-size:11px;color:#94a3b8;text-transform:uppercase;letter-spacing:0.08em;font-weight:600;">${T.better}</p>
       <table cellpadding="0" cellspacing="0" width="100%" style="background:rgba(16,185,129,0.05);border:1px solid rgba(16,185,129,0.15);border-radius:10px;padding:12px 16px;">
         <thead><tr>
-          <th style="text-align:left;font-size:10px;color:#64748b;padding-bottom:6px;font-weight:600;text-transform:uppercase;">Keyword</th>
-          <th style="text-align:center;font-size:10px;color:#64748b;padding-bottom:6px;font-weight:600;text-transform:uppercase;">Vorher</th>
-          <th style="text-align:center;font-size:10px;color:#64748b;padding-bottom:6px;font-weight:600;text-transform:uppercase;">Jetzt</th>
+          <th style="text-align:left;font-size:10px;color:#64748b;padding-bottom:6px;font-weight:600;text-transform:uppercase;">${T.keyword}</th>
+          <th style="text-align:center;font-size:10px;color:#64748b;padding-bottom:6px;font-weight:600;text-transform:uppercase;">${T.before}</th>
+          <th style="text-align:center;font-size:10px;color:#64748b;padding-bottom:6px;font-weight:600;text-transform:uppercase;">${T.now}</th>
         </tr></thead>
         <tbody>${gainRows}</tbody>
       </table>` : ''
@@ -512,33 +821,27 @@ export async function sendSeoRankingAlert({ email, domain, gains, losses, conten
     const gapRows = gapKeywords.map(({ keyword, searchVolume }) => `
       <tr>
         <td style="padding:6px 0;font-size:13px;color:#e2e8f0;">${keyword}</td>
-        <td style="padding:6px 0;font-size:13px;color:#94a3b8;text-align:right;">${searchVolume != null ? searchVolume.toLocaleString('de-DE') : '—'}</td>
+        <td style="padding:6px 0;font-size:13px;color:#94a3b8;text-align:right;">${searchVolume != null ? searchVolume.toLocaleString(en ? 'en-US' : 'de-DE') : '—'}</td>
       </tr>`).join('')
 
     const gapBlock = gapKeywords.length ? `
-      <p style="margin:${hasLosses || hasGains ? '20px' : '0'} 0 6px;font-size:11px;color:#94a3b8;text-transform:uppercase;letter-spacing:0.08em;font-weight:600;">Diese Keywords rankt ${contentGap.competitorDomain}, du nicht</p>
+      <p style="margin:${hasLosses || hasGains ? '20px' : '0'} 0 6px;font-size:11px;color:#94a3b8;text-transform:uppercase;letter-spacing:0.08em;font-weight:600;">${T.gapHeading(contentGap.competitorDomain)}</p>
       <table cellpadding="0" cellspacing="0" width="100%" style="background:rgba(96,165,250,0.05);border:1px solid rgba(96,165,250,0.15);border-radius:10px;padding:12px 16px;">
         <thead><tr>
-          <th style="text-align:left;font-size:10px;color:#64748b;padding-bottom:6px;font-weight:600;text-transform:uppercase;">Keyword</th>
-          <th style="text-align:right;font-size:10px;color:#64748b;padding-bottom:6px;font-weight:600;text-transform:uppercase;">Suchvolumen</th>
+          <th style="text-align:left;font-size:10px;color:#64748b;padding-bottom:6px;font-weight:600;text-transform:uppercase;">${T.keyword}</th>
+          <th style="text-align:right;font-size:10px;color:#64748b;padding-bottom:6px;font-weight:600;text-transform:uppercase;">${T.volume}</th>
         </tr></thead>
         <tbody>${gapRows}</tbody>
       </table>` : ''
 
-    const headline = hasLosses && hasGains
-        ? `Gemischte Ranking-Signale für ${domain}`
-        : hasLosses
-            ? `Ranking-Verluste bei ${domain}`
-            : `Neue Top-Positionen bei ${domain}`
+    const headline = hasLosses && hasGains ? T.mixed(domain) : hasLosses ? T.dropped(domain) : T.newTop(domain)
 
     await transporter.sendMail({
         from: process.env.SMTP_FROM || process.env.SMTP_USER,
         to: email,
-        subject: hasLosses
-            ? `Achtung: Ranking-Änderungen bei ${domain}`
-            : `Gute Nachrichten: Ranking-Verbesserungen bei ${domain}`,
+        subject: hasLosses ? T.subjWarn(domain) : T.subjGood(domain),
         html: `<!DOCTYPE html>
-<html lang="de">
+<html lang="${en ? 'en' : 'de'}">
 <head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/></head>
 <body style="margin:0;padding:0;background:#05080f;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
   <table width="100%" cellpadding="0" cellspacing="0" style="background:#05080f;padding:40px 20px;">
@@ -555,9 +858,9 @@ export async function sendSeoRankingAlert({ email, domain, gains, losses, conten
           </tr></table>
         </td></tr>
         <tr><td style="background:#0d1117;border:1px solid rgba(255,255,255,0.07);border-radius:20px;padding:36px 40px;">
-          <p style="margin:0 0 4px;font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.1em;">SEO Ranking-Alert</p>
+          <p style="margin:0 0 4px;font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.1em;">${T.alertLabel}</p>
           <p style="margin:0 0 6px;font-size:22px;font-weight:700;color:#ffffff;">${headline}</p>
-          <p style="margin:0 0 28px;font-size:14px;color:#64748b;">${domain} &middot; Wöchentlicher Check</p>
+          <p style="margin:0 0 28px;font-size:14px;color:#64748b;">${domain} &middot; ${T.weeklyCheck}</p>
           <div style="margin-bottom:24px;">
             ${lossBlock}
             ${gainBlock}
@@ -566,15 +869,15 @@ export async function sendSeoRankingAlert({ email, domain, gains, losses, conten
           <table cellpadding="0" cellspacing="0"><tr>
             <td style="background:linear-gradient(135deg,#059669,#0d9488);border-radius:12px;padding:1px;">
               <a href="${dashboardUrl}" style="display:block;background:#0d1117;border-radius:11px;padding:12px 28px;font-size:14px;font-weight:600;color:#ffffff;text-decoration:none;">
-                Rankings ansehen &rarr;
+                ${T.viewRankings} &rarr;
               </a>
             </td>
           </tr></table>
           <hr style="border:none;border-top:1px solid rgba(255,255,255,0.06);margin:28px 0;"/>
-          <p style="margin:0;font-size:13px;color:#64748b;">Dein AuditAI SEO-Automatisierung</p>
+          <p style="margin:0;font-size:13px;color:#64748b;">${T.footer1}</p>
         </td></tr>
         <tr><td align="center" style="padding-top:24px;">
-          <p style="margin:0;font-size:11px;color:#334155;">Diese E-Mail wurde automatisch von deinem wöchentlichen SEO-Check ausgelöst.</p>
+          <p style="margin:0;font-size:11px;color:#334155;">${T.footer2}</p>
         </td></tr>
       </table>
     </td></tr>
@@ -585,15 +888,38 @@ export async function sendSeoRankingAlert({ email, domain, gains, losses, conten
 }
 
 const GEO_PLATFORM_LABELS = { claude: 'Claude', chatgpt: 'ChatGPT', perplexity: 'Perplexity', google_aio: 'Google AI Overview' }
-const GEO_INTENT_LABELS   = { empfehlung: 'Empfehlung', vergleich: 'Vergleich' }
+const GEO_INTENT_LABELS_DE = { empfehlung: 'Empfehlung', vergleich: 'Vergleich' }
+const GEO_INTENT_LABELS_EN = { empfehlung: 'Recommendation', vergleich: 'Comparison' }
 
-const PRIORITY_LABELS = { critical: 'Kritisch', high: 'Wichtig', medium: 'Mittel' }
+const PRIORITY_LABELS_DE = { critical: 'Kritisch', high: 'Wichtig', medium: 'Mittel' }
+const PRIORITY_LABELS_EN = { critical: 'Critical', high: 'Important', medium: 'Medium' }
 const PRIORITY_COLORS = { critical: '#f87171', high: '#fbbf24', medium: '#94a3b8' }
 
-export async function sendGeoRankingAlert({ email, domain, gains, losses, possibleCauses }) {
+export async function sendGeoRankingAlert({ email, domain, gains, losses, possibleCauses, language = 'de' }) {
+    const en = language === 'en'
     const dashboardUrl = `${APP_URL}/geo/dashboard`
     const hasLosses = losses.length > 0
     const hasGains  = gains.length > 0
+    const GEO_INTENT_LABELS = en ? GEO_INTENT_LABELS_EN : GEO_INTENT_LABELS_DE
+    const PRIORITY_LABELS = en ? PRIORITY_LABELS_EN : PRIORITY_LABELS_DE
+
+    const T = en ? {
+        noLongerMentioned: 'No longer mentioned', newlyMentioned: 'Newly mentioned',
+        causesHeading: 'Possible reasons (current technical state, not proof)',
+        causesNote: 'These points come from a current technical check of your domain and were found at the same time as the mention loss. This is not proof of the actual cause — just a plausible starting point.',
+        mixed: (d) => `Mixed AI visibility for ${d}`, down: (d) => `AI visibility dropped for ${d}`, newMentions: (d) => `New AI mentions for ${d}`,
+        subjWarn: (d) => `Heads up: lost AI mentions for ${d}`, subjGood: (d) => `Good news: new AI mentions for ${d}`,
+        alertLabel: 'GEO Visibility Alert', weeklyCheck: 'Weekly check', viewVisibility: 'View AI visibility',
+        footer1: 'Your AuditAI GEO Automation', footer2: 'This email was triggered automatically by your weekly GEO check.',
+    } : {
+        noLongerMentioned: 'Nicht mehr erwähnt', newlyMentioned: 'Neu erwähnt',
+        causesHeading: 'Mögliche Gründe (aktueller technischer Zustand, kein Beweis)',
+        causesNote: 'Diese Punkte stammen aus einem aktuellen technischen Check deiner Domain und wurden zeitgleich mit dem Erwähnungsverlust festgestellt. Das ist kein Beweis für den tatsächlichen Grund — nur ein plausibler Ansatzpunkt.',
+        mixed: (d) => `Gemischte KI-Sichtbarkeit für ${d}`, down: (d) => `KI-Sichtbarkeit gesunken bei ${d}`, newMentions: (d) => `Neue KI-Erwähnungen für ${d}`,
+        subjWarn: (d) => `Achtung: KI-Erwähnungen verloren bei ${d}`, subjGood: (d) => `Gute Nachrichten: Neue KI-Erwähnungen bei ${d}`,
+        alertLabel: 'GEO Sichtbarkeits-Alert', weeklyCheck: 'Wöchentlicher Check', viewVisibility: 'KI-Sichtbarkeit ansehen',
+        footer1: 'Deine AuditAI GEO-Automatisierung', footer2: 'Diese E-Mail wurde automatisch von deinem wöchentlichen GEO-Check ausgelöst.',
+    }
 
     const label = ({ keyword, platform, promptIntent }) => {
         const plat = GEO_PLATFORM_LABELS[platform] || platform
@@ -604,29 +930,29 @@ export async function sendGeoRankingAlert({ email, domain, gains, losses, possib
     const lossRows = losses.map(l => `
       <tr>
         <td style="padding:6px 0;font-size:13px;color:#e2e8f0;">${label(l)}</td>
-        <td style="padding:6px 0;font-size:13px;color:#f87171;text-align:right;font-weight:700;">Nicht mehr erwähnt</td>
+        <td style="padding:6px 0;font-size:13px;color:#f87171;text-align:right;font-weight:700;">${T.noLongerMentioned}</td>
       </tr>`).join('')
 
     const gainRows = gains.map(g => `
       <tr>
         <td style="padding:6px 0;font-size:13px;color:#e2e8f0;">${label(g)}</td>
-        <td style="padding:6px 0;font-size:13px;color:#34d399;text-align:right;font-weight:700;">Neu erwähnt</td>
+        <td style="padding:6px 0;font-size:13px;color:#34d399;text-align:right;font-weight:700;">${T.newlyMentioned}</td>
       </tr>`).join('')
 
     const lossBlock = hasLosses ? `
-      <p style="margin:0 0 6px;font-size:11px;color:#94a3b8;text-transform:uppercase;letter-spacing:0.08em;font-weight:600;">Nicht mehr erwähnt</p>
+      <p style="margin:0 0 6px;font-size:11px;color:#94a3b8;text-transform:uppercase;letter-spacing:0.08em;font-weight:600;">${T.noLongerMentioned}</p>
       <table cellpadding="0" cellspacing="0" width="100%" style="background:rgba(239,68,68,0.05);border:1px solid rgba(239,68,68,0.15);border-radius:10px;padding:12px 16px;margin-bottom:${hasGains ? '16px' : '0'};">
         <tbody>${lossRows}</tbody>
       </table>` : ''
 
     const gainBlock = hasGains ? `
-      <p style="margin:0 0 6px;font-size:11px;color:#94a3b8;text-transform:uppercase;letter-spacing:0.08em;font-weight:600;">Neu erwähnt</p>
+      <p style="margin:0 0 6px;font-size:11px;color:#94a3b8;text-transform:uppercase;letter-spacing:0.08em;font-weight:600;">${T.newlyMentioned}</p>
       <table cellpadding="0" cellspacing="0" width="100%" style="background:rgba(139,92,246,0.05);border:1px solid rgba(139,92,246,0.15);border-radius:10px;padding:12px 16px;">
         <tbody>${gainRows}</tbody>
       </table>` : ''
 
-    // Bewusst als "möglicher Grund" formuliert, nicht als bewiesene Ursache — der Audit-Re-Check läuft
-    // zeitgleich mit dem Verlust, beweist aber keine Kausalität (siehe geoTrackingJob.js: getPossibleCauses).
+    // Deliberately phrased as "possible reason", not proven cause — the audit re-check runs at the
+    // same time as the loss, but doesn't prove causality (see geoTrackingJob.js: getPossibleCauses).
     const causeRows = (possibleCauses?.findings || []).map(f => `
       <tr>
         <td style="padding:6px 0 6px 0;font-size:13px;color:#e2e8f0;vertical-align:top;">
@@ -636,29 +962,22 @@ export async function sendGeoRankingAlert({ email, domain, gains, losses, possib
       </tr>`).join('')
 
     const causeBlock = possibleCauses?.findings?.length ? `
-      <p style="margin:20px 0 6px;font-size:11px;color:#94a3b8;text-transform:uppercase;letter-spacing:0.08em;font-weight:600;">Mögliche Gründe (aktueller technischer Zustand, kein Beweis)</p>
+      <p style="margin:20px 0 6px;font-size:11px;color:#94a3b8;text-transform:uppercase;letter-spacing:0.08em;font-weight:600;">${T.causesHeading}</p>
       <table cellpadding="0" cellspacing="0" width="100%" style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:12px 16px;">
         <tbody>${causeRows}</tbody>
       </table>
       <p style="margin:8px 0 0;font-size:11px;color:#64748b;line-height:1.5;">
-        Diese Punkte stammen aus einem aktuellen technischen Check deiner Domain und wurden zeitgleich mit dem Erwähnungsverlust festgestellt.
-        Das ist kein Beweis für den tatsächlichen Grund — nur ein plausibler Ansatzpunkt.
+        ${T.causesNote}
       </p>` : ''
 
-    const headline = hasLosses && hasGains
-        ? `Gemischte KI-Sichtbarkeit für ${domain}`
-        : hasLosses
-            ? `KI-Sichtbarkeit gesunken bei ${domain}`
-            : `Neue KI-Erwähnungen für ${domain}`
+    const headline = hasLosses && hasGains ? T.mixed(domain) : hasLosses ? T.down(domain) : T.newMentions(domain)
 
     await transporter.sendMail({
         from: process.env.SMTP_FROM || process.env.SMTP_USER,
         to: email,
-        subject: hasLosses
-            ? `Achtung: KI-Erwähnungen verloren bei ${domain}`
-            : `Gute Nachrichten: Neue KI-Erwähnungen bei ${domain}`,
+        subject: hasLosses ? T.subjWarn(domain) : T.subjGood(domain),
         html: `<!DOCTYPE html>
-<html lang="de">
+<html lang="${en ? 'en' : 'de'}">
 <head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/></head>
 <body style="margin:0;padding:0;background:#05080f;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
   <table width="100%" cellpadding="0" cellspacing="0" style="background:#05080f;padding:40px 20px;">
@@ -675,9 +994,9 @@ export async function sendGeoRankingAlert({ email, domain, gains, losses, possib
           </tr></table>
         </td></tr>
         <tr><td style="background:#0d1117;border:1px solid rgba(255,255,255,0.07);border-radius:20px;padding:36px 40px;">
-          <p style="margin:0 0 4px;font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.1em;">GEO Sichtbarkeits-Alert</p>
+          <p style="margin:0 0 4px;font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.1em;">${T.alertLabel}</p>
           <p style="margin:0 0 6px;font-size:22px;font-weight:700;color:#ffffff;">${headline}</p>
-          <p style="margin:0 0 28px;font-size:14px;color:#64748b;">${domain} &middot; Wöchentlicher Check</p>
+          <p style="margin:0 0 28px;font-size:14px;color:#64748b;">${domain} &middot; ${T.weeklyCheck}</p>
           <div style="margin-bottom:24px;">
             ${lossBlock}
             ${gainBlock}
@@ -686,15 +1005,15 @@ export async function sendGeoRankingAlert({ email, domain, gains, losses, possib
           <table cellpadding="0" cellspacing="0"><tr>
             <td style="background:linear-gradient(135deg,#7c3aed,#9333ea);border-radius:12px;padding:1px;">
               <a href="${dashboardUrl}" style="display:block;background:#0d1117;border-radius:11px;padding:12px 28px;font-size:14px;font-weight:600;color:#ffffff;text-decoration:none;">
-                KI-Sichtbarkeit ansehen &rarr;
+                ${T.viewVisibility} &rarr;
               </a>
             </td>
           </tr></table>
           <hr style="border:none;border-top:1px solid rgba(255,255,255,0.06);margin:28px 0;"/>
-          <p style="margin:0;font-size:13px;color:#64748b;">Deine AuditAI GEO-Automatisierung</p>
+          <p style="margin:0;font-size:13px;color:#64748b;">${T.footer1}</p>
         </td></tr>
         <tr><td align="center" style="padding-top:24px;">
-          <p style="margin:0;font-size:11px;color:#334155;">Diese E-Mail wurde automatisch von deinem wöchentlichen GEO-Check ausgelöst.</p>
+          <p style="margin:0;font-size:11px;color:#334155;">${T.footer2}</p>
         </td></tr>
       </table>
     </td></tr>
@@ -704,24 +1023,31 @@ export async function sendGeoRankingAlert({ email, domain, gains, losses, possib
     })
 }
 
-export async function sendNewKeywordsAlert({ email, domain, keywords }) {
+export async function sendNewKeywordsAlert({ email, domain, keywords, language = 'de' }) {
     const dashboardUrl = `${APP_URL}/seo/dashboard`
     await transporter.sendMail({
         from:    process.env.SMTP_FROM || process.env.SMTP_USER,
         to:      email,
-        subject: `${keywords.length} neue Keywords entdeckt für ${domain}`,
-        html:    newKeywordsAlertHtml(domain, keywords, dashboardUrl),
+        subject: language === 'en'
+            ? `${keywords.length} new keywords discovered for ${domain}`
+            : `${keywords.length} neue Keywords entdeckt für ${domain}`,
+        html:    newKeywordsAlertHtml(domain, keywords, dashboardUrl, language),
     })
 }
 
-function newKeywordsAlertHtml(domain, keywords, dashboardUrl) {
-    const trendLabel = { rising: '↑ Steigend', falling: '↓ Fallend', neutral: '→ Stabil' }
+function newKeywordsAlertHtml(domain, keywords, dashboardUrl, language = 'de') {
+    const en = language === 'en'
+    const trendLabel = en
+        ? { rising: '↑ Rising', falling: '↓ Falling', neutral: '→ Stable' }
+        : { rising: '↑ Steigend', falling: '↓ Fallend', neutral: '→ Stabil' }
     const trendColor = { rising: '#34d399', falling: '#f87171', neutral: '#94a3b8' }
-    const compLabel  = { LOW: 'Niedrig', MEDIUM: 'Mittel', HIGH: 'Hoch' }
+    const compLabel  = en
+        ? { LOW: 'Low', MEDIUM: 'Medium', HIGH: 'High' }
+        : { LOW: 'Niedrig', MEDIUM: 'Mittel', HIGH: 'Hoch' }
     const compColor  = { LOW: '#34d399', MEDIUM: '#f59e0b', HIGH: '#f87171' }
 
     const rows = keywords.map(({ keyword, searchVolume, competition, cpc, trend }) => {
-        const vol  = searchVolume != null ? searchVolume.toLocaleString('de-DE') : '—'
+        const vol  = searchVolume != null ? searchVolume.toLocaleString(en ? 'en-US' : 'de-DE') : '—'
         const comp = competition ? (compLabel[competition] ?? competition) : '—'
         const cColor = competition ? (compColor[competition] ?? '#94a3b8') : '#94a3b8'
         const cpcStr = cpc != null ? `€${Number(cpc).toFixed(2)}` : '—'
@@ -735,6 +1061,63 @@ function newKeywordsAlertHtml(domain, keywords, dashboardUrl) {
         <td style="padding:8px 0;font-size:12px;font-weight:600;color:${trendColor[tr]};text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">${trendLabel[tr]}</td>
       </tr>`
     }).join('')
+
+    if (en) {
+        return `<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/></head>
+<body style="margin:0;padding:0;background:#05080f;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#05080f;padding:40px 20px;">
+    <tr><td align="center">
+      <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
+        <tr><td align="center" style="padding-bottom:32px;">
+          <table cellpadding="0" cellspacing="0"><tr>
+            <td style="background:linear-gradient(135deg,#059669,#0d9488);border-radius:12px;width:40px;height:40px;text-align:center;vertical-align:middle;">
+              <span style="color:#fff;font-size:18px;font-weight:bold;">&#x26A1;</span>
+            </td>
+            <td style="padding-left:10px;vertical-align:middle;">
+              <span style="color:#ffffff;font-size:20px;font-weight:700;">Audit<span style="color:#34d399;">AI</span></span>
+            </td>
+          </tr></table>
+        </td></tr>
+        <tr><td style="background:#0d1117;border:1px solid rgba(255,255,255,0.07);border-radius:20px;padding:36px 40px;">
+          <p style="margin:0 0 4px;font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.1em;">SEO Keyword Discovery</p>
+          <p style="margin:0 0 6px;font-size:22px;font-weight:700;color:#ffffff;">${keywords.length} new keywords discovered</p>
+          <p style="margin:0 0 28px;font-size:14px;color:#64748b;">${domain} &middot; New content detected</p>
+          <p style="margin:0 0 16px;font-size:14px;color:#94a3b8;line-height:1.6;">
+            New pages or blog posts were found on your website. These keywords were automatically added to tracking. You can remove them anytime in the dashboard.
+          </p>
+          <table cellpadding="0" cellspacing="0" width="100%" style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:16px 20px;margin-bottom:28px;">
+            <thead>
+              <tr>
+                <th style="text-align:left;font-size:10px;color:#64748b;padding-bottom:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;">Keyword</th>
+                <th style="text-align:center;font-size:10px;color:#64748b;padding-bottom:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;">Volume</th>
+                <th style="text-align:center;font-size:10px;color:#64748b;padding-bottom:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;">Competition</th>
+                <th style="text-align:center;font-size:10px;color:#64748b;padding-bottom:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;">CPC</th>
+                <th style="text-align:right;font-size:10px;color:#64748b;padding-bottom:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;">Trend</th>
+              </tr>
+            </thead>
+            <tbody>${rows}</tbody>
+          </table>
+          <table cellpadding="0" cellspacing="0"><tr>
+            <td style="background:linear-gradient(135deg,#059669,#0d9488);border-radius:12px;padding:1px;">
+              <a href="${dashboardUrl}" style="display:block;background:#0d1117;border-radius:11px;padding:12px 28px;font-size:14px;font-weight:600;color:#ffffff;text-decoration:none;">
+                View keywords in dashboard &rarr;
+              </a>
+            </td>
+          </tr></table>
+          <hr style="border:none;border-top:1px solid rgba(255,255,255,0.06);margin:28px 0;"/>
+          <p style="margin:0;font-size:13px;color:#64748b;">Your AuditAI SEO Automation</p>
+        </td></tr>
+        <tr><td align="center" style="padding-top:24px;">
+          <p style="margin:0;font-size:11px;color:#334155;">This email was triggered automatically by new content on your website.</p>
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`
+    }
 
     return `<!DOCTYPE html>
 <html lang="de">
@@ -792,13 +1175,14 @@ function newKeywordsAlertHtml(domain, keywords, dashboardUrl) {
 </html>`
 }
 
-export async function sendWaitlistConfirmation(to) {
+export async function sendWaitlistConfirmation(to, language = 'de') {
+    const isEn = language === 'en'
     await transporter.sendMail({
         from: process.env.SMTP_FROM || process.env.SMTP_USER,
         to,
-        subject: 'SiteCheckAI Extension — Du bist dabei!',
-        text: waitlistText,
-        html: waitlistHtml,
+        subject: isEn ? "SiteCheckAI Extension — You're on the list!" : 'SiteCheckAI Extension — Du bist dabei!',
+        text: isEn ? waitlistTextEn : waitlistText,
+        html: isEn ? waitlistHtmlEn : waitlistHtml,
     });
 }
 
@@ -822,6 +1206,28 @@ Dein SiteCheckAI Team
 
 ---
 Du erhältst diese E-Mail, weil du dich auf sitecheckai.dev für die Warteliste eingetragen hast.
+`.trim()
+
+const waitlistTextEn = `
+Hi there!
+
+Thanks for signing up for the SiteCheckAI Chrome Extension waitlist.
+
+We really appreciate your interest! As soon as the extension is available in the Chrome Web Store, you'll be first in line — we'll notify you immediately.
+
+What to expect:
+- Record clicks through your website — no code required
+- Kick off automated Playwright tests with one click
+- Export steps as CSV and customize them
+- Catch every regression instantly — before your users do
+
+We're working hard on it and can't wait to have you on board.
+
+See you soon,
+Your SiteCheckAI Team
+
+---
+You're receiving this email because you signed up for the waitlist on sitecheckai.dev.
 `.trim()
 
 const waitlistHtml = `
@@ -935,6 +1341,128 @@ const waitlistHtml = `
                 Du erhältst diese E-Mail, weil du dich auf
                 <a href="https://sitecheckai.dev" style="color:#475569;text-decoration:none;">sitecheckai.dev</a>
                 für die Warteliste eingetragen hast.
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+`.trim()
+
+const waitlistHtmlEn = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<body style="margin:0;padding:0;background:#05080f;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#05080f;padding:40px 20px;">
+    <tr>
+      <td align="center">
+        <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
+
+          <tr>
+            <td align="center" style="padding-bottom:32px;">
+              <table cellpadding="0" cellspacing="0">
+                <tr>
+                  <td style="background:linear-gradient(135deg,#7c3aed,#06b6d4);border-radius:12px;width:40px;height:40px;text-align:center;vertical-align:middle;">
+                    <span style="color:#fff;font-size:18px;font-weight:bold;">&#x26A1;</span>
+                  </td>
+                  <td style="padding-left:10px;vertical-align:middle;">
+                    <span style="color:#ffffff;font-size:20px;font-weight:700;letter-spacing:-0.5px;">Audit<span style="color:#22d3ee;">AI</span></span>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <tr>
+            <td style="background:#0d1117;border:1px solid rgba(255,255,255,0.07);border-radius:20px;padding:40px 40px 32px;">
+
+              <p style="margin:0 0 8px;font-size:24px;font-weight:700;color:#ffffff;line-height:1.3;">
+                You're on the list! &#x1F389;
+              </p>
+              <p style="margin:0 0 28px;font-size:15px;color:#94a3b8;line-height:1.6;">
+                Thanks for signing up for the <strong style="color:#a5b4fc;">SiteCheckAI Chrome Extension</strong> waitlist. We really appreciate your interest!
+              </p>
+
+              <p style="margin:0 0 24px;font-size:15px;color:#94a3b8;line-height:1.6;">
+                As soon as the extension is available in the <strong style="color:#ffffff;">Chrome Web Store</strong>, you'll be first in line &mdash; we'll notify you immediately.
+              </p>
+
+              <p style="margin:0 0 12px;font-size:13px;color:#64748b;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;">What to expect</p>
+
+              <table cellpadding="0" cellspacing="0" width="100%" style="margin-bottom:12px;">
+                <tr>
+                  <td width="36" valign="top" style="padding-top:2px;">
+                    <div style="background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.2);border-radius:8px;width:28px;height:28px;text-align:center;line-height:28px;font-size:14px;">&#x1F3AC;</div>
+                  </td>
+                  <td style="padding-left:12px;vertical-align:top;">
+                    <p style="margin:0 0 2px;font-size:13px;font-weight:600;color:#e2e8f0;">Codeless click recording</p>
+                    <p style="margin:0;font-size:12px;color:#64748b;line-height:1.5;">Just click through your website &mdash; every interaction is recorded automatically.</p>
+                  </td>
+                </tr>
+              </table>
+
+              <table cellpadding="0" cellspacing="0" width="100%" style="margin-bottom:12px;">
+                <tr>
+                  <td width="36" valign="top" style="padding-top:2px;">
+                    <div style="background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.2);border-radius:8px;width:28px;height:28px;text-align:center;line-height:28px;font-size:14px;">&#x25B6;</div>
+                  </td>
+                  <td style="padding-left:12px;vertical-align:top;">
+                    <p style="margin:0 0 2px;font-size:13px;font-weight:600;color:#e2e8f0;">Automated tests in one click</p>
+                    <p style="margin:0;font-size:12px;color:#64748b;line-height:1.5;">Playwright replays your flow exactly and shows you instantly what breaks.</p>
+                  </td>
+                </tr>
+              </table>
+
+              <table cellpadding="0" cellspacing="0" width="100%" style="margin-bottom:12px;">
+                <tr>
+                  <td width="36" valign="top" style="padding-top:2px;">
+                    <div style="background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.2);border-radius:8px;width:28px;height:28px;text-align:center;line-height:28px;font-size:14px;">&#x1F504;</div>
+                  </td>
+                  <td style="padding-left:12px;vertical-align:top;">
+                    <p style="margin:0 0 2px;font-size:13px;font-weight:600;color:#e2e8f0;">CSV export for full control</p>
+                    <p style="margin:0;font-size:12px;color:#64748b;line-height:1.5;">Export every step as a readable CSV file and customize it however you like.</p>
+                  </td>
+                </tr>
+              </table>
+
+              <table cellpadding="0" cellspacing="0" width="100%" style="margin-bottom:28px;">
+                <tr>
+                  <td width="36" valign="top" style="padding-top:2px;">
+                    <div style="background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.2);border-radius:8px;width:28px;height:28px;text-align:center;line-height:28px;font-size:14px;">&#x1F6E1;</div>
+                  </td>
+                  <td style="padding-left:12px;vertical-align:top;">
+                    <p style="margin:0 0 2px;font-size:13px;font-weight:600;color:#e2e8f0;">Regression protection after every deploy</p>
+                    <p style="margin:0;font-size:12px;color:#64748b;line-height:1.5;">No more manual click-throughs &mdash; the test runs automatically after every deploy.</p>
+                  </td>
+                </tr>
+              </table>
+
+              <hr style="border:none;border-top:1px solid rgba(255,255,255,0.06);margin:0 0 28px;" />
+
+              <p style="margin:0 0 4px;font-size:15px;color:#94a3b8;line-height:1.6;">
+                We're working hard on it and can't wait to have you on board.
+              </p>
+              <p style="margin:0;font-size:15px;color:#94a3b8;">
+                See you soon,<br />
+                <strong style="color:#ffffff;">Your SiteCheckAI Team</strong>
+              </p>
+
+            </td>
+          </tr>
+
+          <tr>
+            <td align="center" style="padding-top:24px;">
+              <p style="margin:0;font-size:11px;color:#334155;line-height:1.6;">
+                You're receiving this email because you signed up for the waitlist on
+                <a href="https://sitecheckai.dev" style="color:#475569;text-decoration:none;">sitecheckai.dev</a>.
               </p>
             </td>
           </tr>

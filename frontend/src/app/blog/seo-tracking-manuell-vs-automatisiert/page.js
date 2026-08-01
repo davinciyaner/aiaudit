@@ -7,7 +7,13 @@ export const metadata = {
     title: 'Manuelles SEO-Tracking vs. automatisiert: Was lohnt sich wirklich?',
     description: 'Manuelles SEO- und GEO-Tracking vs. Automatisierung im Vergleich: Zeitaufwand, Kosten und warum KI-Sichtbarkeit manuell kaum zuverlässig messbar ist.',
     keywords: 'seo tracking manuell, seo monitoring automatisch, seo automatisierung lohnt sich, ranking tracking manuell vs automatisch, ki sichtbarkeit tracken, geo tracking manuell',
-    alternates: { canonical: 'https://www.sitecheckai.dev/blog/seo-tracking-manuell-vs-automatisiert' },
+    alternates: {
+        canonical: 'https://www.sitecheckai.dev/blog/seo-tracking-manuell-vs-automatisiert',
+        languages: {
+            'de-DE': 'https://www.sitecheckai.dev/blog/seo-tracking-manuell-vs-automatisiert',
+            'en-US': 'https://www.sitecheckai.dev/en/blog/seo-tracking-manual-vs-automated',
+        },
+    },
     openGraph: {
         title: 'Manuelles SEO-Tracking vs. automatisiert: Was lohnt sich wirklich?',
         description: 'Zeitaufwand, Kosten und der blinde Fleck beim manuellen Tracking: KI-Sichtbarkeit.',

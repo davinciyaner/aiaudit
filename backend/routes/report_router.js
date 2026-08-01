@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { auth } from "../middleware/auth.js";
 import Report from "../models/report_model.js";
+import { t } from "../utils/i18n/errors.js";
 
 const router = Router();
 
@@ -11,7 +12,7 @@ router.get("/", auth, async (req, res) => {
         }).sort({ createdAt: -1 });
         res.json(reports);
     } catch (err) {
-        res.status(500).json({ error: "Fehler beim Laden der Reports" });
+        res.status(500).json({ error: t("ERROR_LOADING_REPORTS", req.language) });
     }
 });
 
@@ -22,11 +23,11 @@ router.get("/:id", auth, async (req, res) => {
             userId: req.userId
         });
         if (!report) {
-            return res.status(404).json({ error: "Nicht gefunden" });
+            return res.status(404).json({ error: t("NOT_FOUND", req.language) });
         }
         res.json(report);
     } catch (err) {
-        res.status(400).json({ error: "Ungültige Report-ID" });
+        res.status(400).json({ error: t("INVALID_REPORT_ID", req.language) });
     }
 });
 

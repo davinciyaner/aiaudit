@@ -1,8 +1,10 @@
 import './globals.css'
+import { headers } from 'next/headers'
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import Script from 'next/script'
 import CookieBanner from './components/CookieBanner'
+import { getRootJsonLd } from '../lib/i18n/rootJsonLd'
 
 export const metadata = {
     metadataBase: new URL('https://www.sitecheckai.dev'),
@@ -37,50 +39,14 @@ export const metadata = {
     alternates: { canonical: 'https://www.sitecheckai.dev' },
 }
 
-const jsonLd = {
-    '@context': 'https://schema.org',
-    '@graph': [
-        {
-            '@type': 'Organization',
-            '@id': 'https://www.sitecheckai.dev/#organization',
-            name: 'AuditAI',
-            url: 'https://www.sitecheckai.dev',
-            description: 'KI-gestütztes Website-Audit-Tool für SEO, Performance und GEO-Sichtbarkeit.',
-            logo: {
-                '@type': 'ImageObject',
-                url: 'https://www.sitecheckai.dev/logo',
-                width: 512,
-                height: 512,
-            },
-            sameAs: ['https://twitter.com/auditai'],
-        },
-        {
-            '@type': 'WebSite',
-            '@id': 'https://www.sitecheckai.dev/#website',
-            url: 'https://www.sitecheckai.dev',
-            name: 'AuditAI',
-            publisher: { '@id': 'https://www.sitecheckai.dev/#organization' },
-            inLanguage: 'de-DE',
-        },
-        {
-            '@type': 'SoftwareApplication',
-            name: 'AuditAI',
-            url: 'https://www.sitecheckai.dev',
-            applicationCategory: 'BusinessApplication',
-            operatingSystem: 'Web',
-            description: 'Vollständiger Website-Audit mit KI: SEO, Performance und GEO-Sichtbarkeit in unter 60 Sekunden.',
-            offers: [
-                { '@type': 'Offer', name: 'Free', price: '0', priceCurrency: 'EUR', description: '1 Audit pro Monat' },
-                { '@type': 'Offer', name: 'Pro', price: '29', priceCurrency: 'EUR', description: '10 Audits pro Monat' },
-                { '@type': 'Offer', name: 'Agency', price: '99', priceCurrency: 'EUR', description: 'Unbegrenzte Audits' },
-            ],
-        },
-    ],
-}
+export default async function RootLayout({ children }) {
+    const headerList = await headers()
+    const pathname = headerList.get('x-pathname') || ''
+    const locale = pathname.startsWith('/en') ? 'en' : 'de'
+    const jsonLd = getRootJsonLd(locale)
 
-export default function RootLayout({ children }) {
     return (
-        <html lang="de" className="dark">
+        <html lang={locale} className="dark">
         <head>
         <script
             type="application/ld+json"
@@ -108,7 +74,7 @@ export default function RootLayout({ children }) {
                 gtag('config', 'AW-691789119');
             `}
         </Script>
-        <CookieBanner />
+        <CookieBanner locale={locale} />
         <Analytics />
         <SpeedInsights />
         </body>

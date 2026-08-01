@@ -9,6 +9,7 @@ import { generateAIReport } from "../controllers/ai-report.js";
 import { generateHTMLReport, saveReportAsPDF } from "../controllers/report.js";
 import { anonymousAuditLimiter } from "../middleware/rateLimiter.js";
 import { sendAdminNewAudit } from "../utils/mailer.js";
+import { t } from "../utils/i18n/errors.js";
 
 const router = Router();
 
@@ -42,15 +43,15 @@ const NON_AUDITABLE_DOMAINS = new Set(['paypal.com', 'stripe.com', 'pay.google.c
 const NON_AUDITABLE_PATH_RE = /^\/(login|signin|sign-in|signup|sign-up|register|checkout|cart|account|password|auth|session)(\/|$)/i;
 
 // Blockiert private/lokale URLs (SSRF-Schutz), normalisiert Tracking-Parameter weg
-function validateURL(url) {
+function validateURL(url, lang = "de") {
     let parsed;
     try {
         parsed = new URL(url.startsWith("http") ? url : `https://${url}`);
     } catch {
-        throw new Error("Ungültige URL");
+        throw new Error(t("INVALID_URL", lang));
     }
     if (!["http:", "https:"].includes(parsed.protocol)) {
-        throw new Error("Nur HTTP und HTTPS erlaubt");
+        throw new Error(t("ONLY_HTTP_HTTPS", lang));
     }
     const host = parsed.hostname.toLowerCase();
     const blocked = [
@@ -73,12 +74,12 @@ function validateURL(url) {
         'instance-data.ec2.internal',
     ]);
     if (blocked.some(r => r.test(host)) || metadataHosts.has(host)) {
-        throw new Error("Private oder lokale URLs sind nicht erlaubt");
+        throw new Error(t("PRIVATE_URL_NOT_ALLOWED", lang));
     }
 
     const domain = host.replace(/^www\./, '');
     if (NON_AUDITABLE_DOMAINS.has(domain) || [...NON_AUDITABLE_DOMAINS].some(d => domain.endsWith(`.${d}`))) {
-        const err = new Error("Diese URL ist für einen SEO-Audit nicht geeignet (Zahlungsanbieter). Bitte eine reguläre Seite oder Startseite eingeben.");
+        const err = new Error(t("PAYMENT_DOMAIN_NOT_AUDITABLE", lang));
         err.status = 400;
         throw err;
     }
@@ -88,13 +89,13 @@ function validateURL(url) {
     const hasQuery = parsed.search !== '';
     const hasFragment = parsed.hash !== '';
     if (hasPath || hasQuery || hasFragment) {
-        const err = new Error("Bitte nur die Domain eingeben (z.B. example.com) – keine Pfade, Parameter oder Tokens.");
+        const err = new Error(t("DOMAIN_ONLY", lang));
         err.status = 400;
         throw err;
     }
 
     if (NON_AUDITABLE_PATH_RE.test(parsed.pathname)) {
-        const err = new Error("Login-, Checkout- und Account-Seiten können nicht sinnvoll auditiert werden. Bitte die Startseite oder eine Produktseite eingeben.");
+        const err = new Error(t("LOGIN_CHECKOUT_NOT_AUDITABLE", lang));
         err.status = 400;
         throw err;
     }
@@ -103,7 +104,7 @@ function validateURL(url) {
 }
 
 // Prüft ob eingeloggter Nutzer sein monatliches Audit-Limit erreicht hat
-async function checkPlanLimit(userId) {
+async function checkPlanLimit(userId, lang = "de") {
     if (!userId) return; // Anonyme Nutzer werden per Rate-Limiter kontrolliert
 
     const sub = await Subscription.findOne({ userId, status: "ACTIVE" });
@@ -117,7 +118,10 @@ async function checkPlanLimit(userId) {
 
     const count = await Report.countDocuments({ userId, createdAt: { $gte: startOfMonth } });
     if (count >= limit) {
-        const err = new Error(`Audit-Limit erreicht (${limit}/${limit} in diesem Monat). Bitte upgraden.`);
+        const message = lang === "en"
+            ? `Audit limit reached (${limit}/${limit} this month). Please upgrade.`
+            : `Audit-Limit erreicht (${limit}/${limit} in diesem Monat). Bitte upgraden.`;
+        const err = new Error(message);
         err.status = 429;
         throw err;
     }
@@ -137,19 +141,20 @@ const GLOBAL_DAILY_CAP = parseInt(process.env.GLOBAL_DAILY_AUDIT_CAP || '100', 1
 
 async function handleAudit(req, res, next) {
     const { url } = req.body;
+    const language = req.body.language === 'en' ? 'en' : req.language;
 
-    if (!url) return res.status(400).json({ error: "URL fehlt" });
+    if (!url) return res.status(400).json({ error: t("URL_MISSING", language) });
 
     try {
-        const cleanUrl = validateURL(url);
+        const cleanUrl = validateURL(url, language);
 
         // Globale Notbremse: verhindert Kostenschäden bei Abuse
         const since = new Date(Date.now() - 24 * 60 * 60 * 1000);
         const todayCount = await Report.countDocuments({ createdAt: { $gte: since } });
         if (todayCount >= GLOBAL_DAILY_CAP) {
-            return res.status(503).json({ error: "Tageslimit erreicht. Bitte später erneut versuchen." });
+            return res.status(503).json({ error: t("DAILY_LIMIT_REACHED", language) });
         }
-        await checkPlanLimit(req.userId);
+        await checkPlanLimit(req.userId, language);
 
         // Anonymous users: block if domain was already audited for free
         if (!req.userId) {
@@ -158,7 +163,7 @@ async function handleAudit(req, res, next) {
                 const existing = await FreeDomainAudit.findOne({ domain });
                 if (existing) {
                     return res.status(403).json({
-                        error: "Diese Domain wurde bereits kostenlos auditiert.",
+                        error: t("DOMAIN_ALREADY_AUDITED", language),
                         domainLimitReached: true,
                     });
                 }
@@ -179,8 +184,8 @@ async function handleAudit(req, res, next) {
         let pdfFile = null;
 
         if (isPro) {
-            aiReport = await generateAIReport(auditData, plan);
-            const html = generateHTMLReport(auditData, aiReport);
+            aiReport = await generateAIReport(auditData, plan, language);
+            const html = generateHTMLReport(auditData, aiReport, language);
             pdfFile = await saveReportAsPDF(html, cleanUrl);
         }
 

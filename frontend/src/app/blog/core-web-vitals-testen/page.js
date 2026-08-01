@@ -6,7 +6,13 @@ export const metadata = {
     title: 'Core Web Vitals 2026: Verstehen und kostenlos testen',
     description: 'Core Web Vitals einfach erklärt: LCP, INP und CLS mit den offiziellen Google-Schwellenwerten. Plus: wie du sie in unter 2 Minuten kostenlos testest.',
     keywords: 'core web vitals, core web vitals testen, core web vitals kostenlos, core web vitals prüfen kostenlos, lcp inp cls, ladezeit test kostenlos, pagespeed insights',
-    alternates: { canonical: 'https://www.sitecheckai.dev/blog/core-web-vitals-testen' },
+    alternates: {
+        canonical: 'https://www.sitecheckai.dev/blog/core-web-vitals-testen',
+        languages: {
+            'de-DE': 'https://www.sitecheckai.dev/blog/core-web-vitals-testen',
+            'en-US': 'https://www.sitecheckai.dev/en/blog/core-web-vitals-testing',
+        },
+    },
     openGraph: {
         title: 'Core Web Vitals 2026: Verstehen und kostenlos testen',
         description: 'LCP, INP und CLS erklärt - mit den offiziellen Schwellenwerten und kostenlosen Test-Tools.',

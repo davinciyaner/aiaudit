@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import LandingFeedback from '../models/landing_feedback.js'
+import { t } from '../utils/i18n/errors.js'
 
 const router = Router()
 
@@ -7,7 +8,7 @@ router.post('/', async (req, res) => {
     const { rating, auditBarrier, missingFeature } = req.body
 
     if (rating !== undefined && (typeof rating !== 'number' || rating < 1 || rating > 5)) {
-        return res.status(400).json({ error: 'rating muss zwischen 1 und 5 liegen' })
+        return res.status(400).json({ error: t('RATING_MUST_BE_1_TO_5', req.language) })
     }
 
     try {

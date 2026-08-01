@@ -1,5 +1,6 @@
 import { chromium } from 'playwright';
 import TestResult from '../models/test_result.js';
+import { t } from '../utils/i18n/errors.js';
 
 function buildHTML(doc) {
   const { name, summary, steps, createdAt } = doc;
@@ -185,8 +186,8 @@ ${stepsHTML}
 
 export async function generatePDF(req, res) {
   const doc = await TestResult.findOne({ _id: req.params.id, userId: req.userId });
-  if (!doc) return res.status(404).json({ error: 'Nicht gefunden' });
-  if (doc.status === 'running') return res.status(409).json({ error: 'Test läuft noch' });
+  if (!doc) return res.status(404).json({ error: t('NOT_FOUND', req.language) });
+  if (doc.status === 'running') return res.status(409).json({ error: t('TEST_STILL_RUNNING', req.language) });
 
   const browser = await chromium.launch({ headless: true });
   const page = await browser.newPage();

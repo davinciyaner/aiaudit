@@ -4,17 +4,24 @@ import { X, Lock, UserPlus, Search, Zap, Globe, Calendar, BarChart2 } from 'luci
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
-const FREE_ITEMS = [
+const FREE_ITEMS_DE = [
     { icon: Calendar, label: '1 Audit pro Monat', desc: 'Vollständige Analyse deiner Website' },
     { icon: Search, label: 'SEO-Score & Analyse', desc: 'Title, Meta, H1, Alt-Texte & alle Fehler' },
     { icon: Globe, label: 'GEO-Sichtbarkeit', desc: 'llms.txt, Schema, KI-Crawler & alle Checks' },
     { icon: BarChart2, label: 'Performance-Metriken', desc: 'Ladezeiten, Core Web Vitals & alle Issues' },
 ]
 
+const FREE_ITEMS_EN = [
+    { icon: Calendar, label: '1 audit per month', desc: 'Full analysis of your website' },
+    { icon: Search, label: 'SEO score & analysis', desc: 'Title, meta, H1, alt text & all issues' },
+    { icon: Globe, label: 'GEO visibility', desc: 'llms.txt, schema, AI crawlers & all checks' },
+    { icon: BarChart2, label: 'Performance metrics', desc: 'Load times, Core Web Vitals & all issues' },
+]
 
-// mode="start" → Pre-Audit (Registrierung nötig um zu starten)
-export default function ScoreRegisterModal({ open, onClose, auditUrl = '', mode = 'start' }) {
+// mode="start" → Pre-Audit (registration required to start)
+export default function ScoreRegisterModal({ open, onClose, auditUrl = '', mode = 'start', locale = 'de' }) {
     const router = useRouter()
+    const FREE_ITEMS = locale === 'en' ? FREE_ITEMS_EN : FREE_ITEMS_DE
 
     const handleRegister = () => {
         if (auditUrl) sessionStorage.setItem('pendingAuditUrl', auditUrl)
@@ -60,15 +67,17 @@ export default function ScoreRegisterModal({ open, onClose, auditUrl = '', mode 
                                 </div>
 
                                 <h3 className="text-xl font-bold text-white mb-2">
-                                    Gratis starten - in 30 Sekunden
+                                    {locale === 'en' ? 'Start free - in 30 seconds' : 'Gratis starten - in 30 Sekunden'}
                                 </h3>
                                 <p className="text-slate-400 text-sm mb-5 leading-relaxed">
-                                    Mit einem kostenlosen Account siehst du alle Scores, Probleme und Optimierungen deiner Website.
+                                    {locale === 'en'
+                                        ? 'With a free account you see every score, issue, and optimization for your website.'
+                                        : 'Mit einem kostenlosen Account siehst du alle Scores, Probleme und Optimierungen deiner Website.'}
                                 </p>
 
                                 <div className="mb-3">
                                     <div className="flex items-center gap-2 mb-2">
-                                        <span className="text-[10px] font-semibold uppercase tracking-wider text-emerald-400">Kostenlos enthalten</span>
+                                        <span className="text-[10px] font-semibold uppercase tracking-wider text-emerald-400">{locale === 'en' ? 'Included for free' : 'Kostenlos enthalten'}</span>
                                         <div className="flex-1 h-px bg-white/5" />
                                     </div>
                                     <div className="flex flex-col gap-1.5">
@@ -92,7 +101,7 @@ export default function ScoreRegisterModal({ open, onClose, auditUrl = '', mode 
                                     className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-linear-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white font-semibold rounded-xl transition-all shadow-lg shadow-violet-500/20 mb-3"
                                 >
                                     <UserPlus className="w-4 h-4" />
-                                    Kostenlosen Account erstellen
+                                    {locale === 'en' ? 'Create free account' : 'Kostenlosen Account erstellen'}
                                 </button>
 
                                 <Link
@@ -100,7 +109,7 @@ export default function ScoreRegisterModal({ open, onClose, auditUrl = '', mode 
                                     onClick={onClose}
                                     className="block text-xs text-slate-600 hover:text-slate-400 transition-colors"
                                 >
-                                    Bereits registriert? Einloggen →
+                                    {locale === 'en' ? 'Already registered? Log in →' : 'Bereits registriert? Einloggen →'}
                                 </Link>
                             </div>
                         </motion.div>

@@ -7,6 +7,7 @@ import { checkSiteRankings, getKeywordIdeas, getCompetitors, getBacklinkSummary,
 import SeoUsage from '../models/seo_usage.js'
 import { sendSeoRankingAlert } from '../utils/mailer.js'
 import { detectRankingChanges, ALERT_DROP_THRESHOLD } from '../jobs/seoTrackingJob.js'
+import { t } from '../utils/i18n/errors.js'
 
 const PLAN_LIMITS = {
     einsteiger: { maxSites: 3,  maxKeywords: 50,  historyWeeks: 8,   contentGapPerMonth: 0   },
@@ -38,8 +39,8 @@ export async function getPlan(req, res) {
 export async function subscribePlan(req, res) {
     try {
         const { subscriptionId, plan } = req.body
-        if (!subscriptionId || !plan) return res.status(400).json({ error: 'subscriptionId und plan erforderlich' })
-        if (!['einsteiger', 'pro', 'expert'].includes(plan)) return res.status(400).json({ error: 'Ungültiger Plan' })
+        if (!subscriptionId || !plan) return res.status(400).json({ error: t('SUBSCRIPTION_ID_PLAN_REQUIRED', req.language) })
+        if (!['einsteiger', 'pro', 'expert'].includes(plan)) return res.status(400).json({ error: t('INVALID_PLAN', req.language) })
 
         await ProductSubscription.findOneAndUpdate(
             { userId: req.userId, product: 'seo' },
@@ -56,7 +57,7 @@ export async function subscribePlan(req, res) {
 export async function getSites(req, res) {
     try {
         const plan = await getSeoPlan(req.userId)
-        if (!plan) return res.status(403).json({ error: 'Kein aktives SEO-Automatisierung Abo' })
+        if (!plan) return res.status(403).json({ error: t('NO_ACTIVE_SEO_SUB', req.language) })
 
         const sites = await SeoTrackedSite.find({ userId: req.userId, isActive: true }).lean()
 
@@ -96,7 +97,7 @@ export async function getSites(req, res) {
 export async function getSite(req, res) {
     try {
         const site = await SeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId }).lean()
-        if (!site) return res.status(404).json({ error: 'Website nicht gefunden' })
+        if (!site) return res.status(404).json({ error: t('SITE_NOT_FOUND', req.language) })
         res.json({ site })
     } catch (err) {
         res.status(500).json({ error: err.message })
@@ -107,16 +108,18 @@ export async function getSite(req, res) {
 export async function addSite(req, res) {
     try {
         const { domain, displayName, keywords = [], location = 'Germany', language = 'de' } = req.body
-        if (!domain) return res.status(400).json({ error: 'Domain erforderlich' })
+        if (!domain) return res.status(400).json({ error: t('DOMAIN_REQUIRED', req.language) })
 
         const plan = await getSeoPlan(req.userId)
-        if (!plan) return res.status(403).json({ error: 'Kein aktives SEO-Automatisierung Abo' })
+        if (!plan) return res.status(403).json({ error: t('NO_ACTIVE_SEO_SUB', req.language) })
 
         const limits = PLAN_LIMITS[plan]
 
         const siteCount = await SeoTrackedSite.countDocuments({ userId: req.userId, isActive: true })
         if (siteCount >= limits.maxSites) {
-            return res.status(403).json({ error: `Maximale Websites erreicht (${limits.maxSites} für ${plan}-Plan)` })
+            return res.status(403).json({ error: req.language === 'en'
+                ? `Maximum websites reached (${limits.maxSites} for the ${plan} plan)`
+                : `Maximale Websites erreicht (${limits.maxSites} für ${plan}-Plan)` })
         }
 
         const totalKeywords = await countTotalKeywords(req.userId)
@@ -129,11 +132,11 @@ export async function addSite(req, res) {
         try {
             const parsed = new URL(domain.startsWith('http') ? domain : `https://${domain}`)
             if ((parsed.pathname && parsed.pathname !== '/') || parsed.search || parsed.hash) {
-                return res.status(400).json({ error: 'Bitte nur die Domain eingeben (z.B. example.com) – keine Pfade, Parameter oder Tokens.' })
+                return res.status(400).json({ error: t('DOMAIN_ONLY', req.language) })
             }
             normalizedDomain = parsed.hostname.toLowerCase()
         } catch {
-            return res.status(400).json({ error: 'Ungültige Domain' })
+            return res.status(400).json({ error: t('INVALID_DOMAIN', req.language) })
         }
 
         const site = await SeoTrackedSite.create({
@@ -153,7 +156,7 @@ export async function addSite(req, res) {
 
         res.status(201).json({ site })
     } catch (err) {
-        if (err.code === 11000) return res.status(409).json({ error: 'Website wird bereits getrackt' })
+        if (err.code === 11000) return res.status(409).json({ error: t('SITE_ALREADY_TRACKED', req.language) })
         res.status(500).json({ error: err.message })
     }
 }
@@ -162,7 +165,7 @@ export async function addSite(req, res) {
 export async function deleteSite(req, res) {
     try {
         const site = await SeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId })
-        if (!site) return res.status(404).json({ error: 'Website nicht gefunden' })
+        if (!site) return res.status(404).json({ error: t('SITE_NOT_FOUND', req.language) })
 
         await Promise.all([
             SeoKeywordRanking.deleteMany({ siteId: site._id }),
@@ -179,20 +182,22 @@ export async function deleteSite(req, res) {
 export async function addKeywords(req, res) {
     try {
         const { keywords } = req.body
-        if (!Array.isArray(keywords) || !keywords.length) return res.status(400).json({ error: 'keywords[] erforderlich' })
+        if (!Array.isArray(keywords) || !keywords.length) return res.status(400).json({ error: t('KEYWORDS_ARRAY_REQUIRED', req.language) })
 
         const plan = await getSeoPlan(req.userId)
-        if (!plan) return res.status(403).json({ error: 'Kein aktives SEO-Automatisierung Abo' })
+        if (!plan) return res.status(403).json({ error: t('NO_ACTIVE_SEO_SUB', req.language) })
 
         const site = await SeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId })
-        if (!site) return res.status(404).json({ error: 'Website nicht gefunden' })
+        if (!site) return res.status(404).json({ error: t('SITE_NOT_FOUND', req.language) })
 
         const limits = PLAN_LIMITS[plan]
         const totalKeywords = await countTotalKeywords(req.userId)
         const slotsLeft = limits.maxKeywords - totalKeywords
 
         if (slotsLeft <= 0) {
-            return res.status(403).json({ error: `Keyword-Limit erreicht (${limits.maxKeywords} für ${plan}-Plan)` })
+            return res.status(403).json({ error: req.language === 'en'
+                ? `Keyword limit reached (${limits.maxKeywords} for the ${plan} plan)`
+                : `Keyword-Limit erreicht (${limits.maxKeywords} für ${plan}-Plan)` })
         }
 
         const newKws = keywords
@@ -219,10 +224,10 @@ export async function addKeywords(req, res) {
 export async function removeKeywords(req, res) {
     try {
         const { keywords } = req.body
-        if (!Array.isArray(keywords)) return res.status(400).json({ error: 'keywords[] erforderlich' })
+        if (!Array.isArray(keywords)) return res.status(400).json({ error: t('KEYWORDS_ARRAY_REQUIRED', req.language) })
 
         const site = await SeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId })
-        if (!site) return res.status(404).json({ error: 'Website nicht gefunden' })
+        if (!site) return res.status(404).json({ error: t('SITE_NOT_FOUND', req.language) })
 
         const removed = site.keywords.filter(k => keywords.includes(k))
         site.keywords = site.keywords.filter(k => !keywords.includes(k))
@@ -245,7 +250,7 @@ export async function getRankings(req, res) {
         const historyLimit = PLAN_LIMITS[plan]?.historyWeeks ?? 8
 
         const site = await SeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId }).lean()
-        if (!site) return res.status(404).json({ error: 'Website nicht gefunden' })
+        if (!site) return res.status(404).json({ error: t('SITE_NOT_FOUND', req.language) })
 
         const rankings = await Promise.all(site.keywords.map(async (keyword) => {
             const history = await SeoKeywordRanking.find({ siteId: site._id, keyword })
@@ -270,8 +275,8 @@ export async function getRankings(req, res) {
 export async function triggerCheck(req, res) {
     try {
         const site = await SeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId })
-        if (!site) return res.status(404).json({ error: 'Website nicht gefunden' })
-        if (!site.keywords.length) return res.status(400).json({ error: 'Keine Keywords hinterlegt' })
+        if (!site) return res.status(404).json({ error: t('SITE_NOT_FOUND', req.language) })
+        if (!site.keywords.length) return res.status(400).json({ error: t('NO_KEYWORDS_STORED', req.language) })
 
         // Load previous rankings before the new check
         const previousMap = {}
@@ -303,7 +308,7 @@ export async function triggerCheck(req, res) {
                 try {
                     const user = await User.findById(req.userId).lean()
                     if (user?.email && user.seoEmailAlerts !== false) {
-                        await sendSeoRankingAlert({ email: user.email, domain: site.domain, gains, losses })
+                        await sendSeoRankingAlert({ email: user.email, domain: site.domain, gains, losses, language: user.language })
                     }
                 } catch (alertErr) {
                     console.error('SEO alert fehlgeschlagen:', alertErr.message)
@@ -321,11 +326,11 @@ export async function triggerCheck(req, res) {
 export async function getKeywordIdeasForSite(req, res) {
     try {
         const plan = await getSeoPlan(req.userId)
-        if (!plan) return res.status(403).json({ error: 'Kein aktives SEO-Automatisierung Abo' })
+        if (!plan) return res.status(403).json({ error: t('NO_ACTIVE_SEO_SUB', req.language) })
 
         const site = await SeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId }).lean()
-        if (!site) return res.status(404).json({ error: 'Website nicht gefunden' })
-        if (!site.keywords.length) return res.status(400).json({ error: 'Keine Keywords hinterlegt' })
+        if (!site) return res.status(404).json({ error: t('SITE_NOT_FOUND', req.language) })
+        if (!site.keywords.length) return res.status(400).json({ error: t('NO_KEYWORDS_STORED', req.language) })
 
         const data = await getKeywordIdeas(site.keywords, site.location, site.language)
         res.json(data)
@@ -340,10 +345,10 @@ const COMPETITORS_CACHE_MAX_AGE_MS = 6 * 24 * 60 * 60 * 1000 // 6 Tage (Job läu
 export async function getCompetitorsForSite(req, res) {
     try {
         const plan = await getSeoPlan(req.userId)
-        if (!plan) return res.status(403).json({ error: 'Kein aktives SEO-Automatisierung Abo' })
+        if (!plan) return res.status(403).json({ error: t('NO_ACTIVE_SEO_SUB', req.language) })
 
         const site = await SeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId }).lean()
-        if (!site) return res.status(404).json({ error: 'Website nicht gefunden' })
+        if (!site) return res.status(404).json({ error: t('SITE_NOT_FOUND', req.language) })
 
         const cache = site.competitorsCache
         if (cache?.checkedAt && Date.now() - new Date(cache.checkedAt).getTime() < COMPETITORS_CACHE_MAX_AGE_MS) {
@@ -365,22 +370,22 @@ const CONTENT_GAP_CACHE_MAX_AGE_MS = 6 * 24 * 60 * 60 * 1000 // 6 Tage (Job läu
 export async function getContentGapForSite(req, res) {
     try {
         const plan = await getSeoPlan(req.userId)
-        if (!plan) return res.status(403).json({ error: 'Kein aktives SEO-Automatisierung Abo' })
+        if (!plan) return res.status(403).json({ error: t('NO_ACTIVE_SEO_SUB', req.language) })
         if (plan === 'einsteiger') return res.status(403).json({ error: 'content_gap_locked', requiredPlan: 'pro' })
 
         const { competitor } = req.query
-        if (!competitor) return res.status(400).json({ error: 'competitor-Parameter erforderlich' })
+        if (!competitor) return res.status(400).json({ error: t('COMPETITOR_PARAM_REQUIRED', req.language) })
 
         let competitorDomain
         try {
             const parsed = new URL(competitor.startsWith('http') ? competitor : `https://${competitor}`)
             competitorDomain = parsed.hostname.toLowerCase().replace(/^www\./, '')
         } catch {
-            return res.status(400).json({ error: 'Ungültige Konkurrenz-Domain' })
+            return res.status(400).json({ error: t('INVALID_COMPETITOR_DOMAIN', req.language) })
         }
 
         const site = await SeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId }).lean()
-        if (!site) return res.status(404).json({ error: 'Website nicht gefunden' })
+        if (!site) return res.status(404).json({ error: t('SITE_NOT_FOUND', req.language) })
 
         const monthlyLimit = PLAN_LIMITS[plan]?.contentGapPerMonth ?? 0
         const month = new Date().toISOString().slice(0, 7)
@@ -424,10 +429,10 @@ const BACKLINKS_CACHE_MAX_AGE_MS = 28 * 24 * 60 * 60 * 1000 // 28 Tage (Job läu
 export async function getBacklinksForSite(req, res) {
     try {
         const plan = await getSeoPlan(req.userId)
-        if (!plan) return res.status(403).json({ error: 'Kein aktives SEO-Automatisierung Abo' })
+        if (!plan) return res.status(403).json({ error: t('NO_ACTIVE_SEO_SUB', req.language) })
 
         const site = await SeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId }).lean()
-        if (!site) return res.status(404).json({ error: 'Website nicht gefunden' })
+        if (!site) return res.status(404).json({ error: t('SITE_NOT_FOUND', req.language) })
 
         const cache = site.backlinksCache
         if (cache?.checkedAt && Date.now() - new Date(cache.checkedAt).getTime() < BACKLINKS_CACHE_MAX_AGE_MS) {
@@ -447,7 +452,7 @@ export async function getBacklinksForSite(req, res) {
 export async function getAlertSettings(req, res) {
     try {
         const user = await User.findById(req.userId).lean()
-        if (!user) return res.status(404).json({ error: 'Nutzer nicht gefunden' })
+        if (!user) return res.status(404).json({ error: t('USER_NOT_FOUND', req.language) })
         res.json({ seoEmailAlerts: user.seoEmailAlerts !== false })
     } catch (err) {
         res.status(500).json({ error: err.message })
@@ -458,7 +463,7 @@ export async function getAlertSettings(req, res) {
 export async function getInsights(req, res) {
     try {
         const site = await SeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId }).lean()
-        if (!site) return res.status(404).json({ error: 'Website nicht gefunden' })
+        if (!site) return res.status(404).json({ error: t('SITE_NOT_FOUND', req.language) })
 
         const insights = await SeoKeywordInsight.find({ siteId: site._id }).lean()
         const insightsMap = {}
@@ -480,15 +485,15 @@ const INSIGHT_REFRESH_LIMITS = {
 export async function refreshInsight(req, res) {
     try {
         const { keyword } = req.body
-        if (!keyword) return res.status(400).json({ error: 'keyword erforderlich' })
+        if (!keyword) return res.status(400).json({ error: t('KEYWORD_REQUIRED', req.language) })
 
         const plan = await getSeoPlan(req.userId)
-        if (!plan) return res.status(403).json({ error: 'Kein aktives SEO-Automatisierung Abo' })
+        if (!plan) return res.status(403).json({ error: t('NO_ACTIVE_SEO_SUB', req.language) })
 
         const site = await SeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId }).lean()
-        if (!site) return res.status(404).json({ error: 'Website nicht gefunden' })
+        if (!site) return res.status(404).json({ error: t('SITE_NOT_FOUND', req.language) })
 
-        if (!site.keywords.includes(keyword)) return res.status(400).json({ error: 'Keyword gehört nicht zu dieser Website' })
+        if (!site.keywords.includes(keyword)) return res.status(400).json({ error: t('KEYWORD_NOT_IN_SITE', req.language) })
 
         const monthlyLimit = INSIGHT_REFRESH_LIMITS[plan] ?? 10
         if (monthlyLimit !== Infinity) {
@@ -525,13 +530,13 @@ export async function refreshInsight(req, res) {
 export async function generateContent(req, res) {
     try {
         const { keyword } = req.body
-        if (!keyword) return res.status(400).json({ error: 'keyword erforderlich' })
+        if (!keyword) return res.status(400).json({ error: t('KEYWORD_REQUIRED', req.language) })
 
         const plan = await getSeoPlan(req.userId)
-        if (!plan) return res.status(403).json({ error: 'Kein aktives SEO-Automatisierung Abo' })
+        if (!plan) return res.status(403).json({ error: t('NO_ACTIVE_SEO_SUB', req.language) })
 
         const site = await SeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId }).lean()
-        if (!site) return res.status(404).json({ error: 'Website nicht gefunden' })
+        if (!site) return res.status(404).json({ error: t('SITE_NOT_FOUND', req.language) })
 
         const content = await generateKeywordContent(keyword, site.domain, site.language)
         res.json({ content })
@@ -544,13 +549,13 @@ export async function generateContent(req, res) {
 export async function generateBacklinkIdeasForKeyword(req, res) {
     try {
         const { keyword } = req.body
-        if (!keyword) return res.status(400).json({ error: 'keyword erforderlich' })
+        if (!keyword) return res.status(400).json({ error: t('KEYWORD_REQUIRED', req.language) })
 
         const plan = await getSeoPlan(req.userId)
-        if (!plan) return res.status(403).json({ error: 'Kein aktives SEO-Automatisierung Abo' })
+        if (!plan) return res.status(403).json({ error: t('NO_ACTIVE_SEO_SUB', req.language) })
 
         const site = await SeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId }).lean()
-        if (!site) return res.status(404).json({ error: 'Website nicht gefunden' })
+        if (!site) return res.status(404).json({ error: t('SITE_NOT_FOUND', req.language) })
 
         const ideas = await generateBacklinkIdeas(keyword, site.domain, site.language)
         res.json({ ideas })
@@ -564,7 +569,7 @@ export async function generateBacklinkIdeasForKeyword(req, res) {
 export async function getRankingHistory(req, res) {
     try {
         const site = await SeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId }).lean()
-        if (!site) return res.status(404).json({ error: 'Website nicht gefunden' })
+        if (!site) return res.status(404).json({ error: t('SITE_NOT_FOUND', req.language) })
 
         const byDay = await SeoKeywordRanking.aggregate([
             { $match: { siteId: site._id, position: { $ne: null } } },
@@ -592,7 +597,7 @@ export async function getRankingHistory(req, res) {
 export async function updateAlertSettings(req, res) {
     try {
         const { seoEmailAlerts } = req.body
-        if (typeof seoEmailAlerts !== 'boolean') return res.status(400).json({ error: 'seoEmailAlerts muss ein Boolean sein' })
+        if (typeof seoEmailAlerts !== 'boolean') return res.status(400).json({ error: t('SEO_EMAIL_ALERTS_MUST_BE_BOOLEAN', req.language) })
         await User.findByIdAndUpdate(req.userId, { seoEmailAlerts })
         res.json({ success: true, seoEmailAlerts })
     } catch (err) {
