@@ -6,9 +6,11 @@ import {
     LayoutDashboard, Search, Globe, BookOpen, CreditCard, TrendingUp,
 } from 'lucide-react'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { useRouter, usePathname } from 'next/navigation'
+import { t } from '../../lib/i18n/dictionaries'
+import { getCounterpart } from '../../lib/i18n/routeMap'
 
-const NAV_ITEMS = [
+const NAV_ITEMS_DE = [
     {
         key: 'seo',
         label: 'SEO',
@@ -30,6 +32,30 @@ const NAV_ITEMS = [
     },
     { key: 'preise', label: 'Preise', href: '/pricing' },
     { key: 'blog', label: 'Blog', href: '/blog' },
+]
+
+const NAV_ITEMS_EN = [
+    {
+        key: 'seo',
+        label: 'SEO',
+        items: [
+            { icon: Search, label: 'One-Time Audit', desc: 'Uncover SEO score & issues', href: '/en/dashboard' },
+            { icon: TrendingUp, label: 'SEO Automation', desc: 'Weekly Google rankings', href: '/en/seo/dashboard', accent: 'emerald' },
+            { icon: CreditCard, label: 'Tracking Pricing', desc: '3 plans from €19/month', href: '/en/seo/pricing' },
+            { icon: BookOpen, label: 'Avoid SEO mistakes', desc: 'A practical guide', href: '/en/blog/common-seo-mistakes' },
+        ],
+    },
+    {
+        key: 'geo',
+        label: 'GEO',
+        items: [
+            { icon: Globe, label: 'GEO Automation', desc: 'Track AI mentions', href: '/en/geo/dashboard', accent: 'violet' },
+            { icon: CreditCard, label: 'GEO Pricing', desc: '3 plans from €4.99/month', href: '/en/geo/pricing' },
+            { icon: BookOpen, label: 'GEO Optimization 2026', desc: 'Tips for AI search', href: '/en/blog/what-is-geo' },
+        ],
+    },
+    { key: 'preise', label: 'Pricing', href: '/en/pricing' },
+    { key: 'blog', label: 'Blog', href: '/en/blog' },
 ]
 
 function NavDropdown({ item, isOpen, onOpen, onClose }) {
@@ -138,7 +164,8 @@ function MobileAccordion({ item, isOpen, onToggle, onClose }) {
     )
 }
 
-export default function Navbar() {
+export default function Navbar({ locale = 'de' }) {
+    const NAV_ITEMS = locale === 'en' ? NAV_ITEMS_EN : NAV_ITEMS_DE
     const [scrolled, setScrolled] = useState(false)
     const [mobileOpen, setMobileOpen] = useState(false)
     const [user, setUser] = useState(null)
@@ -147,6 +174,8 @@ export default function Navbar() {
     const [mobileExpanded, setMobileExpanded] = useState(null)
     const userDropdownRef = useRef(null)
     const router = useRouter()
+    const pathname = usePathname()
+    const counterpart = getCounterpart(pathname, locale)
 
     useEffect(() => {
         const fn = () => setScrolled(window.scrollY > 20)
@@ -195,7 +224,7 @@ export default function Navbar() {
                 <div className="max-w-7xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between">
 
                     {/* Logo */}
-                    <Link href="/" className="flex items-center gap-2.5 group">
+                    <Link href={locale === 'en' ? '/en' : '/'} className="flex items-center gap-2.5 group">
                         <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-500 to-cyan-500 flex items-center justify-center shadow-lg shadow-violet-500/30 group-hover:shadow-violet-500/50 transition-shadow">
                             <Zap className="w-4 h-4 text-white" strokeWidth={2.5} />
                         </div>
@@ -253,39 +282,39 @@ export default function Navbar() {
                                             <div className="px-3 py-2.5 border-b border-white/5">
                                                 <div className="text-xs text-slate-500 truncate">{user.email}</div>
                                             </div>
-                                            <div className="p-1.5 space-y-0.5">
-                                                <Link href="/dashboard" onClick={() => setUserDropdownOpen(false)}
+                            <div className="p-1.5 space-y-0.5">
+                                                <Link href={locale === 'en' ? '/en/dashboard' : '/dashboard'} onClick={() => setUserDropdownOpen(false)}
                                                     className="flex items-center gap-2.5 px-3 py-2 text-sm text-slate-300 hover:text-white hover:bg-white/5 rounded-lg transition-all">
-                                                    <LayoutDashboard className="w-3.5 h-3.5 text-slate-500" /> Dashboard
+                                                    <LayoutDashboard className="w-3.5 h-3.5 text-slate-500" /> {t(locale, 'nav.dashboard')}
                                                 </Link>
-                                                <Link href="/profile" onClick={() => setUserDropdownOpen(false)}
+                                                <Link href={locale === 'en' ? '/en/profile' : '/profile'} onClick={() => setUserDropdownOpen(false)}
                                                     className="flex items-center gap-2.5 px-3 py-2 text-sm text-slate-300 hover:text-white hover:bg-white/5 rounded-lg transition-all">
-                                                    <User className="w-3.5 h-3.5 text-slate-500" /> Mein Profil
-                                                </Link>
-                                                <div className="my-1 border-t border-white/5" />
-                                                <p className="px-3 pt-1 pb-0.5 text-[10px] text-slate-600 font-semibold uppercase tracking-wider">SEO Automatisierung</p>
-                                                <Link href="/seo/dashboard" onClick={() => setUserDropdownOpen(false)}
-                                                    className="flex items-center gap-2.5 px-3 py-2 text-sm text-slate-300 hover:text-white hover:bg-white/5 rounded-lg transition-all">
-                                                    <TrendingUp className="w-3.5 h-3.5 text-emerald-400" /> Rankings
-                                                </Link>
-                                                <Link href="/seo/pricing" onClick={() => setUserDropdownOpen(false)}
-                                                    className="flex items-center gap-2.5 px-3 py-2 text-sm text-slate-300 hover:text-white hover:bg-white/5 rounded-lg transition-all">
-                                                    <CreditCard className="w-3.5 h-3.5 text-slate-500" /> Tracking Preise
+                                                    <User className="w-3.5 h-3.5 text-slate-500" /> {t(locale, 'nav.profile')}
                                                 </Link>
                                                 <div className="my-1 border-t border-white/5" />
-                                                <p className="px-3 pt-1 pb-0.5 text-[10px] text-slate-600 font-semibold uppercase tracking-wider">GEO Automatisierung</p>
-                                                <Link href="/geo/dashboard" onClick={() => setUserDropdownOpen(false)}
+                                                <p className="px-3 pt-1 pb-0.5 text-[10px] text-slate-600 font-semibold uppercase tracking-wider">{t(locale, 'nav.seoAutomatisierung')}</p>
+                                                <Link href={locale === 'en' ? '/en/seo/dashboard' : '/seo/dashboard'} onClick={() => setUserDropdownOpen(false)}
                                                     className="flex items-center gap-2.5 px-3 py-2 text-sm text-slate-300 hover:text-white hover:bg-white/5 rounded-lg transition-all">
-                                                    <Globe className="w-3.5 h-3.5 text-violet-400" /> KI-Tracking
+                                                    <TrendingUp className="w-3.5 h-3.5 text-emerald-400" /> {t(locale, 'nav.rankings')}
                                                 </Link>
-                                                <Link href="/geo/pricing" onClick={() => setUserDropdownOpen(false)}
+                                                <Link href={locale === 'en' ? '/en/seo/pricing' : '/seo/pricing'} onClick={() => setUserDropdownOpen(false)}
                                                     className="flex items-center gap-2.5 px-3 py-2 text-sm text-slate-300 hover:text-white hover:bg-white/5 rounded-lg transition-all">
-                                                    <CreditCard className="w-3.5 h-3.5 text-slate-500" /> GEO Preise
+                                                    <CreditCard className="w-3.5 h-3.5 text-slate-500" /> {t(locale, 'nav.trackingPreise')}
+                                                </Link>
+                                                <div className="my-1 border-t border-white/5" />
+                                                <p className="px-3 pt-1 pb-0.5 text-[10px] text-slate-600 font-semibold uppercase tracking-wider">{t(locale, 'nav.geoAutomatisierung')}</p>
+                                                <Link href={locale === 'en' ? '/en/geo/dashboard' : '/geo/dashboard'} onClick={() => setUserDropdownOpen(false)}
+                                                    className="flex items-center gap-2.5 px-3 py-2 text-sm text-slate-300 hover:text-white hover:bg-white/5 rounded-lg transition-all">
+                                                    <Globe className="w-3.5 h-3.5 text-violet-400" /> {t(locale, 'nav.kiTracking')}
+                                                </Link>
+                                                <Link href={locale === 'en' ? '/en/geo/pricing' : '/geo/pricing'} onClick={() => setUserDropdownOpen(false)}
+                                                    className="flex items-center gap-2.5 px-3 py-2 text-sm text-slate-300 hover:text-white hover:bg-white/5 rounded-lg transition-all">
+                                                    <CreditCard className="w-3.5 h-3.5 text-slate-500" /> {t(locale, 'nav.geoPreise')}
                                                 </Link>
                                                 <div className="my-1 border-t border-white/5" />
                                                 <button onClick={handleLogout}
                                                     className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-slate-400 hover:text-red-400 hover:bg-red-500/5 rounded-lg transition-all">
-                                                    <LogOut className="w-3.5 h-3.5" /> Abmelden
+                                                    <LogOut className="w-3.5 h-3.5" /> {t(locale, 'nav.logout')}
                                                 </button>
                                             </div>
                                         </motion.div>
@@ -293,14 +322,20 @@ export default function Navbar() {
                                 </AnimatePresence>
                             </div>
                         ) : (
-                            <Link href="/login" className="text-sm text-slate-400 hover:text-white transition-colors">
-                                Anmelden
+                            <Link href={locale === 'en' ? '/en/login' : '/login'} className="text-sm text-slate-400 hover:text-white transition-colors">
+                                {t(locale, 'nav.login')}
                             </Link>
                         )}
-                        <Link href="/dashboard"
+                        <Link href={locale === 'en' ? '/en/dashboard' : '/dashboard'}
                             className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-violet-500/20 hover:-translate-y-px">
-                            Jetzt prüfen <ArrowRight className="w-3.5 h-3.5" />
+                            {t(locale, 'nav.cta')} <ArrowRight className="w-3.5 h-3.5" />
                         </Link>
+                        {counterpart && (
+                            <Link href={counterpart}
+                                className="px-2.5 py-1.5 text-xs font-semibold text-slate-500 hover:text-white border border-white/10 rounded-lg transition-colors">
+                                {locale === 'en' ? 'DE' : 'EN'}
+                            </Link>
+                        )}
                     </div>
 
                     {/* Mobile Toggle */}
@@ -340,38 +375,45 @@ export default function Navbar() {
 
                         {user ? (
                             <>
-                                <Link href="/dashboard" onClick={() => setMobileOpen(false)}
+                                <Link href={locale === 'en' ? '/en/dashboard' : '/dashboard'} onClick={() => setMobileOpen(false)}
                                     className="flex items-center gap-2 px-4 py-3 text-sm text-slate-300 hover:text-white rounded-lg hover:bg-white/5 transition-all">
-                                    <LayoutDashboard className="w-4 h-4 text-slate-500" /> Dashboard
+                                    <LayoutDashboard className="w-4 h-4 text-slate-500" /> {t(locale, 'nav.dashboard')}
                                 </Link>
-                                <Link href="/profile" onClick={() => setMobileOpen(false)}
+                                <Link href={locale === 'en' ? '/en/profile' : '/profile'} onClick={() => setMobileOpen(false)}
                                     className="flex items-center gap-2 px-4 py-3 text-sm text-slate-300 hover:text-white rounded-lg hover:bg-white/5 transition-all">
-                                    <User className="w-4 h-4 text-slate-500" /> Mein Profil
+                                    <User className="w-4 h-4 text-slate-500" /> {t(locale, 'nav.profile')}
                                 </Link>
-                                <Link href="/seo/dashboard" onClick={() => setMobileOpen(false)}
+                                <Link href={locale === 'en' ? '/en/seo/dashboard' : '/seo/dashboard'} onClick={() => setMobileOpen(false)}
                                     className="flex items-center gap-2 px-4 py-3 text-sm text-slate-300 hover:text-white rounded-lg hover:bg-white/5 transition-all">
-                                    <TrendingUp className="w-4 h-4 text-emerald-400" /> SEO Automatisierung
+                                    <TrendingUp className="w-4 h-4 text-emerald-400" /> {t(locale, 'nav.seoAutomatisierung')}
                                 </Link>
-                                <Link href="/geo/dashboard" onClick={() => setMobileOpen(false)}
+                                <Link href={locale === 'en' ? '/en/geo/dashboard' : '/geo/dashboard'} onClick={() => setMobileOpen(false)}
                                     className="flex items-center gap-2 px-4 py-3 text-sm text-slate-300 hover:text-white rounded-lg hover:bg-white/5 transition-all">
-                                    <Globe className="w-4 h-4 text-violet-400" /> GEO Automatisierung
+                                    <Globe className="w-4 h-4 text-violet-400" /> {t(locale, 'nav.geoAutomatisierung')}
                                 </Link>
                                 <button onClick={handleLogout}
                                     className="w-full flex items-center gap-2 px-4 py-3 text-sm text-slate-400 hover:text-red-400 rounded-lg hover:bg-red-500/5 transition-all">
-                                    <LogOut className="w-4 h-4" /> Abmelden
+                                    <LogOut className="w-4 h-4" /> {t(locale, 'nav.logout')}
                                 </button>
                             </>
                         ) : (
-                            <Link href="/login" onClick={() => setMobileOpen(false)}
+                            <Link href={locale === 'en' ? '/en/login' : '/login'} onClick={() => setMobileOpen(false)}
                                 className="block px-4 py-3 text-sm text-slate-300 hover:text-white rounded-lg hover:bg-white/5 transition-all">
-                                Anmelden
+                                {t(locale, 'nav.login')}
                             </Link>
                         )}
 
-                        <Link href="/dashboard" onClick={() => setMobileOpen(false)}
+                        <Link href={locale === 'en' ? '/en/dashboard' : '/dashboard'} onClick={() => setMobileOpen(false)}
                             className="mt-2 block px-4 py-3 text-center font-semibold text-white rounded-xl bg-gradient-to-r from-violet-600 to-cyan-600 text-sm">
-                            Jetzt prüfen →
+                            {t(locale, 'nav.cta')} →
                         </Link>
+
+                        {counterpart && (
+                            <Link href={counterpart} onClick={() => setMobileOpen(false)}
+                                className="block px-4 py-3 text-center text-xs font-semibold text-slate-500 hover:text-white border border-white/10 rounded-lg transition-colors">
+                                {locale === 'en' ? 'Deutsch' : 'English'}
+                            </Link>
+                        )}
                     </motion.div>
                 )}
             </AnimatePresence>

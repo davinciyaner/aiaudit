@@ -3,21 +3,37 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ThumbsUp, ThumbsDown, X, CheckCircle } from 'lucide-react'
 
-const POSITIVE_OPTIONS = [
+const POSITIVE_OPTIONS_DE = [
     { value: 'seo',         label: 'Die SEO-Analyse' },
     { value: 'geo',         label: 'Die GEO-Sichtbarkeit' },
     { value: 'performance', label: 'Die Performance-Tipps' },
     { value: 'suggestions', label: 'Die Verbesserungsvorschläge' },
 ]
 
-const NEGATIVE_OPTIONS = [
+const NEGATIVE_OPTIONS_DE = [
     { value: 'unclear',        label: 'Die Ergebnisse waren unklar' },
     { value: 'more_details',   label: 'Ich wollte mehr Details' },
     { value: 'not_actionable', label: 'Die Tipps waren nicht umsetzbar' },
     { value: 'broken',         label: 'Etwas hat nicht funktioniert' },
 ]
 
-export default function FeedbackWidget({ auditUrl, reportId }) {
+const POSITIVE_OPTIONS_EN = [
+    { value: 'seo',         label: 'The SEO analysis' },
+    { value: 'geo',         label: 'The GEO visibility' },
+    { value: 'performance', label: 'The performance tips' },
+    { value: 'suggestions', label: 'The improvement suggestions' },
+]
+
+const NEGATIVE_OPTIONS_EN = [
+    { value: 'unclear',        label: 'The results were unclear' },
+    { value: 'more_details',   label: 'I wanted more detail' },
+    { value: 'not_actionable', label: 'The tips weren\'t actionable' },
+    { value: 'broken',         label: 'Something didn\'t work' },
+]
+
+export default function FeedbackWidget({ auditUrl, reportId, locale = 'de' }) {
+    const POSITIVE_OPTIONS = locale === 'en' ? POSITIVE_OPTIONS_EN : POSITIVE_OPTIONS_DE
+    const NEGATIVE_OPTIONS = locale === 'en' ? NEGATIVE_OPTIONS_EN : NEGATIVE_OPTIONS_DE
     const [visible, setVisible] = useState(false)
     const [vote, setVote] = useState(null)
     const [done, setDone] = useState(false)
@@ -68,20 +84,20 @@ export default function FeedbackWidget({ auditUrl, reportId }) {
                         {!vote && !done && (
                             <motion.div key="vote" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
                                 <p className="text-sm font-semibold text-white mb-4 pr-4">
-                                    War dieser Audit hilfreich?
+                                    {locale === 'en' ? 'Was this audit helpful?' : 'War dieser Audit hilfreich?'}
                                 </p>
                                 <div className="flex gap-2">
                                     <button
                                         onClick={() => handleVote('yes')}
                                         className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 hover:bg-emerald-500/20 transition-all text-sm font-medium"
                                     >
-                                        <ThumbsUp className="w-4 h-4" /> Ja
+                                        <ThumbsUp className="w-4 h-4" /> {locale === 'en' ? 'Yes' : 'Ja'}
                                     </button>
                                     <button
                                         onClick={() => handleVote('no')}
                                         className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 hover:bg-red-500/20 transition-all text-sm font-medium"
                                     >
-                                        <ThumbsDown className="w-4 h-4" /> Nein
+                                        <ThumbsDown className="w-4 h-4" /> {locale === 'en' ? 'No' : 'Nein'}
                                     </button>
                                 </div>
                             </motion.div>
@@ -91,7 +107,9 @@ export default function FeedbackWidget({ auditUrl, reportId }) {
                         {vote && !done && (
                             <motion.div key="reason" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
                                 <p className="text-sm font-semibold text-white mb-3 pr-4">
-                                    {vote === 'yes' ? 'Was hat dir am meisten geholfen?' : 'Was hat gefehlt?'}
+                                    {locale === 'en'
+                                        ? (vote === 'yes' ? 'What helped you most?' : 'What was missing?')
+                                        : (vote === 'yes' ? 'Was hat dir am meisten geholfen?' : 'Was hat gefehlt?')}
                                 </p>
                                 <div className="space-y-1.5">
                                     {(vote === 'yes' ? POSITIVE_OPTIONS : NEGATIVE_OPTIONS).map(opt => (
@@ -112,8 +130,8 @@ export default function FeedbackWidget({ auditUrl, reportId }) {
                             <motion.div key="done" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}
                                 className="flex flex-col items-center text-center py-2 gap-3">
                                 <CheckCircle className="w-8 h-8 text-emerald-400" strokeWidth={1.5} />
-                                <p className="text-sm font-semibold text-white">Danke für dein Feedback!</p>
-                                <p className="text-xs text-slate-500">Das hilft uns, besser zu werden.</p>
+                                <p className="text-sm font-semibold text-white">{locale === 'en' ? 'Thanks for your feedback!' : 'Danke für dein Feedback!'}</p>
+                                <p className="text-xs text-slate-500">{locale === 'en' ? 'This helps us get better.' : 'Das hilft uns, besser zu werden.'}</p>
                             </motion.div>
                         )}
                     </AnimatePresence>

@@ -1,0 +1,1021 @@
+'use client'
+import React, { useState, useEffect, useCallback } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import {
+    ArrowLeft, Globe, Loader2, RefreshCw, Plus, Trash2, X,
+    Sparkles, Check, ChevronDown, ChevronUp, Settings2, Lock,
+} from 'lucide-react'
+import Link from 'next/link'
+import { useRouter, useParams } from 'next/navigation'
+import toast, { Toaster } from 'react-hot-toast'
+import Navbar from '../../../components/Navbar'
+
+const PLATFORM_META = {
+    claude:     { label: 'Claude',             color: 'text-violet-400', bg: 'bg-violet-500/10', border: 'border-violet-500/20' },
+    chatgpt:    { label: 'ChatGPT',            color: 'text-green-400',  bg: 'bg-green-500/10',  border: 'border-green-500/20'  },
+    perplexity: { label: 'Perplexity',         color: 'text-teal-400',   bg: 'bg-teal-500/10',   border: 'border-teal-500/20'   },
+    google_aio: { label: 'Google AI Overview', color: 'text-blue-400',   bg: 'bg-blue-500/10',   border: 'border-blue-500/20'   },
+}
+
+const COST_PER_CHECK = { claude: 0.0066, chatgpt: 0.0045, perplexity: 0.0056, google_aio: 0.0026 }
+
+const PLAN_PLATFORMS = {
+    einsteiger: ['claude'],
+    pro:        ['claude', 'chatgpt', 'perplexity', 'google_aio'],
+    expert:     ['claude', 'chatgpt', 'perplexity', 'google_aio'],
+}
+const ALL_PLATFORMS = ['claude', 'chatgpt', 'perplexity', 'google_aio']
+
+const INTENT_META = {
+    empfehlung: { label: 'Recommendation' },
+    vergleich:  { label: 'Comparison' },
+}
+
+function aggregateMention(checks, platform, intents) {
+    const docs = intents.map(i => checks?.[platform]?.[i]).filter(Boolean)
+    if (!docs.length) return null
+    return docs.some(d => d.mentioned)
+}
+
+function MentionBadge({ mentioned }) {
+    if (mentioned == null) return <span className="text-xs text-slate-600">—</span>
+    return mentioned
+        ? <span className="inline-flex items-center gap-1 text-xs font-semibold text-violet-400 bg-violet-500/10 border border-violet-500/20 px-2 py-0.5 rounded-md"><Check className="w-3 h-3" />Yes</span>
+        : <span className="inline-flex items-center gap-1 text-xs font-semibold text-slate-500 bg-white/5 border border-white/10 px-2 py-0.5 rounded-md"><X className="w-3 h-3 opacity-50" />No</span>
+}
+
+function SentimentBadge({ sentiment }) {
+    const meta = {
+        positive: { label: 'Positive', color: 'text-emerald-400', bg: 'bg-emerald-500/10', border: 'border-emerald-500/20' },
+        neutral:  { label: 'Neutral',  color: 'text-slate-400',   bg: 'bg-white/5',         border: 'border-white/10'    },
+        negative: { label: 'Negative', color: 'text-red-400',     bg: 'bg-red-500/10',      border: 'border-red-500/20'  },
+    }[sentiment]
+    if (!meta) return null
+    return (
+        <span className={`inline-flex items-center text-[10px] font-semibold px-1.5 py-0.5 rounded ml-1.5 ${meta.color} ${meta.bg} border ${meta.border}`}>
+            {meta.label}
+        </span>
+    )
+}
+
+const CORRELATION_VERDICT_META = {
+    both:     { label: 'Both visible',    color: 'text-emerald-400', bg: 'bg-emerald-500/10', border: 'border-emerald-500/20' },
+    seo_only: { label: 'Google only',     color: 'text-amber-400',   bg: 'bg-amber-500/10',   border: 'border-amber-500/20'  },
+    geo_only: { label: 'AI only',         color: 'text-blue-400',    bg: 'bg-blue-500/10',    border: 'border-blue-500/20'   },
+    neither:  { label: 'Neither visible', color: 'text-slate-500',   bg: 'bg-white/5',        border: 'border-white/10'      },
+}
+
+// Must match SEO_VISIBLE_THRESHOLD in backend/controllers/geo_tracking.js — a
+// position can exist (e.g. #91), but only counts as "findable on Google" from here on (page 1-2).
+const SEO_VISIBLE_THRESHOLD = 20
+
+function CorrelationPanel({ siteId }) {
+    const [data, setData]       = useState(null)
+    const [loading, setLoading] = useState(true)
+    const [expanded, setExpanded] = useState(false)
+
+    useEffect(() => {
+        const token = localStorage.getItem('token')
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/geo/sites/${siteId}/correlation`, {
+            headers: { Authorization: `Bearer ${token}` },
+        })
+            .then(res => res.json())
+            .then(setData)
+            .catch(() => {})
+            .finally(() => setLoading(false))
+    }, [siteId])
+
+    if (loading || !data) return null
+
+    if (!data.linked) {
+        return (
+            <div className="bg-[#0d1117] border border-dashed border-white/10 rounded-2xl p-5 mb-6">
+                <h3 className="text-sm font-semibold text-white mb-1.5">Compare SEO ranking + AI mention</h3>
+                <p className="text-xs text-slate-500 leading-relaxed">
+                    No SEO automation is running for this domain yet. Once both products track the same domain, AuditAI shows you directly here
+                    whether a page ranks on Google but is never mentioned by AI models — or vice versa.
+                </p>
+            </div>
+        )
+    }
+
+    if (!data.matched.length) {
+        return (
+            <div className="bg-[#0d1117] border border-dashed border-white/10 rounded-2xl p-5 mb-6">
+                <h3 className="text-sm font-semibold text-white mb-1.5">Compare SEO ranking + AI mention</h3>
+                <p className="text-xs text-slate-500 leading-relaxed">
+                    No shared keywords between SEO and GEO tracking ({data.seoOnlyKeywords.length} SEO only, {data.geoOnlyKeywords.length} GEO only).
+                    Add the same keywords in both products to see Google ranking and AI mention side by side.
+                </p>
+            </div>
+        )
+    }
+
+    const visible = expanded ? data.matched : data.matched.slice(0, 3)
+
+    return (
+        <div className="bg-[#0d1117] border border-white/[0.06] rounded-2xl p-5 mb-6">
+            <div className="flex items-center justify-between mb-4">
+                <h3 className="text-sm font-semibold text-white">SEO Ranking + AI Mention</h3>
+                <span className="text-xs text-slate-600">{data.matched.length} shared keywords</span>
+            </div>
+            <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                    <thead>
+                        <tr className="border-b border-white/[0.05]">
+                            <th className="text-left text-xs text-slate-500 font-semibold uppercase tracking-wider pb-2">Keyword</th>
+                            <th className="text-left text-xs text-slate-500 font-semibold uppercase tracking-wider pb-2">Google</th>
+                            <th className="text-left text-xs text-slate-500 font-semibold uppercase tracking-wider pb-2">AI Mention</th>
+                            <th className="text-left text-xs text-slate-500 font-semibold uppercase tracking-wider pb-2">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {visible.map(m => {
+                            const v = CORRELATION_VERDICT_META[m.verdict]
+                            const seoVisible = m.seoPosition != null && m.seoPosition <= SEO_VISIBLE_THRESHOLD
+                            return (
+                                <tr key={m.keyword} className="border-b border-white/[0.04] last:border-0">
+                                    <td className="py-2.5 pr-3 text-slate-200">{m.keyword}</td>
+                                    <td className="py-2.5 pr-3">
+                                        {m.seoPosition == null ? (
+                                            <span className="text-slate-600">—</span>
+                                        ) : seoVisible ? (
+                                            <span className="text-emerald-400 font-semibold">#{m.seoPosition}</span>
+                                        ) : (
+                                            <span className="text-slate-600" title={`Position ${m.seoPosition} — outside the first 20 results, practically unfindable`}>
+                                                #{m.seoPosition} <span className="text-[10px]">(not visible)</span>
+                                            </span>
+                                        )}
+                                    </td>
+                                    <td className="py-2.5 pr-3 text-slate-400">{m.geoChecked ? (m.geoMentioned ? 'Yes' : 'No') : '—'}</td>
+                                    <td className="py-2.5">
+                                        <span className={`inline-flex text-xs font-semibold px-2 py-0.5 rounded-md border ${v.color} ${v.bg} ${v.border}`}>{v.label}</span>
+                                    </td>
+                                </tr>
+                            )
+                        })}
+                    </tbody>
+                </table>
+            </div>
+            {data.matched.length > 3 && (
+                <button onClick={() => setExpanded(v => !v)}
+                    className="mt-3 text-xs text-violet-400 hover:text-violet-300">
+                    {expanded ? 'Show less' : `Show all ${data.matched.length}`}
+                </button>
+            )}
+        </div>
+    )
+}
+
+// Suggests SEO keywords not yet in GEO tracking — closes the gap that
+// CorrelationPanel surfaces (little overlap = the correlation gives few real insights).
+function KeywordSuggestionsPanel({ siteId, onAdded }) {
+    const [suggestions, setSuggestions] = useState(null)
+    const [loading, setLoading]         = useState(true)
+    const [selected, setSelected]       = useState(new Set())
+    const [adding, setAdding]           = useState(false)
+
+    const fetchSuggestions = useCallback(async () => {
+        const token = localStorage.getItem('token')
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/geo/sites/${siteId}/keyword-suggestions`, {
+            headers: { Authorization: `Bearer ${token}` },
+        })
+        const d = await res.json()
+        const list = res.ok ? (d.suggestions || []) : []
+        setSuggestions(list)
+        setSelected(new Set(list)) // pre-selected by default — user can deselect individually
+        setLoading(false)
+    }, [siteId])
+
+    useEffect(() => { fetchSuggestions() }, [fetchSuggestions])
+
+    const toggle = (kw) => setSelected(prev => {
+        const next = new Set(prev); next.has(kw) ? next.delete(kw) : next.add(kw); return next
+    })
+
+    const addKeywords = async (keywords) => {
+        if (!keywords.length) return
+        setAdding(true)
+        try {
+            const token = localStorage.getItem('token')
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/geo/sites/${siteId}/keywords`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+                body: JSON.stringify({ keywords }),
+            })
+            const d = await res.json()
+            if (!res.ok) throw new Error(d.error)
+            toast.success(`${d.added} keyword${d.added !== 1 ? 's' : ''} added to GEO`)
+            onAdded?.()
+            await fetchSuggestions() // list updates automatically since fewer seoOnlyKeywords remain
+        } catch (err) {
+            toast.error(err.message || 'Error adding')
+        } finally {
+            setAdding(false)
+        }
+    }
+
+    if (loading || !suggestions?.length) return null
+
+    return (
+        <div className="bg-[#0d1117] border border-white/[0.06] rounded-2xl p-5 mb-6">
+            <div className="flex items-center justify-between mb-1.5">
+                <h3 className="text-sm font-semibold text-white">Suggest SEO keywords for GEO</h3>
+                <span className="text-xs text-slate-600">{suggestions.length} suggestions</span>
+            </div>
+            <p className="text-xs text-slate-500 leading-relaxed mb-4">
+                These keywords are already tracked in SEO automation and make good AI recommendation questions. Choose which ones to also track in GEO.
+            </p>
+
+            <div className="space-y-1.5 mb-4 max-h-64 overflow-y-auto pr-1">
+                {suggestions.map(kw => {
+                    const checked = selected.has(kw)
+                    return (
+                        <button key={kw} type="button" onClick={() => toggle(kw)}
+                            className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-lg border text-left transition-all ${
+                                checked
+                                    ? 'bg-violet-500/10 border-violet-500/25 text-white'
+                                    : 'bg-white/[0.02] border-white/8 text-slate-500 hover:border-white/15'
+                            }`}>
+                            <div className={`w-3.5 h-3.5 rounded border shrink-0 flex items-center justify-center ${checked ? 'bg-violet-500 border-violet-500' : 'border-white/20'}`}>
+                                {checked && <Check className="w-2.5 h-2.5 text-white" strokeWidth={3.5} />}
+                            </div>
+                            <span className="text-sm">{kw}</span>
+                        </button>
+                    )
+                })}
+            </div>
+
+            <div className="flex items-center gap-2 flex-wrap">
+                <button onClick={() => addKeywords([...selected])} disabled={adding || !selected.size}
+                    className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white transition-all disabled:opacity-50">
+                    {adding ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Plus className="w-3.5 h-3.5" />}
+                    Add selected ({selected.size})
+                </button>
+                <button onClick={() => addKeywords(suggestions)} disabled={adding}
+                    className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 transition-all disabled:opacity-50">
+                    Add all {suggestions.length}
+                </button>
+            </div>
+        </div>
+    )
+}
+
+function CompetitorsPanel({ siteId }) {
+    const [data, setData]       = useState(null)
+    const [loading, setLoading] = useState(true)
+    const [expanded, setExpanded] = useState(false)
+
+    useEffect(() => {
+        const token = localStorage.getItem('token')
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/geo/sites/${siteId}/competitors`, {
+            headers: { Authorization: `Bearer ${token}` },
+        })
+            .then(res => res.json())
+            .then(setData)
+            .catch(() => {})
+            .finally(() => setLoading(false))
+    }, [siteId])
+
+    if (loading || !data?.competitors?.length) return null
+
+    const visible = expanded ? data.competitors : data.competitors.slice(0, 5)
+
+    return (
+        <div className="bg-[#0d1117] border border-white/[0.06] rounded-2xl p-5 mb-6">
+            <div className="flex items-center justify-between mb-4">
+                <h3 className="text-sm font-semibold text-white">Who else gets mentioned (Share of Voice)</h3>
+                <span className="text-xs text-slate-600">{data.totalCitations} citations total</span>
+            </div>
+            <div className="space-y-2.5">
+                {visible.map((c, i) => (
+                    <div key={c.domain} className="flex items-center gap-3">
+                        <span className="text-xs text-slate-600 w-5 text-right shrink-0">{i + 1}.</span>
+                        <div className="flex-1 min-w-0">
+                            <a href={`https://${c.domain}`} target="_blank" rel="noopener noreferrer"
+                                className="text-sm text-slate-200 hover:text-violet-400 truncate block">{c.domain}</a>
+                            {c.title && <div className="text-[11px] text-slate-600 truncate">{c.title}</div>}
+                        </div>
+                        <div className="w-20 shrink-0 hidden sm:block">
+                            <div className="h-1.5 bg-white/5 rounded-full overflow-hidden">
+                                <div className="h-full bg-violet-500 rounded-full" style={{ width: `${Math.min(c.share * 4, 100)}%` }} />
+                            </div>
+                        </div>
+                        <span className="text-xs font-semibold text-violet-400 w-12 text-right shrink-0">{c.share}%</span>
+                        <span className="text-xs text-slate-600 w-8 text-right shrink-0">{c.count}×</span>
+                    </div>
+                ))}
+            </div>
+            {data.competitors.length > 5 && (
+                <button onClick={() => setExpanded(v => !v)}
+                    className="mt-3 text-xs text-violet-400 hover:text-violet-300">
+                    {expanded ? 'Show less' : `Show all ${data.competitors.length}`}
+                </button>
+            )}
+        </div>
+    )
+}
+
+function CitationAnalysis({ url }) {
+    const [loading, setLoading]   = useState(false)
+    const [analysis, setAnalysis] = useState(null)
+    const [error, setError]       = useState(null)
+
+    const handleAnalyze = async () => {
+        setLoading(true)
+        setError(null)
+        try {
+            const token = localStorage.getItem('token')
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/geo/analyze-citation`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+                body: JSON.stringify({ url }),
+            })
+            const d = await res.json()
+            if (!res.ok) throw new Error(d.error)
+            setAnalysis(d.analysis)
+        } catch (err) {
+            setError(err.message || 'Analysis failed')
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    if (analysis) {
+        const c = analysis.checks
+        const rows = [
+            [`${c.wordCount} words`, true],
+            ['FAQ Schema', c.hasFAQ],
+            ['Structured Data', c.hasStructuredData],
+            ['Clear definition', c.hasDirectDefinition],
+            ['Concrete numbers', c.hasStatistics],
+            ['Author info', c.hasAuthorInfo],
+        ]
+        return (
+            <div className="mt-1.5 p-2.5 bg-white/[0.03] border border-white/10 rounded-lg">
+                <div className="text-xs font-semibold text-white mb-1.5">GEO Score: {analysis.score}/100</div>
+                <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-[11px] text-slate-400">
+                    {rows.map(([label, ok], i) => (
+                        <span key={i} className={ok === true && i === 0 ? '' : ok ? 'text-emerald-400' : 'text-slate-500'}>
+                            {i === 0 ? label : `${ok ? '✓' : '✗'} ${label}`}
+                        </span>
+                    ))}
+                </div>
+            </div>
+        )
+    }
+
+    return (
+        <button onClick={handleAnalyze} disabled={loading}
+            className="text-[11px] text-violet-400 hover:text-violet-300 underline underline-offset-2 disabled:opacity-50 disabled:no-underline">
+            {loading ? 'Analyzing…' : error ? `Error — try again` : 'Why is this cited?'}
+        </button>
+    )
+}
+
+function CitationList({ citations }) {
+    if (!citations?.length) return null
+    return (
+        <div className="mt-2 space-y-2">
+            <p className="text-[10px] uppercase tracking-wider text-slate-600 font-semibold">Cited sources ({citations.length})</p>
+            {citations.slice(0, 5).map((cit, idx) => (
+                <div key={idx} className="text-xs">
+                    <a href={cit.url} target="_blank" rel="noopener noreferrer"
+                        className="text-slate-400 hover:text-slate-200 underline underline-offset-2">
+                        {cit.domain}
+                    </a>
+                    {cit.title && <span className="text-slate-600"> — {cit.title}</span>}
+                    <div><CitationAnalysis url={cit.url} /></div>
+                </div>
+            ))}
+        </div>
+    )
+}
+
+function MentionHistoryChart({ siteId }) {
+    const [history, setHistory] = useState(null)
+    const [loading, setLoading] = useState(true)
+    const [hover, setHover]     = useState(null)
+
+    useEffect(() => {
+        const token = localStorage.getItem('token')
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/geo/sites/${siteId}/history`, {
+            headers: { Authorization: `Bearer ${token}` },
+        })
+            .then(res => res.json())
+            .then(d => setHistory(d.history || []))
+            .catch(() => setHistory([]))
+            .finally(() => setLoading(false))
+    }, [siteId])
+
+    if (loading || !history?.length) return null
+
+    const W = 640, H = 180, padL = 34, padR = 12, padT = 12, padB = 24
+    const plotW = W - padL - padR, plotH = H - padT - padB
+    const n = history.length
+    const xAt = (i) => n <= 1 ? padL : padL + (plotW * i) / (n - 1)
+    const yAt = (rate) => padT + plotH * (1 - rate / 100)
+
+    const points = history.map((h, i) => `${xAt(i)},${yAt(h.rate)}`).join(' ')
+    const formatDate = (iso) => new Date(iso).toLocaleDateString('en-US', { day: '2-digit', month: '2-digit' })
+
+    return (
+        <div className="bg-[#0d1117] border border-white/[0.06] rounded-2xl p-5 mb-6">
+            <div className="flex items-center justify-between mb-4">
+                <h3 className="text-sm font-semibold text-white">Mention Rate History</h3>
+                <span className="text-xs text-slate-600">{n} check{n !== 1 ? 's' : ''} recorded</span>
+            </div>
+
+            <div className="relative">
+                <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-auto" preserveAspectRatio="xMidYMid meet">
+                    {[0, 25, 50, 75, 100].map(v => (
+                        <g key={v}>
+                            <line x1={padL} x2={W - padR} y1={yAt(v)} y2={yAt(v)} stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
+                            <text x={padL - 8} y={yAt(v) + 3} textAnchor="end" fontSize="9" fill="#64748b">{v}%</text>
+                        </g>
+                    ))}
+
+                    {history.map((h, i) => {
+                        if (n > 1 && i !== 0 && i !== n - 1 && i % Math.ceil(n / 6) !== 0) return null
+                        return (
+                            <text key={i} x={xAt(i)} y={H - 6} textAnchor="middle" fontSize="9" fill="#64748b">
+                                {formatDate(h.date)}
+                            </text>
+                        )
+                    })}
+
+                    {n > 1 && (
+                        <polyline points={points} fill="none" stroke="#a78bfa" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    )}
+                    {history.map((h, i) => (
+                        <circle key={i} cx={xAt(i)} cy={yAt(h.rate)} r={hover === i ? 5 : 3.5}
+                            fill="#a78bfa" stroke="#0d1117" strokeWidth="2"
+                            style={{ cursor: 'pointer' }}
+                            onMouseEnter={() => setHover(i)} onMouseLeave={() => setHover(null)} />
+                    ))}
+                </svg>
+
+                {hover != null && (
+                    <div className="absolute px-2.5 py-1.5 bg-[#161c2e] border border-white/10 rounded-lg text-xs pointer-events-none shadow-lg"
+                        style={{
+                            left: `${(xAt(hover) / W) * 100}%`,
+                            top: `${(yAt(history[hover].rate) / H) * 100}%`,
+                            transform: 'translate(-50%, -130%)',
+                        }}>
+                        <div className="text-slate-500">{formatDate(history[hover].date)}</div>
+                        <div className="text-white font-semibold">{history[hover].rate}% &middot; {history[hover].mentioned}/{history[hover].checked}</div>
+                    </div>
+                )}
+            </div>
+        </div>
+    )
+}
+
+function HistoryDots({ history }) {
+    if (!history?.length) return null
+    return (
+        <div className="flex items-center gap-1 mt-1">
+            {history.slice(-8).map((h, i) => (
+                <div key={i} title={new Date(h.checkedAt).toLocaleDateString('en-US')}
+                    className={`w-2 h-2 rounded-full ${h.mentioned ? 'bg-violet-500' : 'bg-white/10'}`} />
+            ))}
+        </div>
+    )
+}
+
+
+function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
+    const [data, setData]           = useState(null)
+    const [loading, setLoading]     = useState(true)
+    const [checking, setChecking]   = useState(false)
+    const [showAdd, setShowAdd]     = useState(false)
+    const [newKws, setNewKws]       = useState('')
+    const [addingKws, setAddingKws] = useState(false)
+    const [selected, setSelected]   = useState(new Set())
+    const [expanded, setExpanded]   = useState(null)
+    const [filter, setFilter]       = useState('alle')
+    const [showPlatformEdit, setShowPlatformEdit] = useState(false)
+    const [editPlatforms, setEditPlatforms]       = useState([])
+    const [savingPlatforms, setSavingPlatforms]   = useState(false)
+
+    const platforms = site?.platforms?.length ? site.platforms : ['claude']
+    const allowedPlatforms = PLAN_PLATFORMS[plan] || ['claude']
+
+    const openPlatformEdit = () => {
+        setEditPlatforms(platforms)
+        setShowPlatformEdit(true)
+    }
+
+    const togglePlatformEdit = (id) => {
+        if (!allowedPlatforms.includes(id)) return
+        setEditPlatforms(prev =>
+            prev.includes(id)
+                ? prev.length > 1 ? prev.filter(p => p !== id) : prev
+                : [...prev, id]
+        )
+    }
+
+    const handleSavePlatforms = async () => {
+        setSavingPlatforms(true)
+        try {
+            const token = localStorage.getItem('token')
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/geo/sites/${siteId}/platforms`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+                body: JSON.stringify({ platforms: editPlatforms }),
+            })
+            const d = await res.json()
+            if (!res.ok) throw new Error(d.error)
+            toast.success('Platforms updated')
+            setShowPlatformEdit(false)
+            onSiteUpdated()
+            await fetchResults()
+        } catch (err) { toast.error(err.message || 'Error saving') }
+        finally { setSavingPlatforms(false) }
+    }
+
+    const fetchResults = useCallback(async () => {
+        try {
+            const token = localStorage.getItem('token')
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/geo/sites/${siteId}/results`, {
+                headers: { Authorization: `Bearer ${token}` },
+            })
+            const d = await res.json()
+            if (!res.ok) throw new Error(d.error)
+            setData(d)
+        } catch { toast.error('Error loading') }
+        finally { setLoading(false) }
+    }, [siteId])
+
+    useEffect(() => { fetchResults() }, [fetchResults])
+
+    const CHECK_ERROR_MESSAGES = {
+        check_already_running: 'A check is already running for this website — please wait.',
+        monthly_limit_reached: 'Monthly limit for manual checks reached.',
+    }
+
+    // Check keeps running in the background — here we just poll until checkStatus is 'idle'/'failed' again.
+    const pollUntilDone = async () => {
+        const token = localStorage.getItem('token')
+        for (let i = 0; i < 300; i++) { // safety limit, comfortably covers even very large Expert sites
+            await new Promise(r => setTimeout(r, 4000))
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/geo/sites/${siteId}`, {
+                headers: { Authorization: `Bearer ${token}` },
+            })
+            const d = await res.json()
+            if (d.site?.checkStatus !== 'running') return d.site?.checkStatus
+        }
+        return 'timeout'
+    }
+
+    const handleCheck = async () => {
+        setChecking(true)
+        try {
+            const token = localStorage.getItem('token')
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/geo/sites/${siteId}/check`, {
+                method: 'POST', headers: { Authorization: `Bearer ${token}` },
+            })
+            const d = await res.json()
+            if (!res.ok) throw new Error(CHECK_ERROR_MESSAGES[d.error] || d.error)
+
+            const finalStatus = await pollUntilDone()
+            if (finalStatus === 'failed') toast.error('Check failed — please try again later.')
+            else if (finalStatus === 'timeout') toast.error('Check is taking unusually long — check the result later.')
+            else toast.success('Check complete')
+
+            await fetchResults()
+            onSiteUpdated()
+        } catch (err) { toast.error(err.message || 'Error') }
+        finally { setChecking(false) }
+    }
+
+    // If a check is already running when the page loads (e.g. reload during "Check now"), resume polling.
+    useEffect(() => {
+        if (site?.checkStatus !== 'running' || checking) return
+        setChecking(true)
+        pollUntilDone()
+            .then(finalStatus => {
+                if (finalStatus === 'failed') toast.error('Check failed — please try again later.')
+                return fetchResults()
+            })
+            .finally(() => setChecking(false))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [site?.checkStatus])
+
+    const handleAddKeywords = async (e) => {
+        e.preventDefault()
+        const keywords = newKws.split('\n').map(k => k.trim()).filter(Boolean)
+        if (!keywords.length) return
+        setAddingKws(true)
+        try {
+            const token = localStorage.getItem('token')
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/geo/sites/${siteId}/keywords`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+                body: JSON.stringify({ keywords }),
+            })
+            const d = await res.json()
+            if (!res.ok) throw new Error(d.error)
+            toast.success(`${d.added} keyword${d.added !== 1 ? 's' : ''} added`)
+            setNewKws(''); setShowAdd(false)
+            onSiteUpdated()
+            await fetchResults()
+        } catch (err) { toast.error(err.message || 'Error') }
+        finally { setAddingKws(false) }
+    }
+
+    const handleRemoveSelected = async () => {
+        if (!selected.size || !confirm(`Remove ${selected.size} keyword${selected.size > 1 ? 's' : ''}?`)) return
+        try {
+            const token = localStorage.getItem('token')
+            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/geo/sites/${siteId}/keywords`, {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+                body: JSON.stringify({ keywords: [...selected] }),
+            })
+            toast.success('Keywords removed')
+            setSelected(new Set())
+            onSiteUpdated()
+            await fetchResults()
+        } catch { toast.error('Error removing') }
+    }
+
+    const toggleSelect = (kw) => setSelected(prev => {
+        const n = new Set(prev); n.has(kw) ? n.delete(kw) : n.add(kw); return n
+    })
+
+    const results = data?.results || []
+    const intents = data?.intents?.length ? data.intents : ['empfehlung']
+
+    const filtered = results.filter(r => {
+        if (filter === 'erwaehnt') return platforms.some(p => aggregateMention(r.checks, p, intents) === true)
+        if (filter === 'nicht')    return platforms.every(p => aggregateMention(r.checks, p, intents) === false)
+        if (filter === 'ungetestet') return platforms.every(p => aggregateMention(r.checks, p, intents) == null)
+        return true
+    })
+
+    const totalChecks = platforms.length * intents.length * (site?.keywords?.length || 0)
+    const estSeconds   = totalChecks * 6.4 // avg. duration per check, measured live
+    const estLabel      = estSeconds >= 90 ? `~${Math.round(estSeconds / 60)} min.` : `~${Math.round(estSeconds)}s`
+    const checkLabel  = checking
+        ? `Running in background (${totalChecks} checks, ${estLabel})…`
+        : 'Check now'
+
+    return (
+        <div>
+            {/* Stats */}
+            {data && (
+                <div className="grid grid-cols-3 gap-4 mb-6">
+                    {[
+                        { label: 'Mentions',     value: data.mentionedCount ?? '—', color: 'text-violet-400' },
+                        { label: 'Mention Rate', value: data.mentionRate != null ? `${data.mentionRate}%` : '—', color: data.mentionRate >= 50 ? 'text-violet-400' : 'text-slate-400' },
+                        { label: 'Checked KW',   value: data.checkedCount ?? '—',   color: 'text-white' },
+                    ].map(s => (
+                        <div key={s.label} className="bg-[#0d1117] border border-white/[0.06] rounded-xl p-4">
+                            <div className="text-xs text-slate-500 mb-1">{s.label}</div>
+                            <div className={`text-xl font-bold ${s.color}`}>{s.value}</div>
+                        </div>
+                    ))}
+                </div>
+            )}
+
+            <MentionHistoryChart siteId={siteId} />
+            <CorrelationPanel siteId={siteId} />
+            <KeywordSuggestionsPanel siteId={siteId} onAdded={onSiteUpdated} />
+            <CompetitorsPanel siteId={siteId} />
+
+            {/* Platform badges */}
+            <div className="flex items-center gap-2 mb-5 flex-wrap">
+                {platforms.map(p => {
+                    const m = PLATFORM_META[p]
+                    return (
+                        <span key={p} className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold ${m.color} ${m.bg} border ${m.border}`}>
+                            {m.label}
+                        </span>
+                    )
+                })}
+                <button onClick={openPlatformEdit}
+                    className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold text-slate-500 hover:text-slate-300 bg-white/4 hover:bg-white/8 border border-white/8 transition-all">
+                    <Settings2 className="w-3 h-3" />Edit
+                </button>
+                {intents.length > 1 && (
+                    <span className="text-xs text-slate-600">· {intents.length} prompt variants per keyword ({intents.map(i => INTENT_META[i]?.label || i).join(', ')})</span>
+                )}
+            </div>
+
+            {/* Edit platforms */}
+            <AnimatePresence>
+                {showPlatformEdit && (
+                    <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
+                        className="bg-[#0d1117] border border-violet-500/20 rounded-2xl p-5 mb-5">
+                        <div className="flex items-center justify-between mb-3">
+                            <span className="text-sm font-semibold text-white">Track AI platforms</span>
+                            <button onClick={() => setShowPlatformEdit(false)} className="text-slate-500 hover:text-white transition-colors"><X className="w-4 h-4" /></button>
+                        </div>
+                        <div className="space-y-2 mb-4">
+                            {ALL_PLATFORMS.map(id => {
+                                const m = PLATFORM_META[id]
+                                const active  = editPlatforms.includes(id)
+                                const locked  = !allowedPlatforms.includes(id)
+                                return (
+                                    <button key={id} type="button" disabled={locked}
+                                        onClick={() => togglePlatformEdit(id)}
+                                        className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl border transition-all text-left ${
+                                            locked
+                                                ? 'bg-white/[0.01] border-white/5 text-slate-600 cursor-not-allowed'
+                                                : active
+                                                    ? 'bg-violet-500/10 border-violet-500/30 text-white'
+                                                    : 'bg-white/3 border-white/8 text-slate-500 hover:border-white/15'
+                                        }`}>
+                                        <div className={`w-4 h-4 rounded border-2 flex items-center justify-center shrink-0 transition-all ${
+                                            active && !locked ? 'bg-violet-500 border-violet-500' : 'border-white/20'
+                                        }`}>
+                                            {active && !locked && <span className="text-white text-[10px] font-bold">✓</span>}
+                                        </div>
+                                        <span className="text-sm font-semibold flex-1">{m.label}</span>
+                                        {locked && (
+                                            <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
+                                                <Lock className="w-3 h-3" />Pro/Expert
+                                            </span>
+                                        )}
+                                    </button>
+                                )
+                            })}
+                        </div>
+                        <button onClick={handleSavePlatforms} disabled={savingPlatforms}
+                            className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white text-sm font-semibold transition-all disabled:opacity-50">
+                            {savingPlatforms ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Check className="w-3.5 h-3.5" />}
+                            Save
+                        </button>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            {/* Toolbar */}
+            <div className="flex items-center justify-between gap-3 mb-4 flex-wrap">
+                <div className="text-sm text-slate-500">
+                    {site?.lastChecked
+                        ? `Last checked: ${new Date(site.lastChecked).toLocaleString('en-US', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' })}`
+                        : 'Not checked yet'}
+                </div>
+                <div className="flex items-center gap-2 flex-wrap">
+                    {selected.size > 0 && (
+                        <button onClick={handleRemoveSelected}
+                            className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl border border-red-500/20 text-red-400 hover:bg-red-500/10 transition-all">
+                            <Trash2 className="w-3.5 h-3.5" />Remove {selected.size}
+                        </button>
+                    )}
+                    <button onClick={() => setShowAdd(v => !v)}
+                        className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 transition-all">
+                        <Plus className="w-3.5 h-3.5" />Keywords
+                    </button>
+                    <button onClick={handleCheck} disabled={checking}
+                        className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white transition-all disabled:opacity-50">
+                        {checking ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <RefreshCw className="w-3.5 h-3.5" />}
+                        {checking ? checkLabel : 'Check now'}
+                    </button>
+                </div>
+            </div>
+
+            {/* Filter */}
+            {results.length > 0 && (
+                <div className="flex items-center gap-1.5 mb-5 flex-wrap">
+                    {[
+                        { id: 'alle',        label: 'All' },
+                        { id: 'erwaehnt',    label: '✓ Mentioned' },
+                        { id: 'nicht',       label: '✗ Never mentioned' },
+                        { id: 'ungetestet',  label: 'Untested' },
+                    ].map(f => (
+                        <button key={f.id} onClick={() => setFilter(f.id)}
+                            className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${
+                                filter === f.id
+                                    ? 'bg-violet-500/15 border border-violet-500/30 text-violet-400'
+                                    : 'bg-white/4 border border-white/8 text-slate-500 hover:text-slate-300 hover:bg-white/8'
+                            }`}>
+                            {f.label}
+                        </button>
+                    ))}
+                    <span className="text-xs text-slate-600 ml-1">{filtered.length} keywords</span>
+                </div>
+            )}
+
+            {/* Add Keywords */}
+            <AnimatePresence>
+                {showAdd && (
+                    <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
+                        className="bg-[#0d1117] border border-violet-500/20 rounded-2xl p-5 mb-5">
+                        <div className="flex items-center justify-between mb-3">
+                            <span className="text-sm font-semibold text-white">Add keywords</span>
+                            <button onClick={() => setShowAdd(false)} className="text-slate-500 hover:text-white transition-colors"><X className="w-4 h-4" /></button>
+                        </div>
+                        <form onSubmit={handleAddKeywords} className="flex gap-3">
+                            <textarea value={newKws} onChange={e => setNewKws(e.target.value)}
+                                placeholder={"seo tool\nwebsite audit"} rows={3}
+                                className="flex-1 bg-white/3 border border-white/10 focus:border-violet-500/50 rounded-xl px-4 py-3 text-white placeholder:text-slate-600 outline-none text-sm resize-none font-mono" />
+                            <button type="submit" disabled={addingKws}
+                                className="self-end flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white text-sm font-semibold rounded-xl transition-all disabled:opacity-50">
+                                {addingKws ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Plus className="w-3.5 h-3.5" />}
+                                Add
+                            </button>
+                        </form>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            {/* Results table */}
+            {loading ? (
+                <div className="flex flex-col items-center justify-center py-20 gap-3">
+                    <Loader2 className="w-6 h-6 text-violet-400 animate-spin" />
+                    <span className="text-sm text-slate-500">Loading data…</span>
+                </div>
+            ) : results.length === 0 ? (
+                <div className="flex flex-col items-center justify-center py-20 gap-3">
+                    <Sparkles className="w-8 h-8 text-slate-700" />
+                    <span className="text-sm text-slate-500">No keywords yet. Add keywords and start a check.</span>
+                </div>
+            ) : filtered.length === 0 ? (
+                <div className="flex flex-col items-center justify-center py-16 gap-3">
+                    <Sparkles className="w-8 h-8 text-slate-700" />
+                    <span className="text-sm text-slate-500">No keywords for this filter.</span>
+                </div>
+            ) : (
+                <div className="bg-[#0d1117] border border-white/[0.06] rounded-2xl overflow-hidden">
+                    <div className="overflow-x-auto">
+                        <table className="w-full">
+                            <thead>
+                                <tr className="border-b border-white/[0.05]">
+                                    <th className="w-8 px-5 py-3" />
+                                    <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Keyword</th>
+                                    {platforms.map(p => (
+                                        <th key={p} className={`px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider ${PLATFORM_META[p]?.color || 'text-slate-500'}`}>
+                                            {PLATFORM_META[p]?.label || p}
+                                        </th>
+                                    ))}
+                                    <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider hidden sm:table-cell">History</th>
+                                    <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider hidden md:table-cell">Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {filtered.map(({ keyword, checks, history }) => {
+                                    const isSelected = selected.has(keyword)
+                                    const isExpanded = expanded === keyword
+                                    const hasDetail = intents.length > 1 || platforms.some(p => intents.some(i => checks?.[p]?.[i]?.context || checks?.[p]?.[i]?.citations?.length))
+                                    const latestDate = platforms
+                                        .flatMap(p => intents.map(i => checks?.[p]?.[i]?.checkedAt))
+                                        .filter(Boolean)
+                                        .sort()
+                                        .pop()
+
+                                    return (
+                                        <React.Fragment key={keyword}>
+                                            <tr className={`border-b border-white/[0.04] last:border-0 transition-colors ${isSelected ? 'bg-red-500/5' : isExpanded ? 'bg-white/[0.02]' : 'hover:bg-white/[0.02]'}`}>
+                                                <td className="px-5 py-3.5 cursor-pointer" onClick={() => toggleSelect(keyword)}>
+                                                    <div className={`w-3.5 h-3.5 rounded border transition-all ${isSelected ? 'bg-red-500/40 border-red-500/60' : 'border-white/15'}`} />
+                                                </td>
+                                                <td className="px-5 py-3.5 cursor-pointer" onClick={() => hasDetail && setExpanded(prev => prev === keyword ? null : keyword)}>
+                                                    <div className="flex items-center gap-2">
+                                                        <span className="text-sm text-slate-200">{keyword}</span>
+                                                        {hasDetail && (
+                                                            <span className={`transition-colors ${isExpanded ? 'text-violet-400' : 'text-slate-700'}`}>
+                                                                {isExpanded ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
+                                                            </span>
+                                                        )}
+                                                    </div>
+                                                </td>
+                                                {platforms.map(p => (
+                                                    <td key={p} className="px-4 py-3.5">
+                                                        <MentionBadge mentioned={aggregateMention(checks, p, intents)} />
+                                                    </td>
+                                                ))}
+                                                <td className="px-5 py-3.5 hidden sm:table-cell">
+                                                    <HistoryDots history={history} />
+                                                </td>
+                                                <td className="px-5 py-3.5 hidden md:table-cell">
+                                                    {latestDate
+                                                        ? <span className="text-xs text-slate-600">{new Date(latestDate).toLocaleDateString('en-US')}</span>
+                                                        : <span className="text-xs text-slate-700">—</span>}
+                                                </td>
+                                            </tr>
+                                            {isExpanded && (
+                                                <tr className="border-b border-white/[0.04] last:border-0">
+                                                    <td colSpan={3 + platforms.length} className="px-5 py-4 bg-white/[0.01]">
+                                                        <div className="space-y-4">
+                                                            {platforms.filter(p => intents.some(i => checks?.[p]?.[i])).map(p => {
+                                                                const m = PLATFORM_META[p]
+                                                                return (
+                                                                    <div key={p}>
+                                                                        <p className={`text-xs uppercase tracking-wider font-semibold mb-2 ${m.color}`}>{m.label}</p>
+                                                                        <div className="space-y-2 pl-3 border-l-2 border-white/10">
+                                                                            {intents.filter(i => checks?.[p]?.[i]).map(i => {
+                                                                                const c = checks[p][i]
+                                                                                return (
+                                                                                    <div key={i} className="flex items-start gap-3">
+                                                                                        {intents.length > 1 && (
+                                                                                            <span className="text-[10px] uppercase tracking-wider text-slate-500 font-semibold mt-1 w-20 shrink-0">
+                                                                                                {INTENT_META[i]?.label || i}
+                                                                                            </span>
+                                                                                        )}
+                                                                                        <div className="flex-1 min-w-0">
+                                                                                            <MentionBadge mentioned={c.mentioned} />
+                                                                                            <SentimentBadge sentiment={c.sentiment} />
+                                                                                            {c.context && (
+                                                                                                <p className="text-sm text-slate-300 italic leading-relaxed mt-1">&ldquo;{c.context}&rdquo;</p>
+                                                                                            )}
+                                                                                            <CitationList citations={c.citations} />
+                                                                                        </div>
+                                                                                    </div>
+                                                                                )
+                                                                            })}
+                                                                        </div>
+                                                                    </div>
+                                                                )
+                                                            })}
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            )}
+                                        </React.Fragment>
+                                    )
+                                })}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            )}
+        </div>
+    )
+}
+
+export default function GeoSitePageEn() {
+    const router     = useRouter()
+    const { siteId } = useParams()
+    const [site, setSite]       = useState(null)
+    const [plan, setPlan]       = useState(null)
+    const [loading, setLoading] = useState(true)
+
+    const fetchSite = useCallback(async () => {
+        try {
+            const token = localStorage.getItem('token')
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/geo/sites/${siteId}`, {
+                headers: { Authorization: `Bearer ${token}` },
+            })
+            const d = await res.json()
+            if (!res.ok) throw new Error(d.error)
+            setSite(d.site)
+        } catch { toast.error('Website not found') }
+        finally { setLoading(false) }
+    }, [siteId])
+
+    const fetchPlan = useCallback(async () => {
+        try {
+            const token = localStorage.getItem('token')
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/geo/plan`, {
+                headers: { Authorization: `Bearer ${token}` },
+            })
+            const d = await res.json()
+            if (res.ok) setPlan(d.plan)
+        } catch { /* plan info is only relevant for the edit UI, not a hard error */ }
+    }, [])
+
+    useEffect(() => {
+        if (!localStorage.getItem('user')) { router.push('/en/login'); return }
+        fetchSite()
+        fetchPlan()
+    }, [fetchSite, fetchPlan, router])
+
+    if (loading) return (
+        <div className="min-h-screen bg-[#05080f] flex items-center justify-center">
+            <Loader2 className="w-8 h-8 text-violet-400 animate-spin" />
+        </div>
+    )
+
+    return (
+        <div className="min-h-screen bg-[#05080f]">
+            <Toaster position="top-right" toastOptions={{
+                style: { background: '#0d1117', color: '#fff', border: '1px solid rgba(255,255,255,0.08)' },
+            }} />
+            <Navbar locale="en" />
+
+            <div className="max-w-5xl mx-auto px-5 sm:px-8 pt-28 pb-16">
+
+                {/* Back + Header */}
+                <div className="mb-8">
+                    <Link href="/en/geo/dashboard" className="inline-flex items-center gap-2 text-sm text-slate-500 hover:text-slate-300 transition-colors mb-4">
+                        <ArrowLeft className="w-4 h-4" />Back to dashboard
+                    </Link>
+                    <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-xl bg-violet-500/10 border border-violet-500/15 flex items-center justify-center">
+                            <Globe className="w-5 h-5 text-violet-400" />
+                        </div>
+                        <div>
+                            <h1 className="text-xl font-bold text-white">{site?.displayName || site?.domain}</h1>
+                            <div className="text-sm text-slate-500">{site?.domain}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <ResultsTab siteId={siteId} site={site} plan={plan} onSiteUpdated={fetchSite} />
+            </div>
+        </div>
+    )
+}

@@ -7,7 +7,13 @@ export const metadata = {
     title: 'SEO-Checkliste 2026: In 15 Minuten alle Fehler selbst finden',
     description: 'Die komplette SEO-Checkliste 2026 in fester Reihenfolge: 6 Phasen, 15 Minuten, alle wichtigen SEO- und GEO-Signale. Selbst prüfen oder automatisch mit AuditAI checken.',
     keywords: 'seo checkliste 2026, seo checkliste, seo fehler checkliste, seo fehler finden, technische seo checkliste, seo test kostenlos',
-    alternates: { canonical: 'https://www.sitecheckai.dev/blog/seo-checkliste-2026' },
+    alternates: {
+        canonical: 'https://www.sitecheckai.dev/blog/seo-checkliste-2026',
+        languages: {
+            'de-DE': 'https://www.sitecheckai.dev/blog/seo-checkliste-2026',
+            'en-US': 'https://www.sitecheckai.dev/en/blog/seo-checklist-2026',
+        },
+    },
     openGraph: {
         title: 'SEO-Checkliste 2026: In 15 Minuten alle Fehler selbst finden',
         description: '6 Phasen, 15 Minuten, alle wichtigen SEO- und GEO-Signale in fester Reihenfolge.',

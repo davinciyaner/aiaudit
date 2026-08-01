@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
-const steps = [
+const STEPS_DE = [
     { label: 'Browser wird geöffnet...' },
     { label: 'Website wird geladen...' },
     { label: 'Screenshots werden erstellt...' },
@@ -13,7 +13,19 @@ const steps = [
     { label: 'KI-Bericht wird generiert...' },
 ]
 
-export default function Loading({ url }) {
+const STEPS_EN = [
+    { label: 'Opening browser...' },
+    { label: 'Loading website...' },
+    { label: 'Taking screenshots...' },
+    { label: 'Analyzing SEO...' },
+    { label: 'Measuring performance...' },
+    { label: 'Extracting keywords...' },
+    { label: 'Analyzing GEO visibility...' },
+    { label: 'Generating AI report...' },
+]
+
+export default function Loading({ url, locale = 'de' }) {
+    const steps = locale === 'en' ? STEPS_EN : STEPS_DE
     const [currentStep, setCurrentStep] = useState(0)
 
     useEffect(() => {
@@ -38,7 +50,7 @@ export default function Loading({ url }) {
                     </div>
                 </div>
 
-                <h3 className="text-white font-semibold mb-1">Website wird auditiert</h3>
+                <h3 className="text-white font-semibold mb-1">{locale === 'en' ? 'Auditing website' : 'Website wird auditiert'}</h3>
                 {url && <p className="text-slate-500 text-sm mb-6 truncate">{url}</p>}
 
                 <AnimatePresence mode="wait">
@@ -60,7 +72,7 @@ export default function Loading({ url }) {
                         <div key={i} className={`h-1 rounded-full transition-all duration-500 ${i <= currentStep ? 'bg-gradient-to-r from-violet-500 to-cyan-500' : 'bg-white/5'}`} />
                     ))}
                 </div>
-                <p className="text-slate-600 text-xs mt-4">Kann bis zu 60 Sekunden dauern</p>
+                <p className="text-slate-600 text-xs mt-4">{locale === 'en' ? 'Can take up to 60 seconds' : 'Kann bis zu 60 Sekunden dauern'}</p>
             </div>
         </motion.div>
     )

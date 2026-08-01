@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import jwt from 'jsonwebtoken'
 import Feedback from '../models/feedback.js'
+import { t } from '../utils/i18n/errors.js'
 
 const router = Router()
 
@@ -17,7 +18,7 @@ function optionalAuth(req, res, next) {
 router.post('/', optionalAuth, async (req, res) => {
     const { url, reportId, vote, reason } = req.body
     if (!vote || !['yes', 'no'].includes(vote)) {
-        return res.status(400).json({ error: 'vote muss "yes" oder "no" sein' })
+        return res.status(400).json({ error: t('VOTE_MUST_BE_YES_OR_NO', req.language) })
     }
     try {
         await Feedback.create({

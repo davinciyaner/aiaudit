@@ -7,7 +7,13 @@ export const metadata = {
     title: 'Die besten kostenlosen SEO-Check-Tools 2026 im Vergleich',
     description: '13 SEO-Check-Tools im Vergleich inkl. G2-/Capterra-/OMR-Bewertungen: kostenlose Version, Funktionsumfang, Limits und wer als einziges auch KI-Sichtbarkeit (GEO) prüft.',
     keywords: 'seo analyse kostenlos, seo check tool kostenlos, website audit tool kostenlos, kostenloser seo test, seo tool vergleich',
-    alternates: { canonical: 'https://www.sitecheckai.dev/blog/beste-seo-check-tools-2026' },
+    alternates: {
+        canonical: 'https://www.sitecheckai.dev/blog/beste-seo-check-tools-2026',
+        languages: {
+            'de-DE': 'https://www.sitecheckai.dev/blog/beste-seo-check-tools-2026',
+            'en-US': 'https://www.sitecheckai.dev/en/blog/best-seo-tools-2026',
+        },
+    },
     openGraph: {
         title: 'Die besten kostenlosen SEO-Check-Tools 2026 im Vergleich',
         description: '13 SEO-Check-Tools im Vergleich mit echten G2-/Capterra-/OMR-Bewertungen - inklusive GEO-Check für KI-Sichtbarkeit.',

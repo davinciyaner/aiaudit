@@ -1,7 +1,7 @@
 import { mkdirSync } from 'fs'
 import { chromium } from 'playwright'
 
-export function generateHTMLReport(auditData, aiReport) {
+export function generateHTMLReport(auditData, aiReport, language = 'de') {
     const { url, timestamp, overallScore, seo, performance, keywords, geo, screenshots } = auditData
 
     const scoreColor = (s) => s >= 80 ? '#22c55e' : s >= 60 ? '#f59e0b' : '#ef4444'
@@ -21,11 +21,21 @@ export function generateHTMLReport(auditData, aiReport) {
         const cleaned = cleanAI(text)
 
         // Flexiblere Erkennung — auch mit Leerzeichen, Zeilenumbrüchen, Nummern davor
-        const sectionPatterns = [
+        const sectionPatterns = language === 'en' ? [
+            'SUMMARY',
+            'CRITICAL ISSUES',
+            'SEO ANALYSIS',
+            'PERFORMANCE ANALYSIS',
+            'SECURITY ANALYSIS',
+            'KEYWORD STRATEGY',
+            'GEO ANALYSIS',
+            'ACTION PLAN',
+        ] : [
             'ZUSAMMENFASSUNG',
             'KRITISCHE PROBLEME',
             'SEO-ANALYSE',
             'PERFORMANCE-ANALYSE',
+            'SICHERHEITS-ANALYSE',
             'KEYWORD-STRATEGIE',
             'KEYWORD STRATEGIE',    // ← Variante mit Leerzeichen
             'GEO-ANALYSE',
@@ -71,7 +81,7 @@ export function generateHTMLReport(auditData, aiReport) {
 
         return sections.length > 0
             ? sections
-            : [{ title: 'AI ANALYSE', content: cleaned }]
+            : [{ title: language === 'en' ? 'AI ANALYSIS' : 'AI ANALYSE', content: cleaned }]
     }
 
     const aiSections = parseAISections(aiReport)
@@ -118,7 +128,7 @@ export function generateHTMLReport(auditData, aiReport) {
             <div style="font-size:10px;color:#64748b;text-transform:uppercase;letter-spacing:0.15em;font-weight:600;margin-bottom:12px">Website Performance Report</div>
             <div style="background:rgba(15,23,42,0.8);border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:20px 28px;margin-bottom:32px;max-width:360px">
                 <div style="font-size:13px;color:#94a3b8;margin-bottom:6px;word-break:break-all">${url}</div>
-                <div style="font-size:11px;color:#475569">${new Date(timestamp).toLocaleString('de-DE', { dateStyle: 'long', timeStyle: 'short' })}</div>
+                <div style="font-size:11px;color:#475569">${new Date(timestamp).toLocaleString(language === 'en' ? 'en-US' : 'de-DE', { dateStyle: 'long', timeStyle: 'short' })}</div>
             </div>
             <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;width:100%;max-width:480px;margin-bottom:32px">
                 ${[['Overall', overallScore], ['SEO', seo.score], ['Performance', performance.score], ['GEO', geo ? geo.score : 0]].map(([label, score]) => `
@@ -355,7 +365,7 @@ export function generateHTMLReport(auditData, aiReport) {
     </div>` : ''
 
     return `<!DOCTYPE html>
-<html lang="en">
+<html lang="${language === 'en' ? 'en' : 'de'}">
 <head>
 <meta charset="UTF-8"/>
 <style>

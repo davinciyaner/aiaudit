@@ -7,11 +7,11 @@ const router = Router();
 router.post('/', async (req, res) => {
     const { email, source } = req.body;
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        return res.status(400).json({ error: 'Ungültige E-Mail-Adresse' });
+        return res.status(400).json({ error: req.language === 'en' ? 'Invalid email address' : 'Ungültige E-Mail-Adresse' });
     }
     try {
         await Waitlist.create({ email, source: source || 'extension' });
-        sendWaitlistConfirmation(email).catch(err =>
+        sendWaitlistConfirmation(email, req.language).catch(err =>
             console.error('Waitlist-Mail fehlgeschlagen:', err.message)
         );
         res.json({ ok: true });

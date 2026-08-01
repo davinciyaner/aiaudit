@@ -8,6 +8,8 @@ AuditAI kombiniert technische Website-Analyse mit einem von Claude AI (Anthropic
 
 **Zielgruppe:** Webentwickler, Agenturen, SEO-Freelancer, kleine und mittelständische Unternehmen, die ihre Website für Google und KI-Modelle optimieren möchten.
 
+**Sprachen:** Primär deutschsprachiger Markt (DACH). Seit August 2026 zusätzlich vollständig auf Englisch unter sitecheckai.dev/en verfügbar (Marketing-Seiten, Blog, Dashboard, Registrierung), für englischsprachige Nutzer u. a. in den USA.
+
 ## Analysebereiche
 
 ### SEO (Search Engine Optimization)
@@ -170,6 +172,7 @@ Ja, ab dem Pro-Plan wird jedes Keyword in zwei Prompt-Varianten geprüft — Emp
 ## Kontakt & Links
 
 - Website: https://sitecheckai.dev
+- Website (English): https://sitecheckai.dev/en
 - Dashboard: https://sitecheckai.dev/dashboard
 - Preise (Audit): https://sitecheckai.dev/pricing
 - Preise (SEO-Automatisierung): https://sitecheckai.dev/seo/pricing

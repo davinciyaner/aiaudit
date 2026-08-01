@@ -5,7 +5,13 @@ import Footer from '../components/Footer'
 export const metadata = {
     title: 'Blog – SEO, GEO & Website-Optimierung',
     description: 'Praxisnahe Artikel über SEO, GEO-Optimierung und Performance. Lerne wie du deine Website für Google und KI-Modelle optimierst.',
-    alternates: { canonical: 'https://www.sitecheckai.dev/blog' },
+    alternates: {
+        canonical: 'https://www.sitecheckai.dev/blog',
+        languages: {
+            'de-DE': 'https://www.sitecheckai.dev/blog',
+            'en-US': 'https://www.sitecheckai.dev/en/blog',
+        },
+    },
 }
 
 const breadcrumbLd = {

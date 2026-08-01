@@ -1,6 +1,7 @@
 import express from 'express'
 import rateLimit from 'express-rate-limit'
 import { auth } from '../middleware/auth.js'
+import { t } from '../utils/i18n/errors.js'
 import {
     getPlan, subscribePlan,
     getSites, getSite, addSite, deleteSite,
@@ -13,7 +14,7 @@ const checkRateLimit = rateLimit({
     windowMs: 60 * 1000,
     limit: 2,
     keyGenerator: (req) => `geo:${req.userId}:${req.params.id}`,
-    handler: (req, res) => res.status(429).json({ error: 'Bitte warte eine Minute zwischen manuellen Checks.' }),
+    handler: (req, res) => res.status(429).json({ error: t('CHECK_RATE_LIMIT', req.language) }),
     standardHeaders: false,
     legacyHeaders: false,
 })
@@ -22,7 +23,7 @@ const apiRateLimit = rateLimit({
     windowMs: 60 * 1000,
     limit: 30,
     keyGenerator: (req) => req.userId,
-    handler: (req, res) => res.status(429).json({ error: 'Zu viele Anfragen. Bitte warte einen Moment.' }),
+    handler: (req, res) => res.status(429).json({ error: t('API_RATE_LIMIT', req.language) }),
     standardHeaders: false,
     legacyHeaders: false,
 })

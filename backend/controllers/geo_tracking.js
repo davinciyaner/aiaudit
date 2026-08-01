@@ -7,6 +7,7 @@ import SeoKeywordRanking from '../models/seo_keyword_ranking.js'
 import { checkSiteMentions, PLATFORM_COSTS, PROMPT_INTENTS, classifyGeoSuitableKeywords } from '../services/geoService.js'
 import { analyzeGEO } from './geo.js'
 import { assertPublicHttpsUrl, fetchSafely } from '../utils/safeFetch.js'
+import { t } from '../utils/i18n/errors.js'
 
 const VALID_PLATFORMS = ['claude', 'chatgpt', 'perplexity', 'google_aio']
 const ALLOWED_CITATION_HOSTS = ['example.com']
@@ -64,8 +65,8 @@ export async function getPlan(req, res) {
 export async function subscribePlan(req, res) {
     try {
         const { subscriptionId, plan } = req.body
-        if (!subscriptionId || !plan) return res.status(400).json({ error: 'subscriptionId und plan erforderlich' })
-        if (!['einsteiger', 'pro', 'expert'].includes(plan)) return res.status(400).json({ error: 'Ungültiger Plan' })
+        if (!subscriptionId || !plan) return res.status(400).json({ error: t('SUBSCRIPTION_ID_PLAN_REQUIRED', req.language) })
+        if (!['einsteiger', 'pro', 'expert'].includes(plan)) return res.status(400).json({ error: t('INVALID_PLAN', req.language) })
 
         await ProductSubscription.findOneAndUpdate(
             { userId: req.userId, product: 'geo' },
@@ -82,7 +83,7 @@ export async function subscribePlan(req, res) {
 export async function getSites(req, res) {
     try {
         const plan = await getGeoPlan(req.userId)
-        if (!plan) return res.status(403).json({ error: 'Kein aktives GEO-Automatisierung Abo' })
+        if (!plan) return res.status(403).json({ error: t('NO_ACTIVE_GEO_SUB', req.language) })
 
         const sites = await GeoTrackedSite.find({ userId: req.userId, isActive: true }).lean()
         const limits = PLAN_LIMITS[plan]
@@ -130,7 +131,7 @@ export async function getSites(req, res) {
 export async function getSite(req, res) {
     try {
         const site = await GeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId }).lean()
-        if (!site) return res.status(404).json({ error: 'Website nicht gefunden' })
+        if (!site) return res.status(404).json({ error: t('SITE_NOT_FOUND', req.language) })
         res.json({ site })
     } catch (err) {
         res.status(500).json({ error: err.message })
@@ -141,30 +142,32 @@ export async function getSite(req, res) {
 export async function addSite(req, res) {
     try {
         const { domain, displayName, keywords = [], language = 'de', platforms = ['claude'] } = req.body
-        if (!domain) return res.status(400).json({ error: 'Domain erforderlich' })
+        if (!domain) return res.status(400).json({ error: t('DOMAIN_REQUIRED', req.language) })
 
         const plan = await getGeoPlan(req.userId)
-        if (!plan) return res.status(403).json({ error: 'Kein aktives GEO-Automatisierung Abo' })
+        if (!plan) return res.status(403).json({ error: t('NO_ACTIVE_GEO_SUB', req.language) })
 
         const limits = PLAN_LIMITS[plan]
 
         const siteCount = await GeoTrackedSite.countDocuments({ userId: req.userId, isActive: true })
         if (siteCount >= limits.maxSites) {
-            return res.status(403).json({ error: `Maximal ${limits.maxSites} Website${limits.maxSites > 1 ? 's' : ''} für ${plan}-Plan` })
+            return res.status(403).json({ error: req.language === 'en'
+                ? `Maximum of ${limits.maxSites} website${limits.maxSites > 1 ? 's' : ''} for the ${plan} plan`
+                : `Maximal ${limits.maxSites} Website${limits.maxSites > 1 ? 's' : ''} für ${plan}-Plan` })
         }
 
         const totalKeywords = await countTotalKeywords(req.userId)
         const slotsLeft = limits.maxKeywords - totalKeywords
 
         const allowedPlatforms = platforms.filter(p => VALID_PLATFORMS.includes(p) && limits.platforms.includes(p))
-        if (!allowedPlatforms.length) return res.status(400).json({ error: 'Mindestens eine Plattform erforderlich' })
+        if (!allowedPlatforms.length) return res.status(400).json({ error: t('AT_LEAST_ONE_PLATFORM_REQUIRED', req.language) })
 
         let normalizedDomain
         try {
             const parsed = new URL(domain.startsWith('http') ? domain : `https://${domain}`)
             normalizedDomain = parsed.hostname.toLowerCase().replace(/^www\./, '')
         } catch {
-            return res.status(400).json({ error: 'Ungültige Domain' })
+            return res.status(400).json({ error: t('INVALID_DOMAIN', req.language) })
         }
 
         // SSRF-Härtung: verhindert, dass überhaupt erst eine interne/private Domain gespeichert wird
@@ -172,7 +175,7 @@ export async function addSite(req, res) {
         try {
             await assertPublicHttpsUrl(`https://${normalizedDomain}`)
         } catch (err) {
-            return res.status(400).json({ error: err.message || 'Domain nicht erlaubt' })
+            return res.status(400).json({ error: err.message || t('DOMAIN_NOT_ALLOWED', req.language) })
         }
 
         const uniqueKeywords = [...new Set(
@@ -191,7 +194,7 @@ export async function addSite(req, res) {
 
         res.status(201).json({ site })
     } catch (err) {
-        if (err.code === 11000) return res.status(409).json({ error: 'Website wird bereits getrackt' })
+        if (err.code === 11000) return res.status(409).json({ error: t('SITE_ALREADY_TRACKED', req.language) })
         res.status(500).json({ error: err.message })
     }
 }
@@ -200,7 +203,7 @@ export async function addSite(req, res) {
 export async function deleteSite(req, res) {
     try {
         const site = await GeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId })
-        if (!site) return res.status(404).json({ error: 'Website nicht gefunden' })
+        if (!site) return res.status(404).json({ error: t('SITE_NOT_FOUND', req.language) })
 
         await Promise.all([
             GeoMentionCheck.deleteMany({ siteId: site._id }),
@@ -217,18 +220,20 @@ export async function deleteSite(req, res) {
 export async function addKeywords(req, res) {
     try {
         const { keywords } = req.body
-        if (!Array.isArray(keywords) || !keywords.length) return res.status(400).json({ error: 'keywords[] erforderlich' })
+        if (!Array.isArray(keywords) || !keywords.length) return res.status(400).json({ error: t('KEYWORDS_ARRAY_REQUIRED', req.language) })
 
         const plan = await getGeoPlan(req.userId)
-        if (!plan) return res.status(403).json({ error: 'Kein aktives GEO-Automatisierung Abo' })
+        if (!plan) return res.status(403).json({ error: t('NO_ACTIVE_GEO_SUB', req.language) })
 
         const site = await GeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId })
-        if (!site) return res.status(404).json({ error: 'Website nicht gefunden' })
+        if (!site) return res.status(404).json({ error: t('SITE_NOT_FOUND', req.language) })
 
         const limits = PLAN_LIMITS[plan]
         const totalKeywords = await countTotalKeywords(req.userId)
         const slotsLeft = limits.maxKeywords - totalKeywords
-        if (slotsLeft <= 0) return res.status(403).json({ error: `Keyword-Limit erreicht (${limits.maxKeywords} für ${plan}-Plan)` })
+        if (slotsLeft <= 0) return res.status(403).json({ error: req.language === 'en'
+            ? `Keyword limit reached (${limits.maxKeywords} for the ${plan} plan)`
+            : `Keyword-Limit erreicht (${limits.maxKeywords} für ${plan}-Plan)` })
 
         const newKws = keywords
             .slice(0, slotsLeft)
@@ -248,10 +253,10 @@ export async function addKeywords(req, res) {
 export async function removeKeywords(req, res) {
     try {
         const { keywords } = req.body
-        if (!Array.isArray(keywords)) return res.status(400).json({ error: 'keywords[] erforderlich' })
+        if (!Array.isArray(keywords)) return res.status(400).json({ error: t('KEYWORDS_ARRAY_REQUIRED', req.language) })
 
         const site = await GeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId })
-        if (!site) return res.status(404).json({ error: 'Website nicht gefunden' })
+        if (!site) return res.status(404).json({ error: t('SITE_NOT_FOUND', req.language) })
 
         const removed = site.keywords.filter(k => keywords.includes(k))
         site.keywords = site.keywords.filter(k => !keywords.includes(k))
@@ -271,21 +276,21 @@ export async function removeKeywords(req, res) {
 export async function updatePlatforms(req, res) {
     try {
         const { platforms } = req.body
-        if (!Array.isArray(platforms) || !platforms.length) return res.status(400).json({ error: 'platforms[] erforderlich' })
+        if (!Array.isArray(platforms) || !platforms.length) return res.status(400).json({ error: t('PLATFORMS_ARRAY_REQUIRED', req.language) })
 
         const plan = await getGeoPlan(req.userId)
-        if (!plan) return res.status(403).json({ error: 'Kein aktives GEO-Automatisierung Abo' })
+        if (!plan) return res.status(403).json({ error: t('NO_ACTIVE_GEO_SUB', req.language) })
 
         const limits = PLAN_LIMITS[plan]
         const allowedPlatforms = platforms.filter(p => VALID_PLATFORMS.includes(p) && limits.platforms.includes(p))
-        if (!allowedPlatforms.length) return res.status(400).json({ error: 'Keine erlaubten Plattformen für deinen Plan' })
+        if (!allowedPlatforms.length) return res.status(400).json({ error: t('NO_ALLOWED_PLATFORMS_FOR_PLAN', req.language) })
 
         const site = await GeoTrackedSite.findOneAndUpdate(
             { _id: req.params.id, userId: req.userId },
             { platforms: allowedPlatforms },
             { new: true }
         )
-        if (!site) return res.status(404).json({ error: 'Website nicht gefunden' })
+        if (!site) return res.status(404).json({ error: t('SITE_NOT_FOUND', req.language) })
 
         const monthlyCost = calcMonthlyCost(site.keywords.length, allowedPlatforms, site.promptVariants)
         res.json({ site, monthlyCost })
@@ -298,10 +303,10 @@ export async function updatePlatforms(req, res) {
 export async function getResults(req, res) {
     try {
         const plan = await getGeoPlan(req.userId)
-        if (!plan) return res.status(403).json({ error: 'Kein aktives GEO-Automatisierung Abo' })
+        if (!plan) return res.status(403).json({ error: t('NO_ACTIVE_GEO_SUB', req.language) })
 
         const site = await GeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId }).lean()
-        if (!site) return res.status(404).json({ error: 'Website nicht gefunden' })
+        if (!site) return res.status(404).json({ error: t('SITE_NOT_FOUND', req.language) })
 
         const platforms = site.platforms?.length ? site.platforms : ['claude']
         const intents = activeIntents(site.promptVariants)
@@ -378,11 +383,11 @@ async function runCheckInBackground(site, userId) {
 export async function triggerCheck(req, res) {
     try {
         const plan = await getGeoPlan(req.userId)
-        if (!plan) return res.status(403).json({ error: 'Kein aktives GEO-Automatisierung Abo' })
+        if (!plan) return res.status(403).json({ error: t('NO_ACTIVE_GEO_SUB', req.language) })
 
         const site = await GeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId })
-        if (!site) return res.status(404).json({ error: 'Website nicht gefunden' })
-        if (!site.keywords.length) return res.status(400).json({ error: 'Keine Keywords hinterlegt' })
+        if (!site) return res.status(404).json({ error: t('SITE_NOT_FOUND', req.language) })
+        if (!site.keywords.length) return res.status(400).json({ error: t('NO_KEYWORDS_STORED', req.language) })
 
         const isStale = site.checkStatus === 'running' && site.checkStartedAt
             && (Date.now() - site.checkStartedAt.getTime() > STALE_CHECK_MS)
@@ -424,20 +429,20 @@ const CITATION_CACHE_TTL_MS = 24 * 60 * 60 * 1000
 export async function analyzeCitation(req, res) {
     try {
         const plan = await getGeoPlan(req.userId)
-        if (!plan) return res.status(403).json({ error: 'Kein aktives GEO-Automatisierung Abo' })
+        if (!plan) return res.status(403).json({ error: t('NO_ACTIVE_GEO_SUB', req.language) })
 
         const { url } = req.body
-        if (!url) return res.status(400).json({ error: 'url erforderlich' })
+        if (!url) return res.status(400).json({ error: t('URL_REQUIRED', req.language) })
 
         let parsedUrl
         try {
             parsedUrl = await assertPublicHttpsUrl(url)
         } catch (err) {
-            return res.status(400).json({ error: err.message || 'Ungültige URL' })
+            return res.status(400).json({ error: err.message || t('INVALID_URL', req.language) })
         }
 
         if (!isAllowedCitationHost(parsedUrl.hostname)) {
-            return res.status(400).json({ error: 'Ziel-Domain ist nicht erlaubt' })
+            return res.status(400).json({ error: t('TARGET_DOMAIN_NOT_ALLOWED', req.language) })
         }
 
         const normalizedUrl = parsedUrl.toString()
@@ -453,9 +458,11 @@ export async function analyzeCitation(req, res) {
                 timeoutMs: 10000,
             })
         } catch (err) {
-            return res.status(400).json({ error: err.message || 'Seite konnte nicht abgerufen werden' })
+            return res.status(400).json({ error: err.message || t('PAGE_FETCH_FAILED', req.language) })
         }
-        if (!pageRes.ok) return res.status(502).json({ error: `Seite antwortete mit Status ${pageRes.status}` })
+        if (!pageRes.ok) return res.status(502).json({ error: req.language === 'en'
+            ? `Page responded with status ${pageRes.status}`
+            : `Seite antwortete mit Status ${pageRes.status}` })
 
         const html = await pageRes.text()
         const analysis = await analyzeGEO(normalizedUrl, html)
@@ -473,10 +480,10 @@ export async function analyzeCitation(req, res) {
 export async function getCompetitors(req, res) {
     try {
         const plan = await getGeoPlan(req.userId)
-        if (!plan) return res.status(403).json({ error: 'Kein aktives GEO-Automatisierung Abo' })
+        if (!plan) return res.status(403).json({ error: t('NO_ACTIVE_GEO_SUB', req.language) })
 
         const site = await GeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId }).lean()
-        if (!site) return res.status(404).json({ error: 'Website nicht gefunden' })
+        if (!site) return res.status(404).json({ error: t('SITE_NOT_FOUND', req.language) })
 
         const normalizedOwnDomain = site.domain.replace(/^www\./, '').toLowerCase()
 
@@ -524,10 +531,10 @@ export async function getCompetitors(req, res) {
 export async function getMentionHistory(req, res) {
     try {
         const plan = await getGeoPlan(req.userId)
-        if (!plan) return res.status(403).json({ error: 'Kein aktives GEO-Automatisierung Abo' })
+        if (!plan) return res.status(403).json({ error: t('NO_ACTIVE_GEO_SUB', req.language) })
 
         const site = await GeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId }).lean()
-        if (!site) return res.status(404).json({ error: 'Website nicht gefunden' })
+        if (!site) return res.status(404).json({ error: t('SITE_NOT_FOUND', req.language) })
 
         const byDay = await GeoMentionCheck.aggregate([
             { $match: { siteId: site._id } },
@@ -570,10 +577,10 @@ async function findLinkedSeoSite(userId, geoDomain) {
 export async function getCorrelation(req, res) {
     try {
         const plan = await getGeoPlan(req.userId)
-        if (!plan) return res.status(403).json({ error: 'Kein aktives GEO-Automatisierung Abo' })
+        if (!plan) return res.status(403).json({ error: t('NO_ACTIVE_GEO_SUB', req.language) })
 
         const geoSite = await GeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId }).lean()
-        if (!geoSite) return res.status(404).json({ error: 'Website nicht gefunden' })
+        if (!geoSite) return res.status(404).json({ error: t('SITE_NOT_FOUND', req.language) })
 
         const seoSite = await findLinkedSeoSite(req.userId, geoSite.domain)
 
@@ -641,10 +648,10 @@ const SUGGESTIONS_CACHE_TTL_MS = 24 * 60 * 60 * 1000
 export async function getKeywordSuggestions(req, res) {
     try {
         const plan = await getGeoPlan(req.userId)
-        if (!plan) return res.status(403).json({ error: 'Kein aktives GEO-Automatisierung Abo' })
+        if (!plan) return res.status(403).json({ error: t('NO_ACTIVE_GEO_SUB', req.language) })
 
         const geoSite = await GeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId }).lean()
-        if (!geoSite) return res.status(404).json({ error: 'Website nicht gefunden' })
+        if (!geoSite) return res.status(404).json({ error: t('SITE_NOT_FOUND', req.language) })
 
         const seoSite = await findLinkedSeoSite(req.userId, geoSite.domain)
         if (!seoSite) {

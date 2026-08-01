@@ -142,6 +142,7 @@ async function runWeeklySeoChecks() {
                                     gains,
                                     losses,
                                     contentGap: contentGapResult,
+                                    language: user.language,
                                 })
                                 console.log(`SEO alert gesendet an ${user.email} für ${site.domain} (${losses.length} Verluste, ${gains.length} Gewinne)`)
                             }
@@ -224,7 +225,7 @@ async function runSitemapDiscovery() {
                 if (discovered.length) {
                     const user = await User.findById(site.userId).lean()
                     if (user?.email && user.seoEmailAlerts !== false) {
-                        await sendNewKeywordsAlert({ email: user.email, domain: site.domain, keywords: discovered })
+                        await sendNewKeywordsAlert({ email: user.email, domain: site.domain, keywords: discovered, language: user.language })
                         console.log(`[seo] ${discovered.length} neue Keywords für ${site.domain} — Alert an ${user.email}`)
                     }
                 }

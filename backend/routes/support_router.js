@@ -2,19 +2,20 @@ import { Router } from 'express'
 import rateLimit from 'express-rate-limit'
 import SupportTicket from '../models/support_ticket.js'
 import { sendTicketCreatedUser, sendTicketCreatedAdmin, sendTicketStatusChanged } from '../utils/mailer.js'
+import { t } from '../utils/i18n/errors.js'
 
 const router = Router()
 
 const submitLimiter = rateLimit({
     windowMs: 60 * 60 * 1000,
     max: 5,
-    message: { error: 'Zu viele Anfragen. Bitte in einer Stunde erneut versuchen.' },
+    message: (req) => ({ error: t('TOO_MANY_REQUESTS_HOUR', req.language) }),
 })
 
 const lookupLimiter = rateLimit({
     windowMs: 60 * 1000,
     max: 10,
-    message: { error: 'Zu viele Anfragen.' },
+    message: (req) => ({ error: t('TOO_MANY_REQUESTS', req.language) }),
 })
 
 function generateTicketNumber() {
@@ -31,9 +32,9 @@ function isAdminAuthorized(req) {
 // POST /api/support — Ticket erstellen
 router.post('/', submitLimiter, async (req, res, next) => {
     try {
-        const { name, email, subject, message } = req.body
+        const { name, email, subject, message, language } = req.body
         if (!name?.trim() || !email?.trim() || !subject?.trim() || !message?.trim()) {
-            return res.status(400).json({ error: 'Alle Felder sind erforderlich.' })
+            return res.status(400).json({ error: t('ALL_FIELDS_REQUIRED', req.language) })
         }
 
         let ticketNumber
@@ -49,6 +50,7 @@ router.post('/', submitLimiter, async (req, res, next) => {
             email: email.trim().toLowerCase(),
             subject: subject.trim(),
             message: message.trim(),
+            language: language === 'en' ? 'en' : req.language,
         })
 
         sendTicketCreatedUser(ticket).catch(console.error)
@@ -63,7 +65,7 @@ router.post('/', submitLimiter, async (req, res, next) => {
 // GET /api/support — Admin: alle Tickets
 router.get('/', async (req, res, next) => {
     try {
-        if (!isAdminAuthorized(req)) return res.status(403).json({ error: 'Nicht autorisiert.' })
+        if (!isAdminAuthorized(req)) return res.status(403).json({ error: t('NOT_AUTHORIZED', req.language) })
         const tickets = await SupportTicket.find()
             .sort({ createdAt: -1 })
             .select('ticketNumber name email subject status createdAt')
@@ -77,7 +79,7 @@ router.get('/', async (req, res, next) => {
 router.get('/by-email', lookupLimiter, async (req, res, next) => {
     try {
         const { email } = req.query
-        if (!email?.trim()) return res.status(400).json({ error: 'E-Mail fehlt.' })
+        if (!email?.trim()) return res.status(400).json({ error: t('EMAIL_MISSING', req.language) })
         const tickets = await SupportTicket.find(
             { email: email.trim().toLowerCase() },
             'ticketNumber subject status createdAt'
@@ -95,7 +97,7 @@ router.get('/:ticketNumber', async (req, res, next) => {
             { ticketNumber: req.params.ticketNumber.toUpperCase() },
             'ticketNumber subject status createdAt updatedAt'
         )
-        if (!ticket) return res.status(404).json({ error: 'Ticket nicht gefunden.' })
+        if (!ticket) return res.status(404).json({ error: t('TICKET_NOT_FOUND', req.language) })
         res.json(ticket)
     } catch (err) {
         next(err)
@@ -105,19 +107,19 @@ router.get('/:ticketNumber', async (req, res, next) => {
 // PATCH /api/support/:ticketNumber/status — Admin: Status aktualisieren
 router.patch('/:ticketNumber/status', async (req, res, next) => {
     try {
-        if (!isAdminAuthorized(req)) return res.status(403).json({ error: 'Nicht autorisiert.' })
+        if (!isAdminAuthorized(req)) return res.status(403).json({ error: t('NOT_AUTHORIZED', req.language) })
 
         const { status } = req.body
         if (!['open', 'in_progress', 'closed'].includes(status)) {
-            return res.status(400).json({ error: 'Ungültiger Status.' })
+            return res.status(400).json({ error: t('INVALID_STATUS', req.language) })
         }
 
         const ticket = await SupportTicket.findOneAndUpdate(
             { ticketNumber: req.params.ticketNumber.toUpperCase() },
             { status },
-            { returnDocument: 'after', select: 'ticketNumber name email subject status' }
+            { returnDocument: 'after', select: 'ticketNumber name email subject status language' }
         )
-        if (!ticket) return res.status(404).json({ error: 'Ticket nicht gefunden.' })
+        if (!ticket) return res.status(404).json({ error: t('TICKET_NOT_FOUND', req.language) })
 
         if (status === 'in_progress' || status === 'closed') {
             sendTicketStatusChanged(ticket, status).catch(console.error)

@@ -1,16 +1,17 @@
 import { chromium } from 'playwright';
 import TestResult from '../models/test_result.js';
+import { t } from '../utils/i18n/errors.js';
 
 // ─── CSV Parser ──────────────────────────────────────────────────────────────
 
-function parseCSV(csv) {
+function parseCSV(csv, lang = 'de') {
   const lines = csv.trim().split('\n');
-  if (lines.length < 2) throw new Error('CSV hat keine Schritte');
+  if (lines.length < 2) throw new Error(t('CSV_NO_STEPS', lang));
 
   const header = lines[0].split(',').map(h => h.trim());
   const requiredCols = ['action', 'selector', 'value', 'url'];
   for (const col of requiredCols) {
-    if (!header.includes(col)) throw new Error(`CSV fehlt Spalte: ${col}`);
+    if (!header.includes(col)) throw new Error(lang === 'en' ? `CSV missing column: ${col}` : `CSV fehlt Spalte: ${col}`);
   }
 
   return lines.slice(1).map((line, i) => {
@@ -48,7 +49,7 @@ function parseCSVLine(line) {
 const RETRY_COUNT = 3;
 const RETRY_DELAY = 1500;
 
-async function executeStep(page, step) {
+async function executeStep(page, step, lang = 'de') {
   const maxAttempts = step.action === 'navigate' ? 1 : RETRY_COUNT;
   const totalStart  = Date.now();
   let lastErr       = null;
@@ -58,32 +59,32 @@ async function executeStep(page, step) {
       switch (step.action) {
         case 'navigate': {
           const target = step.value || step.url;
-          if (!target) throw new Error('Kein URL für navigate');
+          if (!target) throw new Error(t('NO_URL_FOR_NAVIGATE', lang));
           await page.goto(target, { waitUntil: 'domcontentloaded', timeout: 15000 });
           break;
         }
         case 'click': {
-          if (!step.selector) throw new Error('Kein Selektor für click');
+          if (!step.selector) throw new Error(t('NO_SELECTOR_FOR_CLICK', lang));
           const locator = resolveLocator(page, step);
           await locator.waitFor({ state: 'visible', timeout: 8000 });
           await locator.click({ timeout: 8000 });
           break;
         }
         case 'input': {
-          if (!step.selector) throw new Error('Kein Selektor für input');
+          if (!step.selector) throw new Error(t('NO_SELECTOR_FOR_INPUT', lang));
           const locator = resolveLocator(page, step);
           await locator.waitFor({ state: 'visible', timeout: 8000 });
           await locator.fill(step.value ?? '', { timeout: 8000 });
           break;
         }
         case 'select': {
-          if (!step.selector) throw new Error('Kein Selektor für select');
+          if (!step.selector) throw new Error(t('NO_SELECTOR_FOR_SELECT', lang));
           const locator = resolveLocator(page, step);
           await locator.selectOption(step.value ?? '', { timeout: 8000 });
           break;
         }
         default:
-          throw new Error(`Unbekannte Action: ${step.action}`);
+          throw new Error(lang === 'en' ? `Unknown action: ${step.action}` : `Unbekannte Action: ${step.action}`);
       }
       return { ...step, result: 'pass', error: null, screenshot: null, duration: Date.now() - totalStart, attempts: attempt };
     } catch (err) {
@@ -118,11 +119,12 @@ function resolveLocator(page, step) {
 
 export async function runTest(req, res) {
   const { csv, name } = req.body;
-  if (!csv) return res.status(400).json({ error: 'CSV fehlt' });
+  const lang = req.language;
+  if (!csv) return res.status(400).json({ error: t('CSV_MISSING', lang) });
 
   let steps;
   try {
-    steps = parseCSV(csv);
+    steps = parseCSV(csv, lang);
   } catch (err) {
     return res.status(400).json({ error: err.message });
   }
@@ -136,7 +138,7 @@ export async function runTest(req, res) {
     steps: [],
   });
 
-  res.json({ id: doc._id, message: 'Test gestartet', total: steps.length });
+  res.json({ id: doc._id, message: t('TEST_STARTED', lang), total: steps.length });
 
   // Playwright asynchron im Hintergrund ausführen
   (async () => {
@@ -150,7 +152,7 @@ export async function runTest(req, res) {
     const results = [];
 
     for (const step of steps) {
-      const r = await executeStep(page, step);
+      const r = await executeStep(page, step, lang);
       results.push(r);
       // Frühzeitig abbrechen bei kritischen navigate-Fehlern
       if (r.result === 'fail' && step.action === 'navigate') break;
@@ -183,7 +185,7 @@ export async function runTest(req, res) {
 
 export async function getResult(req, res) {
   const doc = await TestResult.findOne({ _id: req.params.id, userId: req.userId });
-  if (!doc) return res.status(404).json({ error: 'Nicht gefunden' });
+  if (!doc) return res.status(404).json({ error: t('NOT_FOUND', req.language) });
   res.json(doc);
 }
 

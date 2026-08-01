@@ -1,6 +1,7 @@
 import User from '../models/auth_model.js'
 import Subscription from '../models/subscription.js'
 import Report from '../models/report_model.js'
+import { t } from '../utils/i18n/errors.js'
 
 const PLAN_LIMITS = { free: 1, pro: 10, agency: null }
 
@@ -47,7 +48,7 @@ export async function getProfile(req, res) {
             Subscription.findOne({ userId: req.userId }),
         ])
 
-        if (!user) return res.status(404).json({ error: 'User nicht gefunden' })
+        if (!user) return res.status(404).json({ error: t('USER_NOT_FOUND', req.language) })
 
         const plan = sub && sub.status !== 'CANCELLED' ? sub.plan : 'free'
 

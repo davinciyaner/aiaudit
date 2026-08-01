@@ -1,11 +1,12 @@
 import rateLimit from "express-rate-limit";
+import { t } from "../utils/i18n/errors.js";
 
 export const authLimiter = rateLimit({
     windowMs: 15 * 60 * 1000,
     max: 10,
     standardHeaders: true,
     legacyHeaders: false,
-    message: { error: "Zu viele Versuche. Bitte in 15 Minuten erneut versuchen." },
+    message: (req) => ({ error: t("AUTH_TOO_MANY_ATTEMPTS", req.language) }),
 });
 
 export const anonymousAuditLimiter = rateLimit({
@@ -13,5 +14,5 @@ export const anonymousAuditLimiter = rateLimit({
     max: 1,
     standardHeaders: true,
     legacyHeaders: false,
-    message: { error: "Kostenloses Kontingent aufgebraucht. Bitte registrieren um mehr Audits zu erhalten." },
+    message: (req) => ({ error: t("FREE_QUOTA_USED", req.language) }),
 });

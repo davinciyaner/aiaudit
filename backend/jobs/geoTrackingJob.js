@@ -102,7 +102,7 @@ async function runWeeklyGeoChecks() {
                             const user = await User.findById(site.userId).lean()
                             if (user?.email && user.geoEmailAlerts !== false) {
                                 const possibleCauses = losses.length ? await getPossibleCauses(site.domain) : null
-                                await sendGeoRankingAlert({ email: user.email, domain: site.domain, gains, losses, possibleCauses })
+                                await sendGeoRankingAlert({ email: user.email, domain: site.domain, gains, losses, possibleCauses, language: user.language })
                                 console.log(`GEO alert gesendet an ${user.email} für ${site.domain} (${losses.length} Verluste, ${gains.length} Gewinne)`)
                             }
                         } catch (alertErr) {

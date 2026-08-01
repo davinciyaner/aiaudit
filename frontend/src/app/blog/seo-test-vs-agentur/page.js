@@ -6,7 +6,13 @@ export const metadata = {
     title: 'SEO-Test selbst machen oder Agentur beauftragen? Der ehrliche Kostenvergleich',
     description: 'SEO-Audit selbst durchführen vs. SEO-Agentur beauftragen: Kosten, was jede Option wirklich abdeckt, und für wen sich was lohnt - ohne Verkaufsrhetorik.',
     keywords: 'seo test vs agentur, seo audit selbst machen, seo agentur kosten, seo agentur oder selbst machen, lohnt sich seo agentur, seo selbst optimieren',
-    alternates: { canonical: 'https://www.sitecheckai.dev/blog/seo-test-vs-agentur' },
+    alternates: {
+        canonical: 'https://www.sitecheckai.dev/blog/seo-test-vs-agentur',
+        languages: {
+            'de-DE': 'https://www.sitecheckai.dev/blog/seo-test-vs-agentur',
+            'en-US': 'https://www.sitecheckai.dev/en/blog/seo-tool-vs-agency',
+        },
+    },
     openGraph: {
         title: 'SEO-Test selbst machen oder Agentur beauftragen? Der ehrliche Kostenvergleich',
         description: 'Kosten, Leistungsumfang und für wen sich was lohnt - der ehrliche Vergleich ohne Verkaufsrhetorik.',

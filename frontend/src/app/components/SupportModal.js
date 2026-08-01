@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { X, MessageSquare, ArrowRight, CheckCircle, ExternalLink } from 'lucide-react'
 import Link from 'next/link'
 
-export default function SupportModal({ open, onClose, defaultName = '', defaultEmail = '' }) {
+export default function SupportModal({ open, onClose, defaultName = '', defaultEmail = '', locale = 'de' }) {
     const [form, setForm] = useState({ name: defaultName, email: defaultEmail, subject: '', message: '' })
     const [loading, setLoading] = useState(false)
     const [ticketNumber, setTicketNumber] = useState(null)
@@ -22,10 +22,10 @@ export default function SupportModal({ open, onClose, defaultName = '', defaultE
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/support`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(form),
+                body: JSON.stringify({ ...form, language: locale }),
             })
             const data = await res.json()
-            if (!res.ok) throw new Error(data.error || 'Fehler beim Erstellen des Tickets.')
+            if (!res.ok) throw new Error(data.error || (locale === 'en' ? 'Error creating ticket.' : 'Fehler beim Erstellen des Tickets.'))
             setTicketNumber(data.ticketNumber)
         } catch (err) {
             setError(err.message)
@@ -68,7 +68,7 @@ export default function SupportModal({ open, onClose, defaultName = '', defaultE
                                     <div className="w-8 h-8 rounded-lg bg-violet-500/10 border border-violet-500/20 flex items-center justify-center">
                                         <MessageSquare className="w-4 h-4 text-violet-400" />
                                     </div>
-                                    <span className="font-semibold text-white">Support-Ticket erstellen</span>
+                                    <span className="font-semibold text-white">{locale === 'en' ? 'Create support ticket' : 'Support-Ticket erstellen'}</span>
                                 </div>
                                 <button onClick={handleClose} className="p-2 -mr-2 text-slate-500 hover:text-white transition-colors rounded-lg hover:bg-white/5">
                                     <X className="w-5 h-5" />
@@ -77,20 +77,20 @@ export default function SupportModal({ open, onClose, defaultName = '', defaultE
 
                             <div className="px-4 sm:px-6 py-5 sm:py-6">
                                 {ticketNumber ? (
-                                    <SuccessView ticketNumber={ticketNumber} onClose={handleClose} />
+                                    <SuccessView ticketNumber={ticketNumber} onClose={handleClose} locale={locale} />
                                 ) : (
                                     <form onSubmit={handleSubmit} className="space-y-4">
                                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                            <Field label="Name" value={form.name} onChange={set('name')} placeholder="Max Mustermann" required />
-                                            <Field label="E-Mail" type="email" value={form.email} onChange={set('email')} placeholder="max@beispiel.de" required />
+                                            <Field label={locale === 'en' ? 'Name' : 'Name'} value={form.name} onChange={set('name')} placeholder={locale === 'en' ? 'Jane Doe' : 'Max Mustermann'} required />
+                                            <Field label={locale === 'en' ? 'Email' : 'E-Mail'} type="email" value={form.email} onChange={set('email')} placeholder={locale === 'en' ? 'jane@example.com' : 'max@beispiel.de'} required />
                                         </div>
-                                        <Field label="Betreff" value={form.subject} onChange={set('subject')} placeholder="Kurze Beschreibung des Problems" required />
+                                        <Field label={locale === 'en' ? 'Subject' : 'Betreff'} value={form.subject} onChange={set('subject')} placeholder={locale === 'en' ? 'Brief description of the issue' : 'Kurze Beschreibung des Problems'} required />
                                         <div>
-                                            <label className="block text-xs font-medium text-slate-400 mb-1.5">Nachricht</label>
+                                            <label className="block text-xs font-medium text-slate-400 mb-1.5">{locale === 'en' ? 'Message' : 'Nachricht'}</label>
                                             <textarea
                                                 value={form.message}
                                                 onChange={set('message')}
-                                                placeholder="Beschreibe dein Anliegen so detailliert wie möglich..."
+                                                placeholder={locale === 'en' ? 'Describe your issue in as much detail as possible...' : 'Beschreibe dein Anliegen so detailliert wie möglich...'}
                                                 rows={5}
                                                 required
                                                 className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-slate-600 outline-none focus:border-violet-500/50 resize-none transition-colors"
@@ -105,9 +105,9 @@ export default function SupportModal({ open, onClose, defaultName = '', defaultE
                                             className="w-full flex items-center justify-center gap-2 py-3 bg-linear-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 disabled:opacity-50 disabled:cursor-not-allowed text-white text-sm font-semibold rounded-xl transition-all"
                                         >
                                             {loading ? (
-                                                <><div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />Wird gesendet...</>
+                                                <><div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />{locale === 'en' ? 'Sending...' : 'Wird gesendet...'}</>
                                             ) : (
-                                                <>Ticket erstellen<ArrowRight className="w-4 h-4" /></>
+                                                <>{locale === 'en' ? 'Create ticket' : 'Ticket erstellen'}<ArrowRight className="w-4 h-4" /></>
                                             )}
                                         </button>
                                     </form>
@@ -137,34 +137,34 @@ function Field({ label, type = 'text', value, onChange, placeholder, required })
     )
 }
 
-function SuccessView({ ticketNumber, onClose }) {
+function SuccessView({ ticketNumber, onClose, locale = 'de' }) {
     return (
         <div className="text-center py-4">
             <div className="w-14 h-14 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mx-auto mb-4">
                 <CheckCircle className="w-7 h-7 text-emerald-400" />
             </div>
-            <h3 className="text-lg font-bold text-white mb-2">Ticket erstellt!</h3>
+            <h3 className="text-lg font-bold text-white mb-2">{locale === 'en' ? 'Ticket created!' : 'Ticket erstellt!'}</h3>
             <p className="text-slate-400 text-sm mb-4">
-                Du erhältst eine Bestätigung per E-Mail. Deine Ticketnummer:
+                {locale === 'en' ? 'You\'ll receive a confirmation by email. Your ticket number:' : 'Du erhältst eine Bestätigung per E-Mail. Deine Ticketnummer:'}
             </p>
             <div className="inline-block bg-violet-500/10 border border-violet-500/20 rounded-xl px-5 py-2 mb-6">
                 <span className="text-violet-300 font-mono font-bold tracking-widest text-lg">{ticketNumber}</span>
             </div>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <Link
-                    href={`/support/${ticketNumber}`}
+                    href={`${locale === 'en' ? '/en' : ''}/support/${ticketNumber}`}
                     onClick={onClose}
                     className="flex items-center justify-center gap-2 px-5 py-2.5 bg-linear-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white text-sm font-semibold rounded-xl transition-all"
                 >
-                    Status verfolgen
+                    {locale === 'en' ? 'Track status' : 'Status verfolgen'}
                     <ExternalLink className="w-3.5 h-3.5" />
                 </Link>
                 <Link
-                    href="/support"
+                    href={locale === 'en' ? '/en/support' : '/support'}
                     onClick={onClose}
                     className="flex items-center justify-center gap-2 px-5 py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 text-sm rounded-xl transition-all"
                 >
-                    Alle meine Tickets
+                    {locale === 'en' ? 'All my tickets' : 'Alle meine Tickets'}
                 </Link>
             </div>
         </div>
