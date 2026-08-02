@@ -37,7 +37,10 @@ export default function SupportPage() {
     function goToTicket(e) {
         e.preventDefault()
         const id = ticketId.trim().toUpperCase()
-        if (!id) return
+        if (!/^[A-Z0-9-]{1,20}$/.test(id)) {
+            setError('Ungültige Ticketnummer.')
+            return
+        }
         window.location.href = `/support/${id}`
     }
 

@@ -18,6 +18,14 @@ const lookupLimiter = rateLimit({
     message: (req) => ({ error: t('TOO_MANY_REQUESTS', req.language) }),
 })
 
+// Admin routes are gated by ADMIN_TOKEN, but without a rate limit the token itself
+// can be brute-forced at unlimited speed — this bounds guess attempts regardless.
+const adminLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 20,
+    message: (req) => ({ error: t('TOO_MANY_REQUESTS', req.language) }),
+})
+
 function generateTicketNumber() {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
     const rand = Array.from({ length: 8 }, () => chars[Math.floor(Math.random() * chars.length)]).join('')
@@ -63,7 +71,7 @@ router.post('/', submitLimiter, async (req, res, next) => {
 })
 
 // GET /api/support — Admin: alle Tickets
-router.get('/', async (req, res, next) => {
+router.get('/', adminLimiter, async (req, res, next) => {
     try {
         if (!isAdminAuthorized(req)) return res.status(403).json({ error: t('NOT_AUTHORIZED', req.language) })
         const tickets = await SupportTicket.find()
@@ -91,7 +99,7 @@ router.get('/by-email', lookupLimiter, async (req, res, next) => {
 })
 
 // GET /api/support/:ticketNumber — öffentlicher Status-Check
-router.get('/:ticketNumber', async (req, res, next) => {
+router.get('/:ticketNumber', lookupLimiter, async (req, res, next) => {
     try {
         const ticket = await SupportTicket.findOne(
             { ticketNumber: req.params.ticketNumber.toUpperCase() },
@@ -105,7 +113,7 @@ router.get('/:ticketNumber', async (req, res, next) => {
 })
 
 // PATCH /api/support/:ticketNumber/status — Admin: Status aktualisieren
-router.patch('/:ticketNumber/status', async (req, res, next) => {
+router.patch('/:ticketNumber/status', adminLimiter, async (req, res, next) => {
     try {
         if (!isAdminAuthorized(req)) return res.status(403).json({ error: t('NOT_AUTHORIZED', req.language) })
 

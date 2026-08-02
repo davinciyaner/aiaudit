@@ -10,12 +10,6 @@ import { assertPublicHttpsUrl, fetchSafely } from '../utils/safeFetch.js'
 import { t } from '../utils/i18n/errors.js'
 
 const VALID_PLATFORMS = ['claude', 'chatgpt', 'perplexity', 'google_aio']
-const ALLOWED_CITATION_HOSTS = ['example.com']
-
-function isAllowedCitationHost(hostname) {
-    const lowerHost = hostname.toLowerCase()
-    return ALLOWED_CITATION_HOSTS.some(allowed => lowerHost === allowed || lowerHost.endsWith(`.${allowed}`))
-}
 
 const PLAN_LIMITS = {
     einsteiger: { maxSites: 1,  maxKeywords: 10,  platforms: ['claude'],                                      manualChecksPerMonth: 2,  promptVariants: 1 },
@@ -43,15 +37,10 @@ function activeIntents(promptVariants = 1) {
     return PROMPT_INTENTS.slice(0, Math.max(1, Math.min(promptVariants, PROMPT_INTENTS.length)))
 }
 
-// Checks von vor der Prompt-Varianten-Einführung haben kein promptIntent-Feld gesetzt (weder 'empfehlung'
-// noch der Schema-Default, da der nur bei neu erstellten Dokumenten greift). Damit alte Check-Historie nicht
-// unsichtbar wird, zählt "kein Feld gesetzt" für die 'empfehlung'-Variante als Treffer — MongoDB behandelt
-// eine Query nach null ohnehin als "Feld ist null ODER fehlt".
 function intentQuery(promptIntent) {
     return promptIntent === 'empfehlung' ? { $in: ['empfehlung', null] } : promptIntent
 }
 
-// GET /api/geo/plan
 export async function getPlan(req, res) {
     try {
         const plan = await getGeoPlan(req.userId)
@@ -61,7 +50,6 @@ export async function getPlan(req, res) {
     }
 }
 
-// POST /api/geo/subscribe
 export async function subscribePlan(req, res) {
     try {
         const { subscriptionId, plan } = req.body
@@ -79,7 +67,6 @@ export async function subscribePlan(req, res) {
     }
 }
 
-// GET /api/geo/sites
 export async function getSites(req, res) {
     try {
         const plan = await getGeoPlan(req.userId)
@@ -93,7 +80,6 @@ export async function getSites(req, res) {
             const platforms = site.platforms?.length ? site.platforms : ['claude']
             const intents = activeIntents(site.promptVariants)
 
-            // "gecheckt"/"erwähnt" pro Keyword×Plattform gilt, wenn mindestens eine Prompt-Variante einen Treffer hat
             let totalChecked = 0, totalMentioned = 0
             await Promise.all(site.keywords.map(async (keyword) => {
                 await Promise.all(platforms.map(async (platform) => {
@@ -127,7 +113,6 @@ export async function getSites(req, res) {
     }
 }
 
-// GET /api/geo/sites/:id
 export async function getSite(req, res) {
     try {
         const site = await GeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId }).lean()
@@ -138,7 +123,6 @@ export async function getSite(req, res) {
     }
 }
 
-// POST /api/geo/sites
 export async function addSite(req, res) {
     try {
         const { domain, displayName, keywords = [], language = 'de', platforms = ['claude'] } = req.body
@@ -170,8 +154,6 @@ export async function addSite(req, res) {
             return res.status(400).json({ error: t('INVALID_DOMAIN', req.language) })
         }
 
-        // SSRF-Härtung: verhindert, dass überhaupt erst eine interne/private Domain gespeichert wird
-        // (die später vom wöchentlichen Audit-Re-Check automatisch abgerufen würde).
         try {
             await assertPublicHttpsUrl(`https://${normalizedDomain}`)
         } catch (err) {
@@ -199,7 +181,6 @@ export async function addSite(req, res) {
     }
 }
 
-// DELETE /api/geo/sites/:id
 export async function deleteSite(req, res) {
     try {
         const site = await GeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId })
@@ -216,7 +197,6 @@ export async function deleteSite(req, res) {
     }
 }
 
-// POST /api/geo/sites/:id/keywords
 export async function addKeywords(req, res) {
     try {
         const { keywords } = req.body
@@ -350,11 +330,8 @@ export async function getResults(req, res) {
     }
 }
 
-// Deutlich über der erwarteten Maximaldauer (siehe Live-Messung: ~6,4s/Check) — falls ein Server-Neustart
-// mitten im Check passiert, würde checkStatus sonst für immer auf 'running' hängen bleiben.
 const STALE_CHECK_MS = 20 * 60 * 1000
 
-// Läuft nach dem Response weiter im Hintergrund — kein HTTP-Timeout-Risiko mehr bei vielen Keywords/Plattformen/Varianten.
 async function runCheckInBackground(site, userId) {
     try {
         const results = await checkSiteMentions(site, site.promptVariants)
@@ -439,10 +416,6 @@ export async function analyzeCitation(req, res) {
             parsedUrl = await assertPublicHttpsUrl(url)
         } catch (err) {
             return res.status(400).json({ error: err.message || t('INVALID_URL', req.language) })
-        }
-
-        if (!isAllowedCitationHost(parsedUrl.hostname)) {
-            return res.status(400).json({ error: t('TARGET_DOMAIN_NOT_ALLOWED', req.language) })
         }
 
         const normalizedUrl = parsedUrl.toString()
