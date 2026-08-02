@@ -277,6 +277,7 @@ Alle Strings einzeilig (keine Zeilenumbrüche).
 
 export async function generateInsightsForKeywords(site, keywords) {
     for (const keyword of keywords) {
+        if (typeof keyword !== 'string' || !keyword) continue
         try {
             await SeoKeywordInsight.findOneAndUpdate(
                 { siteId: site._id, keyword },

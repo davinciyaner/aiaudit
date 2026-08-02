@@ -37,6 +37,16 @@ function isAdminAuthorized(req) {
     return token && req.headers.authorization === `Bearer ${token}`
 }
 
+// Ticket numbers are always "TK-" + 8 uppercase alphanumeric chars (generateTicketNumber
+// above). Validating the :ticketNumber route param against this format before it's used
+// in a query — even though Express route params are always strings — gives a value that's
+// provably derived from a matched pattern rather than the raw param.
+const TICKET_NUMBER_RE = /^TK-[A-Z0-9]{8}$/
+function parseTicketNumber(value) {
+    const match = TICKET_NUMBER_RE.exec(String(value || '').toUpperCase())
+    return match ? match[0] : null
+}
+
 // POST /api/support — Ticket erstellen
 router.post('/', submitLimiter, async (req, res, next) => {
     try {
@@ -101,8 +111,11 @@ router.get('/by-email', lookupLimiter, async (req, res, next) => {
 // GET /api/support/:ticketNumber — öffentlicher Status-Check
 router.get('/:ticketNumber', lookupLimiter, async (req, res, next) => {
     try {
+        const ticketNumber = parseTicketNumber(req.params.ticketNumber)
+        if (!ticketNumber) return res.status(404).json({ error: t('TICKET_NOT_FOUND', req.language) })
+
         const ticket = await SupportTicket.findOne(
-            { ticketNumber: req.params.ticketNumber.toUpperCase() },
+            { ticketNumber },
             'ticketNumber subject status createdAt updatedAt'
         )
         if (!ticket) return res.status(404).json({ error: t('TICKET_NOT_FOUND', req.language) })
@@ -122,8 +135,11 @@ router.patch('/:ticketNumber/status', adminLimiter, async (req, res, next) => {
             return res.status(400).json({ error: t('INVALID_STATUS', req.language) })
         }
 
+        const ticketNumber = parseTicketNumber(req.params.ticketNumber)
+        if (!ticketNumber) return res.status(404).json({ error: t('TICKET_NOT_FOUND', req.language) })
+
         const ticket = await SupportTicket.findOneAndUpdate(
-            { ticketNumber: req.params.ticketNumber.toUpperCase() },
+            { ticketNumber },
             { status },
             { returnDocument: 'after', select: 'ticketNumber name email subject status language' }
         )

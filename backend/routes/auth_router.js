@@ -14,7 +14,7 @@ router.post("/register", async (req, res) => {
     const { name, email, password, language } = req.body;
     const userLanguage = language === "en" ? "en" : "de";
 
-    if (!name || !email || !password) {
+    if (!name || typeof email !== "string" || !email || !password) {
         return res.status(400).json({
             error: t("NAME_EMAIL_PASSWORD_REQUIRED", req.language)
         });
@@ -57,7 +57,7 @@ router.post("/register", async (req, res) => {
 router.post("/login", async (req, res) => {
     const { email, password } = req.body;
 
-    if (!email || !password) {
+    if (typeof email !== "string" || !email || !password) {
         return res.status(400).json({
             error: t("EMAIL_PASSWORD_REQUIRED", req.language)
         });
@@ -100,7 +100,7 @@ router.post("/login", async (req, res) => {
 
 router.post("/forgot-password", async (req, res) => {
     const { email } = req.body;
-    if (!email) return res.status(400).json({ error: t("EMAIL_REQUIRED", req.language) });
+    if (typeof email !== "string" || !email) return res.status(400).json({ error: t("EMAIL_REQUIRED", req.language) });
 
     try {
         const user = await User.findOne({ email });

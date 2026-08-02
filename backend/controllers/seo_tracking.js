@@ -8,6 +8,7 @@ import SeoUsage from '../models/seo_usage.js'
 import { sendSeoRankingAlert } from '../utils/mailer.js'
 import { detectRankingChanges, ALERT_DROP_THRESHOLD } from '../jobs/seoTrackingJob.js'
 import { t } from '../utils/i18n/errors.js'
+import { parsePaypalSubscriptionId } from '../utils/paypalValidation.js'
 
 const PLAN_LIMITS = {
     einsteiger: { maxSites: 3,  maxKeywords: 50,  historyWeeks: 8,   contentGapPerMonth: 0   },
@@ -42,9 +43,12 @@ export async function subscribePlan(req, res) {
         if (!subscriptionId || !plan) return res.status(400).json({ error: t('SUBSCRIPTION_ID_PLAN_REQUIRED', req.language) })
         if (!['einsteiger', 'pro', 'expert'].includes(plan)) return res.status(400).json({ error: t('INVALID_PLAN', req.language) })
 
+        const safeSubscriptionId = parsePaypalSubscriptionId(subscriptionId)
+        if (!safeSubscriptionId) return res.status(400).json({ error: t('SUBSCRIPTION_ID_PLAN_REQUIRED', req.language) })
+
         await ProductSubscription.findOneAndUpdate(
             { userId: req.userId, product: 'seo' },
-            { userId: req.userId, product: 'seo', plan, paypalSubscriptionId: subscriptionId, status: 'ACTIVE' },
+            { userId: req.userId, product: 'seo', plan, paypalSubscriptionId: safeSubscriptionId, status: 'ACTIVE' },
             { upsert: true, new: true }
         )
         res.json({ success: true, plan })
@@ -485,7 +489,7 @@ const INSIGHT_REFRESH_LIMITS = {
 export async function refreshInsight(req, res) {
     try {
         const { keyword } = req.body
-        if (!keyword) return res.status(400).json({ error: t('KEYWORD_REQUIRED', req.language) })
+        if (typeof keyword !== 'string' || !keyword) return res.status(400).json({ error: t('KEYWORD_REQUIRED', req.language) })
 
         const plan = await getSeoPlan(req.userId)
         if (!plan) return res.status(403).json({ error: t('NO_ACTIVE_SEO_SUB', req.language) })

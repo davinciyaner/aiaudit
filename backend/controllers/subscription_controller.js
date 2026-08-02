@@ -2,10 +2,7 @@ import Subscription from '../models/subscription.js'
 import User from '../models/auth_model.js'
 import { generateInvoiceHTML, renderToPDF } from '../utils/invoice.js'
 import { sendAdminNewSubscription, sendSubscriptionConfirmation } from '../utils/mailer.js'
-
-// PayPal subscription IDs are always "I-" followed by 12-20 uppercase alphanumeric characters.
-// Validating this before building any PayPal API URL from it prevents arbitrary path/URL injection.
-const PAYPAL_SUBSCRIPTION_ID_RE = /^I-[A-Z0-9]{12,20}$/
+import { parsePaypalSubscriptionId } from '../utils/paypalValidation.js'
 
 async function getPayPalToken() {
     const creds = Buffer.from(`${process.env.PAYPAL_CLIENT_ID}:${process.env.PAYPAL_CLIENT_SECRET}`).toString('base64')
@@ -26,12 +23,13 @@ export async function captureSubscription(req, res) {
         const { subscriptionId, plan } = req.body
         const userId = req.userId
 
-        if (!PAYPAL_SUBSCRIPTION_ID_RE.test(subscriptionId || '')) {
+        const safeSubscriptionId = parsePaypalSubscriptionId(subscriptionId)
+        if (!safeSubscriptionId) {
             return res.status(400).json({ error: req.language === 'en' ? 'Invalid PayPal subscription ID' : 'Ungültige PayPal Subscription-ID' })
         }
 
         const token = await getPayPalToken()
-        const ppRes = await fetch(`${process.env.PAYPAL_BASE_URL}/v1/billing/subscriptions/${subscriptionId}`, {
+        const ppRes = await fetch(`${process.env.PAYPAL_BASE_URL}/v1/billing/subscriptions/${encodeURIComponent(safeSubscriptionId)}`, {
             headers: { 'Authorization': `Bearer ${token}` },
         })
         const sub = await ppRes.json()
@@ -42,7 +40,7 @@ export async function captureSubscription(req, res) {
 
         await Subscription.findOneAndUpdate(
             { userId },
-            { $set: { plan, paypalSubscriptionId: subscriptionId, status: 'ACTIVE' }, $setOnInsert: { userId } },
+            { $set: { plan, paypalSubscriptionId: safeSubscriptionId, status: 'ACTIVE' }, $setOnInsert: { userId } },
             { upsert: true }
         )
 

@@ -122,16 +122,7 @@ async function checkPlanLimit(userId, lang = "de") {
     }
 }
 
-router.post("/", optionalAuth, async (req, res, next) => {
-    if (!req.userId) {
-        return anonymousAuditLimiter(req, res, async () => {
-            await handleAudit(req, res, next);
-        });
-    }
-    return authedAuditLimiter(req, res, async () => {
-        await handleAudit(req, res, next);
-    });
-});
+router.post("/", optionalAuth, anonymousAuditLimiter, authedAuditLimiter, handleAudit);
 
 const GLOBAL_DAILY_CAP = parseInt(process.env.GLOBAL_DAILY_AUDIT_CAP || '100', 10);
 
