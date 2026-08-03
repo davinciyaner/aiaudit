@@ -7,7 +7,7 @@ import User from "../models/auth_model.js";
 import { runAudit } from "../controllers/runner.js";
 import { generateAIReport } from "../controllers/ai-report.js";
 import { generateHTMLReport, saveReportAsPDF } from "../controllers/report.js";
-import { anonymousAuditLimiter, authedAuditLimiter } from "../middleware/rateLimiter.js";
+import { auditFloorLimiter, anonymousAuditLimiter, authedAuditLimiter } from "../middleware/rateLimiter.js";
 import { sendAdminNewAudit } from "../utils/mailer.js";
 import { t } from "../utils/i18n/errors.js";
 
@@ -122,7 +122,7 @@ async function checkPlanLimit(userId, lang = "de") {
     }
 }
 
-router.post("/", optionalAuth, anonymousAuditLimiter, authedAuditLimiter, handleAudit);
+router.post("/", optionalAuth, auditFloorLimiter, anonymousAuditLimiter, authedAuditLimiter, handleAudit);
 
 const GLOBAL_DAILY_CAP = parseInt(process.env.GLOBAL_DAILY_AUDIT_CAP || '100', 10);
 

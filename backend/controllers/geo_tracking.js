@@ -8,7 +8,6 @@ import { checkSiteMentions, PLATFORM_COSTS, PROMPT_INTENTS, classifyGeoSuitableK
 import { analyzeGEO } from './geo.js'
 import { assertPublicHttpsUrl, fetchSafely } from '../utils/safeFetch.js'
 import { t } from '../utils/i18n/errors.js'
-import { parsePaypalSubscriptionId } from '../utils/paypalValidation.js'
 
 const VALID_PLATFORMS = ['claude', 'chatgpt', 'perplexity', 'google_aio']
 
@@ -55,14 +54,20 @@ export async function subscribePlan(req, res) {
     try {
         const { subscriptionId, plan } = req.body
         if (!subscriptionId || !plan) return res.status(400).json({ error: t('SUBSCRIPTION_ID_PLAN_REQUIRED', req.language) })
-        if (!['einsteiger', 'pro', 'expert'].includes(plan)) return res.status(400).json({ error: t('INVALID_PLAN', req.language) })
 
-        const safeSubscriptionId = parsePaypalSubscriptionId(subscriptionId)
-        if (!safeSubscriptionId) return res.status(400).json({ error: t('SUBSCRIPTION_ID_PLAN_REQUIRED', req.language) })
+        // Inline allowlist lookup (not .includes()) and inline regex-match extraction —
+        // CodeQL's NoSQL-injection sanitizer recognition doesn't follow taint through any
+        // function call, even a local one, so both must happen directly in this function.
+        const safePlan = { einsteiger: 'einsteiger', pro: 'pro', expert: 'expert' }[plan]
+        if (!safePlan) return res.status(400).json({ error: t('INVALID_PLAN', req.language) })
+
+        const idMatch = /^I-[A-Z0-9]{12,20}$/.exec(subscriptionId)
+        if (!idMatch) return res.status(400).json({ error: t('SUBSCRIPTION_ID_PLAN_REQUIRED', req.language) })
+        const safeSubscriptionId = idMatch[0]
 
         await ProductSubscription.findOneAndUpdate(
             { userId: req.userId, product: 'geo' },
-            { userId: req.userId, product: 'geo', plan, paypalSubscriptionId: safeSubscriptionId, status: 'ACTIVE' },
+            { userId: req.userId, product: 'geo', plan: safePlan, paypalSubscriptionId: safeSubscriptionId, status: 'ACTIVE' },
             { upsert: true, new: true }
         )
         res.json({ success: true, plan })

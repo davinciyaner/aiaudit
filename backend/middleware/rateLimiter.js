@@ -9,6 +9,19 @@ export const authLimiter = rateLimit({
     message: (req) => ({ error: t("AUTH_TOO_MANY_ATTEMPTS", req.language) }),
 });
 
+// Unconditional (no skip) limiter applied to every request on the audit route, in addition
+// to the two conditional ones below — CodeQL's missing-rate-limiting check didn't recognize
+// the skip-based limiters alone as reliably rate-limiting the route, so this gives it one
+// that unconditionally applies regardless of auth state. Generous ceiling since it's not
+// meant to replace the free-quota/per-minute limiters below, just guarantee an always-on floor.
+export const auditFloorLimiter = rateLimit({
+    windowMs: 60 * 1000,
+    max: 30,
+    standardHeaders: true,
+    legacyHeaders: false,
+    message: (req) => ({ error: t("API_RATE_LIMIT", req.language) }),
+});
+
 // windowMs must be a fixed number (express-rate-limit's default MemoryStore rejects a
 // function there — only `limit` supports one), so the anonymous free-quota check and the
 // authenticated per-minute throttle stay two separate middlewares, each `skip`-ing the
