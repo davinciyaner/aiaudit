@@ -380,12 +380,16 @@ function CitationList({ citations }) {
             <p className="text-[10px] uppercase tracking-wider text-slate-600 font-semibold">Zitierte Quellen ({citations.length})</p>
             {citations.slice(0, 5).map((cit, idx) => (
                 <div key={idx} className="text-xs">
-                    <a href={cit.url} target="_blank" rel="noopener noreferrer"
-                        className="text-slate-400 hover:text-slate-200 underline underline-offset-2">
-                        {cit.domain}
-                    </a>
+                    {cit.url ? (
+                        <a href={cit.url} target="_blank" rel="noopener noreferrer"
+                            className="text-slate-400 hover:text-slate-200 underline underline-offset-2">
+                            {cit.domain}
+                        </a>
+                    ) : (
+                        <span className="text-slate-400">{cit.domain}</span>
+                    )}
                     {cit.title && <span className="text-slate-600"> — {cit.title}</span>}
-                    <div><CitationAnalysis url={cit.url} /></div>
+                    {cit.url && <div><CitationAnalysis url={cit.url} /></div>}
                 </div>
             ))}
         </div>
