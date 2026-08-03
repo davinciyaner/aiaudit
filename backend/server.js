@@ -5,6 +5,7 @@ import "dotenv/config";
 import { connectDB } from "./config/db.js";
 import { authLimiter } from "./middleware/rateLimiter.js";
 import { language } from "./middleware/language.js";
+import { sanitizeBody } from "./middleware/sanitizeBody.js";
 import auditRouter from "./routes/audit_router.js";
 import reportRouter from "./routes/report_router.js";
 import authRouter from "./routes/auth_router.js";
@@ -36,6 +37,7 @@ app.use(cors({
 
 app.set("trust proxy", 1);
 app.use(express.json({ limit: "1mb" }));
+app.use(sanitizeBody);
 app.use(language);
 
 connectDB();

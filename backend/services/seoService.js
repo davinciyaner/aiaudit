@@ -1,5 +1,6 @@
 import Anthropic from '@anthropic-ai/sdk'
 import { jsonrepair } from 'jsonrepair'
+import * as cheerio from 'cheerio'
 import SeoKeywordInsight from '../models/seo_keyword_insight.js'
 import SeoTrackedSite from '../models/seo_tracked_site.js'
 
@@ -276,6 +277,7 @@ Alle Strings einzeilig (keine Zeilenumbrüche).
 
 export async function generateInsightsForKeywords(site, keywords) {
     for (const keyword of keywords) {
+        if (typeof keyword !== 'string' || !keyword) continue
         try {
             await SeoKeywordInsight.findOneAndUpdate(
                 { siteId: site._id, keyword },
@@ -299,7 +301,7 @@ export async function generateInsightsForKeywords(site, keywords) {
             )
             console.log(`[seoService] Insight generiert für "${keyword}" (${site.domain})`)
         } catch (err) {
-            console.error(`[seoService] Insight fehlgeschlagen für "${keyword}":`, err.message)
+            console.error(`[seoService] Insight fehlgeschlagen für "${keyword}": ${err.message}`)
             await SeoKeywordInsight.findOneAndUpdate(
                 { siteId: site._id, keyword },
                 { userId: site.userId, status: 'error', generatedAt: new Date() },
@@ -387,16 +389,13 @@ async function scrapePageText(url) {
     })
     if (!res.ok) return ''
     const html = await res.text()
-    const titleMatch = html.match(/<title[^>]*>([\s\S]*?)<\/title>/i)
-    const title = titleMatch ? titleMatch[1].replace(/<[^>]+>/g, '').trim() : ''
-    const body = html
-        .replace(/<script[\s\S]*?<\/script>/gi, '')
-        .replace(/<style[\s\S]*?<\/style>/gi, '')
-        .replace(/<[^>]+>/g, ' ')
-        .replace(/&[a-z#0-9]+;/gi, ' ')
-        .replace(/\s+/g, ' ')
-        .trim()
-        .slice(0, 3000)
+    // Real DOM parsing instead of regex-based tag stripping — regex can't reliably
+    // strip HTML (malformed/nested tags defeat single-pass replace) and previously
+    // flagged as "incomplete multi-character sanitization" / "bad HTML filtering regexp".
+    const $ = cheerio.load(html)
+    $('script, style, noscript').remove()
+    const title = $('title').first().text().trim()
+    const body = $('body').text().replace(/\s+/g, ' ').trim().slice(0, 3000)
     return title ? `${title}\n\n${body}` : body
 }
 

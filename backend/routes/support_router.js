@@ -18,6 +18,14 @@ const lookupLimiter = rateLimit({
     message: (req) => ({ error: t('TOO_MANY_REQUESTS', req.language) }),
 })
 
+// Admin routes are gated by ADMIN_TOKEN, but without a rate limit the token itself
+// can be brute-forced at unlimited speed — this bounds guess attempts regardless.
+const adminLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 20,
+    message: (req) => ({ error: t('TOO_MANY_REQUESTS', req.language) }),
+})
+
 function generateTicketNumber() {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
     const rand = Array.from({ length: 8 }, () => chars[Math.floor(Math.random() * chars.length)]).join('')
@@ -28,6 +36,12 @@ function isAdminAuthorized(req) {
     const token = process.env.ADMIN_TOKEN
     return token && req.headers.authorization === `Bearer ${token}`
 }
+
+// Ticket numbers are always "TK-" + 8 uppercase alphanumeric chars (generateTicketNumber
+// above). The :ticketNumber route param is matched against this format inline at each use
+// (not via a shared helper — CodeQL's NoSQL-injection sanitizer recognition doesn't follow
+// taint through a function call, even a local one, so the regex match has to happen
+// directly in the same function as the query).
 
 // POST /api/support — Ticket erstellen
 router.post('/', submitLimiter, async (req, res, next) => {
@@ -63,7 +77,7 @@ router.post('/', submitLimiter, async (req, res, next) => {
 })
 
 // GET /api/support — Admin: alle Tickets
-router.get('/', async (req, res, next) => {
+router.get('/', adminLimiter, async (req, res, next) => {
     try {
         if (!isAdminAuthorized(req)) return res.status(403).json({ error: t('NOT_AUTHORIZED', req.language) })
         const tickets = await SupportTicket.find()
@@ -91,10 +105,14 @@ router.get('/by-email', lookupLimiter, async (req, res, next) => {
 })
 
 // GET /api/support/:ticketNumber — öffentlicher Status-Check
-router.get('/:ticketNumber', async (req, res, next) => {
+router.get('/:ticketNumber', lookupLimiter, async (req, res, next) => {
     try {
+        const idMatch = /^TK-[A-Z0-9]{8}$/.exec(String(req.params.ticketNumber || '').toUpperCase())
+        if (!idMatch) return res.status(404).json({ error: t('TICKET_NOT_FOUND', req.language) })
+        const ticketNumber = idMatch[0]
+
         const ticket = await SupportTicket.findOne(
-            { ticketNumber: req.params.ticketNumber.toUpperCase() },
+            { ticketNumber },
             'ticketNumber subject status createdAt updatedAt'
         )
         if (!ticket) return res.status(404).json({ error: t('TICKET_NOT_FOUND', req.language) })
@@ -105,7 +123,7 @@ router.get('/:ticketNumber', async (req, res, next) => {
 })
 
 // PATCH /api/support/:ticketNumber/status — Admin: Status aktualisieren
-router.patch('/:ticketNumber/status', async (req, res, next) => {
+router.patch('/:ticketNumber/status', adminLimiter, async (req, res, next) => {
     try {
         if (!isAdminAuthorized(req)) return res.status(403).json({ error: t('NOT_AUTHORIZED', req.language) })
 
@@ -114,8 +132,12 @@ router.patch('/:ticketNumber/status', async (req, res, next) => {
             return res.status(400).json({ error: t('INVALID_STATUS', req.language) })
         }
 
+        const idMatch = /^TK-[A-Z0-9]{8}$/.exec(String(req.params.ticketNumber || '').toUpperCase())
+        if (!idMatch) return res.status(404).json({ error: t('TICKET_NOT_FOUND', req.language) })
+        const ticketNumber = idMatch[0]
+
         const ticket = await SupportTicket.findOneAndUpdate(
-            { ticketNumber: req.params.ticketNumber.toUpperCase() },
+            { ticketNumber },
             { status },
             { returnDocument: 'after', select: 'ticketNumber name email subject status language' }
         )

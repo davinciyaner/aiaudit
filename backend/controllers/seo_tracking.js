@@ -40,11 +40,20 @@ export async function subscribePlan(req, res) {
     try {
         const { subscriptionId, plan } = req.body
         if (!subscriptionId || !plan) return res.status(400).json({ error: t('SUBSCRIPTION_ID_PLAN_REQUIRED', req.language) })
-        if (!['einsteiger', 'pro', 'expert'].includes(plan)) return res.status(400).json({ error: t('INVALID_PLAN', req.language) })
+
+        // Inline allowlist lookup (not .includes()) and inline regex-match extraction —
+        // CodeQL's NoSQL-injection sanitizer recognition doesn't follow taint through any
+        // function call, even a local one, so both must happen directly in this function.
+        const safePlan = { einsteiger: 'einsteiger', pro: 'pro', expert: 'expert' }[plan]
+        if (!safePlan) return res.status(400).json({ error: t('INVALID_PLAN', req.language) })
+
+        const idMatch = /^I-[A-Z0-9]{12,20}$/.exec(subscriptionId)
+        if (!idMatch) return res.status(400).json({ error: t('SUBSCRIPTION_ID_PLAN_REQUIRED', req.language) })
+        const safeSubscriptionId = idMatch[0]
 
         await ProductSubscription.findOneAndUpdate(
             { userId: req.userId, product: 'seo' },
-            { userId: req.userId, product: 'seo', plan, paypalSubscriptionId: subscriptionId, status: 'ACTIVE' },
+            { userId: req.userId, product: 'seo', plan: safePlan, paypalSubscriptionId: safeSubscriptionId, status: 'ACTIVE' },
             { upsert: true, new: true }
         )
         res.json({ success: true, plan })
@@ -485,7 +494,7 @@ const INSIGHT_REFRESH_LIMITS = {
 export async function refreshInsight(req, res) {
     try {
         const { keyword } = req.body
-        if (!keyword) return res.status(400).json({ error: t('KEYWORD_REQUIRED', req.language) })
+        if (typeof keyword !== 'string' || !keyword) return res.status(400).json({ error: t('KEYWORD_REQUIRED', req.language) })
 
         const plan = await getSeoPlan(req.userId)
         if (!plan) return res.status(403).json({ error: t('NO_ACTIVE_SEO_SUB', req.language) })

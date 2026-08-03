@@ -29,6 +29,7 @@
     "resend": "^6.12.3"
   },
   "resolutions": {
-    "body-parser": ">=2.3.0"
+    "body-parser": ">=2.3.0",
+    "qs": ">=6.15.2"
   }
 }

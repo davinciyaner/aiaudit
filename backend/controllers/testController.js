@@ -2,11 +2,19 @@ import { chromium } from 'playwright';
 import TestResult from '../models/test_result.js';
 import { t } from '../utils/i18n/errors.js';
 
-// ─── CSV Parser ──────────────────────────────────────────────────────────────
+
+const MAX_CSV_LINES = 1000;
+const MAX_CSV_LINE_LENGTH = 5000;
 
 function parseCSV(csv, lang = 'de') {
   const lines = csv.trim().split('\n');
   if (lines.length < 2) throw new Error(t('CSV_NO_STEPS', lang));
+  if (lines.length > MAX_CSV_LINES) {
+    throw new Error(lang === 'en' ? `Too many CSV lines (max ${MAX_CSV_LINES})` : `Zu viele CSV-Zeilen (max. ${MAX_CSV_LINES})`);
+  }
+  if (lines.some(line => line.length > MAX_CSV_LINE_LENGTH)) {
+    throw new Error(lang === 'en' ? `CSV line too long (max ${MAX_CSV_LINE_LENGTH} characters)` : `CSV-Zeile zu lang (max. ${MAX_CSV_LINE_LENGTH} Zeichen)`);
+  }
 
   const header = lines[0].split(',').map(h => h.trim());
   const requiredCols = ['action', 'selector', 'value', 'url'];

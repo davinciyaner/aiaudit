@@ -7,7 +7,7 @@ import User from "../models/auth_model.js";
 import { runAudit } from "../controllers/runner.js";
 import { generateAIReport } from "../controllers/ai-report.js";
 import { generateHTMLReport, saveReportAsPDF } from "../controllers/report.js";
-import { anonymousAuditLimiter } from "../middleware/rateLimiter.js";
+import { auditFloorLimiter, anonymousAuditLimiter, authedAuditLimiter } from "../middleware/rateLimiter.js";
 import { sendAdminNewAudit } from "../utils/mailer.js";
 import { t } from "../utils/i18n/errors.js";
 
@@ -23,7 +23,6 @@ function extractDomain(url) {
     }
 }
 
-// Extrahiert userId aus Token wenn vorhanden — lehnt aber nicht ab wenn kein Token da ist
 function optionalAuth(req, res, next) {
     const header = req.headers.authorization;
     if (!header) return next();
@@ -31,7 +30,6 @@ function optionalAuth(req, res, next) {
         const decoded = jwt.verify(header.split(" ")[1], process.env.JWT_SECRET);
         req.userId = decoded.id;
     } catch {
-        // Ungültiger Token — trotzdem weitermachen als anonymer Nutzer
     }
     next();
 }
@@ -42,7 +40,6 @@ const NON_AUDITABLE_DOMAINS = new Set(['paypal.com', 'stripe.com', 'pay.google.c
 
 const NON_AUDITABLE_PATH_RE = /^\/(login|signin|sign-in|signup|sign-up|register|checkout|cart|account|password|auth|session)(\/|$)/i;
 
-// Blockiert private/lokale URLs (SSRF-Schutz), normalisiert Tracking-Parameter weg
 function validateURL(url, lang = "de") {
     let parsed;
     try {
@@ -65,7 +62,7 @@ function validateURL(url, lang = "de") {
         /^169\.254\./,
         /^fd[0-9a-f]{2}:/i,
         /^fe80:/i,
-        /^::ffff:/i,    // IPv4-mapped IPv6
+        /^::ffff:/i,
     ];
     const metadataHosts = new Set([
         'metadata.google.internal',
@@ -84,7 +81,6 @@ function validateURL(url, lang = "de") {
         throw err;
     }
 
-    // Nur die Domain erlaubt — Pfade, Query-Parameter und Fragments sind nicht zulässig
     const hasPath = parsed.pathname !== '' && parsed.pathname !== '/';
     const hasQuery = parsed.search !== '';
     const hasFragment = parsed.hash !== '';
@@ -103,7 +99,6 @@ function validateURL(url, lang = "de") {
     return parsed.href;
 }
 
-// Prüft ob eingeloggter Nutzer sein monatliches Audit-Limit erreicht hat
 async function checkPlanLimit(userId, lang = "de") {
     if (!userId) return; // Anonyme Nutzer werden per Rate-Limiter kontrolliert
 
@@ -127,15 +122,7 @@ async function checkPlanLimit(userId, lang = "de") {
     }
 }
 
-router.post("/", optionalAuth, async (req, res, next) => {
-    // Anonyme Nutzer → Rate-Limiter anwenden
-    if (!req.userId) {
-        return anonymousAuditLimiter(req, res, async () => {
-            await handleAudit(req, res, next);
-        });
-    }
-    await handleAudit(req, res, next);
-});
+router.post("/", optionalAuth, auditFloorLimiter, anonymousAuditLimiter, authedAuditLimiter, handleAudit);
 
 const GLOBAL_DAILY_CAP = parseInt(process.env.GLOBAL_DAILY_AUDIT_CAP || '100', 10);
 
@@ -148,7 +135,6 @@ async function handleAudit(req, res, next) {
     try {
         const cleanUrl = validateURL(url, language);
 
-        // Globale Notbremse: verhindert Kostenschäden bei Abuse
         const since = new Date(Date.now() - 24 * 60 * 60 * 1000);
         const todayCount = await Report.countDocuments({ createdAt: { $gte: since } });
         if (todayCount >= GLOBAL_DAILY_CAP) {
@@ -156,7 +142,6 @@ async function handleAudit(req, res, next) {
         }
         await checkPlanLimit(req.userId, language);
 
-        // Anonymous users: block if domain was already audited for free
         if (!req.userId) {
             const domain = extractDomain(cleanUrl);
             if (domain) {
@@ -170,7 +155,6 @@ async function handleAudit(req, res, next) {
             }
         }
 
-        // Plan-basiertes Feature-Gating: KI-Bericht + PDF nur für Pro/Agency
         let plan = 'free';
         if (req.userId) {
             const sub = await Subscription.findOne({ userId: req.userId, status: 'ACTIVE' });
@@ -197,7 +181,6 @@ async function handleAudit(req, res, next) {
             pdfPath: pdfFile || '',
         });
 
-        // Track domain so anonymous users can't re-audit for free
         if (!req.userId) {
             const domain = extractDomain(cleanUrl);
             if (domain) {
