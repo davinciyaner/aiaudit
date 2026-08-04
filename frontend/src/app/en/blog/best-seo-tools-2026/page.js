@@ -4,9 +4,9 @@ import Navbar from '../../../components/Navbar'
 import Footer from '../../../components/Footer'
 
 export const metadata = {
-    title: { absolute: 'The Best Free SEO Audit Tools in 2026 (Compared)' },
-    description: '13 free SEO audit tools compared, with real G2/Capterra/OMR ratings: free-tier limits, feature scope, and which one is the only tool that also checks AI visibility (GEO).',
-    keywords: 'free seo audit tool, seo checker free, website audit tool free, free seo test, seo tool comparison, best seo tools 2026',
+    title: { absolute: 'AuditAI: The SEO Tool With GEO Analysis (2026)' },
+    description: 'AuditAI checks SEO, performance, and GEO (AI visibility for ChatGPT, Claude & Perplexity) in one report. All the features, pricing, and what you get as a user.',
+    keywords: 'seo tool, seo check, seo audit, website audit, free seo test, seo software, seo automation, geo tool, geo check, geo automation, ai visibility, generative engine optimization, chatgpt seo, core web vitals test, keyword tracking, google ranking tool, backlink check, llms.txt, schema markup, website analysis',
     alternates: {
         canonical: 'https://www.sitecheckai.dev/en/blog/best-seo-tools-2026',
         languages: {
@@ -15,8 +15,8 @@ export const metadata = {
         },
     },
     openGraph: {
-        title: 'The Best Free SEO Audit Tools in 2026 (Compared)',
-        description: '13 SEO audit tools compared with real G2/Capterra/OMR ratings - including the one that also checks AI visibility (GEO).',
+        title: 'AuditAI: The SEO Tool With GEO Analysis (2026)',
+        description: 'SEO, performance, and GEO in one report - all the features, pricing, and what you get.',
         url: 'https://www.sitecheckai.dev/en/blog/best-seo-tools-2026',
         type: 'article',
         locale: 'en_US',
@@ -26,11 +26,11 @@ export const metadata = {
 const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
-    headline: 'The Best Free SEO Audit Tools in 2026 (Compared)',
-    description: '13 free SEO audit tools compared, with real G2/Capterra/OMR ratings: free-tier limits, feature scope, and which one is the only tool that also checks AI visibility (GEO).',
+    headline: 'AuditAI: The SEO Tool With GEO Analysis (2026)',
+    description: 'AuditAI checks SEO, performance, and GEO (AI visibility for ChatGPT, Claude & Perplexity) in one report. All the features, pricing, and what you get as a user.',
     image: 'https://www.sitecheckai.dev/en/blog/best-seo-tools-2026/opengraph-image',
     datePublished: '2026-07-15T09:00:00+02:00',
-    dateModified: '2026-08-01T09:00:00+02:00',
+    dateModified: '2026-08-04T09:00:00+02:00',
     author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev/about' },
     publisher: {
         '@type': 'Organization',
@@ -48,7 +48,7 @@ const breadcrumbLd = {
     itemListElement: [
         { '@type': 'ListItem', position: 1, name: 'AuditAI', item: 'https://www.sitecheckai.dev/en' },
         { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.sitecheckai.dev/en/blog' },
-        { '@type': 'ListItem', position: 3, name: 'Best SEO Tools 2026', item: 'https://www.sitecheckai.dev/en/blog/best-seo-tools-2026' },
+        { '@type': 'ListItem', position: 3, name: 'AuditAI: SEO Tool With GEO Analysis', item: 'https://www.sitecheckai.dev/en/blog/best-seo-tools-2026' },
     ],
 }
 
@@ -58,227 +58,53 @@ const faqLd = {
     mainEntity: [
         {
             '@type': 'Question',
-            name: 'What is the best free SEO audit tool?',
+            name: 'Is AuditAI really free to use?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'It depends on your needs. For a pure on-page SEO check, tools like Seobility or SEORCH are enough. If you also need performance and AI visibility (GEO) in one report, only a handful of providers currently offer that - AuditAI among them. Most classic SEO checkers don\'t yet check GEO signals like llms.txt or AI crawler access at all.',
+                text: 'Yes. The audit can be started without registration. The full report with all scores (SEO, performance, GEO) just needs a free account - 1 audit per month, free forever, no credit card required.',
             },
         },
         {
             '@type': 'Question',
-            name: 'Is a free SEO tool enough, or do I need a paid plan?',
+            name: 'What is the difference between the audit and SEO/GEO automation?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'For a one-off check or a small website, the free version is usually enough. Paid plans start to pay off once you need to monitor multiple pages regularly, track rankings over time, or manage several domains - free tiers are almost always limited to single checks or a handful of pages per month.',
+                text: 'The audit shows your website\'s status at a point in time. SEO automation and GEO automation are separate, ongoing subscriptions: they track Google rankings and AI mentions automatically every week and alert you when something changes.',
             },
         },
         {
             '@type': 'Question',
-            name: 'What is the difference between an SEO checker and an SEO audit tool?',
+            name: 'Does AuditAI check whether ChatGPT or Google AI Overviews recommend me?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'An SEO checker usually evaluates a single URL against a fixed list of on-page factors. A full audit tool crawls multiple subpages, checks technical signals like the sitemap and robots.txt, and often delivers a prioritized action plan instead of just an error list.',
+                text: 'Yes, that\'s the GEO part of the product. The one-time audit checks 19 technical GEO signals (llms.txt, schema markup, AI crawler access). GEO automation goes further and asks Claude, ChatGPT, Perplexity, and Google AI Overview directly, every week, whether they mention your domain.',
             },
         },
         {
             '@type': 'Question',
-            name: 'Do SEO tools also check whether ChatGPT or Google AI Overviews recommend me?',
+            name: 'How long does an audit take?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'Most established SEO checkers (as of 2026) don\'t - they were built for classic Google ranking, not GEO (Generative Engine Optimization). Only a few tools explicitly check for llms.txt, AI crawler access in robots.txt, and schema markup as a citability signal for ChatGPT, Perplexity, and Google AI Overviews.',
+                text: 'Under 60 seconds for SEO, performance, and GEO analysis combined.',
+            },
+        },
+        {
+            '@type': 'Question',
+            name: 'Can I cancel the subscriptions anytime?',
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Yes. All paid plans are cancellable anytime, no hidden trial tricks. SEO and GEO automation also come with a 14-day free trial.',
             },
         },
     ],
 }
 
-const CRITERIA = [
-    { label: 'Scope', desc: 'Does the tool only check the homepage, or multiple subpages too? Single-URL checkers fall short fast for websites with more than one landing page.' },
-    { label: 'Categories', desc: 'Pure on-page SEO (title, meta, H1) or also performance and mobile-friendliness?' },
-    { label: 'GEO / AI visibility', desc: 'Does the tool check llms.txt, schema markup, and whether AI crawlers like GPTBot or ClaudeBot are even allowed in? That\'s the biggest blind spot for most checkers in 2026.' },
-    { label: 'Free-tier limits', desc: 'Checks per day/month, number of pages scanned, whether a report can be exported as a PDF.' },
-    { label: 'Recommendations', desc: 'Does the tool just hand you an error list, or prioritized, actionable fixes?' },
-    { label: 'Reviews', desc: 'How do real users rate the tool on independent platforms like G2, Capterra, or OMR - and what sample size is that rating based on?' },
-]
-
-const TOOLS = [
-    {
-        name: 'AuditAI',
-        url: 'https://www.sitecheckai.dev',
-        tag: 'SEO + Performance + GEO in one report',
-        tagColor: '#7c3aed',
-        free: 'Start without registration; free account needed for the full report (1 audit/month)',
-        scope: 'Up to 25 subpages',
-        categories: 'SEO, Performance, GEO',
-        geo: true,
-        rating: null,
-        note: 'The only tool in this comparison that combines SEO, performance, and GEO signals (llms.txt, AI crawler access, schema for AI citations) in a single report. The audit itself runs without registration; the full report with all scores needs a free account. The Pro plan adds an AI-generated report with prioritized fixes.',
-    },
-    {
-        name: 'Seobility',
-        url: 'https://www.seobility.net/en/',
-        tag: 'Comprehensive classic on-page check',
-        tagColor: '#06b6d4',
-        free: 'Free with limits, paid plans for more pages',
-        scope: 'Multiple subpages depending on plan',
-        categories: 'SEO, partial performance',
-        geo: false,
-        rating: { value: '4.6', count: 721, source: 'OMR', url: 'https://omr.com/de/reviews/product/seobility' },
-        note: 'A very thorough on-page check with clear error prioritization. Solid for classic SEO, but no visibility into AI search.',
-    },
-    {
-        name: 'SEORCH',
-        url: 'https://seorch.de/',
-        tag: 'Fast all-in-one check, no signup required',
-        tagColor: '#10b981',
-        free: 'Completely free',
-        scope: 'Single URL',
-        categories: 'SEO, Core Web Vitals, Mobile',
-        geo: false,
-        rating: { note: 'Too few ratings (n=5, OMR)' },
-        note: 'Covers a lot of ground and works without registration. No multi-page crawling and no GEO signals.',
-    },
-    {
-        name: 'IONOS SEO Check',
-        url: 'https://www.ionos.com/tools/seo-check',
-        tag: 'Simple entry point for small websites',
-        tagColor: '#f59e0b',
-        free: 'Free',
-        scope: 'Single URL',
-        categories: 'On-page SEO, social SEO',
-        geo: false,
-        rating: { note: 'Not listed' },
-        note: 'A decent starting point, but limited to basic factors. No deep technical check, no security or GEO check.',
-    },
-    {
-        name: 'SE Ranking Checker',
-        url: 'https://seranking.com/',
-        tag: 'SEO suite with AI-search tracking as an add-on',
-        tagColor: '#ef4444',
-        free: 'Free checks with a daily limit, full access is paid',
-        scope: 'Scalable, but paid',
-        categories: 'SEO, rank tracking, partial LLM monitoring',
-        geo: 'partially',
-        rating: { value: '4.7', count: 297, source: 'Capterra', url: 'https://www.capterra.com/p/142169/SE-Ranking/reviews/' },
-        note: 'One of the few established suites with early AI-search-tracking features - though usually as a separate, paid module, not included in the free basic check.',
-    },
-    {
-        name: 'Ahrefs Webmaster Tools',
-        url: 'https://ahrefs.com/webmaster-tools',
-        tag: 'Technical crawling for your own domain',
-        tagColor: '#B07AA1',
-        free: 'Free for a verified website you own',
-        scope: 'Entire domain (after verification)',
-        categories: 'Technical SEO, backlinks',
-        geo: false,
-        rating: { value: '4.7', count: 585, source: 'Capterra', url: 'https://www.capterra.com/p/176340/Ahrefs/reviews/' },
-        note: 'Very solid technical crawling, but requires property verification. Focused on classic SEO and backlinks, no GEO signals.',
-    },
-    {
-        name: 'Semrush Site Audit (Free Check)',
-        url: 'https://www.semrush.com/siteaudit/',
-        tag: 'Best-known suite, free check is heavily limited',
-        tagColor: '#59A14F',
-        free: 'Few free checks per day',
-        scope: 'Limited in the free version',
-        categories: 'SEO, Performance',
-        geo: false,
-        rating: { value: '4.6', count: 2323, source: 'Capterra', url: 'https://www.capterra.com/p/151962/SEMrush/' },
-        note: 'The full feature set (including its own AI-search toolkit) sits behind a paid plan. The free site checker is a decent first impression, but limits you fast.',
-    },
-    {
-        name: 'Screaming Frog SEO Spider',
-        url: 'https://www.screamingfrog.co.uk/seo-spider/',
-        tag: 'Desktop crawler for deep technical audits',
-        tagColor: '#8b5cf6',
-        free: 'Free up to 500 URLs per crawl, no time limit',
-        scope: 'Entire domain (desktop software, up to 500 URLs free)',
-        categories: 'Technical SEO, crawling, broken links',
-        geo: false,
-        rating: { value: '4.6', count: 148, source: 'OMR', url: 'https://omr.com/de/reviews/product/screaming-frog-seo-spider' },
-        note: 'The industry standard for technical crawling - finds broken links, duplicate content, and redirect chains more reliably than any online checker. Requires installation, no cloud version, no GEO signals.',
-    },
-    {
-        name: 'Ryte',
-        url: 'https://en.ryte.com/',
-        tag: 'German SEO suite for technical and content checks',
-        tagColor: '#0ea5e9',
-        free: 'Free: 1 project, up to 100 URLs, 1 crawl per month',
-        scope: '1 project, up to 100 URLs (free plan)',
-        categories: 'Technical SEO, content optimization',
-        geo: false,
-        rating: { value: '4.1', count: 75, source: 'OMR', url: 'https://omr.com/de/reviews/product/ryte' },
-        note: 'Solid for technical SEO and content checks, but the free version allows only one crawl per month - not enough for regular monitoring.',
-    },
-    {
-        name: 'Sistrix',
-        url: 'https://www.sistrix.com/',
-        tag: 'Market leader for visibility and rankings',
-        tagColor: '#f43f5e',
-        free: 'No permanent free full version - only a 14-day trial plus a few standalone free tools',
-        scope: '1 domain, up to 100 keywords (SISTRIX Smart, free)',
-        categories: 'Visibility index, rankings, backlinks',
-        geo: false,
-        rating: { value: '4.3', count: 330, source: 'OMR', url: 'https://omr.com/de/reviews/product/sistrix' },
-        note: 'The reference tool for visibility tracking in German-speaking markets, but not a classic on-page checker and without a free full website audit - better suited to ongoing rank monitoring than a one-off check.',
-    },
-    {
-        name: 'Woorank',
-        url: 'https://www.woorank.com/',
-        tag: 'Marketing checklist rather than a pure SEO check',
-        tagColor: '#eab308',
-        free: '14-day trial, no permanent free plan',
-        scope: 'Single URL per review',
-        categories: 'On-page SEO, social, mobile, marketing checklist',
-        geo: false,
-        rating: { value: '4.4', count: 69, source: 'Capterra', url: 'https://www.capterra.com/p/176630/WooRank/reviews/' },
-        note: 'A broad checklist that goes beyond SEO (social, mobile, local), but without a permanent free tier and without GEO signals.',
-    },
-    {
-        name: 'PageRangers',
-        url: 'https://www.pagerangers.com/',
-        tag: 'German all-in-one suite for mid-size businesses',
-        tagColor: '#22c55e',
-        free: 'No free plan, only a 14-day trial (from about €17/month after that)',
-        scope: 'Entire domain (during the trial)',
-        categories: 'SEO suite, content, monitoring',
-        geo: false,
-        rating: { value: '4.5', count: 26, source: 'OMR', url: 'https://omr.com/de/reviews/product/pagerangers-seo-suite' },
-        note: 'Good for teams that want ongoing monitoring rather than a one-off check - but no free entry option and a small rating sample.',
-    },
-    {
-        name: 'Ubersuggest',
-        url: 'https://neilpatel.com/ubersuggest/',
-        tag: 'Keyword tool with a site-audit add-on',
-        tagColor: '#ec4899',
-        free: '3 searches/day, site audit up to 150 pages, no manual re-crawl',
-        scope: '1 project, up to 150 pages per audit cycle',
-        categories: 'Keyword research, site audit',
-        geo: false,
-        rating: { value: '4.4', count: 93, source: 'Capterra', url: 'https://www.capterra.com/p/229169/Ubersuggest/reviews/' },
-        note: 'Primarily a keyword tool, with the site audit as a secondary feature. Second choice for a pure tool comparison, but it shows up in almost every comparison list because of its reach.',
-    },
-]
-
-const itemListLd = {
-    '@context': 'https://schema.org',
-    '@type': 'ItemList',
-    name: 'The Best Free SEO Audit Tools in 2026',
-    numberOfItems: TOOLS.length,
-    itemListElement: TOOLS.map((t, i) => ({
-        '@type': 'ListItem',
-        position: i + 1,
-        name: t.name,
-        url: t.url,
-    })),
-}
-
-export default function BestSeoToolsPageEn() {
+export default function AuditAiOverviewPageEn() {
     return (
         <main className="bg-[#05080f] min-h-screen">
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
-            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListLd) }} />
             <Navbar locale="en" />
 
             <article className="max-w-3xl mx-auto px-5 sm:px-8 pt-32 pb-24">
@@ -289,7 +115,7 @@ export default function BestSeoToolsPageEn() {
                     <span>/</span>
                     <Link href="/en/blog" className="hover:text-slate-400 transition-colors">Blog</Link>
                     <span>/</span>
-                    <span className="text-slate-500">Best SEO Tools 2026</span>
+                    <span className="text-slate-500">AuditAI: SEO Tool With GEO Analysis</span>
                 </div>
 
                 {/* Header */}
@@ -299,14 +125,14 @@ export default function BestSeoToolsPageEn() {
                             Tools
                         </span>
                         <span className="text-xs text-slate-600">July 15, 2026</span>
-                        <span className="text-xs text-slate-600">· Updated Aug 1, 2026</span>
-                        <span className="text-xs text-slate-600">· 13 min read</span>
+                        <span className="text-xs text-slate-600">· Updated Aug 4, 2026</span>
+                        <span className="text-xs text-slate-600">· 8 min read</span>
                     </div>
                     <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight tracking-tight mb-5">
-                        The Best Free SEO Audit Tools in 2026 (Compared)
+                        AuditAI: The SEO Tool With GEO Analysis
                     </h1>
                     <p className="text-lg text-slate-400 leading-relaxed">
-                        13 tools, one criterion most comparisons ignore: almost none of them besides AuditAI check whether your website is even visible to ChatGPT, Perplexity, and Google AI Overviews. Here&apos;s the honest comparison - including limits, feature scope, real G2/Capterra/OMR ratings, and who each tool is actually worth it for.
+                        Most SEO tools check whether your website looks okay to Google - and completely ignore whether ChatGPT, Claude, Perplexity, or Google AI Overview even know you exist. AuditAI checks both: classic SEO, performance, and GEO (AI visibility), in one report, in under 60 seconds. Here&apos;s everything you get as a user.
                     </p>
                     <div className="mt-5 flex items-center gap-2 text-xs text-slate-600">
                         <Link href="/en/about" className="flex items-center gap-2 hover:text-slate-300 transition-colors">
@@ -322,167 +148,261 @@ export default function BestSeoToolsPageEn() {
 
                 <div className="space-y-10 text-slate-300 leading-relaxed">
 
-                    <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">What to look for in an SEO audit tool</h2>
+                    <nav aria-label="Table of contents" className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
+                        <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">In this article</p>
+                        <ol className="grid sm:grid-cols-2 gap-x-6 gap-y-1.5 text-sm">
+                            <li><a href="#what-is-auditai" className="text-slate-400 hover:text-amber-300 transition-colors">What is AuditAI?</a></li>
+                            <li><a href="#free-audit" className="text-slate-400 hover:text-amber-300 transition-colors">The free audit</a></li>
+                            <li><a href="#seo-analysis" className="text-slate-400 hover:text-amber-300 transition-colors">SEO analysis in detail</a></li>
+                            <li><a href="#performance" className="text-slate-400 hover:text-amber-300 transition-colors">Performance check</a></li>
+                            <li><a href="#geo-check" className="text-slate-400 hover:text-amber-300 transition-colors">GEO check: AI visibility</a></li>
+                            <li><a href="#ai-report" className="text-slate-400 hover:text-amber-300 transition-colors">The AI report</a></li>
+                            <li><a href="#seo-automation" className="text-slate-400 hover:text-amber-300 transition-colors">SEO automation</a></li>
+                            <li><a href="#geo-automation" className="text-slate-400 hover:text-amber-300 transition-colors">GEO automation</a></li>
+                            <li><a href="#who-its-for" className="text-slate-400 hover:text-amber-300 transition-colors">Who is AuditAI for?</a></li>
+                            <li><a href="#pricing" className="text-slate-400 hover:text-amber-300 transition-colors">Pricing overview</a></li>
+                            <li><a href="#faq" className="text-slate-400 hover:text-amber-300 transition-colors">Frequently asked questions</a></li>
+                        </ol>
+                    </nav>
+
+                    <section id="what-is-auditai" className="scroll-mt-28">
+                        <h2 className="text-2xl font-bold text-white mb-4">What is AuditAI?</h2>
                         <p>
-                            Most &quot;SEO checkers&quot; test essentially the same ten to fifteen on-page factors: title tag, meta description, H1, alt text, load time. The difference rarely comes down to accuracy - it comes down to six things that determine whether a tool actually helps you.
+                            AuditAI is an AI-powered website audit tool that combines SEO, performance, and GEO (Generative Engine Optimization) in a single scan. Instead of needing a separate tool for each - an SEO checker, a performance tool, and (if one even exists) a separate GEO tool - AuditAI runs all three analyses at once, evaluated by Claude (Anthropic).
                         </p>
-                        <div className="space-y-3 mt-5">
-                            {CRITERIA.map((c) => (
-                                <div key={c.label} className="flex items-start gap-3 py-2.5 border-b border-white/[0.04] last:border-0">
-                                    <div className="w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0 mt-2" />
+                        <p className="mt-4">
+                            The difference from classic SEO checkers: most of them were built long before ChatGPT, Perplexity, and Google AI Overview became meaningful traffic sources. Their checklists stop at title tags and backlinks. AuditAI also checks whether AI models can recognize and cite your website as a source.
+                        </p>
+                    </section>
+
+                    <section id="free-audit" className="scroll-mt-28">
+                        <h2 className="text-2xl font-bold text-white mb-4">The free audit: what you get instantly</h2>
+                        <p className="mb-5">
+                            You enter a URL, wait under 60 seconds, and get a full website check - no registration needed for the first look, a free account unlocks the full report.
+                        </p>
+                        <figure className="mb-6">
+                            <Image
+                                src="/blog/auditai-score-overview.png"
+                                alt="AuditAI score overview showing overall, SEO, performance, and GEO scores from a real audit report"
+                                width={960}
+                                height={194}
+                                className="w-full h-auto rounded-2xl border border-white/[0.07]"
+                            />
+                            <figcaption className="text-xs text-slate-600 mt-2">
+                                The score overview from a real AuditAI report: SEO, performance, and GEO in one view.
+                            </figcaption>
+                        </figure>
+                        <div className="space-y-2">
+                            {[
+                                ['Overall score', 'A single weighted score summarizing SEO, performance, and GEO'],
+                                ['SEO score', 'How well your page is set up for Google ranking factors'],
+                                ['Performance score', 'Load time and technical metrics against real thresholds'],
+                                ['GEO score', 'Whether AI models can technically recognize and cite your website at all'],
+                                ['Audit history', 'Past checks stay saved so you can see progress over time'],
+                            ].map(([title, desc], i) => (
+                                <div key={i} className="flex items-start gap-3 py-2.5 border-b border-white/[0.04] last:border-0">
+                                    <div className="w-5 h-5 rounded-full bg-amber-500/15 border border-amber-500/30 flex items-center justify-center shrink-0 mt-0.5">
+                                        <span className="text-[9px] font-bold text-amber-400">{i + 1}</span>
+                                    </div>
                                     <div>
-                                        <span className="text-sm font-medium text-white">{c.label}</span>
-                                        <span className="text-sm text-slate-500"> - {c.desc}</span>
+                                        <span className="text-sm font-medium text-white">{title}</span>
+                                        <span className="text-sm text-slate-500"> - {desc}</span>
                                     </div>
                                 </div>
                             ))}
                         </div>
                     </section>
 
-                    <section>
-                        <h2 className="text-2xl font-bold text-white mb-2">13 tools compared</h2>
-                        <p className="text-sm text-slate-500 mb-6">
-                            Ratings are pulled from G2, Capterra, or OMR - only values with a reasonable sample size are shown; otherwise this table honestly says &quot;no reliable rating.&quot;
+                    <section id="seo-analysis" className="scroll-mt-28">
+                        <h2 className="text-2xl font-bold text-white mb-4">SEO analysis in detail</h2>
+                        <p className="mb-5">
+                            The SEO portion covers the factors Google actually uses to evaluate your page:
                         </p>
-                        <p className="sm:hidden text-xs text-amber-400/80 mb-2">
-                            → Swipe the table left to see every column, including ratings
+                        <figure className="mb-6">
+                            <Image
+                                src="/blog/auditai-seo-issues.png"
+                                alt="AuditAI SEO issue list with prioritized problems and concrete fixes"
+                                width={960}
+                                height={420}
+                                className="w-full h-auto rounded-2xl border border-white/[0.07]"
+                            />
+                            <figcaption className="text-xs text-slate-600 mt-2">
+                                Found SEO issues, prioritized and clearly described instead of just a raw error list.
+                            </figcaption>
+                        </figure>
+                        <div className="grid sm:grid-cols-2 gap-x-6 gap-y-1.5 text-sm">
+                            {[
+                                'Title tag (length & keyword relevance)', 'Meta description', 'H1-H6 structure',
+                                'Image alt text', 'Canonical tag', 'Open Graph & Twitter Card',
+                                'Structured data / JSON-LD', 'Robots meta tag', 'Internal linking',
+                                'Word count per page', 'HTML lang attribute', 'HTTPS status',
+                            ].map((item) => (
+                                <div key={item} className="flex items-center gap-2 text-slate-400">
+                                    <span className="text-emerald-400">✓</span> {item}
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+
+                    <section id="performance" className="scroll-mt-28">
+                        <h2 className="text-2xl font-bold text-white mb-4">Performance check</h2>
+                        <p className="mb-4">
+                            Load time is both a Google ranking factor and a direct revenue factor - AuditAI measures the metrics that actually matter:
                         </p>
-                        <div className="relative">
-                            <div className="overflow-x-auto rounded-2xl border border-white/[0.07]">
-                                <table className="w-full text-sm min-w-[760px]">
-                                    <thead>
-                                        <tr className="border-b border-white/5 bg-white/[0.02]">
-                                            <th className="text-left px-4 py-3 text-slate-400 font-semibold">Tool</th>
-                                            <th className="text-left px-4 py-3 text-slate-400 font-semibold">Free version</th>
-                                            <th className="text-left px-4 py-3 text-slate-400 font-semibold">Categories</th>
-                                            <th className="text-left px-4 py-3 text-amber-400 font-semibold">GEO check</th>
-                                            <th className="text-left px-4 py-3 text-slate-400 font-semibold">Rating</th>
+                        <div className="grid sm:grid-cols-2 gap-x-6 gap-y-1.5 text-sm">
+                            {[
+                                'Time to First Byte (TTFB)', 'First Contentful Paint (FCP)',
+                                'DOM load', 'Full page load time',
+                                'Page size', 'Number of HTTP requests',
+                            ].map((item) => (
+                                <div key={item} className="flex items-center gap-2 text-slate-400">
+                                    <span className="text-emerald-400">✓</span> {item}
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+
+                    <section id="geo-check" className="scroll-mt-28">
+                        <h2 className="text-2xl font-bold text-white mb-4">GEO check: are you found by ChatGPT & co.?</h2>
+                        <p className="mb-5">
+                            This is the part almost no other tool checks. 19 technical signals determine whether AI models recognize your website as a trustworthy source:
+                        </p>
+                        <figure className="mb-6">
+                            <Image
+                                src="/blog/auditai-geo-report.png"
+                                alt="AuditAI GEO report showing checked AI visibility signals like llms.txt, Organization schema, AI crawler access, and sitemap.xml"
+                                width={960}
+                                height={411}
+                                className="w-full h-auto rounded-2xl border border-white/[0.07]"
+                            />
+                            <figcaption className="text-xs text-slate-600 mt-2">
+                                A real GEO report: every checked AI visibility signal at a glance, including a found issue.
+                            </figcaption>
+                        </figure>
+                        <div className="grid sm:grid-cols-2 gap-x-6 gap-y-1.5 text-sm">
+                            {[
+                                'llms.txt present & correctly formatted', 'llms-full.txt present',
+                                'Organization schema (JSON-LD)', 'FAQ schema with visible HTML content',
+                                'AI crawler access allowed in robots.txt', 'sitemap.xml complete & current',
+                                'Clear product definition in the content', 'Concrete numbers & statistics',
+                                'External source links', 'Author & about info (E-E-A-T)',
+                            ].map((item) => (
+                                <div key={item} className="flex items-center gap-2 text-slate-400">
+                                    <span className="text-emerald-400">✓</span> {item}
+                                </div>
+                            ))}
+                        </div>
+                        <p className="mt-5">
+                            More on the concept behind this: <Link href="/en/blog/what-is-geo" className="text-amber-400 hover:text-amber-300 underline underline-offset-2">What is GEO?</Link>.
+                        </p>
+                    </section>
+
+                    <section id="ai-report" className="scroll-mt-28">
+                        <h2 className="text-2xl font-bold text-white mb-4">The AI report: concrete fixes, not just numbers</h2>
+                        <p>
+                            On the Pro plan and above, Claude (Anthropic) generates a full report from the audit data - not a generic error list, but:
+                        </p>
+                        <div className="space-y-2 mt-4">
+                            {[
+                                ['Prioritized problem summary', 'What to tackle first, and why'],
+                                ['Concrete fixes per category', 'Directly actionable, not just "improve your meta tags"'],
+                                ['Action plan', 'Quick wins first, bigger fixes after'],
+                                ['Desktop & mobile screenshots', 'Visual comparison of both views'],
+                                ['PDF export', 'For sharing or archiving'],
+                            ].map(([title, desc], i) => (
+                                <div key={i} className="flex items-start gap-3 py-2.5 border-b border-white/[0.04] last:border-0">
+                                    <div className="w-5 h-5 rounded-full bg-violet-500/15 border border-violet-500/30 flex items-center justify-center shrink-0 mt-0.5">
+                                        <span className="text-[9px] font-bold text-violet-400">{i + 1}</span>
+                                    </div>
+                                    <div>
+                                        <span className="text-sm font-medium text-white">{title}</span>
+                                        <span className="text-sm text-slate-500"> - {desc}</span>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+
+                    <section id="seo-automation" className="scroll-mt-28">
+                        <h2 className="text-2xl font-bold text-white mb-4">SEO automation: ongoing ranking tracking</h2>
+                        <p className="mb-4">
+                            The one-time audit shows your status right now. SEO automation is a separate subscription for ongoing monitoring:
+                        </p>
+                        <div className="grid sm:grid-cols-2 gap-x-6 gap-y-1.5 text-sm">
+                            {[
+                                'Weekly Google ranking tracking', 'Email alerts on significant moves',
+                                'Keyword ideas with search volume & CPC', 'Automated competitor analysis',
+                                'Content gap analysis (Pro and above)', 'Monthly backlink summary',
+                                'Automatic keyword discovery from new content',
+                            ].map((item) => (
+                                <div key={item} className="flex items-center gap-2 text-slate-400">
+                                    <span className="text-emerald-400">✓</span> {item}
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+
+                    <section id="geo-automation" className="scroll-mt-28">
+                        <h2 className="text-2xl font-bold text-white mb-4">GEO automation: AI visibility over time</h2>
+                        <p className="mb-4">
+                            And the GEO counterpart - ongoing tracking of whether AI models actually mention you, not just whether the technical prerequisites are in place:
+                        </p>
+                        <div className="grid sm:grid-cols-2 gap-x-6 gap-y-1.5 text-sm">
+                            {[
+                                'Weekly check across Claude, ChatGPT, Perplexity & Google AI Overview',
+                                'Real user-style queries, not synthetic tests',
+                                'Mention rate (%) per keyword & platform',
+                                'Two prompt variants: recommendation & comparison (Pro and above)',
+                                'History over time', 'Manual checks on demand',
+                            ].map((item) => (
+                                <div key={item} className="flex items-center gap-2 text-slate-400">
+                                    <span className="text-emerald-400">✓</span> {item}
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+
+                    <section id="who-its-for" className="scroll-mt-28">
+                        <h2 className="text-2xl font-bold text-white mb-4">Who is AuditAI for?</h2>
+                        <p>
+                            Web developers and agencies who want a fast status check on a website (their own or a client&apos;s) without juggling three tools. SEO freelancers who want to bring AI visibility to their clients&apos; attention before it becomes standard practice. And small to mid-size businesses who want to understand for themselves why they&apos;re not showing up on Google - or in ChatGPT - without hiring an agency to find out.
+                        </p>
+                    </section>
+
+                    <section id="pricing" className="scroll-mt-28">
+                        <h2 className="text-2xl font-bold text-white mb-4">Pricing overview</h2>
+                        <div className="overflow-hidden rounded-2xl border border-white/[0.07] mb-4">
+                            <table className="w-full text-sm">
+                                <thead>
+                                    <tr className="border-b border-white/5 bg-white/[0.02]">
+                                        <th className="text-left px-4 py-3 text-slate-400 font-semibold">Plan</th>
+                                        <th className="text-left px-4 py-3 text-slate-400 font-semibold">Price</th>
+                                        <th className="text-left px-4 py-3 text-slate-400 font-semibold">Includes</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {[
+                                        ['Free (Audit)', '€0/month', '1 audit/month, SEO, performance & GEO score'],
+                                        ['Pro (Audit)', '€29/month', '10 audits/month, AI report, screenshots, PDF export'],
+                                        ['SEO Automation', 'from €19/month', 'Weekly ranking tracking, 14-day free trial'],
+                                        ['GEO Automation', 'from €4.99/month', 'Weekly AI mention tracking, 14-day free trial'],
+                                    ].map(([plan, price, desc]) => (
+                                        <tr key={plan} className="border-b border-white/[0.04] last:border-0">
+                                            <td className="px-4 py-3 text-white font-medium whitespace-nowrap">{plan}</td>
+                                            <td className="px-4 py-3 text-amber-400 font-medium whitespace-nowrap">{price}</td>
+                                            <td className="px-4 py-3 text-slate-400">{desc}</td>
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        {TOOLS.map((t) => (
-                                            <tr key={t.name} className="border-b border-white/[0.04] last:border-0">
-                                                <td className="px-4 py-3 text-white font-medium whitespace-nowrap">{t.name}</td>
-                                                <td className="px-4 py-3 text-slate-400">{t.free}</td>
-                                                <td className="px-4 py-3 text-slate-400">{t.categories}</td>
-                                                <td className="px-4 py-3">
-                                                    {t.geo === true && <span className="text-emerald-400 font-medium">✓ Yes</span>}
-                                                    {t.geo === false && <span className="text-slate-600">✗ No</span>}
-                                                    {t.geo === 'partially' && <span className="text-amber-400">Partially</span>}
-                                                </td>
-                                                <td className="px-4 py-3 whitespace-nowrap">
-                                                    {t.rating?.value ? (
-                                                        <a
-                                                            href={t.rating.url}
-                                                            target="_blank"
-                                                            rel="noopener noreferrer nofollow"
-                                                            className="text-slate-300 hover:text-white underline decoration-slate-700 underline-offset-2"
-                                                        >
-                                                            {t.rating.value} ★ <span className="text-slate-500">({t.rating.count}, {t.rating.source})</span>
-                                                        </a>
-                                                    ) : (
-                                                        <span className="text-slate-600" title={t.rating?.note || 'New to market'}>
-                                                            {t.rating?.note || 'New to market'}
-                                                        </span>
-                                                    )}
-                                                </td>
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div className="sm:hidden absolute top-0 right-0 bottom-0 w-8 bg-gradient-to-l from-[#05080f] to-transparent pointer-events-none rounded-r-2xl" />
+                                    ))}
+                                </tbody>
+                            </table>
                         </div>
-                    </section>
-
-                    <section>
-                        <h2 className="text-2xl font-bold text-white mb-6">The tools in detail</h2>
-                        <div className="space-y-5">
-                            {TOOLS.map((t) => (
-                                <div key={t.name} className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
-                                    <div className="flex flex-wrap items-center gap-2 mb-2">
-                                        <h3 className="font-semibold text-white">
-                                            <a href={t.url} target="_blank" rel="noopener noreferrer nofollow" className="hover:text-violet-300 transition-colors">
-                                                {t.name}
-                                            </a>
-                                        </h3>
-                                        <span
-                                            className="text-[10px] font-semibold px-2 py-0.5 rounded-full"
-                                            style={{ background: t.tagColor + '18', color: t.tagColor }}
-                                        >
-                                            {t.tag}
-                                        </span>
-                                        {t.rating?.value ? (
-                                            <span className="text-[10px] font-medium text-slate-500">
-                                                {t.rating.value} ★ ({t.rating.count} reviews, {t.rating.source})
-                                            </span>
-                                        ) : (
-                                            <span className="text-[10px] font-medium text-slate-600">{t.rating?.note || 'New to market'}</span>
-                                        )}
-                                    </div>
-                                    <p className="text-xs text-slate-500 mb-3">
-                                        <span className="text-slate-400">Scope:</span> {t.scope}
-                                    </p>
-                                    <p className="text-sm text-slate-400 leading-relaxed">{t.note}</p>
-                                    {t.name === 'AuditAI' && (
-                                        <figure className="mt-4">
-                                            <Image
-                                                src="/blog/auditai-score-overview.png"
-                                                alt="AuditAI score overview showing overall, SEO, performance, and GEO scores from a real audit report"
-                                                width={960}
-                                                height={194}
-                                                className="w-full h-auto rounded-xl border border-white/[0.07]"
-                                            />
-                                            <figcaption className="text-xs text-slate-600 mt-2">
-                                                The score overview from a real AuditAI report: SEO, performance, and GEO in one view.
-                                            </figcaption>
-                                        </figure>
-                                    )}
-                                </div>
-                            ))}
-                        </div>
-                    </section>
-
-                    <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">Why most tools don&apos;t check GEO</h2>
-                        <p>
-                            Most established SEO checkers were built long before ChatGPT, Perplexity, and Google AI Overviews became meaningful traffic sources. Their checklists are tailored to classic Google ranking factors - title tags, backlinks, load time. That&apos;s not wrong, it&apos;s just incomplete.
-                        </p>
-                        <p className="mt-4">
-                            AI visibility depends on different signals: Is there an{' '}
-                            <code className="text-xs bg-white/[0.06] px-1.5 py-0.5 rounded">llms.txt</code>? Are{' '}
-                            <a href="https://developers.openai.com/api/docs/bots" target="_blank" rel="noopener noreferrer" className="text-amber-400 hover:text-amber-300 underline underline-offset-2">GPTBot</a>{' '}
-                            and{' '}
-                            <a href="https://support.claude.com/en/articles/8896518-does-anthropic-crawl-data-from-the-web-and-how-can-site-owners-block-the-crawler" target="_blank" rel="noopener noreferrer" className="text-amber-400 hover:text-amber-300 underline underline-offset-2">ClaudeBot</a>{' '}
-                            even allowed to crawl according to robots.txt? Does FAQ content exist not just in JSON-LD, but also visibly in the HTML? These are the factors that decide whether an AI cites your website as a source - and they simply don&apos;t show up in most free SEO checks.
-                        </p>
-                        <div className="bg-amber-500/8 border border-amber-500/20 rounded-2xl p-5 mt-5">
-                            <p className="text-sm text-amber-300 font-medium mb-1">The practical difference</p>
-                            <p className="text-sm text-slate-400">
-                                A website can rank on page 1 of Google and still be completely invisible in ChatGPT&apos;s answers - because AI crawlers are blocked in robots.txt. A classic SEO check won&apos;t catch this, because it isn&apos;t looking for it.
-                            </p>
-                        </div>
-                        <p className="mt-4">
-                            More on the concrete GEO signals and how to check them yourself: <Link href="/en/blog/what-is-geo" className="text-amber-400 hover:text-amber-300 underline underline-offset-2">What is GEO?</Link>.
+                        <p className="text-sm text-slate-500">
+                            All automation plans are cancellable anytime, no hidden trial tricks.
                         </p>
                     </section>
 
-                    <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">How to pick the right tool for you</h2>
-                        <p>
-                            For a quick, one-off on-page check, a simple free checker like SEORCH or IONOS is enough. If you manage a website with multiple subpages and want to see technical errors and GEO signals in a single pass, a tool that crawls multiple pages instead of checking just one URL pays off.
-                        </p>
-                        <p className="mt-4">
-                            The most practical first question: do you just want to know if your website looks okay to Google - or also whether it&apos;s visible to AI search systems? For the former, almost any tool on this list will do. For the latter, very few options currently exist.
-                        </p>
-                        <p className="mt-4">
-                            And if you&apos;re considering outsourcing testing altogether: <Link href="/en/blog/seo-tool-vs-agency" className="text-amber-400 hover:text-amber-300 underline underline-offset-2">SEO tool vs. agency: is it worth doing it yourself?</Link> - the honest cost comparison.
-                        </p>
-                    </section>
-
-                    <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">Frequently asked questions about SEO audit tools</h2>
+                    <section id="faq" className="scroll-mt-28">
+                        <h2 className="text-2xl font-bold text-white mb-4">Frequently asked questions</h2>
                         <div className="space-y-4">
                             {faqLd.mainEntity.map((faq, i) => (
                                 <div key={i} className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5">
@@ -501,10 +421,10 @@ export default function BestSeoToolsPageEn() {
                         SEO, performance, and GEO in one report
                     </h2>
                     <p className="text-slate-400 text-sm mb-6 max-w-md mx-auto leading-relaxed">
-                        AuditAI checks all three areas in under 60 seconds - including llms.txt, AI crawler access, and schema for AI citations. Start without registration, sign up free for the full report with all scores.
+                        Check your website in under 60 seconds - including llms.txt, AI crawler access, and schema for AI citations. Start without registration, sign up free for the full report with all scores.
                     </p>
                     <Link
-                        href="/dashboard"
+                        href="/en/dashboard"
                         className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-amber-500 to-violet-600 hover:from-amber-400 hover:to-violet-500 text-white text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-amber-500/20"
                     >
                         Start free audit
@@ -521,7 +441,7 @@ export default function BestSeoToolsPageEn() {
                                 SEO Checklist 2026: Find Every Issue Yourself in 15 Minutes
                             </h3>
                             <p className="text-slate-400 text-sm leading-relaxed max-w-md">
-                                Instead of picking a tool, you can also check it yourself: 6 phases, 24 points, in a fixed order.
+                                Want to check things yourself first? 6 phases, every important point in a fixed order.
                             </p>
                         </div>
                         <Link

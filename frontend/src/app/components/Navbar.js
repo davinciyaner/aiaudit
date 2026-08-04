@@ -7,8 +7,8 @@ import {
 } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter, usePathname } from 'next/navigation'
-import { t } from '../../lib/i18n/dictionaries'
-import { getCounterpart } from '../../lib/i18n/routeMap'
+import { t } from '@/lib/i18n/dictionaries'
+import { getCounterpart } from '@/lib/i18n/routeMap'
 
 const NAV_ITEMS_DE = [
     {
@@ -72,7 +72,7 @@ function NavDropdown({ item, isOpen, onOpen, onClose }) {
     return (
         <div className="relative" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
             <button className={`flex items-center gap-1 px-4 py-2 text-sm rounded-lg transition-all ${
-                isOpen ? 'text-white bg-white/5' : 'text-slate-400 hover:text-white hover:bg-white/5'
+                isOpen ? 'text-white bg-white/5' : 'text-white hover:bg-white/5'
             }`}>
                 {item.label}
                 <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
@@ -123,7 +123,7 @@ function MobileAccordion({ item, isOpen, onToggle, onClose }) {
         <div>
             <button
                 onClick={onToggle}
-                className="w-full flex items-center justify-between px-4 py-3 text-sm text-slate-300 hover:text-white rounded-lg hover:bg-white/5 transition-all"
+                className="w-full flex items-center justify-between px-4 py-3 text-sm text-white rounded-lg hover:bg-white/5 transition-all"
             >
                 {item.label}
                 <ChevronDown className={`w-4 h-4 text-slate-500 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
@@ -225,11 +225,11 @@ export default function Navbar({ locale = 'de' }) {
 
                     {/* Logo */}
                     <Link href={locale === 'en' ? '/en' : '/'} className="flex items-center gap-2.5 group">
-                        <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-500 to-cyan-500 flex items-center justify-center shadow-lg shadow-violet-500/30 group-hover:shadow-violet-500/50 transition-shadow">
+                        <div className="w-8 h-8 rounded-lg bg-linear-to-br from-violet-500 to-cyan-500 flex items-center justify-center shadow-lg shadow-violet-500/30 group-hover:shadow-violet-500/50 transition-shadow">
                             <Zap className="w-4 h-4 text-white" strokeWidth={2.5} />
                         </div>
                         <span className="font-bold text-white text-lg tracking-tight">
-                            Audit<span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-cyan-400">AI</span>
+                            Audit<span className="text-transparent bg-clip-text bg-linear-to-r from-violet-400 to-cyan-400">AI</span>
                         </span>
                     </Link>
 
@@ -246,7 +246,7 @@ export default function Navbar({ locale = 'de' }) {
                                 />
                             ) : (
                                 <Link key={item.key} href={item.href}
-                                    className="px-4 py-2 text-sm text-slate-400 hover:text-white rounded-lg hover:bg-white/5 transition-all">
+                                    className="px-4 py-2 text-sm text-white rounded-lg hover:bg-white/5 transition-all">
                                     {item.label}
                                 </Link>
                             )
@@ -261,7 +261,7 @@ export default function Navbar({ locale = 'de' }) {
                                     onClick={() => setUserDropdownOpen(prev => !prev)}
                                     className="flex items-center gap-2 px-3 py-1.5 rounded-xl hover:bg-white/5 transition-all group"
                                 >
-                                    <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-violet-600 to-cyan-600 flex items-center justify-center text-white text-xs font-bold shrink-0">
+                                    <div className="w-7 h-7 rounded-lg bg-linear-to-br from-violet-600 to-cyan-600 flex items-center justify-center text-white text-xs font-bold shrink-0">
                                         {initials}
                                     </div>
                                     <span className="text-sm text-slate-300 font-medium group-hover:text-white transition-colors">
@@ -327,7 +327,7 @@ export default function Navbar({ locale = 'de' }) {
                             </Link>
                         )}
                         <Link href={locale === 'en' ? '/en/dashboard' : '/dashboard'}
-                            className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-violet-500/20 hover:-translate-y-px">
+                            className="flex items-center gap-2 px-5 py-2.5 bg-linear-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-violet-500/20 hover:-translate-y-px">
                             {t(locale, 'nav.cta')} <ArrowRight className="w-3.5 h-3.5" />
                         </Link>
                         {counterpart && (
@@ -404,7 +404,7 @@ export default function Navbar({ locale = 'de' }) {
                         )}
 
                         <Link href={locale === 'en' ? '/en/dashboard' : '/dashboard'} onClick={() => setMobileOpen(false)}
-                            className="mt-2 block px-4 py-3 text-center font-semibold text-white rounded-xl bg-gradient-to-r from-violet-600 to-cyan-600 text-sm">
+                            className="mt-2 block px-4 py-3 text-center font-semibold text-white rounded-xl bg-linear-to-r from-violet-600 to-cyan-600 text-sm">
                             {t(locale, 'nav.cta')} →
                         </Link>
 

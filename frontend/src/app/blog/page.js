@@ -71,12 +71,12 @@ const ARTICLES = [
     },
     {
         slug: 'beste-seo-check-tools-2026',
-        title: 'Die besten kostenlosen SEO-Check-Tools 2026 im Vergleich',
-        description: '13 SEO-Check-Tools im Vergleich inkl. G2-/Capterra-/OMR-Bewertungen: kostenlose Version, Funktionsumfang, Limits und wer als einziges auch KI-Sichtbarkeit (GEO) prüft.',
+        title: 'AuditAI: Das SEO-Check-Tool mit GEO-Analyse (2026)',
+        description: 'AuditAI prüft SEO, Performance und GEO (KI-Sichtbarkeit für ChatGPT, Claude & Perplexity) in einem Report. Alle Features, Preise und was du als Nutzer bekommst.',
         category: 'Tools',
         categoryColor: '#f59e0b',
         date: '15. Juli 2026',
-        readTime: '13 min',
+        readTime: '8 min',
     },
     {
         slug: 'seo-checkliste-2026',

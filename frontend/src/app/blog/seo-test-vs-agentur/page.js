@@ -287,17 +287,17 @@ export default function SeoTestVsAgenturPage() {
                         <div>
                             <span className="text-xs font-semibold text-violet-400 uppercase tracking-wider mb-1 block">Weiterlesen</span>
                             <h3 className="text-base sm:text-lg font-bold text-white mb-2">
-                                Die besten kostenlosen SEO-Check-Tools 2026
+                                AuditAI: Das SEO-Check-Tool mit GEO-Analyse
                             </h3>
                             <p className="text-slate-400 text-sm leading-relaxed max-w-md">
-                                Falls du erstmal selbst testen willst: 13 Tools im Vergleich, inklusive echter Nutzerbewertungen.
+                                Falls du erstmal selbst testen willst: alle Features im Überblick, inklusive kostenlosem Audit.
                             </p>
                         </div>
                         <Link
                             href="/blog/beste-seo-check-tools-2026"
                             className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/[0.06] hover:bg-white/10 text-white text-sm font-semibold rounded-xl transition-all duration-200 shrink-0"
                         >
-                            Vergleich lesen
+                            Mehr erfahren
                         </Link>
                     </div>
                 </div>
