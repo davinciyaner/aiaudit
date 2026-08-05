@@ -89,8 +89,8 @@ const ARTICLES = [
     },
     {
         slug: 'seo-geo-automatisierung',
-        title: 'SEO Automatisierung & GEO Automatisierung: Rankings und KI-Sichtbarkeit automatisch tracken',
-        description: 'Wie du Google-Rankings und KI-Sichtbarkeit bei ChatGPT, Claude, Perplexity & Google AI Overview wöchentlich automatisch trackst - statt manuell zu prüfen. Mit Preisen und Vergleich.',
+        title: 'SEO Rank Tracker & KI-Sichtbarkeits-Monitor: SEO- und GEO-Tracking automatisieren',
+        description: 'Ein automatisierter SEO Rank Tracker und Keyword Tracker, plus KI-Sichtbarkeits-Monitoring für ChatGPT, Claude, Perplexity & Google AI Overview - wöchentlich automatisch statt manuell geprüft. Mit Preisen und Vergleich.',
         category: 'SEO & GEO',
         categoryColor: '#10b981',
         date: '5. Juli 2026',

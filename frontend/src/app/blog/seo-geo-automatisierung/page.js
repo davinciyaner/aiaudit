@@ -4,9 +4,9 @@ import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
 
 export const metadata = {
-    title: 'SEO Automatisierung & GEO Automatisierung: Rankings und KI-Sichtbarkeit automatisch tracken',
-    description: 'SEO Automatisierung und GEO Automatisierung erklärt: Wie du Google-Rankings und KI-Sichtbarkeit bei ChatGPT, Claude, Perplexity & Google AI Overview wöchentlich automatisch trackst - statt manuell zu prüfen. Mit Preisen und Vergleich.',
-    keywords: 'seo automatisierung, geo automatisierung, ki sichtbarkeit, ki sichtbarkeit messen, seo automatisierung tool, geo automatisierung tool, ranking tracking automatisch, google rankings automatisch tracken, chatgpt sichtbarkeit tracken, ki sichtbarkeit prüfen, automatisiertes seo tracking, keyword tracking automatisch, seo monitoring tool',
+    title: 'SEO Rank Tracker & KI-Sichtbarkeits-Monitor: SEO- und GEO-Tracking automatisieren',
+    description: 'Ein automatisierter SEO Rank Tracker und Keyword Tracker, plus KI-Sichtbarkeits-Monitoring für ChatGPT, Claude, Perplexity & Google AI Overview - wöchentlich automatisch statt manuell geprüft. Mit Preisen und Vergleich.',
+    keywords: 'seo tool, rank tracker, keyword tracker, seo monitoring, google ranking tool, keyword monitoring, seo tracking tool, seo automatisierung, geo automatisierung, ki sichtbarkeit, automatisiertes seo tracking, seo monitoring tool',
     alternates: {
         canonical: 'https://www.sitecheckai.dev/blog/seo-geo-automatisierung',
         languages: {
@@ -15,8 +15,8 @@ export const metadata = {
         },
     },
     openGraph: {
-        title: 'SEO Automatisierung & GEO Automatisierung: Rankings und KI-Sichtbarkeit automatisch tracken',
-        description: 'Wie du Google-Rankings und KI-Sichtbarkeit bei ChatGPT, Claude, Perplexity & Google AI Overview wöchentlich automatisch trackst - statt manuell zu prüfen.',
+        title: 'SEO Rank Tracker & KI-Sichtbarkeits-Monitor: SEO- und GEO-Tracking automatisieren',
+        description: 'Ein automatisierter Rank Tracker und Keyword Tracker, plus KI-Sichtbarkeits-Monitoring für ChatGPT, Claude, Perplexity & Google AI Overview - wöchentlich automatisch statt manuell geprüft.',
         url: 'https://www.sitecheckai.dev/blog/seo-geo-automatisierung',
         type: 'article',
         locale: 'de_DE',
@@ -26,8 +26,8 @@ export const metadata = {
 const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
-    headline: 'SEO Automatisierung & GEO Automatisierung: Rankings und KI-Sichtbarkeit automatisch tracken',
-    description: 'SEO Automatisierung und GEO Automatisierung erklärt: Wie du Google-Rankings und KI-Sichtbarkeit bei ChatGPT, Claude, Perplexity & Google AI Overview wöchentlich automatisch trackst.',
+    headline: 'SEO Rank Tracker & KI-Sichtbarkeits-Monitor: SEO- und GEO-Tracking automatisieren',
+    description: 'Ein automatisierter SEO Rank Tracker und Keyword Tracker, plus KI-Sichtbarkeits-Monitoring für ChatGPT, Claude, Perplexity & Google AI Overview - wöchentlich automatisch statt manuell geprüft.',
     image: 'https://www.sitecheckai.dev/blog/seo-geo-automatisierung/opengraph-image',
     datePublished: '2026-07-05T09:00:00+02:00',
     dateModified: '2026-07-30T09:00:00+02:00',
@@ -41,9 +41,9 @@ const jsonLd = {
     url: 'https://www.sitecheckai.dev/blog/seo-geo-automatisierung',
     mainEntityOfPage: 'https://www.sitecheckai.dev/blog/seo-geo-automatisierung',
     about: [
-        { '@type': 'Thing', name: 'SEO Automatisierung' },
-        { '@type': 'Thing', name: 'GEO Automatisierung' },
-        { '@type': 'Thing', name: 'KI-Sichtbarkeit' },
+        { '@type': 'Thing', name: 'SEO Rank Tracker' },
+        { '@type': 'Thing', name: 'Keyword Tracker' },
+        { '@type': 'Thing', name: 'KI-Sichtbarkeits-Monitoring' },
     ],
     mentions: [
         { '@type': 'Thing', name: 'ChatGPT', url: 'https://chat.openai.com' },
@@ -58,7 +58,7 @@ const breadcrumbLd = {
     itemListElement: [
         { '@type': 'ListItem', position: 1, name: 'AuditAI', item: 'https://www.sitecheckai.dev' },
         { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.sitecheckai.dev/blog' },
-        { '@type': 'ListItem', position: 3, name: 'SEO & GEO Automatisierung', item: 'https://www.sitecheckai.dev/blog/seo-geo-automatisierung' },
+        { '@type': 'ListItem', position: 3, name: 'SEO Rank Tracker & KI-Sichtbarkeits-Monitor', item: 'https://www.sitecheckai.dev/blog/seo-geo-automatisierung' },
     ],
 }
 
@@ -147,7 +147,7 @@ export default function SeoGeoAutomatisierungPage() {
                     <span>/</span>
                     <Link href="/blog" className="hover:text-slate-400 transition-colors">Blog</Link>
                     <span>/</span>
-                    <span className="text-slate-500">SEO & GEO Automatisierung</span>
+                    <span className="text-slate-500">SEO Rank Tracker & KI-Sichtbarkeits-Monitor</span>
                 </div>
 
                 {/* Header */}
@@ -164,10 +164,10 @@ export default function SeoGeoAutomatisierungPage() {
                         <span className="text-xs text-slate-600">· Aktualisiert am 30. Juli 2026</span>
                     </div>
                     <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight tracking-tight mb-5">
-                        SEO Automatisierung & GEO Automatisierung: Rankings und KI-Sichtbarkeit automatisch tracken
+                        SEO Rank Tracker & KI-Sichtbarkeits-Monitor
                     </h1>
                     <p className="text-lg text-slate-400 leading-relaxed">
-                        Ein einmaliger Audit zeigt dir den Zustand heute. Aber Google-Rankings und KI-Sichtbarkeit ändern sich jede Woche - mit oder ohne dein Zutun. SEO Automatisierung und GEO Automatisierung übernehmen das laufende Tracking, damit du Verschlechterungen siehst bevor sie Umsatz kosten.
+                        Ein einmaliger Audit zeigt dir den Zustand heute. Aber Google-Rankings und KI-Sichtbarkeit ändern sich jede Woche - mit oder ohne dein Zutun. Ein automatisierter Rank Tracker und Keyword Tracker (SEO Automatisierung) plus ein KI-Sichtbarkeits-Monitor (GEO Automatisierung) übernehmen das laufende Tracking, damit du Verschlechterungen siehst bevor sie Umsatz kosten.
                     </p>
                     <div className="mt-5 flex items-center gap-2 text-xs text-slate-600">
                         <Link href="/about" className="flex items-center gap-2 hover:text-slate-300 transition-colors">
@@ -197,9 +197,9 @@ export default function SeoGeoAutomatisierungPage() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">Wie funktioniert SEO Automatisierung für Google-Rankings?</h2>
+                        <h2 className="text-2xl font-bold text-white mb-4">Wie funktioniert ein automatisierter SEO Rank Tracker?</h2>
                         <p>
-                            SEO Automatisierung trackt deine Google-Positionen für ausgewählte Keywords wöchentlich - automatisch, ohne dass du selbst nachsehen musst. Statt eines einmaligen SEO-Scores bekommst du einen Verlauf: welche Keywords steigen, welche fallen, und wo neue Chancen entstehen.
+                            SEO Automatisierung ist ein Rank Tracker und Keyword Tracker in einem: er trackt deine Google-Positionen für ausgewählte Keywords wöchentlich - automatisch, ohne dass du selbst nachsehen musst. Statt eines einmaligen SEO-Scores bekommst du einen Verlauf: welche Keywords steigen, welche fallen, und wo neue Chancen entstehen.
                         </p>
                         <div className="grid sm:grid-cols-2 gap-4 mt-6">
                             {SEO_FEATURES.map(f => (
