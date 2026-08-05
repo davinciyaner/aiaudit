@@ -4,9 +4,9 @@ import Navbar from '../../../components/Navbar'
 import Footer from '../../../components/Footer'
 
 export const metadata = {
-    title: { absolute: 'SEO Automation & GEO Automation: Track Rankings and AI Visibility Automatically' },
-    description: 'SEO automation and GEO automation explained: how to automatically track Google rankings and AI visibility on ChatGPT, Claude, Perplexity & Google AI Overview every week - instead of checking manually. With pricing and a comparison.',
-    keywords: 'seo automation, geo automation, ai visibility, measure ai visibility, seo automation tool, geo automation tool, automatic rank tracking, track google rankings automatically, track chatgpt visibility, check ai visibility, automated seo tracking, automatic keyword tracking, seo monitoring tool',
+    title: { absolute: 'SEO Rank Tracker & AI Visibility Monitor: Automate SEO and GEO Tracking' },
+    description: 'An automated SEO rank tracker and keyword tracker, plus AI visibility monitoring for ChatGPT, Claude, Perplexity & Google AI Overview - updated automatically every week instead of checking manually. With pricing and a comparison.',
+    keywords: 'rank tracker, keyword tracker, seo tracker, seo tracking tools, automatic seo optimization, auto seo, seo automation, seo automation tool, rank tracking tool, keyword tracking tools, keyword monitoring tools, ai visibility, geo automation, backlink automation',
     alternates: {
         canonical: 'https://www.sitecheckai.dev/en/blog/seo-geo-automation',
         languages: {
@@ -15,8 +15,8 @@ export const metadata = {
         },
     },
     openGraph: {
-        title: 'SEO Automation & GEO Automation: Track Rankings and AI Visibility Automatically',
-        description: 'How to automatically track Google rankings and AI visibility on ChatGPT, Claude, Perplexity & Google AI Overview every week - instead of checking manually.',
+        title: 'SEO Rank Tracker & AI Visibility Monitor: Automate SEO and GEO Tracking',
+        description: 'An automated rank tracker and keyword tracker, plus AI visibility monitoring for ChatGPT, Claude, Perplexity & Google AI Overview - updated every week instead of checking manually.',
         url: 'https://www.sitecheckai.dev/en/blog/seo-geo-automation',
         type: 'article',
         locale: 'en_US',
@@ -26,8 +26,8 @@ export const metadata = {
 const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
-    headline: 'SEO Automation & GEO Automation: Track Rankings and AI Visibility Automatically',
-    description: 'SEO automation and GEO automation explained: how to automatically track Google rankings and AI visibility on ChatGPT, Claude, Perplexity & Google AI Overview every week.',
+    headline: 'SEO Rank Tracker & AI Visibility Monitor: Automate SEO and GEO Tracking',
+    description: 'An automated SEO rank tracker and keyword tracker, plus AI visibility monitoring for ChatGPT, Claude, Perplexity & Google AI Overview - updated automatically every week instead of checking manually.',
     image: 'https://www.sitecheckai.dev/en/blog/seo-geo-automation/opengraph-image',
     datePublished: '2026-07-05T09:00:00+02:00',
     dateModified: '2026-08-01T09:00:00+02:00',
@@ -41,9 +41,9 @@ const jsonLd = {
     url: 'https://www.sitecheckai.dev/en/blog/seo-geo-automation',
     mainEntityOfPage: 'https://www.sitecheckai.dev/en/blog/seo-geo-automation',
     about: [
-        { '@type': 'Thing', name: 'SEO automation' },
-        { '@type': 'Thing', name: 'GEO automation' },
-        { '@type': 'Thing', name: 'AI visibility' },
+        { '@type': 'Thing', name: 'SEO rank tracker' },
+        { '@type': 'Thing', name: 'Keyword tracker' },
+        { '@type': 'Thing', name: 'AI visibility monitoring' },
     ],
     mentions: [
         { '@type': 'Thing', name: 'ChatGPT', url: 'https://chat.openai.com' },
@@ -58,7 +58,7 @@ const breadcrumbLd = {
     itemListElement: [
         { '@type': 'ListItem', position: 1, name: 'AuditAI', item: 'https://www.sitecheckai.dev/en' },
         { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.sitecheckai.dev/en/blog' },
-        { '@type': 'ListItem', position: 3, name: 'SEO & GEO Automation', item: 'https://www.sitecheckai.dev/en/blog/seo-geo-automation' },
+        { '@type': 'ListItem', position: 3, name: 'SEO Rank Tracker & AI Visibility Monitor', item: 'https://www.sitecheckai.dev/en/blog/seo-geo-automation' },
     ],
 }
 
@@ -147,7 +147,7 @@ export default function SeoGeoAutomationPageEn() {
                     <span>/</span>
                     <Link href="/en/blog" className="hover:text-slate-400 transition-colors">Blog</Link>
                     <span>/</span>
-                    <span className="text-slate-500">SEO & GEO Automation</span>
+                    <span className="text-slate-500">SEO Rank Tracker & AI Visibility Monitor</span>
                 </div>
 
                 {/* Header */}
@@ -164,10 +164,10 @@ export default function SeoGeoAutomationPageEn() {
                         <span className="text-xs text-slate-600">· Updated Aug 1, 2026</span>
                     </div>
                     <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight tracking-tight mb-5">
-                        SEO Automation & GEO Automation: Track Rankings and AI Visibility Automatically
+                        SEO Rank Tracker & AI Visibility Monitor
                     </h1>
                     <p className="text-lg text-slate-400 leading-relaxed">
-                        A one-time audit shows you where things stand today. But Google rankings and AI visibility change every week - whether you touch anything or not. SEO automation and GEO automation take over the ongoing tracking, so you catch declines before they cost you revenue.
+                        A one-time audit shows you where things stand today. But Google rankings and AI visibility change every week - whether you touch anything or not. An automated rank tracker and keyword tracker (SEO automation) plus an AI visibility monitor (GEO automation) take over the ongoing tracking, so you catch declines before they cost you revenue.
                     </p>
                     <div className="mt-5 flex items-center gap-2 text-xs text-slate-600">
                         <Link href="/about" className="flex items-center gap-2 hover:text-slate-300 transition-colors">
@@ -198,9 +198,9 @@ export default function SeoGeoAutomationPageEn() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">How does SEO automation work for Google rankings?</h2>
+                        <h2 className="text-2xl font-bold text-white mb-4">How does an automated SEO rank tracker work?</h2>
                         <p>
-                            SEO automation tracks your Google positions for selected keywords every week - automatically, without you having to check yourself. Instead of a one-time SEO score, you get a trend line: which keywords are climbing, which are dropping, and where new opportunities are opening up.
+                            SEO automation is a rank tracker and keyword tracker in one: it tracks your Google positions for selected keywords every week - automatically, without you having to check yourself. Instead of a one-time SEO score, you get a trend line: which keywords are climbing, which are dropping, and where new opportunities are opening up.
                         </p>
                         <div className="grid sm:grid-cols-2 gap-4 mt-6">
                             {SEO_FEATURES.map(f => (
