@@ -261,10 +261,97 @@ function KeywordSuggestionsPanel({ siteId, onAdded }) {
     )
 }
 
+// Google's public favicon service — no API key, no own storage, just the domain.
+function faviconUrl(domain, size = 64) {
+    return `https://www.google.com/s2/favicons?domain=${encodeURIComponent(domain)}&sz=${size}`
+}
+
+function CompetitorLogo({ domain, size = 28 }) {
+    const [broken, setBroken] = useState(false)
+    if (broken) {
+        return (
+            <div
+                className="rounded-full bg-violet-500/20 border border-violet-500/30 flex items-center justify-center text-violet-300 font-bold shrink-0"
+                style={{ width: size, height: size, fontSize: size * 0.4 }}
+            >
+                {domain[0]?.toUpperCase()}
+            </div>
+        )
+    }
+    return (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+            src={faviconUrl(domain, size * 2)}
+            alt={domain}
+            width={size}
+            height={size}
+            className="rounded-full bg-white/5 border border-white/10 shrink-0 object-cover"
+            onError={() => setBroken(true)}
+        />
+    )
+}
+
+function PlatformPresenceDots({ present }) {
+    return (
+        <div className="flex items-center gap-1 shrink-0">
+            {ALL_PLATFORMS.map(p => {
+                const active = present?.includes(p)
+                const m = PLATFORM_META[p]
+                return (
+                    <span key={p} title={`${m.label}${active ? ' — cites this domain' : ' — does not cite this domain'}`}
+                        className={`w-3.5 h-3.5 rounded-full border flex items-center justify-center text-[7px] font-bold shrink-0 ${active ? `${m.bg} ${m.border} ${m.color}` : 'bg-transparent border-white/10 text-transparent'}`}>
+                        {m.label[0]}
+                    </span>
+                )
+            })}
+        </div>
+    )
+}
+
+function CompetitorBarChart({ competitors }) {
+    const maxShare = Math.max(...competitors.map(c => c.share), 1)
+    return (
+        <div>
+            <div className="flex items-center gap-3 mb-2">
+                <div className="w-32 sm:w-44 shrink-0" />
+                <div className="relative flex-1 h-3">
+                    <span className="absolute left-0 text-[9px] text-slate-600">0%</span>
+                    <span className="absolute left-1/2 -translate-x-1/2 text-[9px] text-slate-600">50%</span>
+                    <span className="absolute right-0 text-[9px] text-slate-600">100%</span>
+                </div>
+                <span className="w-11 shrink-0" />
+                <span className="w-[72px] shrink-0" />
+            </div>
+            <div className="space-y-3">
+                {competitors.map((c) => (
+                    <div key={c.domain} className="flex items-center gap-3">
+                        <div className="w-32 sm:w-44 shrink-0 flex items-center gap-2 min-w-0"
+                            title={c.keywords?.length ? `Mentioned for: ${c.keywords.join(', ')}` : undefined}>
+                            <CompetitorLogo domain={c.domain} size={20} />
+                            <a href={`https://${c.domain}`} target="_blank" rel="noopener noreferrer"
+                                className="text-xs text-slate-300 hover:text-violet-400 truncate">{c.domain}</a>
+                        </div>
+                        <div className="relative flex-1 h-2.5">
+                            {[25, 50, 75, 100].map(v => (
+                                <div key={v} className="absolute top-0 bottom-0 w-px bg-white/[0.06]" style={{ left: `${v}%` }} />
+                            ))}
+                            <div className="absolute inset-y-0 left-0 bg-gradient-to-r from-violet-600 to-violet-400 rounded-full"
+                                style={{ width: `${Math.max((c.share / maxShare) * 100, 3)}%` }} />
+                        </div>
+                        <span className="text-xs font-semibold text-violet-400 w-11 text-right shrink-0">{c.share}%</span>
+                        <PlatformPresenceDots present={c.platforms} />
+                    </div>
+                ))}
+            </div>
+        </div>
+    )
+}
+
 function CompetitorsPanel({ siteId }) {
     const [data, setData]       = useState(null)
     const [loading, setLoading] = useState(true)
     const [expanded, setExpanded] = useState(false)
+    const [view, setView] = useState('list')
 
     useEffect(() => {
         const token = localStorage.getItem('token')
@@ -283,29 +370,54 @@ function CompetitorsPanel({ siteId }) {
 
     return (
         <div className="bg-[#0d1117] border border-white/[0.06] rounded-2xl p-5 mb-6">
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center justify-between mb-1">
                 <h3 className="text-sm font-semibold text-white">Who else gets mentioned (Share of Voice)</h3>
-                <span className="text-xs text-slate-600">{data.totalCitations} citations total</span>
-            </div>
-            <div className="space-y-2.5">
-                {visible.map((c, i) => (
-                    <div key={c.domain} className="flex items-center gap-3">
-                        <span className="text-xs text-slate-600 w-5 text-right shrink-0">{i + 1}.</span>
-                        <div className="flex-1 min-w-0">
-                            <a href={`https://${c.domain}`} target="_blank" rel="noopener noreferrer"
-                                className="text-sm text-slate-200 hover:text-violet-400 truncate block">{c.domain}</a>
-                            {c.title && <div className="text-[11px] text-slate-600 truncate">{c.title}</div>}
-                        </div>
-                        <div className="w-20 shrink-0 hidden sm:block">
-                            <div className="h-1.5 bg-white/5 rounded-full overflow-hidden">
-                                <div className="h-full bg-violet-500 rounded-full" style={{ width: `${Math.min(c.share * 4, 100)}%` }} />
-                            </div>
-                        </div>
-                        <span className="text-xs font-semibold text-violet-400 w-12 text-right shrink-0">{c.share}%</span>
-                        <span className="text-xs text-slate-600 w-8 text-right shrink-0">{c.count}×</span>
+                <div className="flex items-center gap-3">
+                    <div className="flex bg-white/5 rounded-lg p-0.5">
+                        <button onClick={() => setView('list')}
+                            className={`px-2.5 py-1 text-[11px] font-medium rounded-md transition-all ${view === 'list' ? 'bg-white/10 text-white' : 'text-slate-500 hover:text-slate-300'}`}>
+                            List
+                        </button>
+                        <button onClick={() => setView('chart')}
+                            className={`px-2.5 py-1 text-[11px] font-medium rounded-md transition-all ${view === 'chart' ? 'bg-white/10 text-white' : 'text-slate-500 hover:text-slate-300'}`}>
+                            Chart
+                        </button>
                     </div>
-                ))}
+                    <span className="text-xs text-slate-600 hidden sm:inline">{data.totalCitations} citations total</span>
+                </div>
             </div>
+            <p className="text-[11px] text-slate-500 mb-4">
+                Domains AI models cite alongside you — ranked by share. The dots show exactly which platform, "For: ..." shows which keyword.
+            </p>
+
+            {view === 'chart' ? (
+                <CompetitorBarChart competitors={visible} />
+            ) : (
+                <div className="space-y-2.5">
+                    {visible.map((c, i) => (
+                        <div key={c.domain} className="flex items-center gap-3">
+                            <span className="text-xs text-slate-600 w-5 text-right shrink-0">{i + 1}.</span>
+                            <CompetitorLogo domain={c.domain} size={22} />
+                            <div className="flex-1 min-w-0">
+                                <a href={`https://${c.domain}`} target="_blank" rel="noopener noreferrer"
+                                    className="text-sm text-slate-200 hover:text-violet-400 truncate block">{c.domain}</a>
+                                {c.keywords?.length > 0 && (
+                                    <div className="text-[11px] text-slate-600 truncate">
+                                        For: {c.keywords.map(k => `"${k}"`).join(', ')}
+                                    </div>
+                                )}
+                            </div>
+                            <PlatformPresenceDots present={c.platforms} />
+                            <div className="w-20 shrink-0 hidden sm:block">
+                                <div className="h-1.5 bg-white/5 rounded-full overflow-hidden">
+                                    <div className="h-full bg-violet-500 rounded-full" style={{ width: `${Math.min(c.share * 4, 100)}%` }} />
+                                </div>
+                            </div>
+                            <span className="text-xs font-semibold text-violet-400 w-12 text-right shrink-0">{c.share}%</span>
+                        </div>
+                    ))}
+                </div>
+            )}
             {data.competitors.length > 5 && (
                 <button onClick={() => setExpanded(v => !v)}
                     className="mt-3 text-xs text-violet-400 hover:text-violet-300">

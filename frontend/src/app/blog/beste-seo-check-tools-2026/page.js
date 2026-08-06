@@ -4,9 +4,9 @@ import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
 
 export const metadata = {
-    title: 'AuditAI: Das SEO-Check-Tool mit GEO-Analyse (2026)',
-    description: 'AuditAI prüft SEO, Performance und GEO (KI-Sichtbarkeit für ChatGPT, Claude & Perplexity) in einem Report. Alle Features, Preise und was du als Nutzer bekommst.',
-    keywords: 'seo tool, seo check, seo audit, website audit, kostenloser seo test, seo software, seo automatisierung, geo tool, geo check, geo automatisierung, ki sichtbarkeit, generative engine optimization, chatgpt seo, core web vitals test, keyword tracking, google ranking tool, backlink check, llms.txt, schema markup, website analyse',
+    title: 'Website SEO Check & Audit: AuditAI mit GEO-Analyse (2026)',
+    description: 'Website SEO Check und Website Audit mit AuditAI: SEO, Performance und GEO (KI-Sichtbarkeit für ChatGPT, Claude & Perplexity) in einem Report. Alle Features, Preise und was du als Nutzer bekommst.',
+    keywords: 'website seo check, website audit, website seo analyse, seo check, seo audit, seo tool, kostenloser seo test, seo software, seo automatisierung, geo tool, geo check, geo automatisierung, ki sichtbarkeit, generative engine optimization, chatgpt seo, core web vitals test, keyword tracking, google ranking tool, backlink check, llms.txt, schema markup',
     alternates: {
         canonical: 'https://www.sitecheckai.dev/blog/beste-seo-check-tools-2026',
         languages: {
@@ -15,7 +15,7 @@ export const metadata = {
         },
     },
     openGraph: {
-        title: 'AuditAI: Das SEO-Check-Tool mit GEO-Analyse (2026)',
+        title: 'Website SEO Check & Audit: AuditAI mit GEO-Analyse (2026)',
         description: 'SEO, Performance und GEO in einem Report - alle Features, Preise und was du bekommst.',
         url: 'https://www.sitecheckai.dev/blog/beste-seo-check-tools-2026',
         type: 'article',
@@ -26,11 +26,11 @@ export const metadata = {
 const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
-    headline: 'AuditAI: Das SEO-Check-Tool mit GEO-Analyse (2026)',
-    description: 'AuditAI prüft SEO, Performance und GEO (KI-Sichtbarkeit für ChatGPT, Claude & Perplexity) in einem Report. Alle Features, Preise und was du als Nutzer bekommst.',
+    headline: 'Website SEO Check & Audit: AuditAI mit GEO-Analyse (2026)',
+    description: 'Website SEO Check und Website Audit mit AuditAI: SEO, Performance und GEO (KI-Sichtbarkeit für ChatGPT, Claude & Perplexity) in einem Report. Alle Features, Preise und was du als Nutzer bekommst.',
     image: 'https://www.sitecheckai.dev/blog/beste-seo-check-tools-2026/opengraph-image',
     datePublished: '2026-07-15T09:00:00+02:00',
-    dateModified: '2026-08-04T09:00:00+02:00',
+    dateModified: '2026-08-06T09:00:00+02:00',
     author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev/about' },
     publisher: {
         '@type': 'Organization',
@@ -48,7 +48,7 @@ const breadcrumbLd = {
     itemListElement: [
         { '@type': 'ListItem', position: 1, name: 'AuditAI', item: 'https://www.sitecheckai.dev' },
         { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.sitecheckai.dev/blog' },
-        { '@type': 'ListItem', position: 3, name: 'AuditAI: SEO-Check-Tool mit GEO-Analyse', item: 'https://www.sitecheckai.dev/blog/beste-seo-check-tools-2026' },
+        { '@type': 'ListItem', position: 3, name: 'Website SEO Check & Audit mit GEO-Analyse', item: 'https://www.sitecheckai.dev/blog/beste-seo-check-tools-2026' },
     ],
 }
 
@@ -56,6 +56,14 @@ const faqLd = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
     mainEntity: [
+        {
+            '@type': 'Question',
+            name: 'Was ist ein Website SEO Check?',
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Ein Website SEO Check ist eine automatisierte Analyse einer Website auf SEO-relevante Faktoren wie Title-Tags, Meta-Descriptions, Ladezeit, Seitenstruktur und technische Fehler. AuditAI führt diesen Check in unter 60 Sekunden durch und ergänzt ihn um einen GEO-Check, der prüft, ob KI-Modelle wie ChatGPT oder Claude die Website als Quelle erkennen und zitieren.',
+            },
+        },
         {
             '@type': 'Question',
             name: 'Ist AuditAI wirklich kostenlos nutzbar?',
@@ -115,7 +123,7 @@ export default function AuditAiOverviewPage() {
                     <span>/</span>
                     <Link href="/blog" className="hover:text-slate-400 transition-colors">Blog</Link>
                     <span>/</span>
-                    <span className="text-slate-500">AuditAI: SEO-Check-Tool mit GEO-Analyse</span>
+                    <span className="text-slate-500">Website SEO Check & Audit mit GEO-Analyse</span>
                 </div>
 
                 {/* Header */}
@@ -125,14 +133,14 @@ export default function AuditAiOverviewPage() {
                             Tools
                         </span>
                         <span className="text-xs text-slate-600">15. Juli 2026</span>
-                        <span className="text-xs text-slate-600">· Aktualisiert 4. August 2026</span>
+                        <span className="text-xs text-slate-600">· Aktualisiert 6. August 2026</span>
                         <span className="text-xs text-slate-600">· 8 min Lesezeit</span>
                     </div>
                     <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight tracking-tight mb-5">
-                        AuditAI: Das SEO-Check-Tool mit GEO-Analyse
+                        Website SEO Check & Audit mit AuditAI (inkl. GEO-Analyse)
                     </h1>
                     <p className="text-lg text-slate-400 leading-relaxed">
-                        Die meisten SEO-Tools prüfen, ob deine Website für Google okay aussieht - und ignorieren komplett, ob ChatGPT, Claude, Perplexity oder Google AI Overview dich überhaupt kennen. AuditAI prüft beides: klassisches SEO, Performance und GEO (KI-Sichtbarkeit), in einem Report, in unter 60 Sekunden. Hier ist alles, was du als Nutzer bekommst.
+                        Ein Website SEO Check ist eine automatisierte Analyse deiner Website auf technische, inhaltliche und Performance-Probleme, die deine Google-Rankings beeinflussen. Die meisten SEO-Tools prüfen dabei nur, ob deine Website für Google okay aussieht - und ignorieren komplett, ob ChatGPT, Claude, Perplexity oder Google AI Overview dich überhaupt kennen. AuditAI prüft beides: klassisches SEO, Performance und GEO (KI-Sichtbarkeit), in einem Report, in unter 60 Sekunden. Hier ist alles, was du als Nutzer bekommst.
                     </p>
                     <div className="mt-5 flex items-center gap-2 text-xs text-slate-600">
                         <Link href="/about" className="flex items-center gap-2 hover:text-slate-300 transition-colors">
@@ -214,7 +222,7 @@ export default function AuditAiOverviewPage() {
                     </section>
 
                     <section id="seo-analyse" className="scroll-mt-28">
-                        <h2 className="text-2xl font-bold text-white mb-4">SEO-Analyse im Detail</h2>
+                        <h2 className="text-2xl font-bold text-white mb-4">Website SEO Analyse im Detail</h2>
                         <p className="mb-5">
                             Der SEO-Teil deckt die Faktoren ab, die Google zum Bewerten deiner Seite nutzt:
                         </p>
