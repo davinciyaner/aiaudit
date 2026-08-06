@@ -469,7 +469,7 @@ export async function getCompetitors(req, res) {
 
         const normalizedOwnDomain = site.domain.replace(/^www\./, '').toLowerCase()
 
-        const [byDomain, totalAgg] = await Promise.all([
+        const [byDomain, byDomainKeyword, totalAgg] = await Promise.all([
             GeoMentionCheck.aggregate([
                 { $match: { siteId: site._id } },
                 { $unwind: '$citations' },
@@ -486,12 +486,32 @@ export async function getCompetitors(req, res) {
                 { $sort: { count: -1 } },
                 { $limit: 20 },
             ]),
+            // Welches Keyword hat die Erwähnung ausgelöst? Pro Domain getrennt aggregiert,
+            // damit "wofür wird die Domain genannt" ohne eine weitere Anfrage im Frontend sichtbar ist.
+            GeoMentionCheck.aggregate([
+                { $match: { siteId: site._id } },
+                { $unwind: '$citations' },
+                { $match: {
+                    'citations.domain': { $ne: null, $nin: [normalizedOwnDomain] },
+                } },
+                { $group: {
+                    _id: { domain: '$citations.domain', keyword: '$keyword' },
+                    count: { $sum: 1 },
+                } },
+                { $sort: { count: -1 } },
+            ]),
             GeoMentionCheck.aggregate([
                 { $match: { siteId: site._id } },
                 { $unwind: '$citations' },
                 { $count: 'total' },
             ]),
         ])
+
+        const keywordsByDomain = {}
+        for (const row of byDomainKeyword) {
+            const list = keywordsByDomain[row._id.domain] || (keywordsByDomain[row._id.domain] = [])
+            list.push({ keyword: row._id.keyword, count: row.count })
+        }
 
         const total = totalAgg[0]?.total || 0
         const competitors = byDomain.map(c => ({
@@ -501,6 +521,7 @@ export async function getCompetitors(req, res) {
             platforms: c.platforms,
             lastSeen: c.lastSeen,
             title: c.sampleTitle,
+            keywords: (keywordsByDomain[c._id] || []).slice(0, 5).map(k => k.keyword),
         }))
 
         res.json({ competitors, totalCitations: total })

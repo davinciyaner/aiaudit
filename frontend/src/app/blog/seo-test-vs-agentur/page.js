@@ -287,7 +287,7 @@ export default function SeoTestVsAgenturPage() {
                         <div>
                             <span className="text-xs font-semibold text-violet-400 uppercase tracking-wider mb-1 block">Weiterlesen</span>
                             <h3 className="text-base sm:text-lg font-bold text-white mb-2">
-                                AuditAI: Das SEO-Check-Tool mit GEO-Analyse
+                                Website SEO Check & Audit mit AuditAI
                             </h3>
                             <p className="text-slate-400 text-sm leading-relaxed max-w-md">
                                 Falls du erstmal selbst testen willst: alle Features im Überblick, inklusive kostenlosem Audit.

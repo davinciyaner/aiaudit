@@ -71,8 +71,8 @@ const ARTICLES = [
     },
     {
         slug: 'beste-seo-check-tools-2026',
-        title: 'AuditAI: Das SEO-Check-Tool mit GEO-Analyse (2026)',
-        description: 'AuditAI prüft SEO, Performance und GEO (KI-Sichtbarkeit für ChatGPT, Claude & Perplexity) in einem Report. Alle Features, Preise und was du als Nutzer bekommst.',
+        title: 'Website SEO Check & Audit: AuditAI mit GEO-Analyse (2026)',
+        description: 'Website SEO Check und Website Audit mit AuditAI: SEO, Performance und GEO (KI-Sichtbarkeit für ChatGPT, Claude & Perplexity) in einem Report. Alle Features, Preise und was du als Nutzer bekommst.',
         category: 'Tools',
         categoryColor: '#f59e0b',
         date: '15. Juli 2026',

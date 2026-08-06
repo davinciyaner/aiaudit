@@ -30,7 +30,7 @@ const jsonLd = {
     description: 'GEO (Generative Engine Optimization) bezeichnet die Optimierung von Content für KI-Antworten wie ChatGPT, Claude und Google AI Overview. Definition, Unterschied zu SEO und 19-Punkte-Checkliste.',
     image: 'https://www.sitecheckai.dev/blog/geo-optimierung-2026/opengraph-image',
     datePublished: '2026-06-10T09:00:00+02:00',
-    dateModified: '2026-07-30T09:00:00+02:00',
+    dateModified: '2026-08-06T09:00:00+02:00',
     author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev/about' },
     publisher: {
         '@type': 'Organization',
@@ -66,6 +66,14 @@ const faqLd = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
     mainEntity: [
+        {
+            '@type': 'Question',
+            name: 'Was ist Generative Engine Optimization (GEO)?',
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Generative Engine Optimization (GEO) ist die Optimierung einer Website, damit generative KI-Modelle wie ChatGPT, Claude, Perplexity und Google AI Overview sie als vertrauenswürdige Quelle erkennen und in ihren Antworten zitieren - im Unterschied zu klassischem SEO, das für Ranking-Positionen in Suchergebnissen optimiert. Der Begriff wurde 2023 in einer gemeinsamen Forschungsarbeit von Princeton, Georgia Tech und dem Allen Institute for AI geprägt.',
+            },
+        },
         {
             '@type': 'Question',
             name: 'Was ist GEO-Optimierung?',
@@ -207,7 +215,7 @@ export default function GeoArtikelPage() {
                         </span>
                         <span className="text-xs text-slate-600">10. Juni 2026</span>
                         <span className="text-xs text-slate-600">· 8 min Lesezeit</span>
-                        <span className="text-xs text-slate-600">· Aktualisiert am 30. Juli 2026</span>
+                        <span className="text-xs text-slate-600">· Aktualisiert am 6. August 2026</span>
                     </div>
                     <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight tracking-tight mb-5">
                         Was ist GEO? Generative Engine Optimization einfach erklärt
@@ -407,6 +415,10 @@ export default function GeoArtikelPage() {
                         <h2 className="text-2xl font-bold text-white mb-4">Häufige Fragen zu GEO</h2>
                         <div className="space-y-4">
                             {[
+                                {
+                                    q: 'Was ist Generative Engine Optimization (GEO)?',
+                                    a: 'Generative Engine Optimization (GEO) ist die Optimierung einer Website, damit generative KI-Modelle wie ChatGPT, Claude, Perplexity und Google AI Overview sie als vertrauenswürdige Quelle erkennen und in ihren Antworten zitieren - im Unterschied zu klassischem SEO, das für Ranking-Positionen in Suchergebnissen optimiert. Der Begriff wurde 2023 in einer gemeinsamen Forschungsarbeit von Princeton, Georgia Tech und dem Allen Institute for AI geprägt.',
+                                },
                                 {
                                     q: 'Was ist GEO-Optimierung?',
                                     a: 'GEO steht für Generative Engine Optimization. Es bezeichnet die Optimierung einer Website, damit KI-Modelle wie ChatGPT, Claude oder Perplexity sie als vertrauenswürdige Quelle erkennen und in ihren Antworten zitieren. Ähnlich wie SEO für Google-Algorithmen optimiert, zielt GEO auf die Indexierung und Nutzung durch generative KI-Systeme ab.',

@@ -5,7 +5,7 @@ import Footer from '../../components/Footer'
 export const metadata = {
     title: 'llms.txt erklärt: Was es ist und wie du es richtig einrichtest',
     description: 'llms.txt einfach erklärt: die robots.txt für KI-Modelle. Herkunft, Aufbau, Unterschied zu llms-full.txt und eine Schritt-für-Schritt-Anleitung zum Erstellen.',
-    keywords: 'llms.txt, llms.txt was ist das, llms.txt erstellen, llms-full.txt, ai crawler datei, llms.txt beispiel, llms.txt generator',
+    keywords: 'llms.txt einrichten, llms.txt, llms.txt was ist das, llms.txt erstellen, llms-full.txt, ai crawler datei, llms.txt beispiel, llms.txt generator',
     alternates: {
         canonical: 'https://www.sitecheckai.dev/blog/llms-txt-erklaert',
         languages: {
@@ -29,7 +29,7 @@ const jsonLd = {
     description: 'llms.txt einfach erklärt: die robots.txt für KI-Modelle. Herkunft, Aufbau, Unterschied zu llms-full.txt und eine Schritt-für-Schritt-Anleitung.',
     image: 'https://www.sitecheckai.dev/blog/llms-txt-erklaert/opengraph-image',
     datePublished: '2026-07-26T09:00:00+02:00',
-    dateModified: '2026-07-30T09:00:00+02:00',
+    dateModified: '2026-08-06T09:00:00+02:00',
     author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev/about' },
     publisher: {
         '@type': 'Organization',
@@ -85,6 +85,14 @@ const faqLd = {
             acceptedAnswer: {
                 '@type': 'Answer',
                 text: 'Im Root-Verzeichnis der Domain, erreichbar unter deinedomain.de/llms.txt - genau wie robots.txt oder sitemap.xml. Es muss öffentlich und ohne Login abrufbar sein, damit KI-Crawler es lesen können.',
+            },
+        },
+        {
+            '@type': 'Question',
+            name: 'Wie richte ich llms.txt ein?',
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Eine Markdown-Datei mit H1-Projektname, einem Blockquote mit Kurzbeschreibung und H2-Abschnitten mit Links zu den wichtigsten Unterseiten (z. B. Docs, Preise, API) erstellen, dann unter deinedomain.de/llms.txt öffentlich und ohne Login bereitstellen. Dauert in der Regel unter 10 Minuten.',
             },
         },
     ],
@@ -147,7 +155,7 @@ export default function LlmsTxtPage() {
                         </span>
                         <span className="text-xs text-slate-600">26. Juli 2026</span>
                         <span className="text-xs text-slate-600">· 7 min Lesezeit</span>
-                        <span className="text-xs text-slate-600">· Aktualisiert am 30. Juli 2026</span>
+                        <span className="text-xs text-slate-600">· Aktualisiert am 6. August 2026</span>
                     </div>
                     <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight tracking-tight mb-5">
                         llms.txt erklärt: Was es ist und wie du es richtig einrichtest
