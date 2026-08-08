@@ -4,7 +4,7 @@ import GeoUsage from '../models/geo_usage.js'
 import ProductSubscription from '../models/product_subscription.js'
 import SeoTrackedSite from '../models/seo_tracked_site.js'
 import SeoKeywordRanking from '../models/seo_keyword_ranking.js'
-import { checkSiteMentions, PLATFORM_COSTS, PROMPT_INTENTS, classifyGeoSuitableKeywords } from '../services/geoService.js'
+import { checkSiteMentions, PLATFORM_COSTS, PROMPT_INTENTS, classifyGeoSuitableKeywords, getAiKeywordVolume } from '../services/geoService.js'
 import { analyzeGEO } from './geo.js'
 import { assertPublicHttpsUrl, fetchSafely } from '../utils/safeFetch.js'
 import { t } from '../utils/i18n/errors.js'
@@ -673,7 +673,19 @@ export async function getKeywordSuggestions(req, res) {
             return res.json({ linked: true, suggestions: cached.data, cached: true })
         }
 
-        const suggestions = await classifyGeoSuitableKeywords(seoOnlyKeywords, geoSite.language)
+        const suitable = await classifyGeoSuitableKeywords(seoOnlyKeywords, geoSite.language)
+
+        // Reale AI-Suchvolumen ergänzen statt nur auf die LLM-Einschätzung zu vertrauen, welches
+        // Keyword "wie eine KI-Frage klingt" — und danach absteigend sortieren, damit die Vorschläge
+        // mit dem größten echten Nutzen zuerst stehen.
+        const location = geoSite.language === 'en' ? 'United States' : 'Germany'
+        const volumes = await getAiKeywordVolume(suitable, location, geoSite.language).catch(() => [])
+        const volumeByKeyword = Object.fromEntries(volumes.map(v => [v.keyword.toLowerCase(), v.aiSearchVolume]))
+
+        const suggestions = suitable
+            .map(keyword => ({ keyword, aiSearchVolume: volumeByKeyword[keyword.toLowerCase()] ?? null }))
+            .sort((a, b) => (b.aiSearchVolume ?? -1) - (a.aiSearchVolume ?? -1))
+
         KEYWORD_SUGGESTIONS_CACHE.set(cacheKey, { data: suggestions, expiresAt: Date.now() + SUGGESTIONS_CACHE_TTL_MS, sourceCount: seoOnlyKeywords.length })
 
         res.json({ linked: true, suggestions, cached: false })

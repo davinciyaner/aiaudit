@@ -6,7 +6,6 @@ const anthropic  = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
 const openai     = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
 const perplexity = new OpenAI({ apiKey: process.env.perplexity_sitecheck, baseURL: 'https://api.perplexity.ai' })
 
-// DataForSEO API — DATAFORSEO_LOGIN + DATAFORSEO_PASSWORD in .env (siehe auch seoService.js)
 const DFS_LOGIN    = process.env.DATAFORSEO_LOGIN
 const DFS_PASSWORD = process.env.DATAFORSEO_PASSWORD
 
@@ -35,7 +34,6 @@ export const PLATFORM_LABELS = {
     google_aio:  'Google AI Overview',
 }
 
-// Cost per check in USD (approx 200 input + 400 output tokens)
 export const PLATFORM_COSTS = {
     claude:     0.0066,  // Sonnet 4.6: $3/M in, $15/M out
     chatgpt:    0.0045,  // GPT-4o: $2.50/M in, $10/M out
@@ -43,7 +41,6 @@ export const PLATFORM_COSTS = {
     google_aio: 0.0026,  // DataForSEO SERP Live Advanced (~$0.002) + load_async_ai_overview surcharge ($0.0006, refunded when no AI Overview appears)
 }
 
-// Reihenfolge = Priorität: bei promptVariants=1 wird nur 'empfehlung' genutzt, bei 2 kommt 'vergleich' dazu.
 export const PROMPT_INTENTS = ['empfehlung', 'vergleich']
 
 function buildQuery(keyword, language, intent = 'empfehlung') {
@@ -57,8 +54,7 @@ function buildQuery(keyword, language, intent = 'empfehlung') {
         : `I'm looking for recommendations for: "${keyword}". Which websites, tools or services do you know and would recommend? Please name specific domains or names.`
 }
 
-// Für Google AI Overview gibt's keinen Chat-Prompt, sondern eine echte Google-Suchanfrage —
-// die Intent-Variante ändert hier die Suchphrase, nicht einen Gesprächssatz.
+
 function buildSearchQuery(keyword, language, intent = 'empfehlung') {
     if (intent === 'vergleich') {
         return language === 'de' ? `beste ${keyword}` : `best ${keyword}`
@@ -95,10 +91,6 @@ function safeHostname(url) {
     }
 }
 
-// Claude/ChatGPT liefern ohne Web-Search-Tool keine strukturierten Quellen — Domain-Namen im
-// Fließtext per Regex erkennen ist die kostenlose Notlösung, um trotzdem "wer wird sonst noch
-// genannt" (Share of Voice) zu bekommen. Bewusst auf gängige TLDs beschränkt, um Fehltreffer wie
-// "z.B." oder "Version 2.0" zu vermeiden.
 const DOMAIN_MENTION_REGEX = /\b[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?(?:\.[a-z0-9-]+)*\.(?:com|de|net|org|io|co|app|ai|dev|info|eu|at|ch|tools?|shop)\b/gi
 
 function extractDomainMentions(text, excludeDomain) {
@@ -108,8 +100,6 @@ function extractDomainMentions(text, excludeDomain) {
     return unique.map(domain => ({ url: null, domain, title: null, snippet: null }))
 }
 
-// Sentiment nur bei mentioned:true berechnen — kostet praktisch nichts (winziger Haiku-Call auf
-// bereits vorhandenen Kontext-Text) und skaliert mit Erfolg statt mit Check-Volumen.
 async function classifySentiment(context, domain) {
     if (!context) return null
     try {
@@ -131,11 +121,6 @@ async function classifySentiment(context, domain) {
     }
 }
 
-// Perplexity liefert echte Quellen-Metadaten (search_results, citations) statt nur Fließtext —
-// das ist der Unterschied zwischen "Marke genannt" und "als Quelle zitiert". Reihenfolge:
-// 1) search_results (Titel+Snippet als Kontext, beste Qualität) 2) citations (nur URL) 3) Fließtext-Fallback.
-// `citations` im Rückgabewert enthält ALLE zitierten Quellen (nicht nur die eigene Domain) — Basis
-// für "welche Seiten werden stattdessen zitiert und warum".
 function extractPerplexityCitation(res, domain) {
     const normalizedDomain = domain.replace(/^www\./, '').toLowerCase()
 
@@ -184,9 +169,6 @@ async function checkWithPerplexity(keyword, domain, language, intent) {
     return extractPerplexityCitation(res, domain)
 }
 
-// DataForSEO's Live-Advanced-Endpoint liefert vereinzelt einen transienten 40101 "Internal SE Server
-// Error", der beim direkten Retry meist verschwindet (in eigenen Tests wie auch live beobachtet) —
-// ohne Retry würde das fälschlich als "nicht erwähnt" statt als fehlgeschlagener Check gespeichert.
 async function dfsPostWithRetry(endpoint, body, keyword, retries = 1) {
     for (let attempt = 0; ; attempt++) {
         const data = await dfsPost(endpoint, body)
@@ -252,10 +234,6 @@ async function checkOneCombination(site, keyword, platform, intent) {
     }
 }
 
-// Plattformen sind unabhängige APIs mit eigenen Rate-Limits (Anthropic, OpenAI, Perplexity,
-// DataForSEO) — laufen pro Keyword+Variante parallel statt nacheinander. Mehrere Keyword+Varianten-
-// Kombinationen laufen ebenfalls gleichzeitig, aber mit einem Limit, damit kein einzelner Anbieter
-// zu viele parallele Anfragen gleichzeitig bekommt (Rate-Limit-Risiko).
 const CHECK_CONCURRENCY = 5
 
 export async function checkSiteMentions(site, variantCount = 1) {
@@ -283,9 +261,22 @@ export async function checkSiteMentions(site, variantCount = 1) {
     return results
 }
 
-// Ein gebündelter Call für die ganze Liste statt pro Keyword — SEO-Keywords sind oft enge
-// Rechercheanfragen ("keyword analyse durchführen"), die niemand einer KI als Empfehlungsfrage
-// stellen würde. Filtert auf Keywords, die als "Welches Tool empfiehlst du für X?"-Anfrage plausibel sind.
+export async function getAiKeywordVolume(keywords, location = 'Germany', language = 'de') {
+    if (!DFS_LOGIN || !DFS_PASSWORD || !keywords.length) return []
+
+    const data = await dfsPost('/v3/ai_optimization/ai_keyword_data/keywords_search_volume/live', [{
+        keywords: keywords.slice(0, 50),
+        location_name: location,
+        language_code: language,
+    }])
+
+    const items = data?.tasks?.[0]?.result?.[0]?.items || []
+    return items.map(item => ({
+        keyword: item.keyword,
+        aiSearchVolume: item.ai_search_volume ?? null,
+    }))
+}
+
 export async function classifyGeoSuitableKeywords(keywords, language = 'de') {
     if (!keywords.length) return []
 
