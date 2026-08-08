@@ -183,7 +183,7 @@ function KeywordSuggestionsPanel({ siteId, onAdded }) {
         const d = await res.json()
         const list = res.ok ? (d.suggestions || []) : []
         setSuggestions(list)
-        setSelected(new Set(list)) // pre-selected by default — user can deselect individually
+        setSelected(new Set(list.map(s => s.keyword))) // pre-selected by default — user can deselect individually
         setLoading(false)
     }, [siteId])
 
@@ -228,10 +228,10 @@ function KeywordSuggestionsPanel({ siteId, onAdded }) {
             </p>
 
             <div className="space-y-1.5 mb-4 max-h-64 overflow-y-auto pr-1">
-                {suggestions.map(kw => {
-                    const checked = selected.has(kw)
+                {suggestions.map(s => {
+                    const checked = selected.has(s.keyword)
                     return (
-                        <button key={kw} type="button" onClick={() => toggle(kw)}
+                        <button key={s.keyword} type="button" onClick={() => toggle(s.keyword)}
                             className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-lg border text-left transition-all ${
                                 checked
                                     ? 'bg-violet-500/10 border-violet-500/25 text-white'
@@ -240,7 +240,12 @@ function KeywordSuggestionsPanel({ siteId, onAdded }) {
                             <div className={`w-3.5 h-3.5 rounded border shrink-0 flex items-center justify-center ${checked ? 'bg-violet-500 border-violet-500' : 'border-white/20'}`}>
                                 {checked && <Check className="w-2.5 h-2.5 text-white" strokeWidth={3.5} />}
                             </div>
-                            <span className="text-sm">{kw}</span>
+                            <span className="text-sm flex-1">{s.keyword}</span>
+                            {s.aiSearchVolume != null && (
+                                <span className="text-[10px] text-cyan-400/80 font-medium shrink-0" title="Estimated AI search volume/month">
+                                    {s.aiSearchVolume.toLocaleString('en-US')} AI searches/mo.
+                                </span>
+                            )}
                         </button>
                     )
                 })}
@@ -252,7 +257,7 @@ function KeywordSuggestionsPanel({ siteId, onAdded }) {
                     {adding ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Plus className="w-3.5 h-3.5" />}
                     Add selected ({selected.size})
                 </button>
-                <button onClick={() => addKeywords(suggestions)} disabled={adding}
+                <button onClick={() => addKeywords(suggestions.map(s => s.keyword))} disabled={adding}
                     className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 transition-all disabled:opacity-50">
                     Add all {suggestions.length}
                 </button>

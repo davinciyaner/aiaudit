@@ -35,7 +35,6 @@ export async function analyzeGEO(url, html) {
     const pageTitle = $('title').text()
     const pageDescription = $('meta[name="description"]').attr('content') || ''
 
-    // ─── 1. STRUCTURED DATA ───────────────────────────────────────────
     const structuredDataScripts = $('script[type="application/ld+json"]')
     const structuredDataCount = structuredDataScripts.length
     let hasOrganization = false
@@ -79,7 +78,6 @@ export async function analyzeGEO(url, html) {
         'WebSite oder SoftwareApplication Schema fehlt',
         'WebSite Schema mit SearchAction hinzufuegen, oder SoftwareApplication mit featureList und offers')
 
-    // ─── 2. KI-INDEXIERBARKEIT ─────────────────────────────────────────
     let hasLlmsTxt = false
     let hasLlmsFullTxt = false
     try {
@@ -98,7 +96,6 @@ export async function analyzeGEO(url, html) {
         'llms-full.txt fehlt',
         'llms-full.txt mit vollstaendigem Seiteninhalt hinzufuegen (erweiterter llms.txt-Standard)')
 
-    // robots.txt — mehrere KI-Crawler pruefen
     let robotsContent = ''
     try {
         const robotsRes = await fetch(`${hostname}/robots.txt`, { signal: AbortSignal.timeout(5000) })
@@ -117,7 +114,6 @@ export async function analyzeGEO(url, html) {
             : 'KI-Crawler blockiert',
         'GPTBot, ClaudeBot, PerplexityBot und weitere KI-Crawler in robots.txt erlauben')
 
-    // sitemap.xml
     let hasSitemap = false
     try {
         if (/sitemap:/i.test(robotsContent)) {
@@ -131,7 +127,6 @@ export async function analyzeGEO(url, html) {
         'Keine sitemap.xml gefunden',
         'sitemap.xml erstellen und in robots.txt verlinken — KI-Crawler nutzen sie zur vollstaendigen Indexierung')
 
-    // ─── 3. CONTENT-QUALITAET ─────────────────────────────────────────
     const hasDirectDefinition = (
         /\b(is a|is an|ist ein|ist eine|is the)\b/.test(bodyText) ||
         /\b(is a|is an|ist ein|ist eine)\b/.test(metaDesc)
@@ -169,7 +164,6 @@ export async function analyzeGEO(url, html) {
         'Keine externen Quellenverweise gefunden',
         'Links zu autoritaeren Quellen (Studien, Docs, Wikipedia) erhoehen das Vertrauen von KI-Modellen in deine Inhalte')
 
-    // ─── 4. VERTRAUEN / E-E-A-T ───────────────────────────────────────
     const hasAuthorInfo = (
         $('[rel="author"]').length > 0 ||
         $('meta[name="author"]').length > 0 ||
@@ -198,7 +192,6 @@ export async function analyzeGEO(url, html) {
         'Keine Datenschutz/Impressum Links gefunden',
         'Privacy Policy und Impressum verlinken — grundlegende Trust-Signale fuer KI und Suchmaschinen')
 
-    // ─── 5. TECHNISCH ─────────────────────────────────────────────────
     const hasHTTPS = url.startsWith('https://')
     check(hasHTTPS, 5,
         'Kein HTTPS — Seite nicht verschluesselt',
@@ -214,10 +207,8 @@ export async function analyzeGEO(url, html) {
         'HTML lang-Attribut fehlt',
         'Sprache im HTML-Tag setzen (z.B. lang="de") — KI ordnet Inhalte sonst keiner Sprache zu')
 
-    // ─── SCORE ────────────────────────────────────────────────────────
     const scorePercent = Math.round((score.total / score.max) * 100)
 
-    // ─── EMPFEHLUNGEN (priorisiert) ───────────────────────────────────
     const recommendations = []
     if (!hasLlmsTxt) recommendations.push({
         priority: 'critical',
