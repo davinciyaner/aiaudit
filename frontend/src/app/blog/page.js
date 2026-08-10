@@ -25,6 +25,15 @@ const breadcrumbLd = {
 
 const ARTICLES = [
     {
+        slug: 'ki-sichtbarkeit-erlangen',
+        title: 'KI-Sichtbarkeit erlangen: So wirst du von ChatGPT, Claude & Perplexity zitiert',
+        description: 'KI-Sichtbarkeit ist mehr als llms.txt und Schema Markup. Wie du wirklich von ChatGPT, Claude, Perplexity und Google AI Overview zitiert wirst - inklusive Monitoring mit AuditAI.',
+        category: 'GEO',
+        categoryColor: '#06b6d4',
+        date: '10. August 2026',
+        readTime: '9 min',
+    },
+    {
         slug: 'core-web-vitals-testen',
         title: 'Core Web Vitals 2026: Verstehen und kostenlos testen',
         description: 'LCP, INP und CLS erklärt - mit den offiziellen Google-Schwellenwerten. Plus: wie du sie in unter 2 Minuten kostenlos testest.',

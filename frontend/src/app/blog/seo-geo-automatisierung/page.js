@@ -318,6 +318,27 @@ export default function SeoGeoAutomatisierungPage() {
                     </div>
                 </div>
 
+                {/* Cross-link to KI-Sichtbarkeit deep dive */}
+                <div className="mb-5 bg-white/[0.02] border border-white/[0.06] rounded-2xl p-6 sm:p-8">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 justify-between">
+                        <div>
+                            <span className="text-xs font-semibold text-violet-400 uppercase tracking-wider mb-1 block">Weiterlesen</span>
+                            <h3 className="text-base sm:text-lg font-bold text-white mb-2">
+                                KI-Sichtbarkeit erlangen: So wirst du tatsächlich zitiert
+                            </h3>
+                            <p className="text-slate-400 text-sm leading-relaxed max-w-md">
+                                Technische GEO-Signale sind nur die halbe Miete - Content-Strategie und plattformspezifische Unterschiede im Detail.
+                            </p>
+                        </div>
+                        <Link
+                            href="/blog/ki-sichtbarkeit-erlangen"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/[0.06] hover:bg-white/10 text-white text-sm font-semibold rounded-xl transition-all duration-200 shrink-0"
+                        >
+                            Artikel lesen
+                        </Link>
+                    </div>
+                </div>
+
                 {/* CTA: SEO Automatisierung */}
                 <div className="mt-14 bg-emerald-500/[0.04] border border-emerald-500/20 rounded-2xl p-6 sm:p-8">
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 justify-between">

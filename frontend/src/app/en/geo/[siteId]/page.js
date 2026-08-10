@@ -52,6 +52,18 @@ function MentionBadge({ mentioned }) {
         : <span className="inline-flex items-center gap-1 text-xs font-semibold text-slate-500 bg-white/5 border border-white/10 px-2 py-0.5 rounded-md"><X className="w-3 h-3 opacity-50" />No</span>
 }
 
+// Compact dot instead of a text badge for the table overview — with many rows and mostly
+// negative results, the eye should jump straight to the (few) hits instead of reading
+// "No" 4x per row. Full detail is still available when expanding a row.
+function MentionDot({ mentioned }) {
+    if (mentioned == null) return <span className="inline-block w-2 h-2 rounded-full bg-white/10" title="Not tested" />
+    return mentioned
+        ? <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-violet-500/20 border border-violet-500/50" title="Mentioned">
+              <Check className="w-3 h-3 text-violet-400" strokeWidth={3} />
+          </span>
+        : <span className="inline-block w-2 h-2 rounded-full bg-white/10" title="Not mentioned" />
+}
+
 function SentimentBadge({ sentiment }) {
     const meta = {
         positive: { label: 'Positive', color: 'text-emerald-400', bg: 'bg-emerald-500/10', border: 'border-emerald-500/20' },
@@ -543,25 +555,48 @@ function CitationAnalysis({ url }) {
     )
 }
 
+// Compact chips instead of a full list with an analysis button per citation — with up to
+// 4 platforms x 2 prompt variants x 5 citations the expanded row used to get huge ("scroll
+// forever"). Anyone who wants the GEO analysis for a source clicks the chip.
 function CitationList({ citations }) {
+    const [showAll, setShowAll] = useState(false)
     if (!citations?.length) return null
+    const shown = showAll ? citations : citations.slice(0, 4)
     return (
-        <div className="mt-2 space-y-2">
-            <p className="text-[10px] uppercase tracking-wider text-slate-600 font-semibold">Cited sources ({citations.length})</p>
-            {citations.slice(0, 5).map((cit, idx) => (
-                <div key={idx} className="text-xs">
-                    {cit.url ? (
-                        <a href={cit.url} target="_blank" rel="noopener noreferrer"
-                            className="text-slate-400 hover:text-slate-200 underline underline-offset-2">
-                            {cit.domain}
-                        </a>
-                    ) : (
-                        <span className="text-slate-400">{cit.domain}</span>
-                    )}
-                    {cit.title && <span className="text-slate-600"> — {cit.title}</span>}
-                    {cit.url && <div><CitationAnalysis url={cit.url} /></div>}
+        <div className="mt-1.5">
+            <p className="text-[10px] text-slate-600 mb-1">These sources were cited instead — click for details:</p>
+            <div className="flex flex-wrap items-center gap-1.5">
+                {shown.map((cit, idx) => (
+                    <CitationChip key={idx} citation={cit} />
+                ))}
+                {!showAll && citations.length > shown.length && (
+                    <button type="button" onClick={() => setShowAll(true)}
+                        className="text-[11px] text-violet-400 hover:text-violet-300 underline underline-offset-2">
+                        +{citations.length - shown.length} more
+                    </button>
+                )}
+            </div>
+        </div>
+    )
+}
+
+function CitationChip({ citation: cit }) {
+    const [open, setOpen] = useState(false)
+    return (
+        <div className="relative">
+            <button type="button" onClick={() => cit.url && setOpen(v => !v)}
+                className="text-[11px] text-slate-400 hover:text-slate-200 bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 px-2 py-0.5 rounded-md transition-colors">
+                {cit.domain}
+            </button>
+            {open && cit.url && (
+                <div className="mt-1.5">
+                    <a href={cit.url} target="_blank" rel="noopener noreferrer"
+                        className="text-[11px] text-violet-400 hover:text-violet-300 underline underline-offset-2 block mb-1">
+                        Open page ↗
+                    </a>
+                    <CitationAnalysis url={cit.url} />
                 </div>
-            ))}
+            )}
         </div>
     )
 }
@@ -631,6 +666,12 @@ function MentionHistoryChart({ siteId, mentionedCount, mentionRate, checkedCount
                     <span className="text-lg font-bold text-white">{position ?? '—'}/{positionTotal ?? '—'}</span>
                 </div>
             </div>
+
+            {mentionedCount === 0 && checkedCount > 0 && (
+                <p className="text-xs text-slate-500 leading-relaxed mb-5 -mt-2">
+                    No mentions yet — normal for young domains. AI models learn about new websites gradually, this can take weeks to months.
+                </p>
+            )}
 
             <div className="flex items-center justify-between mb-4">
                 <h3 className="text-sm font-semibold text-white">Mention Rate History</h3>
@@ -868,12 +909,20 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
     const results = data?.results || []
     const intents = data?.intents?.length ? data.intents : ['empfehlung']
 
-    const filtered = results.filter(r => {
-        if (filter === 'erwaehnt') return platforms.some(p => aggregateMention(r.checks, p, intents) === true)
-        if (filter === 'nicht')    return platforms.every(p => aggregateMention(r.checks, p, intents) === false)
-        if (filter === 'ungetestet') return platforms.every(p => aggregateMention(r.checks, p, intents) == null)
-        return true
-    })
+    // Mentioned keywords first — with mostly negative results, the few real hits should be
+    // immediately visible instead of sitting somewhere among 70 "No" rows.
+    const filtered = results
+        .filter(r => {
+            if (filter === 'erwaehnt') return platforms.some(p => aggregateMention(r.checks, p, intents) === true)
+            if (filter === 'nicht')    return platforms.every(p => aggregateMention(r.checks, p, intents) === false)
+            if (filter === 'ungetestet') return platforms.every(p => aggregateMention(r.checks, p, intents) == null)
+            return true
+        })
+        .sort((a, b) => {
+            const aMentioned = platforms.some(p => aggregateMention(a.checks, p, intents) === true)
+            const bMentioned = platforms.some(p => aggregateMention(b.checks, p, intents) === true)
+            return aMentioned === bMentioned ? 0 : aMentioned ? -1 : 1
+        })
 
     const totalChecks = platforms.length * intents.length * (site?.keywords?.length || 0)
     const estSeconds   = totalChecks * 6.4 // avg. duration per check, measured live
@@ -890,23 +939,46 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
                 checkedCount={data?.checkedCount}
             />
 
-            {/* Platform badges */}
-            <div className="flex items-center gap-2 mb-5 flex-wrap">
-                {platforms.map(p => {
-                    const m = PLATFORM_META[p]
-                    return (
-                        <span key={p} className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold ${m.color} ${m.bg} border ${m.border}`}>
-                            {m.label}
-                        </span>
-                    )
-                })}
-                <button onClick={openPlatformEdit}
-                    className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold text-slate-500 hover:text-slate-300 bg-white/4 hover:bg-white/8 border border-white/8 transition-all">
-                    <Settings2 className="w-3 h-3" />Edit
-                </button>
-                {intents.length > 1 && (
-                    <span className="text-xs text-slate-600">· {intents.length} prompt variants per keyword ({intents.map(i => INTENT_META[i]?.label || i).join(', ')})</span>
-                )}
+            {/* One control bar instead of two separate rows — what's tracked and what you can
+                do belongs together at a glance, not split into separate blocks. */}
+            <div className="flex items-center justify-between gap-3 mb-2 flex-wrap">
+                <div className="flex items-center gap-2 flex-wrap">
+                    {platforms.map(p => {
+                        const m = PLATFORM_META[p]
+                        return (
+                            <span key={p} className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold ${m.color} ${m.bg} border ${m.border}`}>
+                                {m.label}
+                            </span>
+                        )
+                    })}
+                    <button onClick={openPlatformEdit}
+                        className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold text-slate-500 hover:text-slate-300 bg-white/4 hover:bg-white/8 border border-white/8 transition-all">
+                        <Settings2 className="w-3 h-3" />Edit
+                    </button>
+                </div>
+                <div className="flex items-center gap-2 flex-wrap">
+                    {selected.size > 0 && (
+                        <button onClick={handleRemoveSelected}
+                            className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl border border-red-500/20 text-red-400 hover:bg-red-500/10 transition-all">
+                            <Trash2 className="w-3.5 h-3.5" />Remove {selected.size}
+                        </button>
+                    )}
+                    <button onClick={() => setShowAdd(v => !v)}
+                        className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 transition-all">
+                        <Plus className="w-3.5 h-3.5" />Keywords
+                    </button>
+                    <button onClick={handleCheck} disabled={checking}
+                        className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white transition-all disabled:opacity-50">
+                        {checking ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <RefreshCw className="w-3.5 h-3.5" />}
+                        {checking ? checkLabel : 'Check now'}
+                    </button>
+                </div>
+            </div>
+            <div className="text-xs text-slate-600 mb-5">
+                {site?.lastChecked
+                    ? `Last checked: ${new Date(site.lastChecked).toLocaleString('en-US', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' })}`
+                    : 'Not checked yet'}
+                {intents.length > 1 && ` · ${intents.length} prompt variants per keyword (${intents.map(i => INTENT_META[i]?.label || i).join(', ')})`}
             </div>
 
             {/* Edit platforms */}
@@ -957,31 +1029,13 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
                 )}
             </AnimatePresence>
 
-            {/* Toolbar */}
-            <div className="flex items-center justify-between gap-3 mb-4 flex-wrap">
-                <div className="text-sm text-slate-500">
-                    {site?.lastChecked
-                        ? `Last checked: ${new Date(site.lastChecked).toLocaleString('en-US', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' })}`
-                        : 'Not checked yet'}
-                </div>
-                <div className="flex items-center gap-2 flex-wrap">
-                    {selected.size > 0 && (
-                        <button onClick={handleRemoveSelected}
-                            className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl border border-red-500/20 text-red-400 hover:bg-red-500/10 transition-all">
-                            <Trash2 className="w-3.5 h-3.5" />Remove {selected.size}
-                        </button>
-                    )}
-                    <button onClick={() => setShowAdd(v => !v)}
-                        className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 transition-all">
-                        <Plus className="w-3.5 h-3.5" />Keywords
-                    </button>
-                    <button onClick={handleCheck} disabled={checking}
-                        className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white transition-all disabled:opacity-50">
-                        {checking ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <RefreshCw className="w-3.5 h-3.5" />}
-                        {checking ? checkLabel : 'Check now'}
-                    </button>
-                </div>
-            </div>
+            {/* Summary — so you don't have to scan the whole table to get the big picture
+                when most rows show "No" anyway. */}
+            {results.length > 0 && (
+                <p className="text-sm text-slate-400 mb-4">
+                    <span className="text-white font-semibold">{data?.mentionedCount ?? 0} of {data?.checkedCount ?? results.length}</span> keywords have been mentioned at least once.
+                </p>
+            )}
 
             {/* Filter */}
             {results.length > 0 && (
@@ -1090,7 +1144,7 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
                                                 </td>
                                                 {platforms.map(p => (
                                                     <td key={p} className="px-4 py-3.5">
-                                                        <MentionBadge mentioned={aggregateMention(checks, p, intents)} />
+                                                        <MentionDot mentioned={aggregateMention(checks, p, intents)} />
                                                     </td>
                                                 ))}
                                                 <td className="px-5 py-3.5 hidden sm:table-cell">
