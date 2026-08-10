@@ -31,44 +31,69 @@ async function dfsPost(endpoint, body) {
     return res.json()
 }
 
+// DataForSEO liefert vereinzelt einen transienten Fehler (z.B. 40101 Internal SE Server Error)
+// statt echter Ergebnisse — ohne Retry wurde das bisher stumm als "Domain nicht gefunden"
+// gespeichert und sah wie ein Rankingverlust aus, obwohl der Check schlicht fehlgeschlagen war.
+async function dfsPostWithRetry(endpoint, body, keyword, retries = 1) {
+    for (let attempt = 0; ; attempt++) {
+        const data = await dfsPost(endpoint, body)
+        const task = data.tasks?.[0]
+        if (task?.status_code === 20000 || attempt >= retries) return data
+        console.warn(`[seoService] Transienter SERP-Fehler bei "${keyword}" (Versuch ${attempt + 1}/${retries + 1}):`, task?.status_code, task?.status_message)
+        await new Promise(r => setTimeout(r, 1500))
+    }
+}
+
 // ─── Rank Tracking ───────────────────────────────────────────────────────────
 
-async function checkKeywordRanking(keyword, domain, location = 'Germany', language = 'de') {
-    if (!isConfigured()) return { position: null, url: null }
-
-    console.log(`[seoService] Prüfe "${keyword}" für ${domain}`)
-    const data = await dfsPost('/v3/serp/google/organic/live/regular', [{
+async function fetchOrganicItems(keyword, location, language) {
+    const data = await dfsPostWithRetry('/v3/serp/google/organic/live/regular', [{
         keyword,
         location_name: location,
         language_code: language,
         device: 'desktop',
         os: 'windows',
         depth: 100,
-    }])
+    }], keyword)
 
     const items = data.tasks?.[0]?.result?.[0]?.items
     if (!items) {
         console.warn(`[seoService] Keine Ergebnisse für "${keyword}" — API-Antwort:`, JSON.stringify(data).slice(0, 300))
-        return { position: null, url: null }
+        return null
     }
+    return items.filter(i => i.type === 'organic')
+}
 
-    const organicItems = items.filter(i => i.type === 'organic')
-    console.log(`[seoService] "${keyword}" — ${organicItems.length} organische Ergebnisse. Top 5 Domains:`,
-        organicItems.slice(0, 5).map(i => `${i.rank_absolute}. ${i.domain}`)
-    )
+// Live-SERP-Snapshots schwanken in der zurückgegebenen Ergebnismenge (z.B. mal 49, mal 53 organische
+// Treffer) — bei Domains genau an der Grenze der erfassten Tiefe sieht das wie ein Rankingverlust aus,
+// obwohl es reines Snapshot-Rauschen ist. Bei "nicht gefunden" deshalb einmal bestätigend nachprüfen,
+// bevor das als echtes Ergebnis gespeichert wird.
+async function checkKeywordRanking(keyword, domain, location = 'Germany', language = 'de') {
+    if (!isConfigured()) return { position: null, url: null }
 
     const normalizedDomain = domain.replace(/^www\./, '')
-    const found = organicItems.find(i => {
+    const findInItems = (organicItems) => organicItems.find(i => {
         const itemDomain = (i.domain || '').replace(/^www\./, '')
         return itemDomain === normalizedDomain || itemDomain.endsWith(`.${normalizedDomain}`)
     })
 
-    if (!found) {
+    for (let attempt = 0; attempt < 2; attempt++) {
+        console.log(`[seoService] Prüfe "${keyword}" für ${domain}${attempt > 0 ? ' (Bestätigungsversuch)' : ''}`)
+        const organicItems = await fetchOrganicItems(keyword, location, language)
+        if (!organicItems) return { position: null, url: null }
+
+        console.log(`[seoService] "${keyword}" — ${organicItems.length} organische Ergebnisse. Top 5 Domains:`,
+            organicItems.slice(0, 5).map(i => `${i.rank_absolute}. ${i.domain}`)
+        )
+
+        const found = findInItems(organicItems)
+        if (found) {
+            console.log(`[seoService] "${keyword}" — Position ${found.rank_absolute} gefunden`)
+            return { position: found.rank_absolute, url: found.url }
+        }
         console.log(`[seoService] "${keyword}" — Domain "${normalizedDomain}" nicht in Top ${organicItems.length} gefunden`)
-        return { position: null, url: null }
     }
-    console.log(`[seoService] "${keyword}" — Position ${found.rank_absolute} gefunden`)
-    return { position: found.rank_absolute, url: found.url }
+    return { position: null, url: null }
 }
 
 export async function checkSiteRankings(site) {

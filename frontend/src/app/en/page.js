@@ -1,5 +1,7 @@
 import Navbar from '../components/Navbar'
 import Hero from '../components/en/Hero'
+import GeoTrackingTeaser from '../components/en/GeoTrackingTeaser'
+import GeoHowItWorks from '../components/en/GeoHowItWorks'
 import SeoTrackingTeaser from '../components/en/SeoTrackingTeaser'
 import SeoSection from '../components/en/SeoSection'
 import GeoSection from '../components/en/GeoSection'
@@ -17,7 +19,7 @@ import { FAQS_EN } from '../components/en/faqDataEn'
 export const metadata = {
     title: { absolute: 'SEO Automation & AI Visibility Check – Audit in 60s | AuditAI' },
     description: 'Free website audit for SEO automation & AI visibility in 60 seconds: check title tags, Core Web Vitals, and visibility in ChatGPT, Claude, Perplexity & Google AI Overview.',
-    keywords: 'seo automation, ai visibility, seo test, free seo test, seo check, free website seo check, free seo analysis, free website audit, seo analysis tool, performance test, core web vitals test, GEO optimization, website checker, lighthouse alternative 2026',
+    keywords: 'seo automation, ai visibility, geo automation, ai visibility tracker, mention rate tracking, share of voice ai, track chatgpt visibility, track ai mentions, seo test, free seo test, seo check, free website seo check, free seo analysis, free website audit, seo analysis tool, performance test, core web vitals test, GEO optimization, website checker, lighthouse alternative 2026',
     alternates: {
         canonical: 'https://www.sitecheckai.dev/en',
         languages: {
@@ -58,6 +60,8 @@ export default function LandingPageEn() {
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
             <Navbar locale="en" />
             <Hero />
+            <GeoTrackingTeaser />
+            <GeoHowItWorks />
             <SeoTrackingTeaser />
             <SeoSection />
             <GeoSection />

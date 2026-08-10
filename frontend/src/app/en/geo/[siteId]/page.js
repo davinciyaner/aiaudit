@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import {
     ArrowLeft, Globe, Loader2, RefreshCw, Plus, Trash2, X,
     Sparkles, Check, ChevronDown, ChevronUp, Settings2, Lock,
+    LayoutDashboard, Users, GitCompare, Lightbulb, ArrowUp, ArrowDown, Minus,
 } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter, useParams } from 'next/navigation'
@@ -30,6 +31,13 @@ const INTENT_META = {
     empfehlung: { label: 'Recommendation' },
     vergleich:  { label: 'Comparison' },
 }
+
+const NAV_ITEMS = [
+    { id: 'overview',    label: 'Overview',                     description: 'Your mention rate, trend over time, and every tracked keyword in detail.',   icon: LayoutDashboard },
+    { id: 'competitors', label: 'Competitors',                  description: 'Which other domains AI models cite alongside you - as a list or a chart.',    icon: Users },
+    { id: 'correlation', label: 'SEO Ranking + AI Mentions',    description: 'Does a page rank on Google but never get mentioned by AI models, or the other way around?', icon: GitCompare },
+    { id: 'suggestions', label: 'Suggest Keywords',             description: 'SEO keywords that would also make sense to track for GEO.',                   icon: Lightbulb },
+]
 
 function aggregateMention(checks, platform, intents) {
     const docs = intents.map(i => checks?.[platform]?.[i]).filter(Boolean)
@@ -85,7 +93,13 @@ function CorrelationPanel({ siteId }) {
             .finally(() => setLoading(false))
     }, [siteId])
 
-    if (loading || !data) return null
+    if (loading) return (
+        <div className="flex flex-col items-center justify-center py-20 gap-3">
+            <Loader2 className="w-6 h-6 text-violet-400 animate-spin" />
+            <span className="text-sm text-slate-500">Loading data…</span>
+        </div>
+    )
+    if (!data) return null
 
     if (!data.linked) {
         return (
@@ -113,12 +127,39 @@ function CorrelationPanel({ siteId }) {
 
     const visible = expanded ? data.matched : data.matched.slice(0, 3)
 
+    const totalKeywords = data.matched.length + data.seoOnlyKeywords.length + data.geoOnlyKeywords.length
+    // A smaller position number is better - invert the delta so "improved" (position went down)
+    // gets the green up arrow, matching standard rank-tracker convention.
+    const positionTrendDelta = data.avgPositionDelta != null ? Math.round(-data.avgPositionDelta * 10) / 10 : null
+    // The average alone can mislead (a few very bad positions drag it up) - show separately how
+    // many actually rank visibly (same threshold the backend uses for "seoVisible").
+    const visibleCount = data.matched.filter(m => m.seoPosition != null && m.seoPosition <= SEO_VISIBLE_THRESHOLD).length
+
     return (
         <div className="bg-[#0d1117] border border-white/[0.06] rounded-2xl p-5 mb-6">
             <div className="flex items-center justify-between mb-4">
                 <h3 className="text-sm font-semibold text-white">SEO Ranking + AI Mention</h3>
                 <span className="text-xs text-slate-600">{data.matched.length} shared keywords</span>
             </div>
+
+            <div className="flex items-center gap-5 mb-5 pb-5 border-b border-white/[0.06] flex-wrap">
+                <div className="flex items-baseline gap-2">
+                    <span className="text-xs text-slate-500">Keywords</span>
+                    <span className="text-lg font-bold text-white">{data.matched.length}/{totalKeywords}</span>
+                </div>
+                <div className="w-px h-7 bg-white/10" />
+                <div className="flex items-baseline gap-2">
+                    <span className="text-xs text-slate-500">Avg. Position</span>
+                    <span className="text-lg font-bold text-white">{data.avgPosition ?? '—'}</span>
+                    {positionTrendDelta != null && <TrendArrow delta={positionTrendDelta} />}
+                </div>
+                <div className="w-px h-7 bg-white/10" />
+                <div className="flex items-baseline gap-2">
+                    <span className="text-xs text-slate-500">Google (Top {SEO_VISIBLE_THRESHOLD})</span>
+                    <span className="text-lg font-bold text-white">{visibleCount}/{data.matched.length}</span>
+                </div>
+            </div>
+
             <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                     <thead>
@@ -215,7 +256,13 @@ function KeywordSuggestionsPanel({ siteId, onAdded }) {
         }
     }
 
-    if (loading || !suggestions?.length) return null
+    if (loading) return (
+        <div className="flex flex-col items-center justify-center py-20 gap-3">
+            <Loader2 className="w-6 h-6 text-violet-400 animate-spin" />
+            <span className="text-sm text-slate-500">Loading data…</span>
+        </div>
+    )
+    if (!suggestions?.length) return null
 
     return (
         <div className="bg-[#0d1117] border border-white/[0.06] rounded-2xl p-5 mb-6">
@@ -369,7 +416,13 @@ function CompetitorsPanel({ siteId }) {
             .finally(() => setLoading(false))
     }, [siteId])
 
-    if (loading || !data?.competitors?.length) return null
+    if (loading) return (
+        <div className="flex flex-col items-center justify-center py-20 gap-3">
+            <Loader2 className="w-6 h-6 text-violet-400 animate-spin" />
+            <span className="text-sm text-slate-500">Loading data…</span>
+        </div>
+    )
+    if (!data?.competitors?.length) return null
 
     const visible = expanded ? data.competitors : data.competitors.slice(0, 5)
 
@@ -513,10 +566,17 @@ function CitationList({ citations }) {
     )
 }
 
-function MentionHistoryChart({ siteId }) {
-    const [history, setHistory] = useState(null)
-    const [loading, setLoading] = useState(true)
-    const [hover, setHover]     = useState(null)
+function TrendArrow({ delta }) {
+    if (delta > 0) return <span className="inline-flex items-center gap-0.5 text-emerald-400"><ArrowUp className="w-3.5 h-3.5" strokeWidth={2.5} />{delta}</span>
+    if (delta < 0) return <span className="inline-flex items-center gap-0.5 text-red-400"><ArrowDown className="w-3.5 h-3.5" strokeWidth={2.5} />{Math.abs(delta)}</span>
+    return <span className="inline-flex items-center gap-0.5 text-slate-500"><Minus className="w-3.5 h-3.5" /></span>
+}
+
+function MentionHistoryChart({ siteId, mentionedCount, mentionRate, checkedCount }) {
+    const [history, setHistory]         = useState(null)
+    const [loading, setLoading]         = useState(true)
+    const [hover, setHover]             = useState(null)
+    const [competitors, setCompetitors] = useState(null)
 
     useEffect(() => {
         const token = localStorage.getItem('token')
@@ -527,67 +587,107 @@ function MentionHistoryChart({ siteId }) {
             .then(d => setHistory(d.history || []))
             .catch(() => setHistory([]))
             .finally(() => setLoading(false))
+
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/geo/sites/${siteId}/competitors`, {
+            headers: { Authorization: `Bearer ${token}` },
+        })
+            .then(res => res.json())
+            .then(d => setCompetitors(d.competitors || []))
+            .catch(() => setCompetitors([]))
     }, [siteId])
 
-    if (loading || !history?.length) return null
-
+    const n = history?.length || 0
     const W = 640, H = 180, padL = 34, padR = 12, padT = 12, padB = 24
     const plotW = W - padL - padR, plotH = H - padT - padB
-    const n = history.length
     const xAt = (i) => n <= 1 ? padL : padL + (plotW * i) / (n - 1)
     const yAt = (rate) => padT + plotH * (1 - rate / 100)
-
-    const points = history.map((h, i) => `${xAt(i)},${yAt(h.rate)}`).join(' ')
+    const points = n ? history.map((h, i) => `${xAt(i)},${yAt(h.rate)}`).join(' ') : ''
     const formatDate = (iso) => new Date(iso).toLocaleDateString('en-US', { day: '2-digit', month: '2-digit' })
 
+    // Trend since the first recorded check in the current window.
+    const visibilityDelta = n >= 2 ? Math.round((history[n - 1].rate - history[0].rate) * 10) / 10 : null
+
+    // Approximate field position: own mention rate compared against competitors' share-of-voice
+    // (both are % of how often AI models name the domain) - not an exactly identical measure,
+    // but the best available comparison for a ranking.
+    let position = null, positionTotal = null
+    if (competitors && mentionRate != null) {
+        const ahead = competitors.filter(c => c.share > mentionRate).length
+        position = ahead + 1
+        positionTotal = competitors.length + 1
+    }
+
     return (
-        <div className="bg-[#0d1117] border border-white/[0.06] rounded-2xl p-5 mb-6">
+        <div className="mb-8 pb-6 border-b border-white/[0.06]">
+            <div className="flex items-center gap-5 mb-5 flex-wrap">
+                <div className="flex items-baseline gap-2">
+                    <span className="text-xs text-slate-500">Visibility</span>
+                    <span className="text-lg font-bold text-white">{mentionedCount ?? '—'}/{checkedCount ?? '—'}</span>
+                    {visibilityDelta != null && <TrendArrow delta={visibilityDelta} />}
+                </div>
+                <div className="w-px h-7 bg-white/10" />
+                <div className="flex items-baseline gap-2">
+                    <span className="text-xs text-slate-500">Position</span>
+                    <span className="text-lg font-bold text-white">{position ?? '—'}/{positionTotal ?? '—'}</span>
+                </div>
+            </div>
+
             <div className="flex items-center justify-between mb-4">
                 <h3 className="text-sm font-semibold text-white">Mention Rate History</h3>
-                <span className="text-xs text-slate-600">{n} check{n !== 1 ? 's' : ''} recorded</span>
+                {n > 0 && <span className="text-xs text-slate-600">{n} check{n !== 1 ? 's' : ''} recorded</span>}
             </div>
 
-            <div className="relative">
-                <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-auto" preserveAspectRatio="xMidYMid meet">
-                    {[0, 25, 50, 75, 100].map(v => (
-                        <g key={v}>
-                            <line x1={padL} x2={W - padR} y1={yAt(v)} y2={yAt(v)} stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
-                            <text x={padL - 8} y={yAt(v) + 3} textAnchor="end" fontSize="9" fill="#64748b">{v}%</text>
-                        </g>
-                    ))}
+            {loading ? (
+                <div className="h-24 flex items-center justify-center">
+                    <Loader2 className="w-5 h-5 text-violet-400 animate-spin" />
+                </div>
+            ) : n < 2 ? (
+                <div className="h-20 flex items-center justify-center text-center text-sm text-slate-600 px-4">
+                    Not enough data for a trend yet. At least 2 checks required.
+                </div>
+            ) : (
+                <div className="relative">
+                    <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-auto" preserveAspectRatio="xMidYMid meet">
+                        {[0, 25, 50, 75, 100].map(v => (
+                            <g key={v}>
+                                <line x1={padL} x2={W - padR} y1={yAt(v)} y2={yAt(v)} stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
+                                <text x={padL - 8} y={yAt(v) + 3} textAnchor="end" fontSize="9" fill="#64748b">{v}%</text>
+                            </g>
+                        ))}
 
-                    {history.map((h, i) => {
-                        if (n > 1 && i !== 0 && i !== n - 1 && i % Math.ceil(n / 6) !== 0) return null
-                        return (
-                            <text key={i} x={xAt(i)} y={H - 6} textAnchor="middle" fontSize="9" fill="#64748b">
-                                {formatDate(h.date)}
-                            </text>
-                        )
-                    })}
+                        {history.map((h, i) => {
+                            if (n > 1 && i !== 0 && i !== n - 1 && i % Math.ceil(n / 6) !== 0) return null
+                            return (
+                                <text key={i} x={xAt(i)} y={H - 6} textAnchor="middle" fontSize="9" fill="#64748b">
+                                    {formatDate(h.date)}
+                                </text>
+                            )
+                        })}
 
-                    {n > 1 && (
-                        <polyline points={points} fill="none" stroke="#a78bfa" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                        {n > 1 && (
+                            <polyline points={points} fill="none" stroke="#a78bfa" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                        )}
+                        {history.map((h, i) => (
+                            <circle key={i} cx={xAt(i)} cy={yAt(h.rate)} r={hover === i ? 5 : 3.5}
+                                fill="#a78bfa" stroke="#0d1117" strokeWidth="2"
+                                style={{ cursor: 'pointer' }}
+                                onMouseEnter={() => setHover(i)} onMouseLeave={() => setHover(null)} />
+                        ))}
+                    </svg>
+
+                    {hover != null && (
+                        <div className="absolute px-2.5 py-1.5 bg-[#161c2e] border border-white/10 rounded-lg text-xs pointer-events-none shadow-lg"
+                            style={{
+                                left: `${(xAt(hover) / W) * 100}%`,
+                                top: `${(yAt(history[hover].rate) / H) * 100}%`,
+                                transform: 'translate(-50%, -130%)',
+                            }}>
+                            <div className="text-slate-500">{formatDate(history[hover].date)}</div>
+                            <div className="text-white font-semibold">{history[hover].rate}% &middot; {history[hover].mentioned}/{history[hover].checked}</div>
+                        </div>
                     )}
-                    {history.map((h, i) => (
-                        <circle key={i} cx={xAt(i)} cy={yAt(h.rate)} r={hover === i ? 5 : 3.5}
-                            fill="#a78bfa" stroke="#0d1117" strokeWidth="2"
-                            style={{ cursor: 'pointer' }}
-                            onMouseEnter={() => setHover(i)} onMouseLeave={() => setHover(null)} />
-                    ))}
-                </svg>
-
-                {hover != null && (
-                    <div className="absolute px-2.5 py-1.5 bg-[#161c2e] border border-white/10 rounded-lg text-xs pointer-events-none shadow-lg"
-                        style={{
-                            left: `${(xAt(hover) / W) * 100}%`,
-                            top: `${(yAt(history[hover].rate) / H) * 100}%`,
-                            transform: 'translate(-50%, -130%)',
-                        }}>
-                        <div className="text-slate-500">{formatDate(history[hover].date)}</div>
-                        <div className="text-white font-semibold">{history[hover].rate}% &middot; {history[hover].mentioned}/{history[hover].checked}</div>
-                    </div>
-                )}
-            </div>
+                </div>
+            )}
         </div>
     )
 }
@@ -784,26 +884,11 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
 
     return (
         <div>
-            {/* Stats */}
-            {data && (
-                <div className="grid grid-cols-3 gap-4 mb-6">
-                    {[
-                        { label: 'Mentions',     value: data.mentionedCount ?? '—', color: 'text-violet-400' },
-                        { label: 'Mention Rate', value: data.mentionRate != null ? `${data.mentionRate}%` : '—', color: data.mentionRate >= 50 ? 'text-violet-400' : 'text-slate-400' },
-                        { label: 'Checked KW',   value: data.checkedCount ?? '—',   color: 'text-white' },
-                    ].map(s => (
-                        <div key={s.label} className="bg-[#0d1117] border border-white/[0.06] rounded-xl p-4">
-                            <div className="text-xs text-slate-500 mb-1">{s.label}</div>
-                            <div className={`text-xl font-bold ${s.color}`}>{s.value}</div>
-                        </div>
-                    ))}
-                </div>
-            )}
-
-            <MentionHistoryChart siteId={siteId} />
-            <CorrelationPanel siteId={siteId} />
-            <KeywordSuggestionsPanel siteId={siteId} onAdded={onSiteUpdated} />
-            <CompetitorsPanel siteId={siteId} />
+            <MentionHistoryChart siteId={siteId}
+                mentionedCount={data?.mentionedCount}
+                mentionRate={data?.mentionRate}
+                checkedCount={data?.checkedCount}
+            />
 
             {/* Platform badges */}
             <div className="flex items-center gap-2 mb-5 flex-wrap">
@@ -1070,9 +1155,10 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
 export default function GeoSitePageEn() {
     const router     = useRouter()
     const { siteId } = useParams()
-    const [site, setSite]       = useState(null)
-    const [plan, setPlan]       = useState(null)
-    const [loading, setLoading] = useState(true)
+    const [site, setSite]           = useState(null)
+    const [plan, setPlan]           = useState(null)
+    const [loading, setLoading]     = useState(true)
+    const [activeView, setActiveView] = useState('overview')
 
     const fetchSite = useCallback(async () => {
         try {
@@ -1110,6 +1196,8 @@ export default function GeoSitePageEn() {
         </div>
     )
 
+    const activeItem = NAV_ITEMS.find(n => n.id === activeView) || NAV_ITEMS[0]
+
     return (
         <div className="min-h-screen bg-[#05080f]">
             <Toaster position="top-right" toastOptions={{
@@ -1117,7 +1205,7 @@ export default function GeoSitePageEn() {
             }} />
             <Navbar locale="en" />
 
-            <div className="max-w-5xl mx-auto px-5 sm:px-8 pt-28 pb-16">
+            <div className="max-w-[1600px] mx-auto px-5 sm:px-8 pt-28 pb-16">
 
                 {/* Back + Header */}
                 <div className="mb-8">
@@ -1135,7 +1223,57 @@ export default function GeoSitePageEn() {
                     </div>
                 </div>
 
-                <ResultsTab siteId={siteId} site={site} plan={plan} onSiteUpdated={fetchSite} />
+                {/* Mobile: horizontal tab strip instead of a side drawer */}
+                <div className="flex lg:hidden items-center gap-1.5 mb-6 overflow-x-auto pb-1">
+                    {NAV_ITEMS.map(item => {
+                        const Icon = item.icon
+                        return (
+                            <button key={item.id} onClick={() => setActiveView(item.id)}
+                                className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all shrink-0 ${
+                                    activeView === item.id
+                                        ? 'bg-violet-500/15 border border-violet-500/30 text-violet-300'
+                                        : 'bg-white/[0.03] border border-white/8 text-slate-500 hover:text-slate-300'
+                                }`}>
+                                <Icon className="w-3.5 h-3.5" />{item.label}
+                            </button>
+                        )
+                    })}
+                </div>
+
+                <div className="flex gap-6 items-start">
+                    {/* Desktop: left drawer */}
+                    <nav className="hidden lg:flex flex-col gap-1 w-60 shrink-0 sticky top-24">
+                        {NAV_ITEMS.map(item => {
+                            const Icon = item.icon
+                            const active = activeView === item.id
+                            return (
+                                <button key={item.id} onClick={() => setActiveView(item.id)}
+                                    className={`flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl text-left text-sm font-medium transition-all ${
+                                        active
+                                            ? 'bg-violet-500/10 border border-violet-500/25 text-white'
+                                            : 'border border-transparent text-slate-500 hover:text-slate-300 hover:bg-white/[0.03]'
+                                    }`}>
+                                    <Icon className={`w-4 h-4 shrink-0 ${active ? 'text-violet-400' : ''}`} />
+                                    {item.label}
+                                </button>
+                            )
+                        })}
+                    </nav>
+
+                    {/* Content */}
+                    <div className="flex-1 min-w-0">
+                        {activeView !== 'overview' && (
+                            <div className="mb-5">
+                                <h2 className="text-lg font-bold text-white mb-1">{activeItem.label}</h2>
+                                <p className="text-sm text-slate-500">{activeItem.description}</p>
+                            </div>
+                        )}
+                        {activeView === 'overview'    && <ResultsTab siteId={siteId} site={site} plan={plan} onSiteUpdated={fetchSite} />}
+                        {activeView === 'competitors' && <CompetitorsPanel siteId={siteId} />}
+                        {activeView === 'correlation' && <CorrelationPanel siteId={siteId} />}
+                        {activeView === 'suggestions' && <KeywordSuggestionsPanel siteId={siteId} onAdded={fetchSite} />}
+                    </div>
+                </div>
             </div>
         </div>
     )

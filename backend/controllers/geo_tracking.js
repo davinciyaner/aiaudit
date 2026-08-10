@@ -457,6 +457,11 @@ export async function analyzeCitation(req, res) {
     }
 }
 
+// Drei $unwind-Aggregationen über die komplette Check-Historie sind bei vielen Checks spürbar
+// langsam — cachen, bis ein neuer Check abgeschlossen ist (lastChecked ändert sich), statt bei
+// jedem Seitenaufruf/Tab-Wechsel neu zu berechnen.
+const COMPETITORS_CACHE = new Map() // geoSiteId -> { data, totalCitations, lastChecked }
+
 // GET /api/geo/sites/:id/competitors — Share of Voice: welche Domains werden über alle Checks
 // hinweg am häufigsten mitgenannt (nicht nur ob die eigene Domain erwähnt wird).
 export async function getCompetitors(req, res) {
@@ -466,6 +471,13 @@ export async function getCompetitors(req, res) {
 
         const site = await GeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId }).lean()
         if (!site) return res.status(404).json({ error: t('SITE_NOT_FOUND', req.language) })
+
+        const cacheKey = String(site._id)
+        const lastCheckedKey = site.lastChecked ? new Date(site.lastChecked).getTime() : null
+        const cached = COMPETITORS_CACHE.get(cacheKey)
+        if (cached && cached.lastChecked === lastCheckedKey) {
+            return res.json({ competitors: cached.data, totalCitations: cached.totalCitations, cached: true })
+        }
 
         const normalizedOwnDomain = site.domain.replace(/^www\./, '').toLowerCase()
 
@@ -524,6 +536,7 @@ export async function getCompetitors(req, res) {
             keywords: (keywordsByDomain[c._id] || []).slice(0, 5).map(k => k.keyword),
         }))
 
+        COMPETITORS_CACHE.set(cacheKey, { data: competitors, totalCitations: total, lastChecked: lastCheckedKey })
         res.json({ competitors, totalCitations: total })
     } catch (err) {
         res.status(500).json({ error: err.message })
@@ -599,8 +612,13 @@ export async function getCorrelation(req, res) {
         const intents = activeIntents(geoSite.promptVariants)
 
         const matched = await Promise.all(overlap.map(async (keyword) => {
-            const seoRank = await SeoKeywordRanking.findOne({ siteId: seoSite._id, keyword })
-                .sort({ checkedAt: -1 }).lean()
+            // Die letzten beiden Rank-Checks statt nur des aktuellen — der zweite dient als
+            // Vergleichspunkt für den Positions-Trend (verbessert/verschlechtert), ohne dass
+            // dafür eine eigene History-Tabelle gepflegt werden muss.
+            const seoRankDocs = await SeoKeywordRanking.find({ siteId: seoSite._id, keyword })
+                .sort({ checkedAt: -1 }).limit(2).lean()
+            const seoRank     = seoRankDocs[0] || null
+            const seoRankPrev = seoRankDocs[1] || null
 
             const geoDocs = await Promise.all(geoPlatforms.flatMap(platform =>
                 intents.map(promptIntent =>
@@ -621,6 +639,7 @@ export async function getCorrelation(req, res) {
             return {
                 keyword,
                 seoPosition: seoRank?.position ?? null,
+                seoPositionPrevious: seoRankPrev?.position ?? null,
                 seoCheckedAt: seoRank?.checkedAt ?? null,
                 geoMentioned,
                 geoChecked,
@@ -628,12 +647,30 @@ export async function getCorrelation(req, res) {
             }
         }))
 
+        // Durchschnittliche Platzierung + Trend — nur über Keywords mit tatsächlicher Position
+        // gemittelt, und der Trend nur über Keywords, die sowohl einen aktuellen als auch einen
+        // vorherigen Wert haben (fairer Vergleich derselben Keyword-Menge).
+        const withPosition = matched.filter(m => m.seoPosition != null)
+        const avgPosition = withPosition.length
+            ? Math.round((withPosition.reduce((s, m) => s + m.seoPosition, 0) / withPosition.length) * 10) / 10
+            : null
+
+        const withBothPositions = matched.filter(m => m.seoPosition != null && m.seoPositionPrevious != null)
+        const avgPositionDelta = withBothPositions.length
+            ? Math.round((
+                (withBothPositions.reduce((s, m) => s + m.seoPosition, 0) / withBothPositions.length)
+                - (withBothPositions.reduce((s, m) => s + m.seoPositionPrevious, 0) / withBothPositions.length)
+            ) * 10) / 10
+            : null
+
         res.json({
             linked: true,
             seoSiteId: seoSite._id,
             matched,
             seoOnlyKeywords: seoSite.keywords.filter(kw => !geoKeywordSet.has(kw)),
             geoOnlyKeywords: geoSite.keywords.filter(kw => !seoKeywordSet.has(kw)),
+            avgPosition,
+            avgPositionDelta,
         })
     } catch (err) {
         res.status(500).json({ error: err.message })
