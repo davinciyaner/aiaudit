@@ -25,6 +25,15 @@ const breadcrumbLd = {
 
 const ARTICLES = [
     {
+        slug: 'ai-visibility',
+        title: 'AI Visibility: How to Get Cited by ChatGPT, Claude & Perplexity',
+        description: 'AI visibility is more than llms.txt and schema markup. How to actually get cited by ChatGPT, Claude, Perplexity and Google AI Overview - including monitoring with AuditAI.',
+        category: 'GEO',
+        categoryColor: '#06b6d4',
+        date: 'Aug 10, 2026',
+        readTime: '9 min',
+    },
+    {
         slug: 'core-web-vitals-testing',
         title: 'Core Web Vitals in 2026: What They Are and How to Test Them for Free',
         description: 'Core Web Vitals explained simply: LCP, INP, and CLS with Google\'s official thresholds. Plus how to test them for free in under 2 minutes.',
