@@ -415,12 +415,13 @@ function InsightPanel({ insight, keyword, siteId, onRefreshed }) {
 }
 
 
-function RankingHistoryChart({ siteId }) {
+function RankingHistoryChart({ siteId, refreshKey }) {
     const [history, setHistory] = useState(null)
     const [loading, setLoading] = useState(true)
     const [hover, setHover]     = useState(null)
 
     useEffect(() => {
+        setLoading(true)
         const token = localStorage.getItem('token')
         fetch(`${process.env.NEXT_PUBLIC_API_URL}/seo/sites/${siteId}/history`, {
             headers: { Authorization: `Bearer ${token}` },
@@ -429,7 +430,7 @@ function RankingHistoryChart({ siteId }) {
             .then(d => setHistory(d.history || []))
             .catch(() => setHistory([]))
             .finally(() => setLoading(false))
-    }, [siteId])
+    }, [siteId, refreshKey])
 
     if (loading || !history?.length) return null
 
@@ -446,8 +447,8 @@ function RankingHistoryChart({ siteId }) {
     const range  = maxPos - minPos
 
     const xAt = (i) => n <= 1 ? padL : padL + (plotW * i) / (n - 1)
-    // Niedrigere Position = besser -> oben im Chart (Y invertiert)
-    const yAt = (pos) => padT + plotH * (1 - (pos - minPos) / range)
+    // Niedrigere Position = besser -> oben im Chart
+    const yAt = (pos) => padT + plotH * (pos - minPos) / range
 
     const points = history.map((h, i) => `${xAt(i)},${yAt(h.avgPosition)}`).join(' ')
     const formatDate = (iso) => new Date(iso).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit' })
@@ -516,6 +517,7 @@ function RankingsTab({ siteId, site, onSiteUpdated }) {
     const [selected, setSelected]       = useState(new Set())
     const [expandedKw, setExpandedKw]   = useState(null)
     const [filter, setFilter]           = useState('alle')
+    const [chartKey, setChartKey]       = useState(0)
 
     const fetchInsights = useCallback(async () => {
         try {
@@ -565,6 +567,7 @@ function RankingsTab({ siteId, site, onSiteUpdated }) {
             if (!res.ok) throw new Error(data.error)
             toast.success('Check abgeschlossen')
             await fetchRankings()
+            setChartKey(k => k + 1)
         } catch (err) { toast.error(err.message || 'Fehler') }
         finally { setChecking(false) }
     }
@@ -587,6 +590,7 @@ function RankingsTab({ siteId, site, onSiteUpdated }) {
             setNewKeywords(''); setShowAdd(false)
             onSiteUpdated()
             await fetchRankings()
+            setChartKey(k => k + 1)
             setTimeout(fetchInsights, 3000)
         } catch (err) { toast.error(err.message || 'Fehler') }
         finally { setAddingKws(false) }
@@ -606,6 +610,7 @@ function RankingsTab({ siteId, site, onSiteUpdated }) {
             setSelected(new Set())
             onSiteUpdated()
             await fetchRankings()
+            setChartKey(k => k + 1)
         } catch { toast.error('Fehler beim Entfernen') }
     }
 
@@ -645,7 +650,7 @@ function RankingsTab({ siteId, site, onSiteUpdated }) {
 
     return (
         <div>
-            <RankingHistoryChart siteId={siteId} />
+            <RankingHistoryChart siteId={siteId} refreshKey={chartKey} />
 
             {/* Toolbar */}
             <div className="flex items-center justify-between gap-3 mb-4 flex-wrap">
@@ -1111,35 +1116,28 @@ function CompetitorsTab({ siteId }) {
 // ─── Backlinks Tab ────────────────────────────────────────────────────────────
 
 function BacklinksTab({ siteId }) {
-    const [summary, setSummary] = useState(null)
-    const [loading, setLoading] = useState(false)
-    const [loaded, setLoaded]   = useState(false)
+    const [summary, setSummary]     = useState(null)
+    const [checkedAt, setCheckedAt] = useState(null)
+    const [loading, setLoading]     = useState(false)
+    const [loaded, setLoaded]       = useState(false)
 
-    const fetch_ = async () => {
+    const fetch_ = async (force = false) => {
         setLoading(true)
         try {
             const token = localStorage.getItem('token')
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/seo/sites/${siteId}/backlinks`, {
-                headers: { Authorization: `Bearer ${token}` },
-            })
+            const url = `${process.env.NEXT_PUBLIC_API_URL}/seo/sites/${siteId}/backlinks${force ? '?force=true' : ''}`
+            const res = await fetch(url, { headers: { Authorization: `Bearer ${token}` } })
             const d = await res.json()
             if (!res.ok) throw new Error(d.error)
-            setSummary(d.summary); setLoaded(true)
+            setSummary(d.summary); setCheckedAt(d.checkedAt); setLoaded(true)
+            if (force) toast.success('Aktuelle Backlink-Daten geladen')
         } catch (err) { toast.error(err.message || 'Fehler') }
         finally { setLoading(false) }
     }
 
-    if (!loaded) return (
-        <div className="flex flex-col items-center justify-center py-20 gap-4">
-            <Link2 className="w-10 h-10 text-emerald-500/30" />
-            <p className="text-slate-500 text-sm text-center">Backlink-Zusammenfassung deiner Domain laden</p>
-            <button onClick={fetch_} disabled={loading}
-                className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-sm font-semibold rounded-xl transition-all disabled:opacity-50">
-                {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Link2 className="w-4 h-4" />}
-                {loading ? 'Wird geladen…' : 'Backlinks laden'}
-            </button>
-        </div>
-    )
+    useEffect(() => { fetch_() }, [siteId])
+
+    if (!loaded) return <LoadingTab />
 
     if (!summary) return <EmptyTab icon={Link2} text="Keine Backlink-Daten gefunden." />
 
@@ -1168,8 +1166,13 @@ function BacklinksTab({ siteId }) {
                     Erster Backlink seit: {new Date(summary.firstSeen).toLocaleDateString('de-DE')}
                 </div>
             )}
+            {checkedAt && (
+                <div className="text-xs text-slate-600 mt-1">
+                    Zuletzt geprüft: {new Date(checkedAt).toLocaleDateString('de-DE')} {new Date(checkedAt).toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' })}
+                </div>
+            )}
 
-            <button onClick={fetch_} disabled={loading}
+            <button onClick={() => fetch_(true)} disabled={loading}
                 className="mt-4 flex items-center gap-2 text-xs text-slate-600 hover:text-slate-400 transition-colors">
                 <RefreshCw className={`w-3 h-3 ${loading ? 'animate-spin' : ''}`} />
                 Neu laden
