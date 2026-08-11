@@ -443,8 +443,9 @@ export async function getBacklinksForSite(req, res) {
         const site = await SeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId }).lean()
         if (!site) return res.status(404).json({ error: t('SITE_NOT_FOUND', req.language) })
 
+        const force = req.query.force === 'true'
         const cache = site.backlinksCache
-        if (cache?.checkedAt && Date.now() - new Date(cache.checkedAt).getTime() < BACKLINKS_CACHE_MAX_AGE_MS) {
+        if (!force && cache?.checkedAt && Date.now() - new Date(cache.checkedAt).getTime() < BACKLINKS_CACHE_MAX_AGE_MS) {
             return res.json({ summary: cache.data, checkedAt: cache.checkedAt, cached: true })
         }
 

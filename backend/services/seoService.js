@@ -240,13 +240,14 @@ export async function getBacklinkSummary(domain) {
     const r = data.tasks?.[0]?.result?.[0]
     if (!r) return null
 
+    const nofollow = r.referring_pages_nofollow ?? 0
     return {
         backlinks:         r.backlinks,
         referringDomains:  r.referring_domains,
         referringIPs:      r.referring_ips,
-        dofollow:          r.dofollow,
-        nofollow:          r.nofollow,
-        spamScore:         r.spam_score,
+        dofollow:          r.backlinks != null ? r.backlinks - nofollow : null,
+        nofollow,
+        spamScore:         r.backlinks_spam_score,
         rank:              r.rank,
         firstSeen:         r.first_seen,
     }
