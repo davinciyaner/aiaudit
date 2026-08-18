@@ -21,7 +21,7 @@ const checkRateLimit = rateLimit({
 
 const apiRateLimit = rateLimit({
     windowMs: 60 * 1000,
-    limit: 30,
+    limit: 60, // war 30 — reichte kaum, weil das 4s-Status-Polling während eines laufenden Checks allein schon 15/min verbraucht
     keyGenerator: (req) => req.userId,
     handler: (req, res) => res.status(429).json({ error: t('API_RATE_LIMIT', req.language) }),
     standardHeaders: false,

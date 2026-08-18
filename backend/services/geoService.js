@@ -2,9 +2,13 @@ import Anthropic from '@anthropic-ai/sdk'
 import OpenAI from 'openai'
 import { jsonrepair } from 'jsonrepair'
 
-const anthropic  = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
-const openai     = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
-const perplexity = new OpenAI({ apiKey: process.env.perplexity_sitecheck, baseURL: 'https://api.perplexity.ai' })
+// Explizites Timeout — ohne das warten die SDKs bis zu 10 Minuten pro Anfrage, was bei
+// CHECK_CONCURRENCY=5 einen ganzen Batch blockieren und den Gesamt-Check extrem verzögern kann.
+const CHECK_TIMEOUT_MS = 45000
+
+const anthropic  = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY, timeout: CHECK_TIMEOUT_MS })
+const openai     = new OpenAI({ apiKey: process.env.OPENAI_API_KEY, timeout: CHECK_TIMEOUT_MS })
+const perplexity = new OpenAI({ apiKey: process.env.perplexity_sitecheck, baseURL: 'https://api.perplexity.ai', timeout: CHECK_TIMEOUT_MS })
 
 const DFS_LOGIN    = process.env.DATAFORSEO_LOGIN
 const DFS_PASSWORD = process.env.DATAFORSEO_PASSWORD
@@ -18,6 +22,7 @@ async function dfsPost(endpoint, body) {
         method: 'POST',
         headers: { 'Authorization': `Basic ${dfsAuth()}`, 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
+        signal: AbortSignal.timeout(CHECK_TIMEOUT_MS),
     })
     return res.json()
 }
@@ -140,32 +145,45 @@ function extractPerplexityCitation(res, domain) {
     return { ...textResult, citations }
 }
 
+async function withRateLimitRetry(fn, label, retries = 4, baseDelay = 3000) {
+    for (let attempt = 0; ; attempt++) {
+        try {
+            return await fn()
+        } catch (err) {
+            if (err.status !== 429 || attempt >= retries) throw err
+            const delay = baseDelay * 2 ** attempt
+            console.warn(`[geoService] ${label} rate limit erreicht, retry in ${delay}ms (Versuch ${attempt + 1}/${retries + 1})`)
+            await new Promise(r => setTimeout(r, delay))
+        }
+    }
+}
+
 async function checkWithClaude(keyword, domain, language, intent) {
-    const msg = await anthropic.messages.create({
+    const msg = await withRateLimitRetry(() => anthropic.messages.create({
         model: 'claude-sonnet-4-6',
         max_tokens: 400,
         messages: [{ role: 'user', content: buildQuery(keyword, language, intent) }],
-    })
+    }), 'claude')
     const text = msg.content[0].text
     return { ...extractMention(text, domain), citations: extractDomainMentions(text, domain) }
 }
 
 async function checkWithChatGPT(keyword, domain, language, intent) {
-    const res = await openai.chat.completions.create({
+    const res = await withRateLimitRetry(() => openai.chat.completions.create({
         model: 'gpt-4o',
         max_tokens: 400,
         messages: [{ role: 'user', content: buildQuery(keyword, language, intent) }],
-    })
+    }), 'chatgpt')
     const text = res.choices[0].message.content
     return { ...extractMention(text, domain), citations: extractDomainMentions(text, domain) }
 }
 
 async function checkWithPerplexity(keyword, domain, language, intent) {
-    const res = await perplexity.chat.completions.create({
+    const res = await withRateLimitRetry(() => perplexity.chat.completions.create({
         model: 'sonar',
         max_tokens: 400,
         messages: [{ role: 'user', content: buildQuery(keyword, language, intent) }],
-    })
+    }), 'perplexity')
     return extractPerplexityCitation(res, domain)
 }
 
