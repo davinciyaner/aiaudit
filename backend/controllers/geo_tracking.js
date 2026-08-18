@@ -358,10 +358,18 @@ async function runCheckInBackground(site, userId) {
             checkedAt:    new Date(),
         })))
 
-        await GeoTrackedSite.updateOne({ _id: site._id }, { lastChecked: new Date(), checkStatus: 'idle' })
+        // checkStartedAt als Guard: verhindert, dass ein verspätet fertiger (z.B. per Stale-Timeout
+        // bereits neu gestarteter) Check den Status eines inzwischen neueren Checks überschreibt.
+        await GeoTrackedSite.updateOne(
+            { _id: site._id, checkStartedAt: site.checkStartedAt },
+            { lastChecked: new Date(), checkStatus: 'idle' }
+        )
     } catch (err) {
         console.error(`[geo] Hintergrund-Check fehlgeschlagen für ${site.domain}:`, err.message)
-        await GeoTrackedSite.updateOne({ _id: site._id }, { checkStatus: 'failed' })
+        await GeoTrackedSite.updateOne(
+            { _id: site._id, checkStartedAt: site.checkStartedAt },
+            { checkStatus: 'failed' }
+        )
     }
 }
 

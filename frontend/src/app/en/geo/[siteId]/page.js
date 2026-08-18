@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
     ArrowLeft, Globe, Loader2, RefreshCw, Plus, Trash2, X,
@@ -759,6 +759,15 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
     const [showPlatformEdit, setShowPlatformEdit] = useState(false)
     const [editPlatforms, setEditPlatforms]       = useState([])
     const [savingPlatforms, setSavingPlatforms]   = useState(false)
+    const cancelledRef = useRef(false)
+
+    // pollUntilDone keeps running independently of the component (no AbortController) — without
+    // this flag, every tab switch during a running check would start another polling loop that
+    // never stops and stacks up with older ones.
+    useEffect(() => {
+        cancelledRef.current = false
+        return () => { cancelledRef.current = true }
+    }, [])
 
     const platforms = site?.platforms?.length ? site.platforms : ['claude']
     const allowedPlatforms = PLAN_PLATFORMS[plan] || ['claude']
@@ -820,7 +829,9 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
     const pollUntilDone = async () => {
         const token = localStorage.getItem('token')
         for (let i = 0; i < 300; i++) { // safety limit, comfortably covers even very large Expert sites
+            if (cancelledRef.current) return 'cancelled'
             await new Promise(r => setTimeout(r, 4000))
+            if (cancelledRef.current) return 'cancelled'
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/geo/sites/${siteId}`, {
                 headers: { Authorization: `Bearer ${token}` },
             })
@@ -841,6 +852,7 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
             if (!res.ok) throw new Error(CHECK_ERROR_MESSAGES[d.error] || d.error)
 
             const finalStatus = await pollUntilDone()
+            if (finalStatus === 'cancelled') return // component was unmounted in the meantime
             if (finalStatus === 'failed') toast.error('Check failed — please try again later.')
             else if (finalStatus === 'timeout') toast.error('Check is taking unusually long — check the result later.')
             else toast.success('Check complete')
@@ -857,6 +869,7 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
         setChecking(true)
         pollUntilDone()
             .then(finalStatus => {
+                if (finalStatus === 'cancelled') return
                 if (finalStatus === 'failed') toast.error('Check failed — please try again later.')
                 return fetchResults()
             })
