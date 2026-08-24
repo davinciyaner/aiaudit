@@ -16,7 +16,7 @@ const CHECK_GROUPS = [
     {
         title: 'AI Indexability',
         checks: [
-            { label: 'llms.txt', detail: 'The single most important GEO file' },
+            { label: 'llms.txt', detail: 'Unconfirmed signal, but doesn\'t hurt' },
             { label: 'llms-full.txt', detail: 'Extended llms.txt standard' },
             { label: 'AI crawlers in robots.txt', detail: 'GPTBot, ClaudeBot, PerplexityBot, anthropic-ai, YouBot etc.' },
             { label: 'sitemap.xml', detail: 'Full indexing by AI' },

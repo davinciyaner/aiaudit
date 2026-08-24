@@ -29,7 +29,7 @@ const jsonLd = {
     description: 'llms.txt einfach erklärt: die robots.txt für KI-Modelle. Herkunft, Aufbau, Unterschied zu llms-full.txt und eine Schritt-für-Schritt-Anleitung.',
     image: 'https://www.sitecheckai.dev/blog/llms-txt-erklaert/opengraph-image',
     datePublished: '2026-07-26T09:00:00+02:00',
-    dateModified: '2026-08-06T09:00:00+02:00',
+    dateModified: '2026-08-24T09:00:00+02:00',
     author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev/about' },
     publisher: {
         '@type': 'Organization',
@@ -68,7 +68,15 @@ const faqLd = {
             name: 'Ist llms.txt Pflicht für KI-Sichtbarkeit?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'Nein, es ist kein offizieller Google- oder OpenAI-Standard und keine Pflicht. Es ist ein freiwilliger, community-getriebener Vorschlag, den aber immer mehr Websites und Dokumentations-Plattformen übernehmen, weil er KI-Crawlern eine klare erste Orientierung gibt statt sie durch Navigation, Werbung und JavaScript navigieren zu lassen.',
+                text: 'Nein. Es ist kein offizieller Standard von Google, OpenAI oder Anthropic, und keiner der großen KI-Anbieter hat bestätigt, llms.txt tatsächlich zu nutzen. Google hat sogar explizit erklärt, dass die Datei für die Suche und AI Overviews nicht notwendig ist. Es bleibt ein freiwilliger, community-getriebener Vorschlag ohne belegte Wirkung auf KI-Zitate.',
+            },
+        },
+        {
+            '@type': 'Question',
+            name: 'Nutzt Google llms.txt für die Suche oder AI Overviews?',
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Nein. Google hat erklärt, dass llms.txt für die Google-Suche und AI Overviews überflüssig ist, weil Google Website-Inhalte bereits vollständig über die bestehende Indexierung crawlt und verarbeitet. Eine zusätzliche Zusammenfassungsdatei ändert daran nichts.',
             },
         },
         {
@@ -155,7 +163,7 @@ export default function LlmsTxtPage() {
                         </span>
                         <span className="text-xs text-slate-600">26. Juli 2026</span>
                         <span className="text-xs text-slate-600">· 7 min Lesezeit</span>
-                        <span className="text-xs text-slate-600">· Aktualisiert am 6. August 2026</span>
+                        <span className="text-xs text-slate-600">· Aktualisiert am 24. August 2026</span>
                     </div>
                     <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight tracking-tight mb-5">
                         llms.txt erklärt: Was es ist und wie du es richtig einrichtest
@@ -192,12 +200,12 @@ export default function LlmsTxtPage() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">Warum llms.txt für GEO relevant ist</h2>
+                        <h2 className="text-2xl font-bold text-white mb-4">Nutzt Google llms.txt wirklich? Der aktuelle Stand</h2>
                         <p>
-                            Viele KI-Crawler lesen llms.txt als erste Orientierung, bevor sie den Rest der Website crawlen - ähnlich wie Googlebot zuerst robots.txt und sitemap.xml prüft. Eine gepflegte llms.txt erhöht die Wahrscheinlichkeit, dass ein KI-Modell deine Produktdefinition korrekt versteht, statt sie aus fragmentierten HTML-Schnipseln zu erraten.
+                            Kein großer KI-Anbieter hat bislang offiziell bestätigt, llms.txt tatsächlich einzulesen. Google hat sich am deutlichsten geäußert: Die Datei ist für die Google-Suche und AI Overviews nicht notwendig, weil Google Seiteninhalte bereits vollständig über die reguläre Indexierung crawlt und verarbeitet - eine separate Zusammenfassungsdatei bringt dafür keinen zusätzlichen Nutzen. Auch für ChatGPT, Claude oder Perplexity gibt es keine offizielle Bestätigung eines gezielten /llms.txt-Abrufs, und Logfile-Analysen mehrerer SEO-Tools fanden bisher keine Hinweise darauf, dass die bekannten KI-Crawler die Datei tatsächlich abrufen.
                         </p>
                         <p className="mt-4">
-                            Wichtig für die Einordnung: llms.txt ist kein offizieller Standard von Google, OpenAI oder Anthropic und garantiert keine Zitate. Es ist ein freiwilliger, offener Vorschlag - aber einer, den immer mehr Dokumentations-Plattformen und Tools übernehmen, weil er strukturell Sinn ergibt. Es ist nur eines von mehreren GEO-Signalen - die vollständige Übersicht steht in unserem Artikel zur{' '}
+                            Für die Einordnung heißt das: llms.txt ist aktuell kein nachgewiesenes GEO-Signal mit belegter Wirkung auf Zitate oder Rankings, sondern ein freiwilliger, community-getriebener Vorschlag ohne offizielle Unterstützung der großen KI-Anbieter. Sinnvoll bleibt sie trotzdem als saubere Produkt-Dokumentation für dich selbst und für Tools, die gezielt danach suchen (z. B. manche RAG-Systeme oder KI-Coding-Agents) - nur solltest du sie nicht als Hauptstrategie für KI-Sichtbarkeit behandeln. Die Signale mit belegter Wirkung wie Schema Markup, Crawler-Freigaben und zitierbare Inhalte findest du in unserem Artikel zur{' '}
                             <Link href="/blog/geo-optimierung-2026" className="text-cyan-400 hover:text-cyan-300 underline underline-offset-2">
                                 GEO-Optimierung 2026
                             </Link>, zusammen mit{' '}

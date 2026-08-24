@@ -16,7 +16,7 @@ const CHECK_GROUPS = [
     {
         title: 'KI-Indexierbarkeit',
         checks: [
-            { label: 'llms.txt', detail: 'Wichtigste GEO-Datei überhaupt' },
+            { label: 'llms.txt', detail: 'Unbestätigtes Signal, schadet aber nicht' },
             { label: 'llms-full.txt', detail: 'Erweiterter llms.txt-Standard' },
             { label: 'KI-Crawler in robots.txt', detail: 'GPTBot, ClaudeBot, PerplexityBot, anthropic-ai, YouBot u.a.' },
             { label: 'sitemap.xml', detail: 'Vollständige Indexierung durch KI' },
