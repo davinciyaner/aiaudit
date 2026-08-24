@@ -30,7 +30,7 @@ const jsonLd = {
     description: 'GEO (Generative Engine Optimization) explained: how to optimize your website so ChatGPT, Claude, Perplexity, and Google AI Overview cite it as a source.',
     image: 'https://www.sitecheckai.dev/en/blog/what-is-geo/opengraph-image',
     datePublished: '2026-06-10T09:00:00+02:00',
-    dateModified: '2026-08-01T09:00:00+02:00',
+    dateModified: '2026-08-24T09:00:00+02:00',
     author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev/about' },
     publisher: {
         '@type': 'Organization',
@@ -87,7 +87,7 @@ const faqLd = {
             name: 'What is llms.txt and why does it matter for GEO?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'llms.txt is a text file in a website\'s root directory (similar to robots.txt) that\'s specifically readable by AI models and large language models. It describes, in structured form, what the website is, what it offers, and which content is relevant for AI crawlers. Many AI crawlers read llms.txt as their first orientation to a website.',
+                text: 'llms.txt is a text file in a website\'s root directory (similar to robots.txt) meant to be specifically readable by AI models and large language models. It describes, in structured form, what the website is and what it offers. Important: no major AI provider has confirmed actually using the file - Google has explicitly stated it isn\'t necessary for Search or AI Overviews. llms.txt is therefore not a confirmed GEO signal, though it can still be worthwhile as clean product documentation.',
             },
         },
         {
@@ -103,7 +103,7 @@ const faqLd = {
             name: 'How long does it take for GEO to show results?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'GEO works differently from SEO. Technical signals like llms.txt, Schema.org data, and robots.txt settings can be picked up by AI crawlers within days. Whether an AI model actually cites a website then depends on training and retrieval algorithms - that can take weeks to months. Perplexity and similar RAG-based systems react faster than models with a fixed training-data cutoff.',
+                text: 'GEO works differently from SEO. Technical signals like Schema.org data and robots.txt crawler access can be picked up by AI crawlers within days (llms.txt excepted, since no major provider has confirmed using it). Whether an AI model actually cites a website then depends on training and retrieval algorithms - that can take weeks to months. Perplexity and similar RAG-based systems react faster than models with a fixed training-data cutoff.',
             },
         },
     ],
@@ -134,7 +134,7 @@ const SIGNALS = [
         number: '01',
         title: 'Create llms.txt',
         color: '#06b6d4',
-        desc: 'The single most important GEO file. Create a file at /llms.txt with a clear description of your website, your products, and your key points. Structure it with Markdown headings. Add /llms-full.txt for a detailed version.',
+        desc: 'A file popular among GEO enthusiasts, but currently unconfirmed: no major AI provider (Google, OpenAI, Anthropic) has confirmed actually using llms.txt - Google has explicitly called it unnecessary for Search and AI Overviews. It doesn\'t hurt to have one, though, and it doubles as compact product documentation: a file at /llms.txt with a clear description of your website, your products, and your key points, structured with Markdown headings. Optionally add /llms-full.txt for a detailed version.',
         example: '# MyTool\n> MyTool is an X for Y that does Z in under 60 seconds.',
         source: { label: 'llms.txt specification (llmstxt.org)', url: 'https://llmstxt.org' },
         internalLink: { label: 'llms.txt explained in depth', href: '/blog/llms-txt-erklaert' },
@@ -207,7 +207,7 @@ export default function WhatIsGeoPageEn() {
                         </span>
                         <span className="text-xs text-slate-600">June 10, 2026</span>
                         <span className="text-xs text-slate-600">· 8 min read</span>
-                        <span className="text-xs text-slate-600">· Updated Aug 1, 2026</span>
+                        <span className="text-xs text-slate-600">· Updated Aug 24, 2026</span>
                     </div>
                     <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight tracking-tight mb-5">
                         What is GEO? Generative Engine Optimization Explained
@@ -371,7 +371,7 @@ export default function WhatIsGeoPageEn() {
                             <strong className="text-white">Models with a training cutoff</strong> like ChatGPT (without browsing) or Claude (without web access) only know content from their training data. It takes longer here - but the more your website is discussed across the public web (GitHub, Reddit, Hacker News, product pages), the higher the chance of being picked up in future training runs.
                         </p>
                         <p className="mt-4">
-                            <strong className="text-white">Hybrid systems</strong> like ChatGPT with browsing enabled or Claude with web access combine both approaches. For these, a solid technical GEO foundation (llms.txt, Schema.org, clean canonicals) is especially important.
+                            <strong className="text-white">Hybrid systems</strong> like ChatGPT with browsing enabled or Claude with web access combine both approaches. For these, a solid technical GEO foundation (Schema.org, clean canonicals, citable facts) is especially important.
                         </p>
                     </section>
 
@@ -417,7 +417,7 @@ export default function WhatIsGeoPageEn() {
                                 },
                                 {
                                     q: 'What is llms.txt and why does it matter?',
-                                    a: 'llms.txt is a text file in a website\'s root directory (similar to robots.txt) that\'s specifically readable by AI models. It describes what the website is, what it offers, and which content is relevant for AI crawlers. Many AI crawlers read llms.txt as their first orientation.',
+                                    a: 'llms.txt is a text file in a website\'s root directory (similar to robots.txt) meant to be specifically readable by AI models. It describes what the website is and what it offers. No major AI provider has confirmed actually using the file - Google has explicitly called it unnecessary. It\'s therefore not a confirmed GEO signal, though it can still be worthwhile as clean product documentation.',
                                 },
                                 {
                                     q: 'What is "ChatGPT SEO"?',
@@ -425,7 +425,7 @@ export default function WhatIsGeoPageEn() {
                                 },
                                 {
                                     q: 'How long does it take for GEO to show results?',
-                                    a: 'RAG-based systems like Perplexity react to technical GEO signals within days to weeks. Models with a fixed training-data cutoff like GPT-4 can take months until the next training update. Technical quick wins like llms.txt and AI crawler access work fastest.',
+                                    a: 'RAG-based systems like Perplexity react to technical GEO signals within days to weeks. Models with a fixed training-data cutoff like GPT-4 can take months until the next training update. Technical quick wins like schema markup and AI crawler access work fastest - llms.txt excepted, since no major provider has confirmed using it.',
                                 },
                             ].map((faq, i) => (
                                 <div key={i} className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5">

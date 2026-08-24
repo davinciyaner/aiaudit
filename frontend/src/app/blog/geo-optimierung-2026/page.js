@@ -30,7 +30,7 @@ const jsonLd = {
     description: 'GEO (Generative Engine Optimization) bezeichnet die Optimierung von Content für KI-Antworten wie ChatGPT, Claude und Google AI Overview. Definition, Unterschied zu SEO und 19-Punkte-Checkliste.',
     image: 'https://www.sitecheckai.dev/blog/geo-optimierung-2026/opengraph-image',
     datePublished: '2026-06-10T09:00:00+02:00',
-    dateModified: '2026-08-06T09:00:00+02:00',
+    dateModified: '2026-08-24T09:00:00+02:00',
     author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev/about' },
     publisher: {
         '@type': 'Organization',
@@ -95,7 +95,7 @@ const faqLd = {
             name: 'Was ist llms.txt und warum ist es wichtig für GEO?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'llms.txt ist eine Textdatei im Root-Verzeichnis einer Website (ähnlich wie robots.txt), die speziell für KI-Modelle und Large Language Models lesbar ist. Sie beschreibt in strukturierter Form was die Website ist, was sie anbietet und welche Inhalte für KI-Crawler relevant sind. Viele KI-Crawler lesen llms.txt als erste Orientierung über eine Website.',
+                text: 'llms.txt ist eine Textdatei im Root-Verzeichnis einer Website (ähnlich wie robots.txt), die speziell für KI-Modelle und Large Language Models lesbar sein soll. Sie beschreibt in strukturierter Form, was die Website ist und was sie anbietet. Wichtig: Kein großer KI-Anbieter hat bestätigt, die Datei tatsächlich zu nutzen - Google hat explizit erklärt, dass sie für Suche und AI Overviews nicht notwendig ist. llms.txt ist also kein bestätigtes GEO-Signal, kann aber trotzdem als saubere Produkt-Dokumentation sinnvoll sein.',
             },
         },
         {
@@ -111,7 +111,7 @@ const faqLd = {
             name: 'Wie lange dauert es bis GEO-Optimierung wirkt?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'GEO wirkt anders als SEO. Technische Signale wie llms.txt, Schema.org-Daten und robots.txt-Einstellungen können innerhalb weniger Tage von KI-Crawlern aufgenommen werden. Ob ein KI-Modell eine Website dann tatsächlich zitiert, hängt von Training und Retrieval-Algorithmen ab - das kann Wochen bis Monate dauern. Perplexity und ähnliche RAG-basierte Systeme reagieren schneller als Modelle mit festem Trainingsdaten-Cutoff.',
+                text: 'GEO wirkt anders als SEO. Technische Signale wie Schema.org-Daten und robots.txt-Crawler-Freigaben können innerhalb weniger Tage von KI-Crawlern aufgenommen werden (llms.txt ausgenommen, da bislang kein großer Anbieter dessen Nutzung bestätigt hat). Ob ein KI-Modell eine Website dann tatsächlich zitiert, hängt von Training und Retrieval-Algorithmen ab - das kann Wochen bis Monate dauern. Perplexity und ähnliche RAG-basierte Systeme reagieren schneller als Modelle mit festem Trainingsdaten-Cutoff.',
             },
         },
     ],
@@ -142,7 +142,7 @@ const SIGNALS = [
         number: '01',
         title: 'llms.txt erstellen',
         color: '#06b6d4',
-        desc: 'Die wichtigste GEO-Datei. Erstelle eine Datei unter /llms.txt mit einer klaren Beschreibung deiner Website, deiner Produkte und deiner Kernaussagen. Strukturiere sie mit Markdown-Überschriften. Ergänze /llms-full.txt für eine ausführliche Version.',
+        desc: 'Eine unter GEO-Fans verbreitete, aber bislang unbestätigte Datei: Kein großer KI-Anbieter (Google, OpenAI, Anthropic) hat bestätigt, llms.txt tatsächlich zu nutzen - Google hat sie sogar explizit als für Suche und AI Overviews überflüssig bezeichnet. Sie schadet trotzdem nicht und dient als kompakte Produkt-Dokumentation: eine Datei unter /llms.txt mit klarer Beschreibung deiner Website, deiner Produkte und Kernaussagen, strukturiert mit Markdown-Überschriften. Optional ergänzt um /llms-full.txt als ausführliche Version.',
         example: '# MeinTool\n> MeinTool ist ein X für Y, das Z in unter 60 Sekunden macht.',
         source: { label: 'llms.txt-Spezifikation (llmstxt.org)', url: 'https://llmstxt.org' },
         internalLink: { label: 'llms.txt ausführlich erklärt', href: '/blog/llms-txt-erklaert' },
@@ -215,7 +215,7 @@ export default function GeoArtikelPage() {
                         </span>
                         <span className="text-xs text-slate-600">10. Juni 2026</span>
                         <span className="text-xs text-slate-600">· 8 min Lesezeit</span>
-                        <span className="text-xs text-slate-600">· Aktualisiert am 6. August 2026</span>
+                        <span className="text-xs text-slate-600">· Aktualisiert am 24. August 2026</span>
                     </div>
                     <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight tracking-tight mb-5">
                         Was ist GEO? Generative Engine Optimization einfach erklärt
@@ -379,7 +379,7 @@ export default function GeoArtikelPage() {
                             <strong className="text-white">Modelle mit Trainings-Cutoff</strong> wie ChatGPT (ohne Browsing) oder Claude (ohne Websuche) kennen nur Inhalte aus ihrem Trainingsdatensatz. Hier dauert es länger - aber je mehr deine Website im öffentlichen Web diskutiert wird (GitHub, Reddit, HackerNews, Produktseiten), desto höher die Chance in zukünftige Trainingsläufe aufgenommen zu werden.
                         </p>
                         <p className="mt-4">
-                            <strong className="text-white">Hybrid-Systeme</strong> wie ChatGPT mit aktivierter Websuche oder Claude mit Webzugang kombinieren beide Ansätze. Für diese ist eine gute technische GEO-Grundlage (llms.txt, Schema.org, saubere Canonicals) besonders wichtig.
+                            <strong className="text-white">Hybrid-Systeme</strong> wie ChatGPT mit aktivierter Websuche oder Claude mit Webzugang kombinieren beide Ansätze. Für diese ist eine gute technische GEO-Grundlage (Schema.org, saubere Canonicals, zitierbare Fakten) besonders wichtig.
                         </p>
                     </section>
 
@@ -429,7 +429,7 @@ export default function GeoArtikelPage() {
                                 },
                                 {
                                     q: 'Was ist llms.txt und warum ist es wichtig?',
-                                    a: 'llms.txt ist eine Textdatei im Root-Verzeichnis einer Website (ähnlich wie robots.txt), die speziell für KI-Modelle lesbar ist. Sie beschreibt was die Website ist, was sie anbietet und welche Inhalte für KI-Crawler relevant sind. Viele KI-Crawler lesen llms.txt als erste Orientierung.',
+                                    a: 'llms.txt ist eine Textdatei im Root-Verzeichnis einer Website (ähnlich wie robots.txt), die speziell für KI-Modelle lesbar sein soll. Sie beschreibt, was die Website ist und was sie anbietet. Kein großer KI-Anbieter hat bislang bestätigt, die Datei tatsächlich zu nutzen - Google hat sie sogar explizit als überflüssig bezeichnet. Sie ist also kein bestätigtes GEO-Signal, kann aber trotzdem als saubere Produkt-Dokumentation sinnvoll sein.',
                                 },
                                 {
                                     q: 'Was ist ChatGPT SEO?',
@@ -437,7 +437,7 @@ export default function GeoArtikelPage() {
                                 },
                                 {
                                     q: 'Wie lange dauert es bis GEO-Optimierung wirkt?',
-                                    a: 'RAG-basierte Systeme wie Perplexity reagieren innerhalb von Tagen bis Wochen auf technische GEO-Signale. Modelle mit festem Trainingsdaten-Cutoff wie GPT-4 können Monate bis zum nächsten Training-Update benötigen. Technische Quick-Wins wie llms.txt und KI-Crawler-Erlaubnis wirken am schnellsten.',
+                                    a: 'RAG-basierte Systeme wie Perplexity reagieren innerhalb von Tagen bis Wochen auf technische GEO-Signale. Modelle mit festem Trainingsdaten-Cutoff wie GPT-4 können Monate bis zum nächsten Training-Update benötigen. Technische Quick-Wins wie Schema Markup und KI-Crawler-Erlaubnis wirken am schnellsten - llms.txt ausgenommen, da bislang kein großer Anbieter dessen Nutzung bestätigt hat.',
                                 },
                             ].map((faq, i) => (
                                 <div key={i} className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5">

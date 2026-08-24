@@ -29,7 +29,7 @@ const jsonLd = {
     description: 'llms.txt explained simply: the robots.txt for AI models. Origin, structure, the difference from llms-full.txt, and a step-by-step guide.',
     image: 'https://www.sitecheckai.dev/en/blog/llms-txt-explained/opengraph-image',
     datePublished: '2026-07-26T09:00:00+02:00',
-    dateModified: '2026-08-01T09:00:00+02:00',
+    dateModified: '2026-08-24T09:00:00+02:00',
     author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev/about' },
     publisher: {
         '@type': 'Organization',
@@ -68,7 +68,15 @@ const faqLd = {
             name: 'Is llms.txt required for AI visibility?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'No, it\'s not an official Google or OpenAI standard, and it\'s not required. It\'s a voluntary, community-driven proposal - but one that more and more websites and documentation platforms are adopting, because it gives AI crawlers clear first orientation instead of making them navigate through menus, ads, and JavaScript.',
+                text: 'No. It\'s not an official standard from Google, OpenAI, or Anthropic, and none of the major AI providers have confirmed actually using llms.txt. Google has explicitly stated the file isn\'t necessary for Search or AI Overviews. It remains a voluntary, community-driven proposal with no proven effect on AI citations.',
+            },
+        },
+        {
+            '@type': 'Question',
+            name: 'Does Google use llms.txt for Search or AI Overviews?',
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'No. Google has stated that llms.txt is unnecessary for Google Search and AI Overviews, because Google already crawls and processes full website content through its existing indexing pipeline. A separate summary file doesn\'t change that.',
             },
         },
         {
@@ -147,7 +155,7 @@ export default function LlmsTxtPageEn() {
                         </span>
                         <span className="text-xs text-slate-600">July 26, 2026</span>
                         <span className="text-xs text-slate-600">· 7 min read</span>
-                        <span className="text-xs text-slate-600">· Updated Aug 1, 2026</span>
+                        <span className="text-xs text-slate-600">· Updated Aug 24, 2026</span>
                     </div>
                     <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight tracking-tight mb-5">
                         llms.txt Explained: What It Is and How to Set It Up Correctly
@@ -184,12 +192,12 @@ export default function LlmsTxtPageEn() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">Why llms.txt matters for GEO</h2>
+                        <h2 className="text-2xl font-bold text-white mb-4">Does Google actually use llms.txt? The current state</h2>
                         <p>
-                            Many AI crawlers read llms.txt as their first point of orientation before crawling the rest of a website - similar to how Googlebot checks robots.txt and sitemap.xml first. A well-maintained llms.txt increases the odds that an AI model understands your product definition correctly, instead of guessing at it from fragmented HTML snippets.
+                            No major AI provider has officially confirmed that it actually reads llms.txt. Google has been the most explicit: the file isn&apos;t necessary for Google Search or AI Overviews, because Google already crawls and processes full page content through its existing indexing pipeline - a separate summary file doesn&apos;t add anything there. There&apos;s no official confirmation from ChatGPT, Claude, or Perplexity that their crawlers specifically fetch /llms.txt either, and log-file analyses from several SEO tools have so far found no evidence that the known AI crawlers actually request the file.
                         </p>
                         <p className="mt-4">
-                            Important context: llms.txt is not an official standard from Google, OpenAI, or Anthropic, and it doesn&apos;t guarantee citations. It&apos;s a voluntary, open proposal - but one that more and more documentation platforms and tools are adopting because it makes structural sense. It&apos;s just one of several GEO signals - the full overview is in our article on{' '}
+                            In practice, that means llms.txt is currently not a proven GEO signal with a demonstrated effect on citations or rankings - it&apos;s a voluntary, community-driven proposal without official backing from the major AI providers. It can still be worthwhile as clean product documentation for yourself and for tools that do explicitly look for it (some RAG systems or AI coding agents, for example) - just don&apos;t treat it as your main AI-visibility strategy. Signals with a demonstrated effect, like schema markup, crawler access, and citable content, are covered in our article on{' '}
                             <Link href="/en/blog/what-is-geo" className="text-cyan-400 hover:text-cyan-300 underline underline-offset-2">
                                 What is GEO?
                             </Link>, along with{' '}
