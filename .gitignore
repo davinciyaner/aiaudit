@@ -32,6 +32,9 @@ dist/
 # Reports (generated at runtime)
 backend/reports/
 
+# Ad-hoc scripts with hardcoded API credentials — never commit
+backend/scripts/dataforseo-backlink-compare.mjs
+
 # Misc
 *.pem
 .vercel
