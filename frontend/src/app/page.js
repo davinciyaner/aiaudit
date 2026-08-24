@@ -5,11 +5,8 @@ import GeoHowItWorks from './components/GeoHowItWorks'
 import SeoTrackingTeaser from './components/SeoTrackingTeaser'
 import SeoSection from './components/SeoSection'
 import GeoSection from './components/GeoSection'
-import PerformanceSection from './components/PerformanceSection'
 import WhyAudit from './components/WhyAudit'
 import Features from './components/Features'
-import ExtensionSection from './components/ExtensionSection'
-import CTA from './components/CTA'
 import Pricing from './components/Pricing'
 import Footer from './components/Footer'
 import LandingFeedback from './components/LandingFeedback'
@@ -65,11 +62,8 @@ export default function LandingPage() {
             <SeoTrackingTeaser />
             <SeoSection />
             <GeoSection />
-            <PerformanceSection />
             <WhyAudit />
             <Features />
-            <ExtensionSection />
-            <CTA />
             <Pricing />
             <FAQ />
             <Footer />
