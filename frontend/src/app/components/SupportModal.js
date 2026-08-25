@@ -70,7 +70,11 @@ export default function SupportModal({ open, onClose, defaultName = '', defaultE
                                     </div>
                                     <span className="font-semibold text-white">{locale === 'en' ? 'Create support ticket' : 'Support-Ticket erstellen'}</span>
                                 </div>
-                                <button onClick={handleClose} className="p-2 -mr-2 text-slate-500 hover:text-white transition-colors rounded-lg hover:bg-white/5">
+                                <button
+                                    onClick={handleClose}
+                                    aria-label={locale === 'en' ? 'Close' : 'Schließen'}
+                                    className="p-3 -mr-2 text-slate-500 hover:text-white transition-colors rounded-lg hover:bg-white/5"
+                                >
                                     <X className="w-5 h-5" />
                                 </button>
                             </div>

@@ -32,8 +32,16 @@ dist/
 # Reports (generated at runtime)
 backend/reports/
 
-# Ad-hoc scripts with hardcoded API credentials — never commit
+# Ad-hoc admin/migration scripts — kept local, not versioned
 backend/scripts/dataforseo-backlink-compare.mjs
+backend/scripts/giveGeoExpert.js
+backend/scripts/giveSeoPro.js
+backend/scripts/migrateGoogleAioPlatform.js
+backend/scripts/migratePerplexityPlatforms.js
+backend/scripts/migratePromptVariants.js
+
+# Claude Code plugin/skill cache (marketplace-installed, not project source)
+.claude/
 
 # Misc
 *.pem

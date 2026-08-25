@@ -108,10 +108,12 @@ export default function AuditForm({ onAuditStart, onAuditComplete, defaultUrl = 
 
     return (
         <form onSubmit={handleSubmit} className="w-full">
-            <div className="relative flex items-center gap-3 p-2 bg-white/[0.03] border border-white/10 rounded-2xl focus-within:border-violet-500/50 focus-within:bg-white/[0.05] transition-all duration-200 shadow-xl shadow-black/20">
+            <div className="relative flex items-center gap-3 p-2 bg-white/[0.03] border border-white/10 rounded-2xl focus-within:border-violet-500/50 focus-within:ring-2 focus-within:ring-cyan-400/40 focus-within:bg-white/[0.05] transition-all duration-200 shadow-xl shadow-black/20">
                 <div className="flex items-center gap-3 flex-1 px-3">
                     <Globe className="w-4 h-4 text-slate-500 shrink-0" />
+                    <label htmlFor="audit-form-url" className="sr-only">{locale === 'en' ? 'Website URL' : 'Website-URL'}</label>
                     <input
+                        id="audit-form-url"
                         type="text"
                         value={url}
                         onChange={e => setUrl(e.target.value)}
@@ -143,7 +145,7 @@ export default function AuditForm({ onAuditStart, onAuditComplete, defaultUrl = 
                     )}
                 </motion.button>
             </div>
-            <p className="text-xs text-slate-600 text-center mt-3">
+            <p className="text-xs text-slate-400 text-center mt-3">
                 {locale === 'en' ? 'Free · No sign-up required · Results in ~60 seconds' : 'Kostenlos · Start ohne Anmeldung · Ergebnis in ~60 Sekunden'}
             </p>
         </form>

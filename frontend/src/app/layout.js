@@ -2,6 +2,7 @@ import './globals.css'
 import { headers } from 'next/headers'
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
+import { MotionConfig } from 'framer-motion'
 import Script from 'next/script'
 import CookieBanner from './components/CookieBanner'
 import { getRootJsonLd } from '../lib/i18n/rootJsonLd'
@@ -54,7 +55,9 @@ export default async function RootLayout({ children }) {
         />
         </head>
         <body className="bg-[#080b14] text-white antialiased">
-        {children}
+        <MotionConfig reducedMotion="user">
+            {children}
+        </MotionConfig>
         <Script
             src="https://www.googletagmanager.com/gtag/js?id=AW-691789119"
             strategy="lazyOnload"

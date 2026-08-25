@@ -218,7 +218,7 @@ export default function Navbar({ locale = 'de' }) {
         <>
             <nav
                 className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-                    scrolled ? 'bg-[#05080f]/95 backdrop-blur-xl border-b border-white/5' : 'bg-transparent'
+                    scrolled ? 'bg-[var(--bg-base)]/95 backdrop-blur-xl border-b border-white/5' : 'bg-transparent'
                 }`}
             >
                 <div className="max-w-7xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between">
@@ -292,7 +292,7 @@ export default function Navbar({ locale = 'de' }) {
                                                     <User className="w-3.5 h-3.5 text-slate-500" /> {t(locale, 'nav.profile')}
                                                 </Link>
                                                 <div className="my-1 border-t border-white/5" />
-                                                <p className="px-3 pt-1 pb-0.5 text-[10px] text-slate-600 font-semibold uppercase tracking-wider">{t(locale, 'nav.seoAutomatisierung')}</p>
+                                                <p className="px-3 pt-1 pb-0.5 text-[10px] text-slate-400 font-semibold uppercase tracking-wider">{t(locale, 'nav.seoAutomatisierung')}</p>
                                                 <Link href={locale === 'en' ? '/en/seo/dashboard' : '/seo/dashboard'} onClick={() => setUserDropdownOpen(false)}
                                                     className="flex items-center gap-2.5 px-3 py-2 text-sm text-slate-300 hover:text-white hover:bg-white/5 rounded-lg transition-all">
                                                     <TrendingUp className="w-3.5 h-3.5 text-emerald-400" /> {t(locale, 'nav.rankings')}
@@ -302,7 +302,7 @@ export default function Navbar({ locale = 'de' }) {
                                                     <CreditCard className="w-3.5 h-3.5 text-slate-500" /> {t(locale, 'nav.trackingPreise')}
                                                 </Link>
                                                 <div className="my-1 border-t border-white/5" />
-                                                <p className="px-3 pt-1 pb-0.5 text-[10px] text-slate-600 font-semibold uppercase tracking-wider">{t(locale, 'nav.geoAutomatisierung')}</p>
+                                                <p className="px-3 pt-1 pb-0.5 text-[10px] text-slate-400 font-semibold uppercase tracking-wider">{t(locale, 'nav.geoAutomatisierung')}</p>
                                                 <Link href={locale === 'en' ? '/en/geo/dashboard' : '/geo/dashboard'} onClick={() => setUserDropdownOpen(false)}
                                                     className="flex items-center gap-2.5 px-3 py-2 text-sm text-slate-300 hover:text-white hover:bg-white/5 rounded-lg transition-all">
                                                     <Globe className="w-3.5 h-3.5 text-violet-400" /> {t(locale, 'nav.kiTracking')}
@@ -339,7 +339,13 @@ export default function Navbar({ locale = 'de' }) {
                     </div>
 
                     {/* Mobile Toggle */}
-                    <button className="md:hidden p-2 text-slate-400 hover:text-white" onClick={() => setMobileOpen(!mobileOpen)}>
+                    <button
+                        className="md:hidden p-3 -mr-1 text-slate-400 hover:text-white"
+                        onClick={() => setMobileOpen(!mobileOpen)}
+                        aria-label={mobileOpen ? (locale === 'en' ? 'Close menu' : 'Menü schließen') : (locale === 'en' ? 'Open menu' : 'Menü öffnen')}
+                        aria-expanded={mobileOpen}
+                        aria-controls="mobile-nav-menu"
+                    >
                         {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
                     </button>
                 </div>
@@ -352,7 +358,8 @@ export default function Navbar({ locale = 'de' }) {
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -10 }}
-                        className="fixed top-16 left-0 right-0 z-40 bg-[#05080f]/95 backdrop-blur-xl border-b border-white/5 p-4 space-y-1"
+                        id="mobile-nav-menu"
+                        className="fixed top-16 left-0 right-0 z-40 bg-[var(--bg-base)]/95 backdrop-blur-xl border-b border-white/5 p-4 space-y-1"
                     >
                         {NAV_ITEMS.map(item =>
                             item.items ? (
