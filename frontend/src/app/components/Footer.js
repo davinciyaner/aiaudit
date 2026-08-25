@@ -71,7 +71,7 @@ export default function Footer({ locale = 'de' }) {
 
     return (
         <>
-            <footer className="border-t border-white/5 bg-[#05080f]">
+            <footer className="border-t border-white/5 bg-[var(--bg-base)]">
                 <div className="max-w-7xl mx-auto px-5 sm:px-8 py-14">
 
                     {/* Top: Brand + Columns */}
@@ -87,7 +87,7 @@ export default function Footer({ locale = 'de' }) {
                                     Audit<span className="text-transparent bg-clip-text bg-linear-to-r from-violet-400 to-cyan-400">AI</span>
                                 </span>
                             </Link>
-                            <p className="text-xs text-slate-600 leading-relaxed max-w-[180px]">
+                            <p className="text-xs text-slate-400 leading-relaxed max-w-[180px]">
                                 {t(locale, 'footer.tagline')}
                             </p>
                         </div>
@@ -103,7 +103,7 @@ export default function Footer({ locale = 'de' }) {
                                         <li key={link.label}>
                                             <Link
                                                 href={link.href}
-                                                className="text-xs text-slate-600 hover:text-slate-300 transition-colors"
+                                                className="text-xs text-slate-400 hover:text-slate-200 transition-colors"
                                             >
                                                 {link.label}
                                             </Link>
@@ -116,10 +116,10 @@ export default function Footer({ locale = 'de' }) {
 
                     {/* Bottom: Divider + Copyright + Support */}
                     <div className="mt-12 pt-6 border-t border-white/[0.04] flex flex-col sm:flex-row items-center justify-between gap-3">
-                        <p className="text-xs text-slate-700">{t(locale, 'footer.copyright')}</p>
+                        <p className="text-xs text-slate-500">{t(locale, 'footer.copyright')}</p>
                         <button
                             onClick={() => setSupportOpen(true)}
-                            className="text-xs text-slate-600 hover:text-slate-400 transition-colors"
+                            className="text-xs text-slate-400 hover:text-slate-200 transition-colors py-2 -my-2"
                         >
                             {t(locale, 'footer.support')}
                         </button>

@@ -1,12 +1,53 @@
 @import "tailwindcss";
 
+/*
+  Color system — 60/30/10
+  60% Dominant  → near-black navy (#05080f / #080b14), used for every section background.
+  30% Secondary → white/slate neutrals, used for text, borders, and card surfaces.
+  10% Accent    → single violet→cyan brand gradient, reserved for CTAs, active states
+                  and the handful of words per section that should pull the eye.
+  Keep new sections on this palette instead of introducing extra hues.
+*/
+:root {
+  --bg-base: #05080f;
+  --bg-surface: #0d1117;
+  --border-subtle: rgba(255, 255, 255, 0.07);
+  --accent-from: #7c3aed;
+  --accent-to: #06b6d4;
+}
+
 * {
   box-sizing: border-box;
+}
+
+.text-gradient-accent {
+  background-image: linear-gradient(to right, #a78bfa, #22d3ee);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.bg-gradient-accent {
+  background-image: linear-gradient(to right, var(--accent-from), var(--accent-to));
 }
 
 html {
   scroll-behavior: smooth;
   overflow-x: hidden;
+}
+
+/* Anchor targets (Footer -> #features/#pricing/#faq etc.) land below the fixed navbar instead of under it */
+[id] {
+  scroll-margin-top: 5rem;
+}
+
+/* Visible keyboard-focus indicator on every interactive element, including inputs that
+   suppress their own outline (e.g. AuditForm) — this rule sits outside Tailwind's layers
+   so it wins over utility classes like outline-none. */
+:focus-visible {
+  outline: 2px solid #22d3ee;
+  outline-offset: 2px;
+  border-radius: 2px;
 }
 
 body {

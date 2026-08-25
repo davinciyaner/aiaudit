@@ -57,7 +57,8 @@ export default function ScoreRegisterModal({ open, onClose, auditUrl = '', mode 
                             <div className="relative z-10 p-6 sm:p-8 text-center">
                                 <button
                                     onClick={onClose}
-                                    className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-lg bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-all"
+                                    aria-label={locale === 'en' ? 'Close' : 'Schließen'}
+                                    className="absolute top-4 right-4 w-11 h-11 flex items-center justify-center rounded-lg bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-all"
                                 >
                                     <X className="w-4 h-4" />
                                 </button>

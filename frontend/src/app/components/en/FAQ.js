@@ -8,7 +8,7 @@ export default function FAQ() {
     const [open, setOpen] = useState(null)
 
     return (
-        <section id="faq" className="relative py-16 md:py-24 bg-[#05080f]">
+        <section id="faq" className="relative py-16 md:py-24 bg-[var(--bg-base)]">
             <div className="max-w-3xl mx-auto px-5 sm:px-8">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -17,7 +17,7 @@ export default function FAQ() {
                     className="text-center mb-10 sm:mb-14"
                 >
                     <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">
-                        Frequently asked questions
+                        Frequently asked <span className="text-gradient-accent">questions</span>
                     </h2>
                     <p className="text-slate-400 text-base">
                         Everything you need to know about website audits, SEO tests and GEO.

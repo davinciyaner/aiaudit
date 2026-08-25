@@ -1,11 +1,11 @@
 import { ImageResponse } from 'next/og'
 
 export const runtime = 'edge'
-export const alt = 'AuditAI – Website prüfen: SEO, GEO & Performance'
+export const alt = 'AuditAI – KI-Sichtbarkeit (AI Visibility) & SEO prüfen'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
-const TAGS = ['SEO-Analyse', 'GEO-Sichtbarkeit', 'Performance', 'KI-Bericht']
+const TAGS = ['KI-Sichtbarkeit', 'AI Visibility', 'SEO-Analyse', 'KI-Bericht']
 
 export default function Image() {
     return new ImageResponse(
@@ -93,7 +93,7 @@ export default function Image() {
                             color: '#a78bfa',
                         }}
                     >
-                        SEO, GEO, Performance
+                        KI-Sichtbarkeit, SEO
                     </div>
                     <div
                         style={{
