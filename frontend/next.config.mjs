@@ -19,7 +19,7 @@ const securityHeaders = [
             "img-src 'self' data: https: blob:",
             "font-src 'self' data:",
             `connect-src 'self' ${isDev ? 'http://localhost:3001' : ''} ${process.env.NEXT_PUBLIC_API_URL ? new URL(process.env.NEXT_PUBLIC_API_URL).origin : ''} https://api-m.sandbox.paypal.com https://api-m.paypal.com https://www.paypal.com https://www.googletagmanager.com https://www.google-analytics.com https://www.googleadservices.com https://stats.g.doubleclick.net https://www.google.com https://news.google.com https://*.clarity.ms https://pagead2.googlesyndication.com`,
-            "frame-src https://www.paypal.com https://www.sandbox.paypal.com",
+            "frame-src https://www.paypal.com https://www.sandbox.paypal.com https://news.google.com",
             "object-src 'none'",
             "base-uri 'self'",
             "form-action 'self'",
