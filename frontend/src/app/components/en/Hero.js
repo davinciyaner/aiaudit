@@ -111,6 +111,8 @@ export default function Hero() {
                             <ArrowRight className="w-3 h-3 text-slate-500 group-hover:translate-x-0.5 group-hover:text-violet-300 transition-all" />
                         </Link>
                     </div>
+
+                    <div className="mt-5" google-add-preferred-source-btn="" data-theme="dark" data-lang="en" />
                 </div>
             </div>
         </main>

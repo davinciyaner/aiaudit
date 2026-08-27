@@ -217,7 +217,7 @@ export default function Dashboard() {
                     <h1 className="text-2xl sm:text-4xl font-bold text-white mb-3">
                         {result ? 'Audit Fertig' : 'Audit deine Website'}
                     </h1>
-                    <p className="text-slate-400 text-sm max-w-sm mx-auto truncate px-4">
+                    <p className="text-slate-400 text-sm max-md mx-auto px-4">
                         {result
                             ? `Resultate für ${result?.auditData?.url || auditUrl}`
                             : 'Gib deine URL ein und erhalte einen vollständigen AI Bericht'}

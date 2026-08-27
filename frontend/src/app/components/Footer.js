@@ -21,6 +21,7 @@ const COLUMNS_DE = [
             { label: 'Alle Artikel', href: '/blog' },
             { label: 'SEO-Test', href: '/blog/seo-test-haeufige-fehler' },
             { label: 'GEO-Optimierung', href: '/blog/geo-optimierung-2026' },
+            { label: 'Otterly.ai Alternative', href: '/vergleich/otterly-alternative' },
         ],
     },
     {
@@ -51,6 +52,7 @@ const COLUMNS_EN = [
             { label: 'All Articles', href: '/en/blog' },
             { label: 'SEO Test', href: '/en/blog/common-seo-mistakes' },
             { label: 'GEO Optimization', href: '/en/blog/what-is-geo' },
+            { label: 'Otterly.ai Alternative', href: '/en/compare/otterly-alternative' },
         ],
     },
     {
