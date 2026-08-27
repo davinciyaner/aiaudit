@@ -16,7 +16,10 @@ import {
 const checkRateLimit = rateLimit({
     windowMs: 60 * 1000,
     limit: 2,
-    keyGenerator: (req) => `${req.userId}:${req.params.id}`,
+    // Pro Route eigenes Kontingent — sonst teilen sich Check, Keyword-Ideen, Konkurrenten,
+    // Backlinks, Content-Gap etc. ein gemeinsames Limit von 2/Minute und blockieren sich
+    // gegenseitig beim Wechsel zwischen Tabs, obwohl jede Aktion für sich harmlos ist.
+    keyGenerator: (req) => `${req.userId}:${req.params.id}:${req.path}`,
     handler: (req, res) => res.status(429).json({ error: t('CHECK_RATE_LIMIT', req.language) }),
     standardHeaders: false,
     legacyHeaders: false,

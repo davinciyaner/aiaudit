@@ -135,6 +135,13 @@ export default function Pricing() {
                         </motion.div>
                     ))}
                 </div>
+
+                <p className="text-center text-sm text-slate-500 mt-8">
+                    Comparing tools?{' '}
+                    <Link href="/en/compare/otterly-alternative" className="text-violet-400 hover:text-violet-300 underline underline-offset-2">
+                        AuditAI vs. Otterly.ai
+                    </Link>
+                </p>
             </div>
         </section>
         </>
