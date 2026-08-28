@@ -51,7 +51,8 @@ const breadcrumbLd = {
     '@type': 'BreadcrumbList',
     itemListElement: [
         { '@type': 'ListItem', position: 1, name: 'AuditAI', item: 'https://www.sitecheckai.dev/en' },
-        { '@type': 'ListItem', position: 2, name: 'Otterly.ai Alternative', item: 'https://www.sitecheckai.dev/en/compare/otterly-alternative' },
+        { '@type': 'ListItem', position: 2, name: 'Compare', item: 'https://www.sitecheckai.dev/en/compare' },
+        { '@type': 'ListItem', position: 3, name: 'Otterly.ai Alternative', item: 'https://www.sitecheckai.dev/en/compare/otterly-alternative' },
     ],
 }
 
@@ -138,6 +139,8 @@ export default function OtterlyAlternativePage() {
                 {/* Breadcrumb */}
                 <div className="flex items-center gap-2 text-xs text-slate-600 mb-8">
                     <Link href="/en" className="hover:text-slate-400 transition-colors">AuditAI</Link>
+                    <span>/</span>
+                    <Link href="/en/compare" className="hover:text-slate-400 transition-colors">Compare</Link>
                     <span>/</span>
                     <span className="text-slate-500">Otterly.ai Alternative</span>
                 </div>
@@ -309,6 +312,27 @@ export default function OtterlyAlternativePage() {
                             className="inline-flex items-center gap-2 px-5 py-2.5 bg-violet-600 hover:bg-violet-500 text-white text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-violet-500/20 shrink-0"
                         >
                             Check for free now
+                        </Link>
+                    </div>
+                </div>
+
+                {/* Cross-link: Solutions */}
+                <div className="mt-5 bg-white/[0.02] border border-white/[0.06] rounded-2xl p-6 sm:p-8">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 justify-between">
+                        <div>
+                            <span className="text-xs font-semibold text-emerald-400 uppercase tracking-wider mb-1 block">Related solution</span>
+                            <h3 className="text-base sm:text-lg font-bold text-white mb-2">
+                                Affordable AI Visibility Tool: all prices at a glance
+                            </h3>
+                            <p className="text-slate-400 text-sm leading-relaxed max-w-md">
+                                Who benefits from an affordable combined SEO + AI-visibility tool — and what's included in each plan.
+                            </p>
+                        </div>
+                        <Link
+                            href="/en/solutions/affordable-ai-visibility-tool"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/[0.06] hover:bg-white/10 text-white text-sm font-semibold rounded-xl transition-all duration-200 shrink-0"
+                        >
+                            View page
                         </Link>
                     </div>
                 </div>
