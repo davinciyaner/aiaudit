@@ -16,12 +16,25 @@ const COLUMNS_DE = [
         ],
     },
     {
+        heading: 'Alternativen',
+        links: [
+            { label: 'Alle Alternativen', href: '/vergleich' },
+            { label: 'Otterly.ai Alternative', href: '/vergleich/otterly-alternative' },
+        ],
+    },
+    {
+        heading: 'Lösungen',
+        links: [
+            { label: 'Alle Lösungen', href: '/loesungen' },
+            { label: 'Günstiges KI-Sichtbarkeit Tool', href: '/loesungen/guenstiges-ki-sichtbarkeit-tool' },
+        ],
+    },
+    {
         heading: 'Blog',
         links: [
             { label: 'Alle Artikel', href: '/blog' },
             { label: 'SEO-Test', href: '/blog/seo-test-haeufige-fehler' },
             { label: 'GEO-Optimierung', href: '/blog/geo-optimierung-2026' },
-            { label: 'Otterly.ai Alternative', href: '/vergleich/otterly-alternative' },
         ],
     },
     {
@@ -47,12 +60,25 @@ const COLUMNS_EN = [
         ],
     },
     {
+        heading: 'Alternatives',
+        links: [
+            { label: 'All Alternatives', href: '/en/compare' },
+            { label: 'Otterly.ai Alternative', href: '/en/compare/otterly-alternative' },
+        ],
+    },
+    {
+        heading: 'Solutions',
+        links: [
+            { label: 'All Solutions', href: '/en/solutions' },
+            { label: 'Affordable AI Visibility Tool', href: '/en/solutions/affordable-ai-visibility-tool' },
+        ],
+    },
+    {
         heading: 'Blog',
         links: [
             { label: 'All Articles', href: '/en/blog' },
             { label: 'SEO Test', href: '/en/blog/common-seo-mistakes' },
             { label: 'GEO Optimization', href: '/en/blog/what-is-geo' },
-            { label: 'Otterly.ai Alternative', href: '/en/compare/otterly-alternative' },
         ],
     },
     {
@@ -77,10 +103,10 @@ export default function Footer({ locale = 'de' }) {
                 <div className="max-w-7xl mx-auto px-5 sm:px-8 py-14">
 
                     {/* Top: Brand + Columns */}
-                    <div className="grid grid-cols-2 gap-10 sm:grid-cols-4">
+                    <div className="grid grid-cols-2 gap-10 sm:grid-cols-3 lg:grid-cols-6">
 
                         {/* Brand */}
-                        <div className="col-span-2 sm:col-span-1">
+                        <div className="col-span-2 sm:col-span-3 lg:col-span-1">
                             <Link href={locale === 'en' ? '/en' : '/'} className="inline-flex items-center gap-2.5 mb-3">
                                 <div className="w-7 h-7 rounded-lg bg-[var(--accent)] flex items-center justify-center">
                                     <Zap className="w-3.5 h-3.5 text-[var(--bg-base)]" strokeWidth={2.5} />
