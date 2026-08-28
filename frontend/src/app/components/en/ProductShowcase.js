@@ -29,22 +29,22 @@ const SEO_RESULTS = [
 
 function ResultCard({ title, score, checksLabel, results }) {
     return (
-        <div className="bg-[var(--bg-surface)] border border-white/10 rounded-2xl overflow-hidden shadow-2xl shadow-black/30">
-            <div className="px-5 py-4 border-b border-white/5 flex items-center justify-between">
+        <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl overflow-hidden shadow-2xl shadow-black/30">
+            <div className="px-5 py-4 border-b border-[var(--border-subtle)] flex items-center justify-between">
                 <span className="text-sm font-semibold text-white">{title}</span>
-                <span className="text-xs px-2.5 py-1 rounded-full bg-violet-500/15 text-violet-300 font-semibold">{score}</span>
+                <span className="text-xs px-2.5 py-1 rounded-full bg-[var(--accent-soft)] text-[var(--accent)] font-semibold">{score}</span>
             </div>
             <div className="p-5 space-y-2.5">
                 {results.map((r, i) => (
-                    <div key={i} className="flex items-center justify-between gap-3 py-1.5 border-b border-white/[0.04] last:border-0">
+                    <div key={i} className="flex items-center justify-between gap-3 py-1.5 border-b border-[var(--border-subtle)] last:border-0">
                         <div className="flex items-center gap-2.5">
                             {r.ok
-                                ? <CheckCircle className="w-4 h-4 text-cyan-400 shrink-0" />
+                                ? <CheckCircle className="w-4 h-4 text-[var(--accent)] shrink-0" />
                                 : <XCircle className="w-4 h-4 text-slate-500 shrink-0" />
                             }
                             <span className="text-sm text-slate-300">{r.label}</span>
                         </div>
-                        <span className={`text-xs ${r.ok ? 'text-cyan-400' : 'text-slate-500'}`}>{r.note}</span>
+                        <span className={`text-xs ${r.ok ? 'text-[var(--accent)]' : 'text-slate-500'}`}>{r.note}</span>
                     </div>
                 ))}
             </div>
@@ -68,7 +68,7 @@ export default function ProductShowcase() {
                     className="grid sm:grid-cols-3 gap-4 mb-20 sm:mb-28">
                     {STEPS.map((s, i) => (
                         <div key={s.title} className="flex items-start gap-4">
-                            <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 bg-white/[0.04] border border-white/10 text-xs font-bold text-slate-400">
+                            <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 bg-[var(--surface-08)] border border-[var(--border-subtle)] text-xs font-bold text-slate-400">
                                 {i + 1}
                             </div>
                             <div>
@@ -83,7 +83,7 @@ export default function ProductShowcase() {
                 <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center mb-24 sm:mb-32">
                     <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
                         <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-5 leading-tight">
-                            Do <span className="text-gradient-accent">AI models cite you?</span>
+                            Do AI models cite you?
                         </h2>
                         <p className="text-slate-400 text-base leading-relaxed mb-8">
                             ChatGPT, Perplexity and Claude decide every day which websites they recommend. AuditAI checks
@@ -92,11 +92,11 @@ export default function ProductShowcase() {
                         </p>
                         <div className="flex flex-wrap items-center gap-3">
                             <Link href="/en/dashboard"
-                                className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-accent hover:opacity-90 text-white text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-cyan-500/20">
+                                className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-[var(--accent-border)]">
                                 Check AI Visibility now <ArrowRight className="w-3.5 h-3.5" />
                             </Link>
                             <Link href="/geo/pricing"
-                                className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white text-sm font-semibold rounded-xl transition-all duration-200">
+                                className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--surface-06)] hover:bg-[var(--surface-10)] border border-[var(--border-subtle)] text-slate-300 hover:text-white text-sm font-semibold rounded-xl transition-all duration-200">
                                 <Globe className="w-4 h-4 text-slate-400" />
                                 Track it automatically, every week
                             </Link>
@@ -118,7 +118,7 @@ export default function ProductShowcase() {
                     <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
                         className="order-1 lg:order-2">
                         <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-5 leading-tight">
-                            Every mistake costs <span className="text-gradient-accent">rankings.</span>
+                            Every mistake costs rankings.
                         </h2>
                         <p className="text-slate-400 text-base leading-relaxed mb-8">
                             AuditAI crawls your entire website up to 25 pages deep and checks title tags, meta descriptions,
@@ -126,11 +126,11 @@ export default function ProductShowcase() {
                         </p>
                         <div className="flex flex-wrap items-center gap-3">
                             <Link href="/en/dashboard"
-                                className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-accent hover:opacity-90 text-white text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-violet-500/20">
+                                className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-[var(--accent-border)]">
                                 Check SEO now <ArrowRight className="w-3.5 h-3.5" />
                             </Link>
                             <Link href="/seo/pricing"
-                                className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white text-sm font-semibold rounded-xl transition-all duration-200">
+                                className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--surface-06)] hover:bg-[var(--surface-10)] border border-[var(--border-subtle)] text-slate-300 hover:text-white text-sm font-semibold rounded-xl transition-all duration-200">
                                 <TrendingUp className="w-4 h-4 text-slate-400" />
                                 Track it automatically, every week
                             </Link>

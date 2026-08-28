@@ -73,7 +73,7 @@ export default function Footer({ locale = 'de' }) {
 
     return (
         <>
-            <footer className="border-t border-white/5 bg-[var(--bg-base)]">
+            <footer className="border-t border-[var(--border-subtle)] bg-[var(--bg-base)]">
                 <div className="max-w-7xl mx-auto px-5 sm:px-8 py-14">
 
                     {/* Top: Brand + Columns */}
@@ -82,11 +82,11 @@ export default function Footer({ locale = 'de' }) {
                         {/* Brand */}
                         <div className="col-span-2 sm:col-span-1">
                             <Link href={locale === 'en' ? '/en' : '/'} className="inline-flex items-center gap-2.5 mb-3">
-                                <div className="w-7 h-7 rounded-lg bg-linear-to-br from-violet-500 to-cyan-500 flex items-center justify-center">
-                                    <Zap className="w-3.5 h-3.5 text-white" strokeWidth={2.5} />
+                                <div className="w-7 h-7 rounded-lg bg-[var(--accent)] flex items-center justify-center">
+                                    <Zap className="w-3.5 h-3.5 text-[var(--bg-base)]" strokeWidth={2.5} />
                                 </div>
                                 <span className="font-bold text-white">
-                                    Audit<span className="text-transparent bg-clip-text bg-linear-to-r from-violet-400 to-cyan-400">AI</span>
+                                    AuditAI
                                 </span>
                             </Link>
                             <p className="text-xs text-slate-400 leading-relaxed max-w-[180px]">
@@ -117,7 +117,7 @@ export default function Footer({ locale = 'de' }) {
                     </div>
 
                     {/* Bottom: Divider + Copyright + Support */}
-                    <div className="mt-12 pt-6 border-t border-white/[0.04] flex flex-col sm:flex-row items-center justify-between gap-3">
+                    <div className="mt-12 pt-6 border-t border-[var(--border-subtle)] flex flex-col sm:flex-row items-center justify-between gap-3">
                         <p className="text-xs text-slate-500">{t(locale, 'footer.copyright')}</p>
                         <button
                             onClick={() => setSupportOpen(true)}

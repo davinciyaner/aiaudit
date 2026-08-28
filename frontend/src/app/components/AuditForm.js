@@ -133,10 +133,10 @@ export default function AuditForm({ onAuditStart, onAuditComplete, defaultUrl = 
     return (
         <div className="w-full">
             <form onSubmit={handleSubmit} className="w-full">
-                <div className={`relative flex items-center gap-3 p-2 bg-white/[0.03] border rounded-2xl transition-all duration-200 shadow-xl shadow-black/20 ${
+                <div className={`relative flex items-center gap-3 p-2 bg-[var(--surface-06)] border rounded-2xl transition-all duration-200 shadow-xl shadow-black/20 ${
                     domainError && trimmed
                         ? 'border-red-500/40 focus-within:border-red-500/60 focus-within:ring-2 focus-within:ring-red-400/30'
-                        : 'border-white/10 focus-within:border-violet-500/50 focus-within:ring-2 focus-within:ring-cyan-400/40 focus-within:bg-white/[0.05]'
+                        : 'border-[var(--border-subtle)] focus-within:border-[var(--accent-border)] focus-within:ring-2 focus-within:ring-[var(--accent-soft-strong)] focus-within:bg-[var(--surface-08)]'
                 }`}>
                     <div className="flex items-center gap-2 flex-1 px-3 min-w-0">
                         <Globe className="w-4 h-4 text-slate-500 shrink-0" />
@@ -186,7 +186,7 @@ export default function AuditForm({ onAuditStart, onAuditComplete, defaultUrl = 
                                 type="button"
                                 onClick={handleClear}
                                 aria-label={locale === 'en' ? 'Clear' : 'Leeren'}
-                                className="shrink-0 p-1 rounded-lg text-slate-500 hover:text-white hover:bg-white/10 transition-colors"
+                                className="shrink-0 p-1 rounded-lg text-slate-500 hover:text-white hover:bg-[var(--surface-10)] transition-colors"
                             >
                                 <X className="w-3.5 h-3.5" />
                             </button>
@@ -196,10 +196,10 @@ export default function AuditForm({ onAuditStart, onAuditComplete, defaultUrl = 
                         type="submit"
                         disabled={loading || (!!trimmed && !!domainError)}
                         whileTap={{ scale: 0.97 }}
-                        className="flex items-center gap-2 px-6 py-3 bg-linear-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 disabled:opacity-50 disabled:cursor-not-allowed text-white text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-violet-500/20 shrink-0"
+                        className="flex items-center gap-2 px-6 py-3 bg-[var(--accent)] hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-[var(--accent-border)] shrink-0"
                     >
                         {loading ? (
-                            <><div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />{locale === 'en' ? 'Analyzing...' : 'Analysiert...'}</>
+                            <><div className="w-4 h-4 border-2 border-[var(--bg-base)]/30 border-t-[var(--bg-base)] rounded-full animate-spin" />{locale === 'en' ? 'Analyzing...' : 'Analysiert...'}</>
                         ) : (
                             <><Search className="w-4 h-4" />{locale === 'en' ? 'Check now' : 'Jetzt prüfen'}<ArrowRight className="w-3.5 h-3.5" /></>
                         )}
@@ -230,7 +230,7 @@ export default function AuditForm({ onAuditStart, onAuditComplete, defaultUrl = 
                             key={d}
                             type="button"
                             onClick={() => { setUrl(d); inputRef.current?.focus() }}
-                            className="px-2.5 py-1 text-xs text-slate-400 bg-white/[0.03] border border-white/10 rounded-full hover:text-white hover:border-white/20 hover:bg-white/[0.06] transition-all"
+                            className="px-2.5 py-1 text-xs text-slate-400 bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-full hover:text-white hover:border-[var(--border-strong)] hover:bg-[var(--surface-08)] transition-all"
                         >
                             {d}
                         </button>

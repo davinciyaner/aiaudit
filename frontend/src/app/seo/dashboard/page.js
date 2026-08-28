@@ -11,11 +11,11 @@ import toast, { Toaster } from 'react-hot-toast'
 import Navbar from '../../components/Navbar'
 
 function PositionBadge({ position }) {
-    if (position == null) return <span className="text-xs text-slate-600">—</span>
+    if (position == null) return <span className="text-xs text-slate-600">-</span>
     if (position <= 3)  return <span className="text-sm font-bold text-emerald-400">#{position}</span>
     if (position <= 10) return <span className="text-sm font-bold text-teal-400">#{position}</span>
     if (position <= 30) return <span className="text-sm font-bold text-amber-400">#{position}</span>
-    return <span className="text-sm font-bold text-slate-400">#{position}</span>
+    return <span className="text-sm font-bold text-white">#{position}</span>
 }
 
 function SiteCard({ site, onDelete }) {
@@ -44,19 +44,19 @@ function SiteCard({ site, onDelete }) {
         <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="group relative bg-[#0d1117] border border-white/[0.06] rounded-2xl p-6 hover:border-emerald-500/20 transition-all duration-200"
+            className="group relative bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl p-6 hover:border-[var(--accent-border)] transition-all duration-200"
         >
             <button
                 onClick={handleDelete}
                 disabled={deleting}
-                className="absolute top-4 right-4 w-7 h-7 flex items-center justify-center rounded-lg opacity-0 group-hover:opacity-100 bg-white/5 hover:bg-red-500/15 text-slate-500 hover:text-red-400 transition-all"
+                className="absolute top-4 right-4 w-7 h-7 flex items-center justify-center rounded-lg opacity-0 group-hover:opacity-100 bg-[var(--surface-06)] hover:bg-red-500/15 text-slate-500 hover:text-red-400 transition-all"
             >
                 {deleting ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Trash2 className="w-3.5 h-3.5" />}
             </button>
 
             <div className="flex items-start gap-3 mb-4">
-                <div className="w-9 h-9 rounded-xl bg-emerald-500/10 border border-emerald-500/15 flex items-center justify-center shrink-0">
-                    <Globe className="w-4 h-4 text-emerald-400" />
+                <div className="w-9 h-9 rounded-xl bg-[var(--accent-soft)] border border-[var(--accent-border)] flex items-center justify-center shrink-0">
+                    <Globe className="w-4 h-4 text-[var(--accent)]" />
                 </div>
                 <div className="min-w-0">
                     <div className="text-sm font-semibold text-white truncate">{site.displayName || site.domain}</div>
@@ -65,11 +65,11 @@ function SiteCard({ site, onDelete }) {
             </div>
 
             <div className="grid grid-cols-2 gap-3 mb-5">
-                <div className="bg-white/[0.03] rounded-xl p-3">
+                <div className="bg-[var(--surface-06)] rounded-xl p-3">
                     <div className="text-xs text-slate-500 mb-1">Ø Position</div>
                     <PositionBadge position={site.avgPosition} />
                 </div>
-                <div className="bg-white/[0.03] rounded-xl p-3">
+                <div className="bg-[var(--surface-06)] rounded-xl p-3">
                     <div className="text-xs text-slate-500 mb-1">Keywords</div>
                     <span className="text-sm font-bold text-white">{site.trackedCount || 0}</span>
                 </div>
@@ -85,7 +85,7 @@ function SiteCard({ site, onDelete }) {
 
             <Link
                 href={`/seo/${site._id}`}
-                className="flex items-center justify-center gap-2 w-full py-2.5 text-sm font-semibold rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 hover:text-emerald-300 border border-emerald-500/15 hover:border-emerald-500/30 transition-all"
+                className="flex items-center justify-center gap-2 w-full py-2.5 text-sm font-semibold rounded-xl bg-[var(--accent-soft)] hover:bg-[var(--accent-soft-strong)] text-[var(--accent)] border border-[var(--accent-border)] transition-all"
             >
                 Rankings ansehen
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -136,11 +136,11 @@ function AddSiteModal({ maxKeywords, usedKeywords, onClose, onAdded }) {
                 initial={{ opacity: 0, scale: 0.95, y: 16 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.95 }}
-                className="w-full max-w-md bg-[#0d1117] border border-white/10 rounded-2xl p-6"
+                className="w-full max-w-md bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl p-6"
             >
                 <div className="flex items-center justify-between mb-6">
                     <h3 className="text-lg font-bold text-white">Website hinzufügen</h3>
-                    <button onClick={onClose} className="w-8 h-8 flex items-center justify-center rounded-lg bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-all">
+                    <button onClick={onClose} className="w-8 h-8 flex items-center justify-center rounded-lg bg-[var(--surface-06)] hover:bg-[var(--surface-10)] text-slate-400 hover:text-white transition-all">
                         <X className="w-4 h-4" />
                     </button>
                 </div>
@@ -154,7 +154,7 @@ function AddSiteModal({ maxKeywords, usedKeywords, onClose, onAdded }) {
                             onChange={e => setDomain(e.target.value)}
                             placeholder="example.com"
                             required
-                            className="w-full bg-white/3 border border-white/10 hover:border-white/20 focus:border-emerald-500/50 rounded-xl px-4 py-3 text-white placeholder:text-slate-600 outline-none transition-all text-sm"
+                            className="w-full bg-[var(--surface-06)] border border-[var(--border-subtle)] hover:border-[var(--border-strong)] focus:border-[var(--accent-border)] rounded-xl px-4 py-3 text-white placeholder:text-slate-600 outline-none transition-all text-sm"
                         />
                     </div>
 
@@ -167,7 +167,7 @@ function AddSiteModal({ maxKeywords, usedKeywords, onClose, onAdded }) {
                             onChange={e => setKeywordsText(e.target.value)}
                             placeholder={"keyword eins\nkeyword zwei\nkeyword drei"}
                             rows={6}
-                            className="w-full bg-white/3 border border-white/10 hover:border-white/20 focus:border-emerald-500/50 rounded-xl px-4 py-3 text-white placeholder:text-slate-600 outline-none transition-all text-sm resize-none font-mono"
+                            className="w-full bg-[var(--surface-06)] border border-[var(--border-subtle)] hover:border-[var(--border-strong)] focus:border-[var(--accent-border)] rounded-xl px-4 py-3 text-white placeholder:text-slate-600 outline-none transition-all text-sm resize-none font-mono"
                         />
                         <div className="text-xs text-slate-600 mt-1">
                             {keywordsText.split('\n').filter(k => k.trim()).length} Keywords eingegeben
@@ -177,7 +177,7 @@ function AddSiteModal({ maxKeywords, usedKeywords, onClose, onAdded }) {
                     <button
                         type="submit"
                         disabled={loading}
-                        className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-semibold transition-all disabled:opacity-50 text-sm"
+                        className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] font-semibold transition-all disabled:opacity-50 text-sm"
                     >
                         {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Plus className="w-4 h-4" />}
                         {loading ? 'Wird hinzugefügt...' : 'Website hinzufügen'}
@@ -254,16 +254,16 @@ export default function SeoDashboardPage() {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-[#05080f] flex items-center justify-center">
-                <Loader2 className="w-8 h-8 text-emerald-400 animate-spin" />
+            <div className="min-h-screen bg-[var(--bg-base)] flex items-center justify-center">
+                <Loader2 className="w-8 h-8 text-[var(--accent)] animate-spin" />
             </div>
         )
     }
 
     return (
-        <div className="min-h-screen bg-[#05080f]">
+        <div className="min-h-screen bg-[var(--bg-base)]">
             <Toaster position="top-right" toastOptions={{
-                style: { background: '#0d1117', color: '#fff', border: '1px solid rgba(255,255,255,0.08)' },
+                style: { background: 'var(--bg-surface)', color: '#fff', border: '1px solid var(--border-subtle)' },
             }} />
             <Navbar />
 
@@ -272,17 +272,13 @@ export default function SeoDashboardPage() {
                 {/* Header */}
                 <div className="flex items-start justify-between gap-4 mb-8">
                     <div>
-                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-emerald-500/20 bg-emerald-500/5 text-emerald-400 text-xs font-medium mb-3">
-                            <TrendingUp className="w-3 h-3" />
-                            SEO Automatisierung · {plan ? plan.charAt(0).toUpperCase() + plan.slice(1) : ''}-Plan
-                        </div>
                         <h1 className="text-2xl sm:text-3xl font-bold text-white">Keyword Rankings</h1>
                     </div>
 
                     {limits.usedSites < limits.maxSites && (
                         <button
                             onClick={() => setShowAdd(true)}
-                            className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-sm font-semibold rounded-xl transition-all shadow-lg shadow-emerald-500/20"
+                            className="flex items-center gap-2 px-4 py-2.5 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all shadow-lg shadow-[var(--accent-border)]"
                         >
                             <Plus className="w-4 h-4" />
                             Website hinzufügen
@@ -292,26 +288,26 @@ export default function SeoDashboardPage() {
 
                 {/* Usage bar */}
                 <div className="grid sm:grid-cols-2 gap-4 mb-8">
-                    <div className="bg-[#0d1117] border border-white/[0.06] rounded-xl p-4">
+                    <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-xl p-4">
                         <div className="flex items-center justify-between mb-2">
                             <span className="text-sm text-slate-400">Websites</span>
                             <span className="text-sm font-semibold text-white">{limits.usedSites} / {limits.maxSites}</span>
                         </div>
-                        <div className="h-1.5 bg-white/5 rounded-full overflow-hidden">
+                        <div className="h-1.5 bg-[var(--surface-08)] rounded-full overflow-hidden">
                             <div
-                                className="h-full bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full transition-all"
+                                className="h-full bg-[var(--accent)] rounded-full transition-all"
                                 style={{ width: `${limits.maxSites > 0 ? (limits.usedSites / limits.maxSites) * 100 : 0}%` }}
                             />
                         </div>
                     </div>
-                    <div className="bg-[#0d1117] border border-white/[0.06] rounded-xl p-4">
+                    <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-xl p-4">
                         <div className="flex items-center justify-between mb-2">
                             <span className="text-sm text-slate-400">Keywords</span>
                             <span className="text-sm font-semibold text-white">{limits.usedKeywords} / {limits.maxKeywords}</span>
                         </div>
-                        <div className="h-1.5 bg-white/5 rounded-full overflow-hidden">
+                        <div className="h-1.5 bg-[var(--surface-08)] rounded-full overflow-hidden">
                             <div
-                                className="h-full bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full transition-all"
+                                className="h-full bg-[var(--accent)] rounded-full transition-all"
                                 style={{ width: `${limits.maxKeywords > 0 ? (limits.usedKeywords / limits.maxKeywords) * 100 : 0}%` }}
                             />
                         </div>
@@ -321,14 +317,14 @@ export default function SeoDashboardPage() {
                 {/* Sites grid */}
                 {sites.length === 0 ? (
                     <div className="text-center py-20">
-                        <div className="w-16 h-16 rounded-2xl bg-emerald-500/10 border border-emerald-500/15 flex items-center justify-center mx-auto mb-4">
-                            <TrendingUp className="w-7 h-7 text-emerald-400" />
+                        <div className="w-16 h-16 rounded-2xl bg-[var(--accent-soft)] border border-[var(--accent-border)] flex items-center justify-center mx-auto mb-4">
+                            <TrendingUp className="w-7 h-7 text-[var(--accent)]" />
                         </div>
                         <h3 className="text-xl font-bold text-white mb-2">Noch keine Website hinzugefügt</h3>
                         <p className="text-slate-500 text-sm mb-6">Füge deine erste Website mit Keywords hinzu und tracke deine Rankings.</p>
                         <button
                             onClick={() => setShowAdd(true)}
-                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-sm font-semibold rounded-xl transition-all"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all"
                         >
                             <Plus className="w-4 h-4" />
                             Erste Website hinzufügen

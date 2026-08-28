@@ -9,7 +9,7 @@ import Navbar from '../../../components/Navbar'
 
 function MentionRateBadge({ rate, mentioned, checked }) {
     if (rate == null) return <span className="text-xs text-slate-600">No check yet</span>
-    const color = rate >= 70 ? 'text-violet-400' : rate >= 40 ? 'text-amber-400' : 'text-slate-400'
+    const color = rate >= 70 ? 'text-[var(--accent)]' : rate >= 40 ? 'text-amber-400' : 'text-slate-400'
     return (
         <div>
             <span className={`text-xl font-bold ${color}`}>{rate}%</span>
@@ -44,19 +44,19 @@ function SiteCard({ site, onDelete }) {
         <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="group relative bg-[#0d1117] border border-white/[0.06] rounded-2xl p-6 hover:border-violet-500/20 transition-all duration-200"
+            className="group relative bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl p-6 hover:border-[var(--accent-border)] transition-all duration-200"
         >
             <button
                 onClick={handleDelete}
                 disabled={deleting}
-                className="absolute top-4 right-4 w-7 h-7 flex items-center justify-center rounded-lg opacity-0 group-hover:opacity-100 bg-white/5 hover:bg-red-500/15 text-slate-500 hover:text-red-400 transition-all"
+                className="absolute top-4 right-4 w-7 h-7 flex items-center justify-center rounded-lg opacity-0 group-hover:opacity-100 bg-[var(--surface-06)] hover:bg-red-500/15 text-slate-500 hover:text-red-400 transition-all"
             >
                 {deleting ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Trash2 className="w-3.5 h-3.5" />}
             </button>
 
             <div className="flex items-start gap-3 mb-4">
-                <div className="w-9 h-9 rounded-xl bg-violet-500/10 border border-violet-500/15 flex items-center justify-center shrink-0">
-                    <Globe className="w-4 h-4 text-violet-400" />
+                <div className="w-9 h-9 rounded-xl bg-[var(--accent-soft)] border border-[var(--accent-border)] flex items-center justify-center shrink-0">
+                    <Globe className="w-4 h-4 text-[var(--accent)]" />
                 </div>
                 <div className="min-w-0">
                     <div className="text-sm font-semibold text-white truncate">{site.displayName || site.domain}</div>
@@ -65,11 +65,11 @@ function SiteCard({ site, onDelete }) {
             </div>
 
             <div className="grid grid-cols-2 gap-3 mb-4">
-                <div className="bg-white/[0.03] rounded-xl p-3">
+                <div className="bg-[var(--surface-06)] rounded-xl p-3">
                     <div className="text-xs text-slate-500 mb-1">AI mentions</div>
                     <MentionRateBadge rate={site.mentionRate} mentioned={site.mentionedCount} checked={site.checkedCount} />
                 </div>
-                <div className="bg-white/[0.03] rounded-xl p-3">
+                <div className="bg-[var(--surface-06)] rounded-xl p-3">
                     <div className="text-xs text-slate-500 mb-1">Keywords</div>
                     <span className="text-xl font-bold text-white">{site.keywords?.length || 0}</span>
                 </div>
@@ -83,7 +83,7 @@ function SiteCard({ site, onDelete }) {
 
             <Link
                 href={`/en/geo/${site._id}`}
-                className="flex items-center justify-center gap-2 w-full py-2.5 text-sm font-semibold rounded-xl bg-violet-500/10 hover:bg-violet-500/20 text-violet-400 hover:text-violet-300 border border-violet-500/15 hover:border-violet-500/30 transition-all"
+                className="flex items-center justify-center gap-2 w-full py-2.5 text-sm font-semibold rounded-xl bg-[var(--accent-soft)] hover:bg-[var(--accent-soft-strong)] text-[var(--accent)] border border-[var(--accent-border)] transition-all"
             >
                 View results
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -159,11 +159,11 @@ function AddSiteModal({ slotsLeft, onClose, onAdded }) {
                 initial={{ opacity: 0, scale: 0.95, y: 16 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.95 }}
-                className="w-full max-w-md bg-[#0d1117] border border-white/10 rounded-2xl p-6"
+                className="w-full max-w-md bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl p-6"
             >
                 <div className="flex items-center justify-between mb-6">
                     <h3 className="text-lg font-bold text-white">Add website</h3>
-                    <button onClick={onClose} className="w-8 h-8 flex items-center justify-center rounded-lg bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-all">
+                    <button onClick={onClose} className="w-8 h-8 flex items-center justify-center rounded-lg bg-[var(--surface-06)] hover:bg-[var(--surface-10)] text-slate-400 hover:text-white transition-all">
                         <X className="w-4 h-4" />
                     </button>
                 </div>
@@ -177,7 +177,7 @@ function AddSiteModal({ slotsLeft, onClose, onAdded }) {
                             onChange={e => setDomain(e.target.value)}
                             placeholder="example.com"
                             required
-                            className="w-full bg-white/3 border border-white/10 focus:border-violet-500/50 rounded-xl px-4 py-3 text-white placeholder:text-slate-600 outline-none transition-all text-sm"
+                            className="w-full bg-[var(--surface-06)] border border-[var(--border-subtle)] focus:border-[var(--accent-border)] rounded-xl px-4 py-3 text-white placeholder:text-slate-600 outline-none transition-all text-sm"
                         />
                     </div>
 
@@ -193,12 +193,12 @@ function AddSiteModal({ slotsLeft, onClose, onAdded }) {
                                         onClick={() => togglePlatform(p.id)}
                                         className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl border transition-all text-left ${
                                             active
-                                                ? 'bg-violet-500/10 border-violet-500/30 text-white'
-                                                : 'bg-white/3 border-white/8 text-slate-500 hover:border-white/15'
+                                                ? 'bg-[var(--accent-soft)] border-[var(--accent-border)] text-white'
+                                                : 'bg-[var(--surface-06)] border-[var(--border-subtle)] text-slate-500 hover:border-[var(--border-strong)]'
                                         }`}
                                     >
                                         <div className={`w-4 h-4 rounded border-2 flex items-center justify-center shrink-0 transition-all ${
-                                            active ? 'bg-violet-500 border-violet-500' : 'border-white/20'
+                                            active ? 'bg-[var(--accent)] border-[var(--accent)]' : 'border-[var(--border-strong)]'
                                         }`}>
                                             {active && <span className="text-white text-[10px] font-bold">✓</span>}
                                         </div>
@@ -221,7 +221,7 @@ function AddSiteModal({ slotsLeft, onClose, onAdded }) {
                             onChange={e => setKeywordsText(e.target.value)}
                             placeholder={"seo tool\nwebsite audit\nkeyword tracking"}
                             rows={4}
-                            className="w-full bg-white/3 border border-white/10 focus:border-violet-500/50 rounded-xl px-4 py-3 text-white placeholder:text-slate-600 outline-none transition-all text-sm resize-none font-mono"
+                            className="w-full bg-[var(--surface-06)] border border-[var(--border-subtle)] focus:border-[var(--accent-border)] rounded-xl px-4 py-3 text-white placeholder:text-slate-600 outline-none transition-all text-sm resize-none font-mono"
                         />
                         <div className="flex items-center justify-between mt-1">
                             <p className="text-xs text-slate-600">{kwCount} keywords entered</p>
@@ -236,7 +236,7 @@ function AddSiteModal({ slotsLeft, onClose, onAdded }) {
                     <button
                         type="submit"
                         disabled={loading || !domain.trim() || !selectedPlatforms.length}
-                        className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white font-semibold transition-all disabled:opacity-50 text-sm"
+                        className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] font-semibold transition-all disabled:opacity-50 text-sm"
                     >
                         {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Plus className="w-4 h-4" />}
                         {loading ? 'Adding…' : 'Add website'}
@@ -305,17 +305,17 @@ export default function GeoDashboardPageEn() {
     }
 
     if (loading) return (
-        <div className="min-h-screen bg-[#05080f] flex items-center justify-center">
-            <Loader2 className="w-8 h-8 text-violet-400 animate-spin" />
+        <div className="min-h-screen bg-[var(--bg-base)] flex items-center justify-center">
+            <Loader2 className="w-8 h-8 text-[var(--accent)] animate-spin" />
         </div>
     )
 
     if (!plan) return (
-        <div className="min-h-screen bg-[#05080f]">
+        <div className="min-h-screen bg-[var(--bg-base)]">
             <Navbar locale="en" />
             <div className="flex flex-col items-center justify-center min-h-screen gap-6 px-5 text-center">
-                <div className="w-16 h-16 rounded-2xl bg-violet-500/10 border border-violet-500/15 flex items-center justify-center">
-                    <Sparkles className="w-7 h-7 text-violet-400" />
+                <div className="w-16 h-16 rounded-2xl bg-[var(--accent-soft)] border border-[var(--accent-border)] flex items-center justify-center">
+                    <Sparkles className="w-7 h-7 text-[var(--accent)]" />
                 </div>
                 <div>
                     <h2 className="text-2xl font-bold text-white mb-2">GEO Automation</h2>
@@ -326,7 +326,7 @@ export default function GeoDashboardPageEn() {
                 </div>
                 <Link
                     href="/en/geo/pricing"
-                    className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white font-semibold rounded-xl transition-all shadow-lg shadow-violet-500/20"
+                    className="flex items-center gap-2 px-6 py-3 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] font-semibold rounded-xl transition-all shadow-lg shadow-[var(--accent-border)]"
                 >
                     View plans →
                 </Link>
@@ -335,9 +335,9 @@ export default function GeoDashboardPageEn() {
     )
 
     return (
-        <div className="min-h-screen bg-[#05080f]">
+        <div className="min-h-screen bg-[var(--bg-base)]">
             <Toaster position="top-right" toastOptions={{
-                style: { background: '#0d1117', color: '#fff', border: '1px solid rgba(255,255,255,0.08)' },
+                style: { background: 'var(--bg-surface)', color: '#fff', border: '1px solid var(--border-subtle)' },
             }} />
             <Navbar locale="en" />
 
@@ -346,7 +346,7 @@ export default function GeoDashboardPageEn() {
                 {/* Header */}
                 <div className="flex items-start justify-between gap-4 mb-8">
                     <div>
-                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-violet-500/20 bg-violet-500/5 text-violet-400 text-xs font-medium mb-3">
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--accent-border)] bg-[var(--accent-soft)] text-[var(--accent)] text-xs font-medium mb-3">
                             <Sparkles className="w-3 h-3" />
                             GEO Tracking · Claude · ChatGPT
                         </div>
@@ -357,7 +357,7 @@ export default function GeoDashboardPageEn() {
                     {limits.usedSites < limits.maxSites && (
                         <button
                             onClick={() => setShowAdd(true)}
-                            className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white text-sm font-semibold rounded-xl transition-all shadow-lg shadow-violet-500/20"
+                            className="flex items-center gap-2 px-4 py-2.5 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all shadow-lg shadow-[var(--accent-border)]"
                         >
                             <Plus className="w-4 h-4" />
                             Add website
@@ -371,14 +371,14 @@ export default function GeoDashboardPageEn() {
                         { label: 'Websites', used: limits.usedSites, max: limits.maxSites },
                         { label: 'Keywords', used: limits.usedKeywords, max: limits.maxKeywords },
                     ].map(({ label, used, max }) => (
-                        <div key={label} className="bg-[#0d1117] border border-white/[0.06] rounded-xl p-4">
+                        <div key={label} className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-xl p-4">
                             <div className="flex items-center justify-between mb-2">
                                 <span className="text-sm text-slate-400">{label}</span>
                                 <span className="text-sm font-semibold text-white">{used} / {max}</span>
                             </div>
-                            <div className="h-1.5 bg-white/5 rounded-full overflow-hidden">
+                            <div className="h-1.5 bg-[var(--surface-08)] rounded-full overflow-hidden">
                                 <div
-                                    className="h-full bg-gradient-to-r from-violet-500 to-purple-500 rounded-full transition-all"
+                                    className="h-full bg-[var(--accent)] rounded-full transition-all"
                                     style={{ width: `${max > 0 ? (used / max) * 100 : 0}%` }}
                                 />
                             </div>
@@ -387,8 +387,8 @@ export default function GeoDashboardPageEn() {
                 </div>
 
                 {/* Info banner */}
-                <div className="bg-violet-500/5 border border-violet-500/15 rounded-2xl p-4 mb-8 flex items-start gap-3">
-                    <Sparkles className="w-4 h-4 text-violet-400 shrink-0 mt-0.5" />
+                <div className="bg-[var(--accent-soft)] border border-[var(--accent-border)] rounded-2xl p-4 mb-8 flex items-start gap-3">
+                    <Sparkles className="w-4 h-4 text-[var(--accent)] shrink-0 mt-0.5" />
                     <p className="text-xs text-slate-400 leading-relaxed">
                         GEO tracking checks whether Claude, ChatGPT, Perplexity, and Google AI Overview mention your domain for relevant queries.
                         The more keywords AI systems associate with your site, the better your GEO visibility.
@@ -399,14 +399,14 @@ export default function GeoDashboardPageEn() {
                 {/* Sites grid */}
                 {sites.length === 0 ? (
                     <div className="text-center py-20">
-                        <div className="w-16 h-16 rounded-2xl bg-violet-500/10 border border-violet-500/15 flex items-center justify-center mx-auto mb-4">
-                            <Sparkles className="w-7 h-7 text-violet-400" />
+                        <div className="w-16 h-16 rounded-2xl bg-[var(--accent-soft)] border border-[var(--accent-border)] flex items-center justify-center mx-auto mb-4">
+                            <Sparkles className="w-7 h-7 text-[var(--accent)]" />
                         </div>
                         <h3 className="text-xl font-bold text-white mb-2">No website added yet</h3>
                         <p className="text-slate-500 text-sm mb-6">Add your website with keywords and check whether Claude AI mentions you.</p>
                         <button
                             onClick={() => setShowAdd(true)}
-                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white text-sm font-semibold rounded-xl transition-all"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all"
                         >
                             <Plus className="w-4 h-4" />
                             Add first website
