@@ -1,34 +1,33 @@
 @import "tailwindcss";
 
 /*
-  Color system — 60/30/10
-  60% Dominant  → near-black navy (#05080f / #080b14), used for every section background.
-  30% Secondary → white/slate neutrals, used for text, borders, and card surfaces.
-  10% Accent    → single violet→cyan brand gradient, reserved for CTAs, active states
-                  and the handful of words per section that should pull the eye.
+  Color system — 60/30/10, three fixed OKLCH hues, no gradients between them.
+  60% Dominant  → oklch(13% 0.028 261.692), every section background (bg-base / bg-surface
+                  are two shades of this same hue, used only to alternate section rhythm).
+  30% Secondary → oklch(37.3% 0.034 259.733), used at low alpha for card surfaces and
+                  borders (--surface-*, --border-*).
+  10% Accent    → oklch(68.5% 0.169 237.323), reserved for buttons, icon chips, badges and
+                  focus states only — never for headline or body text.
   Keep new sections on this palette instead of introducing extra hues.
 */
 :root {
-  --bg-base: #05080f;
-  --bg-surface: #0d1117;
-  --border-subtle: rgba(255, 255, 255, 0.07);
-  --accent-from: #7c3aed;
-  --accent-to: #06b6d4;
+  --bg-base: oklch(13% 0.028 261.692);
+  --bg-surface: oklch(16.5% 0.03 261.692);
+  --surface-06: oklch(37.3% 0.034 259.733 / 8%);
+  --surface-08: oklch(37.3% 0.034 259.733 / 12%);
+  --surface-10: oklch(37.3% 0.034 259.733 / 16%);
+  --border-subtle: oklch(37.3% 0.034 259.733 / 35%);
+  --border-strong: oklch(37.3% 0.034 259.733 / 60%);
+  --accent: oklch(68.5% 0.169 237.323);
+  --accent-soft: oklch(68.5% 0.169 237.323 / 12%);
+  --accent-soft-strong: oklch(68.5% 0.169 237.323 / 18%);
+  --accent-border: oklch(68.5% 0.169 237.323 / 35%);
+  --accent-glow: oklch(68.5% 0.169 237.323 / 10%);
+  --text-muted: oklch(58% 0.02 259.733);
 }
 
 * {
   box-sizing: border-box;
-}
-
-.text-gradient-accent {
-  background-image: linear-gradient(to right, #a78bfa, #22d3ee);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-.bg-gradient-accent {
-  background-image: linear-gradient(to right, var(--accent-from), var(--accent-to));
 }
 
 html {
@@ -45,14 +44,14 @@ html {
    suppress their own outline (e.g. AuditForm) — this rule sits outside Tailwind's layers
    so it wins over utility classes like outline-none. */
 :focus-visible {
-  outline: 2px solid #22d3ee;
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
   border-radius: 2px;
 }
 
 body {
-  background: #080b14;
-  color: #e8e5e0;
+  background: var(--bg-base);
+  color: oklch(97% 0.006 260);
   overflow-x: hidden;
 }
 
@@ -66,14 +65,14 @@ body {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #080b14;
+  background: var(--bg-base);
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(255,255,255,0.08);
+  background: var(--surface-10);
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255,255,255,0.15);
+  background: var(--border-strong);
 }
 
 /* Card transition */

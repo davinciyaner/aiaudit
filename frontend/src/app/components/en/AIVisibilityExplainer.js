@@ -69,7 +69,7 @@ export default function AIVisibilityExplainer() {
     return (
         <section className="relative py-16 md:py-28 bg-[var(--bg-base)] overflow-hidden">
             <div className="absolute top-1/4 right-0 w-[600px] h-[400px] rounded-full blur-3xl pointer-events-none"
-                style={{ background: 'radial-gradient(ellipse, rgba(6,182,212,0.08) 0%, transparent 70%)' }} />
+                style={{ background: 'radial-gradient(ellipse, var(--accent-glow) 0%, transparent 70%)' }} />
 
             <div className="relative max-w-6xl mx-auto px-5 sm:px-8">
 
@@ -77,7 +77,7 @@ export default function AIVisibilityExplainer() {
                 <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
                     className="max-w-3xl mb-12 sm:mb-16">
                     <h2 className="text-3xl sm:text-5xl font-bold tracking-tight mb-5 leading-tight">
-                        Google isn't <span className="text-gradient-accent">the only search engine anymore.</span>
+                        Google isn't the only search engine anymore.
                     </h2>
                     <p className="text-slate-400 text-base sm:text-lg leading-relaxed">
                         Classic SEO optimizes for Google rankings: keywords, backlinks, technical signals. AI models like
@@ -92,7 +92,7 @@ export default function AIVisibilityExplainer() {
                     {STATS.map((s, i) => (
                         <motion.div key={s.value}
                             initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
-                            className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-6 sm:p-8">
+                            className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl p-6 sm:p-8">
                             <div className="text-4xl sm:text-5xl font-black text-white mb-2">{s.value}</div>
                             <div className="text-sm font-semibold text-white mb-2 leading-snug">{s.label}</div>
                             <div className="text-xs text-slate-500 leading-relaxed">{s.sub}</div>
@@ -117,8 +117,8 @@ export default function AIVisibilityExplainer() {
                         <div className="space-y-4">
                             {CONCEPTS.map(c => (
                                 <div key={c.title} className="flex gap-4">
-                                    <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 bg-cyan-500/10 border border-cyan-500/20">
-                                        <c.icon className="w-4 h-4 text-cyan-300" strokeWidth={1.8} />
+                                    <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 bg-[var(--accent-soft)] border border-[var(--accent-border)]">
+                                        <c.icon className="w-4 h-4 text-[var(--accent)]" strokeWidth={1.8} />
                                     </div>
                                     <div>
                                         <div className="text-sm font-semibold text-white mb-1">{c.title}</div>
@@ -140,9 +140,9 @@ export default function AIVisibilityExplainer() {
                     </p>
                     <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
                         {CHECK_GROUPS.map(g => (
-                            <div key={g.title} className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5">
-                                <div className="w-9 h-9 rounded-xl flex items-center justify-center mb-4 bg-violet-500/10 border border-violet-500/20">
-                                    <g.icon className="w-4 h-4 text-violet-300" strokeWidth={1.8} />
+                            <div key={g.title} className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl p-5">
+                                <div className="w-9 h-9 rounded-xl flex items-center justify-center mb-4 bg-[var(--accent-soft)] border border-[var(--accent-border)]">
+                                    <g.icon className="w-4 h-4 text-[var(--accent)]" strokeWidth={1.8} />
                                 </div>
                                 <div className="text-sm font-semibold text-white mb-3">{g.title}</div>
                                 <ul className="space-y-1.5">
@@ -160,7 +160,7 @@ export default function AIVisibilityExplainer() {
 
                 <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center">
                     <Link href="/en/dashboard"
-                        className="inline-flex items-center gap-2 px-6 py-3.5 bg-gradient-accent hover:opacity-90 text-white text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-cyan-500/20">
+                        className="inline-flex items-center gap-2 px-6 py-3.5 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-[var(--accent-border)]">
                         Check AI Visibility now <ArrowRight className="w-3.5 h-3.5" />
                     </Link>
                 </motion.div>

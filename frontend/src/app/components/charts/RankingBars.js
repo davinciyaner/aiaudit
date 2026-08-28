@@ -15,12 +15,12 @@ export default function RankingBars() {
     const reduceMotion = useReducedMotion()
 
     return (
-        <div className="bg-[var(--bg-surface)] border border-white/10 rounded-2xl p-5 sm:p-6">
+        <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl p-5 sm:p-6">
             <div className="flex items-start justify-between gap-3 mb-5">
                 <div>
                     <div className="flex items-center gap-2">
                         <h3 className="text-sm font-semibold text-white">Ranking-Verbesserung</h3>
-                        <span className="text-[10px] px-1.5 py-0.5 rounded-md bg-white/[0.06] text-slate-500 font-medium">Beispiel</span>
+                        <span className="text-[10px] px-1.5 py-0.5 rounded-md bg-[var(--surface-08)] text-slate-500 font-medium">Beispiel</span>
                     </div>
                     <p className="text-xs text-slate-500 mt-0.5">Google-Position vor und nach umgesetzten AuditAI-Fixes</p>
                 </div>
@@ -33,14 +33,14 @@ export default function RankingBars() {
                             <span className="text-sm text-slate-300 truncate">{r.keyword}</span>
                             <div className="flex items-center gap-2 shrink-0">
                                 <span className="text-xs text-slate-500 tabular-nums">Platz {r.before} → Platz {r.after}</span>
-                                <span className="flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 text-[11px] font-semibold tabular-nums">
+                                <span className="flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-[var(--accent-soft)] border border-[var(--accent-border)] text-[var(--accent)] text-[11px] font-semibold tabular-nums">
                                     <ArrowUp className="w-2.5 h-2.5" />{r.delta}
                                 </span>
                             </div>
                         </div>
-                        <div className="relative h-2.5 rounded-full bg-white/[0.06] overflow-hidden">
+                        <div className="relative h-2.5 rounded-full bg-[var(--surface-08)] overflow-hidden">
                             <motion.div
-                                className="absolute inset-y-0 left-0 rounded-full bg-gradient-accent"
+                                className="absolute inset-y-0 left-0 rounded-full bg-[var(--accent)]"
                                 initial={reduceMotion ? false : { width: 0 }}
                                 whileInView={{ width: `${r.score}%` }}
                                 viewport={{ once: true }}

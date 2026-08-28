@@ -48,26 +48,26 @@ function aggregateMention(checks, platform, intents) {
 function MentionBadge({ mentioned }) {
     if (mentioned == null) return <span className="text-xs text-slate-600">—</span>
     return mentioned
-        ? <span className="inline-flex items-center gap-1 text-xs font-semibold text-violet-400 bg-violet-500/10 border border-violet-500/20 px-2 py-0.5 rounded-md"><Check className="w-3 h-3" />Yes</span>
-        : <span className="inline-flex items-center gap-1 text-xs font-semibold text-slate-500 bg-white/5 border border-white/10 px-2 py-0.5 rounded-md"><X className="w-3 h-3 opacity-50" />No</span>
+        ? <span className="inline-flex items-center gap-1 text-xs font-semibold text-[var(--accent)] bg-[var(--accent-soft)] border border-[var(--accent-border)] px-2 py-0.5 rounded-md"><Check className="w-3 h-3" />Yes</span>
+        : <span className="inline-flex items-center gap-1 text-xs font-semibold text-slate-500 bg-[var(--surface-08)] border border-[var(--border-subtle)] px-2 py-0.5 rounded-md"><X className="w-3 h-3 opacity-50" />No</span>
 }
 
 // Compact dot instead of a text badge for the table overview — with many rows and mostly
 // negative results, the eye should jump straight to the (few) hits instead of reading
 // "No" 4x per row. Full detail is still available when expanding a row.
 function MentionDot({ mentioned }) {
-    if (mentioned == null) return <span className="inline-block w-2 h-2 rounded-full bg-white/10" title="Not tested" />
+    if (mentioned == null) return <span className="inline-block w-2 h-2 rounded-full bg-[var(--surface-10)]" title="Not tested" />
     return mentioned
-        ? <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-violet-500/20 border border-violet-500/50" title="Mentioned">
-              <Check className="w-3 h-3 text-violet-400" strokeWidth={3} />
+        ? <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-[var(--accent-soft-strong)] border border-[var(--accent-border)]" title="Mentioned">
+              <Check className="w-3 h-3 text-[var(--accent)]" strokeWidth={3} />
           </span>
-        : <span className="inline-block w-2 h-2 rounded-full bg-white/10" title="Not mentioned" />
+        : <span className="inline-block w-2 h-2 rounded-full bg-[var(--surface-10)]" title="Not mentioned" />
 }
 
 function SentimentBadge({ sentiment }) {
     const meta = {
         positive: { label: 'Positive', color: 'text-emerald-400', bg: 'bg-emerald-500/10', border: 'border-emerald-500/20' },
-        neutral:  { label: 'Neutral',  color: 'text-slate-400',   bg: 'bg-white/5',         border: 'border-white/10'    },
+        neutral:  { label: 'Neutral',  color: 'text-slate-400',   bg: 'bg-[var(--surface-08)]',         border: 'border-[var(--border-subtle)]'    },
         negative: { label: 'Negative', color: 'text-red-400',     bg: 'bg-red-500/10',      border: 'border-red-500/20'  },
     }[sentiment]
     if (!meta) return null
@@ -82,7 +82,7 @@ const CORRELATION_VERDICT_META = {
     both:     { label: 'Both visible',    color: 'text-emerald-400', bg: 'bg-emerald-500/10', border: 'border-emerald-500/20' },
     seo_only: { label: 'Google only',     color: 'text-amber-400',   bg: 'bg-amber-500/10',   border: 'border-amber-500/20'  },
     geo_only: { label: 'AI only',         color: 'text-blue-400',    bg: 'bg-blue-500/10',    border: 'border-blue-500/20'   },
-    neither:  { label: 'Neither visible', color: 'text-slate-500',   bg: 'bg-white/5',        border: 'border-white/10'      },
+    neither:  { label: 'Neither visible', color: 'text-slate-500',   bg: 'bg-[var(--surface-08)]',        border: 'border-[var(--border-subtle)]'      },
 }
 
 // Must match SEO_VISIBLE_THRESHOLD in backend/controllers/geo_tracking.js — a
@@ -107,7 +107,7 @@ function CorrelationPanel({ siteId }) {
 
     if (loading) return (
         <div className="flex flex-col items-center justify-center py-20 gap-3">
-            <Loader2 className="w-6 h-6 text-violet-400 animate-spin" />
+            <Loader2 className="w-6 h-6 text-[var(--accent)] animate-spin" />
             <span className="text-sm text-slate-500">Loading data…</span>
         </div>
     )
@@ -115,7 +115,7 @@ function CorrelationPanel({ siteId }) {
 
     if (!data.linked) {
         return (
-            <div className="bg-[#0d1117] border border-dashed border-white/10 rounded-2xl p-5 mb-6">
+            <div className="bg-[var(--bg-surface)] border border-dashed border-[var(--border-subtle)] rounded-2xl p-5 mb-6">
                 <h3 className="text-sm font-semibold text-white mb-1.5">Compare SEO ranking + AI mention</h3>
                 <p className="text-xs text-slate-500 leading-relaxed">
                     No SEO automation is running for this domain yet. Once both products track the same domain, AuditAI shows you directly here
@@ -127,7 +127,7 @@ function CorrelationPanel({ siteId }) {
 
     if (!data.matched.length) {
         return (
-            <div className="bg-[#0d1117] border border-dashed border-white/10 rounded-2xl p-5 mb-6">
+            <div className="bg-[var(--bg-surface)] border border-dashed border-[var(--border-subtle)] rounded-2xl p-5 mb-6">
                 <h3 className="text-sm font-semibold text-white mb-1.5">Compare SEO ranking + AI mention</h3>
                 <p className="text-xs text-slate-500 leading-relaxed">
                     No shared keywords between SEO and GEO tracking ({data.seoOnlyKeywords.length} SEO only, {data.geoOnlyKeywords.length} GEO only).
@@ -148,24 +148,24 @@ function CorrelationPanel({ siteId }) {
     const visibleCount = data.matched.filter(m => m.seoPosition != null && m.seoPosition <= SEO_VISIBLE_THRESHOLD).length
 
     return (
-        <div className="bg-[#0d1117] border border-white/[0.06] rounded-2xl p-5 mb-6">
+        <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl p-5 mb-6">
             <div className="flex items-center justify-between mb-4">
                 <h3 className="text-sm font-semibold text-white">SEO Ranking + AI Mention</h3>
                 <span className="text-xs text-slate-600">{data.matched.length} shared keywords</span>
             </div>
 
-            <div className="flex items-center gap-5 mb-5 pb-5 border-b border-white/[0.06] flex-wrap">
+            <div className="flex items-center gap-5 mb-5 pb-5 border-b border-[var(--border-subtle)] flex-wrap">
                 <div className="flex items-baseline gap-2">
                     <span className="text-xs text-slate-500">Keywords</span>
                     <span className="text-lg font-bold text-white">{data.matched.length}/{totalKeywords}</span>
                 </div>
-                <div className="w-px h-7 bg-white/10" />
+                <div className="w-px h-7 bg-[var(--surface-10)]" />
                 <div className="flex items-baseline gap-2">
                     <span className="text-xs text-slate-500">Avg. Position</span>
                     <span className="text-lg font-bold text-white">{data.avgPosition ?? '—'}</span>
                     {positionTrendDelta != null && <TrendArrow delta={positionTrendDelta} />}
                 </div>
-                <div className="w-px h-7 bg-white/10" />
+                <div className="w-px h-7 bg-[var(--surface-10)]" />
                 <div className="flex items-baseline gap-2">
                     <span className="text-xs text-slate-500">Google (Top {SEO_VISIBLE_THRESHOLD})</span>
                     <span className="text-lg font-bold text-white">{visibleCount}/{data.matched.length}</span>
@@ -175,7 +175,7 @@ function CorrelationPanel({ siteId }) {
             <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                     <thead>
-                        <tr className="border-b border-white/[0.05]">
+                        <tr className="border-b border-[var(--border-subtle)]">
                             <th className="text-left text-xs text-slate-500 font-semibold uppercase tracking-wider pb-2">Keyword</th>
                             <th className="text-left text-xs text-slate-500 font-semibold uppercase tracking-wider pb-2">Google</th>
                             <th className="text-left text-xs text-slate-500 font-semibold uppercase tracking-wider pb-2">AI Mention</th>
@@ -187,7 +187,7 @@ function CorrelationPanel({ siteId }) {
                             const v = CORRELATION_VERDICT_META[m.verdict]
                             const seoVisible = m.seoPosition != null && m.seoPosition <= SEO_VISIBLE_THRESHOLD
                             return (
-                                <tr key={m.keyword} className="border-b border-white/[0.04] last:border-0">
+                                <tr key={m.keyword} className="border-b border-[var(--border-subtle)] last:border-0">
                                     <td className="py-2.5 pr-3 text-slate-200">{m.keyword}</td>
                                     <td className="py-2.5 pr-3">
                                         {m.seoPosition == null ? (
@@ -212,7 +212,7 @@ function CorrelationPanel({ siteId }) {
             </div>
             {data.matched.length > 3 && (
                 <button onClick={() => setExpanded(v => !v)}
-                    className="mt-3 text-xs text-violet-400 hover:text-violet-300">
+                    className="mt-3 text-xs text-[var(--accent)] hover:text-[var(--accent)]">
                     {expanded ? 'Show less' : `Show all ${data.matched.length}`}
                 </button>
             )}
@@ -270,14 +270,14 @@ function KeywordSuggestionsPanel({ siteId, onAdded }) {
 
     if (loading) return (
         <div className="flex flex-col items-center justify-center py-20 gap-3">
-            <Loader2 className="w-6 h-6 text-violet-400 animate-spin" />
+            <Loader2 className="w-6 h-6 text-[var(--accent)] animate-spin" />
             <span className="text-sm text-slate-500">Loading data…</span>
         </div>
     )
     if (!suggestions?.length) return null
 
     return (
-        <div className="bg-[#0d1117] border border-white/[0.06] rounded-2xl p-5 mb-6">
+        <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl p-5 mb-6">
             <div className="flex items-center justify-between mb-1.5">
                 <h3 className="text-sm font-semibold text-white">Suggest SEO keywords for GEO</h3>
                 <span className="text-xs text-slate-600">{suggestions.length} suggestions</span>
@@ -293,15 +293,15 @@ function KeywordSuggestionsPanel({ siteId, onAdded }) {
                         <button key={s.keyword} type="button" onClick={() => toggle(s.keyword)}
                             className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-lg border text-left transition-all ${
                                 checked
-                                    ? 'bg-violet-500/10 border-violet-500/25 text-white'
-                                    : 'bg-white/[0.02] border-white/8 text-slate-500 hover:border-white/15'
+                                    ? 'bg-[var(--accent-soft)] border-[var(--accent-border)] text-white'
+                                    : 'bg-[var(--surface-06)] border-[var(--border-subtle)] text-slate-500 hover:border-[var(--border-strong)]'
                             }`}>
-                            <div className={`w-3.5 h-3.5 rounded border shrink-0 flex items-center justify-center ${checked ? 'bg-violet-500 border-violet-500' : 'border-white/20'}`}>
+                            <div className={`w-3.5 h-3.5 rounded border shrink-0 flex items-center justify-center ${checked ? 'bg-[var(--accent)] border-[var(--accent)]' : 'border-[var(--border-strong)]'}`}>
                                 {checked && <Check className="w-2.5 h-2.5 text-white" strokeWidth={3.5} />}
                             </div>
                             <span className="text-sm flex-1">{s.keyword}</span>
                             {s.aiSearchVolume != null && (
-                                <span className="text-[10px] text-cyan-400/80 font-medium shrink-0" title="Estimated AI search volume/month">
+                                <span className="text-[10px] text-[var(--accent)]/80 font-medium shrink-0" title="Estimated AI search volume/month">
                                     {s.aiSearchVolume.toLocaleString('en-US')} AI searches/mo.
                                 </span>
                             )}
@@ -312,12 +312,12 @@ function KeywordSuggestionsPanel({ siteId, onAdded }) {
 
             <div className="flex items-center gap-2 flex-wrap">
                 <button onClick={() => addKeywords([...selected])} disabled={adding || !selected.size}
-                    className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white transition-all disabled:opacity-50">
+                    className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] transition-all disabled:opacity-50">
                     {adding ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Plus className="w-3.5 h-3.5" />}
                     Add selected ({selected.size})
                 </button>
                 <button onClick={() => addKeywords(suggestions.map(s => s.keyword))} disabled={adding}
-                    className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 transition-all disabled:opacity-50">
+                    className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl bg-[var(--surface-08)] hover:bg-[var(--surface-10)] text-slate-300 border border-[var(--border-subtle)] transition-all disabled:opacity-50">
                     Add all {suggestions.length}
                 </button>
             </div>
@@ -335,7 +335,7 @@ function CompetitorLogo({ domain, size = 28 }) {
     if (broken) {
         return (
             <div
-                className="rounded-full bg-violet-500/20 border border-violet-500/30 flex items-center justify-center text-violet-300 font-bold shrink-0"
+                className="rounded-full bg-[var(--accent-soft-strong)] border border-[var(--accent-border)] flex items-center justify-center text-[var(--accent)] font-bold shrink-0"
                 style={{ width: size, height: size, fontSize: size * 0.4 }}
             >
                 {domain[0]?.toUpperCase()}
@@ -349,7 +349,7 @@ function CompetitorLogo({ domain, size = 28 }) {
             alt={domain}
             width={size}
             height={size}
-            className="rounded-full bg-white/5 border border-white/10 shrink-0 object-cover"
+            className="rounded-full bg-[var(--surface-08)] border border-[var(--border-subtle)] shrink-0 object-cover"
             onError={() => setBroken(true)}
         />
     )
@@ -363,7 +363,7 @@ function PlatformPresenceDots({ present }) {
                 const m = PLATFORM_META[p]
                 return (
                     <span key={p} title={`${m.label}${active ? ' — cites this domain' : ' — does not cite this domain'}`}
-                        className={`w-3.5 h-3.5 rounded-full border flex items-center justify-center text-[7px] font-bold shrink-0 ${active ? `${m.bg} ${m.border} ${m.color}` : 'bg-transparent border-white/10 text-transparent'}`}>
+                        className={`w-3.5 h-3.5 rounded-full border flex items-center justify-center text-[7px] font-bold shrink-0 ${active ? `${m.bg} ${m.border} ${m.color}` : 'bg-transparent border-[var(--border-subtle)] text-transparent'}`}>
                         {m.label[0]}
                     </span>
                 )
@@ -384,6 +384,7 @@ function CompetitorBarChart({ competitors }) {
                     <span className="absolute right-0 text-[9px] text-slate-600">100%</span>
                 </div>
                 <span className="w-11 shrink-0" />
+                <span className="w-16 shrink-0" />
                 <span className="w-[72px] shrink-0" />
             </div>
             <div className="space-y-3">
@@ -393,16 +394,19 @@ function CompetitorBarChart({ competitors }) {
                             title={c.keywords?.length ? `Mentioned for: ${c.keywords.join(', ')}` : undefined}>
                             <CompetitorLogo domain={c.domain} size={20} />
                             <a href={`https://${c.domain}`} target="_blank" rel="noopener noreferrer"
-                                className="text-xs text-slate-300 hover:text-violet-400 truncate">{c.domain}</a>
+                                className="text-xs text-slate-300 hover:text-[var(--accent)] truncate">{c.domain}</a>
                         </div>
                         <div className="relative flex-1 h-2.5">
                             {[25, 50, 75, 100].map(v => (
-                                <div key={v} className="absolute top-0 bottom-0 w-px bg-white/[0.06]" style={{ left: `${v}%` }} />
+                                <div key={v} className="absolute top-0 bottom-0 w-px bg-[var(--surface-08)]" style={{ left: `${v}%` }} />
                             ))}
-                            <div className="absolute inset-y-0 left-0 bg-gradient-to-r from-violet-600 to-violet-400 rounded-full"
+                            <div className="absolute inset-y-0 left-0 bg-[var(--accent)] rounded-full"
                                 style={{ width: `${Math.max((c.share / maxShare) * 100, 3)}%` }} />
                         </div>
-                        <span className="text-xs font-semibold text-violet-400 w-11 text-right shrink-0">{c.share}%</span>
+                        <span className="text-xs font-semibold text-[var(--accent)] w-11 text-right shrink-0">{c.share}%</span>
+                        <span className="text-[11px] text-slate-500 w-16 text-right shrink-0" title="Average position when mentioned">
+                            {c.avgPosition != null ? `Avg. rank ${c.avgPosition}` : ''}
+                        </span>
                         <PlatformPresenceDots present={c.platforms} />
                     </div>
                 ))}
@@ -430,7 +434,7 @@ function CompetitorsPanel({ siteId }) {
 
     if (loading) return (
         <div className="flex flex-col items-center justify-center py-20 gap-3">
-            <Loader2 className="w-6 h-6 text-violet-400 animate-spin" />
+            <Loader2 className="w-6 h-6 text-[var(--accent)] animate-spin" />
             <span className="text-sm text-slate-500">Loading data…</span>
         </div>
     )
@@ -439,17 +443,17 @@ function CompetitorsPanel({ siteId }) {
     const visible = expanded ? data.competitors : data.competitors.slice(0, 5)
 
     return (
-        <div className="bg-[#0d1117] border border-white/[0.06] rounded-2xl p-5 mb-6">
+        <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl p-5 mb-6">
             <div className="flex items-center justify-between mb-1">
                 <h3 className="text-sm font-semibold text-white">Who else gets mentioned (Share of Voice)</h3>
                 <div className="flex items-center gap-3">
-                    <div className="flex bg-white/5 rounded-lg p-0.5">
+                    <div className="flex bg-[var(--surface-08)] rounded-lg p-0.5">
                         <button onClick={() => setView('list')}
-                            className={`px-2.5 py-1 text-[11px] font-medium rounded-md transition-all ${view === 'list' ? 'bg-white/10 text-white' : 'text-slate-500 hover:text-slate-300'}`}>
+                            className={`px-2.5 py-1 text-[11px] font-medium rounded-md transition-all ${view === 'list' ? 'bg-[var(--surface-10)] text-white' : 'text-slate-500 hover:text-slate-300'}`}>
                             List
                         </button>
                         <button onClick={() => setView('chart')}
-                            className={`px-2.5 py-1 text-[11px] font-medium rounded-md transition-all ${view === 'chart' ? 'bg-white/10 text-white' : 'text-slate-500 hover:text-slate-300'}`}>
+                            className={`px-2.5 py-1 text-[11px] font-medium rounded-md transition-all ${view === 'chart' ? 'bg-[var(--surface-10)] text-white' : 'text-slate-500 hover:text-slate-300'}`}>
                             Chart
                         </button>
                     </div>
@@ -470,27 +474,32 @@ function CompetitorsPanel({ siteId }) {
                             <CompetitorLogo domain={c.domain} size={22} />
                             <div className="flex-1 min-w-0">
                                 <a href={`https://${c.domain}`} target="_blank" rel="noopener noreferrer"
-                                    className="text-sm text-slate-200 hover:text-violet-400 truncate block">{c.domain}</a>
+                                    className="text-sm text-slate-200 hover:text-[var(--accent)] truncate block">{c.domain}</a>
                                 {c.keywords?.length > 0 && (
                                     <div className="text-[11px] text-slate-600 truncate">
                                         For: {c.keywords.map(k => `"${k}"`).join(', ')}
                                     </div>
                                 )}
                             </div>
+                            {c.avgPosition != null && (
+                                <span className="text-[11px] text-slate-500 shrink-0 hidden md:block w-20 text-right" title="Average position when mentioned">
+                                    Avg. rank {c.avgPosition}
+                                </span>
+                            )}
                             <PlatformPresenceDots present={c.platforms} />
                             <div className="w-20 shrink-0 hidden sm:block">
-                                <div className="h-1.5 bg-white/5 rounded-full overflow-hidden">
-                                    <div className="h-full bg-violet-500 rounded-full" style={{ width: `${Math.min(c.share * 4, 100)}%` }} />
+                                <div className="h-1.5 bg-[var(--surface-08)] rounded-full overflow-hidden">
+                                    <div className="h-full bg-[var(--accent)] rounded-full" style={{ width: `${Math.min(c.share * 4, 100)}%` }} />
                                 </div>
                             </div>
-                            <span className="text-xs font-semibold text-violet-400 w-12 text-right shrink-0">{c.share}%</span>
+                            <span className="text-xs font-semibold text-[var(--accent)] w-12 text-right shrink-0">{c.share}%</span>
                         </div>
                     ))}
                 </div>
             )}
             {data.competitors.length > 5 && (
                 <button onClick={() => setExpanded(v => !v)}
-                    className="mt-3 text-xs text-violet-400 hover:text-violet-300">
+                    className="mt-3 text-xs text-[var(--accent)] hover:text-[var(--accent)]">
                     {expanded ? 'Show less' : `Show all ${data.competitors.length}`}
                 </button>
             )}
@@ -534,7 +543,7 @@ function CitationAnalysis({ url }) {
             ['Author info', c.hasAuthorInfo],
         ]
         return (
-            <div className="mt-1.5 p-2.5 bg-white/[0.03] border border-white/10 rounded-lg">
+            <div className="mt-1.5 p-2.5 bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-lg">
                 <div className="text-xs font-semibold text-white mb-1.5">GEO Score: {analysis.score}/100</div>
                 <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-[11px] text-slate-400">
                     {rows.map(([label, ok], i) => (
@@ -549,7 +558,7 @@ function CitationAnalysis({ url }) {
 
     return (
         <button onClick={handleAnalyze} disabled={loading}
-            className="text-[11px] text-violet-400 hover:text-violet-300 underline underline-offset-2 disabled:opacity-50 disabled:no-underline">
+            className="text-[11px] text-[var(--accent)] hover:text-[var(--accent)] underline underline-offset-2 disabled:opacity-50 disabled:no-underline">
             {loading ? 'Analyzing…' : error ? `Error — try again` : 'Why is this cited?'}
         </button>
     )
@@ -571,7 +580,7 @@ function CitationList({ citations }) {
                 ))}
                 {!showAll && citations.length > shown.length && (
                     <button type="button" onClick={() => setShowAll(true)}
-                        className="text-[11px] text-violet-400 hover:text-violet-300 underline underline-offset-2">
+                        className="text-[11px] text-[var(--accent)] hover:text-[var(--accent)] underline underline-offset-2">
                         +{citations.length - shown.length} more
                     </button>
                 )}
@@ -585,13 +594,13 @@ function CitationChip({ citation: cit }) {
     return (
         <div className="relative">
             <button type="button" onClick={() => cit.url && setOpen(v => !v)}
-                className="text-[11px] text-slate-400 hover:text-slate-200 bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 px-2 py-0.5 rounded-md transition-colors">
+                className="text-[11px] text-slate-400 hover:text-slate-200 bg-[var(--surface-06)] hover:bg-[var(--surface-10)] border border-[var(--border-subtle)] px-2 py-0.5 rounded-md transition-colors">
                 {cit.domain}
             </button>
             {open && cit.url && (
                 <div className="mt-1.5">
                     <a href={cit.url} target="_blank" rel="noopener noreferrer"
-                        className="text-[11px] text-violet-400 hover:text-violet-300 underline underline-offset-2 block mb-1">
+                        className="text-[11px] text-[var(--accent)] hover:text-[var(--accent)] underline underline-offset-2 block mb-1">
                         Open page ↗
                     </a>
                     <CitationAnalysis url={cit.url} />
@@ -653,14 +662,14 @@ function MentionHistoryChart({ siteId, mentionedCount, mentionRate, checkedCount
     }
 
     return (
-        <div className="mb-8 pb-6 border-b border-white/[0.06]">
+        <div className="mb-8 pb-6 border-b border-[var(--border-subtle)]">
             <div className="flex items-center gap-5 mb-5 flex-wrap">
                 <div className="flex items-baseline gap-2">
                     <span className="text-xs text-slate-500">Visibility</span>
                     <span className="text-lg font-bold text-white">{mentionedCount ?? '—'}/{checkedCount ?? '—'}</span>
                     {visibilityDelta != null && <TrendArrow delta={visibilityDelta} />}
                 </div>
-                <div className="w-px h-7 bg-white/10" />
+                <div className="w-px h-7 bg-[var(--surface-10)]" />
                 <div className="flex items-baseline gap-2">
                     <span className="text-xs text-slate-500">Position</span>
                     <span className="text-lg font-bold text-white">{position ?? '—'}/{positionTotal ?? '—'}</span>
@@ -680,7 +689,7 @@ function MentionHistoryChart({ siteId, mentionedCount, mentionRate, checkedCount
 
             {loading ? (
                 <div className="h-24 flex items-center justify-center">
-                    <Loader2 className="w-5 h-5 text-violet-400 animate-spin" />
+                    <Loader2 className="w-5 h-5 text-[var(--accent)] animate-spin" />
                 </div>
             ) : n < 2 ? (
                 <div className="h-20 flex items-center justify-center text-center text-sm text-slate-600 px-4">
@@ -706,18 +715,18 @@ function MentionHistoryChart({ siteId, mentionedCount, mentionRate, checkedCount
                         })}
 
                         {n > 1 && (
-                            <polyline points={points} fill="none" stroke="#a78bfa" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                            <polyline points={points} fill="none" stroke="var(--accent)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                         )}
                         {history.map((h, i) => (
                             <circle key={i} cx={xAt(i)} cy={yAt(h.rate)} r={hover === i ? 5 : 3.5}
-                                fill="#a78bfa" stroke="#0d1117" strokeWidth="2"
+                                fill="var(--accent)" stroke="var(--bg-surface)" strokeWidth="2"
                                 style={{ cursor: 'pointer' }}
                                 onMouseEnter={() => setHover(i)} onMouseLeave={() => setHover(null)} />
                         ))}
                     </svg>
 
                     {hover != null && (
-                        <div className="absolute px-2.5 py-1.5 bg-[#161c2e] border border-white/10 rounded-lg text-xs pointer-events-none shadow-lg"
+                        <div className="absolute px-2.5 py-1.5 bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-lg text-xs pointer-events-none shadow-lg"
                             style={{
                                 left: `${(xAt(hover) / W) * 100}%`,
                                 top: `${(yAt(history[hover].rate) / H) * 100}%`,
@@ -739,7 +748,7 @@ function HistoryDots({ history }) {
         <div className="flex items-center gap-1 mt-1">
             {history.slice(-8).map((h, i) => (
                 <div key={i} title={new Date(h.checkedAt).toLocaleDateString('en-US')}
-                    className={`w-2 h-2 rounded-full ${h.mentioned ? 'bg-violet-500' : 'bg-white/10'}`} />
+                    className={`w-2 h-2 rounded-full ${h.mentioned ? 'bg-[var(--accent)]' : 'bg-[var(--surface-10)]'}`} />
             ))}
         </div>
     )
@@ -965,7 +974,7 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
                         )
                     })}
                     <button onClick={openPlatformEdit}
-                        className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold text-slate-500 hover:text-slate-300 bg-white/4 hover:bg-white/8 border border-white/8 transition-all">
+                        className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold text-slate-500 hover:text-slate-300 bg-[var(--surface-06)] hover:bg-[var(--surface-10)] border border-[var(--border-subtle)] transition-all">
                         <Settings2 className="w-3 h-3" />Edit
                     </button>
                 </div>
@@ -977,11 +986,11 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
                         </button>
                     )}
                     <button onClick={() => setShowAdd(v => !v)}
-                        className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 transition-all">
+                        className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl bg-[var(--surface-08)] hover:bg-[var(--surface-10)] text-slate-300 border border-[var(--border-subtle)] transition-all">
                         <Plus className="w-3.5 h-3.5" />Keywords
                     </button>
                     <button onClick={handleCheck} disabled={checking}
-                        className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white transition-all disabled:opacity-50">
+                        className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] transition-all disabled:opacity-50">
                         {checking ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <RefreshCw className="w-3.5 h-3.5" />}
                         {checking ? checkLabel : 'Check now'}
                     </button>
@@ -998,7 +1007,7 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
             <AnimatePresence>
                 {showPlatformEdit && (
                     <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
-                        className="bg-[#0d1117] border border-violet-500/20 rounded-2xl p-5 mb-5">
+                        className="bg-[var(--bg-surface)] border border-[var(--accent-border)] rounded-2xl p-5 mb-5">
                         <div className="flex items-center justify-between mb-3">
                             <span className="text-sm font-semibold text-white">Track AI platforms</span>
                             <button onClick={() => setShowPlatformEdit(false)} className="text-slate-500 hover:text-white transition-colors"><X className="w-4 h-4" /></button>
@@ -1013,13 +1022,13 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
                                         onClick={() => togglePlatformEdit(id)}
                                         className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl border transition-all text-left ${
                                             locked
-                                                ? 'bg-white/[0.01] border-white/5 text-slate-600 cursor-not-allowed'
+                                                ? 'bg-[var(--surface-06)] border-[var(--border-subtle)] text-slate-600 cursor-not-allowed'
                                                 : active
-                                                    ? 'bg-violet-500/10 border-violet-500/30 text-white'
-                                                    : 'bg-white/3 border-white/8 text-slate-500 hover:border-white/15'
+                                                    ? 'bg-[var(--accent-soft)] border-[var(--accent-border)] text-white'
+                                                    : 'bg-[var(--surface-06)] border-[var(--border-subtle)] text-slate-500 hover:border-[var(--border-strong)]'
                                         }`}>
                                         <div className={`w-4 h-4 rounded border-2 flex items-center justify-center shrink-0 transition-all ${
-                                            active && !locked ? 'bg-violet-500 border-violet-500' : 'border-white/20'
+                                            active && !locked ? 'bg-[var(--accent)] border-[var(--accent)]' : 'border-[var(--border-strong)]'
                                         }`}>
                                             {active && !locked && <span className="text-white text-[10px] font-bold">✓</span>}
                                         </div>
@@ -1034,7 +1043,7 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
                             })}
                         </div>
                         <button onClick={handleSavePlatforms} disabled={savingPlatforms}
-                            className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white text-sm font-semibold transition-all disabled:opacity-50">
+                            className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold transition-all disabled:opacity-50">
                             {savingPlatforms ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Check className="w-3.5 h-3.5" />}
                             Save
                         </button>
@@ -1062,8 +1071,8 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
                         <button key={f.id} onClick={() => setFilter(f.id)}
                             className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${
                                 filter === f.id
-                                    ? 'bg-violet-500/15 border border-violet-500/30 text-violet-400'
-                                    : 'bg-white/4 border border-white/8 text-slate-500 hover:text-slate-300 hover:bg-white/8'
+                                    ? 'bg-[var(--accent-soft)] border border-[var(--accent-border)] text-[var(--accent)]'
+                                    : 'bg-[var(--surface-06)] border border-[var(--border-subtle)] text-slate-500 hover:text-slate-300 hover:bg-[var(--surface-10)]'
                             }`}>
                             {f.label}
                         </button>
@@ -1076,7 +1085,7 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
             <AnimatePresence>
                 {showAdd && (
                     <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
-                        className="bg-[#0d1117] border border-violet-500/20 rounded-2xl p-5 mb-5">
+                        className="bg-[var(--bg-surface)] border border-[var(--accent-border)] rounded-2xl p-5 mb-5">
                         <div className="flex items-center justify-between mb-3">
                             <span className="text-sm font-semibold text-white">Add keywords</span>
                             <button onClick={() => setShowAdd(false)} className="text-slate-500 hover:text-white transition-colors"><X className="w-4 h-4" /></button>
@@ -1084,9 +1093,9 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
                         <form onSubmit={handleAddKeywords} className="flex gap-3">
                             <textarea value={newKws} onChange={e => setNewKws(e.target.value)}
                                 placeholder={"seo tool\nwebsite audit"} rows={3}
-                                className="flex-1 bg-white/3 border border-white/10 focus:border-violet-500/50 rounded-xl px-4 py-3 text-white placeholder:text-slate-600 outline-none text-sm resize-none font-mono" />
+                                className="flex-1 bg-[var(--surface-06)] border border-[var(--border-subtle)] focus:border-[var(--accent-border)] rounded-xl px-4 py-3 text-white placeholder:text-slate-600 outline-none text-sm resize-none font-mono" />
                             <button type="submit" disabled={addingKws}
-                                className="self-end flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white text-sm font-semibold rounded-xl transition-all disabled:opacity-50">
+                                className="self-end flex items-center gap-2 px-4 py-2 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all disabled:opacity-50">
                                 {addingKws ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Plus className="w-3.5 h-3.5" />}
                                 Add
                             </button>
@@ -1098,7 +1107,7 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
             {/* Results table */}
             {loading ? (
                 <div className="flex flex-col items-center justify-center py-20 gap-3">
-                    <Loader2 className="w-6 h-6 text-violet-400 animate-spin" />
+                    <Loader2 className="w-6 h-6 text-[var(--accent)] animate-spin" />
                     <span className="text-sm text-slate-500">Loading data…</span>
                 </div>
             ) : results.length === 0 ? (
@@ -1112,11 +1121,11 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
                     <span className="text-sm text-slate-500">No keywords for this filter.</span>
                 </div>
             ) : (
-                <div className="bg-[#0d1117] border border-white/[0.06] rounded-2xl overflow-hidden">
+                <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl overflow-hidden">
                     <div className="overflow-x-auto">
                         <table className="w-full">
                             <thead>
-                                <tr className="border-b border-white/[0.05]">
+                                <tr className="border-b border-[var(--border-subtle)]">
                                     <th className="w-8 px-5 py-3" />
                                     <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Keyword</th>
                                     {platforms.map(p => (
@@ -1141,15 +1150,15 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
 
                                     return (
                                         <React.Fragment key={keyword}>
-                                            <tr className={`border-b border-white/[0.04] last:border-0 transition-colors ${isSelected ? 'bg-red-500/5' : isExpanded ? 'bg-white/[0.02]' : 'hover:bg-white/[0.02]'}`}>
+                                            <tr className={`border-b border-[var(--border-subtle)] last:border-0 transition-colors ${isSelected ? 'bg-red-500/5' : isExpanded ? 'bg-[var(--surface-06)]' : 'hover:bg-[var(--surface-08)]'}`}>
                                                 <td className="px-5 py-3.5 cursor-pointer" onClick={() => toggleSelect(keyword)}>
-                                                    <div className={`w-3.5 h-3.5 rounded border transition-all ${isSelected ? 'bg-red-500/40 border-red-500/60' : 'border-white/15'}`} />
+                                                    <div className={`w-3.5 h-3.5 rounded border transition-all ${isSelected ? 'bg-red-500/40 border-red-500/60' : 'border-[var(--border-strong)]'}`} />
                                                 </td>
                                                 <td className="px-5 py-3.5 cursor-pointer" onClick={() => hasDetail && setExpanded(prev => prev === keyword ? null : keyword)}>
                                                     <div className="flex items-center gap-2">
                                                         <span className="text-sm text-slate-200">{keyword}</span>
                                                         {hasDetail && (
-                                                            <span className={`transition-colors ${isExpanded ? 'text-violet-400' : 'text-slate-700'}`}>
+                                                            <span className={`transition-colors ${isExpanded ? 'text-[var(--accent)]' : 'text-slate-700'}`}>
                                                                 {isExpanded ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
                                                             </span>
                                                         )}
@@ -1170,15 +1179,15 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
                                                 </td>
                                             </tr>
                                             {isExpanded && (
-                                                <tr className="border-b border-white/[0.04] last:border-0">
-                                                    <td colSpan={3 + platforms.length} className="px-5 py-4 bg-white/[0.01]">
+                                                <tr className="border-b border-[var(--border-subtle)] last:border-0">
+                                                    <td colSpan={3 + platforms.length} className="px-5 py-4 bg-[var(--surface-06)]">
                                                         <div className="space-y-4">
                                                             {platforms.filter(p => intents.some(i => checks?.[p]?.[i])).map(p => {
                                                                 const m = PLATFORM_META[p]
                                                                 return (
                                                                     <div key={p}>
                                                                         <p className={`text-xs uppercase tracking-wider font-semibold mb-2 ${m.color}`}>{m.label}</p>
-                                                                        <div className="space-y-2 pl-3 border-l-2 border-white/10">
+                                                                        <div className="space-y-2 pl-3 border-l-2 border-[var(--border-subtle)]">
                                                                             {intents.filter(i => checks?.[p]?.[i]).map(i => {
                                                                                 const c = checks[p][i]
                                                                                 return (
@@ -1258,17 +1267,17 @@ export default function GeoSitePageEn() {
     }, [fetchSite, fetchPlan, router])
 
     if (loading) return (
-        <div className="min-h-screen bg-[#05080f] flex items-center justify-center">
-            <Loader2 className="w-8 h-8 text-violet-400 animate-spin" />
+        <div className="min-h-screen bg-[var(--bg-base)] flex items-center justify-center">
+            <Loader2 className="w-8 h-8 text-[var(--accent)] animate-spin" />
         </div>
     )
 
     const activeItem = NAV_ITEMS.find(n => n.id === activeView) || NAV_ITEMS[0]
 
     return (
-        <div className="min-h-screen bg-[#05080f]">
+        <div className="min-h-screen bg-[var(--bg-base)]">
             <Toaster position="top-right" toastOptions={{
-                style: { background: '#0d1117', color: '#fff', border: '1px solid rgba(255,255,255,0.08)' },
+                style: { background: 'var(--bg-surface)', color: '#fff', border: '1px solid var(--border-subtle)' },
             }} />
             <Navbar locale="en" />
 
@@ -1280,8 +1289,8 @@ export default function GeoSitePageEn() {
                         <ArrowLeft className="w-4 h-4" />Back to dashboard
                     </Link>
                     <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-xl bg-violet-500/10 border border-violet-500/15 flex items-center justify-center">
-                            <Globe className="w-5 h-5 text-violet-400" />
+                        <div className="w-10 h-10 rounded-xl bg-[var(--accent-soft)] border border-[var(--accent-border)] flex items-center justify-center">
+                            <Globe className="w-5 h-5 text-[var(--accent)]" />
                         </div>
                         <div>
                             <h1 className="text-xl font-bold text-white">{site?.displayName || site?.domain}</h1>
@@ -1298,8 +1307,8 @@ export default function GeoSitePageEn() {
                             <button key={item.id} onClick={() => setActiveView(item.id)}
                                 className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all shrink-0 ${
                                     activeView === item.id
-                                        ? 'bg-violet-500/15 border border-violet-500/30 text-violet-300'
-                                        : 'bg-white/[0.03] border border-white/8 text-slate-500 hover:text-slate-300'
+                                        ? 'bg-[var(--accent-soft)] border border-[var(--accent-border)] text-[var(--accent)]'
+                                        : 'bg-[var(--surface-06)] border border-[var(--border-subtle)] text-slate-500 hover:text-slate-300'
                                 }`}>
                                 <Icon className="w-3.5 h-3.5" />{item.label}
                             </button>
@@ -1317,10 +1326,10 @@ export default function GeoSitePageEn() {
                                 <button key={item.id} onClick={() => setActiveView(item.id)}
                                     className={`flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl text-left text-sm font-medium transition-all ${
                                         active
-                                            ? 'bg-violet-500/10 border border-violet-500/25 text-white'
-                                            : 'border border-transparent text-slate-500 hover:text-slate-300 hover:bg-white/[0.03]'
+                                            ? 'bg-[var(--accent-soft)] border border-[var(--accent-border)] text-white'
+                                            : 'border border-transparent text-slate-500 hover:text-slate-300 hover:bg-[var(--surface-06)]'
                                     }`}>
-                                    <Icon className={`w-4 h-4 shrink-0 ${active ? 'text-violet-400' : ''}`} />
+                                    <Icon className={`w-4 h-4 shrink-0 ${active ? 'text-[var(--accent)]' : ''}`} />
                                     {item.label}
                                 </button>
                             )

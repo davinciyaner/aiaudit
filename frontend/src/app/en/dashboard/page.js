@@ -74,12 +74,12 @@ function LockedIssues({ count, type = 'error', onRegister }) {
                 ))}
             </div>
             <div className="absolute inset-0 flex flex-col items-center justify-center rounded-xl"
-                style={{ background: 'linear-gradient(to top, #080b14 40%, transparent)' }}>
+                style={{ background: 'linear-gradient(to top, var(--bg-base) 40%, transparent)' }}>
                 <div className="flex flex-col items-center gap-1.5 pb-1">
                     <Lock className="w-3.5 h-3.5 text-slate-500" />
                     <p className="text-xs font-semibold text-slate-300">+{count} more issue{count !== 1 ? 's' : ''} hidden</p>
                     <button onClick={onRegister}
-                        className="text-xs font-semibold text-violet-400 hover:text-violet-300 underline underline-offset-2 transition-colors">
+                        className="text-xs font-semibold text-[var(--accent)] hover:opacity-80 underline underline-offset-2 transition-colors">
                         Sign up for free to see all →
                     </button>
                 </div>
@@ -92,10 +92,10 @@ function Section({ title, icon, children, defaultOpen = true }) {
     const [open, setOpen] = useState(defaultOpen)
 
     return (
-        <div className="bg-white/2 border border-white/[0.07] rounded-2xl overflow-hidden">
+        <div className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl overflow-hidden">
             <button
                 onClick={() => setOpen(!open)}
-                className="w-full flex items-center justify-between px-4 sm:px-6 py-4 sm:py-5 hover:bg-white/2 transition-colors"
+                className="w-full flex items-center justify-between px-4 sm:px-6 py-4 sm:py-5 hover:bg-[var(--surface-06)] transition-colors"
             >
                 <div className="flex items-center gap-3">
                     <span className="text-lg">{icon}</span>
@@ -112,7 +112,7 @@ function Section({ title, icon, children, defaultOpen = true }) {
                         transition={{ duration: 0.3 }}
                         className="overflow-hidden"
                     >
-                        <div className="px-4 sm:px-6 pb-4 sm:pb-6 border-t border-white/5">
+                        <div className="px-4 sm:px-6 pb-4 sm:pb-6 border-t border-[var(--border-subtle)]">
                             <div className="pt-4">{children}</div>
                         </div>
                     </motion.div>
@@ -195,14 +195,14 @@ export default function DashboardEn() {
     }
 
     return (
-        <div className="min-h-screen bg-[#080b14]">
+        <div className="min-h-screen bg-[var(--bg-base)]">
             <Toaster
                 position="top-right"
                 toastOptions={{
                     style: {
-                        background: '#0d1117',
+                        background: 'var(--bg-surface)',
                         color: '#e8e5e0',
-                        border: '1px solid rgba(255,255,255,0.08)',
+                        border: '1px solid var(--border-subtle)',
                         maxWidth: 'calc(100vw - 2rem)',
                     },
                 }}
@@ -225,7 +225,7 @@ export default function DashboardEn() {
                     {result && !result.limitReached && (
                         <button
                             onClick={() => { setResult(null); setLoading(false) }}
-                            className="mt-4 inline-flex items-center gap-2 px-4 py-2 text-sm text-slate-400 hover:text-white border border-white/10 hover:border-white/20 rounded-xl transition-all"
+                            className="mt-4 inline-flex items-center gap-2 px-4 py-2 text-sm text-slate-400 hover:text-white border border-[var(--border-subtle)] hover:border-[var(--border-strong)] rounded-xl transition-all"
                         >
                             <RefreshCw className="w-3.5 h-3.5" />
                             New check
@@ -257,17 +257,17 @@ export default function DashboardEn() {
                             <h2 className="text-2xl font-bold text-white mb-2">Free check already used</h2>
                             <p className="text-slate-400 max-w-md">
                                 You've already used your monthly free check. Upgrade to{' '}
-                                <span className="text-violet-400 font-semibold">Pro</span> to get 10 checks per month.
+                                <span className="text-white font-semibold">Pro</span> to get 10 checks per month.
                             </p>
                         </div>
                         <div className="flex flex-col sm:flex-row gap-3">
                             <Link href="/en/pricing"
-                                className="flex items-center gap-2 px-6 py-3 bg-linear-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white font-semibold rounded-xl transition-all shadow-lg shadow-violet-500/20"
+                                className="flex items-center gap-2 px-6 py-3 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] font-semibold rounded-xl transition-all shadow-lg shadow-[var(--accent-border)]"
                             >
                                 Upgrade to Pro <ArrowRight className="w-4 h-4" />
                             </Link>
                             <button onClick={() => setResult(null)}
-                                className="px-6 py-3 text-slate-400 hover:text-white border border-white/10 hover:border-white/20 rounded-xl transition-all text-sm"
+                                className="px-6 py-3 text-slate-400 hover:text-white border border-[var(--border-subtle)] hover:border-[var(--border-strong)] rounded-xl transition-all text-sm"
                             >
                                 Back
                             </button>
@@ -281,24 +281,24 @@ export default function DashboardEn() {
                     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
                         className="flex flex-col items-center text-center gap-6 py-16"
                     >
-                        <div className="w-16 h-16 rounded-2xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center">
-                            <RefreshCw className="w-7 h-7 text-violet-400" />
+                        <div className="w-16 h-16 rounded-2xl bg-[var(--accent-soft)] border border-[var(--accent-border)] flex items-center justify-center">
+                            <RefreshCw className="w-7 h-7 text-[var(--accent)]" />
                         </div>
                         <div>
                             <h2 className="text-2xl font-bold text-white mb-2">Did you fix the issues?</h2>
                             <p className="text-slate-400 max-w-md">
                                 This domain has already been checked for free. Create a{' '}
-                                <span className="text-violet-400 font-semibold">free account</span> to check your website again.
+                                <span className="text-white font-semibold">free account</span> to check your website again.
                             </p>
                         </div>
                         <div className="flex flex-col sm:flex-row gap-3">
                             <Link href="/en/register"
-                                className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white font-semibold rounded-xl transition-all shadow-lg shadow-violet-500/20"
+                                className="flex items-center gap-2 px-6 py-3 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] font-semibold rounded-xl transition-all shadow-lg shadow-[var(--accent-border)]"
                             >
                                 <UserPlus className="w-4 h-4" /> Create free account
                             </Link>
                             <Link href="/en/pricing"
-                                className="flex items-center gap-2 px-6 py-3 text-slate-300 hover:text-white border border-white/10 hover:border-violet-500/40 font-semibold rounded-xl transition-all text-sm"
+                                className="flex items-center gap-2 px-6 py-3 text-slate-300 hover:text-white border border-[var(--border-subtle)] hover:border-[var(--accent-border)] font-semibold rounded-xl transition-all text-sm"
                             >
                                 Pro for €29/month <ArrowRight className="w-4 h-4" />
                             </Link>
@@ -412,7 +412,7 @@ export default function DashboardEn() {
                                                 <div key={i} className="space-y-1.5">
                                                     <IssueItem text={issue} type="error" />
                                                     {isPro && audit.seo.suggestions?.[i] && (
-                                                        <div className="ml-6 text-xs text-slate-500 bg-white/[0.02] rounded-lg px-3 py-2 border border-white/[0.05]">
+                                                        <div className="ml-6 text-xs text-slate-500 bg-[var(--surface-06)] rounded-lg px-3 py-2 border border-[var(--border-subtle)]">
                                                             Recommendation: {audit.seo.suggestions[i]}
                                                         </div>
                                                     )}
@@ -432,17 +432,17 @@ export default function DashboardEn() {
 
                                     {/* Show title + description */}
                                     {(audit?.seo?.title?.text || audit?.seo?.description?.text) && (
-                                        <div className="mt-4 pt-4 border-t border-white/5 space-y-3">
+                                        <div className="mt-4 pt-4 border-t border-[var(--border-subtle)] space-y-3">
                                             {audit?.seo?.title?.text && (
                                                 <div>
                                                     <div className="text-[10px] text-slate-600 uppercase tracking-wider mb-1">Title Tag</div>
-                                                    <div className="text-xs text-slate-400 bg-white/[0.02] rounded-lg px-3 py-2 border border-white/[0.05]">{audit.seo.title.text}</div>
+                                                    <div className="text-xs text-slate-400 bg-[var(--surface-06)] rounded-lg px-3 py-2 border border-[var(--border-subtle)]">{audit.seo.title.text}</div>
                                                 </div>
                                             )}
                                             {audit?.seo?.description?.text && (
                                                 <div>
                                                     <div className="text-[10px] text-slate-600 uppercase tracking-wider mb-1">Meta Description</div>
-                                                    <div className="text-xs text-slate-400 bg-white/[0.02] rounded-lg px-3 py-2 border border-white/[0.05]">{audit.seo.description.text}</div>
+                                                    <div className="text-xs text-slate-400 bg-[var(--surface-06)] rounded-lg px-3 py-2 border border-[var(--border-subtle)]">{audit.seo.description.text}</div>
                                                 </div>
                                             )}
                                         </div>
@@ -490,7 +490,7 @@ export default function DashboardEn() {
                                                     <div key={i} className="space-y-1.5">
                                                         <IssueItem text={issue} type="error" />
                                                         {isPro && audit.geo.suggestions?.[i] && (
-                                                            <div className="ml-6 text-xs text-slate-500 bg-white/[0.02] rounded-lg px-3 py-2 border border-white/[0.05]">
+                                                            <div className="ml-6 text-xs text-slate-500 bg-[var(--surface-06)] rounded-lg px-3 py-2 border border-[var(--border-subtle)]">
                                                                 Recommendation: {audit.geo.suggestions[i]}
                                                             </div>
                                                         )}
@@ -513,7 +513,7 @@ export default function DashboardEn() {
                                             <div className="space-y-2 mb-5">
                                                 <div className="text-[10px] text-slate-600 uppercase tracking-wider mb-2">Prioritized Action Items</div>
                                                 {audit.geo.recommendations.map((r, i) => (
-                                                    <div key={i} className="flex gap-3 bg-white/2 border border-white/[0.06] rounded-xl p-4">
+                                                    <div key={i} className="flex gap-3 bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-xl p-4">
                                                         <span className={`text-xs font-bold px-2 py-1 rounded shrink-0 h-fit ${
                                                             r.priority === 'critical' ? 'bg-red-500/15 text-red-400' :
                                                             r.priority === 'high' ? 'bg-amber-500/15 text-amber-400' :
@@ -532,10 +532,10 @@ export default function DashboardEn() {
                                         {/* Generated llms.txt — Pro only */}
                                         {isPro && !audit.geo.checks?.hasLlmsTxt && audit.geo.generatedLlmsTxt && (
                                             <div className="mt-2">
-                                                <div className="text-xs font-bold text-cyan-400 uppercase tracking-wider mb-2">
+                                                <div className="text-xs font-bold text-[var(--accent)] uppercase tracking-wider mb-2">
                                                     Generated llms.txt — save as /llms.txt in your project
                                                 </div>
-                                                <pre className="bg-cyan-500/5 border border-cyan-500/15 rounded-xl p-4 text-xs text-slate-400 overflow-auto whitespace-pre-wrap">
+                                                <pre className="bg-[var(--accent-soft)] border border-[var(--accent-border)] rounded-xl p-4 text-xs text-slate-400 overflow-auto whitespace-pre-wrap">
                                                     {audit.geo.generatedLlmsTxt}
                                                 </pre>
                                             </div>
@@ -546,11 +546,11 @@ export default function DashboardEn() {
                                 {/* AI REPORT UPSELL — after the issues, so the user feels the pain first */}
                                 {!result.aiReport && (
                                     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-                                        className="relative overflow-hidden rounded-2xl border border-violet-500/25 bg-[#0d1117] p-6 sm:p-8 text-center">
-                                        <div className="pointer-events-none absolute -top-20 left-1/2 -translate-x-1/2 w-64 h-64 rounded-full bg-violet-600/8 blur-3xl" />
+                                        className="relative overflow-hidden rounded-2xl border border-[var(--accent-border)] bg-[var(--bg-surface)] p-6 sm:p-8 text-center">
+                                        <div className="pointer-events-none absolute -top-20 left-1/2 -translate-x-1/2 w-64 h-64 rounded-full bg-[var(--accent-soft)] blur-3xl" />
                                         <div className="relative z-10">
-                                            <div className="w-12 h-12 rounded-2xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center mx-auto mb-4">
-                                                <Bot className="w-6 h-6 text-violet-400" />
+                                            <div className="w-12 h-12 rounded-2xl bg-[var(--accent-soft)] border border-[var(--accent-border)] flex items-center justify-center mx-auto mb-4">
+                                                <Bot className="w-6 h-6 text-[var(--accent)]" />
                                             </div>
                                             <h3 className="text-lg font-bold text-white mb-2">Concrete fixes for every issue</h3>
                                             <p className="text-slate-400 text-sm mb-5 max-w-md mx-auto leading-relaxed">
@@ -558,11 +558,11 @@ export default function DashboardEn() {
                                             </p>
                                             <div className="flex flex-col sm:flex-row gap-3 justify-center">
                                                 <Link href="/en/pricing"
-                                                    className="flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white font-semibold rounded-xl transition-all shadow-lg shadow-violet-500/20 text-sm">
+                                                    className="flex items-center justify-center gap-2 px-6 py-3 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] font-semibold rounded-xl transition-all shadow-lg shadow-[var(--accent-border)] text-sm">
                                                     Pro for €29/month <ArrowRight className="w-4 h-4" />
                                                 </Link>
                                                 <Link href="/en/pricing"
-                                                    className="flex items-center justify-center gap-2 px-6 py-3 text-slate-400 hover:text-white border border-white/10 hover:border-white/20 rounded-xl transition-all text-sm">
+                                                    className="flex items-center justify-center gap-2 px-6 py-3 text-slate-400 hover:text-white border border-[var(--border-subtle)] hover:border-[var(--border-strong)] rounded-xl transition-all text-sm">
                                                     All pricing
                                                 </Link>
                                             </div>
@@ -575,34 +575,34 @@ export default function DashboardEn() {
 
                                 {/* SEO AUTOMATION UPSELL */}
                                     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}
-                                        className="rounded-2xl border border-emerald-500/20 bg-emerald-500/[0.03] p-5">
+                                        className="rounded-2xl border border-[var(--accent-border)] bg-[var(--accent-soft)] p-5">
                                         <div className="flex items-start gap-3 mb-4">
-                                            <div className="w-9 h-9 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shrink-0">
-                                                <TrendingUp className="w-4 h-4 text-emerald-400" />
+                                            <div className="w-9 h-9 rounded-xl bg-[var(--accent-soft-strong)] border border-[var(--accent-border)] flex items-center justify-center shrink-0">
+                                                <TrendingUp className="w-4 h-4 text-[var(--accent)]" />
                                             </div>
                                             <div>
-                                                <span className="text-xs font-semibold text-emerald-400 uppercase tracking-wider">Add-on</span>
+                                                <span className="text-xs font-semibold text-[var(--accent)] uppercase tracking-wider">Add-on</span>
                                                 <h3 className="text-sm font-bold text-white">SEO Automation</h3>
                                             </div>
                                         </div>
                                         <ul className="space-y-1.5 mb-4">
                                             {['Weekly Google rankings', 'Keyword ideas & search volume', 'Competitor analysis', 'Backlink overview'].map(f => (
                                                 <li key={f} className="flex items-center gap-2 text-xs text-slate-500">
-                                                    <CheckCircle className="w-3 h-3 text-emerald-400/60 shrink-0" />
+                                                    <CheckCircle className="w-3 h-3 text-[var(--accent)]/60 shrink-0" />
                                                     {f}
                                                 </li>
                                             ))}
                                         </ul>
                                         {isLoggedIn ? (
-                                            <Link href="/seo/pricing" className="flex items-center justify-center gap-1.5 w-full px-4 py-2 bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/20 text-emerald-400 text-xs font-semibold rounded-xl transition-all">
+                                            <Link href="/seo/pricing" className="flex items-center justify-center gap-1.5 w-full px-4 py-2 bg-[var(--accent-soft)] hover:bg-[var(--accent-soft-strong)] border border-[var(--accent-border)] text-[var(--accent)] text-xs font-semibold rounded-xl transition-all">
                                                 Book now <ArrowRight className="w-3 h-3" />
                                             </Link>
                                         ) : (
                                             <div className="flex gap-2">
-                                                <Link href="/en/register" className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/20 text-emerald-400 text-xs font-semibold rounded-xl transition-all">
+                                                <Link href="/en/register" className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 bg-[var(--accent-soft)] hover:bg-[var(--accent-soft-strong)] border border-[var(--accent-border)] text-[var(--accent)] text-xs font-semibold rounded-xl transition-all">
                                                     <UserPlus className="w-3 h-3" /> Sign up
                                                 </Link>
-                                                <Link href="/seo/pricing" className="flex items-center justify-center px-3 py-2 border border-white/10 hover:border-white/20 text-slate-500 hover:text-slate-300 text-xs rounded-xl transition-all">
+                                                <Link href="/seo/pricing" className="flex items-center justify-center px-3 py-2 border border-[var(--border-subtle)] hover:border-[var(--border-strong)] text-slate-500 hover:text-slate-300 text-xs rounded-xl transition-all">
                                                     Pricing
                                                 </Link>
                                             </div>
@@ -624,7 +624,7 @@ export default function DashboardEn() {
                                                     })
                                                 }
                                             }}
-                                            className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-violet-600 to-cyan-600 text-white rounded-xl"
+                                            className="flex items-center gap-2 px-6 py-3 bg-[var(--accent)] text-[var(--bg-base)] rounded-xl"
                                         >
                                             <Download className="w-4 h-4" />
                                             Download PDF
@@ -632,13 +632,13 @@ export default function DashboardEn() {
                                         </a>
                                     </div>
                                 ) : (
-                                    <div className="flex items-center justify-between gap-4 px-4 sm:px-5 py-4 rounded-xl border border-white/[0.06] bg-white/[0.02]">
+                                    <div className="flex items-center justify-between gap-4 px-4 sm:px-5 py-4 rounded-xl border border-[var(--border-subtle)] bg-[var(--surface-06)]">
                                         <div className="flex items-center gap-3">
                                             <FileText className="w-4 h-4 text-slate-600 shrink-0" />
                                             <span className="text-sm text-slate-500">PDF report available with Pro</span>
                                         </div>
                                         <Link href="/en/pricing"
-                                            className="flex items-center gap-1.5 px-4 py-2 bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white text-xs font-semibold rounded-lg transition-all shrink-0">
+                                            className="flex items-center gap-1.5 px-4 py-2 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-xs font-semibold rounded-lg transition-all shrink-0">
                                             Upgrade <ArrowRight className="w-3 h-3" />
                                         </Link>
                                     </div>
@@ -672,7 +672,7 @@ export default function DashboardEn() {
                             animate={{ opacity: 1, scale: 1, y: 0 }}
                             exit={{ opacity: 0, scale: 0.95, y: 16 }}
                             transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-                            className="relative w-full max-w-md bg-[#0d1117] border border-white/10 rounded-2xl p-6 shadow-2xl"
+                            className="relative w-full max-w-md bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl p-6 shadow-2xl"
                             onClick={e => e.stopPropagation()}
                         >
                             <button
@@ -681,8 +681,8 @@ export default function DashboardEn() {
                             >✕</button>
 
                             <div className="mb-5">
-                                <div className="w-10 h-10 rounded-xl bg-violet-500/15 border border-violet-500/20 flex items-center justify-center mb-4">
-                                    <UserPlus className="w-5 h-5 text-violet-400" />
+                                <div className="w-10 h-10 rounded-xl bg-[var(--accent-soft-strong)] border border-[var(--accent-border)] flex items-center justify-center mb-4">
+                                    <UserPlus className="w-5 h-5 text-[var(--accent)]" />
                                 </div>
                                 <h2 className="text-lg font-bold text-white mb-1">Save your results</h2>
                                 <p className="text-sm text-slate-400">
@@ -697,8 +697,8 @@ export default function DashboardEn() {
                                     '1 free audit per month',
                                 ].map(f => (
                                     <li key={f} className="flex items-center gap-2.5 text-sm text-slate-300">
-                                        <span className="w-4 h-4 rounded-full bg-emerald-500/15 flex items-center justify-center shrink-0">
-                                            <span className="text-emerald-400 text-[10px]">✓</span>
+                                        <span className="w-4 h-4 rounded-full bg-[var(--accent-soft-strong)] flex items-center justify-center shrink-0">
+                                            <span className="text-[var(--accent)] text-[10px]">✓</span>
                                         </span>
                                         {f}
                                     </li>
@@ -710,7 +710,7 @@ export default function DashboardEn() {
                                     if (auditUrl) sessionStorage.setItem('pendingAuditUrl', auditUrl)
                                     router.push('/en/register')
                                 }}
-                                className="flex items-center justify-center gap-2 w-full py-3 bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white font-semibold rounded-xl transition-all shadow-lg shadow-violet-500/20 mb-3"
+                                className="flex items-center justify-center gap-2 w-full py-3 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] font-semibold rounded-xl transition-all shadow-lg shadow-[var(--accent-border)] mb-3"
                             >
                                 <UserPlus className="w-4 h-4" />
                                 Create free account

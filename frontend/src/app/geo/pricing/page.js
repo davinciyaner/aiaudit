@@ -111,26 +111,26 @@ function PlanCard({ plan, user, currentPlan, loading, onSuccess }) {
             transition={{ delay: PLANS.indexOf(plan) * 0.1 }}
             className={`relative flex flex-col rounded-2xl p-8 border transition-all duration-300 ${
                 plan.highlight
-                    ? 'bg-gradient-to-b from-violet-600/10 to-transparent border-violet-500/30 shadow-2xl shadow-violet-500/10'
-                    : 'bg-white/[0.02] border-white/[0.06]'
+                    ? 'bg-[var(--accent-soft)] border-[var(--accent-border)] shadow-2xl shadow-[var(--accent-border)]'
+                    : 'bg-[var(--surface-06)] border-[var(--border-subtle)]'
             }`}
         >
             {plan.badge && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-gradient-to-r from-violet-600 to-purple-600 rounded-full text-xs font-semibold text-white shadow-lg whitespace-nowrap">
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-[var(--accent)] rounded-full text-xs font-semibold text-[var(--bg-base)] shadow-lg whitespace-nowrap">
                     {plan.badge}
                 </div>
             )}
 
             {currentPlan === plan.id && (
-                <div className="absolute -top-3 right-6 px-3 py-1 bg-violet-500/20 border border-violet-500/30 rounded-full text-xs font-semibold text-violet-400">
+                <div className="absolute -top-3 right-6 px-3 py-1 bg-[var(--accent-soft-strong)] border border-[var(--accent-border)] rounded-full text-xs font-semibold text-[var(--accent)]">
                     Aktuell
                 </div>
             )}
 
             <div className="mb-6">
                 <div className="flex items-center gap-2 mb-3">
-                    <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${plan.highlight ? 'bg-violet-500/20' : 'bg-white/5'}`}>
-                        <plan.icon className={`w-4 h-4 ${plan.highlight ? 'text-violet-400' : 'text-slate-400'}`} strokeWidth={1.8} />
+                    <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${plan.highlight ? 'bg-[var(--accent-soft-strong)]' : 'bg-[var(--surface-08)]'}`}>
+                        <plan.icon className={`w-4 h-4 ${plan.highlight ? 'text-[var(--accent)]' : 'text-slate-400'}`} strokeWidth={1.8} />
                     </div>
                     <span className="text-sm font-semibold text-slate-400 uppercase tracking-wider">{plan.name}</span>
                 </div>
@@ -145,15 +145,15 @@ function PlanCard({ plan, user, currentPlan, loading, onSuccess }) {
             <div className="space-y-3 mb-8 flex-1">
                 {plan.features.map(f => (
                     <div key={f} className="flex items-center gap-3 text-sm">
-                        <div className={`w-4 h-4 rounded-full flex items-center justify-center shrink-0 ${plan.highlight ? 'bg-violet-500/20' : 'bg-white/5'}`}>
-                            <Check className={`w-2.5 h-2.5 ${plan.highlight ? 'text-violet-400' : 'text-slate-400'}`} strokeWidth={3} />
+                        <div className={`w-4 h-4 rounded-full flex items-center justify-center shrink-0 ${plan.highlight ? 'bg-[var(--accent-soft-strong)]' : 'bg-[var(--surface-08)]'}`}>
+                            <Check className={`w-2.5 h-2.5 ${plan.highlight ? 'text-[var(--accent)]' : 'text-slate-400'}`} strokeWidth={3} />
                         </div>
                         <span className="text-slate-300">{f}</span>
                     </div>
                 ))}
                 {plan.locked?.map(f => (
                     <div key={f} className="flex items-center gap-3 text-sm opacity-40">
-                        <div className="w-4 h-4 rounded-full flex items-center justify-center shrink-0 bg-white/5">
+                        <div className="w-4 h-4 rounded-full flex items-center justify-center shrink-0 bg-[var(--surface-08)]">
                             <Lock className="w-2.5 h-2.5 text-slate-500" strokeWidth={3} />
                         </div>
                         <span className="text-slate-500 line-through">{f}</span>
@@ -163,11 +163,11 @@ function PlanCard({ plan, user, currentPlan, loading, onSuccess }) {
 
             <div>
                 {loading ? (
-                    <div className="flex items-center justify-center w-full py-3 rounded-xl border border-white/10">
+                    <div className="flex items-center justify-center w-full py-3 rounded-xl border border-[var(--border-subtle)]">
                         <Loader2 className="w-4 h-4 text-slate-500 animate-spin" />
                     </div>
                 ) : currentPlan === plan.id ? (
-                    <div className="block w-full py-3 text-center text-sm font-semibold rounded-xl border border-violet-500/20 text-violet-400 bg-violet-500/5">
+                    <div className="block w-full py-3 text-center text-sm font-semibold rounded-xl border border-[var(--accent-border)] text-[var(--accent)] bg-[var(--accent-soft)]">
                         Aktives Abo
                     </div>
                 ) : !user ? (
@@ -175,8 +175,8 @@ function PlanCard({ plan, user, currentPlan, loading, onSuccess }) {
                         href="/login?redirect=/geo/pricing"
                         className={`flex items-center justify-center gap-2 w-full py-3 text-center text-sm font-semibold rounded-xl transition-all duration-200 ${
                             plan.highlight
-                                ? 'bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white shadow-lg shadow-violet-500/20 hover:-translate-y-0.5'
-                                : 'border border-white/10 text-slate-300 hover:text-white hover:border-white/20 hover:bg-white/5'
+                                ? 'bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] shadow-lg shadow-[var(--accent-border)] hover:-translate-y-0.5'
+                                : 'border border-[var(--border-subtle)] text-slate-300 hover:text-white hover:border-[var(--border-strong)] hover:bg-[var(--surface-06)]'
                         }`}
                     >
                         <LogIn className="w-4 h-4" /> Anmelden zum Abonnieren
@@ -270,33 +270,33 @@ export default function GeoPricingPage() {
 
     return (
         <>
-            <div className="min-h-screen bg-[#05080f]">
+            <div className="min-h-screen bg-[var(--bg-base)]">
                 <Toaster position="top-right" toastOptions={{
-                    style: { background: '#0d1117', color: '#fff', border: '1px solid rgba(255,255,255,0.08)' },
+                    style: { background: 'var(--bg-surface)', color: '#fff', border: '1px solid var(--border-subtle)' },
                 }} />
                 <Navbar />
 
                 <div className="relative pt-32 pb-24 px-5 sm:px-8">
                     <div
                         className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] rounded-full blur-3xl pointer-events-none"
-                        style={{ background: 'radial-gradient(ellipse, rgba(139,92,246,0.08) 0%, transparent 70%)' }}
+                        style={{ background: 'radial-gradient(ellipse, var(--accent-glow) 0%, transparent 70%)' }}
                     />
 
                     <div className="relative z-10 max-w-6xl mx-auto">
                         <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-16">
-                            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-violet-500/20 bg-violet-500/5 text-violet-400 text-xs font-medium mb-6">
+                            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[var(--accent-border)] bg-[var(--accent-soft)] text-[var(--accent)] text-xs font-medium mb-6">
                                 <Sparkles className="w-3.5 h-3.5" />
                                 GEO Automatisierung
                             </div>
                             <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-5">
                                 Wirst du von KI<br />
-                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-purple-400">empfohlen?</span>
+                                empfohlen?
                             </h1>
                             <p className="text-lg text-slate-400 max-w-xl mx-auto mb-6">
                                 Tracke ob Claude, ChatGPT, Perplexity und Google AI Overview deine Domain erwähnen — wöchentlich automatisch.
                             </p>
-                            <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-violet-500/20 bg-violet-500/5 text-sm">
-                                <span className="text-violet-300 font-semibold">14 Tage kostenlos testen</span>
+                            <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-[var(--accent-border)] bg-[var(--accent-soft)] text-sm">
+                                <span className="text-[var(--accent)] font-semibold">14 Tage kostenlos testen</span>
                                 <span className="text-slate-600">·</span>
                                 <span className="text-slate-400">danach automatisch verlängerbar · jederzeit kündbar</span>
                             </div>
@@ -329,7 +329,7 @@ export default function GeoPricingPage() {
                             </h2>
                             <div className="space-y-4">
                                 {FAQS.map((faq, i) => (
-                                    <div key={i} className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5">
+                                    <div key={i} className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl p-5">
                                         <h3 className="font-semibold text-white mb-2 text-sm">{faq.q}</h3>
                                         <p className="text-sm text-slate-400 leading-relaxed">{faq.a}</p>
                                     </div>

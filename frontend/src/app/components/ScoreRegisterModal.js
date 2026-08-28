@@ -50,21 +50,21 @@ export default function ScoreRegisterModal({ open, onClose, auditUrl = '', mode 
                             animate={{ opacity: 1, scale: 1, y: 0 }}
                             exit={{ opacity: 0, scale: 0.94, y: 16 }}
                             transition={{ type: 'spring', damping: 28, stiffness: 320 }}
-                            className="relative w-full max-w-md bg-[#0d1117] border border-violet-500/25 rounded-2xl shadow-2xl shadow-violet-500/10 overflow-hidden pointer-events-auto"
+                            className="relative w-full max-w-md bg-[var(--bg-surface)] border border-[var(--accent-border)] rounded-2xl shadow-2xl shadow-[var(--accent-border)] overflow-hidden pointer-events-auto"
                         >
-                            <div className="pointer-events-none absolute -top-24 left-1/2 -translate-x-1/2 w-72 h-72 rounded-full bg-violet-600/10 blur-3xl" />
+                            <div className="pointer-events-none absolute -top-24 left-1/2 -translate-x-1/2 w-72 h-72 rounded-full bg-[var(--accent-soft)] blur-3xl" />
 
                             <div className="relative z-10 p-6 sm:p-8 text-center">
                                 <button
                                     onClick={onClose}
                                     aria-label={locale === 'en' ? 'Close' : 'Schließen'}
-                                    className="absolute top-4 right-4 w-11 h-11 flex items-center justify-center rounded-lg bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-all"
+                                    className="absolute top-4 right-4 w-11 h-11 flex items-center justify-center rounded-lg bg-[var(--surface-06)] hover:bg-[var(--surface-10)] text-slate-400 hover:text-white transition-all"
                                 >
                                     <X className="w-4 h-4" />
                                 </button>
 
-                                <div className="w-14 h-14 rounded-2xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center mx-auto mb-5">
-                                    <Lock className="w-6 h-6 text-violet-400" />
+                                <div className="w-14 h-14 rounded-2xl bg-[var(--accent-soft)] border border-[var(--accent-border)] flex items-center justify-center mx-auto mb-5">
+                                    <Lock className="w-6 h-6 text-[var(--accent)]" />
                                 </div>
 
                                 <h3 className="text-xl font-bold text-white mb-2">
@@ -78,14 +78,14 @@ export default function ScoreRegisterModal({ open, onClose, auditUrl = '', mode 
 
                                 <div className="mb-3">
                                     <div className="flex items-center gap-2 mb-2">
-                                        <span className="text-[10px] font-semibold uppercase tracking-wider text-emerald-400">{locale === 'en' ? 'Included for free' : 'Kostenlos enthalten'}</span>
-                                        <div className="flex-1 h-px bg-white/5" />
+                                        <span className="text-[10px] font-semibold uppercase tracking-wider text-[var(--accent)]">{locale === 'en' ? 'Included for free' : 'Kostenlos enthalten'}</span>
+                                        <div className="flex-1 h-px bg-[var(--border-subtle)]" />
                                     </div>
                                     <div className="flex flex-col gap-1.5">
                                         {FREE_ITEMS.map(({ icon: Icon, label, desc }) => (
-                                            <div key={label} className="flex items-center gap-3 px-3 py-2.5 bg-white/3 border border-white/6 rounded-xl text-left">
-                                                <div className="w-7 h-7 rounded-lg bg-emerald-500/10 flex items-center justify-center shrink-0">
-                                                    <Icon className="w-3.5 h-3.5 text-emerald-400" />
+                                            <div key={label} className="flex items-center gap-3 px-3 py-2.5 bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-xl text-left">
+                                                <div className="w-7 h-7 rounded-lg bg-[var(--accent-soft)] flex items-center justify-center shrink-0">
+                                                    <Icon className="w-3.5 h-3.5 text-[var(--accent)]" />
                                                 </div>
                                                 <div className="min-w-0">
                                                     <div className="text-xs font-medium text-slate-200 leading-tight">{label}</div>
@@ -99,7 +99,7 @@ export default function ScoreRegisterModal({ open, onClose, auditUrl = '', mode 
 
                                 <button
                                     onClick={handleRegister}
-                                    className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-linear-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white font-semibold rounded-xl transition-all shadow-lg shadow-violet-500/20 mb-3"
+                                    className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] font-semibold rounded-xl transition-all shadow-lg shadow-[var(--accent-border)] mb-3"
                                 >
                                     <UserPlus className="w-4 h-4" />
                                     {locale === 'en' ? 'Create free account' : 'Kostenlosen Account erstellen'}

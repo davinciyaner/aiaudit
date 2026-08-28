@@ -492,13 +492,16 @@ export async function getCompetitors(req, res) {
         const [byDomain, byDomainKeyword, totalAgg] = await Promise.all([
             GeoMentionCheck.aggregate([
                 { $match: { siteId: site._id } },
-                { $unwind: '$citations' },
+                // includeArrayIndex erfasst, an welcher Stelle die Domain im Antworttext zuerst
+                // genannt wurde (extractDomainMentions bewahrt diese Reihenfolge) — Basis für avgPosition.
+                { $unwind: { path: '$citations', includeArrayIndex: 'citationIndex' } },
                 { $match: {
                     'citations.domain': { $ne: null, $nin: [normalizedOwnDomain] },
                 } },
                 { $group: {
                     _id: '$citations.domain',
                     count: { $sum: 1 },
+                    avgPosition: { $avg: '$citationIndex' },
                     platforms: { $addToSet: '$platform' },
                     lastSeen: { $max: '$checkedAt' },
                     sampleTitle: { $first: '$citations.title' },
@@ -538,6 +541,8 @@ export async function getCompetitors(req, res) {
             domain: c._id,
             count: c.count,
             share: total > 0 ? Math.round((c.count / total) * 1000) / 10 : 0,
+            // citationIndex ist 0-basiert (0 = zuerst genannt) — +1 für die "Platz 1, 2, 3..."-Anzeige.
+            avgPosition: c.avgPosition != null ? Math.round((c.avgPosition + 1) * 10) / 10 : null,
             platforms: c.platforms,
             lastSeen: c.lastSeen,
             title: c.sampleTitle,

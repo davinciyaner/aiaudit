@@ -14,9 +14,9 @@ const BENEFITS = [
 ]
 
 const PLAN_FEATURES = [
-    {icon: Search, label: 'SEO', value: '14 Checks', color: '#7c3aed'},
-    {icon: Globe, label: 'GEO', value: '19 Checks', color: '#06b6d4'},
-    {icon: Zap, label: 'Speed', value: '60s', color: '#f59e0b'},
+    {icon: Search, label: 'SEO', value: '14 Checks'},
+    {icon: Globe, label: 'GEO', value: '19 Checks'},
+    {icon: Zap, label: 'Speed', value: '60s'},
 ]
 
 export default function RegisterPage() {
@@ -63,12 +63,12 @@ export default function RegisterPage() {
     const strengthLabel = ['', 'Zu kurz', 'Mittel', 'Stark'][passwordStrength]
 
     return (
-        <div className="min-h-screen bg-[#05080f] flex">
+        <div className="min-h-screen bg-[var(--bg-base)] flex">
             <Toaster position="top-right" toastOptions={{
                 style: {
-                    background: '#0d1117',
+                    background: 'var(--bg-surface)',
                     color: '#fff',
-                    border: '1px solid rgba(255,255,255,0.08)',
+                    border: '1px solid var(--border-subtle)',
                     maxWidth: 'calc(100vw - 2rem)',
                 }
             }}/>
@@ -77,7 +77,7 @@ export default function RegisterPage() {
             <div className="flex-1 flex items-center justify-center px-5 py-12 order-2 lg:order-1">
                 <div className="absolute inset-0 lg:hidden">
                     <div className="absolute top-0 left-1/2 -translate-x-1/2 w-125 h-100 rounded-full blur-3xl"
-                         style={{background: 'radial-gradient(ellipse, rgba(124,58,237,0.12), transparent 70%)'}}/>
+                         style={{background: 'radial-gradient(ellipse, var(--accent-glow), transparent 70%)'}}/>
                 </div>
 
                 <motion.div initial={{opacity: 0, y: 30}} animate={{opacity: 1, y: 0}} transition={{duration: 0.5}}
@@ -87,19 +87,18 @@ export default function RegisterPage() {
                     <div className="flex justify-center mb-8 lg:hidden">
                         <Link href="/" className="flex items-center gap-2.5">
                             <div
-                                className="w-9 h-9 rounded-xl bg-linear-to-br from-violet-500 to-cyan-500 flex items-center justify-center shadow-lg shadow-violet-500/30">
-                                <Zap className="w-4 h-4 text-white" strokeWidth={2.5}/>
+                                className="w-9 h-9 rounded-xl bg-[var(--accent)] flex items-center justify-center shadow-lg shadow-[var(--accent-border)]">
+                                <Zap className="w-4 h-4 text-[var(--bg-base)]" strokeWidth={2.5}/>
                             </div>
-                            <span className="text-xl font-bold text-white">Audit<span
-                                className="text-transparent bg-clip-text bg-linear-to-r from-violet-400 to-cyan-400">AI</span></span>
+                            <span className="text-xl font-bold text-white">AuditAI</span>
                         </Link>
                     </div>
 
                     <div className="mb-8">
                         <h1 className="text-3xl font-bold text-white mb-2">Account erstellen</h1>
                         {hasPendingAudit && (
-                            <div className="flex items-center gap-2 mt-3 px-3 py-2 bg-violet-500/10 border border-violet-500/20 rounded-xl">
-                                <p className="text-xs text-violet-300">Dein Audit wartet — du siehst die Ergebnisse sofort nach der Registrierung.</p>
+                            <div className="flex items-center gap-2 mt-3 px-3 py-2 bg-[var(--accent-soft)] border border-[var(--accent-border)] rounded-xl">
+                                <p className="text-xs text-[var(--accent)]">Dein Audit wartet — du siehst die Ergebnisse sofort nach der Registrierung.</p>
                             </div>
                         )}
                     </div>
@@ -111,7 +110,7 @@ export default function RegisterPage() {
                                 <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500"/>
                                 <input type="text" name="name" value={formData.name} onChange={handleChange}
                                        placeholder="Benutzername" required
-                                       className="w-full bg-white/3 border border-white/10 hover:border-white/15 focus:border-violet-500/60 rounded-xl pl-11 pr-4 py-3.5 text-white placeholder:text-slate-600 outline-none transition-all text-sm"/>
+                                       className="w-full bg-[var(--surface-06)] border border-[var(--border-subtle)] hover:border-[var(--border-strong)] focus:border-[var(--accent-border)] rounded-xl pl-11 pr-4 py-3.5 text-white placeholder:text-slate-600 outline-none transition-all text-sm"/>
                             </div>
                         </div>
 
@@ -121,7 +120,7 @@ export default function RegisterPage() {
                                 <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500"/>
                                 <input type="email" name="email" value={formData.email} onChange={handleChange}
                                        placeholder="du@beispiel.de" required
-                                       className="w-full bg-white/3 border border-white/10 hover:border-white/15 focus:border-cyan-500/60 rounded-xl pl-11 pr-4 py-3.5 text-white placeholder:text-slate-600 outline-none transition-all text-sm"/>
+                                       className="w-full bg-[var(--surface-06)] border border-[var(--border-subtle)] hover:border-[var(--border-strong)] focus:border-[var(--accent-border)] rounded-xl pl-11 pr-4 py-3.5 text-white placeholder:text-slate-600 outline-none transition-all text-sm"/>
                             </div>
                         </div>
 
@@ -131,7 +130,7 @@ export default function RegisterPage() {
                                 <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500"/>
                                 <input type="password" name="password" value={formData.password} onChange={handleChange}
                                        placeholder="Mindestens 6 Zeichen" required minLength={6}
-                                       className="w-full bg-white/3 border border-white/10 hover:border-white/15 focus:border-violet-500/60 rounded-xl pl-11 pr-4 py-3.5 text-white placeholder:text-slate-600 outline-none transition-all text-sm"/>
+                                       className="w-full bg-[var(--surface-06)] border border-[var(--border-subtle)] hover:border-[var(--border-strong)] focus:border-[var(--accent-border)] rounded-xl pl-11 pr-4 py-3.5 text-white placeholder:text-slate-600 outline-none transition-all text-sm"/>
                             </div>
                             {/* Password strength */}
                             {formData.password.length > 0 && (
@@ -151,7 +150,7 @@ export default function RegisterPage() {
                             <div
                                 onClick={() => setConsent(v => !v)}
                                 className={`mt-0.5 w-4 h-4 rounded flex items-center justify-center shrink-0 border transition-all ${
-                                    consent ? 'bg-violet-600 border-violet-600' : 'border-white/20 bg-white/5 group-hover:border-white/40'
+                                    consent ? 'bg-[var(--accent)] border-[var(--accent)]' : 'border-[var(--border-strong)] bg-[var(--surface-08)] group-hover:border-[var(--border-strong)]'
                                 }`}
                             >
                                 {consent && (
@@ -162,9 +161,9 @@ export default function RegisterPage() {
                             </div>
                             <span className="text-xs text-slate-400 leading-relaxed">
                                 Ich habe die{' '}
-                                <Link href="/nutzungsbedingungen" target="_blank" className="text-violet-400 hover:text-violet-300 underline underline-offset-2">Nutzungsbedingungen</Link>{' '}
+                                <Link href="/nutzungsbedingungen" target="_blank" className="text-slate-300 hover:text-[var(--accent)] underline underline-offset-2">Nutzungsbedingungen</Link>{' '}
                                 und die{' '}
-                                <Link href="/datenschutz" target="_blank" className="text-violet-400 hover:text-violet-300 underline underline-offset-2">Datenschutzerklärung</Link>{' '}
+                                <Link href="/datenschutz" target="_blank" className="text-slate-300 hover:text-[var(--accent)] underline underline-offset-2">Datenschutzerklärung</Link>{' '}
                                 gelesen und stimme diesen zu.
                             </span>
                         </label>
@@ -173,7 +172,7 @@ export default function RegisterPage() {
                             <div
                                 onClick={() => setMarketingConsent(v => !v)}
                                 className={`mt-0.5 w-4 h-4 rounded flex items-center justify-center shrink-0 border transition-all ${
-                                    marketingConsent ? 'bg-violet-600 border-violet-600' : 'border-white/20 bg-white/5 group-hover:border-white/40'
+                                    marketingConsent ? 'bg-[var(--accent)] border-[var(--accent)]' : 'border-[var(--border-strong)] bg-[var(--surface-08)] group-hover:border-[var(--border-strong)]'
                                 }`}
                             >
                                 {marketingConsent && (
@@ -188,11 +187,11 @@ export default function RegisterPage() {
                         </label>
 
                         <motion.button type="submit" disabled={loading || !consent} whileTap={{scale: 0.98}}
-                                       className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl bg-linear-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white font-semibold transition-all duration-200 shadow-lg shadow-violet-500/20 disabled:opacity-50 disabled:cursor-not-allowed text-sm mt-2">
+                                       className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] font-semibold transition-all duration-200 shadow-lg shadow-[var(--accent-border)] disabled:opacity-50 disabled:cursor-not-allowed text-sm mt-2">
                             {loading ? (
                                 <>
                                     <div
-                                        className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"/>
+                                        className="w-4 h-4 border-2 border-[var(--bg-base)]/30 border-t-[var(--bg-base)] rounded-full animate-spin"/>
                                     Account wird erstellt...</>
                             ) : (
                                 <>Account erstellen</>
@@ -201,14 +200,14 @@ export default function RegisterPage() {
                     </form>
 
                     <div className="my-6 flex items-center gap-4">
-                        <div className="flex-1 h-px bg-white/5"/>
+                        <div className="flex-1 h-px bg-[var(--border-subtle)]"/>
                         <span className="text-xs text-slate-600 uppercase tracking-wider">oder</span>
-                        <div className="flex-1 h-px bg-white/5"/>
+                        <div className="flex-1 h-px bg-[var(--border-subtle)]"/>
                     </div>
 
                     <div className="text-center text-sm text-slate-500">
                         Bereits ein Account?{' '}
-                        <Link href="/login" className="text-cyan-400 hover:text-cyan-300 font-medium transition-colors">
+                        <Link href="/login" className="text-white hover:text-[var(--accent)] font-medium transition-colors">
                             Einloggen
                         </Link>
                     </div>
@@ -218,12 +217,12 @@ export default function RegisterPage() {
 
             {/* Right — Branding */}
             <div
-                className="hidden lg:flex flex-col justify-between w-120 shrink-0 relative overflow-hidden border-l border-white/5 p-12 order-1 lg:order-2">
-                <div className="absolute inset-0 bg-linear-to-bl from-cyan-950/30 via-[#05080f] to-violet-950/20"/>
+                className="hidden lg:flex flex-col justify-between w-120 shrink-0 relative overflow-hidden border-l border-[var(--border-subtle)] p-12 order-1 lg:order-2">
+                <div className="absolute inset-0 bg-[var(--bg-base)]"/>
                 <div className="absolute top-0 right-0 w-80 h-80 rounded-full blur-3xl"
-                     style={{background: 'radial-gradient(circle, rgba(6,182,212,0.15), transparent 70%)'}}/>
+                     style={{background: 'radial-gradient(circle, var(--accent-glow), transparent 70%)'}}/>
                 <div className="absolute bottom-0 left-0 w-60 h-60 rounded-full blur-3xl"
-                     style={{background: 'radial-gradient(circle, rgba(124,58,237,0.12), transparent 70%)'}}/>
+                     style={{background: 'radial-gradient(circle, var(--accent-glow), transparent 70%)'}}/>
                 <div className="absolute inset-0" style={{
                     backgroundImage: 'linear-gradient(rgba(255,255,255,0.012) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.012) 1px, transparent 1px)',
                     backgroundSize: '40px 40px'
@@ -232,11 +231,11 @@ export default function RegisterPage() {
                 <div className="relative z-10">
                     <Link href="/" className="flex items-center gap-2.5">
                         <div
-                            className="w-9 h-9 rounded-xl bg-linear-to-br from-violet-500 to-cyan-500 flex items-center justify-center shadow-lg shadow-violet-500/30">
-                            <Zap className="w-4 h-4 text-white" strokeWidth={2.5}/>
+                            className="w-9 h-9 rounded-xl bg-[var(--accent)] flex items-center justify-center shadow-lg shadow-[var(--accent-border)]">
+                            <Zap className="w-4 h-4 text-[var(--bg-base)]" strokeWidth={2.5}/>
                         </div>
                         <span className="text-xl font-bold text-white tracking-tight">
-              Audit<span className="text-transparent bg-clip-text bg-linear-to-r from-violet-400 to-cyan-400">AI</span>
+              AuditAI
             </span>
                     </Link>
                 </div>
@@ -244,7 +243,7 @@ export default function RegisterPage() {
                 <div className="relative z-10">
                     <h2 className="text-4xl font-bold text-white leading-tight mb-4">
                         Einmal registrieren.<br/>
-                        <span className="text-transparent bg-clip-text bg-linear-to-r from-violet-400 to-cyan-400">Immer den Überblick.</span>
+                        Immer den Überblick.
                     </h2>
                     <p className="text-slate-400 text-sm leading-relaxed mb-8">
                         Speicher deine Audit-Ergebnisse, prüf dieselbe Domain erneut und verfolg deine Fortschritte — alles an einem Ort.
@@ -257,8 +256,8 @@ export default function RegisterPage() {
                                         transition={{delay: 0.2 + i * 0.08}}
                                         className="flex items-center gap-3">
                                 <div
-                                    className="w-5 h-5 rounded-full bg-emerald-500/15 border border-emerald-500/25 flex items-center justify-center shrink-0">
-                                    <Check className="w-3 h-3 text-emerald-400" strokeWidth={3}/>
+                                    className="w-5 h-5 rounded-full bg-[var(--accent-soft-strong)] border border-[var(--accent-border)] flex items-center justify-center shrink-0">
+                                    <Check className="w-3 h-3 text-[var(--accent)]" strokeWidth={3}/>
                                 </div>
                                 <span className="text-sm text-slate-400">{b.text}</span>
                             </motion.div>
@@ -269,10 +268,9 @@ export default function RegisterPage() {
                     <div className="grid grid-cols-2 gap-3">
                         {PLAN_FEATURES.map((f, i) => (
                             <div key={i}
-                                 className="flex items-center gap-2.5 bg-white/3 border border-white/6 rounded-xl px-3 py-2.5">
-                                <div className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0"
-                                     style={{background: f.color + '15', border: `1px solid ${f.color}25`}}>
-                                    <f.icon className="w-3.5 h-3.5" style={{color: f.color}} strokeWidth={1.8}/>
+                                 className="flex items-center gap-2.5 bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-xl px-3 py-2.5">
+                                <div className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0 bg-[var(--accent-soft)] border border-[var(--accent-border)]">
+                                    <f.icon className="w-3.5 h-3.5 text-[var(--accent)]" strokeWidth={1.8}/>
                                 </div>
                                 <div>
                                     <div className="text-xs font-semibold text-white">{f.value}</div>

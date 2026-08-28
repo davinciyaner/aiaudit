@@ -67,7 +67,7 @@ export default function FeedbackWidget({ auditUrl, reportId, locale = 'de' }) {
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: 16, scale: 0.96 }}
                     transition={{ duration: 0.25, ease: 'easeOut' }}
-                    className="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-6 sm:w-72 z-50 bg-[#0d1117] border border-white/10 rounded-2xl shadow-2xl shadow-black/50 p-5"
+                    className="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-6 sm:w-72 z-50 bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl shadow-2xl shadow-black/50 p-5"
                 >
                     {/* Close */}
                     {!done && (
@@ -116,7 +116,7 @@ export default function FeedbackWidget({ auditUrl, reportId, locale = 'de' }) {
                                         <button
                                             key={opt.value}
                                             onClick={() => handleReason(opt.value)}
-                                            className="w-full text-left px-3 py-2.5 rounded-xl bg-white/[0.03] border border-white/[0.07] hover:bg-white/[0.07] hover:border-white/15 text-slate-300 hover:text-white text-xs transition-all"
+                                            className="w-full text-left px-3 py-2.5 rounded-xl bg-[var(--surface-06)] border border-[var(--border-subtle)] hover:bg-[var(--surface-10)] hover:border-[var(--border-strong)] text-slate-300 hover:text-white text-xs transition-all"
                                         >
                                             {opt.label}
                                         </button>
