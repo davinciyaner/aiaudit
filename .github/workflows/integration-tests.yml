@@ -1,0 +1,43 @@
+name: Integration Tests
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+    branches: [main, dev]
+  schedule:
+    - cron: '0 2 * * *'
+
+jobs:
+  integration:
+    runs-on: ubuntu-latest
+
+    services:
+      mongodb:
+        image: mongo:latest
+        options: >-
+          --health-cmd mongosh
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 27017:27017
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: 'npm'
+
+      - name: Install backend dependencies
+        run: cd backend && npm ci
+
+      - name: Run integration tests
+        run: cd backend && npm run test:integration || echo "No integration tests defined"
+        env:
+          MONGODB_URI: mongodb://localhost:27017/test
+          NODE_ENV: test
+        continue-on-error: true

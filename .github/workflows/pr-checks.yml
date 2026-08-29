@@ -1,0 +1,33 @@
+name: PR Quality Gate
+
+on:
+  pull_request:
+    branches: [main, dev]
+    types: [opened, synchronize, reopened]
+
+jobs:
+  pr-quality-gate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check PR title format
+        run: |
+          PR_TITLE="${{ github.event.pull_request.title }}"
+          if [[ ! $PR_TITLE =~ ^(feat|fix|docs|style|refactor|perf|test|chore)\(.*\): ]]; then
+            echo "PR title must follow format: type(scope): description"
+            exit 1
+          fi
+          echo "PR title format is correct"
+
+      - name: Check PR has description
+        run: |
+          BODY="${{ github.event.pull_request.body }}"
+          if [ -z "$BODY" ] || [ ${#BODY} -lt 10 ]; then
+            echo "PR description is required"
+            exit 1
+          fi
+          echo "PR has valid description"
