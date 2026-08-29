@@ -30,6 +30,12 @@ const ALTERNATIVES = [
         description: 'Preise, abgedeckte KI-Plattformen und Funktionsumfang im direkten Vergleich – inklusive der Punkte, in denen Otterly.ai besser ist.',
         tag: 'Ab 9,99 €/Monat',
     },
+    {
+        slug: 'peec-alternative',
+        title: 'Peec.ai Alternative: AuditAI im ehrlichen Vergleich',
+        description: 'Preise, abgedeckte KI-Plattformen und Funktionsumfang im direkten Vergleich – inklusive der Punkte, in denen Peec.ai besser ist.',
+        tag: 'Ab 9,99 €/Monat',
+    },
 ]
 
 export default function VergleichHubPage() {
