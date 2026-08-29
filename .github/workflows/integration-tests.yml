@@ -26,17 +26,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Setup Node.js 22.x
         uses: actions/setup-node@v4
         with:
-          node-version: 20.x
-          cache: 'npm'
+          node-version: 22.x
+
+      - name: Setup Yarn
+        run: npm install -g yarn
 
       - name: Install backend dependencies
-        run: cd backend && npm ci
+        run: cd backend && yarn install --frozen-lockfile
 
       - name: Run integration tests
-        run: cd backend && npm run test:integration || echo "No integration tests defined"
+        run: cd backend && yarn test:integration || echo "No integration tests defined"
         env:
           MONGODB_URI: mongodb://localhost:27017/test
           NODE_ENV: test

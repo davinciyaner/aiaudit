@@ -14,6 +14,14 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Setup Node.js 22.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+
+      - name: Setup Yarn
+        run: npm install -g yarn
+
       - name: Check PR title format
         run: |
           PR_TITLE="${{ github.event.pull_request.title }}"
@@ -31,3 +39,15 @@ jobs:
             exit 1
           fi
           echo "PR has valid description"
+
+      - name: Comment PR with checklist
+        if: github.event.action == 'opened'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `## PR Quality Checklist \n\n- [ ] All tests pass\n- [ ] Security checks pass\n- [ ] Code quality gates pass\n- [ ] No new vulnerabilities introduced\n- [ ] Branch is up to date with main\n- [ ] Changelog updated (if needed)\n\nPlease ensure all items are checked before merge.`
+            })
