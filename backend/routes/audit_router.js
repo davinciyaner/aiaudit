@@ -122,7 +122,7 @@ async function checkPlanLimit(userId, lang = "de") {
     }
 }
 
-router.post("/", optionalAuth, auditFloorLimiter, anonymousAuditLimiter, authedAuditLimiter, handleAudit);
+router.post("/", auditFloorLimiter, optionalAuth, anonymousAuditLimiter, authedAuditLimiter, handleAudit);
 
 const GLOBAL_DAILY_CAP = parseInt(process.env.GLOBAL_DAILY_AUDIT_CAP || '100', 10);
 
