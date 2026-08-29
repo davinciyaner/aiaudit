@@ -59,10 +59,6 @@ export default async function RootLayout({ children }) {
             {children}
         </MotionConfig>
         <Script
-            src="https://news.google.com/swg/js/v1/publisher.js"
-            strategy="afterInteractive"
-        />
-        <Script
             src="https://www.googletagmanager.com/gtag/js?id=AW-691789119"
             strategy="lazyOnload"
         />
