@@ -30,6 +30,12 @@ const SOLUTIONS = [
         description: 'Für alle, die KI-Sichtbarkeit und SEO nicht in zwei separaten Tools bezahlen wollen. Alle Preise, Features und wer davon profitiert.',
         tag: 'Ab 4,99 €/Monat',
     },
+    {
+        slug: 'claude-ai-sichtbarkeit-tracken',
+        title: 'Claude AI Sichtbarkeit tracken: So siehst du, ob Claude dich empfiehlt',
+        description: 'Bei den meisten Tools ist Claude-Tracking ein teures Enterprise-Add-on oder gar nicht verfügbar. So funktioniert es bei AuditAI ab 4,99 €/Monat.',
+        tag: 'Ab 4,99 €/Monat',
+    },
 ]
 
 export default function LoesungenHubPage() {

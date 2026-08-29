@@ -36,6 +36,18 @@ const ALTERNATIVES = [
         description: 'Preise, abgedeckte KI-Plattformen und Funktionsumfang im direkten Vergleich – inklusive der Punkte, in denen Peec.ai besser ist.',
         tag: 'Ab 9,99 €/Monat',
     },
+    {
+        slug: 'rankscale-alternative',
+        title: 'Rankscale Alternative: AuditAI im ehrlichen Vergleich',
+        description: 'Feste Preise statt Credit-System, abgedeckte KI-Plattformen und Funktionsumfang im direkten Vergleich – inklusive der Punkte, in denen Rankscale besser ist.',
+        tag: 'Ab 9,99 €/Monat',
+    },
+    {
+        slug: 'writesonic-alternative',
+        title: 'Writesonic Alternative: AuditAI im ehrlichen Vergleich',
+        description: 'GEO-Tracking von Anfang an statt erst im 249-$-Tarif, feste Limits statt verfallender Credits – inklusive der Punkte, in denen Writesonic besser ist.',
+        tag: 'Ab 9,99 €/Monat',
+    },
 ]
 
 export default function VergleichHubPage() {

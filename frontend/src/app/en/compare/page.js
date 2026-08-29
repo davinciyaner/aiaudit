@@ -36,6 +36,18 @@ const ALTERNATIVES = [
         description: 'Pricing, covered AI platforms, and feature scope side by side — including the areas where Peec.ai is still ahead.',
         tag: 'From €9.99/month',
     },
+    {
+        slug: 'rankscale-alternative',
+        title: 'Rankscale Alternative: An Honest Look at AuditAI',
+        description: 'Fixed pricing instead of a credit system, covered AI platforms, and feature scope side by side — including the areas where Rankscale is still ahead.',
+        tag: 'From €9.99/month',
+    },
+    {
+        slug: 'writesonic-alternative',
+        title: 'Writesonic Alternative: An Honest Look at AuditAI',
+        description: 'GEO tracking from day one instead of gated behind a $249 tier, fixed limits instead of expiring credits — including the areas where Writesonic is still ahead.',
+        tag: 'From €9.99/month',
+    },
 ]
 
 export default function CompareHubPageEn() {

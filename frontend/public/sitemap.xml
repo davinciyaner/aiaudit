@@ -211,6 +211,18 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://www.sitecheckai.dev/vergleich/rankscale-alternative</loc>
+    <lastmod>2026-08-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.sitecheckai.dev/vergleich/writesonic-alternative</loc>
+    <lastmod>2026-08-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://www.sitecheckai.dev/en/compare</loc>
     <lastmod>2026-08-29</lastmod>
     <changefreq>monthly</changefreq>
@@ -229,8 +241,20 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://www.sitecheckai.dev/en/compare/rankscale-alternative</loc>
+    <lastmod>2026-08-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.sitecheckai.dev/en/compare/writesonic-alternative</loc>
+    <lastmod>2026-08-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://www.sitecheckai.dev/loesungen</loc>
-    <lastmod>2026-08-28</lastmod>
+    <lastmod>2026-08-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -241,14 +265,26 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://www.sitecheckai.dev/loesungen/claude-ai-sichtbarkeit-tracken</loc>
+    <lastmod>2026-08-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://www.sitecheckai.dev/en/solutions</loc>
-    <lastmod>2026-08-28</lastmod>
+    <lastmod>2026-08-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.sitecheckai.dev/en/solutions/affordable-ai-visibility-tool</loc>
     <lastmod>2026-08-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.sitecheckai.dev/en/solutions/claude-ai-visibility-tracking</loc>
+    <lastmod>2026-08-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>

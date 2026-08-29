@@ -30,6 +30,12 @@ const SOLUTIONS = [
         description: 'For anyone who doesn\'t want to pay for AI visibility and SEO in two separate tools. All prices, features, and who benefits.',
         tag: 'From €4.99/month',
     },
+    {
+        slug: 'claude-ai-visibility-tracking',
+        title: 'Claude AI Visibility Tracking: See Whether Claude Recommends You',
+        description: "On most tools, Claude tracking is an expensive Enterprise add-on or unavailable. How it works at AuditAI from €4.99/month.",
+        tag: 'From €4.99/month',
+    },
 ]
 
 export default function SolutionsHubPageEn() {

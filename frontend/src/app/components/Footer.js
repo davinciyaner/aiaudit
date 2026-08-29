@@ -21,6 +21,8 @@ const COLUMNS_DE = [
             { label: 'Alle Alternativen', href: '/vergleich' },
             { label: 'Otterly.ai Alternative', href: '/vergleich/otterly-alternative' },
             { label: 'Peec.ai Alternative', href: '/vergleich/peec-alternative' },
+            { label: 'Rankscale Alternative', href: '/vergleich/rankscale-alternative' },
+            { label: 'Writesonic Alternative', href: '/vergleich/writesonic-alternative' },
         ],
     },
     {
@@ -28,6 +30,7 @@ const COLUMNS_DE = [
         links: [
             { label: 'Alle Lösungen', href: '/loesungen' },
             { label: 'Günstiges KI-Sichtbarkeit Tool', href: '/loesungen/guenstiges-ki-sichtbarkeit-tool' },
+            { label: 'Claude AI Sichtbarkeit tracken', href: '/loesungen/claude-ai-sichtbarkeit-tracken' },
         ],
     },
     {
@@ -66,6 +69,8 @@ const COLUMNS_EN = [
             { label: 'All Alternatives', href: '/en/compare' },
             { label: 'Otterly.ai Alternative', href: '/en/compare/otterly-alternative' },
             { label: 'Peec.ai Alternative', href: '/en/compare/peec-alternative' },
+            { label: 'Rankscale Alternative', href: '/en/compare/rankscale-alternative' },
+            { label: 'Writesonic Alternative', href: '/en/compare/writesonic-alternative' },
         ],
     },
     {
@@ -73,6 +78,7 @@ const COLUMNS_EN = [
         links: [
             { label: 'All Solutions', href: '/en/solutions' },
             { label: 'Affordable AI Visibility Tool', href: '/en/solutions/affordable-ai-visibility-tool' },
+            { label: 'Claude AI Visibility Tracking', href: '/en/solutions/claude-ai-visibility-tracking' },
         ],
     },
     {
