@@ -3,9 +3,9 @@ import Navbar from '../../../components/Navbar'
 import Footer from '../../../components/Footer'
 
 export const metadata = {
-    title: { absolute: 'Schema Markup for AI Citations: How to Get Cited by ChatGPT & Co.' },
-    description: 'Schema markup (JSON-LD) explained simply: the most important types for AI citability, free testing tools, and the most common mistake that kills rich results.',
-    keywords: 'schema markup, structured data testing free, schema markup ai, json-ld generator, faq schema, organization schema, rich results test',
+    title: { absolute: 'Schema Markup for AI Citations 2026: How to Get Cited by ChatGPT & Co.' },
+    description: 'Schema markup (JSON-LD) explained simply: priority order, ready-to-copy code, free generators & testing tools, and the most common mistake that kills rich results.',
+    keywords: 'schema markup, schema markup generator, structured data testing free, schema markup ai, json-ld generator, json-ld example, faq schema, organization schema, rich results test',
     alternates: {
         canonical: 'https://www.sitecheckai.dev/en/blog/schema-markup-ai-citations',
         languages: {
@@ -14,8 +14,8 @@ export const metadata = {
         },
     },
     openGraph: {
-        title: 'Schema Markup for AI Citations: How to Get Cited by ChatGPT & Co.',
-        description: 'The most important schema types for AI citability, free testing tools, and the most common mistake that kills them.',
+        title: 'Schema Markup for AI Citations 2026: How to Get Cited by ChatGPT & Co.',
+        description: 'Priority order, ready-to-copy JSON-LD code, free generators & testing tools, and the most common mistake that kills rich results.',
         url: 'https://www.sitecheckai.dev/en/blog/schema-markup-ai-citations',
         type: 'article',
         locale: 'en_US',
@@ -25,11 +25,11 @@ export const metadata = {
 const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
-    headline: 'Schema Markup for AI Citations: How to Get Cited by ChatGPT & Co.',
-    description: 'Schema markup (JSON-LD) explained simply: the most important types for AI citability, free testing tools, and the most common mistake that kills rich results.',
+    headline: 'Schema Markup for AI Citations 2026: How to Get Cited by ChatGPT & Co.',
+    description: 'Schema markup (JSON-LD) explained simply: priority order, ready-to-copy code, free generators & testing tools, and the most common mistake that kills rich results.',
     image: 'https://www.sitecheckai.dev/en/blog/schema-markup-ai-citations/opengraph-image',
     datePublished: '2026-07-26T09:00:00+02:00',
-    dateModified: '2026-08-01T09:00:00+02:00',
+    dateModified: '2026-08-29T09:00:00+02:00',
     author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev/about' },
     publisher: {
         '@type': 'Organization',
@@ -87,15 +87,43 @@ const faqLd = {
                 text: 'Organization schema (who runs the site) and WebSite schema as a baseline. Blog posts should add Article schema, product pages should add Product or SoftwareApplication schema, and pages with genuine questions and answers should add FAQPage schema.',
             },
         },
+        {
+            '@type': 'Question',
+            name: 'How do I generate schema markup without coding it myself?',
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'With a form-based generator like the Merkle Schema Generator or the tool from TechnicalSEO.com - fill in your data, copy the resulting JSON-LD, and paste it into your <head> section.',
+            },
+        },
     ],
 }
 
-const SCHEMA_TYPES = [
-    { type: 'Organization', use: 'Who runs the website - name, logo, contact details, social profiles.', why: 'A baseline trust signal AI models use to map a brand to a domain.' },
-    { type: 'WebSite', use: 'Core site-level metadata, often linked to a search function.', why: 'Helps classify the site as a whole, not just individual subpages.' },
-    { type: 'Article', use: 'Blog posts and news: author, publish date, headline.', why: 'Gives AI models author and freshness context for citations - important E-E-A-T signals.' },
-    { type: 'FAQPage', use: 'Question-and-answer pairs that also appear visibly in the HTML.', why: 'The most direct format for AI citations - question and answer are already pre-formatted.' },
-    { type: 'Product / SoftwareApplication', use: 'Pricing, ratings, and feature set of a product.', why: 'Enables precise price and feature citations instead of vague paraphrasing.' },
+const howToLd = {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name: 'Implement schema markup in the right order',
+    description: 'The recommended implementation order for schema markup, so each type builds on the trust and context signal of the one before it.',
+    step: [
+        { '@type': 'HowToStep', position: 1, name: 'Organization', text: 'Establish who runs the site as a baseline trust signal - without it, no AI can map a brand to a domain.' },
+        { '@type': 'HowToStep', position: 2, name: 'WebSite', text: 'Add site-level metadata so subpages are understood as part of one overarching property.' },
+        { '@type': 'HowToStep', position: 3, name: 'Article', text: 'Mark up author, date, and headline for blog posts once Organization schema is in place.' },
+        { '@type': 'HowToStep', position: 4, name: 'Product / SoftwareApplication', text: 'Mark up pricing, ratings, and features to enable precise citations instead of vague paraphrasing.' },
+        { '@type': 'HowToStep', position: 5, name: 'FAQPage', text: 'Mark up visible question-and-answer pairs last - the most direct format for AI citations.' },
+    ],
+}
+
+const PRIORITY_STEPS = [
+    { num: 1, type: 'Organization', purpose: 'Who runs the website', why: "A baseline trust signal - without it, no AI can map a brand to a domain." },
+    { num: 2, type: 'WebSite', purpose: 'Metadata for the site as a whole', why: 'Groups subpages under one overarching property.' },
+    { num: 3, type: 'Article', purpose: 'Author, date, headline', why: 'Adds E-E-A-T context once Organization is in place.' },
+    { num: 4, type: 'Product / SoftwareApplication', purpose: 'Pricing, ratings, features', why: 'Enables precise price citations instead of vague paraphrasing.' },
+    { num: 5, type: 'FAQPage', purpose: 'Visible question-and-answer pairs', why: 'The most direct citation format - question and answer are already pre-formatted.' },
+]
+
+const GENERATOR_TOOLS = [
+    { name: 'Merkle Schema Generator', desc: 'Form-based, covers the most common types - a solid starting point.' },
+    { name: 'TechnicalSEO.com Generator', desc: 'Similar, with especially strong local-business coverage.' },
+    { name: 'Google Structured Data Markup Helper', desc: 'Tag elements directly on a pasted-in page with clicks.' },
 ]
 
 export default function SchemaMarkupPageEn() {
@@ -104,6 +132,7 @@ export default function SchemaMarkupPageEn() {
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToLd) }} />
             <Navbar locale="en" />
 
             <article className="max-w-3xl mx-auto px-5 sm:px-8 pt-32 pb-24">
@@ -124,14 +153,14 @@ export default function SchemaMarkupPageEn() {
                             GEO
                         </span>
                         <span className="text-xs text-slate-600">Jul 26, 2026</span>
-                        <span className="text-xs text-slate-600">· 7 min read</span>
-                        <span className="text-xs text-slate-600">· Updated Aug 1, 2026</span>
+                        <span className="text-xs text-slate-600">· 8 min read</span>
+                        <span className="text-xs text-slate-600">· Updated Aug 29, 2026</span>
                     </div>
                     <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight tracking-tight mb-5">
-                        Schema Markup for AI Citations: How to Get Cited by ChatGPT & Co.
+                        Schema Markup for AI Citations 2026: How to Get Cited by ChatGPT & Co.
                     </h1>
                     <p className="text-lg text-slate-400 leading-relaxed">
-                        Schema markup is invisible to visitors - but it's exactly the language Google and AI models use to understand and cite content precisely. Here are the key types, how to test them for free, and the mistake that most often makes all of it worthless.
+                        Schema markup is invisible to visitors - but it's exactly the language Google and AI models use to understand and cite content precisely. The key types in the right order, ready-to-copy JSON-LD code, free generators and testing tools, and the mistake that most often makes all of it worthless.
                     </p>
                     <div className="mt-5 flex items-center gap-2 text-xs text-slate-600">
                         <Link href="/about" className="flex items-center gap-2 hover:text-slate-300 transition-colors">
@@ -166,13 +195,75 @@ export default function SchemaMarkupPageEn() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-6">The most important schema types for AI citability</h2>
-                        <div className="space-y-3">
-                            {SCHEMA_TYPES.map((s) => (
-                                <div key={s.type} className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5">
-                                    <h3 className="font-mono text-sm font-semibold text-cyan-400 mb-2">{s.type}</h3>
-                                    <p className="text-sm text-slate-300 mb-1.5">{s.use}</p>
-                                    <p className="text-xs text-slate-500">{s.why}</p>
+                        <h2 className="text-2xl font-bold text-white mb-4">Implement in this order</h2>
+                        <p>The order isn't arbitrary - each type builds on the trust and context signal of the one before it.</p>
+                        <div className="overflow-x-auto rounded-2xl border border-white/[0.07] mt-5">
+                            <table className="w-full text-sm min-w-[560px]">
+                                <thead>
+                                    <tr className="border-b border-white/5 bg-white/[0.02]">
+                                        <th className="text-left px-4 py-3 text-slate-400 font-semibold w-10">#</th>
+                                        <th className="text-left px-4 py-3 text-slate-400 font-semibold">Schema type</th>
+                                        <th className="text-left px-4 py-3 text-slate-400 font-semibold">Purpose</th>
+                                        <th className="text-left px-4 py-3 text-slate-400 font-semibold">Why at this step</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {PRIORITY_STEPS.map((s) => (
+                                        <tr key={s.num} className="border-b border-white/[0.04] last:border-0">
+                                            <td className="px-4 py-3 text-cyan-400 font-mono font-bold">{s.num}</td>
+                                            <td className="px-4 py-3 text-white font-mono text-xs font-semibold whitespace-nowrap">{s.type}</td>
+                                            <td className="px-4 py-3 text-slate-300">{s.purpose}</td>
+                                            <td className="px-4 py-3 text-slate-400">{s.why}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <section>
+                        <h2 className="text-2xl font-bold text-white mb-4">Organization schema, ready to copy</h2>
+                        <p>The minimum every website should start with - ready to use as-is:</p>
+                        <pre className="mt-4 text-xs bg-white/[0.04] border border-white/[0.06] rounded-xl p-4 text-slate-400 font-mono overflow-x-auto">
+{`<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Your Company",
+  "url": "https://your-domain.com",
+  "logo": "https://your-domain.com/logo.png",
+  "sameAs": ["https://linkedin.com/company/..."]
+}
+</script>`}
+                        </pre>
+                        <p className="mt-5">Next, FAQPage schema - but only for questions that are also visible on the page (more on that below):</p>
+                        <pre className="mt-4 text-xs bg-white/[0.04] border border-white/[0.06] rounded-xl p-4 text-slate-400 font-mono overflow-x-auto">
+{`{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [{
+    "@type": "Question",
+    "name": "Your question, word-for-word matching the visible text",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Your answer, word-for-word matching the visible text"
+    }
+  }]
+}`}
+                        </pre>
+                        <p className="text-xs text-slate-600 mt-3">
+                            For the priority table above, this page also carries HowTo schema in its &lt;head&gt; - invisible in the text, but machine-readable for the implementation order itself.
+                        </p>
+                    </section>
+
+                    <section>
+                        <h2 className="text-2xl font-bold text-white mb-4">Free generators</h2>
+                        <p>If writing code by hand isn't an option, these three produce valid JSON-LD from a form:</p>
+                        <div className="space-y-2 mt-4">
+                            {GENERATOR_TOOLS.map((t) => (
+                                <div key={t.name} className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-3 bg-white/[0.02] border border-white/[0.06] rounded-xl p-4">
+                                    <span className="text-sm font-semibold text-white sm:min-w-[220px] shrink-0">{t.name}</span>
+                                    <span className="text-sm text-slate-500">{t.desc}</span>
                                 </div>
                             ))}
                         </div>
