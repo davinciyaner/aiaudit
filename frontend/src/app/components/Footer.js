@@ -20,6 +20,7 @@ const COLUMNS_DE = [
         links: [
             { label: 'Alle Alternativen', href: '/vergleich' },
             { label: 'Otterly.ai Alternative', href: '/vergleich/otterly-alternative' },
+            { label: 'Peec.ai Alternative', href: '/vergleich/peec-alternative' },
         ],
     },
     {
@@ -64,6 +65,7 @@ const COLUMNS_EN = [
         links: [
             { label: 'All Alternatives', href: '/en/compare' },
             { label: 'Otterly.ai Alternative', href: '/en/compare/otterly-alternative' },
+            { label: 'Peec.ai Alternative', href: '/en/compare/peec-alternative' },
         ],
     },
     {

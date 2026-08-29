@@ -14,6 +14,10 @@ const FAQS = [
         a: 'GEO automation at AuditAI starts at €4.99/month for 1 website and 10 keywords with weekly Claude tracking. The Pro plan (€9.99/month) adds ChatGPT, Perplexity, and Google AI Overview tracking for 3 websites plus 2 prompt variants per keyword, the Expert plan (€19.99/month) covers up to 10 websites. All plans include a 14-day free trial.',
     },
     {
+        q: 'Can I track my visibility on Claude (Claude AI)?',
+        a: 'Yes. Even the Starter plan at €4.99/month automatically checks every week whether and how often Claude cites your website as a source for relevant queries — including a mention history over time. To also track ChatGPT, Perplexity, and Google AI Overview in the same dashboard, you need the Pro plan at €9.99/month.',
+    },
+    {
         q: 'What\'s the difference between a one-time GEO audit and GEO automation?',
         a: 'A one-time GEO audit (part of the free AuditAI website audit) shows your GEO score at a single point in time. GEO automation automatically checks every week whether ChatGPT, Claude, Perplexity, and Google AI Overview mention your website, and shows the trend over time instead of a single snapshot.',
     },

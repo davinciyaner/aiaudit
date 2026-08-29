@@ -2,7 +2,13 @@ export const metadata = {
     title: 'GEO Automatisierung Preise – KI-Sichtbarkeit bei ChatGPT, Claude, Perplexity & Google AI Overview tracken',
     description: 'GEO Automatisierung ab 4,99€/Monat: Wöchentlich automatisch prüfen, ob ChatGPT, Claude, Perplexity und Google AI Overview deine Website erwähnen. Mention-Verlauf & Keyword-Tracking. 14 Tage kostenlos testen.',
     keywords: 'geo automatisierung preise, ki sichtbarkeit tracken, chatgpt sichtbarkeit tool, claude sichtbarkeit tool, perplexity sichtbarkeit tool, google ai overview tracken, generative engine optimization tool, geo tracking kosten',
-    alternates: { canonical: 'https://www.sitecheckai.dev/geo/pricing' },
+    alternates: {
+        canonical: 'https://www.sitecheckai.dev/geo/pricing',
+        languages: {
+            'de-DE': 'https://www.sitecheckai.dev/geo/pricing',
+            'en-US': 'https://www.sitecheckai.dev/en/geo/pricing',
+        },
+    },
     openGraph: {
         title: 'GEO Automatisierung Preise | AuditAI',
         description: 'Wöchentlich automatisch tracken, ob ChatGPT, Claude, Perplexity und Google AI Overview deine Website erwähnen. Pläne ab 4,99€/Monat, 14 Tage kostenlos.',
@@ -22,6 +28,14 @@ const faqJsonLd = {
             acceptedAnswer: {
                 '@type': 'Answer',
                 text: 'GEO Automatisierung bei AuditAI startet ab 4,99 €/Monat für 1 Website und 10 Keywords mit wöchentlichem Claude-Tracking. Der Pro-Plan (9,99 €/Monat) ergänzt ChatGPT-, Perplexity- und Google-AI-Overview-Tracking für 3 Websites sowie 2 Prompt-Varianten pro Keyword, der Expert-Plan (19,99 €/Monat) deckt bis zu 10 Websites ab. Alle Pläne bieten 14 Tage kostenlose Testphase.',
+            },
+        },
+        {
+            '@type': 'Question',
+            name: 'Kann ich meine Sichtbarkeit bei Claude (Claude AI) tracken?',
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Ja. Schon der Einsteiger-Plan ab 4,99 €/Monat trackt wöchentlich automatisch, ob und wie oft Claude deine Website bei relevanten Anfragen als Quelle nennt — inklusive Mention-Verlauf über Zeit. Für zusätzliches Tracking bei ChatGPT, Perplexity und Google AI Overview im selben Dashboard brauchst du den Pro-Plan ab 9,99 €/Monat.',
             },
         },
         {

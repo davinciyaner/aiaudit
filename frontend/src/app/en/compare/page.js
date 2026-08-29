@@ -30,6 +30,12 @@ const ALTERNATIVES = [
         description: 'Pricing, covered AI platforms, and feature scope side by side — including the areas where Otterly.ai is still ahead.',
         tag: 'From €9.99/month',
     },
+    {
+        slug: 'peec-alternative',
+        title: 'Peec.ai Alternative: An Honest Look at AuditAI',
+        description: 'Pricing, covered AI platforms, and feature scope side by side — including the areas where Peec.ai is still ahead.',
+        tag: 'From €9.99/month',
+    },
 ]
 
 export default function CompareHubPageEn() {
