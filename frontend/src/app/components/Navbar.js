@@ -16,7 +16,7 @@ const NAV_ITEMS_DE = [
         label: 'SEO',
         items: [
             { icon: Search, label: 'Einmal-Audit', desc: 'SEO-Score & Fehler aufdecken', href: '/dashboard' },
-            { icon: TrendingUp, label: 'SEO Automatisierung', desc: 'Wöchentliche Google-Rankings', href: '/seo/dashboard', accent: 'emerald' },
+            { icon: TrendingUp, label: 'SEO Automatisierung', desc: 'Wöchentliche Google-Rankings', href: '/seo/dashboard', accent: true },
             { icon: CreditCard, label: 'Tracking Preise', desc: '3 Pläne ab 19€/Monat', href: '/seo/pricing' },
             { icon: BookOpen, label: 'SEO-Fehler vermeiden', desc: 'Leitfaden aus der Praxis', href: '/blog/seo-test-haeufige-fehler' },
         ],
@@ -25,7 +25,7 @@ const NAV_ITEMS_DE = [
         key: 'geo',
         label: 'GEO',
         items: [
-            { icon: Globe, label: 'GEO Automatisierung', desc: 'KI-Erwähnungen tracken', href: '/geo/dashboard', accent: 'violet' },
+            { icon: Globe, label: 'GEO Automatisierung', desc: 'KI-Erwähnungen tracken', href: '/geo/dashboard', accent: true },
             { icon: CreditCard, label: 'GEO Preise', desc: '3 Pläne ab 4,99€/Monat', href: '/geo/pricing' },
             { icon: BookOpen, label: 'GEO-Optimierung 2026', desc: 'Tipps für KI-Suchen', href: '/blog/geo-optimierung-2026' },
         ],
@@ -40,7 +40,7 @@ const NAV_ITEMS_EN = [
         label: 'SEO',
         items: [
             { icon: Search, label: 'One-Time Audit', desc: 'Uncover SEO score & issues', href: '/en/dashboard' },
-            { icon: TrendingUp, label: 'SEO Automation', desc: 'Weekly Google rankings', href: '/en/seo/dashboard', accent: 'emerald' },
+            { icon: TrendingUp, label: 'SEO Automation', desc: 'Weekly Google rankings', href: '/en/seo/dashboard', accent: true },
             { icon: CreditCard, label: 'Tracking Pricing', desc: '3 plans from €19/month', href: '/en/seo/pricing' },
             { icon: BookOpen, label: 'Avoid SEO mistakes', desc: 'A practical guide', href: '/en/blog/common-seo-mistakes' },
         ],
@@ -49,7 +49,7 @@ const NAV_ITEMS_EN = [
         key: 'geo',
         label: 'GEO',
         items: [
-            { icon: Globe, label: 'GEO Automation', desc: 'Track AI mentions', href: '/en/geo/dashboard', accent: 'violet' },
+            { icon: Globe, label: 'GEO Automation', desc: 'Track AI mentions', href: '/en/geo/dashboard', accent: true },
             { icon: CreditCard, label: 'GEO Pricing', desc: '3 plans from €4.99/month', href: '/en/geo/pricing' },
             { icon: BookOpen, label: 'GEO Optimization 2026', desc: 'Tips for AI search', href: '/en/blog/what-is-geo' },
         ],
@@ -72,7 +72,7 @@ function NavDropdown({ item, isOpen, onOpen, onClose }) {
     return (
         <div className="relative" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
             <button className={`flex items-center gap-1 px-4 py-2 text-sm rounded-lg transition-all ${
-                isOpen ? 'text-white bg-white/5' : 'text-white hover:bg-white/5'
+                isOpen ? 'text-white bg-[var(--surface-06)]' : 'text-white hover:bg-[var(--surface-06)]'
             }`}>
                 {item.label}
                 <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
@@ -85,15 +85,15 @@ function NavDropdown({ item, isOpen, onOpen, onClose }) {
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 8, scale: 0.97 }}
                         transition={{ duration: 0.15 }}
-                        className="absolute top-full left-0 mt-2 w-64 bg-[#0d1117] border border-white/10 rounded-xl shadow-2xl shadow-black/50 overflow-hidden"
+                        className="absolute top-full left-0 mt-2 w-64 bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-xl shadow-2xl shadow-black/50 overflow-hidden"
                     >
                         <div className="p-1.5 space-y-0.5">
                             {item.items.map(sub => {
-                                const a = sub.accent
-                                const hoverBg   = a === 'red' ? 'hover:bg-red-500/5' : a === 'emerald' ? 'hover:bg-emerald-500/5' : a === 'violet' ? 'hover:bg-violet-500/5' : 'hover:bg-white/5'
-                                const iconBg    = a === 'red' ? 'bg-red-500/10' : a === 'emerald' ? 'bg-emerald-500/10' : a === 'violet' ? 'bg-violet-500/10' : 'bg-white/5 group-hover:bg-white/8'
-                                const iconColor = a === 'red' ? 'text-red-400' : a === 'emerald' ? 'text-emerald-400' : a === 'violet' ? 'text-violet-400' : 'text-slate-400'
-                                const textColor = a === 'red' ? 'text-red-400' : a === 'emerald' ? 'text-emerald-400' : a === 'violet' ? 'text-violet-400' : 'text-slate-200 group-hover:text-white'
+                                const a = !!sub.accent
+                                const hoverBg   = a ? 'hover:bg-[var(--accent-soft)]' : 'hover:bg-[var(--surface-06)]'
+                                const iconBg    = a ? 'bg-[var(--accent-soft)]' : 'bg-[var(--surface-06)] group-hover:bg-[var(--surface-08)]'
+                                const iconColor = a ? 'text-[var(--accent)]' : 'text-slate-400'
+                                const textColor = a ? 'text-[var(--accent)]' : 'text-slate-200 group-hover:text-white'
                                 return (
                                 <Link key={sub.href} href={sub.href} onClick={onClose}
                                     className={`flex items-start gap-3 px-3 py-2.5 rounded-lg transition-all group ${hoverBg}`}
@@ -123,7 +123,7 @@ function MobileAccordion({ item, isOpen, onToggle, onClose }) {
         <div>
             <button
                 onClick={onToggle}
-                className="w-full flex items-center justify-between px-4 py-3 text-sm text-white rounded-lg hover:bg-white/5 transition-all"
+                className="w-full flex items-center justify-between px-4 py-3 text-sm text-white rounded-lg hover:bg-[var(--surface-06)] transition-all"
             >
                 {item.label}
                 <ChevronDown className={`w-4 h-4 text-slate-500 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
@@ -139,14 +139,9 @@ function MobileAccordion({ item, isOpen, onToggle, onClose }) {
                     >
                         <div className="pl-4 pb-1 space-y-0.5">
                             {item.items.map(sub => {
-                                const a = sub.accent
-                                const cls = a === 'red'
-                                    ? 'text-red-400 hover:text-red-300 hover:bg-red-500/5'
-                                    : a === 'emerald'
-                                    ? 'text-emerald-400 hover:text-emerald-300 hover:bg-emerald-500/5'
-                                    : a === 'violet'
-                                    ? 'text-violet-400 hover:text-violet-300 hover:bg-violet-500/5'
-                                    : 'text-slate-400 hover:text-white hover:bg-white/5'
+                                const cls = sub.accent
+                                    ? 'text-[var(--accent)] hover:bg-[var(--accent-soft)]'
+                                    : 'text-slate-400 hover:text-white hover:bg-[var(--surface-06)]'
                                 return (
                                 <Link key={sub.href} href={sub.href} onClick={onClose}
                                     className={`flex items-center gap-2.5 px-4 py-2.5 text-sm rounded-lg transition-all ${cls}`}
@@ -218,18 +213,18 @@ export default function Navbar({ locale = 'de' }) {
         <>
             <nav
                 className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-                    scrolled ? 'bg-[var(--bg-base)]/95 backdrop-blur-xl border-b border-white/5' : 'bg-transparent'
+                    scrolled ? 'bg-[var(--bg-base)]/95 backdrop-blur-xl border-b border-[var(--border-subtle)]' : 'bg-transparent'
                 }`}
             >
                 <div className="max-w-7xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between">
 
                     {/* Logo */}
                     <Link href={locale === 'en' ? '/en' : '/'} className="flex items-center gap-2.5 group">
-                        <div className="w-8 h-8 rounded-lg bg-linear-to-br from-violet-500 to-cyan-500 flex items-center justify-center shadow-lg shadow-violet-500/30 group-hover:shadow-violet-500/50 transition-shadow">
-                            <Zap className="w-4 h-4 text-white" strokeWidth={2.5} />
+                        <div className="w-8 h-8 rounded-lg bg-[var(--accent)] flex items-center justify-center shadow-lg shadow-[var(--accent-border)] transition-shadow">
+                            <Zap className="w-4 h-4 text-[var(--bg-base)]" strokeWidth={2.5} />
                         </div>
                         <span className="font-bold text-white text-lg tracking-tight">
-                            Audit<span className="text-transparent bg-clip-text bg-linear-to-r from-violet-400 to-cyan-400">AI</span>
+                            AuditAI
                         </span>
                     </Link>
 
@@ -246,7 +241,7 @@ export default function Navbar({ locale = 'de' }) {
                                 />
                             ) : (
                                 <Link key={item.key} href={item.href}
-                                    className="px-4 py-2 text-sm text-white rounded-lg hover:bg-white/5 transition-all">
+                                    className="px-4 py-2 text-sm text-white rounded-lg hover:bg-[var(--surface-06)] transition-all">
                                     {item.label}
                                 </Link>
                             )
@@ -259,9 +254,9 @@ export default function Navbar({ locale = 'de' }) {
                             <div className="relative" ref={userDropdownRef}>
                                 <button
                                     onClick={() => setUserDropdownOpen(prev => !prev)}
-                                    className="flex items-center gap-2 px-3 py-1.5 rounded-xl hover:bg-white/5 transition-all group"
+                                    className="flex items-center gap-2 px-3 py-1.5 rounded-xl hover:bg-[var(--surface-06)] transition-all group"
                                 >
-                                    <div className="w-7 h-7 rounded-lg bg-linear-to-br from-violet-600 to-cyan-600 flex items-center justify-center text-white text-xs font-bold shrink-0">
+                                    <div className="w-7 h-7 rounded-lg bg-[var(--accent)] flex items-center justify-center text-[var(--bg-base)] text-xs font-bold shrink-0">
                                         {initials}
                                     </div>
                                     <span className="text-sm text-slate-300 font-medium group-hover:text-white transition-colors">
@@ -277,41 +272,41 @@ export default function Navbar({ locale = 'de' }) {
                                             animate={{ opacity: 1, y: 0, scale: 1 }}
                                             exit={{ opacity: 0, y: 6, scale: 0.97 }}
                                             transition={{ duration: 0.15 }}
-                                            className="absolute right-0 top-full mt-2 w-52 bg-[#0d1117] border border-white/10 rounded-xl shadow-2xl shadow-black/40 overflow-hidden"
+                                            className="absolute right-0 top-full mt-2 w-52 bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-xl shadow-2xl shadow-black/40 overflow-hidden"
                                         >
-                                            <div className="px-3 py-2.5 border-b border-white/5">
+                                            <div className="px-3 py-2.5 border-b border-[var(--border-subtle)]">
                                                 <div className="text-xs text-slate-500 truncate">{user.email}</div>
                                             </div>
                             <div className="p-1.5 space-y-0.5">
                                                 <Link href={locale === 'en' ? '/en/dashboard' : '/dashboard'} onClick={() => setUserDropdownOpen(false)}
-                                                    className="flex items-center gap-2.5 px-3 py-2 text-sm text-slate-300 hover:text-white hover:bg-white/5 rounded-lg transition-all">
+                                                    className="flex items-center gap-2.5 px-3 py-2 text-sm text-slate-300 hover:text-white hover:bg-[var(--surface-06)] rounded-lg transition-all">
                                                     <LayoutDashboard className="w-3.5 h-3.5 text-slate-500" /> {t(locale, 'nav.dashboard')}
                                                 </Link>
                                                 <Link href={locale === 'en' ? '/en/profile' : '/profile'} onClick={() => setUserDropdownOpen(false)}
-                                                    className="flex items-center gap-2.5 px-3 py-2 text-sm text-slate-300 hover:text-white hover:bg-white/5 rounded-lg transition-all">
+                                                    className="flex items-center gap-2.5 px-3 py-2 text-sm text-slate-300 hover:text-white hover:bg-[var(--surface-06)] rounded-lg transition-all">
                                                     <User className="w-3.5 h-3.5 text-slate-500" /> {t(locale, 'nav.profile')}
                                                 </Link>
-                                                <div className="my-1 border-t border-white/5" />
+                                                <div className="my-1 border-t border-[var(--border-subtle)]" />
                                                 <p className="px-3 pt-1 pb-0.5 text-[10px] text-slate-400 font-semibold uppercase tracking-wider">{t(locale, 'nav.seoAutomatisierung')}</p>
                                                 <Link href={locale === 'en' ? '/en/seo/dashboard' : '/seo/dashboard'} onClick={() => setUserDropdownOpen(false)}
-                                                    className="flex items-center gap-2.5 px-3 py-2 text-sm text-slate-300 hover:text-white hover:bg-white/5 rounded-lg transition-all">
-                                                    <TrendingUp className="w-3.5 h-3.5 text-emerald-400" /> {t(locale, 'nav.rankings')}
+                                                    className="flex items-center gap-2.5 px-3 py-2 text-sm text-slate-300 hover:text-white hover:bg-[var(--surface-06)] rounded-lg transition-all">
+                                                    <TrendingUp className="w-3.5 h-3.5 text-[var(--accent)]" /> {t(locale, 'nav.rankings')}
                                                 </Link>
                                                 <Link href={locale === 'en' ? '/en/seo/pricing' : '/seo/pricing'} onClick={() => setUserDropdownOpen(false)}
-                                                    className="flex items-center gap-2.5 px-3 py-2 text-sm text-slate-300 hover:text-white hover:bg-white/5 rounded-lg transition-all">
+                                                    className="flex items-center gap-2.5 px-3 py-2 text-sm text-slate-300 hover:text-white hover:bg-[var(--surface-06)] rounded-lg transition-all">
                                                     <CreditCard className="w-3.5 h-3.5 text-slate-500" /> {t(locale, 'nav.trackingPreise')}
                                                 </Link>
-                                                <div className="my-1 border-t border-white/5" />
+                                                <div className="my-1 border-t border-[var(--border-subtle)]" />
                                                 <p className="px-3 pt-1 pb-0.5 text-[10px] text-slate-400 font-semibold uppercase tracking-wider">{t(locale, 'nav.geoAutomatisierung')}</p>
                                                 <Link href={locale === 'en' ? '/en/geo/dashboard' : '/geo/dashboard'} onClick={() => setUserDropdownOpen(false)}
-                                                    className="flex items-center gap-2.5 px-3 py-2 text-sm text-slate-300 hover:text-white hover:bg-white/5 rounded-lg transition-all">
-                                                    <Globe className="w-3.5 h-3.5 text-violet-400" /> {t(locale, 'nav.kiTracking')}
+                                                    className="flex items-center gap-2.5 px-3 py-2 text-sm text-slate-300 hover:text-white hover:bg-[var(--surface-06)] rounded-lg transition-all">
+                                                    <Globe className="w-3.5 h-3.5 text-[var(--accent)]" /> {t(locale, 'nav.kiTracking')}
                                                 </Link>
                                                 <Link href={locale === 'en' ? '/en/geo/pricing' : '/geo/pricing'} onClick={() => setUserDropdownOpen(false)}
-                                                    className="flex items-center gap-2.5 px-3 py-2 text-sm text-slate-300 hover:text-white hover:bg-white/5 rounded-lg transition-all">
+                                                    className="flex items-center gap-2.5 px-3 py-2 text-sm text-slate-300 hover:text-white hover:bg-[var(--surface-06)] rounded-lg transition-all">
                                                     <CreditCard className="w-3.5 h-3.5 text-slate-500" /> {t(locale, 'nav.geoPreise')}
                                                 </Link>
-                                                <div className="my-1 border-t border-white/5" />
+                                                <div className="my-1 border-t border-[var(--border-subtle)]" />
                                                 <button onClick={handleLogout}
                                                     className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-slate-400 hover:text-red-400 hover:bg-red-500/5 rounded-lg transition-all">
                                                     <LogOut className="w-3.5 h-3.5" /> {t(locale, 'nav.logout')}
@@ -327,12 +322,12 @@ export default function Navbar({ locale = 'de' }) {
                             </Link>
                         )}
                         <Link href={locale === 'en' ? '/en/dashboard' : '/dashboard'}
-                            className="flex items-center gap-2 px-5 py-2.5 bg-linear-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-violet-500/20 hover:-translate-y-px">
+                            className="flex items-center gap-2 px-5 py-2.5 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-[var(--accent-border)] hover:-translate-y-px">
                             {t(locale, 'nav.cta')} <ArrowRight className="w-3.5 h-3.5" />
                         </Link>
                         {counterpart && (
                             <Link href={counterpart}
-                                className="px-2.5 py-1.5 text-xs font-semibold text-slate-500 hover:text-white border border-white/10 rounded-lg transition-colors">
+                                className="px-2.5 py-1.5 text-xs font-semibold text-slate-500 hover:text-white border border-[var(--border-strong)] rounded-lg transition-colors">
                                 {locale === 'en' ? 'DE' : 'EN'}
                             </Link>
                         )}
@@ -359,7 +354,7 @@ export default function Navbar({ locale = 'de' }) {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -10 }}
                         id="mobile-nav-menu"
-                        className="fixed top-16 left-0 right-0 z-40 bg-[var(--bg-base)]/95 backdrop-blur-xl border-b border-white/5 p-4 space-y-1"
+                        className="fixed top-16 left-0 right-0 z-40 bg-[var(--bg-base)]/95 backdrop-blur-xl border-b border-[var(--border-subtle)] p-4 space-y-1"
                     >
                         {NAV_ITEMS.map(item =>
                             item.items ? (
@@ -372,31 +367,31 @@ export default function Navbar({ locale = 'de' }) {
                                 />
                             ) : (
                                 <Link key={item.key} href={item.href} onClick={() => setMobileOpen(false)}
-                                    className="block px-4 py-3 text-sm text-slate-300 hover:text-white rounded-lg hover:bg-white/5 transition-all">
+                                    className="block px-4 py-3 text-sm text-slate-300 hover:text-white rounded-lg hover:bg-[var(--surface-06)] transition-all">
                                     {item.label}
                                 </Link>
                             )
                         )}
 
-                        <div className="border-t border-white/5 my-1" />
+                        <div className="border-t border-[var(--border-subtle)] my-1" />
 
                         {user ? (
                             <>
                                 <Link href={locale === 'en' ? '/en/dashboard' : '/dashboard'} onClick={() => setMobileOpen(false)}
-                                    className="flex items-center gap-2 px-4 py-3 text-sm text-slate-300 hover:text-white rounded-lg hover:bg-white/5 transition-all">
+                                    className="flex items-center gap-2 px-4 py-3 text-sm text-slate-300 hover:text-white rounded-lg hover:bg-[var(--surface-06)] transition-all">
                                     <LayoutDashboard className="w-4 h-4 text-slate-500" /> {t(locale, 'nav.dashboard')}
                                 </Link>
                                 <Link href={locale === 'en' ? '/en/profile' : '/profile'} onClick={() => setMobileOpen(false)}
-                                    className="flex items-center gap-2 px-4 py-3 text-sm text-slate-300 hover:text-white rounded-lg hover:bg-white/5 transition-all">
+                                    className="flex items-center gap-2 px-4 py-3 text-sm text-slate-300 hover:text-white rounded-lg hover:bg-[var(--surface-06)] transition-all">
                                     <User className="w-4 h-4 text-slate-500" /> {t(locale, 'nav.profile')}
                                 </Link>
                                 <Link href={locale === 'en' ? '/en/seo/dashboard' : '/seo/dashboard'} onClick={() => setMobileOpen(false)}
-                                    className="flex items-center gap-2 px-4 py-3 text-sm text-slate-300 hover:text-white rounded-lg hover:bg-white/5 transition-all">
-                                    <TrendingUp className="w-4 h-4 text-emerald-400" /> {t(locale, 'nav.seoAutomatisierung')}
+                                    className="flex items-center gap-2 px-4 py-3 text-sm text-slate-300 hover:text-white rounded-lg hover:bg-[var(--surface-06)] transition-all">
+                                    <TrendingUp className="w-4 h-4 text-[var(--accent)]" /> {t(locale, 'nav.seoAutomatisierung')}
                                 </Link>
                                 <Link href={locale === 'en' ? '/en/geo/dashboard' : '/geo/dashboard'} onClick={() => setMobileOpen(false)}
-                                    className="flex items-center gap-2 px-4 py-3 text-sm text-slate-300 hover:text-white rounded-lg hover:bg-white/5 transition-all">
-                                    <Globe className="w-4 h-4 text-violet-400" /> {t(locale, 'nav.geoAutomatisierung')}
+                                    className="flex items-center gap-2 px-4 py-3 text-sm text-slate-300 hover:text-white rounded-lg hover:bg-[var(--surface-06)] transition-all">
+                                    <Globe className="w-4 h-4 text-[var(--accent)]" /> {t(locale, 'nav.geoAutomatisierung')}
                                 </Link>
                                 <button onClick={handleLogout}
                                     className="w-full flex items-center gap-2 px-4 py-3 text-sm text-slate-400 hover:text-red-400 rounded-lg hover:bg-red-500/5 transition-all">
@@ -405,19 +400,19 @@ export default function Navbar({ locale = 'de' }) {
                             </>
                         ) : (
                             <Link href={locale === 'en' ? '/en/login' : '/login'} onClick={() => setMobileOpen(false)}
-                                className="block px-4 py-3 text-sm text-slate-300 hover:text-white rounded-lg hover:bg-white/5 transition-all">
+                                className="block px-4 py-3 text-sm text-slate-300 hover:text-white rounded-lg hover:bg-[var(--surface-06)] transition-all">
                                 {t(locale, 'nav.login')}
                             </Link>
                         )}
 
                         <Link href={locale === 'en' ? '/en/dashboard' : '/dashboard'} onClick={() => setMobileOpen(false)}
-                            className="mt-2 block px-4 py-3 text-center font-semibold text-white rounded-xl bg-linear-to-r from-violet-600 to-cyan-600 text-sm">
+                            className="mt-2 block px-4 py-3 text-center font-semibold text-[var(--bg-base)] rounded-xl bg-[var(--accent)] text-sm">
                             {t(locale, 'nav.cta')} →
                         </Link>
 
                         {counterpart && (
                             <Link href={counterpart} onClick={() => setMobileOpen(false)}
-                                className="block px-4 py-3 text-center text-xs font-semibold text-slate-500 hover:text-white border border-white/10 rounded-lg transition-colors">
+                                className="block px-4 py-3 text-center text-xs font-semibold text-slate-500 hover:text-white border border-[var(--border-strong)] rounded-lg transition-colors">
                                 {locale === 'en' ? 'Deutsch' : 'English'}
                             </Link>
                         )}

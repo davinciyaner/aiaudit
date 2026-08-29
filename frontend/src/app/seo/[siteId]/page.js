@@ -12,7 +12,6 @@ import { useRouter, useParams } from 'next/navigation'
 import toast, { Toaster } from 'react-hot-toast'
 import Navbar from '../../components/Navbar'
 
-// ─── Helpers ─────────────────────────────────────────────────────────────────
 
 function PositionCell({ position }) {
     if (position == null) return <span className="text-slate-600 text-sm">—</span>
@@ -32,8 +31,8 @@ function VolumeBar({ value, max }) {
     const pct = Math.min((value / max) * 100, 100)
     return (
         <div className="flex items-center gap-2">
-            <div className="w-16 h-1.5 bg-white/5 rounded-full overflow-hidden">
-                <div className="h-full bg-emerald-500/60 rounded-full" style={{ width: `${pct}%` }} />
+            <div className="w-16 h-1.5 bg-[var(--surface-08)] rounded-full overflow-hidden">
+                <div className="h-full bg-[var(--accent)] rounded-full" style={{ width: `${pct}%` }} />
             </div>
             <span className="text-xs text-slate-400">{value >= 1000 ? `${(value/1000).toFixed(1)}k` : value}</span>
         </div>
@@ -43,7 +42,7 @@ function VolumeBar({ value, max }) {
 function LoadingTab() {
     return (
         <div className="flex flex-col items-center justify-center py-20 gap-3">
-            <Loader2 className="w-6 h-6 text-emerald-400 animate-spin" />
+            <Loader2 className="w-6 h-6 text-[var(--accent)] animate-spin" />
             <span className="text-sm text-slate-500">Daten werden geladen…</span>
         </div>
     )
@@ -58,7 +57,6 @@ function EmptyTab({ icon: Icon, text }) {
     )
 }
 
-// ─── Sparkline Chart ──────────────────────────────────────────────────────────
 
 function SparklineChart({ history }) {
     const valid = history.filter(h => h.position != null)
@@ -79,19 +77,18 @@ function SparklineChart({ history }) {
     const maxPos = rawMax + Math.round(span * 0.2)
     const range  = maxPos - minPos
 
-    const n   = history.length
+    const n = history.length
     const xOf = (i) => padL + (i / (n - 1)) * chartW
     const yOf = (pos) => padT + ((pos - minPos) / range) * chartH
 
     const colorOf = (pos) => {
         if (pos == null) return '#475569'
-        if (pos <= 3)   return '#10b981'
-        if (pos <= 10)  return '#14b8a6'
-        if (pos <= 30)  return '#f59e0b'
+        if (pos <= 3) return '#10b981'
+        if (pos <= 10) return '#14b8a6'
+        if (pos <= 30) return '#f59e0b'
         return '#64748b'
     }
 
-    // Build polyline segments, skipping null gaps
     const segments = []
     let seg = []
     history.forEach((h, i) => {
@@ -125,7 +122,7 @@ function SparklineChart({ history }) {
             {segments.map((s, si) => s.length > 1 && (
                 <polyline key={si}
                     points={s.map(([x, y]) => `${x},${y}`).join(' ')}
-                    fill="none" stroke="#10b981" strokeWidth="2"
+                    fill="none" stroke="var(--accent)" strokeWidth="2"
                     strokeLinecap="round" strokeLinejoin="round" opacity="0.7" />
             ))}
 
@@ -227,7 +224,7 @@ function InsightPanel({ insight, keyword, siteId, onRefreshed }) {
 
     const refreshBtn = (
         <button onClick={handleRefresh} disabled={refreshing}
-            className="flex items-center gap-1 text-xs text-slate-600 hover:text-emerald-400 transition-colors disabled:opacity-40">
+            className="flex items-center gap-1 text-xs text-slate-600 hover:text-[var(--accent)] transition-colors disabled:opacity-40">
             <RefreshCw className={`w-3 h-3 ${refreshing ? 'animate-spin' : ''}`} />
             {refreshing ? 'Läuft…' : 'Neu generieren'}
         </button>
@@ -235,7 +232,7 @@ function InsightPanel({ insight, keyword, siteId, onRefreshed }) {
 
     if (isPending) return (
         <div className="flex items-center gap-2 py-2 text-sm text-slate-600">
-            <Loader2 className="w-3.5 h-3.5 animate-spin text-emerald-500/50" />
+            <Loader2 className="w-3.5 h-3.5 animate-spin text-[var(--accent)]" />
             Content-Plan wird im Hintergrund generiert…
         </div>
     )
@@ -262,10 +259,10 @@ function InsightPanel({ insight, keyword, siteId, onRefreshed }) {
                     </div>
                     <div className="grid sm:grid-cols-2 gap-2.5">
                         {/* Title */}
-                        <div className="bg-white/[0.03] border border-white/[0.05] rounded-xl p-3">
+                        <div className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-xl p-3">
                             <div className="flex items-center justify-between mb-1.5">
                                 <span className="text-[10px] font-semibold text-slate-600 uppercase tracking-wider">H1 Titel</span>
-                                <button onClick={() => copy(content.title, 'title')} className="flex items-center gap-1 text-[10px] text-slate-600 hover:text-emerald-400 transition-colors">
+                                <button onClick={() => copy(content.title, 'title')} className="flex items-center gap-1 text-[10px] text-slate-600 hover:text-[var(--accent)] transition-colors">
                                     {copied === 'title' ? <Check className="w-2.5 h-2.5" /> : <Copy className="w-2.5 h-2.5" />}
                                     {copied === 'title' ? 'Kopiert' : 'Kopieren'}
                                 </button>
@@ -274,12 +271,12 @@ function InsightPanel({ insight, keyword, siteId, onRefreshed }) {
                         </div>
 
                         {/* Meta */}
-                        <div className="bg-white/[0.03] border border-white/[0.05] rounded-xl p-3">
+                        <div className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-xl p-3">
                             <div className="flex items-center justify-between mb-1.5">
                                 <span className="text-[10px] font-semibold text-slate-600 uppercase tracking-wider">Meta Description</span>
                                 <div className="flex items-center gap-2">
                                     <span className="text-[10px] text-slate-700">{content.metaDescription?.length || 0}/155</span>
-                                    <button onClick={() => copy(content.metaDescription, 'meta')} className="flex items-center gap-1 text-[10px] text-slate-600 hover:text-emerald-400 transition-colors">
+                                    <button onClick={() => copy(content.metaDescription, 'meta')} className="flex items-center gap-1 text-[10px] text-slate-600 hover:text-[var(--accent)] transition-colors">
                                         {copied === 'meta' ? <Check className="w-2.5 h-2.5" /> : <Copy className="w-2.5 h-2.5" />}
                                         {copied === 'meta' ? 'Kopiert' : 'Kopieren'}
                                     </button>
@@ -289,23 +286,23 @@ function InsightPanel({ insight, keyword, siteId, onRefreshed }) {
                         </div>
 
                         {/* Slug */}
-                        <div className="bg-white/[0.03] border border-white/[0.05] rounded-xl p-3">
+                        <div className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-xl p-3">
                             <div className="flex items-center justify-between mb-1.5">
                                 <span className="text-[10px] font-semibold text-slate-600 uppercase tracking-wider">URL Slug</span>
-                                <button onClick={() => copy(content.slug, 'slug')} className="flex items-center gap-1 text-[10px] text-slate-600 hover:text-emerald-400 transition-colors">
+                                <button onClick={() => copy(content.slug, 'slug')} className="flex items-center gap-1 text-[10px] text-slate-600 hover:text-[var(--accent)] transition-colors">
                                     {copied === 'slug' ? <Check className="w-2.5 h-2.5" /> : <Copy className="w-2.5 h-2.5" />}
                                     {copied === 'slug' ? 'Kopiert' : 'Kopieren'}
                                 </button>
                             </div>
-                            <p className="text-xs text-emerald-400 font-mono">/{content.slug}</p>
+                            <p className="text-xs text-[var(--accent)] font-mono">/{content.slug}</p>
                         </div>
 
                         {/* Intro */}
                         {content.intro && (
-                            <div className="bg-white/[0.03] border border-white/[0.05] rounded-xl p-3">
+                            <div className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-xl p-3">
                                 <div className="flex items-center justify-between mb-1.5">
                                     <span className="text-[10px] font-semibold text-slate-600 uppercase tracking-wider">Einleitung</span>
-                                    <button onClick={() => copy(content.intro, 'intro')} className="flex items-center gap-1 text-[10px] text-slate-600 hover:text-emerald-400 transition-colors">
+                                    <button onClick={() => copy(content.intro, 'intro')} className="flex items-center gap-1 text-[10px] text-slate-600 hover:text-[var(--accent)] transition-colors">
                                         {copied === 'intro' ? <Check className="w-2.5 h-2.5" /> : <Copy className="w-2.5 h-2.5" />}
                                         {copied === 'intro' ? 'Kopiert' : 'Kopieren'}
                                     </button>
@@ -317,11 +314,11 @@ function InsightPanel({ insight, keyword, siteId, onRefreshed }) {
 
                     {/* Outline */}
                     {content.outline?.length > 0 && (
-                        <div className="mt-2.5 bg-white/[0.02] border border-white/[0.04] rounded-xl p-3">
+                        <div className="mt-2.5 bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-xl p-3">
                             <div className="flex items-center justify-between mb-2">
                                 <span className="text-[10px] font-semibold text-slate-600 uppercase tracking-wider">Artikel-Gliederung</span>
                                 <button onClick={() => copy(content.outline.map((o, i) => `${i+1}. ${o.h2}\n   ${o.description}`).join('\n'), 'outline')}
-                                    className="flex items-center gap-1 text-[10px] text-slate-600 hover:text-emerald-400 transition-colors">
+                                    className="flex items-center gap-1 text-[10px] text-slate-600 hover:text-[var(--accent)] transition-colors">
                                     {copied === 'outline' ? <Check className="w-2.5 h-2.5" /> : <Copy className="w-2.5 h-2.5" />}
                                     {copied === 'outline' ? 'Kopiert' : 'Kopieren'}
                                 </button>
@@ -329,7 +326,7 @@ function InsightPanel({ insight, keyword, siteId, onRefreshed }) {
                             <div className="space-y-1.5">
                                 {content.outline.map((item, i) => (
                                     <div key={i} className="flex gap-2">
-                                        <span className="text-[10px] font-bold text-emerald-500/50 shrink-0 mt-0.5">H2</span>
+                                        <span className="text-[10px] font-bold text-[var(--accent)] shrink-0 mt-0.5">H2</span>
                                         <div>
                                             <p className="text-xs font-semibold text-slate-200">{item.h2}</p>
                                             <p className="text-[11px] text-slate-600">{item.description}</p>
@@ -342,12 +339,12 @@ function InsightPanel({ insight, keyword, siteId, onRefreshed }) {
 
                     {/* Key Points */}
                     {content.keyPoints?.length > 0 && (
-                        <div className="mt-2.5 bg-white/[0.02] border border-white/[0.04] rounded-xl p-3">
+                        <div className="mt-2.5 bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-xl p-3">
                             <span className="text-[10px] font-semibold text-slate-600 uppercase tracking-wider block mb-2">Wichtige Inhaltspunkte</span>
                             <div className="grid sm:grid-cols-2 gap-1">
                                 {content.keyPoints.map((p, i) => (
                                     <div key={i} className="flex items-start gap-2">
-                                        <Check className="w-3 h-3 text-emerald-500/50 shrink-0 mt-0.5" strokeWidth={3} />
+                                        <Check className="w-3 h-3 text-[var(--accent)] shrink-0 mt-0.5" strokeWidth={3} />
                                         <span className="text-xs text-slate-400">{p}</span>
                                     </div>
                                 ))}
@@ -367,7 +364,7 @@ function InsightPanel({ insight, keyword, siteId, onRefreshed }) {
                     {backlinks.strategies?.length > 0 && (
                         <div className="space-y-1.5 mb-3">
                             {backlinks.strategies.map((s, i) => (
-                                <div key={i} className="bg-white/[0.02] border border-white/[0.04] rounded-xl px-3 py-2.5 flex gap-3 items-start">
+                                <div key={i} className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-xl px-3 py-2.5 flex gap-3 items-start">
                                     <div className="flex-1">
                                         <div className="flex items-center gap-2 mb-0.5">
                                             <span className="text-xs font-semibold text-white">{s.type}</span>
@@ -381,12 +378,12 @@ function InsightPanel({ insight, keyword, siteId, onRefreshed }) {
                     )}
 
                     {backlinks.targetSites?.length > 0 && (
-                        <div className="bg-white/[0.02] border border-white/[0.04] rounded-xl overflow-hidden mb-2.5">
-                            <div className="px-3 py-2 border-b border-white/[0.03]">
+                        <div className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-xl overflow-hidden mb-2.5">
+                            <div className="px-3 py-2 border-b border-[var(--border-subtle)]">
                                 <span className="text-[10px] font-semibold text-slate-600 uppercase tracking-wider">Ziel-Webseiten</span>
                             </div>
                             {backlinks.targetSites.map((ts, i) => (
-                                <div key={i} className={`px-3 py-2.5 ${i < backlinks.targetSites.length - 1 ? 'border-b border-white/[0.03]' : ''}`}>
+                                <div key={i} className={`px-3 py-2.5 ${i < backlinks.targetSites.length - 1 ? 'border-b border-[var(--border-subtle)]' : ''}`}>
                                     <span className="text-xs font-semibold text-slate-300">{ts.type}</span>
                                     {ts.example && <span className="text-[11px] text-slate-600 ml-2">{ts.example}</span>}
                                     <p className="text-[11px] text-slate-500 mt-0.5">{ts.why}</p>
@@ -396,12 +393,12 @@ function InsightPanel({ insight, keyword, siteId, onRefreshed }) {
                     )}
 
                     {backlinks.linkbaitIdeas?.length > 0 && (
-                        <div className="bg-white/[0.02] border border-white/[0.04] rounded-xl p-3">
+                        <div className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-xl p-3">
                             <span className="text-[10px] font-semibold text-slate-600 uppercase tracking-wider block mb-2">Linkbait-Ideen</span>
                             <div className="space-y-1.5">
                                 {backlinks.linkbaitIdeas.map((idea, i) => (
                                     <div key={i} className="flex items-start gap-2">
-                                        <span className="text-[10px] font-bold text-emerald-500/50 shrink-0 w-4 mt-0.5">{i + 1}.</span>
+                                        <span className="text-[10px] font-bold text-[var(--accent)] shrink-0 w-4 mt-0.5">{i + 1}.</span>
                                         <span className="text-xs text-slate-400">{idea}</span>
                                     </div>
                                 ))}
@@ -455,7 +452,7 @@ function RankingHistoryChart({ siteId, refreshKey }) {
     const yTicks = [minPos, Math.round((minPos + maxPos) / 2), maxPos]
 
     return (
-        <div className="bg-[#0d1117] border border-white/[0.06] rounded-2xl p-5 mb-6">
+        <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl p-5 mb-6">
             <div className="flex items-center justify-between mb-4">
                 <h3 className="text-sm font-semibold text-white">Ø Position Verlauf</h3>
                 <span className="text-xs text-slate-600">{n} Check{n !== 1 ? 's' : ''} aufgezeichnet</span>
@@ -480,18 +477,18 @@ function RankingHistoryChart({ siteId, refreshKey }) {
                     })}
 
                     {n > 1 && (
-                        <polyline points={points} fill="none" stroke="#34d399" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                        <polyline points={points} fill="none" stroke="var(--accent)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                     )}
                     {history.map((h, i) => (
                         <circle key={i} cx={xAt(i)} cy={yAt(h.avgPosition)} r={hover === i ? 5 : 3.5}
-                            fill="#34d399" stroke="#0d1117" strokeWidth="2"
+                            fill="var(--accent)" stroke="var(--bg-surface)" strokeWidth="2"
                             style={{ cursor: 'pointer' }}
                             onMouseEnter={() => setHover(i)} onMouseLeave={() => setHover(null)} />
                     ))}
                 </svg>
 
                 {hover != null && (
-                    <div className="absolute px-2.5 py-1.5 bg-[#161c2e] border border-white/10 rounded-lg text-xs pointer-events-none shadow-lg"
+                    <div className="absolute px-2.5 py-1.5 bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-lg text-xs pointer-events-none shadow-lg"
                         style={{
                             left: `${(xAt(hover) / W) * 100}%`,
                             top: `${(yAt(history[hover].avgPosition) / H) * 100}%`,
@@ -668,16 +665,16 @@ function RankingsTab({ siteId, site, onSiteUpdated }) {
                     )}
                     {rankings.length > 0 && (
                         <button onClick={exportCSV}
-                            className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 transition-all">
+                            className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl bg-[var(--surface-08)] hover:bg-[var(--surface-10)] text-slate-300 border border-[var(--border-subtle)] transition-all">
                             <Download className="w-3.5 h-3.5" />CSV
                         </button>
                     )}
                     <button onClick={() => setShowAdd(v => !v)}
-                        className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 transition-all">
+                        className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl bg-[var(--surface-08)] hover:bg-[var(--surface-10)] text-slate-300 border border-[var(--border-subtle)] transition-all">
                         <Plus className="w-3.5 h-3.5" />Keywords
                     </button>
                     <button onClick={handleCheck} disabled={checking}
-                        className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white transition-all disabled:opacity-50">
+                        className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] transition-all disabled:opacity-50">
                         {checking ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <RefreshCw className="w-3.5 h-3.5" />}
                         {checking ? 'Prüfe…' : 'Jetzt prüfen'}
                     </button>
@@ -691,8 +688,8 @@ function RankingsTab({ siteId, site, onSiteUpdated }) {
                         <button key={f.id} onClick={() => setFilter(f.id)}
                             className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${
                                 filter === f.id
-                                    ? 'bg-emerald-500/15 border border-emerald-500/30 text-emerald-400'
-                                    : 'bg-white/4 border border-white/8 text-slate-500 hover:text-slate-300 hover:bg-white/8'
+                                    ? 'bg-[var(--accent-soft)] border border-[var(--accent-border)] text-[var(--accent)]'
+                                    : 'bg-[var(--surface-06)] border border-[var(--border-subtle)] text-slate-500 hover:text-slate-300 hover:bg-[var(--surface-10)]'
                             }`}>
                             {f.label}
                         </button>
@@ -705,7 +702,7 @@ function RankingsTab({ siteId, site, onSiteUpdated }) {
             <AnimatePresence>
                 {showAdd && (
                     <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
-                        className="bg-[#0d1117] border border-emerald-500/20 rounded-2xl p-5 mb-5">
+                        className="bg-[var(--bg-surface)] border border-[var(--accent-border)] rounded-2xl p-5 mb-5">
                         <div className="flex items-center justify-between mb-3">
                             <span className="text-sm font-semibold text-white">Keywords hinzufügen</span>
                             <button onClick={() => setShowAdd(false)} className="text-slate-500 hover:text-white transition-colors"><X className="w-4 h-4" /></button>
@@ -713,9 +710,9 @@ function RankingsTab({ siteId, site, onSiteUpdated }) {
                         <form onSubmit={handleAddKeywords} className="flex gap-3">
                             <textarea value={newKeywords} onChange={e => setNewKeywords(e.target.value)}
                                 placeholder={"keyword eins\nkeyword zwei"} rows={3}
-                                className="flex-1 bg-white/3 border border-white/10 focus:border-emerald-500/50 rounded-xl px-4 py-3 text-white placeholder:text-slate-600 outline-none text-sm resize-none font-mono" />
+                                className="flex-1 bg-[var(--surface-06)] border border-[var(--border-subtle)] focus:border-[var(--accent-border)] rounded-xl px-4 py-3 text-white placeholder:text-slate-600 outline-none text-sm resize-none font-mono" />
                             <button type="submit" disabled={addingKws}
-                                className="self-end flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-sm font-semibold rounded-xl transition-all disabled:opacity-50">
+                                className="self-end flex items-center gap-2 px-4 py-2 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all disabled:opacity-50">
                                 {addingKws ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Plus className="w-3.5 h-3.5" />}
                                 Hinzufügen
                             </button>
@@ -730,11 +727,11 @@ function RankingsTab({ siteId, site, onSiteUpdated }) {
             ) : filteredRankings.length === 0 ? (
                 <EmptyTab icon={TrendingUp} text={`Keine Keywords für Filter "${FILTERS.find(f => f.id === filter)?.label}".`} />
             ) : (
-                <div className="bg-[#0d1117] border border-white/[0.06] rounded-2xl overflow-hidden">
+                <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl overflow-hidden">
                     <div className="overflow-x-auto">
                         <table className="w-full">
                             <thead>
-                                <tr className="border-b border-white/[0.05]">
+                                <tr className="border-b border-[var(--border-subtle)]">
                                     <th className="w-8 px-5 py-3" />
                                     <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Keyword</th>
                                     <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Position</th>
@@ -755,9 +752,9 @@ function RankingsTab({ siteId, site, onSiteUpdated }) {
                                     return (
                                         <React.Fragment key={keyword}>
                                             <tr onClick={() => toggleExpand(keyword)}
-                                                className={`border-b border-white/[0.04] cursor-pointer transition-colors ${isSelected ? 'bg-red-500/5' : isExpanded ? 'bg-white/[0.03]' : 'hover:bg-white/[0.02]'} ${!isExpanded ? 'last:border-0' : ''}`}>
+                                                className={`border-b border-[var(--border-subtle)] cursor-pointer transition-colors ${isSelected ? 'bg-red-500/5' : isExpanded ? 'bg-[var(--surface-06)]' : 'hover:bg-[var(--surface-08)]'} ${!isExpanded ? 'last:border-0' : ''}`}>
                                                 <td className="px-5 py-3.5" onClick={e => { e.stopPropagation(); toggleSelect(keyword) }}>
-                                                    <div className={`w-3.5 h-3.5 rounded border transition-all ${isSelected ? 'bg-red-500/40 border-red-500/60' : 'border-white/15'}`} />
+                                                    <div className={`w-3.5 h-3.5 rounded border transition-all ${isSelected ? 'bg-red-500/40 border-red-500/60' : 'border-[var(--border-strong)]'}`} />
                                                 </td>
                                                 <td className="px-5 py-3.5">
                                                     <div className="flex items-center gap-2">
@@ -765,7 +762,7 @@ function RankingsTab({ siteId, site, onSiteUpdated }) {
                                                         {insightDone && <span className="w-1.5 h-1.5 rounded-full bg-emerald-500/70 shrink-0" title="Content-Plan verfügbar" />}
                                                         {insightPending && <Loader2 className="w-2.5 h-2.5 text-slate-600 animate-spin shrink-0" />}
                                                         {(hasHistory || insightDone) && (
-                                                            <span className={`transition-colors ${isExpanded ? 'text-emerald-400' : 'text-slate-700'}`}>
+                                                            <span className={`transition-colors ${isExpanded ? 'text-[var(--accent)]' : 'text-slate-700'}`}>
                                                                 {isExpanded ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
                                                             </span>
                                                         )}
@@ -781,7 +778,7 @@ function RankingsTab({ siteId, site, onSiteUpdated }) {
                                                 <td className="px-5 py-3.5 hidden sm:table-cell">
                                                     {current?.url && /^https?:\/\//.test(current.url) ? (
                                                         <a href={current.url} target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()}
-                                                            className="text-xs text-slate-500 hover:text-emerald-400 transition-colors truncate max-w-[180px] block">
+                                                            className="text-xs text-slate-500 hover:text-[var(--accent)] transition-colors truncate max-w-[180px] block">
                                                             {current.url.replace(/^https?:\/\//, '')}
                                                         </a>
                                                     ) : <span className="text-xs text-slate-700">—</span>}
@@ -793,8 +790,8 @@ function RankingsTab({ siteId, site, onSiteUpdated }) {
                                                 </td>
                                             </tr>
                                             {isExpanded && (
-                                                <tr className="border-b border-white/[0.04] last:border-0">
-                                                    <td colSpan={7} className="px-5 py-5 bg-white/[0.01]">
+                                                <tr className="border-b border-[var(--border-subtle)] last:border-0">
+                                                    <td colSpan={7} className="px-5 py-5 bg-[var(--surface-06)]">
                                                         {hasHistory && (
                                                             <div className="mb-5">
                                                                 <p className="text-xs text-slate-500 mb-3 uppercase tracking-wider font-semibold">Verlauf — {keyword}</p>
@@ -883,10 +880,10 @@ function KeywordIdeasTab({ siteId }) {
 
     if (!loaded) return (
         <div className="flex flex-col items-center justify-center py-20 gap-4">
-            <Lightbulb className="w-10 h-10 text-emerald-500/30" />
+            <Lightbulb className="w-10 h-10 text-[var(--accent)]" />
             <p className="text-slate-500 text-sm text-center">Suchvolumen deiner Keywords + 20 neue Keyword-Ideen laden</p>
             <button onClick={fetch_} disabled={loading}
-                className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-sm font-semibold rounded-xl transition-all disabled:opacity-50">
+                className="flex items-center gap-2 px-5 py-2.5 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all disabled:opacity-50">
                 {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Lightbulb className="w-4 h-4" />}
                 {loading ? 'Wird geladen…' : 'Keyword-Ideen laden'}
             </button>
@@ -905,8 +902,8 @@ function KeywordIdeasTab({ siteId }) {
                                 ? f.id === 'LOW'    ? 'bg-emerald-500/15 border-emerald-500/30 text-emerald-400'
                                 : f.id === 'MEDIUM' ? 'bg-amber-500/15 border-amber-500/30 text-amber-400'
                                 : f.id === 'HIGH'   ? 'bg-red-500/15 border-red-500/30 text-red-400'
-                                : 'bg-emerald-500/15 border-emerald-500/30 text-emerald-400'
-                                : 'bg-white/4 border-white/8 text-slate-500 hover:text-slate-300 hover:bg-white/8'
+                                : 'bg-[var(--accent-soft)] border-[var(--accent-border)] text-[var(--accent)]'
+                                : 'bg-[var(--surface-06)] border-[var(--border-subtle)] text-slate-500 hover:text-slate-300 hover:bg-[var(--surface-10)]'
                         }`}>
                         {f.label}
                     </button>
@@ -922,10 +919,10 @@ function KeywordIdeasTab({ siteId }) {
                             <span className="ml-2 text-slate-600 font-normal normal-case">{filteredVolumes?.length} von {data.volumes.length}</span>
                         )}
                     </h3>
-                    <div className="bg-[#0d1117] border border-white/[0.06] rounded-2xl overflow-hidden">
+                    <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl overflow-hidden">
                         <table className="w-full">
                             <thead>
-                                <tr className="border-b border-white/[0.05]">
+                                <tr className="border-b border-[var(--border-subtle)]">
                                     <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Keyword</th>
                                     <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Volumen/Monat</th>
                                     <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider hidden sm:table-cell">Wettbewerb</th>
@@ -937,7 +934,7 @@ function KeywordIdeasTab({ siteId }) {
                                 {(filteredVolumes || []).length === 0 ? (
                                     <tr><td colSpan={5} className="px-5 py-8 text-center text-sm text-slate-600">Keine Keywords mit diesem Wettbewerb-Level.</td></tr>
                                 ) : (filteredVolumes || []).map(item => (
-                                    <tr key={item.keyword} className="border-b border-white/[0.04] last:border-0">
+                                    <tr key={item.keyword} className="border-b border-[var(--border-subtle)] last:border-0">
                                         <td className="px-5 py-3"><span className="text-sm text-slate-200">{item.keyword}</span></td>
                                         <td className="px-5 py-3"><VolumeBar value={item.searchVolume} max={maxVolume} /></td>
                                         <td className="px-5 py-3 hidden sm:table-cell">
@@ -951,7 +948,7 @@ function KeywordIdeasTab({ siteId }) {
                                                 className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold transition-all ${
                                                     added.has(item.keyword)
                                                         ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 cursor-default'
-                                                        : 'bg-white/5 hover:bg-emerald-500/10 text-slate-400 hover:text-emerald-400 border border-white/10 hover:border-emerald-500/20'
+                                                        : 'bg-[var(--surface-08)] hover:bg-[var(--accent-soft)] text-slate-400 hover:text-[var(--accent)] border border-[var(--border-subtle)] hover:border-[var(--accent-border)]'
                                                 }`}>
                                                 {adding.has(item.keyword) ? <Loader2 className="w-3 h-3 animate-spin" /> : added.has(item.keyword) ? <Check className="w-3 h-3" /> : <Plus className="w-3 h-3" />}
                                                 {added.has(item.keyword) ? 'Getrackt' : 'Tracken'}
@@ -974,10 +971,10 @@ function KeywordIdeasTab({ siteId }) {
                             <span className="ml-2 text-slate-600 font-normal normal-case">{filteredIdeas?.length} von {data.ideas.length}</span>
                         )}
                     </h3>
-                    <div className="bg-[#0d1117] border border-emerald-500/10 rounded-2xl overflow-hidden">
+                    <div className="bg-[var(--bg-surface)] border border-[var(--accent-border)] rounded-2xl overflow-hidden">
                         <table className="w-full">
                             <thead>
-                                <tr className="border-b border-white/[0.05]">
+                                <tr className="border-b border-[var(--border-subtle)]">
                                     <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Keyword</th>
                                     <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Volumen/Monat</th>
                                     <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider hidden sm:table-cell">Wettbewerb</th>
@@ -989,9 +986,9 @@ function KeywordIdeasTab({ siteId }) {
                                 {(filteredIdeas || []).length === 0 ? (
                                     <tr><td colSpan={5} className="px-5 py-8 text-center text-sm text-slate-600">Keine Ideen mit diesem Wettbewerb-Level.</td></tr>
                                 ) : (filteredIdeas || []).map(item => (
-                                    <tr key={item.keyword} className="border-b border-white/[0.04] last:border-0 hover:bg-emerald-500/[0.03] transition-colors">
+                                    <tr key={item.keyword} className="border-b border-[var(--border-subtle)] last:border-0 hover:bg-[var(--accent-soft)] transition-colors">
                                         <td className="px-5 py-3">
-                                            <span className="text-sm text-emerald-300 font-medium">{item.keyword}</span>
+                                            <span className="text-sm text-[var(--accent)] font-medium">{item.keyword}</span>
                                         </td>
                                         <td className="px-5 py-3"><VolumeBar value={item.searchVolume} max={maxVolume} /></td>
                                         <td className="px-5 py-3 hidden sm:table-cell">
@@ -1005,7 +1002,7 @@ function KeywordIdeasTab({ siteId }) {
                                                 className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold transition-all ${
                                                     added.has(item.keyword)
                                                         ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 cursor-default'
-                                                        : 'bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/20'
+                                                        : 'bg-[var(--accent-soft)] hover:bg-[var(--accent-soft-strong)] text-[var(--accent)] border border-[var(--accent-border)]'
                                                 }`}>
                                                 {adding.has(item.keyword) ? <Loader2 className="w-3 h-3 animate-spin" /> : added.has(item.keyword) ? <Check className="w-3 h-3" /> : <Plus className="w-3 h-3" />}
                                                 {added.has(item.keyword) ? 'Getrackt' : 'Tracken'}
@@ -1050,10 +1047,10 @@ function CompetitorsTab({ siteId }) {
 
     if (!loaded) return (
         <div className="flex flex-col items-center justify-center py-20 gap-4">
-            <Users className="w-10 h-10 text-emerald-500/30" />
+            <Users className="w-10 h-10 text-[var(--accent)]" />
             <p className="text-slate-500 text-sm text-center">Finde die 10 größten Konkurrenten deiner Domain<br/>basierend auf gemeinsamen Keywords</p>
             <button onClick={fetch_} disabled={loading}
-                className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-sm font-semibold rounded-xl transition-all disabled:opacity-50">
+                className="flex items-center gap-2 px-5 py-2.5 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all disabled:opacity-50">
                 {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Users className="w-4 h-4" />}
                 {loading ? 'Wird geladen…' : 'Konkurrenten analysieren'}
             </button>
@@ -1064,11 +1061,11 @@ function CompetitorsTab({ siteId }) {
 
     return (
         <div>
-            <div className="bg-[#0d1117] border border-white/[0.06] rounded-2xl overflow-hidden">
+            <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl overflow-hidden">
                 <div className="overflow-x-auto">
                     <table className="w-full">
                         <thead>
-                            <tr className="border-b border-white/[0.05]">
+                            <tr className="border-b border-[var(--border-subtle)]">
                                 <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">#</th>
                                 <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Domain</th>
                                 <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Gemeinsame KW</th>
@@ -1078,13 +1075,13 @@ function CompetitorsTab({ siteId }) {
                         </thead>
                         <tbody>
                             {competitors.map((c, i) => (
-                                <tr key={c.domain} className="border-b border-white/[0.04] last:border-0 hover:bg-white/[0.02] transition-colors">
+                                <tr key={c.domain} className="border-b border-[var(--border-subtle)] last:border-0 hover:bg-[var(--surface-08)] transition-colors">
                                     <td className="px-5 py-3.5">
                                         <span className="text-sm text-slate-500">{i + 1}</span>
                                     </td>
                                     <td className="px-5 py-3.5">
                                         <a href={`https://${c.domain}`} target="_blank" rel="noopener noreferrer"
-                                            className="flex items-center gap-1.5 text-sm text-slate-200 hover:text-emerald-400 transition-colors">
+                                            className="flex items-center gap-1.5 text-sm text-slate-200 hover:text-[var(--accent)] transition-colors">
                                             {c.domain}
                                             <ExternalLink className="w-3 h-3 text-slate-600" />
                                         </a>
@@ -1142,19 +1139,19 @@ function BacklinksTab({ siteId }) {
     if (!summary) return <EmptyTab icon={Link2} text="Keine Backlink-Daten gefunden." />
 
     const stats = [
-        { label: 'Backlinks gesamt',     value: summary.backlinks?.toLocaleString('de-DE') ?? '—', color: 'text-white' },
-        { label: 'Referring Domains',    value: summary.referringDomains?.toLocaleString('de-DE') ?? '—', color: 'text-emerald-400' },
-        { label: 'Referring IPs',        value: summary.referringIPs?.toLocaleString('de-DE') ?? '—', color: 'text-teal-400' },
-        { label: 'Dofollow',             value: summary.dofollow?.toLocaleString('de-DE') ?? '—', color: 'text-emerald-400' },
-        { label: 'Nofollow',             value: summary.nofollow?.toLocaleString('de-DE') ?? '—', color: 'text-slate-400' },
-        { label: 'Spam Score',           value: summary.spamScore != null ? `${summary.spamScore}%` : '—', color: summary.spamScore > 30 ? 'text-red-400' : 'text-emerald-400' },
+        { label: 'Backlinks gesamt', value: summary.backlinks?.toLocaleString('de-DE') ?? '—', color: 'text-white' },
+        { label: 'Referring Domains', value: summary.referringDomains?.toLocaleString('de-DE') ?? '—', color: 'text-white' },
+        { label: 'Referring IPs', value: summary.referringIPs?.toLocaleString('de-DE') ?? '—', color: 'text-white' },
+        { label: 'Dofollow', value: summary.dofollow?.toLocaleString('de-DE') ?? '—', color: 'text-white' },
+        { label: 'Nofollow', value: summary.nofollow?.toLocaleString('de-DE') ?? '—', color: 'text-white' },
+        { label: 'Spam Score', value: summary.spamScore != null ? `${summary.spamScore}%` : '—', color: summary.spamScore > 30 ? 'text-red-400' : 'text-[var(--accent)]' },
     ]
 
     return (
         <div>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-6">
                 {stats.map(s => (
-                    <div key={s.label} className="bg-[#0d1117] border border-white/[0.06] rounded-xl p-4">
+                    <div key={s.label} className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-xl p-4">
                         <div className="text-xs text-slate-500 mb-1.5">{s.label}</div>
                         <div className={`text-xl font-bold ${s.color}`}>{s.value}</div>
                     </div>
@@ -1237,8 +1234,8 @@ function ContentGapTab({ siteId, plan }) {
 
     if (plan === 'einsteiger') return (
         <div className="flex flex-col items-center justify-center py-20 gap-5">
-            <div className="w-14 h-14 rounded-2xl bg-emerald-500/10 border border-emerald-500/15 flex items-center justify-center">
-                <Lock className="w-6 h-6 text-emerald-400" />
+            <div className="w-14 h-14 rounded-2xl bg-[var(--accent-soft)] border border-[var(--accent-border)] flex items-center justify-center">
+                <Lock className="w-6 h-6 text-[var(--accent)]" />
             </div>
             <div className="text-center">
                 <h3 className="text-lg font-bold text-white mb-2">Content Gap Analyse</h3>
@@ -1248,7 +1245,7 @@ function ContentGapTab({ siteId, plan }) {
                 </p>
             </div>
             <Link href="/seo/pricing"
-                className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-sm font-semibold rounded-xl transition-all">
+                className="flex items-center gap-2 px-5 py-2.5 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all">
                 Auf Pro upgraden →
             </Link>
         </div>
@@ -1259,7 +1256,7 @@ function ContentGapTab({ siteId, plan }) {
     return (
         <div className="space-y-6">
             {/* Input + usage counter */}
-            <div className="bg-[#0d1117] border border-white/[0.06] rounded-2xl p-5">
+            <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl p-5">
                 <div className="flex items-center justify-between mb-3">
                     <p className="text-sm text-slate-400">
                         Gib eine Konkurrenz-Domain ein — wir zeigen dir Keywords, für die dein Konkurrent rankt, du aber noch nicht trackst.
@@ -1275,10 +1272,10 @@ function ContentGapTab({ siteId, plan }) {
                         value={competitor}
                         onChange={e => setCompetitor(e.target.value)}
                         placeholder="konkurrent.de"
-                        className="flex-1 bg-white/3 border border-white/10 focus:border-emerald-500/50 rounded-xl px-4 py-2.5 text-white placeholder:text-slate-600 outline-none text-sm"
+                        className="flex-1 bg-[var(--surface-06)] border border-[var(--border-subtle)] focus:border-[var(--accent-border)] rounded-xl px-4 py-2.5 text-white placeholder:text-slate-600 outline-none text-sm"
                     />
                     <button type="submit" disabled={loading || !competitor.trim()}
-                        className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-sm font-semibold rounded-xl transition-all disabled:opacity-50 whitespace-nowrap">
+                        className="flex items-center gap-2 px-4 py-2.5 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all disabled:opacity-50 whitespace-nowrap">
                         {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <GitCompare className="w-4 h-4" />}
                         {loading ? 'Analysiere…' : 'Gap analysieren'}
                     </button>
@@ -1287,7 +1284,7 @@ function ContentGapTab({ siteId, plan }) {
 
             {/* Limit reached */}
             {limitReached && (
-                <div className="flex flex-col items-center justify-center py-12 gap-4 bg-[#0d1117] border border-amber-500/15 rounded-2xl">
+                <div className="flex flex-col items-center justify-center py-12 gap-4 bg-[var(--bg-surface)] border border-amber-500/15 rounded-2xl">
                     <div className="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center">
                         <Lock className="w-5 h-5 text-amber-400" />
                     </div>
@@ -1302,7 +1299,7 @@ function ContentGapTab({ siteId, plan }) {
                     </div>
                     {plan === 'pro' && (
                         <Link href="/seo/pricing"
-                            className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-sm font-semibold rounded-xl transition-all">
+                            className="flex items-center gap-2 px-4 py-2 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all">
                             Auf Expert upgraden →
                         </Link>
                     )}
@@ -1325,11 +1322,11 @@ function ContentGapTab({ siteId, plan }) {
                                 </h3>
                                 <span className="text-xs text-slate-600">Sortiert nach Suchvolumen</span>
                             </div>
-                            <div className="bg-[#0d1117] border border-emerald-500/10 rounded-2xl overflow-hidden">
+                            <div className="bg-[var(--bg-surface)] border border-[var(--accent-border)] rounded-2xl overflow-hidden">
                                 <div className="overflow-x-auto">
                                     <table className="w-full">
                                         <thead>
-                                            <tr className="border-b border-white/[0.05]">
+                                            <tr className="border-b border-[var(--border-subtle)]">
                                                 <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Keyword</th>
                                                 <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Volumen/Mo</th>
                                                 <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider hidden sm:table-cell">Konkurrent</th>
@@ -1343,7 +1340,7 @@ function ContentGapTab({ siteId, plan }) {
                                                 const isAdded  = added.has(item.keyword)
                                                 const isAdding = adding.has(item.keyword)
                                                 return (
-                                                    <tr key={item.keyword} className="border-b border-white/[0.04] last:border-0 hover:bg-white/[0.02] transition-colors">
+                                                    <tr key={item.keyword} className="border-b border-[var(--border-subtle)] last:border-0 hover:bg-[var(--surface-08)] transition-colors">
                                                         <td className="px-5 py-3.5"><span className="text-sm text-slate-200 font-medium">{item.keyword}</span></td>
                                                         <td className="px-5 py-3.5"><VolumeBar value={item.searchVolume} max={maxVolume} /></td>
                                                         <td className="px-5 py-3.5 hidden sm:table-cell"><PositionCell position={item.competitorPosition} /></td>
@@ -1362,7 +1359,7 @@ function ContentGapTab({ siteId, plan }) {
                                                                 </span>
                                                             ) : (
                                                                 <button onClick={() => handleAddKeyword(item.keyword)} disabled={isAdding}
-                                                                    className="flex items-center gap-1 ml-auto px-2.5 py-1.5 text-xs font-semibold rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/20 transition-all disabled:opacity-50 whitespace-nowrap">
+                                                                    className="flex items-center gap-1 ml-auto px-2.5 py-1.5 text-xs font-semibold rounded-lg bg-[var(--accent-soft)] hover:bg-[var(--accent-soft-strong)] text-[var(--accent)] border border-[var(--accent-border)] transition-all disabled:opacity-50 whitespace-nowrap">
                                                                     {isAdding ? <Loader2 className="w-3 h-3 animate-spin" /> : <Plus className="w-3 h-3" />}
                                                                     Tracken
                                                                 </button>
@@ -1426,10 +1423,10 @@ function SettingsTab({ siteId }) {
     return (
         <div className="max-w-lg space-y-4">
             {/* Email alerts card */}
-            <div className="bg-white/[0.03] border border-white/[0.07] rounded-2xl p-6">
+            <div className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl p-6">
                 <div className="flex items-center gap-3 mb-4">
-                    <div className="w-9 h-9 rounded-xl bg-emerald-500/10 border border-emerald-500/15 flex items-center justify-center">
-                        <Bell className="w-4 h-4 text-emerald-400" />
+                    <div className="w-9 h-9 rounded-xl bg-[var(--accent-soft)] border border-[var(--accent-border)] flex items-center justify-center">
+                        <Bell className="w-4 h-4 text-[var(--accent)]" />
                     </div>
                     <div>
                         <h3 className="text-sm font-semibold text-white">E-Mail-Alerts</h3>
@@ -1439,20 +1436,20 @@ function SettingsTab({ siteId }) {
 
                 <div className="space-y-3 mb-5">
                     <div className="flex items-start gap-2.5">
-                        <div className="w-4 h-4 rounded-full bg-emerald-500/15 border border-emerald-500/25 flex items-center justify-center shrink-0 mt-0.5">
-                            <Check className="w-2.5 h-2.5 text-emerald-400" strokeWidth={3} />
+                        <div className="w-4 h-4 rounded-full bg-[var(--accent-soft)] border border-[var(--accent-border)] flex items-center justify-center shrink-0 mt-0.5">
+                            <Check className="w-2.5 h-2.5 text-[var(--accent)]" strokeWidth={3} />
                         </div>
                         <p className="text-xs text-slate-400">Automatischer wöchentlicher Check (montags)</p>
                     </div>
                     <div className="flex items-start gap-2.5">
-                        <div className="w-4 h-4 rounded-full bg-emerald-500/15 border border-emerald-500/25 flex items-center justify-center shrink-0 mt-0.5">
-                            <Check className="w-2.5 h-2.5 text-emerald-400" strokeWidth={3} />
+                        <div className="w-4 h-4 rounded-full bg-[var(--accent-soft)] border border-[var(--accent-border)] flex items-center justify-center shrink-0 mt-0.5">
+                            <Check className="w-2.5 h-2.5 text-[var(--accent)]" strokeWidth={3} />
                         </div>
                         <p className="text-xs text-slate-400">Alert bei signifikanten Verlusten <span className="text-slate-600">(Einsteiger: ±10, Pro: ±5, Expert: ±3 Positionen)</span></p>
                     </div>
                     <div className="flex items-start gap-2.5">
-                        <div className="w-4 h-4 rounded-full bg-emerald-500/15 border border-emerald-500/25 flex items-center justify-center shrink-0 mt-0.5">
-                            <Check className="w-2.5 h-2.5 text-emerald-400" strokeWidth={3} />
+                        <div className="w-4 h-4 rounded-full bg-[var(--accent-soft)] border border-[var(--accent-border)] flex items-center justify-center shrink-0 mt-0.5">
+                            <Check className="w-2.5 h-2.5 text-[var(--accent)]" strokeWidth={3} />
                         </div>
                         <p className="text-xs text-slate-400">Alert bei Verbesserungen — neu in Top 10 oder +5 Positionen</p>
                     </div>
@@ -1464,7 +1461,7 @@ function SettingsTab({ siteId }) {
                     className={`flex items-center justify-between w-full px-4 py-3 rounded-xl border transition-all ${
                         alertsEnabled
                             ? 'bg-emerald-500/10 border-emerald-500/20 hover:bg-emerald-500/15'
-                            : 'bg-white/[0.03] border-white/10 hover:border-white/15'
+                            : 'bg-[var(--surface-06)] border-[var(--border-subtle)] hover:border-[var(--border-strong)]'
                     }`}
                 >
                     <div className="flex items-center gap-3">
@@ -1473,7 +1470,7 @@ function SettingsTab({ siteId }) {
                             Ranking-Alerts per E-Mail
                         </span>
                     </div>
-                    <div className={`relative w-10 h-5 rounded-full transition-colors shrink-0 ${alertsEnabled ? 'bg-emerald-500' : 'bg-white/10'}`}>
+                    <div className={`relative w-10 h-5 rounded-full transition-colors shrink-0 ${alertsEnabled ? 'bg-emerald-500' : 'bg-[var(--surface-10)]'}`}>
                         <div className={`absolute top-0.5 w-4 h-4 rounded-full bg-white shadow transition-transform ${alertsEnabled ? 'translate-x-5' : 'translate-x-0.5'}`} />
                     </div>
                 </button>
@@ -1533,15 +1530,15 @@ export default function SeoSitePage() {
     }, [fetchSite, router])
 
     if (loading) return (
-        <div className="min-h-screen bg-[#05080f] flex items-center justify-center">
-            <Loader2 className="w-8 h-8 text-emerald-400 animate-spin" />
+        <div className="min-h-screen bg-[var(--bg-base)] flex items-center justify-center">
+            <Loader2 className="w-8 h-8 text-[var(--accent)] animate-spin" />
         </div>
     )
 
     return (
-        <div className="min-h-screen bg-[#05080f]">
+        <div className="min-h-screen bg-[var(--bg-base)]">
             <Toaster position="top-right" toastOptions={{
-                style: { background: '#0d1117', color: '#fff', border: '1px solid rgba(255,255,255,0.08)' },
+                style: { background: 'var(--bg-surface)', color: '#fff', border: '1px solid var(--border-subtle)' },
             }} />
             <Navbar />
 
@@ -1553,8 +1550,8 @@ export default function SeoSitePage() {
                         <ArrowLeft className="w-4 h-4" />Zurück zum Dashboard
                     </Link>
                     <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/15 flex items-center justify-center">
-                            <Globe className="w-5 h-5 text-emerald-400" />
+                        <div className="w-10 h-10 rounded-xl bg-[var(--accent-soft)] border border-[var(--accent-border)] flex items-center justify-center">
+                            <Globe className="w-5 h-5 text-[var(--accent)]" />
                         </div>
                         <div>
                             <h1 className="text-xl font-bold text-white">{site?.displayName || site?.domain}</h1>
@@ -1564,12 +1561,12 @@ export default function SeoSitePage() {
                 </div>
 
                 {/* Tabs */}
-                <div className="flex items-center gap-1 mb-6 border-b border-white/[0.06] overflow-x-auto">
+                <div className="flex items-center gap-1 mb-6 border-b border-[var(--border-subtle)] overflow-x-auto">
                     {TABS.map(t => (
                         <button key={t.id} onClick={() => setTab(t.id)}
                             className={`flex items-center gap-2 px-4 py-3 text-sm font-medium whitespace-nowrap border-b-2 transition-all -mb-px ${
                                 tab === t.id
-                                    ? 'text-emerald-400 border-emerald-400'
+                                    ? 'text-[var(--accent)] border-[var(--accent)]'
                                     : 'text-slate-500 hover:text-slate-300 border-transparent'
                             }`}>
                             <t.icon className="w-3.5 h-3.5" />

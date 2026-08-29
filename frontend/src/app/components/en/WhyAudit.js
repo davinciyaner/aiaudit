@@ -64,7 +64,7 @@ export default function WhyAudit() {
                     {STATS.map((s, i) => (
                         <motion.div key={i}
                             initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
-                            className="flex sm:flex-col items-center sm:items-start gap-4 sm:gap-0 bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5 sm:p-8">
+                            className="flex sm:flex-col items-center sm:items-start gap-4 sm:gap-0 bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl p-5 sm:p-8">
                             <div className="text-4xl sm:text-5xl font-black shrink-0 text-white">{s.value}</div>
                             <div>
                                 <div className="text-sm font-semibold text-white sm:mt-3 sm:mb-2 leading-snug">{s.label}</div>
@@ -89,9 +89,9 @@ export default function WhyAudit() {
                         {DECAY_ITEMS.map((item, i) => (
                             <motion.div key={i}
                                 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}
-                                className="flex gap-4 bg-white/[0.02] border border-white/[0.05] rounded-2xl p-4 sm:p-6">
-                                <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 bg-violet-500/10 border border-violet-500/20">
-                                    <item.icon className="w-5 h-5 text-violet-300" strokeWidth={1.8} />
+                                className="flex gap-4 bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl p-4 sm:p-6">
+                                <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 bg-[var(--accent-soft)] border border-[var(--accent-border)]">
+                                    <item.icon className="w-5 h-5 text-[var(--accent)]" strokeWidth={1.8} />
                                 </div>
                                 <div>
                                     <div className="text-sm font-semibold text-white mb-1.5">{item.title}</div>

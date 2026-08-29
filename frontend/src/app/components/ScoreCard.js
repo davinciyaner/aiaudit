@@ -15,7 +15,7 @@ export default function ScoreCard({ label, score, delay = 0, onClick }) {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.4, delay }}
             onClick={onClick}
-            className={`bg-white/[0.03] border border-white/[0.07] rounded-2xl p-4 sm:p-6 text-center ${onClick ? 'cursor-pointer hover:border-violet-500/30 hover:bg-white/[0.05] transition-all' : ''}`}
+            className={`bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl p-4 sm:p-6 text-center ${onClick ? 'cursor-pointer hover:border-[var(--accent-border)] hover:bg-[var(--surface-08)] transition-all' : ''}`}
         >
             <div className="text-xs text-slate-500 uppercase tracking-widest mb-3">{label}</div>
             <div className="relative w-20 h-20 mx-auto mb-3">

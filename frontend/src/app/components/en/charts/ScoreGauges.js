@@ -15,9 +15,9 @@ function Gauge({ label, icon: Icon, score, delay, reduceMotion }) {
         <div className="flex flex-col items-center text-center">
             <div className="relative w-20 h-20">
                 <svg className="w-20 h-20 -rotate-90" viewBox="0 0 80 80">
-                    <circle cx="40" cy="40" r={R} fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="6" />
+                    <circle cx="40" cy="40" r={R} fill="none" stroke="var(--surface-06)" strokeWidth="6" />
                     <motion.circle
-                        cx="40" cy="40" r={R} fill="none" stroke="url(#gaugeGradientEn)"
+                        cx="40" cy="40" r={R} fill="none" stroke="var(--accent)"
                         strokeWidth="6" strokeLinecap="round"
                         strokeDasharray={CIRC}
                         initial={reduceMotion ? false : { strokeDashoffset: CIRC }}
@@ -42,19 +42,10 @@ export default function ScoreGauges() {
     const reduceMotion = useReducedMotion()
 
     return (
-        <div className="bg-[var(--bg-surface)] border border-white/10 rounded-2xl p-5 sm:p-6 h-full">
-            <svg width="0" height="0">
-                <defs>
-                    <linearGradient id="gaugeGradientEn" x1="0" y1="0" x2="1" y2="1">
-                        <stop offset="0%" stopColor="#a78bfa" />
-                        <stop offset="100%" stopColor="#22d3ee" />
-                    </linearGradient>
-                </defs>
-            </svg>
-
+        <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl p-5 sm:p-6 h-full">
             <div className="flex items-center gap-2 mb-6">
                 <h3 className="text-sm font-semibold text-white">Audit Scores</h3>
-                <span className="text-[10px] px-1.5 py-0.5 rounded-md bg-white/[0.06] text-slate-500 font-medium">Example</span>
+                <span className="text-[10px] px-1.5 py-0.5 rounded-md bg-[var(--surface-08)] text-slate-500 font-medium">Example</span>
             </div>
 
             <div className="grid grid-cols-2 gap-2">

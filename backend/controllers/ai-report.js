@@ -36,7 +36,6 @@ Pages crawled: ${auditData.pagesAnalyzed}
 Overall score: ${auditData.overallScore}/100
 SEO score: ${auditData.seo.score}/100
 Performance score: ${auditData.performance.score}/100
-Security score: ${auditData.security.score}/100
 GEO score: ${auditData.geo?.score ?? 0}/100
 
 PAGE STATISTICS:
@@ -64,9 +63,6 @@ ${slowResources}
 
 PERFORMANCE ISSUES:
 ${auditData.performance.issues.join('\n') || none}
-
-SECURITY ISSUES:
-${auditData.security.issues.join('\n') || none}
 
 TOP KEYWORDS:
 ${auditData.keywords.topKeywords.slice(0, 10).map(k => `${k.keyword} (Score: ${k.score}, Density: ${k.density}, in Title: ${k.inTitle ? yes : no}, in H1: ${k.inH1 ? yes : no})`).join('\n')}
@@ -127,7 +123,6 @@ Gecrawlte Seiten: ${auditData.pagesAnalyzed}
 Gesamtscore: ${auditData.overallScore}/100
 SEO Score: ${auditData.seo.score}/100
 Performance Score: ${auditData.performance.score}/100
-Security Score: ${auditData.security.score}/100
 GEO Score: ${auditData.geo?.score ?? 0}/100
 
 SEITEN-STATISTIKEN:
@@ -155,9 +150,6 @@ ${slowResources}
 
 PERFORMANCE PROBLEME:
 ${auditData.performance.issues.join('\n') || none}
-
-SECURITY PROBLEME:
-${auditData.security.issues.join('\n') || none}
 
 TOP KEYWORDS:
 ${auditData.keywords.topKeywords.slice(0, 10).map(k => `${k.keyword} (Score: ${k.score}, Dichte: ${k.density}, in Title: ${k.inTitle ? yes : no}, in H1: ${k.inH1 ? yes : no})`).join('\n')}

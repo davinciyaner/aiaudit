@@ -181,20 +181,20 @@ function PlanCard({plan, user, currentPlan, loading, onSuccess}) {
             transition={{delay: PLANS.indexOf(plan) * 0.1}}
             className={`relative flex flex-col rounded-2xl p-8 border transition-all duration-300 ${
                 plan.highlight
-                    ? 'bg-linear-to-b from-violet-600/10 to-transparent border-violet-500/30 shadow-2xl shadow-violet-500/10'
-                    : 'bg-white/2 border-white/6'
+                    ? 'bg-[var(--accent-soft)] border-[var(--accent-border)] shadow-2xl shadow-[var(--accent-border)]'
+                    : 'bg-[var(--surface-06)] border-[var(--border-subtle)]'
             }`}
         >
             {plan.badge && (
                 <div
-                    className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-linear-to-r from-violet-600 to-cyan-600 rounded-full text-xs font-semibold text-white shadow-lg whitespace-nowrap">
+                    className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-[var(--accent)] rounded-full text-xs font-semibold text-[var(--bg-base)] shadow-lg whitespace-nowrap">
                     {plan.badge}
                 </div>
             )}
 
             {isCurrentPlan && (
                 <div
-                    className="absolute -top-3 right-6 px-3 py-1 bg-emerald-500/20 border border-emerald-500/30 rounded-full text-xs font-semibold text-emerald-400">
+                    className="absolute -top-3 right-6 px-3 py-1 bg-[var(--accent-soft-strong)] border border-[var(--accent-border)] rounded-full text-xs font-semibold text-[var(--accent)]">
                     Aktuell
                 </div>
             )}
@@ -215,8 +215,8 @@ function PlanCard({plan, user, currentPlan, loading, onSuccess}) {
                 {plan.features.map(f => (
                     <div key={f} className="flex items-center gap-3 text-sm">
                         <div
-                            className={`w-4 h-4 rounded-full flex items-center justify-center shrink-0 ${plan.highlight ? 'bg-violet-500/20' : 'bg-white/5'}`}>
-                            <Check className={`w-2.5 h-2.5 ${plan.highlight ? 'text-violet-400' : 'text-slate-400'}`}
+                            className={`w-4 h-4 rounded-full flex items-center justify-center shrink-0 ${plan.highlight ? 'bg-[var(--accent-soft-strong)]' : 'bg-[var(--surface-08)]'}`}>
+                            <Check className={`w-2.5 h-2.5 ${plan.highlight ? 'text-[var(--accent)]' : 'text-slate-400'}`}
                                    strokeWidth={3}/>
                         </div>
                         <span className="text-slate-300">{f}</span>
@@ -227,24 +227,24 @@ function PlanCard({plan, user, currentPlan, loading, onSuccess}) {
             <div>
                 {!isPaid ? (
                     <Link href={plan.href}
-                          className="block w-full py-3 text-center text-sm font-semibold rounded-xl border border-white/10 text-slate-300 hover:text-white hover:border-white/20 hover:bg-white/5 transition-all duration-200">
+                          className="block w-full py-3 text-center text-sm font-semibold rounded-xl border border-[var(--border-subtle)] text-slate-300 hover:text-white hover:border-[var(--border-strong)] hover:bg-[var(--surface-08)] transition-all duration-200">
                         {plan.cta}
                     </Link>
                 ) : loading ? (
-                    <div className="flex items-center justify-center w-full py-3 rounded-xl border border-white/10">
+                    <div className="flex items-center justify-center w-full py-3 rounded-xl border border-[var(--border-subtle)]">
                         <Loader2 className="w-4 h-4 text-slate-500 animate-spin"/>
                     </div>
                 ) : isCurrentPlan ? (
                     <div
-                        className="block w-full py-3 text-center text-sm font-semibold rounded-xl border border-emerald-500/20 text-emerald-400 bg-emerald-500/5">
+                        className="block w-full py-3 text-center text-sm font-semibold rounded-xl border border-[var(--accent-border)] text-[var(--accent)] bg-[var(--accent-soft)]">
                         Aktives Abo
                     </div>
                 ) : !user ? (
                     <Link href={`/login?redirect=/pricing`}
                           className={`flex items-center justify-center gap-2 w-full py-3 text-center text-sm font-semibold rounded-xl transition-all duration-200 ${
                               plan.highlight
-                                  ? 'bg-linear-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white shadow-lg shadow-violet-500/20 hover:-translate-y-0.5'
-                                  : 'border border-white/10 text-slate-300 hover:text-white hover:border-white/20 hover:bg-white/5'
+                                  ? 'bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] shadow-lg shadow-[var(--accent-border)] hover:-translate-y-0.5'
+                                  : 'border border-[var(--border-subtle)] text-slate-300 hover:text-white hover:border-[var(--border-strong)] hover:bg-[var(--surface-08)]'
                           }`}>
                         <LogIn className="w-4 h-4"/> Anmelden zum Abonnieren
                     </Link>
@@ -347,12 +347,12 @@ export default function PricingPage() {
 
     return (
         <>
-            <div className="min-h-screen bg-[#05080f]">
+            <div className="min-h-screen bg-[var(--bg-base)]">
                 <Toaster position="top-right" toastOptions={{
                     style: {
-                        background: '#0d1117',
+                        background: 'var(--bg-surface)',
                         color: '#fff',
-                        border: '1px solid rgba(255,255,255,0.08)',
+                        border: '1px solid var(--border-subtle)',
                         maxWidth: 'calc(100vw - 2rem)',
                     }
                 }}/>
@@ -361,15 +361,14 @@ export default function PricingPage() {
                 <div className="relative pt-32 pb-24 px-5 sm:px-8">
                     <div
                         className="absolute top-0 left-1/2 -translate-x-1/2 w-150 h-100 rounded-full blur-3xl pointer-events-none"
-                        style={{background: 'radial-gradient(ellipse, rgba(124,58,237,0.08) 0%, transparent 70%)'}}/>
+                        style={{background: 'radial-gradient(ellipse, var(--accent-glow) 0%, transparent 70%)'}}/>
 
                     <div className="relative z-10 max-w-6xl mx-auto">
                         <motion.div initial={{opacity: 0, y: 30}} animate={{opacity: 1, y: 0}}
                                     className="text-center mb-16">
                             <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-5">
                                 Kostenlos starten.<br/>
-                                <span
-                                    className="text-transparent bg-clip-text bg-linear-to-r from-violet-400 to-cyan-400">Wachsen wenn nötig.</span>
+                                Wachsen wenn nötig.
                             </h1>
                             <p className="text-lg text-slate-400 max-w-xl mx-auto">
                                 Keine versteckten Gebühren. Monatliches Abo. Jederzeit kündbar.
@@ -396,11 +395,11 @@ export default function PricingPage() {
                         <motion.div initial={{opacity: 0, y: 30}} whileInView={{opacity: 1, y: 0}} viewport={{once: true}}
                                     className="mt-24">
                             <div className="flex items-center gap-4 mb-10">
-                                <div className="flex-1 h-px bg-white/[0.06]"/>
-                                <div className="flex items-center gap-2 px-4 py-2 rounded-full border border-emerald-500/20 bg-emerald-500/5 text-emerald-400 text-xs font-semibold whitespace-nowrap">
+                                <div className="flex-1 h-px bg-[var(--border-subtle)]"/>
+                                <div className="flex items-center gap-2 px-4 py-2 rounded-full border border-[var(--accent-border)] bg-[var(--accent-soft)] text-[var(--accent)] text-xs font-semibold whitespace-nowrap">
                                     SEO Automatisierung
                                 </div>
-                                <div className="flex-1 h-px bg-white/[0.06]"/>
+                                <div className="flex-1 h-px bg-[var(--border-subtle)]"/>
                             </div>
 
                             <div className="text-center mb-10">
@@ -410,8 +409,8 @@ export default function PricingPage() {
                                 <p className="text-slate-400 text-sm max-w-lg mx-auto mb-4">
                                     Wöchentliche Ranking-Updates, Keyword-Ideen, Konkurrenzanalyse und Backlink-Profil - unabhängig vom Audit-Plan buchbar.
                                 </p>
-                                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-violet-500/20 bg-violet-500/5 text-xs">
-                                    <span className="text-violet-300 font-semibold">14 Tage kostenlos testen</span>
+                                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-[var(--accent-border)] bg-[var(--accent-soft)] text-xs">
+                                    <span className="text-[var(--accent)] font-semibold">14 Tage kostenlos testen</span>
                                 </div>
                             </div>
 
@@ -422,11 +421,11 @@ export default function PricingPage() {
                                         viewport={{once: true}} transition={{delay: i * 0.1}}
                                         className={`relative flex flex-col rounded-2xl p-6 sm:p-8 border transition-all duration-300 ${
                                             plan.highlight
-                                                ? 'bg-linear-to-b from-emerald-600/10 to-transparent border-emerald-500/30 shadow-2xl shadow-emerald-500/10'
-                                                : 'bg-white/[0.02] border-white/[0.06]'
+                                                ? 'bg-[var(--accent-soft)] border-[var(--accent-border)] shadow-2xl shadow-[var(--accent-border)]'
+                                                : 'bg-[var(--surface-06)] border-[var(--border-subtle)]'
                                         }`}>
                                         {plan.badge && (
-                                            <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-linear-to-r from-emerald-600 to-teal-600 rounded-full text-xs font-semibold text-white shadow-lg whitespace-nowrap">
+                                            <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-[var(--accent)] rounded-full text-xs font-semibold text-[var(--bg-base)] shadow-lg whitespace-nowrap">
                                                 {plan.badge}
                                             </div>
                                         )}
@@ -444,15 +443,15 @@ export default function PricingPage() {
                                         <div className="space-y-3 mb-8 flex-1">
                                             {plan.features.map(f => (
                                                 <div key={f} className="flex items-center gap-3 text-sm">
-                                                    <div className={`w-4 h-4 rounded-full flex items-center justify-center shrink-0 ${plan.highlight ? 'bg-emerald-500/20' : 'bg-white/5'}`}>
-                                                        <Check className={`w-2.5 h-2.5 ${plan.highlight ? 'text-emerald-400' : 'text-slate-400'}`} strokeWidth={3}/>
+                                                    <div className={`w-4 h-4 rounded-full flex items-center justify-center shrink-0 ${plan.highlight ? 'bg-[var(--accent-soft-strong)]' : 'bg-[var(--surface-08)]'}`}>
+                                                        <Check className={`w-2.5 h-2.5 ${plan.highlight ? 'text-[var(--accent)]' : 'text-slate-400'}`} strokeWidth={3}/>
                                                     </div>
                                                     <span className="text-slate-300">{f}</span>
                                                 </div>
                                             ))}
                                             {plan.locked?.map(f => (
                                                 <div key={f} className="flex items-center gap-3 text-sm opacity-40">
-                                                    <div className="w-4 h-4 rounded-full flex items-center justify-center shrink-0 bg-white/5">
+                                                    <div className="w-4 h-4 rounded-full flex items-center justify-center shrink-0 bg-[var(--surface-08)]">
                                                         <Lock className="w-2.5 h-2.5 text-slate-500" strokeWidth={3}/>
                                                     </div>
                                                     <span className="text-slate-500 line-through">{f}</span>
@@ -462,8 +461,8 @@ export default function PricingPage() {
                                         <Link href="/seo/pricing"
                                             className={`flex items-center justify-center gap-2 w-full py-3.5 text-sm font-semibold rounded-xl transition-all duration-200 ${
                                                 plan.highlight
-                                                    ? 'bg-linear-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white shadow-lg shadow-emerald-500/20'
-                                                    : 'border border-white/10 text-slate-300 hover:text-white hover:border-white/20 hover:bg-white/5'
+                                                    ? 'bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] shadow-lg shadow-[var(--accent-border)]'
+                                                    : 'border border-[var(--border-subtle)] text-slate-300 hover:text-white hover:border-[var(--border-strong)] hover:bg-[var(--surface-08)]'
                                             }`}>
                                             {plan.name} starten
                                             <ArrowRight className="w-4 h-4"/>
@@ -481,11 +480,11 @@ export default function PricingPage() {
                         <motion.div initial={{opacity: 0, y: 30}} whileInView={{opacity: 1, y: 0}} viewport={{once: true}}
                                     className="mt-20">
                             <div className="flex items-center gap-4 mb-10">
-                                <div className="flex-1 h-px bg-white/[0.06]"/>
-                                <div className="flex items-center gap-2 px-4 py-2 rounded-full border border-violet-500/20 bg-violet-500/5 text-violet-400 text-xs font-semibold whitespace-nowrap">
+                                <div className="flex-1 h-px bg-[var(--border-subtle)]"/>
+                                <div className="flex items-center gap-2 px-4 py-2 rounded-full border border-[var(--accent-border)] bg-[var(--accent-soft)] text-[var(--accent)] text-xs font-semibold whitespace-nowrap">
                                     GEO Automatisierung
                                 </div>
-                                <div className="flex-1 h-px bg-white/[0.06]"/>
+                                <div className="flex-1 h-px bg-[var(--border-subtle)]"/>
                             </div>
 
                             <div className="text-center mb-10">
@@ -495,8 +494,8 @@ export default function PricingPage() {
                                 <p className="text-slate-400 text-sm max-w-lg mx-auto mb-4">
                                     Tracke automatisch ob Claude, ChatGPT, Perplexity und Google AI Overview deine Domain bei relevanten Anfragen erwähnen - wöchentlich und auf Abruf.
                                 </p>
-                                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-violet-500/20 bg-violet-500/5 text-xs">
-                                    <span className="text-violet-300 font-semibold">14 Tage kostenlos testen</span>
+                                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-[var(--accent-border)] bg-[var(--accent-soft)] text-xs">
+                                    <span className="text-[var(--accent)] font-semibold">14 Tage kostenlos testen</span>
                                 </div>
                             </div>
 
@@ -507,8 +506,8 @@ export default function PricingPage() {
                                         viewport={{once: true}} transition={{delay: i * 0.1}}
                                         className={`relative flex flex-col rounded-2xl p-6 sm:p-8 border transition-all duration-300 ${
                                             plan.highlight
-                                                ? 'bg-linear-to-b from-violet-600/10 to-transparent border-violet-500/30 shadow-2xl shadow-violet-500/10'
-                                                : 'bg-white/[0.02] border-white/[0.06]'
+                                                ? 'bg-[var(--accent-soft)] border-[var(--accent-border)] shadow-2xl shadow-[var(--accent-border)]'
+                                                : 'bg-[var(--surface-06)] border-[var(--border-subtle)]'
                                         }`}>
                                         <div className="mb-5">
                                             <div className="flex items-center gap-2 mb-3">
@@ -524,8 +523,8 @@ export default function PricingPage() {
                                         <div className="space-y-3 mb-8 flex-1">
                                             {plan.features.map(f => (
                                                 <div key={f} className="flex items-center gap-3 text-sm">
-                                                    <div className={`w-4 h-4 rounded-full flex items-center justify-center shrink-0 ${plan.highlight ? 'bg-violet-500/20' : 'bg-white/5'}`}>
-                                                        <Check className={`w-2.5 h-2.5 ${plan.highlight ? 'text-violet-400' : 'text-slate-400'}`} strokeWidth={3}/>
+                                                    <div className={`w-4 h-4 rounded-full flex items-center justify-center shrink-0 ${plan.highlight ? 'bg-[var(--accent-soft-strong)]' : 'bg-[var(--surface-08)]'}`}>
+                                                        <Check className={`w-2.5 h-2.5 ${plan.highlight ? 'text-[var(--accent)]' : 'text-slate-400'}`} strokeWidth={3}/>
                                                     </div>
                                                     <span className="text-slate-300">{f}</span>
                                                 </div>
@@ -534,8 +533,8 @@ export default function PricingPage() {
                                         <Link href="/geo/pricing"
                                             className={`flex items-center justify-center gap-2 w-full py-3.5 text-sm font-semibold rounded-xl transition-all duration-200 ${
                                                 plan.highlight
-                                                    ? 'bg-linear-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white shadow-lg shadow-violet-500/20'
-                                                    : 'border border-white/10 text-slate-300 hover:text-white hover:border-white/20 hover:bg-white/5'
+                                                    ? 'bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] shadow-lg shadow-[var(--accent-border)]'
+                                                    : 'border border-[var(--border-subtle)] text-slate-300 hover:text-white hover:border-[var(--border-strong)] hover:bg-[var(--surface-08)]'
                                             }`}>
                                             {plan.name} starten
                                             <ArrowRight className="w-4 h-4"/>

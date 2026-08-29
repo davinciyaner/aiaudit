@@ -61,10 +61,10 @@ export default function LandingFeedback() {
                     transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
                     // bottom-28 (112px) auf Mobile damit es über der Sticky-URL-Bar liegt (~76px + safe area)
                     // sm:bottom-6 auf Desktop normal
-                    className="fixed bottom-28 left-3 right-3 sm:bottom-6 sm:left-auto sm:right-6 sm:w-80 z-50 bg-[#0d1117] border border-white/10 rounded-2xl shadow-2xl shadow-black/60"
+                    className="fixed bottom-28 left-3 right-3 sm:bottom-6 sm:left-auto sm:right-6 sm:w-80 z-50 bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl shadow-2xl shadow-black/60"
                 >
                     {/* Header */}
-                    <div className="flex items-center justify-between px-4 sm:px-5 pt-4 pb-3 border-b border-white/5">
+                    <div className="flex items-center justify-between px-4 sm:px-5 pt-4 pb-3 border-b border-[var(--border-subtle)]">
                         <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-500">Schnelles Feedback</span>
                         {step !== 'done' && (
                             <button
@@ -95,7 +95,7 @@ export default function LandingFeedback() {
                                                 onClick={() => handleRating(i)}
                                                 onMouseEnter={() => setHovered(i)}
                                                 onMouseLeave={() => setHovered(0)}
-                                                className="flex-1 flex flex-col items-center py-3 sm:py-2 rounded-xl active:bg-white/5 hover:bg-white/5 transition-all"
+                                                className="flex-1 flex flex-col items-center py-3 sm:py-2 rounded-xl active:bg-[var(--surface-06)] hover:bg-[var(--surface-06)] transition-all"
                                             >
                                                 <Star
                                                     className="w-7 h-7 sm:w-6 sm:h-6 transition-all duration-150"
@@ -145,7 +145,7 @@ export default function LandingFeedback() {
                                                 placeholder="z.B. Nicht sicher ob es wirklich kostenlos ist…"
                                                 rows={2}
                                                 // text-base (16px) auf Mobile verhindert iOS-Zoom; sm:text-xs auf Desktop
-                                                className="w-full bg-white/[0.04] border border-white/10 rounded-xl px-3 py-2.5 text-base sm:text-xs leading-snug text-white placeholder-slate-600 outline-none focus:border-violet-500/50 resize-none transition-all"
+                                                className="w-full bg-[var(--surface-08)] border border-[var(--border-subtle)] rounded-xl px-3 py-2.5 text-base sm:text-xs leading-snug text-white placeholder-slate-600 outline-none focus:border-[var(--accent-border)] resize-none transition-all"
                                             />
                                         </div>
                                         <div>
@@ -157,21 +157,21 @@ export default function LandingFeedback() {
                                                 onChange={e => setMissingFeature(e.target.value)}
                                                 placeholder="z.B. Mehr Beispiele, Preistransparenz…"
                                                 rows={2}
-                                                className="w-full bg-white/[0.04] border border-white/10 rounded-xl px-3 py-2.5 text-base sm:text-xs leading-snug text-white placeholder-slate-600 outline-none focus:border-violet-500/50 resize-none transition-all"
+                                                className="w-full bg-[var(--surface-08)] border border-[var(--border-subtle)] rounded-xl px-3 py-2.5 text-base sm:text-xs leading-snug text-white placeholder-slate-600 outline-none focus:border-[var(--accent-border)] resize-none transition-all"
                                             />
                                         </div>
                                     </div>
                                     <div className="flex gap-2 mt-4">
                                         <button
                                             onClick={dismiss}
-                                            className="flex-1 py-3 sm:py-2.5 rounded-xl text-xs text-slate-500 hover:text-slate-300 border border-white/[0.06] hover:border-white/10 transition-all"
+                                            className="flex-1 py-3 sm:py-2.5 rounded-xl text-xs text-slate-500 hover:text-slate-300 border border-[var(--border-subtle)] hover:border-[var(--border-strong)] transition-all"
                                         >
                                             Überspringen
                                         </button>
                                         <button
                                             onClick={handleSubmit}
                                             disabled={sending}
-                                            className="flex-1 py-3 sm:py-2.5 rounded-xl text-xs font-semibold text-white bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 disabled:opacity-50 transition-all shadow-lg shadow-violet-500/20"
+                                            className="flex-1 py-3 sm:py-2.5 rounded-xl text-xs font-semibold text-[var(--bg-base)] bg-[var(--accent)] hover:opacity-90 disabled:opacity-50 transition-all shadow-lg shadow-[var(--accent-border)]"
                                         >
                                             {sending ? 'Sende…' : 'Senden'}
                                         </button>

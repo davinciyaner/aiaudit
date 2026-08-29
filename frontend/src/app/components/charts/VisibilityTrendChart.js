@@ -43,29 +43,25 @@ export default function VisibilityTrendChart() {
     const delta = SCORES[SCORES.length - 1] - SCORES[0]
 
     return (
-        <div className="bg-[var(--bg-surface)] border border-white/10 rounded-2xl p-5 sm:p-6">
+        <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl p-5 sm:p-6">
             <div className="flex items-start justify-between gap-3 mb-1">
                 <div>
                     <div className="flex items-center gap-2">
                         <h3 className="text-sm font-semibold text-white">KI-Sichtbarkeit / AI-Visibility-Score</h3>
-                        <span className="text-[10px] px-1.5 py-0.5 rounded-md bg-white/[0.06] text-slate-500 font-medium">Beispiel</span>
+                        <span className="text-[10px] px-1.5 py-0.5 rounded-md bg-[var(--surface-08)] text-slate-500 font-medium">Beispiel</span>
                     </div>
                     <p className="text-xs text-slate-500 mt-0.5">Mentions bei ChatGPT, Claude, Perplexity &amp; Google AI Overview — 8 Wochen Tracking</p>
                 </div>
-                <div className="flex items-center gap-1 px-2 py-1 rounded-lg bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 text-xs font-semibold shrink-0">
+                <div className="flex items-center gap-1 px-2 py-1 rounded-lg bg-[var(--accent-soft)] border border-[var(--accent-border)] text-[var(--accent)] text-xs font-semibold shrink-0">
                     <TrendingUp className="w-3 h-3" /> +{delta} Punkte
                 </div>
             </div>
 
             <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-auto mt-2" role="img" aria-label={`KI-Sichtbarkeits-Score gestiegen von ${SCORES[0]} auf ${SCORES[SCORES.length - 1]} Punkten über 8 Wochen`}>
                 <defs>
-                    <linearGradient id="visLine" x1="0" y1="0" x2="1" y2="0">
-                        <stop offset="0%" stopColor="#a78bfa" />
-                        <stop offset="100%" stopColor="#22d3ee" />
-                    </linearGradient>
                     <linearGradient id="visArea" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="#22d3ee" stopOpacity="0.18" />
-                        <stop offset="100%" stopColor="#22d3ee" stopOpacity="0" />
+                        <stop offset="0%" stopColor="var(--accent)" stopOpacity="0.18" />
+                        <stop offset="100%" stopColor="var(--accent)" stopOpacity="0" />
                     </linearGradient>
                 </defs>
 
@@ -73,8 +69,8 @@ export default function VisibilityTrendChart() {
                     const y = BASE - (v / 100) * (BASE - TOP)
                     return (
                         <g key={v}>
-                            <line x1={PAD_L} y1={y} x2={W - PAD_R} y2={y} stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
-                            <text x={W - PAD_R + 8} y={y + 3} fontSize="9" fill="#64748b">{v}</text>
+                            <line x1={PAD_L} y1={y} x2={W - PAD_R} y2={y} stroke="var(--surface-06)" strokeWidth="1" />
+                            <text x={W - PAD_R + 8} y={y + 3} fontSize="9" fill="var(--text-muted)">{v}</text>
                         </g>
                     )
                 })}
@@ -84,7 +80,7 @@ export default function VisibilityTrendChart() {
                 <motion.path
                     d={linePath}
                     fill="none"
-                    stroke="url(#visLine)"
+                    stroke="var(--accent)"
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -94,11 +90,11 @@ export default function VisibilityTrendChart() {
                     transition={{ duration: 1.1, ease: 'easeOut' }}
                 />
 
-                <circle cx={last.x} cy={last.y} r="5" fill="#22d3ee" stroke="var(--bg-surface)" strokeWidth="2" />
+                <circle cx={last.x} cy={last.y} r="5" fill="var(--accent)" stroke="var(--bg-surface)" strokeWidth="2" />
                 <text x={last.x - 6} y={last.y - 14} fontSize="13" fontWeight="700" fill="#ffffff" textAnchor="end">{last.v}</text>
 
                 {WEEKS.map((w, i) => (
-                    <text key={w} x={pts[i].x} y={BASE + 18} fontSize="9" fill="#475569" textAnchor="middle">{w}</text>
+                    <text key={w} x={pts[i].x} y={BASE + 18} fontSize="9" fill="var(--text-muted)" textAnchor="middle">{w}</text>
                 ))}
             </svg>
 

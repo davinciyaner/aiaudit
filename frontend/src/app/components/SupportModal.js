@@ -61,19 +61,19 @@ export default function SupportModal({ open, onClose, defaultName = '', defaultE
                         transition={{ duration: 0.2 }}
                         className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none"
                     >
-                        <div className="w-full max-w-lg bg-[#0d1117] border border-white/[0.08] rounded-2xl shadow-2xl shadow-black/60 pointer-events-auto">
+                        <div className="w-full max-w-lg bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl shadow-2xl shadow-black/60 pointer-events-auto">
                             {/* Header */}
-                            <div className="flex items-center justify-between px-4 sm:px-6 py-4 sm:py-5 border-b border-white/[0.06]">
+                            <div className="flex items-center justify-between px-4 sm:px-6 py-4 sm:py-5 border-b border-[var(--border-subtle)]">
                                 <div className="flex items-center gap-3">
-                                    <div className="w-8 h-8 rounded-lg bg-violet-500/10 border border-violet-500/20 flex items-center justify-center">
-                                        <MessageSquare className="w-4 h-4 text-violet-400" />
+                                    <div className="w-8 h-8 rounded-lg bg-[var(--accent-soft)] border border-[var(--accent-border)] flex items-center justify-center">
+                                        <MessageSquare className="w-4 h-4 text-[var(--accent)]" />
                                     </div>
                                     <span className="font-semibold text-white">{locale === 'en' ? 'Create support ticket' : 'Support-Ticket erstellen'}</span>
                                 </div>
                                 <button
                                     onClick={handleClose}
                                     aria-label={locale === 'en' ? 'Close' : 'Schließen'}
-                                    className="p-3 -mr-2 text-slate-500 hover:text-white transition-colors rounded-lg hover:bg-white/5"
+                                    className="p-3 -mr-2 text-slate-500 hover:text-white transition-colors rounded-lg hover:bg-[var(--surface-06)]"
                                 >
                                     <X className="w-5 h-5" />
                                 </button>
@@ -97,7 +97,7 @@ export default function SupportModal({ open, onClose, defaultName = '', defaultE
                                                 placeholder={locale === 'en' ? 'Describe your issue in as much detail as possible...' : 'Beschreibe dein Anliegen so detailliert wie möglich...'}
                                                 rows={5}
                                                 required
-                                                className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-slate-600 outline-none focus:border-violet-500/50 resize-none transition-colors"
+                                                className="w-full bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-xl px-4 py-3 text-sm text-white placeholder-slate-600 outline-none focus:border-[var(--accent-border)] resize-none transition-colors"
                                             />
                                         </div>
                                         {error && (
@@ -106,10 +106,10 @@ export default function SupportModal({ open, onClose, defaultName = '', defaultE
                                         <button
                                             type="submit"
                                             disabled={loading}
-                                            className="w-full flex items-center justify-center gap-2 py-3 bg-linear-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 disabled:opacity-50 disabled:cursor-not-allowed text-white text-sm font-semibold rounded-xl transition-all"
+                                            className="w-full flex items-center justify-center gap-2 py-3 bg-[var(--accent)] hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all"
                                         >
                                             {loading ? (
-                                                <><div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />{locale === 'en' ? 'Sending...' : 'Wird gesendet...'}</>
+                                                <><div className="w-4 h-4 border-2 border-[var(--bg-base)]/30 border-t-[var(--bg-base)] rounded-full animate-spin" />{locale === 'en' ? 'Sending...' : 'Wird gesendet...'}</>
                                             ) : (
                                                 <>{locale === 'en' ? 'Create ticket' : 'Ticket erstellen'}<ArrowRight className="w-4 h-4" /></>
                                             )}
@@ -135,7 +135,7 @@ function Field({ label, type = 'text', value, onChange, placeholder, required })
                 onChange={onChange}
                 placeholder={placeholder}
                 required={required}
-                className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-slate-600 outline-none focus:border-violet-500/50 transition-colors"
+                className="w-full bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-xl px-4 py-2.5 text-sm text-white placeholder-slate-600 outline-none focus:border-[var(--accent-border)] transition-colors"
             />
         </div>
     )
@@ -151,14 +151,14 @@ function SuccessView({ ticketNumber, onClose, locale = 'de' }) {
             <p className="text-slate-400 text-sm mb-4">
                 {locale === 'en' ? 'You\'ll receive a confirmation by email. Your ticket number:' : 'Du erhältst eine Bestätigung per E-Mail. Deine Ticketnummer:'}
             </p>
-            <div className="inline-block bg-violet-500/10 border border-violet-500/20 rounded-xl px-5 py-2 mb-6">
-                <span className="text-violet-300 font-mono font-bold tracking-widest text-lg">{ticketNumber}</span>
+            <div className="inline-block bg-[var(--accent-soft)] border border-[var(--accent-border)] rounded-xl px-5 py-2 mb-6">
+                <span className="text-[var(--accent)] font-mono font-bold tracking-widest text-lg">{ticketNumber}</span>
             </div>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <Link
                     href={`${locale === 'en' ? '/en' : ''}/support/${ticketNumber}`}
                     onClick={onClose}
-                    className="flex items-center justify-center gap-2 px-5 py-2.5 bg-linear-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white text-sm font-semibold rounded-xl transition-all"
+                    className="flex items-center justify-center gap-2 px-5 py-2.5 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all"
                 >
                     {locale === 'en' ? 'Track status' : 'Status verfolgen'}
                     <ExternalLink className="w-3.5 h-3.5" />
@@ -166,7 +166,7 @@ function SuccessView({ ticketNumber, onClose, locale = 'de' }) {
                 <Link
                     href={locale === 'en' ? '/en/support' : '/support'}
                     onClick={onClose}
-                    className="flex items-center justify-center gap-2 px-5 py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 text-sm rounded-xl transition-all"
+                    className="flex items-center justify-center gap-2 px-5 py-2.5 bg-[var(--surface-06)] hover:bg-[var(--surface-10)] border border-[var(--border-subtle)] text-slate-300 text-sm rounded-xl transition-all"
                 >
                     {locale === 'en' ? 'All my tickets' : 'Alle meine Tickets'}
                 </Link>

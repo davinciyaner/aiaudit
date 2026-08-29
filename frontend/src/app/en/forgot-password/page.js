@@ -30,12 +30,12 @@ export default function ForgotPasswordPageEn() {
     }
 
     return (
-        <div className="min-h-screen bg-[#05080f] flex items-center justify-center px-5 py-12">
-            <Toaster position="top-right" toastOptions={{ style: { background: '#0d1117', color: '#fff', border: '1px solid rgba(255,255,255,0.08)', maxWidth: 'calc(100vw - 2rem)' } }} />
+        <div className="min-h-screen bg-[var(--bg-base)] flex items-center justify-center px-5 py-12">
+            <Toaster position="top-right" toastOptions={{ style: { background: 'var(--bg-surface)', color: '#fff', border: '1px solid var(--border-subtle)', maxWidth: 'calc(100vw - 2rem)' } }} />
 
             <div className="absolute inset-0">
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-125 h-100 rounded-full blur-3xl pointer-events-none"
-                    style={{ background: 'radial-gradient(ellipse, rgba(124,58,237,0.12), transparent 70%)' }} />
+                    style={{ background: 'radial-gradient(ellipse, var(--accent-glow), transparent 70%)' }} />
             </div>
 
             <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
@@ -43,15 +43,15 @@ export default function ForgotPasswordPageEn() {
 
                 <div className="flex justify-center mb-8">
                     <Link href="/en" className="flex items-center gap-2.5">
-                        <div className="w-9 h-9 rounded-xl bg-linear-to-br from-violet-500 to-cyan-500 flex items-center justify-center shadow-lg shadow-violet-500/30">
-                            <Zap className="w-4 h-4 text-white" strokeWidth={2.5} />
+                        <div className="w-9 h-9 rounded-xl bg-[var(--accent)] flex items-center justify-center shadow-lg shadow-[var(--accent-border)]">
+                            <Zap className="w-4 h-4 text-[var(--bg-base)]" strokeWidth={2.5} />
                         </div>
-                        <span className="text-xl font-bold text-white">Audit<span className="text-transparent bg-clip-text bg-linear-to-r from-violet-400 to-cyan-400">AI</span></span>
+                        <span className="text-xl font-bold text-white">AuditAI</span>
                     </Link>
                 </div>
 
                 {sent ? (
-                    <div className="bg-white/3 border border-white/8 rounded-2xl p-8 text-center">
+                    <div className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl p-8 text-center">
                         <div className="flex justify-center mb-4">
                             <div className="w-14 h-14 rounded-full bg-emerald-500/15 border border-emerald-500/25 flex items-center justify-center">
                                 <CheckCircle className="w-7 h-7 text-emerald-400" strokeWidth={1.5} />
@@ -62,7 +62,7 @@ export default function ForgotPasswordPageEn() {
                             If an account with <strong className="text-slate-300">{email}</strong> exists, we've sent a reset link. Please also check your spam folder.
                         </p>
                         <p className="text-xs text-slate-600 mb-6">The link is valid for 1 hour.</p>
-                        <Link href="/en/login" className="inline-flex items-center gap-2 text-sm text-violet-400 hover:text-violet-300 transition-colors font-medium">
+                        <Link href="/en/login" className="inline-flex items-center gap-2 text-sm text-white hover:text-[var(--accent)] transition-colors font-medium">
                             <ArrowLeft className="w-4 h-4" /> Back to login
                         </Link>
                     </div>
@@ -84,15 +84,15 @@ export default function ForgotPasswordPageEn() {
                                         onChange={(e) => setEmail(e.target.value)}
                                         placeholder="you@example.com"
                                         required
-                                        className="w-full bg-white/3 border border-white/10 hover:border-white/15 focus:border-violet-500/60 rounded-xl pl-11 pr-4 py-3.5 text-white placeholder:text-slate-600 outline-none transition-all text-sm"
+                                        className="w-full bg-[var(--surface-06)] border border-[var(--border-subtle)] hover:border-[var(--border-strong)] focus:border-[var(--accent-border)] rounded-xl pl-11 pr-4 py-3.5 text-white placeholder:text-slate-600 outline-none transition-all text-sm"
                                     />
                                 </div>
                             </div>
 
                             <motion.button type="submit" disabled={loading} whileTap={{ scale: 0.98 }}
-                                className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl bg-linear-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white font-semibold transition-all duration-200 shadow-lg shadow-violet-500/20 disabled:opacity-50 disabled:cursor-not-allowed text-sm">
+                                className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] font-semibold transition-all duration-200 shadow-lg shadow-[var(--accent-border)] disabled:opacity-50 disabled:cursor-not-allowed text-sm">
                                 {loading ? (
-                                    <><div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />Sending...</>
+                                    <><div className="w-4 h-4 border-2 border-[var(--bg-base)]/30 border-t-[var(--bg-base)] rounded-full animate-spin" />Sending...</>
                                 ) : (
                                     <>Send reset link <ArrowRight className="w-4 h-4" /></>
                                 )}

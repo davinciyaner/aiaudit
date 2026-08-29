@@ -1,16 +1,21 @@
 import { defineConfig, globalIgnores } from "eslint/config";
-import nextVitals from "eslint-config-next/core-web-vitals";
+import nextConfig from "eslint-config-next";
 
 const eslintConfig = defineConfig([
-  ...nextVitals,
-  // Override default ignores of eslint-config-next.
+  ...nextConfig,
   globalIgnores([
-    // Default ignores of eslint-config-next:
     ".next/**",
     "out/**",
     "build/**",
     "next-env.d.ts",
+    "node_modules/**",
   ]),
+  {
+    files: ["**/*.{js,jsx}"],
+    rules: {
+      "react/react-in-jsx-scope": "off",
+    },
+  },
 ]);
 
 export default eslintConfig;

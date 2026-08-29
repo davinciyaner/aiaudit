@@ -109,13 +109,13 @@ function PlanCard({ plan, user, currentPlan, loading, onSuccess }) {
             transition={{ delay: PLANS.indexOf(plan) * 0.1 }}
             className={`relative flex flex-col rounded-2xl p-8 border transition-all duration-300 ${
                 plan.highlight
-                    ? 'bg-gradient-to-b from-emerald-600/10 to-transparent border-emerald-500/30 shadow-2xl shadow-emerald-500/10'
-                    : 'bg-white/[0.02] border-white/[0.06]'
+                    ? 'bg-[var(--accent-soft)] border-[var(--accent-border)] shadow-2xl shadow-[var(--accent-border)]'
+                    : 'bg-[var(--surface-06)] border-[var(--border-subtle)]'
             }`}
         >
 
             {currentPlan === plan.id && (
-                <div className="absolute -top-3 right-6 px-3 py-1 bg-emerald-500/20 border border-emerald-500/30 rounded-full text-xs font-semibold text-emerald-400">
+                <div className="absolute -top-3 right-6 px-3 py-1 bg-[var(--accent-soft-strong)] border border-[var(--accent-border)] rounded-full text-xs font-semibold text-[var(--accent)]">
                     Current
                 </div>
             )}
@@ -135,15 +135,15 @@ function PlanCard({ plan, user, currentPlan, loading, onSuccess }) {
             <div className="space-y-3 mb-8 flex-1">
                 {plan.features.map(f => (
                     <div key={f} className="flex items-center gap-3 text-sm">
-                        <div className={`w-4 h-4 rounded-full flex items-center justify-center shrink-0 ${plan.highlight ? 'bg-emerald-500/20' : 'bg-white/5'}`}>
-                            <Check className={`w-2.5 h-2.5 ${plan.highlight ? 'text-emerald-400' : 'text-slate-400'}`} strokeWidth={3} />
+                        <div className={`w-4 h-4 rounded-full flex items-center justify-center shrink-0 ${plan.highlight ? 'bg-[var(--accent-soft-strong)]' : 'bg-[var(--surface-08)]'}`}>
+                            <Check className={`w-2.5 h-2.5 ${plan.highlight ? 'text-[var(--accent)]' : 'text-slate-400'}`} strokeWidth={3} />
                         </div>
                         <span className="text-slate-300">{f}</span>
                     </div>
                 ))}
                 {plan.locked?.map(f => (
                     <div key={f} className="flex items-center gap-3 text-sm opacity-40">
-                        <div className="w-4 h-4 rounded-full flex items-center justify-center shrink-0 bg-white/5">
+                        <div className="w-4 h-4 rounded-full flex items-center justify-center shrink-0 bg-[var(--surface-08)]">
                             <Lock className="w-2.5 h-2.5 text-slate-500" strokeWidth={3} />
                         </div>
                         <span className="text-slate-500 line-through">{f}</span>
@@ -153,11 +153,11 @@ function PlanCard({ plan, user, currentPlan, loading, onSuccess }) {
 
             <div>
                 {loading ? (
-                    <div className="flex items-center justify-center w-full py-3 rounded-xl border border-white/10">
+                    <div className="flex items-center justify-center w-full py-3 rounded-xl border border-[var(--border-subtle)]">
                         <Loader2 className="w-4 h-4 text-slate-500 animate-spin" />
                     </div>
                 ) : currentPlan === plan.id ? (
-                    <div className="block w-full py-3 text-center text-sm font-semibold rounded-xl border border-emerald-500/20 text-emerald-400 bg-emerald-500/5">
+                    <div className="block w-full py-3 text-center text-sm font-semibold rounded-xl border border-[var(--accent-border)] text-[var(--accent)] bg-[var(--accent-soft)]">
                         Active subscription
                     </div>
                 ) : !user ? (
@@ -165,8 +165,8 @@ function PlanCard({ plan, user, currentPlan, loading, onSuccess }) {
                         href="/en/login?redirect=/en/seo/pricing"
                         className={`flex items-center justify-center gap-2 w-full py-3 text-center text-sm font-semibold rounded-xl transition-all duration-200 ${
                             plan.highlight
-                                ? 'bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white shadow-lg shadow-emerald-500/20 hover:-translate-y-0.5'
-                                : 'border border-white/10 text-slate-300 hover:text-white hover:border-white/20 hover:bg-white/5'
+                                ? 'bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] shadow-lg shadow-[var(--accent-border)] hover:-translate-y-0.5'
+                                : 'border border-[var(--border-subtle)] text-slate-300 hover:text-white hover:border-[var(--border-strong)] hover:bg-[var(--surface-06)]'
                         }`}
                     >
                         <LogIn className="w-4 h-4" /> Log in to subscribe
@@ -260,29 +260,29 @@ export default function SeoPricingPageEn() {
 
     return (
         <>
-            <div className="min-h-screen bg-[#05080f]">
+            <div className="min-h-screen bg-[var(--bg-base)]">
                 <Toaster position="top-right" toastOptions={{
-                    style: { background: '#0d1117', color: '#fff', border: '1px solid rgba(255,255,255,0.08)' },
+                    style: { background: 'var(--bg-surface)', color: '#fff', border: '1px solid var(--border-subtle)' },
                 }} />
                 <Navbar locale="en" />
 
                 <div className="relative pt-32 pb-24 px-5 sm:px-8">
                     <div
                         className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] rounded-full blur-3xl pointer-events-none"
-                        style={{ background: 'radial-gradient(ellipse, rgba(16,185,129,0.08) 0%, transparent 70%)' }}
+                        style={{ background: 'radial-gradient(ellipse, var(--accent-glow) 0%, transparent 70%)' }}
                     />
 
                     <div className="relative z-10 max-w-6xl mx-auto">
                         <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-16">
                             <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-5">
                                 Your rankings.<br />
-                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-400">Always in view.</span>
+                                Always in view.
                             </h1>
                             <p className="text-lg text-slate-400 max-w-xl mx-auto mb-6">
                                 Track your Google positions every week. See instantly when you rise or fall.
                             </p>
-                            <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-emerald-500/20 bg-emerald-500/5 text-sm">
-                                <span className="text-emerald-300 font-semibold">Try free for 14 days</span>
+                            <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-[var(--accent-border)] bg-[var(--accent-soft)] text-sm">
+                                <span className="text-[var(--accent)] font-semibold">Try free for 14 days</span>
                             </div>
                         </motion.div>
 
@@ -313,7 +313,7 @@ export default function SeoPricingPageEn() {
                             </h2>
                             <div className="space-y-4">
                                 {FAQS.map((faq, i) => (
-                                    <div key={i} className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5">
+                                    <div key={i} className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl p-5">
                                         <h3 className="font-semibold text-white mb-2 text-sm">{faq.q}</h3>
                                         <p className="text-sm text-slate-400 leading-relaxed">{faq.a}</p>
                                     </div>

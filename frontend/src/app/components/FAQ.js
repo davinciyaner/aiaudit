@@ -17,7 +17,7 @@ export default function FAQ() {
                     className="text-center mb-10 sm:mb-14"
                 >
                     <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">
-                        Häufig gestellte <span className="text-gradient-accent">Fragen</span>
+                        Häufig gestellte Fragen
                     </h2>
                     <p className="text-slate-400 text-base">
                         Alles was du über Website-Audits, SEO-Tests und GEO wissen musst.
@@ -32,11 +32,11 @@ export default function FAQ() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: i * 0.04 }}
-                            className="border border-white/[0.07] rounded-2xl overflow-hidden bg-white/[0.02]"
+                            className="border border-[var(--border-subtle)] rounded-2xl overflow-hidden bg-[var(--surface-06)]"
                         >
                             <button
                                 onClick={() => setOpen(open === i ? null : i)}
-                                className="w-full flex items-center justify-between gap-4 px-5 py-4 text-left hover:bg-white/[0.03] transition-colors"
+                                className="w-full flex items-center justify-between gap-4 px-5 py-4 text-left hover:bg-[var(--surface-08)] transition-colors"
                             >
                                 <span className="text-sm font-medium text-white leading-snug">{faq.q}</span>
                                 <ChevronDown
@@ -54,7 +54,7 @@ export default function FAQ() {
                                         transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
                                         className="overflow-hidden"
                                     >
-                                        <p className="px-5 pb-5 text-sm text-slate-400 leading-relaxed border-t border-white/[0.04] pt-3">
+                                        <p className="px-5 pb-5 text-sm text-slate-400 leading-relaxed border-t border-[var(--border-subtle)] pt-3">
                                             {faq.a}
                                         </p>
                                     </motion.div>

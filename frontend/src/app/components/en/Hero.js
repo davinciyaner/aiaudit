@@ -27,7 +27,7 @@ function HeroAuditInput() {
 
     return (
         <form onSubmit={handleSubmit} className="w-full">
-            <div className="relative flex items-center gap-3 p-2 bg-white/[0.03] border border-white/10 rounded-2xl focus-within:border-violet-500/50 focus-within:ring-2 focus-within:ring-cyan-400/40 focus-within:bg-white/[0.05] transition-all duration-200 shadow-xl shadow-black/20">
+            <div className="relative flex items-center gap-3 p-2 bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl focus-within:border-[var(--accent-border)] focus-within:ring-2 focus-within:ring-[var(--accent-soft-strong)] focus-within:bg-[var(--surface-08)] transition-all duration-200 shadow-xl shadow-black/20">
                 <div className="flex items-center gap-3 flex-1 px-3">
                     <Globe className="w-4 h-4 text-slate-500 shrink-0" />
                     <label htmlFor="hero-audit-url-en" className="sr-only">Website URL</label>
@@ -49,7 +49,7 @@ function HeroAuditInput() {
                     )}
                 </div>
                 <button type="submit"
-                    className="flex items-center gap-2 px-6 py-3 bg-gradient-accent hover:opacity-90 text-white text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-violet-500/20 shrink-0">
+                    className="flex items-center gap-2 px-6 py-3 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-[var(--accent-border)] shrink-0">
                     <Search className="w-4 h-4" />Check now<ArrowRight className="w-3.5 h-3.5" />
                 </button>
             </div>
@@ -73,14 +73,14 @@ export default function Hero() {
     return (
         <main className="relative flex items-center pt-28 pb-16 sm:pt-36 sm:pb-24 overflow-hidden">
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[500px] rounded-full blur-3xl pointer-events-none"
-                style={{ background: 'radial-gradient(ellipse, rgba(124,58,237,0.14) 0%, rgba(6,182,212,0.06) 45%, transparent 70%)' }} />
+                style={{ background: 'radial-gradient(ellipse, var(--accent-glow) 0%, transparent 70%)' }} />
 
             <div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-8 w-full">
                 <div className="flex flex-col items-center text-center">
 
                     <motion.h1 initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
                         className="text-4xl sm:text-6xl lg:text-7xl font-bold leading-[1.08] tracking-tight mb-5">
-                        <span className="text-gradient-accent">Cited by ChatGPT.</span><br />
+                        Cited by ChatGPT.<br />
                         Visible on Google.
                     </motion.h1>
 
@@ -98,19 +98,21 @@ export default function Hero() {
                     <div className="flex flex-wrap items-center justify-center gap-2">
                         <Link href="/geo/dashboard"
                             onClick={e => goToAutomation(e, '/geo/dashboard', '/geo/pricing')}
-                            className="group inline-flex items-center gap-1.5 pl-3 pr-2.5 py-2.5 rounded-full bg-white/[0.04] border border-white/10 hover:border-cyan-500/40 hover:bg-white/[0.06] transition-all duration-200">
-                            <Globe className="w-3 h-3 text-slate-400 group-hover:text-cyan-300 transition-colors" />
+                            className="group inline-flex items-center gap-1.5 pl-3 pr-2.5 py-2.5 rounded-full bg-[var(--surface-08)] border border-[var(--border-subtle)] hover:border-[var(--accent-border)] hover:bg-[var(--surface-10)] transition-all duration-200">
+                            <Globe className="w-3 h-3 text-slate-400 group-hover:text-[var(--accent)] transition-colors" />
                             <span className="text-xs font-medium text-slate-300 group-hover:text-white transition-colors">Track AI mentions</span>
-                            <ArrowRight className="w-3 h-3 text-slate-500 group-hover:translate-x-0.5 group-hover:text-cyan-300 transition-all" />
+                            <ArrowRight className="w-3 h-3 text-slate-500 group-hover:translate-x-0.5 group-hover:text-[var(--accent)] transition-all" />
                         </Link>
                         <Link href="/seo/dashboard"
                             onClick={e => goToAutomation(e, '/seo/dashboard', '/seo/pricing')}
-                            className="group inline-flex items-center gap-1.5 pl-3 pr-2.5 py-2.5 rounded-full bg-white/[0.04] border border-white/10 hover:border-violet-500/40 hover:bg-white/[0.06] transition-all duration-200">
-                            <TrendingUp className="w-3 h-3 text-slate-400 group-hover:text-violet-300 transition-colors" />
+                            className="group inline-flex items-center gap-1.5 pl-3 pr-2.5 py-2.5 rounded-full bg-[var(--surface-08)] border border-[var(--border-subtle)] hover:border-[var(--accent-border)] hover:bg-[var(--surface-10)] transition-all duration-200">
+                            <TrendingUp className="w-3 h-3 text-slate-400 group-hover:text-[var(--accent)] transition-colors" />
                             <span className="text-xs font-medium text-slate-300 group-hover:text-white transition-colors">Track rankings automatically</span>
-                            <ArrowRight className="w-3 h-3 text-slate-500 group-hover:translate-x-0.5 group-hover:text-violet-300 transition-all" />
+                            <ArrowRight className="w-3 h-3 text-slate-500 group-hover:translate-x-0.5 group-hover:text-[var(--accent)] transition-all" />
                         </Link>
                     </div>
+
+                    <div className="mt-5" google-add-preferred-source-btn="" data-theme="dark" data-lang="en" />
                 </div>
             </div>
         </main>
