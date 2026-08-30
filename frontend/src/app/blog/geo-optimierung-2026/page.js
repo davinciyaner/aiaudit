@@ -5,8 +5,8 @@ import Footer from '../../components/Footer'
 
 export const metadata = {
     title: 'Was ist GEO? Generative Engine Optimization einfach erklärt (+ Checkliste 2026)',
-    description: 'GEO (Generative Engine Optimization) bezeichnet die Optimierung von Content für KI-Antworten wie ChatGPT, Claude und Google AI Overview. Definition, Unterschied zu SEO und 19-Punkte-Checkliste.',
-    keywords: 'was ist geo, GEO Optimierung, Generative Engine Optimization, ChatGPT SEO, KI Suchmaschinenoptimierung, ChatGPT Sichtbarkeit, Claude Sichtbarkeit, llms.txt, KI Sichtbarkeit, GEO SEO Unterschied',
+    description: 'GEO (Generative Engine Optimization) bezeichnet die Optimierung von Content für KI-Antworten wie ChatGPT, Claude und Google AI Overview. Definition, Unterschied zu SEO, 19-Punkte-Checkliste und wie du eine GEO-Strategie 2026 Schritt für Schritt aufbaust.',
+    keywords: 'was ist geo, GEO Optimierung, Generative Engine Optimization, ChatGPT SEO, KI Suchmaschinenoptimierung, ChatGPT Sichtbarkeit, Claude Sichtbarkeit, llms.txt, KI Sichtbarkeit, GEO SEO Unterschied, geo strategie 2026, geo strategie aufbauen',
     alternates: {
         canonical: 'https://www.sitecheckai.dev/blog/geo-optimierung-2026',
         languages: {
@@ -16,7 +16,7 @@ export const metadata = {
     },
     openGraph: {
         title: 'Was ist GEO? Generative Engine Optimization einfach erklärt (+ Checkliste 2026)',
-        description: 'GEO (Generative Engine Optimization) erklärt: Definition, Unterschied zu SEO und konkrete Checkliste mit 19 Signalen für ChatGPT, Claude und Google AI Overview.',
+        description: 'GEO (Generative Engine Optimization) erklärt: Definition, Unterschied zu SEO, konkrete Checkliste mit 19 Signalen und eine GEO-Strategie 2026 zum Aufbauen in drei Phasen.',
         url: 'https://www.sitecheckai.dev/blog/geo-optimierung-2026',
         type: 'article',
         locale: 'de_DE',
@@ -27,7 +27,7 @@ const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: 'Was ist GEO? Generative Engine Optimization einfach erklärt (+ Checkliste 2026)',
-    description: 'GEO (Generative Engine Optimization) bezeichnet die Optimierung von Content für KI-Antworten wie ChatGPT, Claude und Google AI Overview. Definition, Unterschied zu SEO und 19-Punkte-Checkliste.',
+    description: 'GEO (Generative Engine Optimization) bezeichnet die Optimierung von Content für KI-Antworten wie ChatGPT, Claude und Google AI Overview. Definition, Unterschied zu SEO, 19-Punkte-Checkliste und wie du eine GEO-Strategie 2026 Schritt für Schritt aufbaust.',
     image: 'https://www.sitecheckai.dev/blog/geo-optimierung-2026/opengraph-image',
     datePublished: '2026-06-10T09:00:00+02:00',
     dateModified: '2026-08-24T09:00:00+02:00',
@@ -254,6 +254,7 @@ export default function GeoArtikelPage() {
                             ))}
                             <li><a href="#ki-modelle" className="text-slate-400 hover:text-cyan-300 transition-colors">Welche KI-Modelle profitieren von GEO?</a></li>
                             <li><a href="#quick-wins" className="text-slate-400 hover:text-cyan-300 transition-colors">10 GEO-Quick-Wins</a></li>
+                            <li><a href="#geo-strategie" className="text-slate-400 hover:text-cyan-300 transition-colors">GEO-Strategie 2026 aufbauen</a></li>
                             <li><a href="#faq" className="text-slate-400 hover:text-cyan-300 transition-colors">Häufige Fragen</a></li>
                         </ol>
                     </nav>
@@ -409,6 +410,39 @@ export default function GeoArtikelPage() {
                                 </div>
                             ))}
                         </div>
+                    </section>
+
+                    <section id="geo-strategie" className="scroll-mt-28">
+                        <h2 className="text-2xl font-bold text-white mb-4">GEO-Strategie 2026 aufbauen: Schritt-für-Schritt</h2>
+                        <p>
+                            Die 10 Quick-Wins oben sind einzelne Hebel - eine GEO-Strategie 2026 bringt sie in eine sinnvolle Reihenfolge, in drei Phasen:
+                        </p>
+                        <div className="space-y-5 mt-5">
+                            <div>
+                                <h3 className="text-lg font-semibold text-white mb-2">Phase 1: Technisches Fundament (Woche 1)</h3>
+                                <p className="text-sm text-slate-400">
+                                    robots.txt für KI-Crawler öffnen, Organization- und FAQ-Schema einbauen, Sitemap aktuell halten. Reine Konfigurationsänderungen, die KI-Crawler innerhalb weniger Tage aufnehmen.
+                                </p>
+                            </div>
+                            <div>
+                                <h3 className="text-lg font-semibold text-white mb-2">Phase 2: Zitierbarer Content (Woche 2-4)</h3>
+                                <p className="text-sm text-slate-400">
+                                    Klare Produktdefinition, konkrete Zahlen/Statistiken und eine About-Seite mit echten E-E-A-T-Signalen ergänzen. Das entscheidet, ob KI-Modelle deine Seite überhaupt als zitierfähig einstufen.
+                                </p>
+                            </div>
+                            <div>
+                                <h3 className="text-lg font-semibold text-white mb-2">Phase 3: Monitoring & Nachschärfen (laufend)</h3>
+                                <p className="text-sm text-slate-400">
+                                    GEO wirkt nicht sofort und nicht einmalig - regelmäßig prüfen, ob ChatGPT, Claude, Perplexity und Google AI Overview deine Website erwähnen, und bei Lücken gezielt nachbessern statt zu raten.
+                                </p>
+                            </div>
+                        </div>
+                        <p className="mt-4">
+                            Für Phase 3 lohnt sich automatisiertes statt manuelles Prüfen - dazu mehr in unserem Artikel zur{' '}
+                            <Link href="/blog/seo-geo-automatisierung" className="text-cyan-400 hover:text-cyan-300 underline underline-offset-2">
+                                SEO- und GEO-Automatisierung
+                            </Link>.
+                        </p>
                     </section>
 
                     <section id="faq" className="scroll-mt-28">
