@@ -29,6 +29,8 @@ const MESSAGES = {
     INVALID_URL: { de: "Ungültige URL", en: "Invalid URL" },
     URL_REQUIRED: { de: "url erforderlich", en: "url is required" },
     KEYWORD_REQUIRED: { de: "keyword erforderlich", en: "keyword is required" },
+    INVALID_PLATFORM: { de: "Ungültige Plattform", en: "Invalid platform" },
+    ONEOFF_QUOTA_USED: { de: "Du hast deine kostenlose Prüfung bereits genutzt. Für weitere Plattformen oder alle 4 auf einmal wechsle auf GEO Automatisierung.", en: "You've already used your one free check. For more platforms or all 4 at once, upgrade to GEO Automation." },
     KEYWORDS_ARRAY_REQUIRED: { de: "keywords[] erforderlich", en: "keywords[] is required" },
     PLATFORMS_ARRAY_REQUIRED: { de: "platforms[] erforderlich", en: "platforms[] is required" },
     NO_KEYWORDS_STORED: { de: "Keine Keywords hinterlegt", en: "No keywords stored" },

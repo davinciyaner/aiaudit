@@ -48,7 +48,7 @@ export const PLATFORM_COSTS = {
 
 export const PROMPT_INTENTS = ['empfehlung', 'vergleich']
 
-function buildQuery(keyword, language, intent = 'empfehlung') {
+export function buildQuery(keyword, language, intent = 'empfehlung') {
     if (intent === 'vergleich') {
         return language === 'de'
             ? `Was ist die beste Website, das beste Tool oder der beste Dienst für "${keyword}"? Vergleiche die Top-Optionen und nenne konkrete Domains oder Namen.`
@@ -249,6 +249,28 @@ async function checkOneCombination(site, keyword, platform, intent) {
     } catch (err) {
         console.error(`[geoService] ${platform}/${intent} Fehler bei "${keyword}":`, err.message)
         return { keyword, platform, promptIntent: intent, mentioned: false, context: null, citations: [], sentiment: null }
+    }
+}
+
+// Wie checkOneCombination, aber als zwei separat aufrufbare Stufen (Mention-Check und
+// Sentiment-Klassifizierung getrennt), damit ein Aufrufer den Fortschritt dazwischen
+// persistieren kann (z.B. für einen Live-Status beim einmaligen Gratis-Check).
+export async function checkPlatformMention(platform, keyword, domain, language, intent = 'empfehlung') {
+    const fn = PLATFORM_FNS[platform]
+    if (!fn) return { mentioned: false, context: null, citations: [] }
+    try {
+        return await fn(keyword, domain, language, intent)
+    } catch (err) {
+        console.error(`[geoService] ${platform}/${intent} Fehler bei "${keyword}":`, err.message)
+        return { mentioned: false, context: null, citations: [] }
+    }
+}
+
+export async function classifySentimentSafe(context, domain) {
+    try {
+        return await classifySentiment(context, domain)
+    } catch {
+        return null
     }
 }
 

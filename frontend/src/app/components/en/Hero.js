@@ -1,7 +1,7 @@
 'use client'
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { ArrowRight, Globe, TrendingUp, Search } from 'lucide-react'
+import { ArrowRight, Globe, TrendingUp, Search, Sparkles } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
@@ -96,6 +96,12 @@ export default function Hero() {
                     </motion.div>
 
                     <div className="flex flex-wrap items-center justify-center gap-2">
+                        <Link href="/en/geo/check"
+                            className="group inline-flex items-center gap-1.5 pl-3 pr-2.5 py-2.5 rounded-full bg-[var(--surface-08)] border border-[var(--border-subtle)] hover:border-[var(--accent-border)] hover:bg-[var(--surface-10)] transition-all duration-200">
+                            <Sparkles className="w-3 h-3 text-slate-400 group-hover:text-[var(--accent)] transition-colors" />
+                            <span className="text-xs font-medium text-slate-300 group-hover:text-white transition-colors">Free AI visibility check</span>
+                            <ArrowRight className="w-3 h-3 text-slate-500 group-hover:translate-x-0.5 group-hover:text-[var(--accent)] transition-all" />
+                        </Link>
                         <Link href="/geo/dashboard"
                             onClick={e => goToAutomation(e, '/geo/dashboard', '/geo/pricing')}
                             className="group inline-flex items-center gap-1.5 pl-3 pr-2.5 py-2.5 rounded-full bg-[var(--surface-08)] border border-[var(--border-subtle)] hover:border-[var(--accent-border)] hover:bg-[var(--surface-10)] transition-all duration-200">

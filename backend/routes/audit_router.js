@@ -1,5 +1,4 @@
 import { Router } from "express";
-import jwt from "jsonwebtoken";
 import Report from "../models/report_model.js";
 import Subscription from "../models/subscription.js";
 import FreeDomainAudit from "../models/free_domain_audit.js";
@@ -10,6 +9,7 @@ import { generateHTMLReport, saveReportAsPDF } from "../controllers/report.js";
 import { auditFloorLimiter, anonymousAuditLimiter, authedAuditLimiter } from "../middleware/rateLimiter.js";
 import { sendAdminNewAudit } from "../utils/mailer.js";
 import { t } from "../utils/i18n/errors.js";
+import { optionalAuth } from "../middleware/optionalAuth.js";
 
 const router = Router();
 
@@ -21,17 +21,6 @@ function extractDomain(url) {
     } catch {
         return null;
     }
-}
-
-function optionalAuth(req, res, next) {
-    const header = req.headers.authorization;
-    if (!header) return next();
-    try {
-        const decoded = jwt.verify(header.split(" ")[1], process.env.JWT_SECRET);
-        req.userId = decoded.id;
-    } catch {
-    }
-    next();
 }
 
 const TRACKING_PARAM_RE = /^(utm_|fbclid|gclid|msclkid|dclid|gbraid|wbraid|mc_eid|mc_cid|_ga)/;
