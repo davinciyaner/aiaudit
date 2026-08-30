@@ -4,8 +4,8 @@ import Footer from '../../components/Footer'
 
 export const metadata = {
     title: 'SEO-Test selbst machen oder Agentur beauftragen? Der ehrliche Kostenvergleich',
-    description: 'SEO-Audit selbst durchführen vs. SEO-Agentur beauftragen: Kosten, was jede Option wirklich abdeckt, und für wen sich was lohnt - ohne Verkaufsrhetorik.',
-    keywords: 'seo test vs agentur, seo audit selbst machen, seo agentur kosten, seo agentur oder selbst machen, lohnt sich seo agentur, seo selbst optimieren',
+    description: 'SEO-Check selbst durchführen oder eine SEO-Check-Agentur beauftragen: Kosten, was jede Option wirklich abdeckt, und für wen sich was lohnt - ohne Verkaufsrhetorik.',
+    keywords: 'seo test vs agentur, seo audit selbst machen, seo agentur kosten, seo agentur oder selbst machen, lohnt sich seo agentur, seo selbst optimieren, seo-check agentur, seo check agentur',
     alternates: {
         canonical: 'https://www.sitecheckai.dev/blog/seo-test-vs-agentur',
         languages: {
@@ -15,7 +15,7 @@ export const metadata = {
     },
     openGraph: {
         title: 'SEO-Test selbst machen oder Agentur beauftragen? Der ehrliche Kostenvergleich',
-        description: 'Kosten, Leistungsumfang und für wen sich was lohnt - der ehrliche Vergleich ohne Verkaufsrhetorik.',
+        description: 'SEO-Check selbst machen oder SEO-Check-Agentur beauftragen: Kosten, Leistungsumfang und für wen sich was lohnt - der ehrliche Vergleich ohne Verkaufsrhetorik.',
         url: 'https://www.sitecheckai.dev/blog/seo-test-vs-agentur',
         type: 'article',
         locale: 'de_DE',
@@ -26,7 +26,7 @@ const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: 'SEO-Test selbst machen oder Agentur beauftragen? Der ehrliche Kostenvergleich',
-    description: 'SEO-Audit selbst durchführen vs. SEO-Agentur beauftragen: Kosten, was jede Option wirklich abdeckt, und für wen sich was lohnt.',
+    description: 'SEO-Check selbst durchführen oder eine SEO-Check-Agentur beauftragen: Kosten, was jede Option wirklich abdeckt, und für wen sich was lohnt.',
     image: 'https://www.sitecheckai.dev/blog/seo-test-vs-agentur/opengraph-image',
     datePublished: '2026-07-26T09:00:00+02:00',
     dateModified: '2026-07-30T09:00:00+02:00',
@@ -148,7 +148,7 @@ export default function SeoTestVsAgenturPage() {
                         SEO-Test selbst machen oder Agentur beauftragen?
                     </h1>
                     <p className="text-lg text-slate-400 leading-relaxed">
-                        Die ehrliche Antwort: Es kommt darauf an, was dein eigentliches Problem ist. Ein automatisierter SEO-Test und eine SEO-Agentur lösen unterschiedliche Probleme - hier der Vergleich ohne Verkaufsrhetorik, inklusive echter Preisspannen.
+                        Die ehrliche Antwort: Es kommt darauf an, was dein eigentliches Problem ist. Egal ob du nach einem SEO-Check, einer SEO-Check-Agentur oder einem eigenständigen SEO-Test suchst - ein automatisiertes Tool und eine SEO-Agentur lösen unterschiedliche Probleme. Hier der Vergleich ohne Verkaufsrhetorik, inklusive echter Preisspannen.
                     </p>
                     <div className="mt-5 flex items-center gap-2 text-xs text-slate-600">
                         <Link href="/about" className="flex items-center gap-2 hover:text-slate-300 transition-colors">
