@@ -17,6 +17,7 @@ import feedbackRouter from "./routes/feedback_router.js";
 import landingFeedbackRouter from "./routes/landing_feedback_router.js";
 import seoTrackingRouter from "./routes/seo_tracking_router.js";
 import geoRouter from "./routes/geo_router.js";
+import geoOneoffRouter from "./routes/geo_oneoff_router.js";
 import { startSeoTrackingJob, runWeeklySeoChecks } from "./jobs/seoTrackingJob.js";
 import { startGeoTrackingJob } from "./jobs/geoTrackingJob.js";
 
@@ -52,6 +53,7 @@ app.use("/api/feedback", feedbackRouter);
 app.use("/api/landing-feedback", landingFeedbackRouter);
 app.use("/api/seo", seoTrackingRouter);
 app.use("/api/geo", geoRouter);
+app.use("/api/geo-check", geoOneoffRouter);
 app.use("/reports", express.static("reports"));
 
 app.get("/health", (req, res) => {

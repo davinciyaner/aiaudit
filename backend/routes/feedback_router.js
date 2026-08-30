@@ -1,19 +1,9 @@
 import { Router } from 'express'
-import jwt from 'jsonwebtoken'
 import Feedback from '../models/feedback.js'
 import { t } from '../utils/i18n/errors.js'
+import { optionalAuth } from '../middleware/optionalAuth.js'
 
 const router = Router()
-
-function optionalAuth(req, res, next) {
-    const header = req.headers.authorization
-    if (!header) return next()
-    try {
-        const decoded = jwt.verify(header.split(' ')[1], process.env.JWT_SECRET)
-        req.userId = decoded.id
-    } catch { /* ignore invalid token */ }
-    next()
-}
 
 router.post('/', optionalAuth, async (req, res) => {
     const { url, reportId, vote, reason } = req.body

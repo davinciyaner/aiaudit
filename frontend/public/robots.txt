@@ -6,11 +6,13 @@ Disallow: /seo/
 Allow: /seo/pricing
 Disallow: /geo/
 Allow: /geo/pricing
+Allow: /geo/check
 Disallow: /en/profile
 Disallow: /en/seo/
 Allow: /en/seo/pricing
 Disallow: /en/geo/
 Allow: /en/geo/pricing
+Allow: /en/geo/check
 
 # AI crawlers – explicitly allowed
 User-agent: GPTBot
