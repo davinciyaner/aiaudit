@@ -1,10 +1,10 @@
 import { Check, X, Lock } from 'lucide-react'
 
 export const PLATFORM_META = {
-    claude:     { label: 'Claude',             mono: 'C',   solid: '#d97757', color: 'text-violet-400', bg: 'bg-violet-500/10', border: 'border-violet-500/20' },
-    chatgpt:    { label: 'ChatGPT',            mono: 'GPT', solid: '#74aa9c', color: 'text-green-400',  bg: 'bg-green-500/10',  border: 'border-green-500/20'  },
-    perplexity: { label: 'Perplexity',         mono: 'P',   solid: '#20b8cd', color: 'text-teal-400',   bg: 'bg-teal-500/10',   border: 'border-teal-500/20'   },
-    google_aio: { label: 'Google AI Overview', mono: 'G',   solid: '#4285f4', color: 'text-blue-400',   bg: 'bg-blue-500/10',   border: 'border-blue-500/20'   },
+    claude: { label: 'Claude', mono: 'C', solid: '#d97757', color: 'text-violet-400', bg: 'bg-violet-500/10', border: 'border-violet-500/20' },
+    chatgpt: { label: 'ChatGPT', mono: 'GPT', solid: '#74aa9c', color: 'text-green-400', bg: 'bg-green-500/10', border: 'border-green-500/20' },
+    perplexity: { label: 'Perplexity', mono: 'P', solid: '#20b8cd', color: 'text-teal-400', bg: 'bg-teal-500/10', border: 'border-teal-500/20' },
+    google_aio: { label: 'Google AI Overview', mono: 'G', solid: '#4285f4', color: 'text-blue-400', bg: 'bg-blue-500/10', border: 'border-blue-500/20' },
 }
 
 export const ALL_PLATFORMS = ['claude', 'chatgpt', 'perplexity', 'google_aio']
@@ -22,7 +22,7 @@ export function PlatformIcon({ platform, size = 'md', locked = false }) {
 }
 
 export function MentionBadge({ mentioned, labels = { yes: 'Ja', no: 'Nein' } }) {
-    if (mentioned == null) return <span className="text-xs text-slate-600">—</span>
+    if (mentioned == null) return <span className="text-xs text-slate-600">-</span>
     return mentioned
         ? <span className="inline-flex items-center gap-1 text-xs font-semibold text-[var(--accent)] bg-[var(--accent-soft)] border border-[var(--accent-border)] px-2 py-0.5 rounded-md"><Check className="w-3 h-3" />{labels.yes}</span>
         : <span className="inline-flex items-center gap-1 text-xs font-semibold text-slate-500 bg-[var(--surface-08)] border border-[var(--border-subtle)] px-2 py-0.5 rounded-md"><X className="w-3 h-3 opacity-50" />{labels.no}</span>

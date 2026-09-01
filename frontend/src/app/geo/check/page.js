@@ -1,8 +1,9 @@
 'use client'
-import { useState, useEffect, useRef, useMemo } from 'react'
+import { useState, useEffect, useRef, useMemo, Suspense } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Globe, X, Check, AlertCircle, ArrowRight, Lock, Loader2, Sparkles, MousePointerClick, CheckCircle2, XCircle, BarChart3 } from 'lucide-react'
 import Link from 'next/link'
+import { useSearchParams } from 'next/navigation'
 import toast, { Toaster } from 'react-hot-toast'
 import Navbar from '../../components/Navbar'
 import { PLATFORM_META, ALL_PLATFORMS, PlatformIcon, SentimentBadge } from '../components/PlatformBadges'
@@ -76,15 +77,33 @@ function isLikelyValidDomain(normalizedUrl) {
 const POLL_INTERVAL_MS = 800
 
 export default function GeoCheckPage() {
+    return (
+        <Suspense fallback={null}>
+            <GeoCheckPageInner />
+        </Suspense>
+    )
+}
+
+function GeoCheckPageInner() {
+    const searchParams = useSearchParams()
+    const platformParam = searchParams.get('platform')
+    const initialPlatform = ALL_PLATFORMS.includes(platformParam) ? platformParam : null
+
     const [domain, setDomain] = useState('')
     const [keyword, setKeyword] = useState('')
-    const [platform, setPlatform] = useState(null)
+    const [platform, setPlatform] = useState(initialPlatform)
+    const [platformLocked, setPlatformLocked] = useState(!!initialPlatform)
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
     const [phase, setPhase] = useState('form')
     const [checkId, setCheckId] = useState(null)
     const [statusData, setStatusData] = useState(null)
     const [formError, setFormError] = useState(null)
     const [submitting, setSubmitting] = useState(false)
     const pollTimer = useRef(null)
+
+    useEffect(() => {
+        setIsLoggedIn(!!localStorage.getItem('token'))
+    }, [])
 
     useEffect(() => () => clearInterval(pollTimer.current), [])
 
@@ -112,6 +131,18 @@ export default function GeoCheckPage() {
 
         return () => clearInterval(pollTimer.current)
     }, [phase, checkId])
+
+    useEffect(() => {
+        if (phase === 'results' && statusData?.status === 'done') {
+            sessionStorage.setItem('pendingGeoCheck', JSON.stringify({
+                domain: extractDomain(normalizedDomain),
+                keyword: keyword.trim(),
+                platform: statusData.platform,
+                label: statusData.label,
+                mentioned: statusData.mentioned,
+            }))
+        }
+    }, [phase, statusData])
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -185,7 +216,7 @@ export default function GeoCheckPage() {
             <main className="max-w-2xl mx-auto px-5 sm:px-8 pt-28 sm:pt-32 pb-24">
                 <div className="text-center mb-8">
                     <h1 className="text-3xl sm:text-4xl font-bold text-white leading-tight tracking-tight mb-4">
-                        Wirst du von ChatGPT & Co. zitiert?
+                        {platformLocked && platform ? `Wirst du von ${PLATFORM_META[platform].label} zitiert?` : 'Wirst du von ChatGPT & Co. zitiert?'}
                     </h1>
                     <p className="text-slate-400 leading-relaxed max-w-lg mx-auto">
                         Der KI-Sichtbarkeits-Check von AuditAI ist ein kostenloses Tool für Websitebetreiber, das prüft, ob ChatGPT, Claude, Perplexity oder Google AI Overview eine Domain als Quelle nennen.
@@ -250,28 +281,42 @@ export default function GeoCheckPage() {
 
                             <div>
                                 <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Plattform</label>
-                                <div className="grid grid-cols-2 gap-2.5">
-                                    {ALL_PLATFORMS.map(p => {
-                                        const meta = PLATFORM_META[p]
-                                        const active = platform === p
-                                        return (
-                                            <button
-                                                type="button"
-                                                key={p}
-                                                onClick={() => setPlatform(p)}
-                                                className={`relative flex items-center gap-2.5 px-3.5 py-3 rounded-xl border text-sm font-medium transition-all ${
-                                                    active
-                                                        ? `${meta.bg} ${meta.border} text-white ring-1 ring-inset ${meta.border}`
-                                                        : 'bg-[var(--surface-08)] border-[var(--border-subtle)] text-slate-400 hover:border-[var(--border-strong)]'
-                                                }`}
-                                            >
-                                                <PlatformIcon platform={p} size="sm" />
-                                                <span className="truncate">{meta.label}</span>
-                                                {active && <Check className="w-3.5 h-3.5 ml-auto shrink-0 text-white" strokeWidth={3} />}
-                                            </button>
-                                        )
-                                    })}
-                                </div>
+                                {platformLocked && platform ? (
+                                    <div className={`flex items-center gap-2.5 px-3.5 py-3 rounded-xl border ${PLATFORM_META[platform].bg} ${PLATFORM_META[platform].border}`}>
+                                        <PlatformIcon platform={platform} size="sm" />
+                                        <span className="text-sm font-medium text-white flex-1">{PLATFORM_META[platform].label}</span>
+                                        <button
+                                            type="button"
+                                            onClick={() => setPlatformLocked(false)}
+                                            className="text-xs font-medium text-slate-300 hover:text-white underline underline-offset-2 shrink-0"
+                                        >
+                                            ändern
+                                        </button>
+                                    </div>
+                                ) : (
+                                    <div className="grid grid-cols-2 gap-2.5">
+                                        {ALL_PLATFORMS.map(p => {
+                                            const meta = PLATFORM_META[p]
+                                            const active = platform === p
+                                            return (
+                                                <button
+                                                    type="button"
+                                                    key={p}
+                                                    onClick={() => setPlatform(p)}
+                                                    className={`relative flex items-center gap-2.5 px-3.5 py-3 rounded-xl border text-sm font-medium transition-all ${
+                                                        active
+                                                            ? `${meta.bg} ${meta.border} text-white ring-1 ring-inset ${meta.border}`
+                                                            : 'bg-[var(--surface-08)] border-[var(--border-subtle)] text-slate-400 hover:border-[var(--border-strong)]'
+                                                    }`}
+                                                >
+                                                    <PlatformIcon platform={p} size="sm" />
+                                                    <span className="truncate">{meta.label}</span>
+                                                    {active && <Check className="w-3.5 h-3.5 ml-auto shrink-0 text-white" strokeWidth={3} />}
+                                                </button>
+                                            )
+                                        })}
+                                    </div>
+                                )}
                                 <p className="text-[11px] text-slate-400 mt-2.5">
                                     1 Plattform ist kostenlos wählbar. Alle 4 gleichzeitig? <Link href="/geo/pricing" className="text-violet-400 hover:text-violet-300">GEO Automatisierung</Link>
                                 </p>
@@ -365,6 +410,22 @@ export default function GeoCheckPage() {
                                 1 Prompt genutzt &middot; dein einmaliger Gratis-Check ist jetzt verbraucht
                             </div>
 
+                            <div className="rounded-2xl border border-[var(--accent-border)] bg-gradient-to-br from-[var(--accent-soft)] to-transparent p-5 sm:p-6 text-center">
+                                <h3 className="text-base font-bold text-white mb-1.5">
+                                    {statusData.mentioned ? 'Bleib zitiert, statt es wieder zu verlieren' : 'Verbessere deine Sichtbarkeit auf allen 4 Plattformen'}
+                                </h3>
+                                <p className="text-slate-400 text-sm mb-4 max-w-sm mx-auto">
+                                    Wir prüfen {extractDomain(normalizedDomain)} wöchentlich automatisch auf ChatGPT, Claude, Perplexity und Google AI Overview und melden dir jede Änderung.
+                                </p>
+                                <Link
+                                    href={isLoggedIn ? '/geo/pricing' : '/register?ref=geo-check'}
+                                    className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all shadow-lg shadow-[var(--accent-border)]"
+                                >
+                                    {isLoggedIn ? 'Jetzt alle 4 Plattformen tracken' : 'Ergebnis retten & Tracking starten'} <ArrowRight className="w-4 h-4" />
+                                </Link>
+                                <p className="text-[11px] text-slate-500 mt-3">14 Tage kostenlos testen &middot; jederzeit kündbar</p>
+                            </div>
+
                             <div className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl p-6">
                                 <h3 className="text-sm font-bold text-white mb-1">
                                     {statusData.mentioned ? 'Das hilft, damit du auch bei den anderen Plattformen zitiert wirst' : 'Worauf es für KI-Zitate ankommt'}
@@ -401,7 +462,7 @@ export default function GeoCheckPage() {
                             <div className="bg-gradient-to-br from-violet-950/40 to-[var(--bg-base)] border border-violet-500/20 rounded-2xl p-6 text-center">
                                 <h3 className="text-base font-bold text-white mb-2">Auch bei {otherPlatforms.map(p => PLATFORM_META[p].label).join(', ')} prüfen?</h3>
                                 <p className="text-slate-400 text-sm mb-5 max-w-sm mx-auto">Mit GEO Automatisierung trackst du alle 4 Plattformen wöchentlich automatisch — ab 4,99&nbsp;€/Monat.</p>
-                                <Link href="/geo/pricing"
+                                <Link href={isLoggedIn ? '/geo/pricing' : '/register?ref=geo-check'}
                                     className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white text-sm font-semibold rounded-xl transition-all shadow-lg shadow-violet-500/20"
                                 >
                                     GEO Automatisierung ansehen <ArrowRight className="w-4 h-4" />
@@ -428,7 +489,7 @@ export default function GeoCheckPage() {
                                     <span className="text-white font-semibold">GEO Automatisierung</span>.
                                 </p>
                             </div>
-                            <Link href="/geo/pricing"
+                            <Link href={isLoggedIn ? '/geo/pricing' : '/register?ref=geo-check'}
                                 className="flex items-center gap-2 px-6 py-3 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] font-semibold rounded-xl transition-all shadow-lg shadow-[var(--accent-border)]"
                             >
                                 GEO Automatisierung ansehen <ArrowRight className="w-4 h-4" />

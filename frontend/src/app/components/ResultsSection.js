@@ -14,7 +14,7 @@ export default function ResultsSection() {
                 <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
                     className="text-center mb-10 sm:mb-14">
                     <h2 className="text-3xl sm:text-5xl font-bold tracking-tight mb-4">
-                        Deine KI-Sichtbarkeit (AI Visibility),<br className="hidden sm:block" /> messbar statt geraten.
+                        Deine AI Visibility,<br className="hidden sm:block" /> messbar statt geraten.
                     </h2>
                     <p className="text-slate-400 max-w-2xl mx-auto text-base sm:text-lg leading-relaxed">
                         AuditAI trackt deine AI Visibility bei ChatGPT, Claude, Perplexity und Google AI Overview genauso

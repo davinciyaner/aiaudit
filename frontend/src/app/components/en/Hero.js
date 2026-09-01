@@ -1,10 +1,11 @@
 'use client'
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { ArrowRight, Globe, TrendingUp, Search, Sparkles } from 'lucide-react'
+import { ArrowRight, Globe, TrendingUp, Search } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
+import { PLATFORM_META, ALL_PLATFORMS, PlatformIcon } from '../../geo/components/PlatformBadges'
 
 function normalizeUrl(input) {
     const trimmed = input.trim()
@@ -96,17 +97,11 @@ export default function Hero() {
                     </motion.div>
 
                     <div className="flex flex-wrap items-center justify-center gap-2">
-                        <Link href="/en/geo/check"
-                            className="group inline-flex items-center gap-1.5 pl-3 pr-2.5 py-2.5 rounded-full bg-[var(--surface-08)] border border-[var(--border-subtle)] hover:border-[var(--accent-border)] hover:bg-[var(--surface-10)] transition-all duration-200">
-                            <Sparkles className="w-3 h-3 text-slate-400 group-hover:text-[var(--accent)] transition-colors" />
-                            <span className="text-xs font-medium text-slate-300 group-hover:text-white transition-colors">Free AI visibility check</span>
-                            <ArrowRight className="w-3 h-3 text-slate-500 group-hover:translate-x-0.5 group-hover:text-[var(--accent)] transition-all" />
-                        </Link>
                         <Link href="/geo/dashboard"
                             onClick={e => goToAutomation(e, '/geo/dashboard', '/geo/pricing')}
                             className="group inline-flex items-center gap-1.5 pl-3 pr-2.5 py-2.5 rounded-full bg-[var(--surface-08)] border border-[var(--border-subtle)] hover:border-[var(--accent-border)] hover:bg-[var(--surface-10)] transition-all duration-200">
                             <Globe className="w-3 h-3 text-slate-400 group-hover:text-[var(--accent)] transition-colors" />
-                            <span className="text-xs font-medium text-slate-300 group-hover:text-white transition-colors">Track AI mentions</span>
+                            <span className="text-xs font-medium text-slate-300 group-hover:text-white transition-colors">Start GEO Automation</span>
                             <ArrowRight className="w-3 h-3 text-slate-500 group-hover:translate-x-0.5 group-hover:text-[var(--accent)] transition-all" />
                         </Link>
                         <Link href="/seo/dashboard"
@@ -117,6 +112,28 @@ export default function Hero() {
                             <ArrowRight className="w-3 h-3 text-slate-500 group-hover:translate-x-0.5 group-hover:text-[var(--accent)] transition-all" />
                         </Link>
                     </div>
+
+                    <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
+                        className="w-full max-w-3xl mt-14 pt-10 border-t border-[var(--border-subtle)]">
+                        <h2 className="text-base sm:text-lg font-bold text-white mb-1.5 text-center">Run a GEO Check per AI tool</h2>
+                        <p className="text-sm text-slate-400 mb-5 max-w-lg mx-auto text-center">
+                            Pick ChatGPT, Claude, Perplexity, or Google AI Overview — results in seconds, no sign-up required.
+                        </p>
+                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                            {ALL_PLATFORMS.map(p => {
+                                const meta = PLATFORM_META[p]
+                                return (
+                                    <Link key={p} href={`/en/geo/check?platform=${p}`}
+                                        title={`Check ${meta.label} visibility`}
+                                        className={`flex flex-col items-center text-center gap-2 py-4 px-2 rounded-2xl border transition-all duration-200 hover:-translate-y-0.5 ${meta.bg} ${meta.border} hover:border-opacity-60`}>
+                                        <PlatformIcon platform={p} size="md" />
+                                        <span className="text-sm font-semibold text-white leading-tight">{meta.label}</span>
+                                        <span className="text-[11px] text-slate-400">Check visibility</span>
+                                    </Link>
+                                )
+                            })}
+                        </div>
+                    </motion.div>
                 </div>
             </div>
         </main>

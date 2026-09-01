@@ -26,9 +26,14 @@ export default function RegisterPage() {
     const [consent, setConsent] = useState(false)
     const [marketingConsent, setMarketingConsent] = useState(false)
     const [hasPendingAudit, setHasPendingAudit] = useState(false)
+    const [geoCheckContext, setGeoCheckContext] = useState(null)
 
     useEffect(() => {
         setHasPendingAudit(!!sessionStorage.getItem('pendingAuditUrl'))
+        const stored = sessionStorage.getItem('pendingGeoCheck')
+        if (stored) {
+            try { setGeoCheckContext(JSON.parse(stored)) } catch {}
+        }
     }, [])
 
     const handleChange = (e) => setFormData({...formData, [e.target.name]: e.target.value})
@@ -50,7 +55,7 @@ export default function RegisterPage() {
             if (typeof window.gtag === 'function' && localStorage.getItem('cookie_consent') === 'granted') {
                 window.gtag('event', 'conversion', {send_to: 'AW-691789119/o2S4CPr_1bUcEL-678kC'})
             }
-            setTimeout(() => router.push('/dashboard'), 1000)
+            setTimeout(() => router.push(geoCheckContext ? '/geo/pricing' : '/dashboard'), 1000)
         } catch (err) {
             toast.error(err.message)
         } finally {
@@ -96,7 +101,15 @@ export default function RegisterPage() {
 
                     <div className="mb-8">
                         <h1 className="text-3xl font-bold text-white mb-2">Account erstellen</h1>
-                        {hasPendingAudit && (
+                        {geoCheckContext ? (
+                            <div className="flex items-center gap-2 mt-3 px-3 py-2 bg-[var(--accent-soft)] border border-[var(--accent-border)] rounded-xl">
+                                <p className="text-xs text-[var(--accent)]">
+                                    {geoCheckContext.mentioned
+                                        ? <>Du wirst bei <b>{geoCheckContext.label}</b> zitiert — bleib dran mit wöchentlichem Tracking für <b>{geoCheckContext.domain}</b>.</>
+                                        : <>Du wirst bei <b>{geoCheckContext.label}</b> noch nicht zitiert — starte Tracking für <b>{geoCheckContext.domain}</b>, um das zu ändern.</>}
+                                </p>
+                            </div>
+                        ) : hasPendingAudit && (
                             <div className="flex items-center gap-2 mt-3 px-3 py-2 bg-[var(--accent-soft)] border border-[var(--accent-border)] rounded-xl">
                                 <p className="text-xs text-[var(--accent)]">Dein Audit wartet — du siehst die Ergebnisse sofort nach der Registrierung.</p>
                             </div>

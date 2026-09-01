@@ -1,7 +1,7 @@
 export const metadata = {
-    title: 'Free AI Visibility Check: Are You Cited by ChatGPT?',
-    description: 'Free one-time check: see whether your website is cited by ChatGPT, Claude, Perplexity, or Google AI Overview. No registration required.',
-    keywords: 'chatgpt visibility check, claude citation check, ai visibility test, free geo check, ai visibility check, google ai overview check',
+    title: 'Free GEO Check: Are You Cited by ChatGPT?',
+    description: 'Free GEO Check: see whether your website is cited by ChatGPT, Claude, Perplexity, or Google AI Overview. No registration required.',
+    keywords: 'free geo check, chatgpt visibility check, claude citation check, ai visibility test, ai visibility check, google ai overview check',
     alternates: {
         canonical: 'https://www.sitecheckai.dev/en/geo/check',
         languages: {
@@ -10,7 +10,7 @@ export const metadata = {
         },
     },
     openGraph: {
-        title: 'Free AI Visibility Check | AuditAI',
+        title: 'Free GEO Check | AuditAI',
         description: 'Check for free, once, whether your website is cited by ChatGPT, Claude, Perplexity, or Google AI Overview.',
         url: 'https://www.sitecheckai.dev/en/geo/check',
         type: 'website',
@@ -27,12 +27,12 @@ const faqJsonLd = {
             name: 'How can I check if my website is cited by ChatGPT or Claude?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'Use the free AI visibility check from AuditAI: enter your domain and a keyword, pick a platform (ChatGPT, Claude, Perplexity, or Google AI Overview), and within seconds you\'ll see whether and how your website is mentioned there - no registration required.',
+                text: 'Use the free GEO Check from AuditAI: enter your domain and a keyword, pick a platform (ChatGPT, Claude, Perplexity, or Google AI Overview), and within seconds you\'ll see whether and how your website is mentioned there - no registration required.',
             },
         },
         {
             '@type': 'Question',
-            name: 'Is the AI visibility check really free?',
+            name: 'Is the GEO Check really free?',
             acceptedAnswer: {
                 '@type': 'Answer',
                 text: 'Yes, every account or IP address can use the check once, completely free. For recurring checks across all four platforms at once, GEO Automation starts at €4.99/month.',
@@ -61,7 +61,7 @@ const howToJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'HowTo',
     name: 'How can I check if my website is cited by ChatGPT or Claude?',
-    description: 'Use the free AI visibility check from AuditAI in three steps to see whether a domain is named as a source by ChatGPT, Claude, Perplexity, or Google AI Overview.',
+    description: 'Use the free GEO Check from AuditAI in three steps to see whether a domain is named as a source by ChatGPT, Claude, Perplexity, or Google AI Overview.',
     totalTime: 'PT1M',
     step: [
         { '@type': 'HowToStep', name: 'Enter domain & keyword', text: 'Enter your website domain and a keyword you want the website to be found for.' },

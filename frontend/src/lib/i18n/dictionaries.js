@@ -14,7 +14,7 @@ export const dictionaries = {
             geoAutomatisierung: 'GEO Automatisierung',
         },
         footer: {
-            tagline: 'KI-Sichtbarkeit (AI Visibility) & SEO - in 60 Sekunden.',
+            tagline: 'AI Visibility & SEO - in 60 Sekunden.',
             product: 'Produkt',
             blogHeading: 'Blog',
             legal: 'Rechtliches',
