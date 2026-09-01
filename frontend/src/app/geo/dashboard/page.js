@@ -1,9 +1,9 @@
 'use client'
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, Suspense } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Plus, Trash2, Globe, Loader2, ArrowRight, X, Sparkles } from 'lucide-react'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import toast, { Toaster } from 'react-hot-toast'
 import Navbar from '../../components/Navbar'
 
@@ -107,10 +107,12 @@ function calcCost(keywords, platforms) {
     return (checks * avg).toFixed(2)
 }
 
-function AddSiteModal({ slotsLeft, onClose, onAdded }) {
-    const [domain, setDomain]             = useState('')
-    const [keywordsText, setKeywordsText] = useState('')
-    const [selectedPlatforms, setSelectedPlatforms] = useState(['claude', 'chatgpt', 'perplexity', 'google_aio'])
+function AddSiteModal({ slotsLeft, onClose, onAdded, initialDomain = '', initialKeyword = '', initialPlatform = '' }) {
+    const [domain, setDomain]             = useState(initialDomain)
+    const [keywordsText, setKeywordsText] = useState(initialKeyword)
+    const [selectedPlatforms, setSelectedPlatforms] = useState(
+        PLATFORMS.some(p => p.id === initialPlatform) ? [initialPlatform] : ['claude', 'chatgpt', 'perplexity', 'google_aio']
+    )
     const [loading, setLoading]           = useState(false)
 
     const togglePlatform = (id) => {
@@ -248,12 +250,25 @@ function AddSiteModal({ slotsLeft, onClose, onAdded }) {
 }
 
 export default function GeoDashboardPage() {
+    return (
+        <Suspense fallback={null}>
+            <GeoDashboardPageInner />
+        </Suspense>
+    )
+}
+
+function GeoDashboardPageInner() {
     const router = useRouter()
+    const searchParams = useSearchParams()
+    const prefillDomain = searchParams.get('domain') || ''
+    const prefillKeyword = searchParams.get('keyword') || ''
+    const prefillPlatform = searchParams.get('platform') || ''
+
     const [loading, setLoading]   = useState(true)
     const [plan, setPlan]         = useState(null)
     const [sites, setSites]       = useState([])
     const [limits, setLimits]     = useState({ usedSites: 0, maxSites: 0, usedKeywords: 0, maxKeywords: 0 })
-    const [showAdd, setShowAdd]   = useState(false)
+    const [showAdd, setShowAdd]   = useState(searchParams.get('addSite') === '1')
 
     const fetchSites = useCallback(async () => {
         try {
@@ -423,6 +438,9 @@ export default function GeoDashboardPage() {
                         slotsLeft={limits.maxKeywords - limits.usedKeywords}
                         onClose={() => setShowAdd(false)}
                         onAdded={handleAdded}
+                        initialDomain={prefillDomain}
+                        initialKeyword={prefillKeyword}
+                        initialPlatform={prefillPlatform}
                     />
                 )}
             </AnimatePresence>

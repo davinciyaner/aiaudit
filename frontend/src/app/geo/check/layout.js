@@ -1,7 +1,7 @@
 export const metadata = {
-    title: 'Gratis KI-Sichtbarkeits-Check: Wirst du von ChatGPT zitiert?',
-    description: 'Kostenloser Einzel-Check: Prüfe einmalig, ob deine Website von ChatGPT, Claude, Perplexity oder Google AI Overview zitiert wird. Keine Registrierung nötig.',
-    keywords: 'chatgpt sichtbarkeit check, claude zitiert werden, ki sichtbarkeit test, geo check kostenlos, ai visibility check, google ai overview check',
+    title: 'Gratis GEO Check: Wirst du von ChatGPT zitiert?',
+    description: 'Kostenloser GEO Check: Prüfe einmalig, ob deine Website von ChatGPT, Claude, Perplexity oder Google AI Overview zitiert wird. Keine Registrierung nötig.',
+    keywords: 'geo check kostenlos, chatgpt sichtbarkeit check, claude zitiert werden, ai visibility check, google ai overview check, ki sichtbarkeit test',
     alternates: {
         canonical: 'https://www.sitecheckai.dev/geo/check',
         languages: {
@@ -10,7 +10,7 @@ export const metadata = {
         },
     },
     openGraph: {
-        title: 'Gratis KI-Sichtbarkeits-Check | AuditAI',
+        title: 'Gratis GEO Check | AuditAI',
         description: 'Prüfe einmalig kostenlos, ob deine Website von ChatGPT, Claude, Perplexity oder Google AI Overview zitiert wird.',
         url: 'https://www.sitecheckai.dev/geo/check',
         type: 'website',
@@ -27,12 +27,12 @@ const faqJsonLd = {
             name: 'Wie kann ich prüfen, ob meine Website von ChatGPT oder Claude zitiert wird?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'Mit dem kostenlosen KI-Sichtbarkeits-Check von AuditAI: Domain und Keyword eingeben, eine Plattform (ChatGPT, Claude, Perplexity oder Google AI Overview) auswählen und in wenigen Sekunden siehst du, ob und wie deine Website dort erwähnt wird - ganz ohne Registrierung.',
+                text: 'Mit dem kostenlosen GEO Check von AuditAI: Domain und Keyword eingeben, eine Plattform (ChatGPT, Claude, Perplexity oder Google AI Overview) auswählen und in wenigen Sekunden siehst du, ob und wie deine Website dort erwähnt wird - ganz ohne Registrierung.',
             },
         },
         {
             '@type': 'Question',
-            name: 'Ist der KI-Sichtbarkeits-Check wirklich kostenlos?',
+            name: 'Ist der GEO Check wirklich kostenlos?',
             acceptedAnswer: {
                 '@type': 'Answer',
                 text: 'Ja, jeder Account bzw. jede IP-Adresse kann den Check einmal komplett kostenlos nutzen. Für wiederkehrende Prüfungen und alle vier Plattformen gleichzeitig gibt es GEO Automatisierung ab 4,99 €/Monat.',
@@ -61,7 +61,7 @@ const howToJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'HowTo',
     name: 'Wie kann ich prüfen, ob meine Website von ChatGPT oder Claude zitiert wird?',
-    description: 'Mit dem kostenlosen KI-Sichtbarkeits-Check von AuditAI in drei Schritten prüfen, ob eine Domain von ChatGPT, Claude, Perplexity oder Google AI Overview als Quelle genannt wird.',
+    description: 'Mit dem kostenlosen GEO Check von AuditAI in drei Schritten prüfen, ob eine Domain von ChatGPT, Claude, Perplexity oder Google AI Overview als Quelle genannt wird.',
     totalTime: 'PT1M',
     step: [
         { '@type': 'HowToStep', name: 'Domain & Keyword eingeben', text: 'Website-Domain und ein Keyword eingeben, für das die Website gefunden werden soll.' },

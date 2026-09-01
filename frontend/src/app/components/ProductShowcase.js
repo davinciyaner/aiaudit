@@ -93,7 +93,7 @@ export default function ProductShowcase() {
                         <div className="flex flex-wrap items-center gap-3">
                             <Link href="/dashboard"
                                 className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-[var(--accent-border)]">
-                                KI-Sichtbarkeit jetzt prüfen <ArrowRight className="w-3.5 h-3.5" />
+                                Ai visibility jetzt prüfen <ArrowRight className="w-3.5 h-3.5" />
                             </Link>
                             <Link href="/geo/pricing"
                                 className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--surface-06)] hover:bg-[var(--surface-10)] border border-[var(--border-subtle)] text-slate-300 hover:text-white text-sm font-semibold rounded-xl transition-all duration-200">

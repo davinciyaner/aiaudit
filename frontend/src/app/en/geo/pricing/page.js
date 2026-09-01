@@ -213,6 +213,7 @@ export default function GeoPricingPageEn() {
     const [user, setUser] = useState(null)
     const [currentPlan, setCurrentPlan] = useState(null)
     const [loading, setLoading] = useState(true)
+    const [geoCheckContext, setGeoCheckContext] = useState(null)
 
     useEffect(() => {
         const stored = localStorage.getItem('user')
@@ -221,6 +222,11 @@ export default function GeoPricingPageEn() {
             fetchStatus()
         } else {
             setLoading(false)
+        }
+        const pending = sessionStorage.getItem('pendingGeoCheck')
+        if (pending) {
+            try { setGeoCheckContext(JSON.parse(pending)) } catch {}
+            sessionStorage.removeItem('pendingGeoCheck')
         }
     }, [])
 
@@ -251,7 +257,10 @@ export default function GeoPricingPageEn() {
 
             setCurrentPlan(plan)
             toast.success(`${plan.charAt(0).toUpperCase() + plan.slice(1)} plan activated!`)
-            setTimeout(() => router.push('/geo/dashboard'), 1500)
+            const dashboardHref = geoCheckContext?.domain
+                ? `/en/geo/dashboard?addSite=1&domain=${encodeURIComponent(geoCheckContext.domain)}&keyword=${encodeURIComponent(geoCheckContext.keyword || '')}&platform=${encodeURIComponent(geoCheckContext.platform || '')}`
+                : '/en/geo/dashboard'
+            setTimeout(() => router.push(dashboardHref), 1500)
         } catch (err) {
             toast.error(err.message || 'Error activating subscription')
         }
@@ -304,6 +313,15 @@ export default function GeoPricingPageEn() {
                                 <span className="text-slate-600">·</span>
                                 <span className="text-slate-400">renews automatically after · cancel anytime</span>
                             </div>
+
+                            {geoCheckContext?.domain && (
+                                <div className="mt-6 inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[var(--surface-06)] border border-[var(--border-subtle)] text-sm max-w-xl mx-auto">
+                                    <span className="text-slate-400">
+                                        Your check: <b className="text-white">{geoCheckContext.domain}</b> is{' '}
+                                        {geoCheckContext.mentioned ? 'cited' : 'not cited yet'} by <b className="text-white">{geoCheckContext.label}</b> — Pro tracks all 4 platforms automatically.
+                                    </span>
+                                </div>
+                            )}
                         </motion.div>
 
                         <h2 className="text-xl sm:text-2xl font-bold text-white text-center mb-8">
