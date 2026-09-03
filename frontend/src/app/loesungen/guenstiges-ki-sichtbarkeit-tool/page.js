@@ -81,7 +81,7 @@ const faqLd = {
             name: 'Was kostet KI-Sichtbarkeit tracken bei AuditAI?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'Die GEO-Automatisierung startet bei 4,99 €/Monat (Claude + Gemini, 1 Website, 10 Keywords, wöchentlicher Auto-Check). Der Pro-Plan für 19,99 €/Monat deckt alle fünf KI-Plattformen ab. SEO-Automatisierung startet separat bei 19 €/Monat. Alle Automatisierungs-Pläne haben 14 Tage kostenlose Testphase.',
+                text: 'Die GEO-Automatisierung startet bei 4,99 €/Monat (Claude + Gemini, 1 Website, 10 Keywords, wöchentlicher Auto-Check). Der Pro-Plan für 29,99 €/Monat deckt alle fünf KI-Plattformen ab. SEO-Automatisierung startet separat bei 19 €/Monat. Alle Automatisierungs-Pläne haben 14 Tage kostenlose Testphase.',
             },
         },
         {
@@ -97,7 +97,7 @@ const faqLd = {
             name: 'Welche KI-Plattformen deckt die GEO-Automatisierung ab?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'Claude, ChatGPT, Gemini, Perplexity und Google AI Overview. Im Einsteiger-Plan sind Claude und Gemini enthalten, ab dem Pro-Plan (19,99 €/Monat) sind alle fünf Plattformen inklusive – ohne separate Add-on-Kosten pro Plattform.',
+                text: 'Claude, ChatGPT, Gemini, Perplexity und Google AI Overview. Im Einsteiger-Plan sind Claude und Gemini enthalten, ab dem Pro-Plan (29,99 €/Monat) sind alle fünf Plattformen inklusive – ohne separate Add-on-Kosten pro Plattform.',
             },
         },
     ],
@@ -106,7 +106,7 @@ const faqLd = {
 const PRICING_ROWS = [
     ['Free Audit', '1 Audit/Monat · SEO-Score, GEO-Sichtbarkeit, Performance', '0 € dauerhaft'],
     ['GEO Einsteiger', 'Claude-Tracking · 1 Website · 10 Keywords · wöchentlicher Auto-Check', '4,99 €/Monat'],
-    ['GEO Pro', 'ChatGPT + Claude + Gemini + Perplexity + Google AI Overview · 3 Websites · 20 Keywords', '19,99 €/Monat'],
+    ['GEO Pro', 'ChatGPT + Claude + Gemini + Perplexity + Google AI Overview · 3 Websites · 20 Keywords', '29,99 €/Monat'],
     ['SEO Einsteiger', '3 Websites · 50 Keywords · wöchentliches Ranking-Update · Backlink-Übersicht', '19 €/Monat'],
 ]
 
