@@ -72,8 +72,9 @@ const SEO_PLANS = [
             'Track 3 websites',
             '50 keywords total',
             'Weekly ranking update',
+            '2 manual checks per month',
             'Ranking history (8 weeks)',
-            'Keyword ideas & search volume',
+            'Keyword ideas & search volume (6 lookups/month)',
             'Automatic keyword discovery from new pages & content (up to 10 per run)',
             'Email alerts on major drops',
             'Competitor analysis (automatic, weekly)',
@@ -93,8 +94,9 @@ const SEO_PLANS = [
             'Track 10 websites',
             '200 keywords total',
             'Weekly ranking update',
+            '4 manual checks per month',
             'Ranking history (6 months)',
-            'Keyword ideas & search volume',
+            'Keyword ideas & search volume (20 lookups/month)',
             'Automatic keyword discovery from new pages & content (up to 30 per run)',
             'Email alerts from 5 positions',
             'Competitor analysis (automatic, weekly)',
@@ -111,8 +113,9 @@ const SEO_PLANS = [
             'Track 20 websites',
             '500 keywords total',
             'Weekly ranking update',
+            '6 manual checks per month',
             'Unlimited ranking history',
-            'Keyword ideas & search volume',
+            'Keyword ideas & search volume (40 lookups/month)',
             'Automatic keyword discovery from new pages & content (up to 50 per run)',
             'Email alerts from 3 positions',
             'Competitor analysis (automatic, weekly)',
@@ -132,7 +135,7 @@ const GEO_PLANS = [
         features: [
             'Track 1 website',
             '10 keywords',
-            'Claude AI tracking',
+            'Claude + Gemini tracking',
             'Weekly auto-check',
             '2 manual checks per month',
         ],
@@ -140,31 +143,34 @@ const GEO_PLANS = [
     {
         id: 'pro',
         name: 'Pro',
-        price: '9.99',
+        price: '19.99',
         badge: 'Most popular',
         highlight: true,
         desc: 'For freelancers and small agencies',
         features: [
             'Track 3 websites',
-            '30 keywords',
-            'Claude + ChatGPT + Perplexity + Google AI Overview tracking',
+            '20 keywords',
+            'Claude + ChatGPT + Gemini + Perplexity + Google AI Overview tracking',
             '2 prompt variants per keyword',
             'Weekly auto-check',
-            '8 manual checks per month',
+            '2 manual checks per month',
+            'Topic visibility analysis',
         ],
     },
     {
         id: 'expert',
         name: 'Expert',
-        price: '19.99',
+        price: '59.99',
         desc: 'For agencies with many clients',
         features: [
             'Track 10 websites',
-            '100 keywords',
-            'Claude + ChatGPT + Perplexity + Google AI Overview tracking',
+            '60 keywords',
+            'Claude + ChatGPT + Gemini + Perplexity + Google AI Overview tracking',
             '2 prompt variants per keyword',
             'Weekly auto-check',
-            '20 manual checks per month',
+            '3 manual checks per month',
+            'Topic visibility analysis',
+            'Historical trends per keyword (Google AI Overview)',
         ],
     },
 ]
@@ -492,7 +498,7 @@ export default function PricingPage() {
                                     Are you recommended by AI?
                                 </h2>
                                 <p className="text-slate-400 text-sm max-w-lg mx-auto mb-4">
-                                    Automatically track whether Claude, ChatGPT, Perplexity and Google AI Overview mention your domain for relevant queries - weekly and on demand.
+                                    Automatically track whether Claude, ChatGPT, Gemini, Perplexity and Google AI Overview mention your domain for relevant queries - weekly and on demand.
                                 </p>
                                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-[var(--accent-border)] bg-[var(--accent-soft)] text-xs">
                                     <span className="text-[var(--accent)] font-semibold">Try free for 14 days</span>

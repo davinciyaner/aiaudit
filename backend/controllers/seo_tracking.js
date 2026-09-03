@@ -3,16 +3,24 @@ import SeoKeywordRanking from '../models/seo_keyword_ranking.js'
 import SeoKeywordInsight from '../models/seo_keyword_insight.js'
 import ProductSubscription from '../models/product_subscription.js'
 import User from '../models/auth_model.js'
-import { checkSiteRankings, getKeywordIdeas, getCompetitors, getBacklinkSummary, getContentGap, generateKeywordContent, generateBacklinkIdeas, generateInsightsForKeywords } from '../services/seoService.js'
+import { checkSiteRankings, getKeywordIdeas, getCompetitors, getBacklinkSummary, getBacklinkGapAnalysis, getContentGap, generateKeywordContent, generateBacklinkIdeas, generateInsightsForKeywords } from '../services/seoService.js'
 import SeoUsage from '../models/seo_usage.js'
 import { sendSeoRankingAlert } from '../utils/mailer.js'
 import { detectRankingChanges, ALERT_DROP_THRESHOLD } from '../jobs/seoTrackingJob.js'
 import { t } from '../utils/i18n/errors.js'
 
+// manualChecksPerMonth per 2026-09: der manuelle Check prüft alle Keywords einer Site neu (siehe
+// triggerCheck) und hatte bisher kein Monats-Kontingent, nur das 2/Minute-Rate-Limit im Router —
+// bei realistischer Agentur-Nutzung (mehrere Websites, wöchentlich neu geprüft) hätte das Pro/Expert
+// bei vollem Keyword-Limit ins Minus kippen können. Limits so gewählt, dass max. 1/4 der bisherigen
+// Marge dafür draufgeht (siehe Kostenrechnung-Artifact).
+// keywordIdeasPerMonth per 2026-09: derselbe Grund wie manualChecksPerMonth — der Endpoint hatte
+// weder Cache noch Monats-Kontingent, nur das 2/Minute-Rate-Limit. Werte so gewählt, dass sie
+// zusammen mit dem neuen manualChecksPerMonth weiterhin max. 1/4 der ursprünglichen Marge kosten.
 const PLAN_LIMITS = {
-    einsteiger: { maxSites: 3,  maxKeywords: 50,  historyWeeks: 8,   contentGapPerMonth: 0   },
-    pro:        { maxSites: 10, maxKeywords: 200, historyWeeks: 26,  contentGapPerMonth: 100 },
-    expert:     { maxSites: 20, maxKeywords: 500, historyWeeks: 999, contentGapPerMonth: 300 },
+    einsteiger: { maxSites: 3,  maxKeywords: 50,  historyWeeks: 8,   contentGapPerMonth: 0,   backlinkGapPerMonth: 0,  manualChecksPerMonth: 2, keywordIdeasPerMonth: 6  },
+    pro:        { maxSites: 10, maxKeywords: 200, historyWeeks: 26,  contentGapPerMonth: 100, backlinkGapPerMonth: 20, manualChecksPerMonth: 4, keywordIdeasPerMonth: 20 },
+    expert:     { maxSites: 20, maxKeywords: 500, historyWeeks: 999, contentGapPerMonth: 300, backlinkGapPerMonth: 60, manualChecksPerMonth: 6, keywordIdeasPerMonth: 40 },
 }
 
 async function getSeoPlan(userId) {
@@ -274,7 +282,12 @@ export async function getRankings(req, res) {
             return { keyword, current, previous, change, history: history.reverse() }
         }))
 
-        res.json({ site, rankings })
+        const month = new Date().toISOString().slice(0, 7)
+        const usage = await SeoUsage.findOne({ userId: req.userId, feature: 'manual_check', month }).lean()
+        const manualChecksUsed = usage?.count ?? 0
+        const manualChecksLimit = PLAN_LIMITS[plan]?.manualChecksPerMonth ?? null
+
+        res.json({ site, rankings, manualChecksUsed, manualChecksLimit })
     } catch (err) {
         res.status(500).json({ error: err.message })
     }
@@ -286,6 +299,22 @@ export async function triggerCheck(req, res) {
         const site = await SeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId })
         if (!site) return res.status(404).json({ error: t('SITE_NOT_FOUND', req.language) })
         if (!site.keywords.length) return res.status(400).json({ error: t('NO_KEYWORDS_STORED', req.language) })
+
+        const plan = await getSeoPlan(req.userId)
+        if (!plan) return res.status(403).json({ error: t('NO_ACTIVE_SEO_SUB', req.language) })
+
+        const manualLimit = PLAN_LIMITS[plan].manualChecksPerMonth
+        const month = new Date().toISOString().slice(0, 7)
+        const usage = await SeoUsage.findOne({ userId: req.userId, feature: 'manual_check', month }).lean()
+        const used = usage?.count ?? 0
+        if (used >= manualLimit) {
+            return res.status(429).json({ error: 'monthly_limit_reached', limit: manualLimit, used })
+        }
+        await SeoUsage.findOneAndUpdate(
+            { userId: req.userId, feature: 'manual_check', month },
+            { $inc: { count: 1 } },
+            { upsert: true }
+        )
 
         // Load previous rankings before the new check
         const previousMap = {}
@@ -310,7 +339,6 @@ export async function triggerCheck(req, res) {
 
         // Send alert if meaningful changes detected
         if (Object.keys(previousMap).length > 0) {
-            const plan = await getSeoPlan(req.userId)
             const dropThreshold = ALERT_DROP_THRESHOLD[plan] ?? 5
             const { gains, losses } = detectRankingChanges(results, previousMap, dropThreshold)
             if (gains.length || losses.length) {
@@ -325,7 +353,7 @@ export async function triggerCheck(req, res) {
             }
         }
 
-        res.json({ results, checkedAt: new Date() })
+        res.json({ results, checkedAt: new Date(), manualChecksUsed: used + 1, manualChecksLimit: manualLimit })
     } catch (err) {
         res.status(500).json({ error: err.message })
     }
@@ -341,8 +369,21 @@ export async function getKeywordIdeasForSite(req, res) {
         if (!site) return res.status(404).json({ error: t('SITE_NOT_FOUND', req.language) })
         if (!site.keywords.length) return res.status(400).json({ error: t('NO_KEYWORDS_STORED', req.language) })
 
+        const monthlyLimit = PLAN_LIMITS[plan]?.keywordIdeasPerMonth ?? 6
+        const month = new Date().toISOString().slice(0, 7)
+        const usage = await SeoUsage.findOne({ userId: req.userId, feature: 'keyword_ideas', month }).lean()
+        const used = usage?.count ?? 0
+        if (used >= monthlyLimit) {
+            return res.status(429).json({ error: 'monthly_limit_reached', limit: monthlyLimit, used })
+        }
+        await SeoUsage.findOneAndUpdate(
+            { userId: req.userId, feature: 'keyword_ideas', month },
+            { $inc: { count: 1 } },
+            { upsert: true }
+        )
+
         const data = await getKeywordIdeas(site.keywords, site.location, site.language)
-        res.json(data)
+        res.json({ ...data, used: used + 1, limit: monthlyLimit })
     } catch (err) {
         res.status(500).json({ error: err.message })
     }
@@ -458,6 +499,88 @@ export async function getBacklinksForSite(req, res) {
     }
 }
 
+const BACKLINK_GAP_CACHE_MAX_AGE_MS = 28 * 24 * 60 * 60 * 1000 // 28 Tage
+
+// Generische Mega-Portale, die bei keyword-overlap-basierter Konkurrenzermittlung (getCompetitors)
+// fälschlich als "Konkurrent" auftauchen — z.B. weil google.com bei sehr vielen Keywords irgendwo
+// im SERP erscheint. Als domain_intersection-Target sind sie zudem so backlink-massiv, dass die
+// DataForSEO-Abfrage in einen Timeout/Internal-Error läuft, statt brauchbare Ergebnisse zu liefern.
+const MEGA_PORTAL_DOMAINS = new Set([
+    'google.com', 'youtube.com', 'wikipedia.org', 'facebook.com', 'instagram.com',
+    'twitter.com', 'x.com', 'linkedin.com', 'amazon.com', 'apple.com', 'microsoft.com',
+    'reddit.com', 'pinterest.com', 'tiktok.com', 'yelp.com', 'maps.google.com',
+])
+
+// GET /api/seo/sites/:id/backlink-gap?competitors=domain1.com,domain2.com
+// Ohne "competitors"-Param: ermittelt automatisch Top-Konkurrenten der Site (via getCompetitors).
+// Mit "competitors"-Param: nutzt die übergebenen Domains direkt (z.B. echte Produkt-Konkurrenten
+// statt generischer Keyword-Overlap-Treffer wie google.com oder branchenfremde Agenturen).
+export async function getBacklinkGapForSite(req, res) {
+    try {
+        const plan = await getSeoPlan(req.userId)
+        if (!plan) return res.status(403).json({ error: t('NO_ACTIVE_SEO_SUB', req.language) })
+        if (plan === 'einsteiger') return res.status(403).json({ error: 'backlink_gap_locked', requiredPlan: 'pro' })
+
+        const site = await SeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId }).lean()
+        if (!site) return res.status(404).json({ error: t('SITE_NOT_FOUND', req.language) })
+
+        const ownDomain = site.domain.toLowerCase().replace(/^www\./, '')
+        const force = req.query.force === 'true'
+        const manualCompetitors = typeof req.query.competitors === 'string'
+            ? req.query.competitors.split(',').map(d => d.trim().toLowerCase().replace(/^https?:\/\//, '').replace(/^www\./, '').split('/')[0]).filter(Boolean)
+            : null
+
+        // Beim passiven Tab-Öffnen (kein force) immer das zuletzt berechnete Ergebnis zeigen,
+        // egal ob es aus der Auto-Erkennung oder einer manuellen Konkurrenten-Auswahl stammt —
+        // sonst würde jeder Tab-Öffnen eine frische manuelle Analyse wieder überschreiben und
+        // unnötig Kontingent verbrauchen. Eine neue Berechnung gibt es nur über "force=true"
+        // (Button "Neu analysieren"/"Analysieren").
+        const cache = site.backlinkGapCache
+        if (!force && cache?.checkedAt && Date.now() - new Date(cache.checkedAt).getTime() < BACKLINK_GAP_CACHE_MAX_AGE_MS) {
+            return res.json({ competitors: cache.competitorDomains, manual: !!cache.manual, gap: cache.data, checkedAt: cache.checkedAt, cached: true })
+        }
+
+        const monthlyLimit = PLAN_LIMITS[plan]?.backlinkGapPerMonth ?? 0
+        const month = new Date().toISOString().slice(0, 7)
+        const existing = await SeoUsage.findOne({ userId: req.userId, feature: 'backlink_gap', month }).lean()
+        const used = existing?.count ?? 0
+        if (used >= monthlyLimit) {
+            return res.status(429).json({ error: 'monthly_limit_reached', limit: monthlyLimit, used })
+        }
+
+        let competitorDomains
+        if (manualCompetitors) {
+            competitorDomains = manualCompetitors.filter(d => d !== ownDomain && !MEGA_PORTAL_DOMAINS.has(d)).slice(0, 5)
+        } else {
+            const competitors = await getCompetitors(site.domain, site.location, site.language)
+            competitorDomains = competitors
+                .map(c => (c.domain || '').toLowerCase().replace(/^www\./, ''))
+                .filter(d => d && d !== ownDomain && !MEGA_PORTAL_DOMAINS.has(d))
+                .slice(0, 5)
+        }
+        if (!competitorDomains.length) {
+            return res.json({ competitors: [], gap: [], checkedAt: new Date(), used, limit: monthlyLimit, cached: false })
+        }
+
+        // Usage vor dem (kostenpflichtigen) API-Call erhöhen
+        await SeoUsage.findOneAndUpdate(
+            { userId: req.userId, feature: 'backlink_gap', month },
+            { $inc: { count: 1 } },
+            { upsert: true }
+        )
+
+        const gap = await getBacklinkGapAnalysis(site.domain, competitorDomains)
+        const checkedAt = new Date()
+        await SeoTrackedSite.updateOne(
+            { _id: site._id },
+            { backlinkGapCache: { competitorDomains, manual: !!manualCompetitors, data: gap, checkedAt } }
+        )
+        res.json({ competitors: competitorDomains, manual: !!manualCompetitors, gap, checkedAt, used: used + 1, limit: monthlyLimit, cached: false })
+    } catch (err) {
+        res.status(500).json({ error: err.message })
+    }
+}
+
 // GET /api/seo/alert-settings
 export async function getAlertSettings(req, res) {
     try {
@@ -485,10 +608,13 @@ export async function getInsights(req, res) {
     }
 }
 
+// expert war bis 2026-09 Infinity — ohne Monats-Deckel, nur durch das 2/Minute-Rate-Limit gebremst.
+// 300 ist so gewählt, dass es zusammen mit dem neuen keywordIdeasPerMonth weiterhin max. 1/4 der
+// ursprünglichen Marge kostet (siehe Kostenrechnung-Artifact).
 const INSIGHT_REFRESH_LIMITS = {
     einsteiger: 10,
     pro:        100,
-    expert:     Infinity,
+    expert:     300,
 }
 
 // POST /api/seo/sites/:id/insights/refresh
@@ -506,19 +632,17 @@ export async function refreshInsight(req, res) {
         if (!site.keywords.includes(keyword)) return res.status(400).json({ error: t('KEYWORD_NOT_IN_SITE', req.language) })
 
         const monthlyLimit = INSIGHT_REFRESH_LIMITS[plan] ?? 10
-        if (monthlyLimit !== Infinity) {
-            const month = new Date().toISOString().slice(0, 7)
-            const usage = await SeoUsage.findOne({ userId: req.userId, feature: 'insight_refresh', month }).lean()
-            const used = usage?.count ?? 0
-            if (used >= monthlyLimit) {
-                return res.status(429).json({ error: 'monthly_limit_reached', limit: monthlyLimit, used })
-            }
-            await SeoUsage.findOneAndUpdate(
-                { userId: req.userId, feature: 'insight_refresh', month },
-                { $inc: { count: 1 } },
-                { upsert: true }
-            )
+        const month = new Date().toISOString().slice(0, 7)
+        const usage = await SeoUsage.findOne({ userId: req.userId, feature: 'insight_refresh', month }).lean()
+        const used = usage?.count ?? 0
+        if (used >= monthlyLimit) {
+            return res.status(429).json({ error: 'monthly_limit_reached', limit: monthlyLimit, used })
         }
+        await SeoUsage.findOneAndUpdate(
+            { userId: req.userId, feature: 'insight_refresh', month },
+            { $inc: { count: 1 } },
+            { upsert: true }
+        )
 
         await SeoKeywordInsight.findOneAndUpdate(
             { siteId: site._id, keyword },

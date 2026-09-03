@@ -8,6 +8,7 @@ import {
     addKeywords, removeKeywords,
     getResults, triggerCheck, updatePlatforms,
     analyzeCitation, getCompetitors, getMentionHistory, getCorrelation, getKeywordSuggestions,
+    getMarketAnalytics, getHistoricalTrend,
 } from '../controllers/geo_tracking.js'
 
 const checkRateLimit = rateLimit({
@@ -46,7 +47,9 @@ router.patch('/sites/:id/platforms', updatePlatforms)
 
 router.get('/sites/:id/results',         getResults)
 router.get('/sites/:id/competitors',     getCompetitors)
+router.get('/sites/:id/market-analytics', getMarketAnalytics)
 router.get('/sites/:id/history',         getMentionHistory)
+router.get('/sites/:id/keywords/:keyword/trend', getHistoricalTrend)
 router.get('/sites/:id/correlation',     getCorrelation)
 router.get('/sites/:id/keyword-suggestions', getKeywordSuggestions)
 router.post('/sites/:id/check', checkRateLimit, triggerCheck)

@@ -15,6 +15,7 @@ const MESSAGES = {
     AUTH_TOO_MANY_ATTEMPTS: { de: "Zu viele Versuche. Bitte in 15 Minuten erneut versuchen.", en: "Too many attempts. Please try again in 15 minutes." },
     FREE_QUOTA_USED: { de: "Kostenloses Kontingent aufgebraucht. Bitte registrieren um mehr Audits zu erhalten.", en: "Free quota used up. Please register to get more audits." },
     CHECK_RATE_LIMIT: { de: "Bitte warte eine Minute zwischen manuellen Checks.", en: "Please wait a minute between manual checks." },
+    MANUAL_REFRESH_RATE_LIMIT: { de: "Bitte warte 45 Sekunden zwischen manuellen Checks.", en: "Please wait 45 seconds between manual checks." },
     API_RATE_LIMIT: { de: "Zu viele Anfragen. Bitte warte einen Moment.", en: "Too many requests. Please wait a moment." },
     TOO_MANY_REQUESTS_HOUR: { de: "Zu viele Anfragen. Bitte in einer Stunde erneut versuchen.", en: "Too many requests. Please try again in an hour." },
     TOO_MANY_REQUESTS: { de: "Zu viele Anfragen.", en: "Too many requests." },

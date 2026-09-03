@@ -515,6 +515,8 @@ function RankingsTab({ siteId, site, onSiteUpdated }) {
     const [expandedKw, setExpandedKw]   = useState(null)
     const [filter, setFilter]           = useState('alle')
     const [chartKey, setChartKey]       = useState(0)
+    const [manualChecksUsed, setManualChecksUsed]   = useState(null)
+    const [manualChecksLimit, setManualChecksLimit] = useState(null)
 
     const fetchInsights = useCallback(async () => {
         try {
@@ -536,6 +538,8 @@ function RankingsTab({ siteId, site, onSiteUpdated }) {
             const data = await res.json()
             if (!res.ok) throw new Error(data.error)
             setRankings(data.rankings || [])
+            setManualChecksUsed(data.manualChecksUsed ?? null)
+            setManualChecksLimit(data.manualChecksLimit ?? null)
         } catch { toast.error('Fehler beim Laden der Rankings') }
         finally { setLoading(false) }
     }, [siteId])
@@ -561,8 +565,14 @@ function RankingsTab({ siteId, site, onSiteUpdated }) {
                 method: 'POST', headers: { Authorization: `Bearer ${token}` },
             })
             const data = await res.json()
+            if (res.status === 429 && data.error === 'monthly_limit_reached') {
+                toast.error(`Monatliches Limit für manuelle Checks erreicht (${data.limit}). Der wöchentliche Auto-Check läuft trotzdem weiter.`)
+                return
+            }
             if (!res.ok) throw new Error(data.error)
             toast.success('Check abgeschlossen')
+            setManualChecksUsed(data.manualChecksUsed ?? null)
+            setManualChecksLimit(data.manualChecksLimit ?? null)
             await fetchRankings()
             setChartKey(k => k + 1)
         } catch (err) { toast.error(err.message || 'Fehler') }
@@ -655,6 +665,8 @@ function RankingsTab({ siteId, site, onSiteUpdated }) {
                     {site?.lastChecked
                         ? `Zuletzt: ${new Date(site.lastChecked).toLocaleString('de-DE', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' })}`
                         : 'Noch nicht geprüft'}
+                    {manualChecksLimit != null &&
+                        ` · ${manualChecksUsed}/${manualChecksLimit} manuelle Checks diesen Monat genutzt`}
                 </div>
                 <div className="flex items-center gap-2 flex-wrap">
                     {selected.size > 0 && (
@@ -831,13 +843,14 @@ const DIFF_FILTERS = [
     { id: 'HIGH',   label: 'Schwer' },
 ]
 
-function KeywordIdeasTab({ siteId }) {
+function KeywordIdeasTab({ siteId, plan }) {
     const [data, setData]             = useState(null)
     const [loading, setLoading]       = useState(false)
     const [loaded, setLoaded]         = useState(false)
     const [adding, setAdding]         = useState(new Set())
     const [added, setAdded]           = useState(new Set())
     const [diffFilter, setDiffFilter] = useState('ALL')
+    const [limitReached, setLimitReached] = useState(null) // { used, limit }
 
     const handleAddKeyword = async (keyword) => {
         setAdding(prev => new Set(prev).add(keyword))
@@ -858,12 +871,14 @@ function KeywordIdeasTab({ siteId }) {
 
     const fetch_ = async () => {
         setLoading(true)
+        setLimitReached(null)
         try {
             const token = localStorage.getItem('token')
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/seo/sites/${siteId}/keyword-ideas`, {
                 headers: { Authorization: `Bearer ${token}` },
             })
             const d = await res.json()
+            if (res.status === 429 && d.error === 'monthly_limit_reached') { setLimitReached({ used: d.used, limit: d.limit }); setLoaded(true); return }
             if (!res.ok) throw new Error(d.error)
             setData(d); setLoaded(true)
         } catch (err) { toast.error(err.message || 'Fehler') }
@@ -877,6 +892,29 @@ function KeywordIdeasTab({ siteId }) {
     const filterByDiff = (items) => diffFilter === 'ALL' ? items : (items || []).filter(i => (i.competition || '').toUpperCase() === diffFilter)
     const filteredVolumes = filterByDiff(data?.volumes)
     const filteredIdeas   = filterByDiff(data?.ideas)
+
+    if (limitReached) return (
+        <div className="flex flex-col items-center justify-center py-12 gap-4 bg-[var(--bg-surface)] border border-amber-500/15 rounded-2xl">
+            <div className="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center">
+                <Lock className="w-5 h-5 text-amber-400" />
+            </div>
+            <div className="text-center">
+                <p className="text-sm font-semibold text-white mb-1">Monatliches Limit erreicht</p>
+                <p className="text-xs text-slate-500">
+                    Du hast {limitReached.limit} von {limitReached.limit} Keyword-Ideen-Aufrufen diesen Monat verwendet.<br />
+                    {plan === 'einsteiger' || plan === 'pro'
+                        ? 'Upgrade für mehr Aufrufe pro Monat.'
+                        : 'Das Limit wird am 1. des nächsten Monats zurückgesetzt.'}
+                </p>
+            </div>
+            {(plan === 'einsteiger' || plan === 'pro') && (
+                <Link href="/seo/pricing"
+                    className="flex items-center gap-2 px-4 py-2 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all">
+                    Plan upgraden →
+                </Link>
+            )}
+        </div>
+    )
 
     if (!loaded) return (
         <div className="flex flex-col items-center justify-center py-20 gap-4">
@@ -1112,11 +1150,63 @@ function CompetitorsTab({ siteId }) {
 
 // ─── Backlinks Tab ────────────────────────────────────────────────────────────
 
-function BacklinksTab({ siteId }) {
+// Reines SVG-Donut-Chart, keine zusätzliche Chart-Library nötig.
+function DonutChart({ segments, size = 128, strokeWidth = 20 }) {
+    const total = segments.reduce((sum, s) => sum + s.value, 0)
+    if (!total) return null
+
+    const radius = (size - strokeWidth) / 2
+    const circumference = 2 * Math.PI * radius
+
+    let cumulative = 0
+    const arcs = segments.map(s => {
+        const dash = (s.value / total) * circumference
+        const arc = { ...s, dash, offset: cumulative }
+        cumulative += dash
+        return arc
+    })
+
+    return (
+        <div className="flex items-center gap-5 flex-wrap">
+            <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className="-rotate-90 shrink-0">
+                <circle cx={size / 2} cy={size / 2} r={radius} fill="none" stroke="var(--surface-08)" strokeWidth={strokeWidth} />
+                {arcs.map((a, i) => (
+                    <motion.circle key={a.label}
+                        cx={size / 2} cy={size / 2} r={radius} fill="none"
+                        stroke={a.color} strokeWidth={strokeWidth}
+                        strokeDasharray={`${a.dash} ${circumference - a.dash}`}
+                        strokeDashoffset={-a.offset}
+                        initial={{ opacity: 0, scale: 0.85 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.5, delay: i * 0.08, ease: 'easeOut' }}
+                        style={{ transformOrigin: '50% 50%' }}
+                    />
+                ))}
+            </svg>
+            <div className="space-y-2 min-w-[140px]">
+                {arcs.map(a => (
+                    <div key={a.label} className="flex items-center gap-2">
+                        <span className="w-2.5 h-2.5 rounded-full shrink-0" style={{ background: a.color }} />
+                        <span className="text-xs text-slate-400 truncate">{a.label}</span>
+                        <span className="text-xs text-white font-semibold tabular-nums ml-auto pl-3">{a.value} · {Math.round((a.value / total) * 100)}%</span>
+                    </div>
+                ))}
+            </div>
+        </div>
+    )
+}
+
+function BacklinksTab({ siteId, plan }) {
     const [summary, setSummary]     = useState(null)
     const [checkedAt, setCheckedAt] = useState(null)
     const [loading, setLoading]     = useState(false)
     const [loaded, setLoaded]       = useState(false)
+
+    const [gap, setGap]                         = useState(null)
+    const [gapLoading, setGapLoading]           = useState(false)
+    const [gapLoaded, setGapLoaded]             = useState(false)
+    const [gapLimitReached, setGapLimitReached] = useState(null) // { used, limit }
+    const [competitorsInput, setCompetitorsInput] = useState('')
 
     const fetch_ = async (force = false) => {
         setLoading(true)
@@ -1132,7 +1222,36 @@ function BacklinksTab({ siteId }) {
         finally { setLoading(false) }
     }
 
-    useEffect(() => { fetch_() }, [siteId])
+    const fetchGap = async (force = false, competitorsOverride = '') => {
+        setGapLoading(true)
+        setGapLimitReached(null)
+        try {
+            const token = localStorage.getItem('token')
+            const params = new URLSearchParams()
+            if (force) params.set('force', 'true')
+            if (competitorsOverride) params.set('competitors', competitorsOverride)
+            const qs = params.toString()
+            const url = `${process.env.NEXT_PUBLIC_API_URL}/seo/sites/${siteId}/backlink-gap${qs ? `?${qs}` : ''}`
+            const res = await fetch(url, { headers: { Authorization: `Bearer ${token}` } })
+            const d = await res.json()
+            if (res.status === 429 && d.error === 'monthly_limit_reached') { setGapLimitReached({ used: d.used, limit: d.limit }); setGapLoaded(true); return }
+            if (!res.ok) throw new Error(d.error)
+            setGap(d); setGapLoaded(true)
+            if (d.manual && d.competitors?.length) setCompetitorsInput(d.competitors.join(', '))
+            if (force) toast.success('Link-Gap-Analyse aktualisiert')
+        } catch (err) { toast.error(err.message || 'Fehler bei der Link-Gap-Analyse') }
+        finally { setGapLoading(false) }
+    }
+
+    const handleGapSubmit = (e) => {
+        e.preventDefault()
+        fetchGap(true, competitorsInput.trim())
+    }
+
+    useEffect(() => {
+        fetch_()
+        if (plan && plan !== 'einsteiger') fetchGap()
+    }, [siteId, plan])
 
     if (!loaded) return <LoadingTab />
 
@@ -1146,6 +1265,43 @@ function BacklinksTab({ siteId }) {
         { label: 'Nofollow', value: summary.nofollow?.toLocaleString('de-DE') ?? '—', color: 'text-white' },
         { label: 'Spam Score', value: summary.spamScore != null ? `${summary.spamScore}%` : '—', color: summary.spamScore > 30 ? 'text-red-400' : 'text-[var(--accent)]' },
     ]
+
+    // Domains, die auf mehrere Konkurrenten gleichzeitig verlinken, zuerst — höchster Linkbuilding-Wert
+    const sortedGap = gap?.gap?.length
+        ? [...gap.gap].sort((a, b) => (b.linksToCount - a.linksToCount) || ((b.rank || 0) - (a.rank || 0)))
+        : []
+    const maxRank = sortedGap.length ? Math.max(...sortedGap.map(g => g.rank || 0)) : 0
+
+    const competitorCounts = (gap?.competitors || [])
+        .map(c => ({ domain: c, count: sortedGap.filter(g => g.linksTo.some(l => l.competitor === c)).length }))
+        .sort((a, b) => b.count - a.count)
+    const maxCompetitorCount = competitorCounts.length ? Math.max(...competitorCounts.map(c => c.count)) : 0
+
+    // Überschneidungsgrad: wie viele Domains verlinken auf 1, 2, 3, 4+ Konkurrenten gleichzeitig
+    // Bewusst weit auseinanderliegende Tailwind-Farbfamilien (400er-Stufe, kräftig auf dunklem
+    // Grund) statt benachbarter Töne wie Emerald/Teal, die sich zu ähnlich sehen.
+    const OVERLAP_COLORS = [
+        'var(--accent)',              // Blau (Marke)
+        'oklch(70.4% 0.191 22)',      // Red
+        'oklch(82.8% 0.189 84)',      // Amber
+        'oklch(76.5% 0.177 163)',     // Emerald
+        'oklch(74% 0.238 322)',       // Fuchsia
+    ]
+    const overlapCounts = {}
+    sortedGap.forEach(g => { overlapCounts[g.linksToCount] = (overlapCounts[g.linksToCount] || 0) + 1 })
+    const overlapSegments = Object.keys(overlapCounts)
+        .map(Number)
+        .sort((a, b) => b - a)
+        .map((n, i) => ({ label: `${n}× Konkurrenten`, value: overlapCounts[n], color: OVERLAP_COLORS[i] ?? '#475569' }))
+
+    // Rank-Verteilung: grobe Autoritäts-Einordnung der Gap-Domains
+    const RANK_BUCKETS = [
+        { label: 'Niedrig (< 100)', test: r => r < 100 },
+        { label: 'Mittel (100–199)', test: r => r >= 100 && r < 200 },
+        { label: 'Hoch (200+)', test: r => r >= 200 },
+    ]
+    const rankBuckets = RANK_BUCKETS.map(b => ({ label: b.label, count: sortedGap.filter(g => b.test(g.rank || 0)).length }))
+    const maxRankBucket = Math.max(...rankBuckets.map(b => b.count), 1)
 
     return (
         <div>
@@ -1174,6 +1330,197 @@ function BacklinksTab({ siteId }) {
                 <RefreshCw className={`w-3 h-3 ${loading ? 'animate-spin' : ''}`} />
                 Neu laden
             </button>
+
+            {/* Link-Gap zu Konkurrenten */}
+            <div className="mt-10 pt-8 border-t border-[var(--border-subtle)]">
+                <h3 className="text-base font-bold text-white flex items-center gap-2 mb-1">
+                    <GitCompare className="w-4 h-4 text-[var(--accent)]" />
+                    Link-Gap zu Konkurrenten
+                </h3>
+                <p className="text-xs text-slate-500 mb-4">
+                    Domains, die auf deine Konkurrenten verlinken — aber (noch) nicht auf dich. Konkrete Kontakt-Ziele fürs Linkbuilding.
+                </p>
+
+                {plan !== 'einsteiger' && (
+                    <form onSubmit={handleGapSubmit} className="flex flex-col sm:flex-row gap-3 mb-5">
+                        <input
+                            value={competitorsInput}
+                            onChange={e => setCompetitorsInput(e.target.value)}
+                            placeholder="peec.ai, otterly.ai, rankscale.ai — leer lassen für automatische Erkennung"
+                            className="flex-1 bg-[var(--surface-06)] border border-[var(--border-subtle)] focus:border-[var(--accent-border)] rounded-xl px-4 py-2.5 text-white placeholder:text-slate-600 outline-none text-sm"
+                        />
+                        <button type="submit" disabled={gapLoading}
+                            className="flex items-center gap-2 px-4 py-2.5 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all disabled:opacity-50 whitespace-nowrap">
+                            {gapLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <GitCompare className="w-4 h-4" />}
+                            {gapLoading ? 'Analysiere…' : competitorsInput.trim() ? 'Analysieren' : 'Neu analysieren'}
+                        </button>
+                    </form>
+                )}
+
+                {plan === 'einsteiger' ? (
+                    <div className="flex flex-col items-center justify-center py-14 gap-4 bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl">
+                        <div className="w-12 h-12 rounded-2xl bg-[var(--accent-soft)] border border-[var(--accent-border)] flex items-center justify-center">
+                            <Lock className="w-5 h-5 text-[var(--accent)]" />
+                        </div>
+                        <div className="text-center">
+                            <p className="text-sm font-semibold text-white mb-1">Ab Pro verfügbar</p>
+                            <p className="text-xs text-slate-500 max-w-sm">
+                                Finde Domains, die auf deine Konkurrenten verlinken, aber nicht auf dich — ab <strong className="text-white">Pro (€79/Monat)</strong>.
+                            </p>
+                        </div>
+                        <Link href="/seo/pricing"
+                            className="flex items-center gap-2 px-5 py-2.5 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all">
+                            Auf Pro upgraden →
+                        </Link>
+                    </div>
+                ) : gapLimitReached ? (
+                    <div className="flex flex-col items-center justify-center py-12 gap-3 bg-[var(--bg-surface)] border border-amber-500/15 rounded-2xl">
+                        <div className="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center">
+                            <Lock className="w-5 h-5 text-amber-400" />
+                        </div>
+                        <p className="text-sm font-semibold text-white">Monatliches Limit erreicht</p>
+                        <p className="text-xs text-slate-500 text-center">
+                            {gapLimitReached.used}/{gapLimitReached.limit} Analysen diesen Monat verwendet.<br />
+                            {plan === 'pro' ? 'Upgrade auf Expert für mehr Analysen/Monat.' : 'Das Limit wird am 1. des nächsten Monats zurückgesetzt.'}
+                        </p>
+                        {plan === 'pro' && (
+                            <Link href="/seo/pricing"
+                                className="flex items-center gap-2 px-4 py-2 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all">
+                                Auf Expert upgraden →
+                            </Link>
+                        )}
+                    </div>
+                ) : !gapLoaded ? (
+                    <div className="flex items-center justify-center py-14">
+                        <Loader2 className="w-5 h-5 text-slate-600 animate-spin" />
+                    </div>
+                ) : sortedGap.length === 0 ? (
+                    <div className="flex flex-col items-center justify-center py-14 gap-3">
+                        <GitCompare className="w-8 h-8 text-slate-700" />
+                        <span className="text-sm text-slate-500 text-center max-w-sm">
+                            {gap?.competitors?.length
+                                ? 'Kein Link-Gap gefunden — sehr gutes Zeichen, deine Konkurrenten haben keine erkennbaren Linkbuilding-Vorteile.'
+                                : 'Keine Konkurrenten gefunden — die Gap-Analyse braucht mindestens einen erkannten Konkurrenten (Tab "Konkurrenten").'}
+                        </span>
+                    </div>
+                ) : (
+                    <>
+                        <div className="flex flex-wrap items-center gap-1.5 mb-5">
+                            <span className="text-xs text-slate-600">Verglichen mit ({gap.manual ? 'manuell eingegeben' : 'automatisch erkannt'}):</span>
+                            {gap.competitors.map(c => (
+                                <span key={c} className="text-xs px-2 py-1 rounded-md bg-[var(--surface-08)] text-slate-400">{c}</span>
+                            ))}
+                        </div>
+
+                        {/* Diagramme: Überschneidungsgrad (Kreisdiagramm) + Rank-Verteilung */}
+                        <div className="grid sm:grid-cols-2 gap-4 mb-5">
+                            <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl p-5">
+                                <h4 className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-4">Überschneidungsgrad</h4>
+                                <DonutChart segments={overlapSegments} />
+                            </div>
+                            <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl p-5">
+                                <h4 className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-4">Rank-Verteilung</h4>
+                                <div className="space-y-3">
+                                    {rankBuckets.map((b, i) => (
+                                        <div key={b.label}>
+                                            <div className="flex items-center justify-between gap-3 mb-1">
+                                                <span className="text-sm text-slate-300">{b.label}</span>
+                                                <span className="text-xs text-[var(--accent)] font-semibold tabular-nums shrink-0">{b.count}</span>
+                                            </div>
+                                            <div className="relative h-2 rounded-full bg-[var(--surface-08)] overflow-hidden">
+                                                <motion.div
+                                                    className="absolute inset-y-0 left-0 rounded-full bg-[var(--accent)]"
+                                                    initial={{ width: 0 }}
+                                                    animate={{ width: `${(b.count / maxRankBucket) * 100}%` }}
+                                                    transition={{ duration: 0.6, delay: i * 0.06, ease: 'easeOut' }}
+                                                />
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Diagramm: Gap-Domains pro Konkurrent */}
+                        <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl p-5 mb-5">
+                            <h4 className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-4">Gap-Domains pro Konkurrent</h4>
+                            <div className="space-y-3">
+                                {competitorCounts.map((c, i) => (
+                                    <div key={c.domain}>
+                                        <div className="flex items-center justify-between gap-3 mb-1">
+                                            <span className="text-sm text-slate-300 truncate">{c.domain}</span>
+                                            <span className="text-xs text-[var(--accent)] font-semibold tabular-nums shrink-0">{c.count} Domains</span>
+                                        </div>
+                                        <div className="relative h-2 rounded-full bg-[var(--surface-08)] overflow-hidden">
+                                            <motion.div
+                                                className="absolute inset-y-0 left-0 rounded-full bg-[var(--accent)]"
+                                                initial={{ width: 0 }}
+                                                animate={{ width: maxCompetitorCount ? `${(c.count / maxCompetitorCount) * 100}%` : '0%' }}
+                                                transition={{ duration: 0.6, delay: i * 0.06, ease: 'easeOut' }}
+                                            />
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Tabelle: konkrete Linkbuilding-Ziele */}
+                        <div className="bg-[var(--bg-surface)] border border-[var(--accent-border)] rounded-2xl overflow-hidden">
+                            <div className="overflow-x-auto">
+                                <table className="w-full">
+                                    <thead>
+                                        <tr className="border-b border-[var(--border-subtle)]">
+                                            <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Domain</th>
+                                            <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Rank</th>
+                                            <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider hidden sm:table-cell">Verlinkt zu</th>
+                                            <th className="px-5 py-3 w-10"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {sortedGap.map((g, i) => (
+                                            <tr key={g.domain} className={i < sortedGap.length - 1 ? 'border-b border-[var(--border-subtle)]' : ''}>
+                                                <td className="px-5 py-3.5">
+                                                    <div className="flex items-center gap-2">
+                                                        <span className="text-sm text-white truncate">{g.domain}</span>
+                                                        {g.linksToCount > 1 && (
+                                                            <span className="text-[10px] px-1.5 py-0.5 rounded-md bg-[var(--accent-soft)] border border-[var(--accent-border)] text-[var(--accent)] font-semibold shrink-0">
+                                                                {g.linksToCount}×
+                                                            </span>
+                                                        )}
+                                                    </div>
+                                                </td>
+                                                <td className="px-5 py-3.5">
+                                                    <VolumeBar value={g.rank} max={maxRank} />
+                                                </td>
+                                                <td className="px-5 py-3.5 hidden sm:table-cell">
+                                                    <div className="flex flex-wrap gap-1">
+                                                        {g.linksTo.map(l => (
+                                                            <span key={l.competitor} className="text-[11px] px-1.5 py-0.5 rounded-md bg-[var(--surface-08)] text-slate-400">
+                                                                {l.competitor}
+                                                            </span>
+                                                        ))}
+                                                    </div>
+                                                </td>
+                                                <td className="px-5 py-3.5 text-right">
+                                                    <a href={`https://${g.domain}`} target="_blank" rel="noopener noreferrer"
+                                                        className="inline-flex items-center text-slate-600 hover:text-[var(--accent)] transition-colors">
+                                                        <ExternalLink className="w-3.5 h-3.5" />
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        {gap.checkedAt && (
+                            <div className="text-xs text-slate-600 mt-3">
+                                Zuletzt analysiert: {new Date(gap.checkedAt).toLocaleDateString('de-DE')} {new Date(gap.checkedAt).toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' })}
+                            </div>
+                        )}
+                    </>
+                )}
+            </div>
         </div>
     )
 }
@@ -1577,10 +1924,10 @@ export default function SeoSitePage() {
 
                 {/* Tab Content */}
                 {tab === 'rankings'    && <RankingsTab siteId={siteId} site={site} onSiteUpdated={fetchSite} />}
-                {tab === 'ideas'       && <KeywordIdeasTab siteId={siteId} />}
+                {tab === 'ideas'       && <KeywordIdeasTab siteId={siteId} plan={plan} />}
                 {tab === 'gap'         && <ContentGapTab siteId={siteId} plan={plan} />}
                 {tab === 'competitors' && <CompetitorsTab siteId={siteId} />}
-                {tab === 'backlinks'   && <BacklinksTab siteId={siteId} />}
+                {tab === 'backlinks'   && <BacklinksTab siteId={siteId} plan={plan} />}
                 {tab === 'settings'    && <SettingsTab siteId={siteId} />}
             </div>
         </div>

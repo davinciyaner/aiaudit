@@ -4,17 +4,31 @@ import GeoUsage from '../models/geo_usage.js'
 import ProductSubscription from '../models/product_subscription.js'
 import SeoTrackedSite from '../models/seo_tracked_site.js'
 import SeoKeywordRanking from '../models/seo_keyword_ranking.js'
-import { checkSiteMentions, PLATFORM_COSTS, PROMPT_INTENTS, classifyGeoSuitableKeywords, getAiKeywordVolume } from '../services/geoService.js'
+import {
+    checkSiteMentions, PLATFORM_COSTS, PROMPT_INTENTS, classifyGeoSuitableKeywords, getAiKeywordVolume,
+    getTopMentionedDomains, getKeywordMentionHistory,
+} from '../services/geoService.js'
 import { analyzeGEO } from './geo.js'
 import { assertPublicHttpsUrl, fetchSafely } from '../utils/safeFetch.js'
 import { t } from '../utils/i18n/errors.js'
 
-const VALID_PLATFORMS = ['claude', 'chatgpt', 'perplexity', 'google_aio']
+const VALID_PLATFORMS = ['claude', 'chatgpt', 'gemini', 'perplexity', 'google_aio']
 
+// Preise/Limits per 2026-09: Kostenanalyse ergab, dass die alten Limits (30/100 Keywords,
+// 8/20 manuelle Checks — jeder manuelle Check = voller Rerun aller Keywords) bei voller
+// Ausschöpfung deutlich mehr an DataForSEO-API-Kosten verursachen als der Plan einbringt.
+// Keywords und manuelle Checks wurden gesenkt, Pro/Expert-Preise entsprechend angehoben
+// (siehe geo/pricing-Seiten), damit auch der Worst Case (volles Kontingent genutzt) nach
+// PayPal-Gebühr und 50% Steuerrücklage noch komfortabel Marge lässt.
+// keywordSuggestionsPerMonth per 2026-09: getKeywordSuggestions (Cross-Sell-Feature, nur aktiv wenn
+// derselbe Nutzer für dieselbe Domain zusätzlich ein SEO-Automatisierung-Abo hat) war nur über einen
+// 24h-Cache pro Site gedeckelt, kein echtes Monats-Kontingent — bei mehreren Sites theoretisch näher
+// an "täglich pro Site" als an einem echten Limit. Live getestet (ai_keyword_data + Claude Haiku):
+// ca. $0,02-0,035/Aufruf. Werte proportional zu maxSites, bleibt weit innerhalb des 1/4-Marge-Budgets.
 const PLAN_LIMITS = {
-    einsteiger: { maxSites: 1,  maxKeywords: 10,  platforms: ['claude'],                                      manualChecksPerMonth: 2,  promptVariants: 1 },
-    pro:        { maxSites: 3,  maxKeywords: 30,  platforms: ['claude', 'chatgpt', 'perplexity', 'google_aio'], manualChecksPerMonth: 8,  promptVariants: 2 },
-    expert:     { maxSites: 10, maxKeywords: 100, platforms: ['claude', 'chatgpt', 'perplexity', 'google_aio'], manualChecksPerMonth: 20, promptVariants: 2 },
+    einsteiger: { maxSites: 1,  maxKeywords: 10, platforms: ['claude', 'gemini'],                                      manualChecksPerMonth: 2, promptVariants: 1, competitorAnalyticsEnabled: false, historicalTrendsEnabled: false, keywordSuggestionsPerMonth: 5  },
+    pro:        { maxSites: 3,  maxKeywords: 20, platforms: ['claude', 'chatgpt', 'gemini', 'perplexity', 'google_aio'], manualChecksPerMonth: 2, promptVariants: 2, competitorAnalyticsEnabled: true,  historicalTrendsEnabled: false, keywordSuggestionsPerMonth: 15 },
+    expert:     { maxSites: 10, maxKeywords: 60, platforms: ['claude', 'chatgpt', 'gemini', 'perplexity', 'google_aio'], manualChecksPerMonth: 3, promptVariants: 2, competitorAnalyticsEnabled: true,  historicalTrendsEnabled: true,  keywordSuggestionsPerMonth: 30 },
 }
 
 async function getGeoPlan(userId) {
@@ -341,9 +355,9 @@ export async function getResults(req, res) {
 
 const STALE_CHECK_MS = 20 * 60 * 1000
 
-async function runCheckInBackground(site, userId) {
+async function runCheckInBackground(site, userId, keywords) {
     try {
-        const results = await checkSiteMentions(site, site.promptVariants)
+        const results = await checkSiteMentions(site, site.promptVariants, keywords)
 
         await GeoMentionCheck.insertMany(results.map(r => ({
             siteId:       site._id,
@@ -383,6 +397,15 @@ export async function triggerCheck(req, res) {
         if (!site) return res.status(404).json({ error: t('SITE_NOT_FOUND', req.language) })
         if (!site.keywords.length) return res.status(400).json({ error: t('NO_KEYWORDS_STORED', req.language) })
 
+        // Optionale Keyword-Auswahl: ein manueller Check muss nicht zwingend die ganze Site neu
+        // prüfen (das ist der teuerste Fall — deshalb im Frontend über die vorhandene Checkbox-
+        // Auswahl ansteuerbar). Ohne Auswahl bleibt das Verhalten wie bisher: alle Keywords.
+        const siteKeywordSet = new Set(site.keywords)
+        const requestedKeywords = Array.isArray(req.body?.keywords)
+            ? [...new Set(req.body.keywords)].filter(k => siteKeywordSet.has(k))
+            : []
+        const keywordsToCheck = requestedKeywords.length ? requestedKeywords : undefined // undefined = alle (siehe checkSiteMentions)
+
         const isStale = site.checkStatus === 'running' && site.checkStartedAt
             && (Date.now() - site.checkStartedAt.getTime() > STALE_CHECK_MS)
         if (site.checkStatus === 'running' && !isStale) {
@@ -407,9 +430,9 @@ export async function triggerCheck(req, res) {
         site.checkStartedAt = new Date()
         await site.save()
 
-        runCheckInBackground(site, req.userId) // bewusst nicht awaited
+        runCheckInBackground(site, req.userId, keywordsToCheck) // bewusst nicht awaited
 
-        res.status(202).json({ status: 'running', startedAt: site.checkStartedAt })
+        res.status(202).json({ status: 'running', startedAt: site.checkStartedAt, checkedKeywords: keywordsToCheck ?? site.keywords })
     } catch (err) {
         res.status(500).json({ error: err.message })
     }
@@ -556,6 +579,47 @@ export async function getCompetitors(req, res) {
     }
 }
 
+const MARKET_ANALYTICS_CACHE_TTL_MS = 7 * 24 * 60 * 60 * 1000 // wöchentlich, wie der Auto-Check
+// Ein leeres Ergebnis (0 Domains) nur kurz cachen — sonst bleibt ein "gerade noch keine Daten
+// gefunden"-Zustand tagelang hängen, obwohl ein erneuter Versuch in ein paar Minuten schon
+// Treffer liefern könnte (z.B. wenn DataForSEO die Daten für ein Keyword erst nachträglich indiziert).
+const MARKET_ANALYTICS_EMPTY_TTL_MS = 5 * 60 * 1000
+const MARKET_ANALYTICS_CACHE = new Map() // geoSiteId -> { data, expiresAt }
+
+// GET /api/geo/sites/:id/market-analytics — Pro/Expert: welche Domains werden über DataForSEOs
+// eigenen (breiteren) Datensatz zu den getrackten Keywords hinweg am häufigsten von KI-Systemen
+// genannt. Ergänzt getCompetitors() (das nur aus den eigenen Check-Ergebnissen aggregiert) um
+// eine Marktsicht, die nicht von den eigenen Checks abhängt.
+export async function getMarketAnalytics(req, res) {
+    try {
+        const plan = await getGeoPlan(req.userId)
+        if (!plan) return res.status(403).json({ error: t('NO_ACTIVE_GEO_SUB', req.language) })
+        if (!PLAN_LIMITS[plan].competitorAnalyticsEnabled) {
+            return res.status(403).json({ error: req.language === 'en'
+                ? 'Competitor analytics requires the Pro or Expert plan'
+                : 'Wettbewerbs-Analytics erfordert den Pro- oder Expert-Plan' })
+        }
+
+        const site = await GeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId }).lean()
+        if (!site) return res.status(404).json({ error: t('SITE_NOT_FOUND', req.language) })
+        if (!site.keywords?.length) return res.json({ domains: [] })
+
+        const cacheKey = String(site._id)
+        const cached = MARKET_ANALYTICS_CACHE.get(cacheKey)
+        if (cached && cached.expiresAt > Date.now()) {
+            return res.json({ domains: cached.data, cached: true })
+        }
+
+        const domains = await getTopMentionedDomains(site.keywords, site.language)
+        const ttl = domains.length ? MARKET_ANALYTICS_CACHE_TTL_MS : MARKET_ANALYTICS_EMPTY_TTL_MS
+        MARKET_ANALYTICS_CACHE.set(cacheKey, { data: domains, expiresAt: Date.now() + ttl })
+
+        res.json({ domains, cached: false })
+    } catch (err) {
+        res.status(500).json({ error: err.message })
+    }
+}
+
 
 export async function getMentionHistory(req, res) {
     try {
@@ -583,6 +647,56 @@ export async function getMentionHistory(req, res) {
         }))
 
         res.json({ history })
+    } catch (err) {
+        res.status(500).json({ error: err.message })
+    }
+}
+
+// keyword -> lastFetchedMonth: verhindert, dass bei jedem Aufruf die komplette Historie seit
+// 2025-08 neu abgefragt wird — nur der aktuelle Monat wird pro Kalendermonat einmal nachgeladen,
+// alte Monate ändern sich ohnehin nicht. Bewusst nicht zeitbasiert (TTL), sondern an den
+// Kalendermonat gekoppelt, weil ein neuer Monat sofort neue Daten haben kann.
+const HISTORICAL_TREND_CACHE = new Map() // `${siteId}:${keyword}` -> { history, lastFetchedMonth }
+
+// GET /api/geo/sites/:id/keywords/:keyword/trend — Expert only, pro Keyword abgerufen (nicht
+// bulk für alle Keywords einer Site), damit die Kosten proportional zur tatsächlichen Nutzung
+// bleiben statt bei jedem Refresh für alle 100 Keywords auf einmal anzufallen.
+export async function getHistoricalTrend(req, res) {
+    try {
+        const plan = await getGeoPlan(req.userId)
+        if (!plan) return res.status(403).json({ error: t('NO_ACTIVE_GEO_SUB', req.language) })
+        if (!PLAN_LIMITS[plan].historicalTrendsEnabled) {
+            return res.status(403).json({ error: req.language === 'en'
+                ? 'Historical trends require the Expert plan'
+                : 'Historien-Trends erfordern den Expert-Plan' })
+        }
+
+        const site = await GeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId }).lean()
+        if (!site) return res.status(404).json({ error: t('SITE_NOT_FOUND', req.language) })
+
+        const keyword = (req.params.keyword || '').trim().toLowerCase()
+        if (!keyword || !site.keywords.includes(keyword)) {
+            return res.status(404).json({ error: req.language === 'en'
+                ? 'Keyword not tracked on this site'
+                : 'Keyword wird bei dieser Website nicht getrackt' })
+        }
+
+        const cacheKey = `${site._id}:${keyword}`
+        const currentMonth = new Date().toISOString().slice(0, 7)
+        const cached = HISTORICAL_TREND_CACHE.get(cacheKey)
+
+        if (cached && cached.lastFetchedMonth === currentMonth) {
+            return res.json({ history: cached.history, cached: true })
+        }
+
+        const newEntries = await getKeywordMentionHistory(keyword, site.language, cached?.lastFetchedMonth)
+        const merged = cached
+            ? [...cached.history.filter(h => !newEntries.some(n => n.month === h.month && n.platform === h.platform)), ...newEntries]
+                .sort((a, b) => a.month.localeCompare(b.month))
+            : newEntries
+
+        HISTORICAL_TREND_CACHE.set(cacheKey, { history: merged, lastFetchedMonth: currentMonth })
+        res.json({ history: merged, cached: false })
     } catch (err) {
         res.status(500).json({ error: err.message })
     }
@@ -722,6 +836,19 @@ export async function getKeywordSuggestions(req, res) {
         if (cached && cached.expiresAt > Date.now() && cached.sourceCount === seoOnlyKeywords.length) {
             return res.json({ linked: true, suggestions: cached.data, cached: true })
         }
+
+        const monthlyLimit = PLAN_LIMITS[plan]?.keywordSuggestionsPerMonth ?? 5
+        const month = new Date().toISOString().slice(0, 7)
+        const usage = await GeoUsage.findOne({ userId: req.userId, feature: 'keyword_suggestions', month }).lean()
+        const used = usage?.count ?? 0
+        if (used >= monthlyLimit) {
+            return res.status(429).json({ error: 'monthly_limit_reached', limit: monthlyLimit, used })
+        }
+        await GeoUsage.findOneAndUpdate(
+            { userId: req.userId, feature: 'keyword_suggestions', month },
+            { $inc: { count: 1 } },
+            { upsert: true }
+        )
 
         const suitable = await classifyGeoSuitableKeywords(seoOnlyKeywords, geoSite.language)
 
