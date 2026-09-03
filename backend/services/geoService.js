@@ -1,14 +1,15 @@
 import Anthropic from '@anthropic-ai/sdk'
-import OpenAI from 'openai'
 import { jsonrepair } from 'jsonrepair'
 
 // Explizites Timeout — ohne das warten die SDKs bis zu 10 Minuten pro Anfrage, was bei
 // CHECK_CONCURRENCY=5 einen ganzen Batch blockieren und den Gesamt-Check extrem verzögern kann.
 const CHECK_TIMEOUT_MS = 45000
 
-const anthropic  = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY, timeout: CHECK_TIMEOUT_MS })
-const openai     = new OpenAI({ apiKey: process.env.OPENAI_API_KEY, timeout: CHECK_TIMEOUT_MS })
-const perplexity = new OpenAI({ apiKey: process.env.perplexity_sitecheck, baseURL: 'https://api.perplexity.ai', timeout: CHECK_TIMEOUT_MS })
+// anthropic wird nur noch für Sentiment-Klassifizierung und Keyword-Eignungs-Klassifizierung
+// direkt genutzt (siehe classifySentiment/classifyGeoSuitableKeywords) — die eigentlichen
+// Plattform-Checks (Claude/ChatGPT/Gemini/Perplexity) laufen über DataForSEOs LLM Responses API,
+// siehe checkWithLlmResponses weiter unten.
+const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY, timeout: CHECK_TIMEOUT_MS })
 
 const DFS_LOGIN    = process.env.DATAFORSEO_LOGIN
 const DFS_PASSWORD = process.env.DATAFORSEO_PASSWORD
@@ -35,15 +36,41 @@ export { MAX_SITES, MAX_KEYWORDS }
 export const PLATFORM_LABELS = {
     claude:      'Claude',
     chatgpt:     'ChatGPT',
+    gemini:      'Gemini',
     perplexity:  'Perplexity',
     google_aio:  'Google AI Overview',
 }
 
+// Aus echten Live-Testcalls gegen DataForSEOs LLM Responses API übernommen — jeweils Mittelwert
+// aus den Prompts für beide Intents (empfehlung/vergleich), money_spent-Feld der Antwort +
+// 0,0006 $ DataForSEO-Grundgebühr, mit den produktiv genutzten Modellen (siehe LLM_RESPONSES_MODEL
+// unten). Nicht geschätzt — Antwortlänge (und damit Kosten) schwankt aber real pro Aufruf; die
+// echten money_spent-Werte werden pro Call zusätzlich geloggt (siehe checkWithLlmResponses).
 export const PLATFORM_COSTS = {
-    claude:     0.0066,  // Sonnet 4.6: $3/M in, $15/M out
-    chatgpt:    0.0045,  // GPT-4o: $2.50/M in, $10/M out
-    perplexity: 0.0056,  // Sonar: $1/M in+out, dominated by the ~$5/1000-request search fee
+    claude:     0.0121,  // getestet: claude-sonnet-4-6, Ø aus empfehlung ($0,0067) + vergleich ($0,0175)
+    chatgpt:    0.0040,  // getestet: gpt-4o, Ø aus empfehlung ($0,0033) + vergleich ($0,0048)
+    gemini:     0.0110,  // getestet: gemini-3.5-flash, Ø aus empfehlung ($0,0103) + vergleich ($0,0111) — antwortet sehr ausführlich (~1150 Output-Tokens)
+    perplexity: 0.0064,  // getestet: sonar, Ø aus empfehlung ($0,0059) + vergleich ($0,0063)
     google_aio: 0.0026,  // DataForSEO SERP Live Advanced (~$0.002) + load_async_ai_overview surcharge ($0.0006, refunded when no AI Overview appears)
+}
+
+// DataForSEO "AI Optimization" API (Top Mentioned Domains, Historical): einheitlich 0,1 $
+// Grundgebühr pro Request + 0,001 $ pro Zeile (bestätigt gegen docs.dataforseo.com). Für
+// Wettbewerbs-Analytics ist "eine Zeile" eine Domain im Top-N-Ranking, für Historie ein
+// Monat x Plattform.
+const AI_OPT_REQUEST_FEE = 0.1
+const AI_OPT_ROW_FEE = 0.001
+function aiOptimizationCostUsd(rowCount) {
+    if (!rowCount) return 0
+    return AI_OPT_REQUEST_FEE + rowCount * AI_OPT_ROW_FEE
+}
+// getTopMentionedDomains fragt pro Sample-Keyword einen eigenen Request ab (siehe Kommentar dort),
+// deshalb hier die Kosten über sampleKeywordCount Requests statt eines einzigen.
+export function marketAnalyticsCostUsd(topN, sampleKeywordCount = 1) {
+    return aiOptimizationCostUsd(topN) * sampleKeywordCount
+}
+export function historicalTrendCostUsd(months, platformCount = 2) {
+    return aiOptimizationCostUsd(months * platformCount)
 }
 
 export const PROMPT_INTENTS = ['empfehlung', 'vergleich']
@@ -126,73 +153,19 @@ async function classifySentiment(context, domain) {
     }
 }
 
-function extractPerplexityCitation(res, domain) {
-    const normalizedDomain = domain.replace(/^www\./, '').toLowerCase()
-
-    const citations = (res.search_results || []).map(r => ({
-        url: r.url, domain: safeHostname(r.url), title: r.title || null, snippet: r.snippet || null,
-    }))
-    if (!citations.length) {
-        for (const url of res.citations || []) {
-            citations.push({ url, domain: safeHostname(url), title: null, snippet: null })
-        }
-    }
-
-    const searchHit = citations.find(c => c.domain && (c.domain === normalizedDomain || c.domain.endsWith(`.${normalizedDomain}`)))
-    if (searchHit) return { mentioned: true, context: searchHit.snippet || searchHit.title || null, citations }
-
-    const textResult = extractMention(res.choices[0].message.content, domain)
-    return { ...textResult, citations }
-}
-
-async function withRateLimitRetry(fn, label, retries = 4, baseDelay = 3000) {
-    for (let attempt = 0; ; attempt++) {
-        try {
-            return await fn()
-        } catch (err) {
-            if (err.status !== 429 || attempt >= retries) throw err
-            const delay = baseDelay * 2 ** attempt
-            console.warn(`[geoService] ${label} rate limit erreicht, retry in ${delay}ms (Versuch ${attempt + 1}/${retries + 1})`)
-            await new Promise(r => setTimeout(r, delay))
-        }
-    }
-}
-
-async function checkWithClaude(keyword, domain, language, intent) {
-    const msg = await withRateLimitRetry(() => anthropic.messages.create({
-        model: 'claude-sonnet-4-6',
-        max_tokens: 400,
-        messages: [{ role: 'user', content: buildQuery(keyword, language, intent) }],
-    }), 'claude')
-    const text = msg.content[0].text
-    return { ...extractMention(text, domain), citations: extractDomainMentions(text, domain) }
-}
-
-async function checkWithChatGPT(keyword, domain, language, intent) {
-    const res = await withRateLimitRetry(() => openai.chat.completions.create({
-        model: 'gpt-4o',
-        max_tokens: 400,
-        messages: [{ role: 'user', content: buildQuery(keyword, language, intent) }],
-    }), 'chatgpt')
-    const text = res.choices[0].message.content
-    return { ...extractMention(text, domain), citations: extractDomainMentions(text, domain) }
-}
-
-async function checkWithPerplexity(keyword, domain, language, intent) {
-    const res = await withRateLimitRetry(() => perplexity.chat.completions.create({
-        model: 'sonar',
-        max_tokens: 400,
-        messages: [{ role: 'user', content: buildQuery(keyword, language, intent) }],
-    }), 'perplexity')
-    return extractPerplexityCitation(res, domain)
-}
-
-async function dfsPostWithRetry(endpoint, body, keyword, retries = 1) {
+async function dfsPostWithRetry(endpoint, body, label, retries = 1) {
     for (let attempt = 0; ; attempt++) {
         const data = await dfsPost(endpoint, body)
         const task = data.tasks?.[0]
-        if (task?.status_code === 20000 || attempt >= retries) return data
-        console.warn(`[geoService] Google AI Overview transienter Fehler bei "${keyword}" (Versuch ${attempt + 1}/${retries + 1}):`, task?.status_code, task?.status_message)
+        if (task?.status_code === 20000) return data
+        if (attempt >= retries) {
+            // Letzter Versuch fehlgeschlagen — volle Antwort loggen (gekürzt), nicht nur die
+            // (bei fehlendem Task immer leeren) task?.status_code-Felder. Zeigt z.B. den echten
+            // Top-Level-Fehler bei falschem Endpoint-Pfad (data.status_code/status_message).
+            console.error(`[geoService] ${label}: kein gültiger Task in der Antwort — endpoint=${endpoint} top-level=${data.status_code} ${data.status_message} raw=${JSON.stringify(data).slice(0, 500)}`)
+            return data
+        }
+        console.warn(`[geoService] ${label} transienter Fehler (Versuch ${attempt + 1}/${retries + 1}): task=${task?.status_code} ${task?.status_message} top-level=${data.status_code} ${data.status_message}`)
         await new Promise(r => setTimeout(r, 1500))
     }
 }
@@ -209,7 +182,7 @@ async function checkWithGoogleAIOverview(keyword, domain, language, intent) {
         language_code: language,
         device: 'desktop',
         load_async_ai_overview: true,
-    }], keyword)
+    }], `Google AI Overview "${keyword}"`)
 
     const task = data.tasks?.[0]
     if (task?.status_code !== 20000) {
@@ -232,9 +205,192 @@ async function checkWithGoogleAIOverview(keyword, domain, language, intent) {
     return { mentioned: !!match, context: match?.snippet || null, citations }
 }
 
+// Claude/ChatGPT/Gemini/Perplexity laufen alle über denselben DataForSEO-Endpoint
+// (/v3/ai_optimization/{plattform}/llm_responses/live) statt über vier separate Direct-API-Keys —
+// bestätigt gegen die echte API (Modell-Liste per GET .../models, Response-Form per Live-Testcall
+// mit echtem money_spent-Feld). Jede Plattform bekommt hier ein festes, aktuelles Modell; die
+// Kosten in PLATFORM_COSTS sind aus echten Testcalls übernommen, nicht geschätzt.
+const LLM_RESPONSES_MODEL = {
+    claude:     'claude-sonnet-4-6',
+    chatgpt:    'gpt-4o',
+    gemini:     'gemini-3.5-flash',
+    perplexity: 'sonar',
+}
+const LLM_RESPONSES_PATH_SEGMENT = {
+    claude: 'claude', chatgpt: 'chat_gpt', gemini: 'gemini', perplexity: 'perplexity',
+}
+
+async function checkWithLlmResponses(platform, keyword, domain, language, intent) {
+    if (!DFS_LOGIN || !DFS_PASSWORD) {
+        console.warn(`[geoService] DATAFORSEO_LOGIN/PASSWORD nicht gesetzt — ${platform}-Check übersprungen`)
+        return { mentioned: false, context: null, citations: [] }
+    }
+
+    const data = await dfsPostWithRetry(`/v3/ai_optimization/${LLM_RESPONSES_PATH_SEGMENT[platform]}/llm_responses/live`, [{
+        user_prompt: buildQuery(keyword, language, intent),
+        model_name: LLM_RESPONSES_MODEL[platform],
+    }], `LLM Responses/${platform} "${keyword}"/${intent}`)
+
+    const task = data.tasks?.[0]
+    if (task?.status_code !== 20000) {
+        console.warn('[geoService] %s-Check endgültig fehlgeschlagen bei "%s":', platform, keyword, task?.status_code, task?.status_message)
+        return { mentioned: false, context: null, citations: [] }
+    }
+
+    const result = task.result?.[0]
+    // Echte Kosten pro Call mitloggen (statt nur die PLATFORM_COSTS-Schätzung zu vertrauen) —
+    // damit sich vor allem der ungetestete ChatGPT-Wert später aus echten Produktionsdaten statt
+    // aus einem o4-mini-Platzhalter kalibrieren lässt.
+    if (result?.money_spent != null) {
+        console.log(`[geoService] ${platform} (${LLM_RESPONSES_MODEL[platform]}) money_spent=${result.money_spent} tokens=${result.input_tokens}/${result.output_tokens}`)
+    }
+    const item = result?.items?.[0]
+    if (!item) {
+        console.log(`[geoService] ${platform}-Check "${keyword}": Status Ok, aber keine items in der Antwort — raw=${JSON.stringify(result).slice(0, 400)}`)
+        return { mentioned: false, context: null, citations: [] }
+    }
+
+    const text = (item.sections || []).map(s => s.text || '').join('\n')
+    const annotations = item.annotations || []
+    const structuredCitations = annotations
+        .map(a => ({ url: a.url || null, domain: safeHostname(a.url), title: a.title || null, snippet: null }))
+        .filter(c => c.domain)
+    // Fällt auf die Regex-Extraktion aus dem Antworttext zurück, falls das Modell keine
+    // annotations liefert (z.B. ohne web_search) — noch nicht gegen jede Plattform live bestätigt.
+    const citations = structuredCitations.length ? structuredCitations : extractDomainMentions(text, domain)
+
+    const { mentioned: textMentioned, context } = extractMention(text, domain)
+    const normalizedDomain = domain.replace(/^www\./, '').toLowerCase()
+    const citationMatch = citations.find(c => c.domain === normalizedDomain || c.domain?.endsWith(`.${normalizedDomain}`))
+
+    return { mentioned: textMentioned || !!citationMatch, context: context || null, citations }
+}
+
+const checkWithClaude     = (keyword, domain, language, intent) => checkWithLlmResponses('claude', keyword, domain, language, intent)
+const checkWithChatGPT    = (keyword, domain, language, intent) => checkWithLlmResponses('chatgpt', keyword, domain, language, intent)
+const checkWithGemini     = (keyword, domain, language, intent) => checkWithLlmResponses('gemini', keyword, domain, language, intent)
+const checkWithPerplexity = (keyword, domain, language, intent) => checkWithLlmResponses('perplexity', keyword, domain, language, intent)
+
+// Bestätigt gegen die reale DataForSEO-Doku (docs.dataforseo.com/v3/ai_optimization/llm_mentions/...):
+// alle Endpoints unten akzeptieren als "platform" nur 'google' oder 'chat_gpt'.
+function keywordTarget(keyword) {
+    return { keyword, search_filter: 'include' }
+}
+
+const MARKET_ANALYTICS_TOP_N = 20
+// Kostenkontrolle: 1 Request pro Keyword (siehe Kommentar unten), deshalb hier begrenzt statt
+// alle getrackten Keywords einer Site abzufragen.
+const MARKET_ANALYTICS_SAMPLE_KEYWORDS = 5
+
+// Wettbewerbs-Analytics: welche Domains werden über die getrackten Keywords hinweg am häufigsten
+// von KI-Systemen (Google AI Overview, ChatGPT) genannt — eine Marktsicht aus DataForSEOs eigenem
+// Datensatz, zusätzlich zum bestehenden getCompetitors() (das nur aus den eigenen Check-Ergebnissen
+// aggregiert).
+//
+// WICHTIG (gegen den echten Account verifiziert): Mehrere Keywords in EINEM target-Array werden von
+// DataForSEO als UND-Schnittmenge behandelt (eine Domain muss zu allen gleichzeitig passen), nicht
+// als "irgendeins davon" — ein Test mit 10 unterschiedlichen Keywords in einem Request lieferte 0
+// Treffer, derselbe Request mit nur 1 Keyword lieferte 20 echte Domains. Deshalb hier bewusst EIN
+// Request pro Keyword (auf MARKET_ANALYTICS_SAMPLE_KEYWORDS begrenzt) und die Ergebnisse selbst pro
+// Domain aufsummiert, statt DataForSEOs Multi-Target-Kombination zu vertrauen.
+export async function getTopMentionedDomains(keywords, language) {
+    if (!DFS_LOGIN || !DFS_PASSWORD || !keywords.length) return []
+
+    const sample = keywords.slice(0, MARKET_ANALYTICS_SAMPLE_KEYWORDS)
+    const settled = await Promise.allSettled(sample.map(keyword => dfsPostWithRetry(
+        '/v3/ai_optimization/llm_mentions/top_mentioned_domains/live',
+        [{
+            target: [keywordTarget(keyword)],
+            limit: MARKET_ANALYTICS_TOP_N,
+            location_name: language === 'de' ? 'Germany' : 'United States',
+            language_code: language,
+        }],
+        `Markt-Analyse "${keyword}"`,
+    )))
+
+    const totals = new Map() // domain -> aufsummierte mentions über alle Sample-Keywords
+    let anySucceeded = false
+
+    for (const result of settled) {
+        if (result.status !== 'fulfilled') continue
+        const task = result.value.tasks?.[0]
+        if (task?.status_code !== 20000) continue
+        anySucceeded = true
+
+        for (const item of task.result?.[0]?.items || []) {
+            const domain = (item.domain || '').replace(/^www\./, '').toLowerCase()
+            if (!domain) continue
+            totals.set(domain, (totals.get(domain) || 0) + (item.total?.mentions ?? 0))
+        }
+    }
+
+    // Bei einem Totalausfall wird geworfen statt [] zurückzugeben — der Aufrufer (getMarketAnalytics
+    // in geo_tracking.js) darf ein Fehlerergebnis nicht als "0 Domains gefunden" langfristig cachen.
+    if (!anySucceeded) {
+        throw new Error('top_mentioned_domains: alle Keyword-Abfragen fehlgeschlagen')
+    }
+    if (!totals.size) {
+        console.log(`[geoService] top_mentioned_domains: erfolgreich, aber 0 Domains über ${sample.length} Sample-Keyword(s) gefunden`)
+    }
+
+    return [...totals.entries()]
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, MARKET_ANALYTICS_TOP_N)
+        .map(([domain, count], i) => ({ domain, count, rank: i + 1 }))
+}
+
+// Nur diese beiden Codes laut Doku — Claude/Perplexity/Gemini werden nicht unterstützt.
+const HISTORICAL_PLATFORMS = ['google', 'chat_gpt']
+
+// Monatliche Mentions-Historie für EIN Keyword. fromMonth (Format "YYYY-MM") erlaubt inkrementelles
+// Nachladen, statt bei jedem Aufruf die komplette Historie seit 2025-08 neu abzufragen — der
+// Aufrufer (getHistoricalTrend in geo_tracking.js) cached bereits geladene Monate und übergibt hier
+// nur, ab wann neue Daten gebraucht werden.
+export async function getKeywordMentionHistory(keyword, language, fromMonth = '2025-08') {
+    if (!DFS_LOGIN || !DFS_PASSWORD) return []
+
+    // Bestätigt gegen die reale API: ChatGPT liefert nur für location_code 2840 (USA) /
+    // language_code 'en' Daten — bei anderen Sprachen weist die API location_name für
+    // platform=chat_gpt sogar als "Invalid Field" zurück. Für nicht-englische Sites daher nur
+    // Google AI Overview abfragen, statt einen Call zu machen, der strukturell nie erfolgreich ist.
+    const platforms = language === 'en' ? HISTORICAL_PLATFORMS : HISTORICAL_PLATFORMS.filter(p => p !== 'chat_gpt')
+
+    const results = await Promise.all(platforms.map(async (platform) => {
+        let data
+        try {
+            data = await dfsPostWithRetry('/v3/ai_optimization/llm_mentions/historical/live', [{
+                target: [keywordTarget(keyword)],
+                platform,
+                date_from: `${fromMonth}-01`,
+                location_name: language === 'de' ? 'Germany' : 'United States',
+                language_code: language,
+            }], `Historie/${platform} "${keyword}"`)
+        } catch (err) {
+            console.error(`[geoService] historical/${platform} fehlgeschlagen für "${keyword}":`, err.message)
+            return []
+        }
+
+        const task = data.tasks?.[0]
+        if (task?.status_code !== 20000) return []
+
+        const items = task.result?.[0]?.items || []
+        return items
+            .filter(item => item.year != null && item.month != null)
+            .map(item => ({
+                month: `${item.year}-${String(item.month).padStart(2, '0')}`,
+                platform,
+                mentionsCount: item.metrics?.mentions ?? 0,
+                aiSearchVolume: item.metrics?.ai_search_volume ?? null,
+            }))
+    }))
+
+    return results.flat().sort((a, b) => a.month.localeCompare(b.month))
+}
+
 const PLATFORM_FNS = {
     claude:     checkWithClaude,
     chatgpt:    checkWithChatGPT,
+    gemini:     checkWithGemini,
     perplexity: checkWithPerplexity,
     google_aio: checkWithGoogleAIOverview,
 }
@@ -261,7 +417,7 @@ export async function checkPlatformMention(platform, keyword, domain, language, 
     try {
         return await fn(keyword, domain, language, intent)
     } catch (err) {
-        console.error(`[geoService] ${platform}/${intent} Fehler bei "${keyword}":`, err.message)
+        console.error('[geoService] %s/%s Fehler bei "%s":', platform, intent, keyword, err.message)
         return { mentioned: false, context: null, citations: [] }
     }
 }
@@ -276,12 +432,17 @@ export async function classifySentimentSafe(context, domain) {
 
 const CHECK_CONCURRENCY = 5
 
-export async function checkSiteMentions(site, variantCount = 1) {
+// keywordsOverride: optionale Teilmenge von site.keywords — für gezielte manuelle Rechecks
+// (siehe triggerCheck in geo_tracking.js), damit ein manueller Check nicht zwingend die komplette
+// Site neu prüfen muss. Der wöchentliche Auto-Check (geoTrackingJob.js) ruft ohne dritten Parameter
+// auf und prüft dadurch weiterhin immer alle Keywords.
+export async function checkSiteMentions(site, variantCount = 1, keywordsOverride = null) {
     const platforms = site.platforms?.length ? site.platforms : ['claude']
     const intents = PROMPT_INTENTS.slice(0, Math.max(1, Math.min(variantCount, PROMPT_INTENTS.length)))
+    const keywords = keywordsOverride?.length ? keywordsOverride : site.keywords
 
     const combos = []
-    for (const keyword of site.keywords) {
+    for (const keyword of keywords) {
         for (const intent of intents) {
             combos.push({ keyword, intent })
         }

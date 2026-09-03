@@ -14,18 +14,28 @@ import Navbar from '../../components/Navbar'
 const PLATFORM_META = {
     claude:     { label: 'Claude',             color: 'text-violet-400', bg: 'bg-violet-500/10', border: 'border-violet-500/20' },
     chatgpt:    { label: 'ChatGPT',            color: 'text-green-400',  bg: 'bg-green-500/10',  border: 'border-green-500/20'  },
+    gemini:     { label: 'Gemini',             color: 'text-amber-400',  bg: 'bg-amber-500/10',  border: 'border-amber-500/20'  },
     perplexity: { label: 'Perplexity',         color: 'text-teal-400',   bg: 'bg-teal-500/10',   border: 'border-teal-500/20'   },
     google_aio: { label: 'Google AI Overview', color: 'text-blue-400',   bg: 'bg-blue-500/10',   border: 'border-blue-500/20'   },
 }
 
-const COST_PER_CHECK = { claude: 0.0066, chatgpt: 0.0045, perplexity: 0.0056, google_aio: 0.0026 }
+const COST_PER_CHECK = { claude: 0.0121, chatgpt: 0.0040, gemini: 0.0110, perplexity: 0.0064, google_aio: 0.0026 }
 
 const PLAN_PLATFORMS = {
-    einsteiger: ['claude'],
-    pro:        ['claude', 'chatgpt', 'perplexity', 'google_aio'],
-    expert:     ['claude', 'chatgpt', 'perplexity', 'google_aio'],
+    einsteiger: ['claude', 'gemini'],
+    pro:        ['claude', 'chatgpt', 'gemini', 'perplexity', 'google_aio'],
+    expert:     ['claude', 'chatgpt', 'gemini', 'perplexity', 'google_aio'],
 }
-const ALL_PLATFORMS = ['claude', 'chatgpt', 'perplexity', 'google_aio']
+const ALL_PLATFORMS = ['claude', 'chatgpt', 'gemini', 'perplexity', 'google_aio']
+
+// Themen-Sichtbarkeit und Historien-Trends sind nach Tier gestaffelt (wie die Content-Gap-
+// Analyse bei SEO Automatisierung) — muss mit competitorAnalyticsEnabled/historicalTrendsEnabled
+// in backend/controllers/geo_tracking.js übereinstimmen.
+const PLAN_FEATURES = {
+    einsteiger: { competitorAnalytics: false, historicalTrends: false },
+    pro:        { competitorAnalytics: true,  historicalTrends: false },
+    expert:     { competitorAnalytics: true,  historicalTrends: true  },
+}
 
 const INTENT_META = {
     empfehlung: { label: 'Empfehlung' },
@@ -35,6 +45,7 @@ const INTENT_META = {
 const NAV_ITEMS = [
     { id: 'overview',    label: 'Übersicht',                   description: 'Deine Mention-Rate, Verlauf und alle getrackten Keywords im Detail.',                icon: LayoutDashboard },
     { id: 'competitors', label: 'Wettbewerber',                 description: 'Welche anderen Domains KI-Modelle neben dir zitieren — als Liste oder Diagramm.',     icon: Users },
+    { id: 'market',      label: 'Themen-Sichtbarkeit',           description: 'Welche Domains in KI-Antworten zu deinen Keywords am häufigsten zitiert werden — über alle Kontexte hinweg (Erklärungen, Vergleiche, Tutorials), nicht nur Empfehlungen. Für Konkurrenz-Tools siehe „Wettbewerber".', icon: Sparkles },
     { id: 'correlation', label: 'SEO-Ranking + KI-Erwähnungen', description: 'Rankt eine Seite bei Google, wird aber nie von KI-Modellen genannt — oder umgekehrt?', icon: GitCompare },
     { id: 'suggestions', label: 'Keywords vorschlagen',         description: 'SEO-Keywords, die sich auch für GEO-Tracking eignen würden.',                        icon: Lightbulb },
 ]
@@ -508,6 +519,87 @@ function CompetitorsPanel({ siteId }) {
     )
 }
 
+function UpsellCard({ label }) {
+    return (
+        <div className="bg-[var(--bg-surface)] border border-dashed border-[var(--border-subtle)] rounded-2xl p-8 flex flex-col items-center text-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-[var(--surface-08)] flex items-center justify-center">
+                <Lock className="w-4.5 h-4.5 text-slate-500" />
+            </div>
+            <p className="text-sm text-slate-400 max-w-sm">{label}</p>
+            <Link href="/geo/pricing" className="text-xs font-semibold text-[var(--accent)] hover:opacity-80">
+                Plan ansehen
+            </Link>
+        </div>
+    )
+}
+
+// Wie CompetitorsPanel, aber gegen DataForSEOs eigenen (breiteren) Mentions-Datensatz statt
+// gegen die eigenen Check-Ergebnisse — zeigt Domains, die zu den getrackten Keywords generell
+// oft von KI-Systemen genannt werden, nicht nur die, die in den eigenen Checks auftauchten.
+function MarketAnalyticsPanel({ siteId, plan }) {
+    const [data, setData]       = useState(null)
+    const [loading, setLoading] = useState(true)
+    const [error, setError]     = useState(false)
+    const enabled = PLAN_FEATURES[plan]?.competitorAnalytics
+
+    useEffect(() => {
+        if (!enabled) { setLoading(false); return }
+        const token = localStorage.getItem('token')
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/geo/sites/${siteId}/market-analytics`, {
+            headers: { Authorization: `Bearer ${token}` },
+        })
+            .then(res => res.ok ? res.json() : Promise.reject())
+            .then(setData)
+            .catch(() => setError(true))
+            .finally(() => setLoading(false))
+    }, [siteId, enabled])
+
+    if (!enabled) {
+        return <UpsellCard label="Themen-Sichtbarkeit zeigt dir, welche Domains in KI-Antworten zu deinen Keywords am häufigsten zitiert werden — ab dem Pro-Plan verfügbar." />
+    }
+
+    if (loading) return (
+        <div className="flex flex-col items-center justify-center py-20 gap-3">
+            <Loader2 className="w-6 h-6 text-[var(--accent)] animate-spin" />
+            <span className="text-sm text-slate-500">Daten werden geladen…</span>
+        </div>
+    )
+    if (error) return (
+        <div className="flex flex-col items-center justify-center py-20 gap-3">
+            <span className="text-sm text-slate-500">Marktdaten konnten nicht geladen werden. Versuch es später erneut.</span>
+        </div>
+    )
+    if (!data?.domains?.length) return (
+        <div className="flex flex-col items-center justify-center py-20 gap-3">
+            <Sparkles className="w-8 h-8 text-slate-700" />
+            <span className="text-sm text-slate-500">Noch keine Marktdaten verfügbar.</span>
+        </div>
+    )
+
+    return (
+        <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl p-5 mb-6">
+            <div className="flex items-center justify-between mb-1">
+                <h3 className="text-sm font-semibold text-white">Themen-Sichtbarkeit: Top-Domains zu deinen Keywords</h3>
+                {data.cached && <span className="text-[10px] text-slate-600">Wöchentlich aktualisiert</span>}
+            </div>
+            <p className="text-[11px] text-slate-500 mb-4">
+                Domains, die in KI-Antworten zu deinen Keywords am häufigsten zitiert werden — über alle Kontexte hinweg (Erklärungen, Vergleiche, Tutorials), nicht nur Tool-Empfehlungen. Für konkrete Konkurrenz-Tools schau dir den „Wettbewerber"-Tab an, der gezielt Empfehlungs-Antworten auswertet.
+            </p>
+            <div className="space-y-2.5">
+                {data.domains.map((d, i) => (
+                    <div key={d.domain} className="flex items-center gap-3">
+                        <span className="text-xs text-slate-600 w-5 text-right shrink-0">{d.rank ?? i + 1}.</span>
+                        <CompetitorLogo domain={d.domain} size={22} />
+                        <a href={`https://${d.domain}`} target="_blank" rel="noopener noreferrer"
+                            className="flex-1 min-w-0 text-sm text-slate-200 hover:text-[var(--accent)] truncate">{d.domain}</a>
+                        {d.count != null && <span className="text-xs text-slate-500 shrink-0">{d.count} Erwähnungen</span>}
+                    </div>
+                ))}
+            </div>
+        </div>
+    )
+}
+
 function CitationAnalysis({ url }) {
     const [loading, setLoading]   = useState(false)
     const [analysis, setAnalysis] = useState(null)
@@ -607,6 +699,73 @@ function CitationChip({ citation: cit }) {
                     <CitationAnalysis url={cit.url} />
                 </div>
             )}
+        </div>
+    )
+}
+
+// Expert-only, pro Keyword einzeln geladen (nicht beim Öffnen der Seite für alle Keywords auf
+// einmal) — hält die DataForSEO-Kosten proportional zur tatsächlichen Nutzung. Deckt nur Google
+// AI Overview und ChatGPT ab (einzige von DataForSEOs historical-Endpoint unterstützte Plattformen);
+// ChatGPT liefert bei DataForSEO aktuell nur für englischsprachige Sites Daten (siehe language-Hinweis unten).
+function KeywordTrendPanel({ siteId, keyword, language }) {
+    const [data, setData]       = useState(null)
+    const [loading, setLoading] = useState(true)
+    const [error, setError]     = useState(false)
+
+    useEffect(() => {
+        const token = localStorage.getItem('token')
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/geo/sites/${siteId}/keywords/${encodeURIComponent(keyword)}/trend`, {
+            headers: { Authorization: `Bearer ${token}` },
+        })
+            .then(res => res.ok ? res.json() : Promise.reject())
+            .then(d => setData(d.history || []))
+            .catch(() => setError(true))
+            .finally(() => setLoading(false))
+    }, [siteId, keyword])
+
+    if (loading) return <div className="flex items-center gap-2 text-xs text-slate-500 py-2"><Loader2 className="w-3.5 h-3.5 animate-spin" />Daten werden geladen…</div>
+    if (error) return <p className="text-xs text-slate-600 py-2">Daten konnten nicht geladen werden.</p>
+    if (!data?.length) return <p className="text-xs text-slate-600 py-2">Noch keine Daten für dieses Keyword (verfügbar ab August 2025).</p>
+
+    const platformLabel = { google: 'Google AI Overview', chat_gpt: 'ChatGPT' }
+    const maxCount = Math.max(...data.map(d => d.mentionsCount || 0), 1)
+
+    return (
+        <div className="py-1">
+            <p className="text-[10px] text-slate-600 mb-1.5 leading-relaxed">
+                Gesamtes Erwähnungsvolumen des Themas &bdquo;{keyword}&ldquo; in KI-Antworten pro Monat (DataForSEO-Datensatz) — zeigt, wie oft das Thema insgesamt aufkommt, nicht speziell, wie oft deine Domain dabei zitiert wird.
+            </p>
+            {language !== 'en' && (
+                <p className="text-[10px] text-slate-600 mb-2 leading-relaxed">
+                    ChatGPT-Historie nur für englischsprachige Websites verfügbar — hier siehst du nur Google AI Overview.
+                </p>
+            )}
+            <div className="space-y-1.5">
+            {data.map((d, i) => (
+                <div key={`${d.month}-${d.platform}-${i}`} className="flex items-center gap-3">
+                    <span className="text-[11px] text-slate-500 w-16 shrink-0">{d.month}</span>
+                    <span className="text-[11px] text-slate-500 w-32 shrink-0">{platformLabel[d.platform] || d.platform}</span>
+                    <div className="relative flex-1 h-1.5 bg-[var(--surface-08)] rounded-full overflow-hidden">
+                        <div className="h-full bg-[var(--accent)] rounded-full" style={{ width: `${Math.max((d.mentionsCount / maxCount) * 100, d.mentionsCount ? 3 : 0)}%` }} />
+                    </div>
+                    <span className="text-[11px] font-semibold text-slate-300 w-8 text-right shrink-0">{d.mentionsCount ?? 0}</span>
+                </div>
+            ))}
+            </div>
+        </div>
+    )
+}
+
+function KeywordTrendToggle({ siteId, keyword, language }) {
+    const [open, setOpen] = useState(false)
+    return (
+        <div className="pt-2 mt-2 border-t border-[var(--border-subtle)]">
+            <button type="button" onClick={() => setOpen(v => !v)}
+                className="text-[11px] font-semibold text-[var(--accent)] hover:opacity-80 inline-flex items-center gap-1">
+                {open ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
+                Themen-Erwähnungsvolumen {open ? 'ausblenden' : 'anzeigen'}
+            </button>
+            {open && <KeywordTrendPanel siteId={siteId} keyword={keyword} language={language} />}
         </div>
     )
 }
@@ -855,8 +1014,14 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
         setChecking(true)
         try {
             const token = localStorage.getItem('token')
+            // Sind Keywords ausgewählt (dieselbe Checkbox-Auswahl wie beim Entfernen), prüft der
+            // Check nur die — spart manuelle Check-Kontingent-Kosten gegenüber einem vollen Rerun.
+            // Ohne Auswahl: wie bisher alle Keywords der Site.
+            const body = selected.size > 0 ? { keywords: [...selected] } : undefined
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/geo/sites/${siteId}/check`, {
-                method: 'POST', headers: { Authorization: `Bearer ${token}` },
+                method: 'POST',
+                headers: { Authorization: `Bearer ${token}`, ...(body ? { 'Content-Type': 'application/json' } : {}) },
+                ...(body ? { body: JSON.stringify(body) } : {}),
             })
             const d = await res.json()
             if (!res.ok) throw new Error(CHECK_ERROR_MESSAGES[d.error] || d.error)
@@ -947,12 +1112,13 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
             return aMentioned === bMentioned ? 0 : aMentioned ? -1 : 1
         })
 
-    const totalChecks = platforms.length * intents.length * (site?.keywords?.length || 0)
+    const keywordsForCheck = selected.size > 0 ? selected.size : (site?.keywords?.length || 0)
+    const totalChecks = platforms.length * intents.length * keywordsForCheck
     const estSeconds   = totalChecks * 6.4 // Ø-Dauer pro Check, live gemessen
     const estLabel      = estSeconds >= 90 ? `~${Math.round(estSeconds / 60)} Min.` : `~${Math.round(estSeconds)}s`
     const checkLabel  = checking
         ? `Läuft im Hintergrund (${totalChecks} Checks, ${estLabel})…`
-        : 'Jetzt prüfen'
+        : selected.size > 0 ? `${selected.size} ausgewählte prüfen` : 'Jetzt prüfen'
 
     return (
         <div>
@@ -993,7 +1159,7 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
                     <button onClick={handleCheck} disabled={checking}
                         className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] transition-all disabled:opacity-50">
                         {checking ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <RefreshCw className="w-3.5 h-3.5" />}
-                        {checking ? checkLabel : 'Jetzt prüfen'}
+                        {checkLabel}
                     </button>
                 </div>
             </div>
@@ -1002,6 +1168,8 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
                     ? `Zuletzt geprüft: ${new Date(site.lastChecked).toLocaleString('de-DE', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' })}`
                     : 'Noch nicht geprüft'}
                 {intents.length > 1 && ` · ${intents.length} Prompt-Varianten pro Keyword (${intents.map(i => INTENT_META[i]?.label || i).join(', ')})`}
+                {data?.manualChecksLimit != null &&
+                    ` · ${data.manualChecksUsed}/${data.manualChecksLimit} manuelle Checks diesen Monat genutzt`}
             </div>
 
             {/* Plattformen bearbeiten */}
@@ -1213,6 +1381,7 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
                                                                     </div>
                                                                 )
                                                             })}
+                                                            {plan === 'expert' && <KeywordTrendToggle siteId={siteId} keyword={keyword} language={site?.language} />}
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -1347,6 +1516,7 @@ export default function GeoSitePage() {
                         )}
                         {activeView === 'overview'    && <ResultsTab siteId={siteId} site={site} plan={plan} onSiteUpdated={fetchSite} />}
                         {activeView === 'competitors' && <CompetitorsPanel siteId={siteId} />}
+                        {activeView === 'market'      && <MarketAnalyticsPanel siteId={siteId} plan={plan} />}
                         {activeView === 'correlation' && <CorrelationPanel siteId={siteId} />}
                         {activeView === 'suggestions' && <KeywordSuggestionsPanel siteId={siteId} onAdded={fetchSite} />}
                     </div>

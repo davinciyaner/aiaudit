@@ -11,19 +11,23 @@ import Navbar from '../../../components/Navbar'
 const FAQS = [
     {
         q: 'What does a GEO audit or GEO automation cost?',
-        a: 'GEO automation at AuditAI starts at €4.99/month for 1 website and 10 keywords with weekly Claude tracking. The Pro plan (€9.99/month) adds ChatGPT, Perplexity, and Google AI Overview tracking for 3 websites plus 2 prompt variants per keyword, the Expert plan (€19.99/month) covers up to 10 websites. All plans include a 14-day free trial.',
+        a: 'GEO automation at AuditAI starts at €4.99/month for 1 website and 10 keywords with weekly Claude and Gemini tracking. The Pro plan (€19.99/month) adds ChatGPT, Perplexity, and Google AI Overview tracking for 3 websites and 20 keywords, 2 prompt variants per keyword, and topic visibility analysis, and the Expert plan (€59.99/month) covers up to 10 websites and 60 keywords plus historical trends per keyword. All plans include a 14-day free trial.',
     },
     {
         q: 'Can I track my visibility on Claude (Claude AI)?',
-        a: 'Yes. Even the Starter plan at €4.99/month automatically checks every week whether and how often Claude cites your website as a source for relevant queries — including a mention history over time. To also track ChatGPT, Perplexity, and Google AI Overview in the same dashboard, you need the Pro plan at €9.99/month.',
+        a: 'Yes. Even the Starter plan at €4.99/month automatically checks every week whether and how often Claude and Google Gemini cite your website as a source for relevant queries — including a mention history over time. To also track ChatGPT, Perplexity, and Google AI Overview in the same dashboard, you need the Pro plan at €19.99/month.',
     },
     {
         q: 'What\'s the difference between a one-time GEO audit and GEO automation?',
-        a: 'A one-time GEO audit (part of the free AuditAI website audit) shows your GEO score at a single point in time. GEO automation automatically checks every week whether ChatGPT, Claude, Perplexity, and Google AI Overview mention your website, and shows the trend over time instead of a single snapshot.',
+        a: 'A one-time GEO audit (part of the free AuditAI website audit) shows your GEO score at a single point in time. GEO automation automatically checks every week whether ChatGPT, Claude, Gemini, Perplexity, and Google AI Overview mention your website, and shows the trend over time instead of a single snapshot.',
     },
     {
         q: 'What are prompt variants and why do I need several?',
         a: 'Real users ask AI systems in very different ways — sometimes recommendation-oriented ("What tool do you know for X?"), sometimes comparative ("What\'s the best tool for X compared to others?"). From the Pro plan, AuditAI checks both variants separately per keyword, so you see which type of query mentions you and which doesn\'t.',
+    },
+    {
+        q: 'What do topic visibility analysis and historical trends show me?',
+        a: 'Topic visibility analysis (from Pro) shows which domains get cited most often in AI answers touching your tracked keywords — across all contexts (explanations, comparisons, tutorials), not just tool recommendations. For actual competitor intelligence, use the Competitors tab, which specifically evaluates recommendation-style answers. Historical trends (Expert) show you, per keyword, how much overall mention volume that topic gets in Google AI Overview responses each month — a topic-volume trend, not domain-specific citation tracking.',
     },
     {
         q: 'Is there a free trial for GEO automation?',
@@ -42,7 +46,7 @@ const PLANS = [
         features: [
             'Track 1 website',
             '10 keywords',
-            'Claude AI tracking',
+            'Claude + Gemini tracking',
             'Weekly auto-check',
             '2 manual checks per month',
             'Mention history',
@@ -52,6 +56,7 @@ const PLANS = [
             'Perplexity tracking (from Pro)',
             'Google AI Overview tracking (from Pro)',
             '2 prompt variants per keyword (from Pro)',
+            'Topic visibility analysis (from Pro)',
         ],
         cta: 'Start Starter',
         planEnvKey: 'NEXT_PUBLIC_PAYPAL_PLAN_ID_GEO_EINSTEIGER',
@@ -59,7 +64,7 @@ const PLANS = [
     {
         id: 'pro',
         name: 'Pro',
-        price: '9.99',
+        price: '19.99',
         period: 'per month',
         desc: 'For freelancers and small agencies',
         icon: Star,
@@ -67,12 +72,16 @@ const PLANS = [
         highlight: true,
         features: [
             'Track 3 websites',
-            '30 keywords',
-            'Claude + ChatGPT + Perplexity + Google AI Overview tracking',
+            '20 keywords',
+            'Claude + ChatGPT + Gemini + Perplexity + Google AI Overview tracking',
             '2 prompt variants per keyword (recommendation + comparison)',
             'Weekly auto-check',
-            '8 manual checks per month',
+            '2 manual checks per month',
+            'Topic visibility analysis (top 20 domains)',
             'Mention history',
+        ],
+        locked: [
+            'Historical trends per keyword (Google AI Overview, from Expert)',
         ],
         cta: 'Start Pro',
         planEnvKey: 'NEXT_PUBLIC_PAYPAL_PLAN_ID_GEO_PRO',
@@ -80,17 +89,19 @@ const PLANS = [
     {
         id: 'expert',
         name: 'Expert',
-        price: '19.99',
+        price: '59.99',
         period: 'per month',
         desc: 'For agencies with many clients',
         icon: Building2,
         features: [
             'Track 10 websites',
-            '100 keywords',
-            'Claude + ChatGPT + Perplexity + Google AI Overview tracking',
+            '60 keywords',
+            'Claude + ChatGPT + Gemini + Perplexity + Google AI Overview tracking',
             '2 prompt variants per keyword (recommendation + comparison)',
             'Weekly auto-check',
-            '20 manual checks per month',
+            '3 manual checks per month',
+            'Topic visibility analysis (top 20 domains)',
+            'Historical trends per keyword (Google AI Overview)',
             'Mention history',
             'Priority support',
         ],
@@ -306,7 +317,7 @@ export default function GeoPricingPageEn() {
                                 recommended by AI?
                             </h1>
                             <p className="text-lg text-slate-400 max-w-xl mx-auto mb-6">
-                                Track whether Claude, ChatGPT, Perplexity, and Google AI Overview mention your domain — automatically, every week.
+                                Track whether Claude, ChatGPT, Gemini, Perplexity, and Google AI Overview mention your domain — automatically, every week.
                             </p>
                             <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-[var(--accent-border)] bg-[var(--accent-soft)] text-sm">
                                 <span className="text-[var(--accent)] font-semibold">Try free for 14 days</span>

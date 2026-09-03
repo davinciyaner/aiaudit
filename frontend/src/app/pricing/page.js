@@ -72,8 +72,9 @@ const SEO_PLANS = [
             '3 Websites tracken',
             '50 Keywords gesamt',
             'Wöchentliches Ranking-Update',
+            '2 manuelle Checks pro Monat',
             'Ranking-Verlauf (8 Wochen)',
-            'Keyword-Ideen & Suchvolumen',
+            'Keyword-Ideen & Suchvolumen (6 Aufrufe/Monat)',
             'Automatische Keyword-Erkennung aus neuen Seiten & Inhalten (bis zu 10 pro Lauf)',
             'E-Mail Alerts bei großen Einbrüchen',
             'Konkurrenten-Analyse (automatisch, wöchentlich)',
@@ -93,8 +94,9 @@ const SEO_PLANS = [
             '10 Websites tracken',
             '200 Keywords gesamt',
             'Wöchentliches Ranking-Update',
+            '4 manuelle Checks pro Monat',
             'Ranking-Verlauf (6 Monate)',
-            'Keyword-Ideen & Suchvolumen',
+            'Keyword-Ideen & Suchvolumen (20 Aufrufe/Monat)',
             'Automatische Keyword-Erkennung aus neuen Seiten & Inhalten (bis zu 30 pro Lauf)',
             'E-Mail Alerts ab 5 Positionen',
             'Konkurrenten-Analyse (automatisch, wöchentlich)',
@@ -111,8 +113,9 @@ const SEO_PLANS = [
             '20 Websites tracken',
             '500 Keywords gesamt',
             'Wöchentliches Ranking-Update',
+            '6 manuelle Checks pro Monat',
             'Ranking-Verlauf unbegrenzt',
-            'Keyword-Ideen & Suchvolumen',
+            'Keyword-Ideen & Suchvolumen (40 Aufrufe/Monat)',
             'Automatische Keyword-Erkennung aus neuen Seiten & Inhalten (bis zu 50 pro Lauf)',
             'E-Mail Alerts ab 3 Positionen',
             'Konkurrenten-Analyse (automatisch, wöchentlich)',
@@ -132,7 +135,7 @@ const GEO_PLANS = [
         features: [
             '1 Website tracken',
             '10 Keywords',
-            'Claude AI Tracking',
+            'Claude + Gemini Tracking',
             'Wöchentlicher Auto-Check',
             '2 manuelle Checks pro Monat',
         ],
@@ -140,31 +143,34 @@ const GEO_PLANS = [
     {
         id: 'pro',
         name: 'Pro',
-        price: '9,99',
+        price: '19,99',
         badge: 'Beliebteste',
         highlight: true,
         desc: 'Für Freelancer und kleine Agenturen',
         features: [
             '3 Websites tracken',
-            '30 Keywords',
-            'Claude + ChatGPT + Perplexity + Google AI Overview Tracking',
+            '20 Keywords',
+            'Claude + ChatGPT + Gemini + Perplexity + Google AI Overview Tracking',
             '2 Prompt-Varianten pro Keyword',
             'Wöchentlicher Auto-Check',
-            '8 manuelle Checks pro Monat',
+            '2 manuelle Checks pro Monat',
+            'Themen-Sichtbarkeits-Analyse',
         ],
     },
     {
         id: 'expert',
         name: 'Expert',
-        price: '19,99',
+        price: '59,99',
         desc: 'Für Agenturen mit vielen Kunden',
         features: [
             '10 Websites tracken',
-            '100 Keywords',
-            'Claude + ChatGPT + Perplexity + Google AI Overview Tracking',
+            '60 Keywords',
+            'Claude + ChatGPT + Gemini + Perplexity + Google AI Overview Tracking',
             '2 Prompt-Varianten pro Keyword',
             'Wöchentlicher Auto-Check',
-            '20 manuelle Checks pro Monat',
+            '3 manuelle Checks pro Monat',
+            'Themen-Sichtbarkeits-Analyse',
+            'Historien-Trends pro Keyword (Google AI Overview)',
         ],
     },
 ]
@@ -492,7 +498,7 @@ export default function PricingPage() {
                                     Wirst du von KI empfohlen?
                                 </h2>
                                 <p className="text-slate-400 text-sm max-w-lg mx-auto mb-4">
-                                    Tracke automatisch ob Claude, ChatGPT, Perplexity und Google AI Overview deine Domain bei relevanten Anfragen erwähnen - wöchentlich und auf Abruf.
+                                    Tracke automatisch ob Claude, ChatGPT, Gemini, Perplexity und Google AI Overview deine Domain bei relevanten Anfragen erwähnen - wöchentlich und auf Abruf.
                                 </p>
                                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-[var(--accent-border)] bg-[var(--accent-soft)] text-xs">
                                     <span className="text-[var(--accent)] font-semibold">14 Tage kostenlos testen</span>

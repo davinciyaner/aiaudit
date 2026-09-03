@@ -7,7 +7,7 @@ import {
     getSites, addSite, getSite, deleteSite,
     addKeywords, removeKeywords,
     getRankings, getRankingHistory, triggerCheck,
-    getKeywordIdeasForSite, getCompetitorsForSite, getBacklinksForSite, getContentGapForSite,
+    getKeywordIdeasForSite, getCompetitorsForSite, getBacklinksForSite, getBacklinkGapForSite, getContentGapForSite,
     getAlertSettings, updateAlertSettings,
     generateContent, generateBacklinkIdeasForKeyword,
     getInsights, refreshInsight,
@@ -23,6 +23,18 @@ const checkRateLimit = rateLimit({
     handler: (req, res) => res.status(429).json({ error: t('CHECK_RATE_LIMIT', req.language) }),
     standardHeaders: false,
     legacyHeaders: false,
+})
+
+// Backlinks/Backlink-Gap: Tab öffnen und gecachte Daten abrufen soll nie blockiert werden —
+// nur der manuelle "Neu laden/analysieren"-Button (?force=true) zählt gegen das Limit.
+const manualRefreshRateLimit = rateLimit({
+    windowMs: 45 * 1000,
+    limit: 1,
+    keyGenerator: (req) => `${req.userId}:${req.params.id}:${req.path}`,
+    handler: (req, res) => res.status(429).json({ error: t('MANUAL_REFRESH_RATE_LIMIT', req.language) }),
+    standardHeaders: false,
+    legacyHeaders: false,
+    skip: (req) => req.query.force !== 'true',
 })
 
 const apiRateLimit = rateLimit({
@@ -58,7 +70,8 @@ router.post('/sites/:id/check', checkRateLimit, triggerCheck)
 
 router.get('/sites/:id/keyword-ideas', checkRateLimit, getKeywordIdeasForSite)
 router.get('/sites/:id/competitors', checkRateLimit, getCompetitorsForSite)
-router.get('/sites/:id/backlinks', checkRateLimit, getBacklinksForSite)
+router.get('/sites/:id/backlinks', manualRefreshRateLimit, getBacklinksForSite)
+router.get('/sites/:id/backlink-gap', manualRefreshRateLimit, getBacklinkGapForSite)
 router.get('/sites/:id/content-gap', checkRateLimit, getContentGapForSite)
 
 router.post('/sites/:id/keyword-content', checkRateLimit, generateContent)

@@ -56,7 +56,7 @@ export default function Pricing() {
                             </div>
                             <div>
                                 <div className="text-sm font-semibold text-white">Track AI Visibility</div>
-                                <div className="text-xs text-slate-500 mt-0.5">ChatGPT, Claude, Perplexity &amp; Google AI Overview — from €4.99/month</div>
+                                <div className="text-xs text-slate-500 mt-0.5">ChatGPT, Claude, Gemini, Perplexity &amp; Google AI Overview — from €4.99/month</div>
                             </div>
                         </div>
                         <Link href="/geo/pricing"

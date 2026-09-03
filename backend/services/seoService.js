@@ -253,6 +253,59 @@ export async function getBacklinkSummary(domain) {
     }
 }
 
+// ─── Backlink-Gap-Analyse ─────────────────────────────────────────────────────
+
+// Findet Domains, die auf mehrere Konkurrenten verlinken, aber (noch) nicht auf
+// die eigene Domain — konkrete Linkbuilding-Ziele statt reiner KI-Vermutung.
+export async function getBacklinkGapAnalysis(domain, competitorDomains, limit = 30) {
+    if (!isConfigured()) return []
+
+    const competitors = (competitorDomains || []).filter(Boolean).slice(0, 5)
+    if (!competitors.length) return []
+
+    const targets = {}
+    competitors.forEach((d, i) => { targets[String(i + 1)] = d })
+
+    const data = await dfsPost('/v3/backlinks/domain_intersection/live', [{
+        targets,
+        exclude_targets:   [domain],
+        intersection_mode: 'partial',
+        limit,
+        order_by:          ['1.rank,desc'],
+    }])
+
+    const task = data.tasks?.[0]
+    if (task?.status_code !== 20000) {
+        console.warn('[seoService] getBacklinkGapAnalysis Fehler:', task?.status_code, task?.status_message)
+        console.warn('[seoService] getBacklinkGapAnalysis Response:', JSON.stringify(data).slice(0, 600))
+        return []
+    }
+
+    const items = task.result?.[0]?.items || []
+
+    // Jedes "target"-Feld innerhalb von domain_intersection["1"/"2"/…] enthält trotz
+    // des irreführenden Namens die verlinkende (gemeinsame) Domain, nicht den Konkurrenten.
+    return items
+        .map(item => {
+            const perTarget = item.domain_intersection || {}
+            const keys = Object.keys(perTarget)
+            const referringDomain = keys.length ? perTarget[keys[0]]?.target : null
+            if (!referringDomain) return null
+
+            return {
+                domain:       referringDomain,
+                rank:         Math.max(...keys.map(k => perTarget[k]?.rank ?? 0)),
+                linksToCount: item.summary?.intersections_count ?? keys.length,
+                linksTo:      keys.map(k => ({
+                    competitor: targets[k],
+                    backlinks:  perTarget[k]?.backlinks ?? null,
+                    spamScore:  perTarget[k]?.backlinks_spam_score ?? null,
+                })),
+            }
+        })
+        .filter(Boolean)
+}
+
 // ─── AI Content & Backlink Generation ────────────────────────────────────────
 
 function parseClaudeJSON(text) {
