@@ -11,11 +11,11 @@ import Navbar from '../../components/Navbar'
 const FAQS = [
     {
         q: 'Was kostet ein GEO Audit bzw. GEO Automatisierung?',
-        a: 'GEO Automatisierung bei AuditAI startet ab 4,99 €/Monat für 1 Website und 10 Keywords mit wöchentlichem Claude- und Gemini-Tracking. Der Pro-Plan (19,99 €/Monat) ergänzt ChatGPT-, Perplexity- und Google-AI-Overview-Tracking für 3 Websites und 20 Keywords, 2 Prompt-Varianten pro Keyword sowie eine Themen-Sichtbarkeits-Analyse, der Expert-Plan (59,99 €/Monat) deckt bis zu 10 Websites und 60 Keywords ab und ergänzt Historien-Trends pro Keyword. Alle Pläne bieten 14 Tage kostenlose Testphase.',
+        a: 'GEO Automatisierung bei AuditAI startet ab 4,99 €/Monat für 1 Website und 10 Keywords mit wöchentlichem Claude- und Gemini-Tracking. Der Pro-Plan (29,99 €/Monat) ergänzt ChatGPT-, Perplexity- und Google-AI-Overview-Tracking für 3 Websites und 20 Keywords, 2 Prompt-Varianten pro Keyword sowie eine Themen-Sichtbarkeits-Analyse, der Expert-Plan (89,99 €/Monat) deckt bis zu 10 Websites und 60 Keywords ab und ergänzt Historien-Trends pro Keyword. Alle Pläne bieten 14 Tage kostenlose Testphase.',
     },
     {
         q: 'Kann ich meine Sichtbarkeit bei Claude (Claude AI) tracken?',
-        a: 'Ja. Schon der Einsteiger-Plan ab 4,99 €/Monat trackt wöchentlich automatisch, ob und wie oft Claude und Google Gemini deine Website bei relevanten Anfragen als Quelle nennen — inklusive Mention-Verlauf über Zeit. Für zusätzliches Tracking bei ChatGPT, Perplexity und Google AI Overview im selben Dashboard brauchst du den Pro-Plan ab 19,99 €/Monat.',
+        a: 'Ja. Schon der Einsteiger-Plan ab 4,99 €/Monat trackt wöchentlich automatisch, ob und wie oft Claude und Google Gemini deine Website bei relevanten Anfragen als Quelle nennen — inklusive Mention-Verlauf über Zeit. Für zusätzliches Tracking bei ChatGPT, Perplexity und Google AI Overview im selben Dashboard brauchst du den Pro-Plan ab 29,99 €/Monat.',
     },
     {
         q: 'Was ist der Unterschied zwischen einem einmaligen GEO Audit und GEO Automatisierung?',
@@ -64,7 +64,7 @@ const PLANS = [
     {
         id: 'pro',
         name: 'Pro',
-        price: '19,99',
+        price: '29,99',
         period: 'pro Monat',
         desc: 'Für Freelancer und kleine Agenturen',
         icon: Star,
@@ -89,7 +89,7 @@ const PLANS = [
     {
         id: 'expert',
         name: 'Expert',
-        price: '59,99',
+        price: '89,99',
         period: 'pro Monat',
         desc: 'Für Agenturen mit vielen Kunden',
         icon: Building2,

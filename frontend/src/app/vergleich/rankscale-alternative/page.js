@@ -4,7 +4,7 @@ import Footer from '../../components/Footer'
 
 export const metadata = {
     title: 'Rankscale Alternative: AuditAI im Vergleich (2026)',
-    description: 'Rankscale-Alternative gesucht? AuditAI trackt KI-Sichtbarkeit bei ChatGPT, Claude, Perplexity & Google AI Overview ab 19,99 €/Monat mit festen Preisen statt Credit-System – plus SEO-Audit im selben Tool.',
+    description: 'Rankscale-Alternative gesucht? AuditAI trackt KI-Sichtbarkeit bei ChatGPT, Claude, Perplexity & Google AI Overview ab 29,99 €/Monat mit festen Preisen statt Credit-System – plus SEO-Audit im selben Tool.',
     keywords: 'rankscale alternative, rankscale ai vergleich, günstige ai visibility tool, geo tracking tool ohne credits, ki sichtbarkeit tool',
     alternates: {
         canonical: 'https://www.sitecheckai.dev/vergleich/rankscale-alternative',
@@ -15,7 +15,7 @@ export const metadata = {
     },
     openGraph: {
         title: 'Rankscale Alternative: AuditAI im Vergleich (2026)',
-        description: 'AuditAI trackt KI-Sichtbarkeit bei ChatGPT, Claude, Perplexity & Google AI Overview ab 19,99 €/Monat mit festen Preisen statt Credit-System. Der ehrliche Vergleich zu Rankscale.',
+        description: 'AuditAI trackt KI-Sichtbarkeit bei ChatGPT, Claude, Perplexity & Google AI Overview ab 29,99 €/Monat mit festen Preisen statt Credit-System. Der ehrliche Vergleich zu Rankscale.',
         url: 'https://www.sitecheckai.dev/vergleich/rankscale-alternative',
         type: 'article',
         locale: 'de_DE',
@@ -26,7 +26,7 @@ const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: 'Rankscale Alternative: AuditAI im ehrlichen Vergleich',
-    description: 'AuditAI trackt KI-Sichtbarkeit bei ChatGPT, Claude, Perplexity & Google AI Overview ab 19,99 €/Monat mit festen Preisen statt Credit-System. Der faktenbasierte Vergleich zu Rankscale.',
+    description: 'AuditAI trackt KI-Sichtbarkeit bei ChatGPT, Claude, Perplexity & Google AI Overview ab 29,99 €/Monat mit festen Preisen statt Credit-System. Der faktenbasierte Vergleich zu Rankscale.',
     image: 'https://www.sitecheckai.dev/vergleich/rankscale-alternative/opengraph-image',
     datePublished: '2026-08-29T09:00:00+02:00',
     dateModified: '2026-08-29T09:00:00+02:00',
@@ -73,7 +73,7 @@ const faqLd = {
             name: 'Was kostet AuditAI im Vergleich zu Rankscale?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'AuditAIs GEO-Automatisierung startet bei 4,99 €/Monat für Claude-Tracking bzw. 19,99 €/Monat für alle fünf Plattformen, mit festen monatlichen Limits. Rankscale startet bei 20 $/Monat (Essential-Plan, 120 Credits, 10 Web-Audits) - ohne dauerhaften Gratis-Plan, nur mit 7-tägigem Test.',
+                text: 'AuditAIs GEO-Automatisierung startet bei 4,99 €/Monat für Claude-Tracking bzw. 29,99 €/Monat für alle fünf Plattformen, mit festen monatlichen Limits. Rankscale startet bei 20 $/Monat (Essential-Plan, 120 Credits, 10 Web-Audits) - ohne dauerhaften Gratis-Plan, nur mit 7-tägigem Test.',
             },
         },
         {
@@ -104,7 +104,7 @@ const faqLd = {
 }
 
 const OVERVIEW_ROWS = [
-    ['GEO-Einstieg', '4,99 €/Monat (Claude) · 19,99 €/Monat (alle 5 Plattformen)', '20 $/Monat (Essential, 120 Credits, 10 Web-Audits)'],
+    ['GEO-Einstieg', '4,99 €/Monat (Claude) · 29,99 €/Monat (alle 5 Plattformen)', '20 $/Monat (Essential, 120 Credits, 10 Web-Audits)'],
     ['Kostenloser Plan', 'Ja, dauerhaft (Audit inkl. GEO-Sichtbarkeit)', 'Nein, nur 7-Tage-Trial'],
     ['Abrechnungsmodell', 'Feste Website-/Keyword-Limits pro Plan', 'Credit-System, Verbrauch variiert je Aktion'],
     ['Plattform-Abdeckung', 'ChatGPT, Claude, Perplexity, Google AI Overview', '17+ Plattformen inkl. Claude, Gemini, Grok, DeepSeek, Mistral'],
@@ -162,7 +162,7 @@ export default function RankscaleAlternativePage() {
                         Du suchst eine Alternative zu Rankscale - meistens aus einem von zwei Gründen: Das Credit-System macht die reale monatliche Rechnung schwer vorhersehbar, oder du brauchst gar nicht 17 KI-Plattformen, sondern willst die vier wichtigsten zuverlässig und günstig abgedeckt haben. Diese Seite vergleicht beide Tools fair und faktenbasiert - inklusive der Punkte, in denen Rankscale besser ist.
                     </p>
                     <p className="mt-4 text-slate-300 leading-relaxed">
-                        Kurzfassung vorweg: <strong className="text-white">AuditAI</strong> trackt deine KI-Sichtbarkeit bei ChatGPT, Claude, Perplexity und Google AI Overview ab 19,99 €/Monat mit festen, planbaren Limits - und bringt SEO-Audit sowie Google-Rankings im selben Haus mit. <strong className="text-white">Rankscale</strong> ist ein GEO-natives Tool mit außergewöhnlich breiter Plattformabdeckung und einem Credit-basierten Abrechnungsmodell. Welches Tool passt, hängt davon ab, ob du planbare Kosten oder maximale Plattformbreite priorisierst.
+                        Kurzfassung vorweg: <strong className="text-white">AuditAI</strong> trackt deine KI-Sichtbarkeit bei ChatGPT, Claude, Perplexity und Google AI Overview ab 29,99 €/Monat mit festen, planbaren Limits - und bringt SEO-Audit sowie Google-Rankings im selben Haus mit. <strong className="text-white">Rankscale</strong> ist ein GEO-natives Tool mit außergewöhnlich breiter Plattformabdeckung und einem Credit-basierten Abrechnungsmodell. Welches Tool passt, hängt davon ab, ob du planbare Kosten oder maximale Plattformbreite priorisierst.
                     </p>
                     <div className="mt-5 flex items-center gap-2 text-xs text-slate-600">
                         <Link href="/about" className="flex items-center gap-2 hover:text-slate-300 transition-colors">

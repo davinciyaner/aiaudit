@@ -143,7 +143,7 @@ const GEO_PLANS = [
     {
         id: 'pro',
         name: 'Pro',
-        price: '19,99',
+        price: '29,99',
         badge: 'Beliebteste',
         highlight: true,
         desc: 'Für Freelancer und kleine Agenturen',
@@ -160,7 +160,7 @@ const GEO_PLANS = [
     {
         id: 'expert',
         name: 'Expert',
-        price: '59,99',
+        price: '89,99',
         desc: 'Für Agenturen mit vielen Kunden',
         features: [
             '10 Websites tracken',

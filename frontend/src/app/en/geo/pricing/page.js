@@ -11,11 +11,11 @@ import Navbar from '../../../components/Navbar'
 const FAQS = [
     {
         q: 'What does a GEO audit or GEO automation cost?',
-        a: 'GEO automation at AuditAI starts at €4.99/month for 1 website and 10 keywords with weekly Claude and Gemini tracking. The Pro plan (€19.99/month) adds ChatGPT, Perplexity, and Google AI Overview tracking for 3 websites and 20 keywords, 2 prompt variants per keyword, and topic visibility analysis, and the Expert plan (€59.99/month) covers up to 10 websites and 60 keywords plus historical trends per keyword. All plans include a 14-day free trial.',
+        a: 'GEO automation at AuditAI starts at €4.99/month for 1 website and 10 keywords with weekly Claude and Gemini tracking. The Pro plan (€29.99/month) adds ChatGPT, Perplexity, and Google AI Overview tracking for 3 websites and 20 keywords, 2 prompt variants per keyword, and topic visibility analysis, and the Expert plan (€89.99/month) covers up to 10 websites and 60 keywords plus historical trends per keyword. All plans include a 14-day free trial.',
     },
     {
         q: 'Can I track my visibility on Claude (Claude AI)?',
-        a: 'Yes. Even the Starter plan at €4.99/month automatically checks every week whether and how often Claude and Google Gemini cite your website as a source for relevant queries — including a mention history over time. To also track ChatGPT, Perplexity, and Google AI Overview in the same dashboard, you need the Pro plan at €19.99/month.',
+        a: 'Yes. Even the Starter plan at €4.99/month automatically checks every week whether and how often Claude and Google Gemini cite your website as a source for relevant queries — including a mention history over time. To also track ChatGPT, Perplexity, and Google AI Overview in the same dashboard, you need the Pro plan at €29.99/month.',
     },
     {
         q: 'What\'s the difference between a one-time GEO audit and GEO automation?',
@@ -64,7 +64,7 @@ const PLANS = [
     {
         id: 'pro',
         name: 'Pro',
-        price: '19.99',
+        price: '29.99',
         period: 'per month',
         desc: 'For freelancers and small agencies',
         icon: Star,
@@ -89,7 +89,7 @@ const PLANS = [
     {
         id: 'expert',
         name: 'Expert',
-        price: '59.99',
+        price: '89.99',
         period: 'per month',
         desc: 'For agencies with many clients',
         icon: Building2,

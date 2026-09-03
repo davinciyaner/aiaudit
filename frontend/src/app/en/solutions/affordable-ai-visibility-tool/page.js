@@ -81,7 +81,7 @@ const faqLd = {
             name: 'How much does AI visibility tracking cost with AuditAI?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'GEO automation starts at €4.99/month (Claude + Gemini, 1 website, 10 keywords, weekly auto-check). The Pro plan at €19.99/month covers all five AI platforms. SEO automation starts separately at €19/month. All automation plans include a 14-day free trial.',
+                text: 'GEO automation starts at €4.99/month (Claude + Gemini, 1 website, 10 keywords, weekly auto-check). The Pro plan at €29.99/month covers all five AI platforms. SEO automation starts separately at €19/month. All automation plans include a 14-day free trial.',
             },
         },
         {
@@ -97,7 +97,7 @@ const faqLd = {
             name: 'Which AI platforms does GEO automation cover?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'Claude, ChatGPT, Gemini, Perplexity, and Google AI Overview. The Starter plan includes Claude and Gemini; from the Pro plan (€19.99/month) all five platforms are included — with no separate per-platform add-on cost.',
+                text: 'Claude, ChatGPT, Gemini, Perplexity, and Google AI Overview. The Starter plan includes Claude and Gemini; from the Pro plan (€29.99/month) all five platforms are included — with no separate per-platform add-on cost.',
             },
         },
     ],
@@ -106,7 +106,7 @@ const faqLd = {
 const PRICING_ROWS = [
     ['Free Audit', '1 audit/month · SEO score, GEO visibility, performance', '€0 forever'],
     ['GEO Starter', 'Claude tracking · 1 website · 10 keywords · weekly auto-check', '€4.99/month'],
-    ['GEO Pro', 'ChatGPT + Claude + Gemini + Perplexity + Google AI Overview · 3 websites · 20 keywords', '€19.99/month'],
+    ['GEO Pro', 'ChatGPT + Claude + Gemini + Perplexity + Google AI Overview · 3 websites · 20 keywords', '€29.99/month'],
     ['SEO Starter', '3 websites · 50 keywords · weekly ranking updates · backlink overview', '€19/month'],
 ]
 

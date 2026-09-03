@@ -89,7 +89,7 @@ const faqLd = {
             name: 'Can I combine Claude tracking with other AI platforms?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'Yes. The Starter plan (€4.99/month) covers Claude and Gemini, and the Pro plan (€19.99/month) adds ChatGPT, Perplexity, and Google AI Overview in the same dashboard - no separate booking per platform.',
+                text: 'Yes. The Starter plan (€4.99/month) covers Claude and Gemini, and the Pro plan (€29.99/month) adds ChatGPT, Perplexity, and Google AI Overview in the same dashboard - no separate booking per platform.',
             },
         },
         {
@@ -231,7 +231,7 @@ export default function ClaudeAiVisibilityPageEn() {
                     <section>
                         <h2 className="text-2xl font-bold text-white mb-4">What AuditAI actually gives you</h2>
                         <p>
-                            From the Starter plan (€4.99/month, 1 website, 10 keywords), AuditAI automatically checks every week whether Claude and Gemini mention your website - including a mention history over time. The Pro plan (€19.99/month) adds ChatGPT, Perplexity, and Google AI Overview in the same dashboard, plus two prompt variants per keyword instead of one.
+                            From the Starter plan (€4.99/month, 1 website, 10 keywords), AuditAI automatically checks every week whether Claude and Gemini mention your website - including a mention history over time. The Pro plan (€29.99/month) adds ChatGPT, Perplexity, and Google AI Overview in the same dashboard, plus two prompt variants per keyword instead of one.
                         </p>
                         <p className="mt-4">
                             Unlike pure analytics dashboards, it doesn't stop at the number: AuditAI also checks whether llms.txt exists, whether schema markup is set up correctly, and whether ClaudeBot is even allowed to crawl - then shows you, in priority order, what to fix to get cited more often.
