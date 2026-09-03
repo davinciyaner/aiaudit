@@ -233,7 +233,7 @@ async function checkWithLlmResponses(platform, keyword, domain, language, intent
 
     const task = data.tasks?.[0]
     if (task?.status_code !== 20000) {
-        console.warn(`[geoService] ${platform}-Check endgültig fehlgeschlagen bei "${keyword}":`, task?.status_code, task?.status_message)
+        console.warn('[geoService] %s-Check endgültig fehlgeschlagen bei "%s":', platform, keyword, task?.status_code, task?.status_message)
         return { mentioned: false, context: null, citations: [] }
     }
 
@@ -417,7 +417,7 @@ export async function checkPlatformMention(platform, keyword, domain, language, 
     try {
         return await fn(keyword, domain, language, intent)
     } catch (err) {
-        console.error(`[geoService] ${platform}/${intent} Fehler bei "${keyword}":`, err.message)
+        console.error('[geoService] %s/%s Fehler bei "%s":', platform, intent, keyword, err.message)
         return { mentioned: false, context: null, citations: [] }
     }
 }
