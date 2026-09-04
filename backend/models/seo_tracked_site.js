@@ -23,6 +23,10 @@ const seoTrackedSiteSchema = new Schema({
         data:      Schema.Types.Mixed,
         checkedAt: Date,
     },
+    referringDomainsCache: {
+        data:      [{ type: Schema.Types.Mixed }],
+        checkedAt: Date,
+    },
     backlinkGapCache: {
         competitorDomains: [{ type: String }],
         manual:            { type: Boolean, default: false },

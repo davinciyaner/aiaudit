@@ -4,7 +4,7 @@ import Footer from '../../components/Footer'
 
 export const metadata = {
     title: 'Writesonic Alternative: AuditAI im Vergleich (2026)',
-    description: 'Writesonic-Alternative gesucht? AuditAI trackt KI-Sichtbarkeit bei ChatGPT, Claude, Perplexity & Google AI Overview ab 29,99 €/Monat - während GEO-Tracking bei Writesonic erst im 249-$-Tarif startet.',
+    description: 'Writesonic-Alternative gesucht? AuditAI trackt KI-Sichtbarkeit bei ChatGPT, Claude, Gemini, Perplexity & Google AI Overview ab 29,99 €/Monat - während GEO-Tracking bei Writesonic erst im 249-$-Tarif startet.',
     keywords: 'writesonic alternative, writesonic geo vergleich, günstige ai visibility tool, geo tracking tool ohne credits, ki sichtbarkeit tool',
     alternates: {
         canonical: 'https://www.sitecheckai.dev/vergleich/writesonic-alternative',
@@ -15,7 +15,7 @@ export const metadata = {
     },
     openGraph: {
         title: 'Writesonic Alternative: AuditAI im Vergleich (2026)',
-        description: 'AuditAI trackt KI-Sichtbarkeit bei ChatGPT, Claude, Perplexity & Google AI Overview ab 29,99 €/Monat - während GEO-Tracking bei Writesonic erst im 249-$-Tarif startet. Der ehrliche Vergleich.',
+        description: 'AuditAI trackt KI-Sichtbarkeit bei ChatGPT, Claude, Gemini, Perplexity & Google AI Overview ab 29,99 €/Monat - während GEO-Tracking bei Writesonic erst im 249-$-Tarif startet. Der ehrliche Vergleich.',
         url: 'https://www.sitecheckai.dev/vergleich/writesonic-alternative',
         type: 'article',
         locale: 'de_DE',
@@ -26,7 +26,7 @@ const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: 'Writesonic Alternative: AuditAI im ehrlichen Vergleich',
-    description: 'AuditAI trackt KI-Sichtbarkeit bei ChatGPT, Claude, Perplexity & Google AI Overview ab 29,99 €/Monat - während GEO-Tracking bei Writesonic erst im 249-$-Tarif startet. Der faktenbasierte Vergleich zu Writesonic.',
+    description: 'AuditAI trackt KI-Sichtbarkeit bei ChatGPT, Claude, Gemini, Perplexity & Google AI Overview ab 29,99 €/Monat - während GEO-Tracking bei Writesonic erst im 249-$-Tarif startet. Der faktenbasierte Vergleich zu Writesonic.',
     image: 'https://www.sitecheckai.dev/vergleich/writesonic-alternative/opengraph-image',
     datePublished: '2026-08-29T09:00:00+02:00',
     dateModified: '2026-08-29T09:00:00+02:00',
@@ -107,7 +107,7 @@ const OVERVIEW_ROWS = [
     ['GEO-Einstieg', '4,99 €/Monat (Claude) · 29,99 €/Monat (alle 5 Plattformen)', '249 $/Monat (Professional) - günstigere Tarife ohne GEO'],
     ['Kostenloser Plan', 'Ja, dauerhaft (Audit inkl. GEO-Sichtbarkeit)', 'Nein, nur Trial ohne Kreditkarte'],
     ['Abrechnungsmodell', 'Feste Website-/Keyword-Limits pro Plan', 'Credits, die am Ende des Abrechnungszyklus verfallen'],
-    ['Plattform-Abdeckung', 'ChatGPT, Claude, Perplexity, Google AI Overview', '~10 Plattformen inkl. Claude, Copilot, Meta AI (ab Professional)'],
+    ['Plattform-Abdeckung', 'ChatGPT, Claude, Gemini, Perplexity, Google AI Overview', '~10 Plattformen inkl. Claude, Copilot, Meta AI (ab Professional)'],
     ['Produktkern', 'Von Grund auf für GEO-/SEO-Diagnose gebaut', 'Content-Generierungs-Tool mit nachträglich ergänztem GEO-Modul'],
     ['Ansatz', 'Audit-first mit priorisierten Fixes', 'Content-Suite mit Prompt Explorer und Action Center'],
     ['Volle AI-Visibility-Suite', 'Im günstigsten GEO-Plan bereits enthalten', 'Laut Reviews erst im individuell bepreisten Enterprise-Tarif vollständig'],
@@ -162,7 +162,7 @@ export default function WritesonicAlternativePage() {
                         Du suchst eine Alternative zu Writesonic - meistens aus einem von zwei Gründen: Du willst gar keine KI-Artikel-Produktion, sondern nur zuverlässiges GEO-Tracking, und merkst, dass genau das bei Writesonic erst im 249-$-Tarif startet. Oder das Credit-System mit Verfallsdatum passt nicht zu deiner Nutzung. Diese Seite vergleicht beide Tools fair und faktenbasiert - inklusive der Punkte, in denen Writesonic besser ist.
                     </p>
                     <p className="mt-4 text-slate-300 leading-relaxed">
-                        Kurzfassung vorweg: <strong className="text-white">AuditAI</strong> trackt deine KI-Sichtbarkeit bei ChatGPT, Claude, Perplexity und Google AI Overview ab 29,99 €/Monat - von Grund auf als GEO-/SEO-Tool gebaut. <strong className="text-white">Writesonic</strong> ist in erster Linie ein KI-Content-Generator, dem eine AI-Visibility-Suite hinzugefügt wurde - mit breiterer Plattformabdeckung, aber erst in den oberen Preisstufen. Welches Tool passt, hängt davon ab, ob du reines, günstiges GEO-Tracking willst oder ohnehin Content-Produktion in großem Umfang brauchst.
+                        Kurzfassung vorweg: <strong className="text-white">AuditAI</strong> trackt deine KI-Sichtbarkeit bei ChatGPT, Claude, Gemini, Perplexity und Google AI Overview ab 29,99 €/Monat - von Grund auf als GEO-/SEO-Tool gebaut. <strong className="text-white">Writesonic</strong> ist in erster Linie ein KI-Content-Generator, dem eine AI-Visibility-Suite hinzugefügt wurde - mit breiterer Plattformabdeckung, aber erst in den oberen Preisstufen. Welches Tool passt, hängt davon ab, ob du reines, günstiges GEO-Tracking willst oder ohnehin Content-Produktion in großem Umfang brauchst.
                     </p>
                     <div className="mt-5 flex items-center gap-2 text-xs text-slate-600">
                         <Link href="/about" className="flex items-center gap-2 hover:text-slate-300 transition-colors">
@@ -243,7 +243,7 @@ export default function WritesonicAlternativePage() {
                             <strong className="text-white">Content-Produktion inklusive.</strong> Wenn du ohnehin KI-generierte Artikel in größerem Umfang brauchst, bekommst du bei Writesonic Schreib-Tool und GEO-Tracking aus einer Hand - zwei separate Abos entfallen, wenn beides für dich relevant ist.
                         </p>
                         <p className="mt-4">
-                            <strong className="text-white">Breitere Plattformabdeckung.</strong> Rund zehn KI-Plattformen inklusive Claude, Copilot und Meta AI stehen zur Verfügung - mehr als AuditAIs vier etablierte Kernplattformen.
+                            <strong className="text-white">Breitere Plattformabdeckung.</strong> Rund zehn KI-Plattformen inklusive Claude, Copilot und Meta AI stehen zur Verfügung - mehr als AuditAIs fünf etablierte Kernplattformen.
                         </p>
                         <p className="mt-4">
                             <strong className="text-white">Prompt Explorer und Action Center.</strong> Dedizierte Features für tiefere Prompt-Recherche und strukturierte nächste Schritte, gerade für Teams, die viel mit Prompt-Varianten experimentieren wollen.
