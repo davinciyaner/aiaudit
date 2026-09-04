@@ -4,7 +4,7 @@ import Footer from '../../../components/Footer'
 
 export const metadata = {
     title: 'Peec.ai Alternative: How AuditAI Compares (2026)',
-    description: 'Looking for a Peec.ai alternative? AuditAI tracks AI visibility across ChatGPT, Claude, Perplexity & Google AI Overview from €29.99/month — plus a built-in SEO audit. Claude included from the entry tier.',
+    description: 'Looking for a Peec.ai alternative? AuditAI tracks AI visibility across ChatGPT, Claude, Gemini, Perplexity & Google AI Overview from €29.99/month — plus a built-in SEO audit. Claude included from the entry tier.',
     keywords: 'peec alternative, peec.ai alternative, peec ai competitor, cheap ai visibility tool, geo tracking tool, ai visibility software',
     alternates: {
         canonical: 'https://www.sitecheckai.dev/en/compare/peec-alternative',
@@ -15,7 +15,7 @@ export const metadata = {
     },
     openGraph: {
         title: 'Peec.ai Alternative: How AuditAI Compares (2026)',
-        description: 'AuditAI tracks AI visibility across ChatGPT, Claude, Perplexity & Google AI Overview from €29.99/month — plus a built-in SEO audit. A fact-checked look at Peec.ai.',
+        description: 'AuditAI tracks AI visibility across ChatGPT, Claude, Gemini, Perplexity & Google AI Overview from €29.99/month — plus a built-in SEO audit. A fact-checked look at Peec.ai.',
         url: 'https://www.sitecheckai.dev/en/compare/peec-alternative',
         type: 'article',
         locale: 'en_US',
@@ -26,7 +26,7 @@ const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: 'Peec.ai Alternative: An Honest Look at AuditAI',
-    description: 'AuditAI tracks AI visibility across ChatGPT, Claude, Perplexity & Google AI Overview from €29.99/month — plus a built-in SEO audit. A fact-checked comparison with Peec.ai.',
+    description: 'AuditAI tracks AI visibility across ChatGPT, Claude, Gemini, Perplexity & Google AI Overview from €29.99/month — plus a built-in SEO audit. A fact-checked comparison with Peec.ai.',
     image: 'https://www.sitecheckai.dev/en/compare/peec-alternative/opengraph-image',
     datePublished: '2026-08-29T09:00:00+02:00',
     dateModified: '2026-08-29T09:00:00+02:00',
@@ -65,7 +65,7 @@ const faqLd = {
             name: 'Is AuditAI a real alternative to Peec.ai?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'If what you want is affordable AI-visibility tracking, yes. AuditAI covers the four most important AI platforms and adds a full SEO audit on top. For very deep analytics across seven engines and large-scale agency reporting, Peec.ai remains the more specialized — but also considerably more expensive — option.',
+                text: 'If what you want is affordable AI-visibility tracking, yes. AuditAI covers the five most important AI platforms (ChatGPT, Claude, Gemini, Perplexity, Google AI Overview) and adds a full SEO audit on top. For very deep analytics across seven engines and large-scale agency reporting, Peec.ai remains the more specialized — but also considerably more expensive — option.',
             },
         },
         {
@@ -106,7 +106,7 @@ const faqLd = {
 const OVERVIEW_ROWS = [
     ['GEO entry price', '€4.99/mo (Claude) · €29.99/mo (all 5 platforms)', '€85/mo (Starter, 50 prompts, pick 3 of 7 engines)'],
     ['Free plan', 'Yes, permanently (audit incl. GEO visibility)', 'No, 7-day trial only'],
-    ['AI platforms included by default', 'ChatGPT, Claude, Perplexity, Google AI Overview (from Pro)', 'None by default — pick 3 of 7 engines'],
+    ['AI platforms included by default', 'ChatGPT, Claude, Gemini, Perplexity, Google AI Overview (from Pro)', 'None by default — pick 3 of 7 engines'],
     ['Claude tracking', 'Included from €4.99/mo', 'Custom-priced Enterprise plan only'],
     ['SEO audit + Google rankings', 'Yes, bookable in the same tool', 'No, AI-visibility only'],
     ['Approach', 'Audit-first with prioritized fixes', 'Analytics dashboard with Share of Voice & Citation Intelligence'],
@@ -114,7 +114,7 @@ const OVERVIEW_ROWS = [
 ]
 
 const AUDITAI_FOR = [
-    'you want all four major AI platforms tracked without paying per-engine',
+    'you want all five major AI platforms tracked without paying per-engine',
     'you need Claude tracking on the cheapest tier, not gated behind an Enterprise plan',
     'you want AI visibility and SEO from one vendor instead of stitching two tools together',
     'you want a low entry price and a genuinely free tier',
@@ -162,7 +162,7 @@ export default function PeecAlternativePage() {
                         People go looking for a Peec.ai alternative for one of two reasons: the €85/month entry price is simply too steep for a solo operator or small team, or you want to track Claude without jumping straight to a custom-priced Enterprise plan. This page compares both tools honestly — including where Peec.ai wins.
                     </p>
                     <p className="mt-4 text-slate-300 leading-relaxed">
-                        Short version: <strong className="text-white">AuditAI</strong> tracks your AI visibility across ChatGPT, Claude, Perplexity, and Google AI Overview from €29.99/month, and bundles in an SEO audit plus Google rank tracking. <strong className="text-white">Peec.ai</strong> is a specialized, highly analytical AI-visibility tool aimed at brands and agencies, with a much higher price point and broader platform selection. Which one fits depends on whether you want an affordable combined tool to get started, or a deeper, pricier analytics dashboard backed by a bigger budget.
+                        Short version: <strong className="text-white">AuditAI</strong> tracks your AI visibility across ChatGPT, Claude, Gemini, Perplexity, and Google AI Overview from €29.99/month, and bundles in an SEO audit plus Google rank tracking. <strong className="text-white">Peec.ai</strong> is a specialized, highly analytical AI-visibility tool aimed at brands and agencies, with a much higher price point and broader platform selection. Which one fits depends on whether you want an affordable combined tool to get started, or a deeper, pricier analytics dashboard backed by a bigger budget.
                     </p>
                     <div className="mt-5 flex items-center gap-2 text-xs text-slate-600">
                         <Link href="/about" className="flex items-center gap-2 hover:text-slate-300 transition-colors">
@@ -218,9 +218,9 @@ export default function PeecAlternativePage() {
                             Peec.ai has no permanent free tier, only a 7-day trial with no credit card required. AuditAI lets you run one full audit a month, including GEO visibility, for free indefinitely — a low-risk way to find out whether AI visibility even matters for your site before you commit to a subscription.
                         </p>
 
-                        <h3 className="text-lg font-semibold text-white mt-6 mb-2">3. No picking and add-ons — all four platforms are just included</h3>
+                        <h3 className="text-lg font-semibold text-white mt-6 mb-2">3. No picking and add-ons — all five platforms are just included</h3>
                         <p>
-                            On every self-serve Peec.ai tier, you select only three of seven engines during onboarding, and each additional one costs noticeably extra depending on the plan. AuditAI tracks ChatGPT, Claude, Perplexity, and Google AI Overview together starting at the GEO Pro tier for €29.99/month — no selection required, no per-platform surcharge.
+                            On every self-serve Peec.ai tier, you select only three of seven engines during onboarding, and each additional one costs noticeably extra depending on the plan. AuditAI tracks ChatGPT, Claude, Gemini, Perplexity, and Google AI Overview together starting at the GEO Pro tier for €29.99/month — no selection required, no per-platform surcharge.
                         </p>
 
                         <h3 className="text-lg font-semibold text-white mt-6 mb-2">4. AI visibility and SEO, one vendor</h3>
@@ -243,7 +243,7 @@ export default function PeecAlternativePage() {
                             <strong className="text-white">Deeper analytics.</strong> Citation Intelligence, Response Position Analysis, Share of Voice, and Content Gap Analysis go beyond raw visibility percentages, offering more nuanced insight into how and where a brand shows up in AI answers.
                         </p>
                         <p className="mt-4">
-                            <strong className="text-white">Broader platform coverage.</strong> Seven engines are available in total, including Grok and Gemini (three at a time depending on the plan), while AuditAI focuses on the four most established platforms.
+                            <strong className="text-white">Broader platform coverage.</strong> Seven engines are available in total, including Grok (three at a time depending on the plan), while AuditAI focuses on the five most established platforms.
                         </p>
                         <p className="mt-4">
                             <strong className="text-white">AI Shopping Analytics.</strong> Since June 2026, Peec.ai additionally tracks which products, at the SKU level, are recommended by AI assistants and at what price — a niche AuditAI doesn't currently cover.

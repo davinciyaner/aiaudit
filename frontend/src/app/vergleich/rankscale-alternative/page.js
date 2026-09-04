@@ -4,7 +4,7 @@ import Footer from '../../components/Footer'
 
 export const metadata = {
     title: 'Rankscale Alternative: AuditAI im Vergleich (2026)',
-    description: 'Rankscale-Alternative gesucht? AuditAI trackt KI-Sichtbarkeit bei ChatGPT, Claude, Perplexity & Google AI Overview ab 29,99 €/Monat mit festen Preisen statt Credit-System – plus SEO-Audit im selben Tool.',
+    description: 'Rankscale-Alternative gesucht? AuditAI trackt KI-Sichtbarkeit bei ChatGPT, Claude, Gemini, Perplexity & Google AI Overview ab 29,99 €/Monat mit festen Preisen statt Credit-System – plus SEO-Audit im selben Tool.',
     keywords: 'rankscale alternative, rankscale ai vergleich, günstige ai visibility tool, geo tracking tool ohne credits, ki sichtbarkeit tool',
     alternates: {
         canonical: 'https://www.sitecheckai.dev/vergleich/rankscale-alternative',
@@ -15,7 +15,7 @@ export const metadata = {
     },
     openGraph: {
         title: 'Rankscale Alternative: AuditAI im Vergleich (2026)',
-        description: 'AuditAI trackt KI-Sichtbarkeit bei ChatGPT, Claude, Perplexity & Google AI Overview ab 29,99 €/Monat mit festen Preisen statt Credit-System. Der ehrliche Vergleich zu Rankscale.',
+        description: 'AuditAI trackt KI-Sichtbarkeit bei ChatGPT, Claude, Gemini, Perplexity & Google AI Overview ab 29,99 €/Monat mit festen Preisen statt Credit-System. Der ehrliche Vergleich zu Rankscale.',
         url: 'https://www.sitecheckai.dev/vergleich/rankscale-alternative',
         type: 'article',
         locale: 'de_DE',
@@ -26,10 +26,10 @@ const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: 'Rankscale Alternative: AuditAI im ehrlichen Vergleich',
-    description: 'AuditAI trackt KI-Sichtbarkeit bei ChatGPT, Claude, Perplexity & Google AI Overview ab 29,99 €/Monat mit festen Preisen statt Credit-System. Der faktenbasierte Vergleich zu Rankscale.',
+    description: 'AuditAI trackt KI-Sichtbarkeit bei ChatGPT, Claude, Gemini, Perplexity & Google AI Overview ab 29,99 €/Monat mit festen Preisen statt Credit-System. Der faktenbasierte Vergleich zu Rankscale.',
     image: 'https://www.sitecheckai.dev/vergleich/rankscale-alternative/opengraph-image',
     datePublished: '2026-08-29T09:00:00+02:00',
-    dateModified: '2026-08-29T09:00:00+02:00',
+    dateModified: '2026-09-03T12:00:00+02:00',
     author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev/about' },
     publisher: {
         '@type': 'Organization',
@@ -42,7 +42,52 @@ const jsonLd = {
     about: [
         { '@type': 'Thing', name: 'AI Visibility Tracking' },
         { '@type': 'Thing', name: 'Generative Engine Optimization' },
-        { '@type': 'SoftwareApplication', name: 'Rankscale' },
+        { '@type': 'SoftwareApplication', name: 'Rankscale', url: 'https://rankscale.ai', sameAs: 'https://rankscale.ai' },
+    ],
+    mentions: [
+        { '@type': 'SoftwareApplication', name: 'Rankscale', url: 'https://rankscale.ai', sameAs: 'https://rankscale.ai' },
+        { '@id': 'https://www.sitecheckai.dev/#software' },
+    ],
+}
+
+const softwareLd = {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    '@id': 'https://www.sitecheckai.dev/#software',
+    name: 'AuditAI',
+    alternateName: 'SiteCheckAI',
+    url: 'https://www.sitecheckai.dev',
+    applicationCategory: 'BusinessApplication',
+    applicationSubCategory: 'AI Visibility & SEO Monitoring',
+    operatingSystem: 'Web',
+    description: 'KI-gestütztes Website-Audit-Tool für SEO, Performance und GEO-Sichtbarkeit (Generative Engine Optimization) bei ChatGPT, Claude, Gemini, Perplexity und Google AI Overview.',
+    offers: [
+        {
+            '@type': 'Offer',
+            name: 'GEO-Automatisierung Einsteiger',
+            price: '4.99',
+            priceCurrency: 'EUR',
+            priceValidUntil: '2026-12-31',
+            billingDuration: 'P1M',
+            url: 'https://www.sitecheckai.dev/geo/pricing',
+        },
+        {
+            '@type': 'Offer',
+            name: 'GEO-Automatisierung Pro (5 Plattformen)',
+            price: '29.99',
+            priceCurrency: 'EUR',
+            priceValidUntil: '2026-12-31',
+            billingDuration: 'P1M',
+            url: 'https://www.sitecheckai.dev/geo/pricing',
+        },
+        {
+            '@type': 'Offer',
+            name: 'Website-Audit Free',
+            price: '0',
+            priceCurrency: 'EUR',
+            billingDuration: 'P1M',
+            url: 'https://www.sitecheckai.dev/pricing',
+        },
     ],
 }
 
@@ -65,7 +110,7 @@ const faqLd = {
             name: 'Ist AuditAI eine echte Alternative zu Rankscale?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'Für alle, die feste, planbare Preise statt eines Credit-Systems wollen, ja. AuditAI deckt die vier wichtigsten KI-Plattformen ab und ergänzt sie um ein SEO-Audit. Für sehr breite Plattformabdeckung über 17+ Engines und internationales Regional-Tracking bleibt Rankscale die spezialisiertere Option.',
+                text: 'Für alle, die feste, planbare Preise statt eines Credit-Systems wollen, ja. AuditAI deckt die fünf wichtigsten KI-Plattformen ab (ChatGPT, Claude, Gemini, Perplexity, Google AI Overview) und ergänzt sie um ein SEO-Audit. Für sehr breite Plattformabdeckung über 17+ Engines und internationales Regional-Tracking bleibt Rankscale die spezialisiertere Option.',
             },
         },
         {
@@ -100,6 +145,22 @@ const faqLd = {
                 text: 'Ja, ohne Anmeldung und ohne Kreditkarte. Du gibst deine URL ein und erhältst in etwa 60 Sekunden ein Ergebnis. Der Free-Plan bleibt dauerhaft kostenlos; die Automatisierungs-Abos haben zusätzlich eine 14-tägige Testphase.',
             },
         },
+        {
+            '@type': 'Question',
+            name: 'Rankscale oder AuditAI - was ist besser?',
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Das hängt vom Anwendungsfall ab. Für planbare Kosten, einen echten Gratis-Einstieg und SEO plus KI-Sichtbarkeit aus einer Hand ist AuditAI die praktischere Wahl. Für maximale Plattformbreite über 17+ KI-Engines, internationales Regional-Tracking und sehr tiefe Analytics ist Rankscale die spezialisiertere Option. Keines der beiden Tools ist in jeder Situation überlegen.',
+            },
+        },
+        {
+            '@type': 'Question',
+            name: 'Gibt es eine kostenlose Rankscale Alternative?',
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'AuditAI bietet einen dauerhaft kostenlosen Plan mit einem Website-Audit pro Monat inklusive GEO-Sichtbarkeits-Check - ohne Anmeldung, ohne Kreditkarte, ohne Zeitlimit. Für laufendes wöchentliches KI-Sichtbarkeits-Monitoring ist ein Abo ab 4,99 €/Monat nötig; Rankscale selbst bietet dafür keinen dauerhaften Gratis-Tarif, nur einen 7-tägigen Test.',
+            },
+        },
     ],
 }
 
@@ -107,7 +168,7 @@ const OVERVIEW_ROWS = [
     ['GEO-Einstieg', '4,99 €/Monat (Claude) · 29,99 €/Monat (alle 5 Plattformen)', '20 $/Monat (Essential, 120 Credits, 10 Web-Audits)'],
     ['Kostenloser Plan', 'Ja, dauerhaft (Audit inkl. GEO-Sichtbarkeit)', 'Nein, nur 7-Tage-Trial'],
     ['Abrechnungsmodell', 'Feste Website-/Keyword-Limits pro Plan', 'Credit-System, Verbrauch variiert je Aktion'],
-    ['Plattform-Abdeckung', 'ChatGPT, Claude, Perplexity, Google AI Overview', '17+ Plattformen inkl. Claude, Gemini, Grok, DeepSeek, Mistral'],
+    ['Plattform-Abdeckung', 'ChatGPT, Claude, Gemini, Perplexity, Google AI Overview', '17+ Plattformen inkl. Claude, Gemini, Grok, DeepSeek, Mistral'],
     ['SEO-Audit + Google-Rankings', 'Ja, im selben Tool buchbar', 'Nein, reines AI-Visibility- und Site-Audit-Tool'],
     ['Ansatz', 'Audit-first mit priorisierten Fixes', 'Breite Analytics-Tiefe (Query-Fan-Out, Sentiment, Source-Analyse)'],
     ['Einstieg für kleine Teams', 'Günstigster Plan dauerhaft verfügbar', 'Günstigere Einstiegsstufe laut Reviews inzwischen entfernt'],
@@ -131,6 +192,7 @@ export default function RankscaleAlternativePage() {
     return (
         <main className="bg-[#05080f] min-h-screen">
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
             <Navbar />
@@ -159,10 +221,10 @@ export default function RankscaleAlternativePage() {
                         Rankscale-Alternative: AuditAI im ehrlichen Vergleich
                     </h1>
                     <p className="text-lg text-slate-400 leading-relaxed">
-                        Du suchst eine Alternative zu Rankscale - meistens aus einem von zwei Gründen: Das Credit-System macht die reale monatliche Rechnung schwer vorhersehbar, oder du brauchst gar nicht 17 KI-Plattformen, sondern willst die vier wichtigsten zuverlässig und günstig abgedeckt haben. Diese Seite vergleicht beide Tools fair und faktenbasiert - inklusive der Punkte, in denen Rankscale besser ist.
+                        Du suchst eine Alternative zu Rankscale - meistens aus einem von zwei Gründen: Das Credit-System macht die reale monatliche Rechnung schwer vorhersehbar, oder du brauchst gar nicht 17 KI-Plattformen, sondern willst die fünf wichtigsten zuverlässig und günstig abgedeckt haben. Diese Seite vergleicht beide Tools fair und faktenbasiert - inklusive der Punkte, in denen Rankscale besser ist.
                     </p>
                     <p className="mt-4 text-slate-300 leading-relaxed">
-                        Kurzfassung vorweg: <strong className="text-white">AuditAI</strong> trackt deine KI-Sichtbarkeit bei ChatGPT, Claude, Perplexity und Google AI Overview ab 29,99 €/Monat mit festen, planbaren Limits - und bringt SEO-Audit sowie Google-Rankings im selben Haus mit. <strong className="text-white">Rankscale</strong> ist ein GEO-natives Tool mit außergewöhnlich breiter Plattformabdeckung und einem Credit-basierten Abrechnungsmodell. Welches Tool passt, hängt davon ab, ob du planbare Kosten oder maximale Plattformbreite priorisierst.
+                        Kurzfassung vorweg: <strong className="text-white">AuditAI</strong> trackt deine KI-Sichtbarkeit bei ChatGPT, Claude, Gemini, Perplexity und Google AI Overview ab 29,99 €/Monat mit festen, planbaren Limits - und bringt SEO-Audit sowie Google-Rankings im selben Haus mit. <strong className="text-white">Rankscale</strong> ist ein GEO-natives Tool mit außergewöhnlich breiter Plattformabdeckung und einem Credit-basierten Abrechnungsmodell. Welches Tool passt, hängt davon ab, ob du planbare Kosten oder maximale Plattformbreite priorisierst.
                     </p>
                     <div className="mt-5 flex items-center gap-2 text-xs text-slate-600">
                         <Link href="/about" className="flex items-center gap-2 hover:text-slate-300 transition-colors">
@@ -240,7 +302,7 @@ export default function RankscaleAlternativePage() {
                             Fairness gehört zu einem echten Vergleich - und Rankscale ist in einigen Punkten stärker:
                         </p>
                         <p className="mt-4">
-                            <strong className="text-white">Außergewöhnliche Plattformbreite.</strong> Rankscale trackt 17+ KI-Engines - neben ChatGPT, Claude, Perplexity und Google AI Overview auch Gemini, Grok, DeepSeek und Mistral. Für Marken, die auch bei europäischen oder chinesischen Modellen wissen wollen, wie sie abschneiden, ist das eine deutlich breitere Abdeckung als AuditAIs vier etablierte Plattformen.
+                            <strong className="text-white">Außergewöhnliche Plattformbreite.</strong> Rankscale trackt 17+ KI-Engines - neben ChatGPT, Claude, Gemini, Perplexity und Google AI Overview auch Grok, DeepSeek und Mistral. Für Marken, die auch bei diesen Nischenmodellen wissen wollen, wie sie abschneiden, ist das eine deutlich breitere Abdeckung als AuditAIs fünf etablierte Plattformen.
                         </p>
                         <p className="mt-4">
                             <strong className="text-white">Internationales Regional-Tracking.</strong> Über 240 Länder und Regionen lassen sich einzeln auswerten - relevant für Marken mit mehreren lokalen Märkten.

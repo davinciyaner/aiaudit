@@ -3,20 +3,12 @@ import SeoKeywordRanking from '../models/seo_keyword_ranking.js'
 import SeoKeywordInsight from '../models/seo_keyword_insight.js'
 import ProductSubscription from '../models/product_subscription.js'
 import User from '../models/auth_model.js'
-import { checkSiteRankings, getKeywordIdeas, getCompetitors, getBacklinkSummary, getBacklinkGapAnalysis, getContentGap, generateKeywordContent, generateBacklinkIdeas, generateInsightsForKeywords } from '../services/seoService.js'
+import { checkSiteRankings, getKeywordIdeas, getCompetitors, getBacklinkSummary, getReferringDomains, getBacklinkGapAnalysis, getContentGap, generateKeywordContent, generateBacklinkIdeas, generateInsightsForKeywords } from '../services/seoService.js'
 import SeoUsage from '../models/seo_usage.js'
 import { sendSeoRankingAlert } from '../utils/mailer.js'
 import { detectRankingChanges, ALERT_DROP_THRESHOLD } from '../jobs/seoTrackingJob.js'
 import { t } from '../utils/i18n/errors.js'
 
-// manualChecksPerMonth per 2026-09: der manuelle Check prüft alle Keywords einer Site neu (siehe
-// triggerCheck) und hatte bisher kein Monats-Kontingent, nur das 2/Minute-Rate-Limit im Router —
-// bei realistischer Agentur-Nutzung (mehrere Websites, wöchentlich neu geprüft) hätte das Pro/Expert
-// bei vollem Keyword-Limit ins Minus kippen können. Limits so gewählt, dass max. 1/4 der bisherigen
-// Marge dafür draufgeht (siehe Kostenrechnung-Artifact).
-// keywordIdeasPerMonth per 2026-09: derselbe Grund wie manualChecksPerMonth — der Endpoint hatte
-// weder Cache noch Monats-Kontingent, nur das 2/Minute-Rate-Limit. Werte so gewählt, dass sie
-// zusammen mit dem neuen manualChecksPerMonth weiterhin max. 1/4 der ursprünglichen Marge kosten.
 const PLAN_LIMITS = {
     einsteiger: { maxSites: 3,  maxKeywords: 50,  historyWeeks: 8,   contentGapPerMonth: 0,   backlinkGapPerMonth: 0,  manualChecksPerMonth: 2, keywordIdeasPerMonth: 6  },
     pro:        { maxSites: 10, maxKeywords: 200, historyWeeks: 26,  contentGapPerMonth: 100, backlinkGapPerMonth: 20, manualChecksPerMonth: 4, keywordIdeasPerMonth: 20 },
@@ -43,15 +35,11 @@ export async function getPlan(req, res) {
     }
 }
 
-// POST /api/seo/subscribe
 export async function subscribePlan(req, res) {
     try {
         const { subscriptionId, plan } = req.body
         if (!subscriptionId || !plan) return res.status(400).json({ error: t('SUBSCRIPTION_ID_PLAN_REQUIRED', req.language) })
 
-        // Inline allowlist lookup (not .includes()) and inline regex-match extraction —
-        // CodeQL's NoSQL-injection sanitizer recognition doesn't follow taint through any
-        // function call, even a local one, so both must happen directly in this function.
         const safePlan = { einsteiger: 'einsteiger', pro: 'pro', expert: 'expert' }[plan]
         if (!safePlan) return res.status(400).json({ error: t('INVALID_PLAN', req.language) })
 
@@ -494,6 +482,34 @@ export async function getBacklinksForSite(req, res) {
         const checkedAt = new Date()
         await SeoTrackedSite.updateOne({ _id: site._id }, { backlinksCache: { data: summary, checkedAt } })
         res.json({ summary, checkedAt, cached: false })
+    } catch (err) {
+        res.status(500).json({ error: err.message })
+    }
+}
+
+const REFERRING_DOMAINS_CACHE_MAX_AGE_MS = 28 * 24 * 60 * 60 * 1000 // 28 Tage (Job läuft monatlich)
+
+// GET /api/seo/sites/:id/referring-domains
+// Liste der Domains, die tatsächlich auf die eigene Site verlinken (im Unterschied zur
+// Backlink-Gap-Analyse, die Domains zeigt, die auf Konkurrenten verlinken, aber noch nicht auf uns).
+export async function getReferringDomainsForSite(req, res) {
+    try {
+        const plan = await getSeoPlan(req.userId)
+        if (!plan) return res.status(403).json({ error: t('NO_ACTIVE_SEO_SUB', req.language) })
+
+        const site = await SeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId }).lean()
+        if (!site) return res.status(404).json({ error: t('SITE_NOT_FOUND', req.language) })
+
+        const force = req.query.force === 'true'
+        const cache = site.referringDomainsCache
+        if (!force && cache?.checkedAt && Date.now() - new Date(cache.checkedAt).getTime() < REFERRING_DOMAINS_CACHE_MAX_AGE_MS) {
+            return res.json({ domains: cache.data, checkedAt: cache.checkedAt, cached: true })
+        }
+
+        const domains = await getReferringDomains(site.domain)
+        const checkedAt = new Date()
+        await SeoTrackedSite.updateOne({ _id: site._id }, { referringDomainsCache: { data: domains, checkedAt } })
+        res.json({ domains, checkedAt, cached: false })
     } catch (err) {
         res.status(500).json({ error: err.message })
     }

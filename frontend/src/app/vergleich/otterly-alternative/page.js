@@ -4,7 +4,7 @@ import Footer from '../../components/Footer'
 
 export const metadata = {
     title: 'Otterly.ai Alternative: AuditAI im Vergleich (2026)',
-    description: 'Otterly.ai-Alternative gesucht? AuditAI trackt KI-Sichtbarkeit bei ChatGPT, Claude, Perplexity & Google AI Overview ab 29,99 €/Monat – plus SEO-Audit im selben Tool. Echter Free-Plan.',
+    description: 'Otterly.ai-Alternative gesucht? AuditAI trackt KI-Sichtbarkeit bei ChatGPT, Claude, Gemini, Perplexity & Google AI Overview ab 29,99 €/Monat – plus SEO-Audit im selben Tool. Echter Free-Plan.',
     keywords: 'otterly alternative, otterly.ai alternative, otterly ai vergleich, günstige ai visibility tool, geo tracking tool, ki sichtbarkeit tool',
     alternates: {
         canonical: 'https://www.sitecheckai.dev/vergleich/otterly-alternative',
@@ -15,7 +15,7 @@ export const metadata = {
     },
     openGraph: {
         title: 'Otterly.ai Alternative: AuditAI im Vergleich (2026)',
-        description: 'AuditAI trackt KI-Sichtbarkeit bei ChatGPT, Claude, Perplexity & Google AI Overview ab 29,99 €/Monat – plus SEO-Audit im selben Tool. Der ehrliche Vergleich zu Otterly.ai.',
+        description: 'AuditAI trackt KI-Sichtbarkeit bei ChatGPT, Claude, Gemini, Perplexity & Google AI Overview ab 29,99 €/Monat – plus SEO-Audit im selben Tool. Der ehrliche Vergleich zu Otterly.ai.',
         url: 'https://www.sitecheckai.dev/vergleich/otterly-alternative',
         type: 'article',
         locale: 'de_DE',
@@ -26,7 +26,7 @@ const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: 'Otterly.ai Alternative: AuditAI im ehrlichen Vergleich',
-    description: 'AuditAI trackt KI-Sichtbarkeit bei ChatGPT, Claude, Perplexity & Google AI Overview ab 29,99 €/Monat – plus SEO-Audit im selben Tool. Der faktenbasierte Vergleich zu Otterly.ai.',
+    description: 'AuditAI trackt KI-Sichtbarkeit bei ChatGPT, Claude, Gemini, Perplexity & Google AI Overview ab 29,99 €/Monat – plus SEO-Audit im selben Tool. Der faktenbasierte Vergleich zu Otterly.ai.',
     image: 'https://www.sitecheckai.dev/vergleich/otterly-alternative/opengraph-image',
     datePublished: '2026-08-27T09:00:00+02:00',
     dateModified: '2026-08-27T09:00:00+02:00',
@@ -65,7 +65,7 @@ const faqLd = {
             name: 'Ist AuditAI eine echte Alternative zu Otterly.ai?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'Ja – für alle, die KI-Sichtbarkeit tracken wollen. AuditAI deckt dieselben zentralen KI-Plattformen ab (ChatGPT, Claude, Perplexity, Google AI Overview) und ergänzt sie um ein SEO-Audit. Für reines, sehr großvolumiges und internationales Agentur-Monitoring bleibt Otterly.ai spezialisierter.',
+                text: 'Ja – für alle, die KI-Sichtbarkeit tracken wollen. AuditAI deckt dieselben zentralen KI-Plattformen ab (ChatGPT, Claude, Gemini, Perplexity, Google AI Overview) und ergänzt sie um ein SEO-Audit. Für reines, sehr großvolumiges und internationales Agentur-Monitoring bleibt Otterly.ai spezialisierter.',
             },
         },
         {
@@ -106,7 +106,7 @@ const faqLd = {
 const OVERVIEW_ROWS = [
     ['GEO-Einstieg', '4,99 €/Monat (Claude) · 29,99 €/Monat (alle 5 Plattformen)', '29 $/Monat (Lite)'],
     ['Kostenloser Plan', 'Ja, dauerhaft (Audit inkl. GEO-Sichtbarkeit)', 'Nein, nur Testphase'],
-    ['Standardmäßig enthaltene KI-Plattformen', 'ChatGPT, Claude, Perplexity, Google AI Overview (ab Pro)', 'ChatGPT, Google AI Overview, Perplexity, Microsoft Copilot'],
+    ['Standardmäßig enthaltene KI-Plattformen', 'ChatGPT, Claude, Gemini, Perplexity, Google AI Overview (ab Pro)', 'ChatGPT, Google AI Overview, Perplexity, Microsoft Copilot'],
     ['Claude-Tracking', 'Ab 4,99 €/Monat inklusive', 'Kostenpflichtiges Add-on, 29–439 $/Monat'],
     ['SEO-Audit + Google-Rankings', 'Ja, im selben Tool buchbar', 'Nein, reines AI-Visibility-Tool'],
     ['Ansatz', 'Audit-first mit priorisierten Fixes', 'Prompt-Monitoring-Dashboard'],
@@ -114,7 +114,7 @@ const OVERVIEW_ROWS = [
 ]
 
 const AUDITAI_FOR = [
-    'alle vier großen KI-Plattformen ohne Plattform-Aufpreise tracken willst',
+    'alle fünf großen KI-Plattformen ohne Plattform-Aufpreise tracken willst',
     'KI-Sichtbarkeit und SEO beim selben Anbieter statt in zwei Tools haben willst',
     'einen niedrigen Einstiegspreis in Euro und einen echten Gratis-Plan brauchst',
     'nicht nur Zahlen, sondern einen priorisierten Fix-Plan willst',
@@ -161,7 +161,7 @@ export default function OtterlyAlternativePage() {
                         Du suchst eine Alternative zu Otterly.ai – meistens aus einem von zwei Gründen: Der Einstieg ist dir bei 15 getrackten Prompts zu knapp, oder die Rechnung wird teuer, sobald du die KI-Plattformen dazubuchst, die du eigentlich brauchst. Diese Seite vergleicht beide Tools fair und faktenbasiert – inklusive der Punkte, in denen Otterly.ai besser ist.
                     </p>
                     <p className="mt-4 text-slate-300 leading-relaxed">
-                        Kurzfassung vorweg: <strong className="text-white">AuditAI</strong> trackt deine KI-Sichtbarkeit bei ChatGPT, Claude, Perplexity und Google AI Overview ab 29,99 €/Monat – und bringt SEO-Audit sowie Google-Rankings im selben Haus mit. <strong className="text-white">Otterly.ai</strong> ist ein reiner, sehr ausgereifter AI-Visibility-Tracker mit hohem Prompt-Volumen in den oberen Tarifen. Welches Tool passt, hängt davon ab, ob du ein bezahlbares Kombi-Tool oder ein spezialisiertes, großvolumiges GEO-Dashboard willst.
+                        Kurzfassung vorweg: <strong className="text-white">AuditAI</strong> trackt deine KI-Sichtbarkeit bei ChatGPT, Claude, Gemini, Perplexity und Google AI Overview ab 29,99 €/Monat – und bringt SEO-Audit sowie Google-Rankings im selben Haus mit. <strong className="text-white">Otterly.ai</strong> ist ein reiner, sehr ausgereifter AI-Visibility-Tracker mit hohem Prompt-Volumen in den oberen Tarifen. Welches Tool passt, hängt davon ab, ob du ein bezahlbares Kombi-Tool oder ein spezialisiertes, großvolumiges GEO-Dashboard willst.
                     </p>
                     <div className="mt-5 flex items-center gap-2 text-xs text-slate-600">
                         <Link href="/about" className="flex items-center gap-2 hover:text-slate-300 transition-colors">
@@ -212,7 +212,7 @@ export default function OtterlyAlternativePage() {
 
                         <h3 className="text-lg font-semibold text-white mt-6 mb-2">1. Alle fünf großen KI-Plattformen für 29,99 €/Monat – ohne Add-on-Mathematik</h3>
                         <p>
-                            Im Kernplan von Otterly.ai sind vier Engines enthalten – aber das sind ChatGPT, Google AI Overview, Perplexity und Microsoft Copilot. Ausgerechnet die Plattform, die im deutschsprachigen Raum oft zuerst gefragt ist, kostet extra: Claude ist bei Otterly.ai ein Add-on für 29 bis 439 $/Monat je nach Tarif, Google Gemini und Google AI Mode kommen mit je 9 bis 149 $/Monat hinzu. AuditAI trackt ChatGPT, Claude, Perplexity und Google AI Overview zusammen ab dem GEO-Pro-Tarif für 29,99 €/Monat. Kein Nachrechnen, keine Plattform-Aufpreise.
+                            Im Kernplan von Otterly.ai sind vier Engines enthalten – aber das sind ChatGPT, Google AI Overview, Perplexity und Microsoft Copilot. Ausgerechnet die Plattform, die im deutschsprachigen Raum oft zuerst gefragt ist, kostet extra: Claude ist bei Otterly.ai ein Add-on für 29 bis 439 $/Monat je nach Tarif, Google Gemini und Google AI Mode kommen mit je 9 bis 149 $/Monat hinzu. AuditAI trackt ChatGPT, Claude, Gemini, Perplexity und Google AI Overview zusammen ab dem GEO-Pro-Tarif für 29,99 €/Monat. Kein Nachrechnen, keine Plattform-Aufpreise.
                         </p>
 
                         <h3 className="text-lg font-semibold text-white mt-6 mb-2">2. Ein echter kostenloser Plan statt nur einer Testphase</h3>

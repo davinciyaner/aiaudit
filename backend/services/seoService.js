@@ -253,6 +253,38 @@ export async function getBacklinkSummary(domain) {
     }
 }
 
+// ─── Referring Domains (wer verlinkt auf mich) ─────────────────────────────────
+
+export async function getReferringDomains(domain, limit = 100) {
+    if (!isConfigured()) return []
+
+    const data = await dfsPost('/v3/backlinks/referring_domains/live', [{
+        target:             domain,
+        include_subdomains: true,
+        limit,
+        order_by:           ['rank,desc'],
+    }])
+
+    const task = data.tasks?.[0]
+    if (task?.status_code !== 20000) {
+        console.warn('[seoService] getReferringDomains Fehler:', task?.status_code, task?.status_message)
+        console.warn('[seoService] getReferringDomains Response:', JSON.stringify(data).slice(0, 600))
+        return []
+    }
+
+    const items = task.result?.[0]?.items || []
+    return items
+        .map(item => ({
+            domain:         item.domain,
+            rank:           item.rank ?? null,
+            backlinks:      item.backlinks ?? null,
+            referringPages: item.referring_pages ?? null,
+            firstSeen:      item.first_seen ?? null,
+            spamScore:      item.backlinks_spam_score ?? null,
+        }))
+        .filter(d => d.domain)
+}
+
 // ─── Backlink-Gap-Analyse ─────────────────────────────────────────────────────
 
 // Findet Domains, die auf mehrere Konkurrenten verlinken, aber (noch) nicht auf

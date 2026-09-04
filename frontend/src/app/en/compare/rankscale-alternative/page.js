@@ -4,7 +4,7 @@ import Footer from '../../../components/Footer'
 
 export const metadata = {
     title: 'Rankscale Alternative: How AuditAI Compares (2026)',
-    description: 'Looking for a Rankscale alternative? AuditAI tracks AI visibility across ChatGPT, Claude, Perplexity & Google AI Overview from €29.99/month with fixed pricing instead of a credit system — plus a built-in SEO audit.',
+    description: 'Looking for a Rankscale alternative? AuditAI tracks AI visibility across ChatGPT, Claude, Gemini, Perplexity & Google AI Overview from €29.99/month with fixed pricing instead of a credit system — plus a built-in SEO audit.',
     keywords: 'rankscale alternative, rankscale ai competitor, cheap ai visibility tool, geo tracking tool without credits, ai visibility software',
     alternates: {
         canonical: 'https://www.sitecheckai.dev/en/compare/rankscale-alternative',
@@ -15,7 +15,7 @@ export const metadata = {
     },
     openGraph: {
         title: 'Rankscale Alternative: How AuditAI Compares (2026)',
-        description: 'AuditAI tracks AI visibility across ChatGPT, Claude, Perplexity & Google AI Overview from €29.99/month with fixed pricing instead of a credit system. A fact-checked look at Rankscale.',
+        description: 'AuditAI tracks AI visibility across ChatGPT, Claude, Gemini, Perplexity & Google AI Overview from €29.99/month with fixed pricing instead of a credit system. A fact-checked look at Rankscale.',
         url: 'https://www.sitecheckai.dev/en/compare/rankscale-alternative',
         type: 'article',
         locale: 'en_US',
@@ -26,10 +26,10 @@ const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: 'Rankscale Alternative: An Honest Look at AuditAI',
-    description: 'AuditAI tracks AI visibility across ChatGPT, Claude, Perplexity & Google AI Overview from €29.99/month with fixed pricing instead of a credit system. A fact-checked comparison with Rankscale.',
+    description: 'AuditAI tracks AI visibility across ChatGPT, Claude, Gemini, Perplexity & Google AI Overview from €29.99/month with fixed pricing instead of a credit system. A fact-checked comparison with Rankscale.',
     image: 'https://www.sitecheckai.dev/en/compare/rankscale-alternative/opengraph-image',
     datePublished: '2026-08-29T09:00:00+02:00',
-    dateModified: '2026-08-29T09:00:00+02:00',
+    dateModified: '2026-09-03T12:00:00+02:00',
     author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev/about' },
     publisher: {
         '@type': 'Organization',
@@ -42,7 +42,52 @@ const jsonLd = {
     about: [
         { '@type': 'Thing', name: 'AI Visibility Tracking' },
         { '@type': 'Thing', name: 'Generative Engine Optimization' },
-        { '@type': 'SoftwareApplication', name: 'Rankscale' },
+        { '@type': 'SoftwareApplication', name: 'Rankscale', url: 'https://rankscale.ai', sameAs: 'https://rankscale.ai' },
+    ],
+    mentions: [
+        { '@type': 'SoftwareApplication', name: 'Rankscale', url: 'https://rankscale.ai', sameAs: 'https://rankscale.ai' },
+        { '@id': 'https://www.sitecheckai.dev/#software' },
+    ],
+}
+
+const softwareLd = {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    '@id': 'https://www.sitecheckai.dev/#software',
+    name: 'AuditAI',
+    alternateName: 'SiteCheckAI',
+    url: 'https://www.sitecheckai.dev',
+    applicationCategory: 'BusinessApplication',
+    applicationSubCategory: 'AI Visibility & SEO Monitoring',
+    operatingSystem: 'Web',
+    description: 'AI-powered website audit tool for SEO, performance, and GEO visibility (Generative Engine Optimization) across ChatGPT, Claude, Gemini, Perplexity, and Google AI Overview.',
+    offers: [
+        {
+            '@type': 'Offer',
+            name: 'GEO Automation Starter',
+            price: '4.99',
+            priceCurrency: 'EUR',
+            priceValidUntil: '2026-12-31',
+            billingDuration: 'P1M',
+            url: 'https://www.sitecheckai.dev/geo/pricing',
+        },
+        {
+            '@type': 'Offer',
+            name: 'GEO Automation Pro (5 platforms)',
+            price: '29.99',
+            priceCurrency: 'EUR',
+            priceValidUntil: '2026-12-31',
+            billingDuration: 'P1M',
+            url: 'https://www.sitecheckai.dev/geo/pricing',
+        },
+        {
+            '@type': 'Offer',
+            name: 'Website Audit Free',
+            price: '0',
+            priceCurrency: 'EUR',
+            billingDuration: 'P1M',
+            url: 'https://www.sitecheckai.dev/pricing',
+        },
     ],
 }
 
@@ -65,7 +110,7 @@ const faqLd = {
             name: 'Is AuditAI a real alternative to Rankscale?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: "If you want fixed, predictable pricing instead of a credit system, yes. AuditAI covers the four most important AI platforms and adds a full SEO audit on top. For very broad coverage across 17+ engines and international regional tracking, Rankscale remains the more specialized option.",
+                text: "If you want fixed, predictable pricing instead of a credit system, yes. AuditAI covers the five most important AI platforms (ChatGPT, Claude, Gemini, Perplexity, Google AI Overview) and adds a full SEO audit on top. For very broad coverage across 17+ engines and international regional tracking, Rankscale remains the more specialized option.",
             },
         },
         {
@@ -100,6 +145,22 @@ const faqLd = {
                 text: 'Yes, no signup and no credit card required. Enter your URL and get a result in about 60 seconds. The free plan stays free forever; the automation subscriptions additionally come with a 14-day free trial.',
             },
         },
+        {
+            '@type': 'Question',
+            name: 'Rankscale or AuditAI - which is better?',
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: "It depends on the use case. For predictable costs, a genuine free tier, and SEO plus AI visibility from one vendor, AuditAI is the more practical choice. For maximum platform breadth across 17+ AI engines, international regional tracking, and very deep analytics, Rankscale is the more specialized option. Neither tool is strictly better in every situation.",
+            },
+        },
+        {
+            '@type': 'Question',
+            name: 'Is there a free Rankscale alternative?',
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'AuditAI offers a permanently free plan with one website audit per month, including a GEO visibility check - no signup, no credit card, no time limit. Ongoing weekly AI-visibility monitoring requires a paid plan starting at €4.99/month; Rankscale itself has no permanent free tier, only a 7-day trial.',
+            },
+        },
     ],
 }
 
@@ -107,7 +168,7 @@ const OVERVIEW_ROWS = [
     ['GEO entry price', '€4.99/mo (Claude) · €29.99/mo (all 5 platforms)', '$20/mo (Essential, 120 credits, 10 web audits)'],
     ['Free plan', 'Yes, permanently (audit incl. GEO visibility)', 'No, 7-day trial only'],
     ['Billing model', 'Fixed website/keyword limits per plan', 'Credit system, consumption varies by action'],
-    ['Platform coverage', 'ChatGPT, Claude, Perplexity, Google AI Overview', '17+ platforms incl. Claude, Gemini, Grok, DeepSeek, Mistral'],
+    ['Platform coverage', 'ChatGPT, Claude, Gemini, Perplexity, Google AI Overview', '17+ platforms incl. Claude, Gemini, Grok, DeepSeek, Mistral'],
     ['SEO audit + Google rankings', 'Yes, bookable in the same tool', 'No, AI-visibility and site-audit only'],
     ['Approach', 'Audit-first with prioritized fixes', 'Broad analytics depth (query fan-out, sentiment, source analysis)'],
     ['Entry access for small teams', 'Cheapest plan permanently available', 'A cheaper entry tier has reportedly been removed'],
@@ -131,6 +192,7 @@ export default function RankscaleAlternativePage() {
     return (
         <main className="bg-[#05080f] min-h-screen">
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
             <Navbar locale="en" />
@@ -159,10 +221,10 @@ export default function RankscaleAlternativePage() {
                         Rankscale Alternative: An Honest Look at AuditAI
                     </h1>
                     <p className="text-lg text-slate-400 leading-relaxed">
-                        People go looking for a Rankscale alternative for one of two reasons: the credit system makes the real monthly bill hard to predict, or you don't actually need 17 AI platforms — you need the four that matter most, covered reliably and affordably. This page compares both tools honestly — including where Rankscale wins.
+                        People go looking for a Rankscale alternative for one of two reasons: the credit system makes the real monthly bill hard to predict, or you don't actually need 17 AI platforms — you need the five that matter most, covered reliably and affordably. This page compares both tools honestly — including where Rankscale wins.
                     </p>
                     <p className="mt-4 text-slate-300 leading-relaxed">
-                        Short version: <strong className="text-white">AuditAI</strong> tracks your AI visibility across ChatGPT, Claude, Perplexity, and Google AI Overview from €29.99/month with fixed, predictable limits, and bundles in an SEO audit plus Google rank tracking. <strong className="text-white">Rankscale</strong> is a GEO-native tool with unusually broad platform coverage and a credit-based billing model. Which one fits depends on whether you prioritize predictable costs or maximum platform breadth.
+                        Short version: <strong className="text-white">AuditAI</strong> tracks your AI visibility across ChatGPT, Claude, Gemini, Perplexity, and Google AI Overview from €29.99/month with fixed, predictable limits, and bundles in an SEO audit plus Google rank tracking. <strong className="text-white">Rankscale</strong> is a GEO-native tool with unusually broad platform coverage and a credit-based billing model. Which one fits depends on whether you prioritize predictable costs or maximum platform breadth.
                     </p>
                     <div className="mt-5 flex items-center gap-2 text-xs text-slate-600">
                         <Link href="/about" className="flex items-center gap-2 hover:text-slate-300 transition-colors">
@@ -240,7 +302,7 @@ export default function RankscaleAlternativePage() {
                             A fair comparison has to say where the other tool is genuinely stronger — and Rankscale is, on a few fronts:
                         </p>
                         <p className="mt-4">
-                            <strong className="text-white">Exceptional platform breadth.</strong> Rankscale tracks 17+ AI engines — beyond ChatGPT, Claude, Perplexity, and Google AI Overview, it also covers Gemini, Grok, DeepSeek, and Mistral. For brands that want to know how they perform on European or Chinese models too, that's meaningfully broader coverage than AuditAI's four established platforms.
+                            <strong className="text-white">Exceptional platform breadth.</strong> Rankscale tracks 17+ AI engines — beyond ChatGPT, Claude, Gemini, Perplexity, and Google AI Overview, it also covers Grok, DeepSeek, and Mistral. For brands that want to know how they perform on these niche models too, that's meaningfully broader coverage than AuditAI's five established platforms.
                         </p>
                         <p className="mt-4">
                             <strong className="text-white">International regional tracking.</strong> Over 240 countries and regions can be broken out individually — relevant for brands operating across multiple local markets.
