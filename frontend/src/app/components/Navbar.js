@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import {
     Zap, Menu, X, ArrowRight, LogOut, User, ChevronDown,
     LayoutDashboard, Search, Globe, BookOpen, CreditCard, TrendingUp,
+    Layers, Wallet, Bot,
 } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter, usePathname } from 'next/navigation'
@@ -31,6 +32,15 @@ const NAV_ITEMS_DE = [
         ],
     },
     { key: 'preise', label: 'Preise', href: '/pricing' },
+    {
+        key: 'loesungen',
+        label: 'Lösungen',
+        items: [
+            { icon: Layers, label: 'SEO + GEO Tool', desc: 'Rankings & KI-Sichtbarkeit in 1 Dashboard', href: '/loesungen/seo-geo-tool', accent: true },
+            { icon: Wallet, label: 'Günstiges KI-Sichtbarkeit Tool', desc: 'SEO + AI Visibility in einem Abo', href: '/loesungen/guenstiges-ki-sichtbarkeit-tool' },
+            { icon: Bot, label: 'Claude AI Sichtbarkeit tracken', desc: 'Empfiehlt dich Claude?', href: '/loesungen/claude-ai-sichtbarkeit-tracken' },
+        ],
+    },
     { key: 'blog', label: 'Blog', href: '/blog' },
 ]
 
@@ -181,9 +191,11 @@ export default function Navbar({ locale = 'de' }) {
     useEffect(() => {
         const stored = localStorage.getItem('user')
         if (stored) {
-            const parsed = JSON.parse(stored)
-            if (!parsed.name && parsed.email) parsed.name = parsed.email.split('@')[0]
-            setUser(parsed)
+            try {
+                const parsed = JSON.parse(stored)
+                if (!parsed.name && parsed.email) parsed.name = parsed.email.split('@')[0]
+                setUser(parsed)
+            } catch (e) {}
         }
     }, [])
 

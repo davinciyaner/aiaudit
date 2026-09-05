@@ -3,25 +3,25 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 const STEPS_DE = [
-    { label: 'Browser wird geöffnet...' },
-    { label: 'Website wird geladen...' },
-    { label: 'Screenshots werden erstellt...' },
-    { label: 'SEO wird analysiert...' },
-    { label: 'Performance wird gemessen...' },
-    { label: 'Keywords werden extrahiert...' },
-    { label: 'GEO-Sichtbarkeit wird analysiert...' },
-    { label: 'KI-Bericht wird generiert...' },
+    { label: 'Browser wird geöffnet...', icon: '🌐' },
+    { label: 'Website wird geladen...', icon: '📄' },
+    { label: 'Screenshots werden erstellt...', icon: '📸' },
+    { label: 'SEO wird analysiert...', icon: '🔍' },
+    { label: 'Performance wird gemessen...', icon: '⚡' },
+    { label: 'Keywords werden extrahiert...', icon: '🎯' },
+    { label: 'GEO-Sichtbarkeit wird analysiert...', icon: '🤖' },
+    { label: 'KI-Bericht wird generiert...', icon: '✨' },
 ]
 
 const STEPS_EN = [
-    { label: 'Opening browser...' },
-    { label: 'Loading website...' },
-    { label: 'Taking screenshots...' },
-    { label: 'Analyzing SEO...' },
-    { label: 'Measuring performance...' },
-    { label: 'Extracting keywords...' },
-    { label: 'Analyzing GEO visibility...' },
-    { label: 'Generating AI report...' },
+    { label: 'Opening browser...', icon: '🌐' },
+    { label: 'Loading website...', icon: '📄' },
+    { label: 'Taking screenshots...', icon: '📸' },
+    { label: 'Analyzing SEO...', icon: '🔍' },
+    { label: 'Measuring performance...', icon: '⚡' },
+    { label: 'Extracting keywords...', icon: '🎯' },
+    { label: 'Analyzing GEO visibility...', icon: '🤖' },
+    { label: 'Generating AI report...', icon: '✨' },
 ]
 
 export default function Loading({ url, locale = 'de' }) {

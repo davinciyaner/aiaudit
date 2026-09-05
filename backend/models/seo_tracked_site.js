@@ -33,6 +33,10 @@ const seoTrackedSiteSchema = new Schema({
         data:              [{ type: Schema.Types.Mixed }],
         checkedAt:         Date,
     },
+    rankedKeywordsCache: {
+        data:      [{ type: Schema.Types.Mixed }],
+        checkedAt: Date,
+    },
     sitemapKnownUrls:    [{ type: String }],
     sitemapLastChecked:  { type: Date },
 }, { timestamps: true })

@@ -25,6 +25,12 @@ const breadcrumbLd = {
 
 const SOLUTIONS = [
     {
+        slug: 'seo-geo-tool',
+        title: 'SEO + GEO Tool: Google-Rankings & KI-Sichtbarkeit in einem Dashboard',
+        description: 'Für alle, die Google-Rankings und KI-Sichtbarkeit nicht in zwei getrennten Tools verwalten wollen, sondern die Überschneidung direkt sehen wollen.',
+        tag: 'SEO + GEO',
+    },
+    {
         slug: 'guenstiges-ki-sichtbarkeit-tool',
         title: 'Günstiges KI-Sichtbarkeit Tool: SEO und AI Visibility in einem Abo',
         description: 'Für alle, die KI-Sichtbarkeit und SEO nicht in zwei separaten Tools bezahlen wollen. Alle Preise, Features und wer davon profitiert.',

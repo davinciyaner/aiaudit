@@ -7,7 +7,7 @@ import {
     getSites, addSite, getSite, deleteSite,
     addKeywords, removeKeywords,
     getRankings, getRankingHistory, triggerCheck,
-    getKeywordIdeasForSite, getCompetitorsForSite, getBacklinksForSite, getReferringDomainsForSite, getBacklinkGapForSite, getContentGapForSite,
+    getKeywordIdeasForSite, getCompetitorsForSite, getBacklinksForSite, getReferringDomainsForSite, getBacklinkGapForSite, getContentGapForSite, getRankedKeywordsForSite,
     getAlertSettings, updateAlertSettings,
     generateContent, generateBacklinkIdeasForKeyword,
     getInsights, refreshInsight,
@@ -74,6 +74,7 @@ router.get('/sites/:id/backlinks', manualRefreshRateLimit, getBacklinksForSite)
 router.get('/sites/:id/referring-domains', manualRefreshRateLimit, getReferringDomainsForSite)
 router.get('/sites/:id/backlink-gap', manualRefreshRateLimit, getBacklinkGapForSite)
 router.get('/sites/:id/content-gap', checkRateLimit, getContentGapForSite)
+router.get('/sites/:id/ranked-keywords', checkRateLimit, getRankedKeywordsForSite)
 
 router.post('/sites/:id/keyword-content', checkRateLimit, generateContent)
 router.post('/sites/:id/backlink-ideas', checkRateLimit, generateBacklinkIdeasForKeyword)

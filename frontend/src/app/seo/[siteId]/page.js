@@ -5,7 +5,7 @@ import {
     ArrowLeft, TrendingUp, TrendingDown, Minus, Plus, Trash2,
     Loader2, RefreshCw, Globe, X, Lightbulb, Users, Link2,
     ExternalLink, ChevronUp, ChevronDown, GitCompare, Check, Lock, Download, Bell, Settings,
-    FileText, Copy,
+    FileText, Copy, Search,
 } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter, useParams } from 'next/navigation'
@@ -1833,6 +1833,159 @@ function ContentGapTab({ siteId, plan }) {
     )
 }
 
+// ─── Ranked Keywords Tab ─────────────────────────────────────────────────────
+
+function RankedKeywordsTab({ siteId }) {
+    const [loading, setLoading]           = useState(true)
+    const [keywords, setKeywords]         = useState(null)
+    const [checkedAt, setCheckedAt]       = useState(null)
+    const [used, setUsed]                 = useState(0)
+    const [limit, setLimit]               = useState(0)
+    const [limitReached, setLimitReached] = useState(null) // { used, limit }
+    const [adding, setAdding]             = useState(new Set())
+    const [added, setAdded]               = useState(new Set())
+
+    const maxVolume = keywords?.length ? Math.max(...keywords.map(k => k.searchVolume || 0)) : 0
+
+    const fetch_ = async (force = false) => {
+        setLoading(true)
+        setLimitReached(null)
+        try {
+            const token = localStorage.getItem('token')
+            const url = `${process.env.NEXT_PUBLIC_API_URL}/seo/sites/${siteId}/ranked-keywords${force ? '?force=true' : ''}`
+            const res = await fetch(url, { headers: { Authorization: `Bearer ${token}` } })
+            const d = await res.json()
+            if (res.status === 429 && d.error === 'monthly_limit_reached') { setLimitReached({ used: d.used, limit: d.limit }); return }
+            if (!res.ok) throw new Error(d.error)
+            setKeywords(d.keywords); setCheckedAt(d.checkedAt); setUsed(d.used); setLimit(d.limit)
+            setAdded(new Set())
+        } catch (err) { toast.error(err.message || 'Fehler') }
+        finally { setLoading(false) }
+    }
+
+    useEffect(() => { fetch_() }, [siteId])
+
+    const handleAddKeyword = async (keyword) => {
+        setAdding(prev => new Set(prev).add(keyword))
+        try {
+            const token = localStorage.getItem('token')
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/seo/sites/${siteId}/keywords`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+                body: JSON.stringify({ keywords: [keyword] }),
+            })
+            const d = await res.json()
+            if (!res.ok) throw new Error(d.error)
+            setAdded(prev => new Set(prev).add(keyword))
+            toast.success(`"${keyword}" wird jetzt getrackt`)
+        } catch (err) { toast.error(err.message || 'Fehler') }
+        finally { setAdding(prev => { const n = new Set(prev); n.delete(keyword); return n }) }
+    }
+
+    if (loading && !keywords) return <LoadingTab />
+
+    return (
+        <div className="space-y-6">
+            <div className="flex items-center justify-between bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl p-5">
+                <p className="text-sm text-slate-400 max-w-lg">
+                    Keywords, für die deine Website aktuell bei Google eine bestätigte Position hat — inklusive echtem Suchvolumen. Der Ausgangspunkt, um zu entscheiden, was sich zu tracken lohnt.
+                </p>
+                {limit > 0 && (
+                    <span className="text-xs text-slate-600 whitespace-nowrap ml-4">{used}/{limit} diesen Monat</span>
+                )}
+            </div>
+
+            {limitReached && (
+                <div className="flex flex-col items-center justify-center py-12 gap-4 bg-[var(--bg-surface)] border border-amber-500/15 rounded-2xl">
+                    <div className="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center">
+                        <Lock className="w-5 h-5 text-amber-400" />
+                    </div>
+                    <div className="text-center">
+                        <p className="text-sm font-semibold text-white mb-1">Monatliches Limit erreicht</p>
+                        <p className="text-xs text-slate-500">
+                            Du hast {limitReached.limit} von {limitReached.limit} Ranking-Abfragen diesen Monat verwendet.<br />
+                            Das Limit wird am 1. des nächsten Monats zurückgesetzt.
+                        </p>
+                    </div>
+                </div>
+            )}
+
+            {!keywords?.length ? (
+                <EmptyTab icon={Search} text="Keine bestätigten Rankings gefunden." />
+            ) : (
+                <>
+                    <div className="flex items-center justify-between mb-3">
+                        <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wider">
+                            {keywords.length} Keywords, für die du aktuell rankst
+                        </h3>
+                        <span className="text-xs text-slate-600">Sortiert nach Position</span>
+                    </div>
+                    <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl overflow-hidden">
+                        <div className="overflow-x-auto">
+                            <table className="w-full">
+                                <thead>
+                                    <tr className="border-b border-[var(--border-subtle)]">
+                                        <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Keyword</th>
+                                        <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Position</th>
+                                        <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider hidden sm:table-cell">Volumen/Mo</th>
+                                        <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider hidden sm:table-cell">Wettbewerb</th>
+                                        <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider hidden md:table-cell">CPC</th>
+                                        <th className="px-5 py-3" />
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {keywords.map(item => {
+                                        const isAdded  = added.has(item.keyword)
+                                        const isAdding = adding.has(item.keyword)
+                                        return (
+                                            <tr key={item.keyword} className="border-b border-[var(--border-subtle)] last:border-0 hover:bg-[var(--surface-08)] transition-colors">
+                                                <td className="px-5 py-3.5"><span className="text-sm text-slate-200 font-medium">{item.keyword}</span></td>
+                                                <td className="px-5 py-3.5"><PositionCell position={item.position} /></td>
+                                                <td className="px-5 py-3.5 hidden sm:table-cell"><VolumeBar value={item.searchVolume} max={maxVolume} /></td>
+                                                <td className="px-5 py-3.5 hidden sm:table-cell">
+                                                    <span className={`text-xs font-medium ${item.competition === 'HIGH' ? 'text-red-400' : item.competition === 'MEDIUM' ? 'text-amber-400' : 'text-emerald-400'}`}>
+                                                        {item.competition || '—'}
+                                                    </span>
+                                                </td>
+                                                <td className="px-5 py-3.5 hidden md:table-cell">
+                                                    <span className="text-xs text-slate-500">{item.cpc ? `€${item.cpc.toFixed(2)}` : '—'}</span>
+                                                </td>
+                                                <td className="px-5 py-3.5 text-right">
+                                                    {isAdded ? (
+                                                        <span className="flex items-center justify-end gap-1 text-xs text-emerald-400 font-semibold">
+                                                            <Check className="w-3.5 h-3.5" />Getrackt
+                                                        </span>
+                                                    ) : (
+                                                        <button onClick={() => handleAddKeyword(item.keyword)} disabled={isAdding}
+                                                            className="flex items-center gap-1 ml-auto px-2.5 py-1.5 text-xs font-semibold rounded-lg bg-[var(--accent-soft)] hover:bg-[var(--accent-soft-strong)] text-[var(--accent)] border border-[var(--accent-border)] transition-all disabled:opacity-50 whitespace-nowrap">
+                                                            {isAdding ? <Loader2 className="w-3 h-3 animate-spin" /> : <Plus className="w-3 h-3" />}
+                                                            Tracken
+                                                        </button>
+                                                    )}
+                                                </td>
+                                            </tr>
+                                        )
+                                    })}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    {checkedAt && (
+                        <div className="text-xs text-slate-600 mt-3">
+                            Zuletzt geprüft: {new Date(checkedAt).toLocaleDateString('de-DE')} {new Date(checkedAt).toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' })}
+                        </div>
+                    )}
+                    <button onClick={() => fetch_(true)} disabled={loading}
+                        className="mt-2 flex items-center gap-2 text-xs text-slate-600 hover:text-slate-400 transition-colors">
+                        <RefreshCw className={`w-3 h-3 ${loading ? 'animate-spin' : ''}`} />
+                        Neu laden
+                    </button>
+                </>
+            )}
+        </div>
+    )
+}
+
 // ─── Settings Tab ────────────────────────────────────────────────────────────
 
 function SettingsTab({ siteId }) {
@@ -1937,6 +2090,7 @@ function SettingsTab({ siteId }) {
 
 const TABS = [
     { id: 'rankings',    label: 'Rankings',       icon: TrendingUp },
+    { id: 'ranked',      label: 'Rankings entdecken', icon: Search },
     { id: 'ideas',       label: 'Keyword-Ideen',  icon: Lightbulb },
     { id: 'gap',         label: 'Content Gap',    icon: GitCompare },
     { id: 'competitors', label: 'Konkurrenten',   icon: Users },
@@ -2025,6 +2179,7 @@ export default function SeoSitePage() {
 
                 {/* Tab Content */}
                 {tab === 'rankings'    && <RankingsTab siteId={siteId} site={site} onSiteUpdated={fetchSite} />}
+                {tab === 'ranked'      && <RankedKeywordsTab siteId={siteId} />}
                 {tab === 'ideas'       && <KeywordIdeasTab siteId={siteId} plan={plan} />}
                 {tab === 'gap'         && <ContentGapTab siteId={siteId} plan={plan} />}
                 {tab === 'competitors' && <CompetitorsTab siteId={siteId} />}

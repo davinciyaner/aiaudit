@@ -40,6 +40,7 @@ const PLAN_FEATURES = {
 const INTENT_META = {
     empfehlung: { label: 'Empfehlung' },
     vergleich:  { label: 'Vergleich' },
+    custom:     { label: 'Eigener Prompt' },
 }
 
 const NAV_ITEMS = [
@@ -922,6 +923,9 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
     const [showAdd, setShowAdd]     = useState(false)
     const [newKws, setNewKws]       = useState('')
     const [addingKws, setAddingKws] = useState(false)
+    const [showAddPrompt, setShowAddPrompt]     = useState(false)
+    const [newCustomPrompt, setNewCustomPrompt] = useState('')
+    const [addingPrompt, setAddingPrompt]       = useState(false)
     const [selected, setSelected]   = useState(new Set())
     const [expanded, setExpanded]   = useState(null)
     const [filter, setFilter]       = useState('alle')
@@ -1014,10 +1018,11 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
         setChecking(true)
         try {
             const token = localStorage.getItem('token')
-            // Sind Keywords ausgewählt (dieselbe Checkbox-Auswahl wie beim Entfernen), prüft der
-            // Check nur die — spart manuelle Check-Kontingent-Kosten gegenüber einem vollen Rerun.
-            // Ohne Auswahl: wie bisher alle Keywords der Site.
-            const body = selected.size > 0 ? { keywords: [...selected] } : undefined
+            // Sind Keywords/Prompts ausgewählt (dieselbe Checkbox-Auswahl wie beim Entfernen), prüft
+            // der Check nur die — spart manuelle Check-Kontingent-Kosten gegenüber einem vollen Rerun.
+            // Ohne Auswahl: wie bisher alle Keywords + Prompts der Site.
+            const { keywords: selectedKws, customPrompts: selectedPrompts } = splitSelection([...selected])
+            const body = selected.size > 0 ? { keywords: selectedKws, customPrompts: selectedPrompts } : undefined
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/geo/sites/${siteId}/check`, {
                 method: 'POST',
                 headers: { Authorization: `Bearer ${token}`, ...(body ? { 'Content-Type': 'application/json' } : {}) },
@@ -1074,16 +1079,55 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
         finally { setAddingKws(false) }
     }
 
-    const handleRemoveSelected = async () => {
-        if (!selected.size || !confirm(`${selected.size} Keyword${selected.size > 1 ? 's' : ''} entfernen?`)) return
+    const handleAddCustomPrompt = async (e) => {
+        e.preventDefault()
+        const prompt = newCustomPrompt.trim()
+        if (!prompt) return
+        setAddingPrompt(true)
         try {
             const token = localStorage.getItem('token')
-            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/geo/sites/${siteId}/keywords`, {
-                method: 'DELETE',
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/geo/sites/${siteId}/custom-prompts`, {
+                method: 'POST',
                 headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-                body: JSON.stringify({ keywords: [...selected] }),
+                body: JSON.stringify({ prompt }),
             })
-            toast.success('Keywords entfernt')
+            const d = await res.json()
+            if (!res.ok) throw new Error(d.error)
+            toast.success('Eigener Prompt hinzugefügt')
+            setNewCustomPrompt(''); setShowAddPrompt(false)
+            onSiteUpdated()
+            await fetchResults()
+        } catch (err) { toast.error(err.message || 'Fehler') }
+        finally { setAddingPrompt(false) }
+    }
+
+    // selected kann sowohl kurze Keywords als auch eigene Prompts enthalten (gemeinsame Checkbox-
+    // Auswahl in derselben Tabelle) — beim Entfernen/Prüfen anhand von site.customPrompts trennen,
+    // da beide Arten über unterschiedliche Endpoints laufen.
+    const customPromptSet = new Set((site?.customPrompts || []).map(cp => cp.prompt))
+    const splitSelection = (items) => ({
+        keywords: items.filter(k => !customPromptSet.has(k)),
+        customPrompts: items.filter(k => customPromptSet.has(k)),
+    })
+
+    const handleRemoveSelected = async () => {
+        if (!selected.size || !confirm(`${selected.size} Eintrag/Einträge entfernen?`)) return
+        const { keywords, customPrompts } = splitSelection([...selected])
+        try {
+            const token = localStorage.getItem('token')
+            await Promise.all([
+                keywords.length && fetch(`${process.env.NEXT_PUBLIC_API_URL}/geo/sites/${siteId}/keywords`, {
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+                    body: JSON.stringify({ keywords }),
+                }),
+                ...customPrompts.map(prompt => fetch(`${process.env.NEXT_PUBLIC_API_URL}/geo/sites/${siteId}/custom-prompts`, {
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+                    body: JSON.stringify({ prompt }),
+                })),
+            ])
+            toast.success('Entfernt')
             setSelected(new Set())
             onSiteUpdated()
             await fetchResults()
@@ -1095,25 +1139,30 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
     })
 
     const results = data?.results || []
-    const intents = data?.intents?.length ? data.intents : ['empfehlung']
+    const baseIntents = data?.intents?.length ? data.intents : ['empfehlung']
+    // Eigene Prompts laufen nur unter dem Intent 'custom' (siehe geoService.checkSiteMentions) —
+    // pro Zeile die passenden Intents waehlen statt ueberall baseIntents anzunehmen.
+    const rowIntents = (r) => r.isCustomPrompt ? ['custom'] : baseIntents
 
     // Erwähnte Keywords zuerst — bei überwiegend negativen Ergebnissen sollen die wenigen
     // echten Treffer sofort sichtbar sein, statt irgendwo zwischen 70 Nein-Zeilen zu stehen.
     const filtered = results
         .filter(r => {
-            if (filter === 'erwaehnt') return platforms.some(p => aggregateMention(r.checks, p, intents) === true)
-            if (filter === 'nicht')    return platforms.every(p => aggregateMention(r.checks, p, intents) === false)
-            if (filter === 'ungetestet') return platforms.every(p => aggregateMention(r.checks, p, intents) == null)
+            if (filter === 'erwaehnt') return platforms.some(p => aggregateMention(r.checks, p, rowIntents(r)) === true)
+            if (filter === 'nicht')    return platforms.every(p => aggregateMention(r.checks, p, rowIntents(r)) === false)
+            if (filter === 'ungetestet') return platforms.every(p => aggregateMention(r.checks, p, rowIntents(r)) == null)
             return true
         })
         .sort((a, b) => {
-            const aMentioned = platforms.some(p => aggregateMention(a.checks, p, intents) === true)
-            const bMentioned = platforms.some(p => aggregateMention(b.checks, p, intents) === true)
+            const aMentioned = platforms.some(p => aggregateMention(a.checks, p, rowIntents(a)) === true)
+            const bMentioned = platforms.some(p => aggregateMention(b.checks, p, rowIntents(b)) === true)
             return aMentioned === bMentioned ? 0 : aMentioned ? -1 : 1
         })
 
-    const keywordsForCheck = selected.size > 0 ? selected.size : (site?.keywords?.length || 0)
-    const totalChecks = platforms.length * intents.length * keywordsForCheck
+    const selectedSplit = selected.size > 0 ? splitSelection([...selected]) : null
+    const keywordsForCheck = selectedSplit ? selectedSplit.keywords.length : (site?.keywords?.length || 0)
+    const customPromptsForCheck = selectedSplit ? selectedSplit.customPrompts.length : (site?.customPrompts?.length || 0)
+    const totalChecks = platforms.length * (baseIntents.length * keywordsForCheck + customPromptsForCheck)
     const estSeconds   = totalChecks * 6.4 // Ø-Dauer pro Check, live gemessen
     const estLabel      = estSeconds >= 90 ? `~${Math.round(estSeconds / 60)} Min.` : `~${Math.round(estSeconds)}s`
     const checkLabel  = checking
@@ -1156,6 +1205,10 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
                         className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl bg-[var(--surface-08)] hover:bg-[var(--surface-10)] text-slate-300 border border-[var(--border-subtle)] transition-all">
                         <Plus className="w-3.5 h-3.5" />Keywords
                     </button>
+                    <button onClick={() => setShowAddPrompt(v => !v)}
+                        className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl bg-[var(--surface-08)] hover:bg-[var(--surface-10)] text-slate-300 border border-[var(--border-subtle)] transition-all">
+                        <Plus className="w-3.5 h-3.5" />Eigener Prompt
+                    </button>
                     <button onClick={handleCheck} disabled={checking}
                         className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] transition-all disabled:opacity-50">
                         {checking ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <RefreshCw className="w-3.5 h-3.5" />}
@@ -1167,7 +1220,7 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
                 {site?.lastChecked
                     ? `Zuletzt geprüft: ${new Date(site.lastChecked).toLocaleString('de-DE', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' })}`
                     : 'Noch nicht geprüft'}
-                {intents.length > 1 && ` · ${intents.length} Prompt-Varianten pro Keyword (${intents.map(i => INTENT_META[i]?.label || i).join(', ')})`}
+                {baseIntents.length > 1 && ` · ${baseIntents.length} Prompt-Varianten pro Keyword (${baseIntents.map(i => INTENT_META[i]?.label || i).join(', ')})`}
                 {data?.manualChecksLimit != null &&
                     ` · ${data.manualChecksUsed}/${data.manualChecksLimit} manuelle Checks diesen Monat genutzt`}
             </div>
@@ -1273,6 +1326,30 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
                 )}
             </AnimatePresence>
 
+            {/* Add Custom Prompt */}
+            <AnimatePresence>
+                {showAddPrompt && (
+                    <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
+                        className="bg-[var(--bg-surface)] border border-[var(--accent-border)] rounded-2xl p-5 mb-5">
+                        <div className="flex items-center justify-between mb-3">
+                            <span className="text-sm font-semibold text-white">Eigenen Prompt hinzufügen</span>
+                            <button onClick={() => setShowAddPrompt(false)} className="text-slate-500 hover:text-white transition-colors"><X className="w-4 h-4" /></button>
+                        </div>
+                        <p className="text-xs text-slate-500 mb-3">Wird unverändert an die KI gesendet, statt in ein Keyword-Template eingesetzt zu werden.</p>
+                        <form onSubmit={handleAddCustomPrompt} className="flex gap-3">
+                            <textarea value={newCustomPrompt} onChange={e => setNewCustomPrompt(e.target.value)}
+                                placeholder="z.B. Ich brauche eine Agentur für ein neues Webdesign in Lübeck" rows={3} maxLength={300}
+                                className="flex-1 bg-[var(--surface-06)] border border-[var(--border-subtle)] focus:border-[var(--accent-border)] rounded-xl px-4 py-3 text-white placeholder:text-slate-600 outline-none text-sm resize-none" />
+                            <button type="submit" disabled={addingPrompt}
+                                className="self-end flex items-center gap-2 px-4 py-2 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all disabled:opacity-50">
+                                {addingPrompt ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Plus className="w-3.5 h-3.5" />}
+                                Hinzufügen
+                            </button>
+                        </form>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
             {/* Results table */}
             {loading ? (
                 <div className="flex flex-col items-center justify-center py-20 gap-3">
@@ -1307,9 +1384,12 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
                                 </tr>
                             </thead>
                             <tbody>
-                                {filtered.map(({ keyword, checks, history }) => {
+                                {filtered.map(({ keyword, checks, history, isCustomPrompt }) => {
                                     const isSelected = selected.has(keyword)
                                     const isExpanded = expanded === keyword
+                                    // Shadowt bewusst die aeussere baseIntents-Variable: eigene Prompts laufen
+                                    // nur unter Intent 'custom', normale Keywords unter baseIntents.
+                                    const intents = isCustomPrompt ? ['custom'] : baseIntents
                                     const hasDetail = intents.length > 1 || platforms.some(p => intents.some(i => checks?.[p]?.[i]?.context || checks?.[p]?.[i]?.citations?.length))
                                     const latestDate = platforms
                                         .flatMap(p => intents.map(i => checks?.[p]?.[i]?.checkedAt))
@@ -1325,6 +1405,9 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
                                                 </td>
                                                 <td className="px-5 py-3.5 cursor-pointer" onClick={() => hasDetail && setExpanded(prev => prev === keyword ? null : keyword)}>
                                                     <div className="flex items-center gap-2">
+                                                        {isCustomPrompt && (
+                                                            <span className="shrink-0 text-[9px] font-semibold uppercase tracking-wider text-violet-400 bg-violet-500/10 border border-violet-500/25 rounded px-1.5 py-0.5">Prompt</span>
+                                                        )}
                                                         <span className="text-sm text-slate-200">{keyword}</span>
                                                         {hasDetail && (
                                                             <span className={`transition-colors ${isExpanded ? 'text-[var(--accent)]' : 'text-slate-700'}`}>

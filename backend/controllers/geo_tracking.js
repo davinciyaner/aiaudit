@@ -36,13 +36,17 @@ async function getGeoPlan(userId) {
     return sub ? sub.plan : null
 }
 
+// Eigene Prompts zaehlen gegen dasselbe Kontingent wie Keywords — ein API-Call kostet gleich viel,
+// unabhaengig davon ob die Frage aus einem Keyword-Template oder einem eigenen Prompt stammt.
 async function countTotalKeywords(userId) {
-    const sites = await GeoTrackedSite.find({ userId, isActive: true }, 'keywords').lean()
-    return sites.reduce((sum, s) => sum + (s.keywords?.length || 0), 0)
+    const sites = await GeoTrackedSite.find({ userId, isActive: true }, 'keywords customPrompts').lean()
+    return sites.reduce((sum, s) => sum + (s.keywords?.length || 0) + (s.customPrompts?.length || 0), 0)
 }
 
-function calcMonthlyCost(keywords, platforms, variantCount = 1) {
-    const checksPerMonth = keywords * platforms.length * variantCount * 4
+// customPromptCount laeuft nur mit 1 Intent ('custom', keine Vergleich-Variante) statt variantCount —
+// der Nutzer gibt die exakte Frage bereits vor, ein zweites Template ergaebe keinen Sinn.
+function calcMonthlyCost(keywordCount, platforms, variantCount = 1, customPromptCount = 0) {
+    const checksPerMonth = (keywordCount * variantCount + customPromptCount) * platforms.length * 4
     const costPerCheck = platforms.reduce((sum, p) => sum + (PLATFORM_COSTS[p] || 0), 0) / platforms.length
     return Math.round(checksPerMonth * costPerCheck * 100) / 100
 }
@@ -99,7 +103,8 @@ export async function getSites(req, res) {
         const limits = PLAN_LIMITS[plan]
 
         const enriched = await Promise.all(sites.map(async (site) => {
-            if (!site.keywords?.length) return { ...site, mentionRate: null, mentionedCount: 0, checkedCount: 0 }
+            const customPrompts = site.customPrompts || []
+            if (!site.keywords?.length && !customPrompts.length) return { ...site, mentionRate: null, mentionedCount: 0, checkedCount: 0 }
             const platforms = site.platforms?.length ? site.platforms : ['claude']
             const intents = activeIntents(site.promptVariants)
 
@@ -116,12 +121,21 @@ export async function getSites(req, res) {
                     }
                 }))
             }))
+            await Promise.all(customPrompts.map(async ({ prompt }) => {
+                await Promise.all(platforms.map(async (platform) => {
+                    const doc = await GeoMentionCheck.findOne({ siteId: site._id, keyword: prompt, platform, promptIntent: 'custom' }).sort({ checkedAt: -1 }).lean()
+                    if (doc) {
+                        totalChecked++
+                        if (doc.mentioned) totalMentioned++
+                    }
+                }))
+            }))
 
             const mentionRate = totalChecked > 0 ? Math.round((totalMentioned / totalChecked) * 100) : null
             return { ...site, mentionRate, mentionedCount: totalMentioned, checkedCount: totalChecked }
         }))
 
-        const totalKeywords = sites.reduce((s, site) => s + (site.keywords?.length || 0), 0)
+        const totalKeywords = sites.reduce((s, site) => s + (site.keywords?.length || 0) + (site.customPrompts?.length || 0), 0)
 
         res.json({
             sites: enriched,
@@ -275,6 +289,67 @@ export async function removeKeywords(req, res) {
     }
 }
 
+const MAX_CUSTOM_PROMPT_LENGTH = 300
+
+// POST /api/geo/sites/:id/custom-prompts — eigener, frei formulierter Prompt statt Keyword+Template.
+// Zaehlt gegen dasselbe maxKeywords-Kontingent wie normale Keywords (siehe countTotalKeywords).
+export async function addCustomPrompt(req, res) {
+    try {
+        const prompt = (req.body?.prompt || '').trim()
+        if (!prompt) return res.status(400).json({ error: req.language === 'en' ? 'prompt is required' : 'prompt erforderlich' })
+        if (prompt.length > MAX_CUSTOM_PROMPT_LENGTH) {
+            return res.status(400).json({ error: req.language === 'en'
+                ? `Prompt too long (max ${MAX_CUSTOM_PROMPT_LENGTH} characters)`
+                : `Prompt zu lang (max. ${MAX_CUSTOM_PROMPT_LENGTH} Zeichen)` })
+        }
+
+        const plan = await getGeoPlan(req.userId)
+        if (!plan) return res.status(403).json({ error: t('NO_ACTIVE_GEO_SUB', req.language) })
+
+        const site = await GeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId })
+        if (!site) return res.status(404).json({ error: t('SITE_NOT_FOUND', req.language) })
+
+        const limits = PLAN_LIMITS[plan]
+        const totalKeywords = await countTotalKeywords(req.userId)
+        if (totalKeywords >= limits.maxKeywords) {
+            return res.status(403).json({ error: req.language === 'en'
+                ? `Keyword limit reached (${limits.maxKeywords} for the ${plan} plan)`
+                : `Keyword-Limit erreicht (${limits.maxKeywords} für ${plan}-Plan)` })
+        }
+
+        if (site.customPrompts.some(cp => cp.prompt === prompt)) {
+            return res.status(409).json({ error: req.language === 'en' ? 'Prompt already added' : 'Prompt bereits hinzugefügt' })
+        }
+
+        site.customPrompts.push({ prompt })
+        await site.save()
+
+        res.json({ site })
+    } catch (err) {
+        res.status(500).json({ error: err.message })
+    }
+}
+
+// DELETE /api/geo/sites/:id/custom-prompts
+export async function removeCustomPrompt(req, res) {
+    try {
+        const { prompt } = req.body
+        if (!prompt) return res.status(400).json({ error: req.language === 'en' ? 'prompt is required' : 'prompt erforderlich' })
+
+        const site = await GeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId })
+        if (!site) return res.status(404).json({ error: t('SITE_NOT_FOUND', req.language) })
+
+        site.customPrompts = site.customPrompts.filter(cp => cp.prompt !== prompt)
+        await site.save()
+
+        await GeoMentionCheck.deleteMany({ siteId: site._id, keyword: prompt, promptIntent: 'custom' })
+
+        res.json({ site })
+    } catch (err) {
+        res.status(500).json({ error: err.message })
+    }
+}
+
 // PATCH /api/geo/sites/:id/platforms
 export async function updatePlatforms(req, res) {
     try {
@@ -295,7 +370,7 @@ export async function updatePlatforms(req, res) {
         )
         if (!site) return res.status(404).json({ error: t('SITE_NOT_FOUND', req.language) })
 
-        const monthlyCost = calcMonthlyCost(site.keywords.length, allowedPlatforms, site.promptVariants)
+        const monthlyCost = calcMonthlyCost(site.keywords.length, allowedPlatforms, site.promptVariants, site.customPrompts?.length || 0)
         res.json({ site, monthlyCost })
     } catch (err) {
         res.status(500).json({ error: err.message })
@@ -314,7 +389,7 @@ export async function getResults(req, res) {
         const platforms = site.platforms?.length ? site.platforms : ['claude']
         const intents = activeIntents(site.promptVariants)
 
-        const results = await Promise.all(site.keywords.map(async (keyword) => {
+        const keywordResults = await Promise.all(site.keywords.map(async (keyword) => {
             const checks = {}
             await Promise.all(platforms.map(async (platform) => {
                 checks[platform] = {}
@@ -325,14 +400,29 @@ export async function getResults(req, res) {
             }))
             const history = await GeoMentionCheck.find({ siteId: site._id, keyword })
                 .sort({ checkedAt: -1 }).limit(24 * intents.length).lean()
-            return { keyword, checks, history: history.reverse() }
+            return { keyword, checks, history: history.reverse(), isCustomPrompt: false }
         }))
+
+        // Eigene Prompts laufen nur unter promptIntent 'custom' (keine Vergleich-Variante) —
+        // eigenes, kuerzeres Mapping statt intents.map, damit checks[platform] dieselbe Form behaelt.
+        const customPromptResults = await Promise.all((site.customPrompts || []).map(async ({ prompt }) => {
+            const checks = {}
+            await Promise.all(platforms.map(async (platform) => {
+                checks[platform] = { custom: await GeoMentionCheck.findOne({ siteId: site._id, keyword: prompt, platform, promptIntent: 'custom' })
+                    .sort({ checkedAt: -1 }).lean() }
+            }))
+            const history = await GeoMentionCheck.find({ siteId: site._id, keyword: prompt, promptIntent: 'custom' })
+                .sort({ checkedAt: -1 }).limit(24).lean()
+            return { keyword: prompt, checks, history: history.reverse(), isCustomPrompt: true }
+        }))
+
+        const results = [...keywordResults, ...customPromptResults]
 
         // "erwähnt" pro Keyword×Plattform gilt, wenn mindestens eine Prompt-Variante einen Treffer hat
         let totalChecked = 0, totalMentioned = 0
         results.forEach(r => {
             platforms.forEach(p => {
-                const docs = intents.map(i => r.checks[p][i]).filter(Boolean)
+                const docs = r.isCustomPrompt ? [r.checks[p]?.custom].filter(Boolean) : intents.map(i => r.checks[p][i]).filter(Boolean)
                 if (docs.length) {
                     totalChecked++
                     if (docs.some(d => d.mentioned)) totalMentioned++
@@ -340,7 +430,7 @@ export async function getResults(req, res) {
             })
         })
         const mentionRate = totalChecked > 0 ? Math.round((totalMentioned / totalChecked) * 100) : null
-        const monthlyCost = calcMonthlyCost(site.keywords.length, platforms, site.promptVariants)
+        const monthlyCost = calcMonthlyCost(site.keywords.length, platforms, site.promptVariants, site.customPrompts?.length || 0)
 
         const month = new Date().toISOString().slice(0, 7)
         const usage = await GeoUsage.findOne({ userId: req.userId, feature: 'manual_check', month }).lean()
@@ -355,9 +445,9 @@ export async function getResults(req, res) {
 
 const STALE_CHECK_MS = 20 * 60 * 1000
 
-async function runCheckInBackground(site, userId, keywords) {
+async function runCheckInBackground(site, userId, keywords, customPrompts) {
     try {
-        const results = await checkSiteMentions(site, site.promptVariants, keywords)
+        const results = await checkSiteMentions(site, site.promptVariants, keywords, customPrompts)
 
         await GeoMentionCheck.insertMany(results.map(r => ({
             siteId:       site._id,
@@ -395,16 +485,22 @@ export async function triggerCheck(req, res) {
 
         const site = await GeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId })
         if (!site) return res.status(404).json({ error: t('SITE_NOT_FOUND', req.language) })
-        if (!site.keywords.length) return res.status(400).json({ error: t('NO_KEYWORDS_STORED', req.language) })
+        if (!site.keywords.length && !site.customPrompts?.length) return res.status(400).json({ error: t('NO_KEYWORDS_STORED', req.language) })
 
-        // Optionale Keyword-Auswahl: ein manueller Check muss nicht zwingend die ganze Site neu
-        // prüfen (das ist der teuerste Fall — deshalb im Frontend über die vorhandene Checkbox-
-        // Auswahl ansteuerbar). Ohne Auswahl bleibt das Verhalten wie bisher: alle Keywords.
+        // Optionale Keyword-/Prompt-Auswahl: ein manueller Check muss nicht zwingend die ganze Site
+        // neu prüfen (das ist der teuerste Fall — deshalb im Frontend über die vorhandene Checkbox-
+        // Auswahl ansteuerbar). Ohne Auswahl bleibt das Verhalten wie bisher: alle Keywords + Prompts.
         const siteKeywordSet = new Set(site.keywords)
         const requestedKeywords = Array.isArray(req.body?.keywords)
             ? [...new Set(req.body.keywords)].filter(k => siteKeywordSet.has(k))
             : []
         const keywordsToCheck = requestedKeywords.length ? requestedKeywords : undefined // undefined = alle (siehe checkSiteMentions)
+
+        const sitePromptSet = new Set((site.customPrompts || []).map(cp => cp.prompt))
+        const requestedPrompts = Array.isArray(req.body?.customPrompts)
+            ? [...new Set(req.body.customPrompts)].filter(p => sitePromptSet.has(p))
+            : []
+        const promptsToCheck = requestedPrompts.length ? requestedPrompts : undefined
 
         const isStale = site.checkStatus === 'running' && site.checkStartedAt
             && (Date.now() - site.checkStartedAt.getTime() > STALE_CHECK_MS)
@@ -430,9 +526,14 @@ export async function triggerCheck(req, res) {
         site.checkStartedAt = new Date()
         await site.save()
 
-        runCheckInBackground(site, req.userId, keywordsToCheck) // bewusst nicht awaited
+        runCheckInBackground(site, req.userId, keywordsToCheck, promptsToCheck) // bewusst nicht awaited
 
-        res.status(202).json({ status: 'running', startedAt: site.checkStartedAt, checkedKeywords: keywordsToCheck ?? site.keywords })
+        res.status(202).json({
+            status: 'running',
+            startedAt: site.checkStartedAt,
+            checkedKeywords: keywordsToCheck ?? site.keywords,
+            checkedCustomPrompts: promptsToCheck ?? (site.customPrompts || []).map(cp => cp.prompt),
+        })
     } catch (err) {
         res.status(500).json({ error: err.message })
     }

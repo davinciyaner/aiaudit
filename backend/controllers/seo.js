@@ -17,16 +17,18 @@ export async function analyzeSEO(url, html) {
         }
     }
 
+    const truncate = (s, n) => s.length > n ? s.slice(0, n) + '…' : s
+
     const title = $('title').text().trim()
     const titleLen = title.length
     check(titleLen >= 30 && titleLen <= 60, 10,
-        `Titel zu ${titleLen < 30 ? 'short' : 'long'} (${titleLen} Zeichen, ideal: 30-60).`,
+        `Titel zu ${titleLen < 30 ? 'kurz' : 'lang'} (${titleLen} Zeichen, ideal: 30-60): "${truncate(title, 70)}"`,
         'Titel zwischen 30-60 Zeichen halten, wichtigstes Keyword zuerst.')
 
     const desc = $('meta[name="description"]').attr('content') || ''
     const descLen = desc.length
     check(descLen >= 120 && descLen <= 160, 10,
-        `Meta Description ${descLen === 0 ? 'fehlt' : `zu ${descLen < 120 ? 'kurz' : 'lang'} (${descLen} Zeichen).`}`,
+        descLen === 0 ? 'Meta Description fehlt' : `Meta Description zu ${descLen < 120 ? 'kurz' : 'lang'} (${descLen} Zeichen): "${truncate(desc, 90)}"`,
         'Meta Description zwischen 120-160 Zeichen, Call-to-Action hinzufügen.')
 
     const h1s = $('h1')
@@ -69,6 +71,10 @@ export async function analyzeSEO(url, html) {
     check(structuredData > 0, 7,
         'Kein Structured Data (JSON-LD) gefunden.',
         'Schema.org Markup hinzufügen (WebSite, Organization, etc.).')
+
+    // Script/Style-Inhalte raus, bevor wir Fliesstext extrahieren — sonst landen JS-Bundle-Tokens
+    // (const, queryselector, ...) und CSS-Klassennamen in Wortanzahl und Keyword-Analyse.
+    $('script, style, noscript').remove()
 
     // Robots Meta
     const robots = $('meta[name="robots"]').attr('content')

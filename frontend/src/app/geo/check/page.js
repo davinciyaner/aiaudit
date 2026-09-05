@@ -75,6 +75,7 @@ function isLikelyValidDomain(normalizedUrl) {
 }
 
 const POLL_INTERVAL_MS = 800
+const MAX_CUSTOM_PROMPT_LENGTH = 300
 
 export default function GeoCheckPage() {
     return (
@@ -91,6 +92,8 @@ function GeoCheckPageInner() {
 
     const [domain, setDomain] = useState('')
     const [keyword, setKeyword] = useState('')
+    const [promptMode, setPromptMode] = useState('keyword') // 'keyword' | 'custom'
+    const [customPrompt, setCustomPrompt] = useState('')
     const [platform, setPlatform] = useState(initialPlatform)
     const [platformLocked, setPlatformLocked] = useState(!!initialPlatform)
     const [isLoggedIn, setIsLoggedIn] = useState(false)
@@ -110,6 +113,7 @@ function GeoCheckPageInner() {
     const trimmedDomain = domain.trim()
     const normalizedDomain = normalizeUrl(domain)
     const domainError = useMemo(() => validateDomainOnly(domain), [domain])
+    const queryLabel = promptMode === 'custom' ? customPrompt.trim() : keyword.trim()
 
     useEffect(() => {
         if (phase !== 'polling' || !checkId) return
@@ -136,7 +140,7 @@ function GeoCheckPageInner() {
         if (phase === 'results' && statusData?.status === 'done') {
             sessionStorage.setItem('pendingGeoCheck', JSON.stringify({
                 domain: extractDomain(normalizedDomain),
-                keyword: keyword.trim(),
+                keyword: queryLabel,
                 platform: statusData.platform,
                 label: statusData.label,
                 mentioned: statusData.mentioned,
@@ -150,7 +154,12 @@ function GeoCheckPageInner() {
 
         if (!trimmedDomain) return setFormError('Bitte eine Domain eingeben')
         if (domainError) return setFormError(domainError)
-        if (!keyword.trim()) return setFormError('Bitte ein Keyword eingeben')
+        if (promptMode === 'custom') {
+            if (!customPrompt.trim()) return setFormError('Bitte einen Prompt eingeben')
+            if (customPrompt.trim().length > MAX_CUSTOM_PROMPT_LENGTH) return setFormError(`Prompt zu lang (max. ${MAX_CUSTOM_PROMPT_LENGTH} Zeichen)`)
+        } else if (!keyword.trim()) {
+            return setFormError('Bitte ein Keyword eingeben')
+        }
         if (!platform) return setFormError('Bitte eine Plattform auswählen')
 
         const finalDomain = extractDomain(normalizedDomain)
@@ -163,7 +172,10 @@ function GeoCheckPageInner() {
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/geo-check`, {
                 method: 'POST',
                 headers,
-                body: JSON.stringify({ domain: finalDomain, keyword: keyword.trim(), platform, language: 'de' }),
+                body: JSON.stringify({
+                    domain: finalDomain, platform, language: 'de',
+                    ...(promptMode === 'custom' ? { customPrompt: customPrompt.trim() } : { keyword: keyword.trim() }),
+                }),
             })
 
             if (res.status === 429) {
@@ -267,16 +279,43 @@ function GeoCheckPageInner() {
                             </div>
 
                             <div>
-                                <label htmlFor="geo-check-keyword" className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Wofür willst du gefunden werden?</label>
-                                <input
-                                    id="geo-check-keyword"
-                                    type="text"
-                                    value={keyword}
-                                    onChange={e => setKeyword(e.target.value)}
-                                    placeholder="z.B. CRM Software"
-                                    className="w-full px-3.5 py-3 bg-[var(--surface-08)] border border-[var(--border-subtle)] focus:border-[var(--accent-border)] rounded-xl text-white placeholder-slate-600 text-sm outline-none transition-colors"
-                                    autoComplete="off"
-                                />
+                                <div className="flex items-center justify-between mb-2">
+                                    <label htmlFor="geo-check-keyword" className="block text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                                        {promptMode === 'custom' ? 'Dein eigener Prompt' : 'Wofür willst du gefunden werden?'}
+                                    </label>
+                                    <button
+                                        type="button"
+                                        onClick={() => setPromptMode(m => m === 'keyword' ? 'custom' : 'keyword')}
+                                        className="text-[11px] font-medium text-violet-400 hover:text-violet-300 underline underline-offset-2"
+                                    >
+                                        {promptMode === 'custom' ? 'Stattdessen Keyword verwenden' : 'Stattdessen eigenen Prompt eingeben'}
+                                    </button>
+                                </div>
+                                {promptMode === 'custom' ? (
+                                    <>
+                                        <textarea
+                                            id="geo-check-keyword"
+                                            value={customPrompt}
+                                            onChange={e => setCustomPrompt(e.target.value)}
+                                            placeholder="z.B. Ich brauche eine Agentur für ein neues Webdesign in Lübeck"
+                                            rows={3}
+                                            maxLength={MAX_CUSTOM_PROMPT_LENGTH}
+                                            className="w-full px-3.5 py-3 bg-[var(--surface-08)] border border-[var(--border-subtle)] focus:border-[var(--accent-border)] rounded-xl text-white placeholder-slate-600 text-sm outline-none transition-colors resize-none"
+                                            autoComplete="off"
+                                        />
+                                        <p className="text-[11px] text-slate-500 mt-1.5 text-right">{customPrompt.length}/{MAX_CUSTOM_PROMPT_LENGTH}</p>
+                                    </>
+                                ) : (
+                                    <input
+                                        id="geo-check-keyword"
+                                        type="text"
+                                        value={keyword}
+                                        onChange={e => setKeyword(e.target.value)}
+                                        placeholder="z.B. CRM Software"
+                                        className="w-full px-3.5 py-3 bg-[var(--surface-08)] border border-[var(--border-subtle)] focus:border-[var(--accent-border)] rounded-xl text-white placeholder-slate-600 text-sm outline-none transition-colors"
+                                        autoComplete="off"
+                                    />
+                                )}
                             </div>
 
                             <div>
@@ -394,7 +433,7 @@ function GeoCheckPageInner() {
                                         <SentimentBadge sentiment={statusData.sentiment} />
                                     </div>
                                 ) : (
-                                    <p className="text-sm text-slate-400 mt-4">{extractDomain(normalizedDomain)} wurde bei "{keyword}" nicht erwähnt.</p>
+                                    <p className="text-sm text-slate-400 mt-4">{extractDomain(normalizedDomain)} wurde bei "{queryLabel}" nicht erwähnt.</p>
                                 )}
 
                                 {statusData.prompt && (

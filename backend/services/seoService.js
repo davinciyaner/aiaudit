@@ -190,17 +190,18 @@ export async function getCompetitors(domain, location = 'Germany', language = 'd
 
 // ─── Content Gap ─────────────────────────────────────────────────────────────
 
+// War auf keywords_for_site aufgebaut, das kein Positions-Feld fuer die Zieldomain liefert (siehe
+// getRankedKeywords) — competitorPosition war dadurch immer null. Jetzt derselbe korrekte Endpoint
+// wie bei getRankedKeywords (ranked_keywords), nur auf die Konkurrenten-Domain angewendet — liefert
+// zusätzlich nur Keywords, für die der Konkurrent nachweislich rankt, statt reiner Themen-Ideen.
 export async function getContentGap(competitorDomain, trackedKeywords, location = 'Germany', language = 'de') {
     if (!LOGIN || !PASSWORD) return []
 
-    const data = await dfsPost('/v3/dataforseo_labs/google/keywords_for_site/live', [{
-        target: competitorDomain,
+    const data = await dfsPost('/v3/dataforseo_labs/google/ranked_keywords/live', [{
+        target:        competitorDomain,
         location_name: location,
         language_code: language,
-        ignore_synonyms: true,
-        include_subdomains: false,
-        include_serp_info: true,
-        limit: 100,
+        limit:         100,
     }])
 
     const task = data.tasks?.[0]
@@ -215,16 +216,55 @@ export async function getContentGap(competitorDomain, trackedKeywords, location 
     const items = task.result?.[0]?.items || []
 
     return items
-        .filter(item => item.keyword && !tracked.has(item.keyword.toLowerCase()))
-        .sort((a, b) => (b.keyword_info?.search_volume ?? 0) - (a.keyword_info?.search_volume ?? 0))
+        .filter(item => item.keyword_data?.keyword && !tracked.has(item.keyword_data.keyword.toLowerCase()))
+        .sort((a, b) => (b.keyword_data.keyword_info?.search_volume ?? 0) - (a.keyword_data.keyword_info?.search_volume ?? 0))
         .slice(0, 30)
         .map(item => ({
-            keyword:            item.keyword,
-            searchVolume:       item.keyword_info?.search_volume ?? null,
-            competition:        item.keyword_info?.competition_level ?? null,
-            cpc:                item.keyword_info?.cpc ?? null,
+            keyword:            item.keyword_data.keyword,
+            searchVolume:       item.keyword_data.keyword_info?.search_volume ?? null,
+            competition:        item.keyword_data.keyword_info?.competition_level ?? null,
+            cpc:                item.keyword_data.keyword_info?.cpc ?? null,
             competitorPosition: item.ranked_serp_element?.serp_item?.rank_absolute ?? null,
         }))
+}
+
+// ─── Ranked Keywords (wofür ranke ich schon?) ───────────────────────────────────
+
+// Anderer Endpoint als getContentGap: keywords_for_site liefert nur allgemeine SERP-Metadaten,
+// kein Positions-Feld fuer die Zieldomain — ranked_keywords ist der korrekte DataForSEO-Labs-
+// Report fuer "wofuer rankt diese Domain aktuell tatsaechlich", inkl. rank_absolute. Live gegen
+// die echte API verifiziert (Antwortstruktur: keyword+Metriken stecken unter item.keyword_data,
+// nicht auf oberster Ebene wie bei keywords_for_site).
+export async function getRankedKeywords(domain, location = 'Germany', language = 'de') {
+    if (!LOGIN || !PASSWORD) return []
+
+    const data = await dfsPost('/v3/dataforseo_labs/google/ranked_keywords/live', [{
+        target:        domain,
+        location_name: location,
+        language_code: language,
+        limit:         200,
+    }])
+
+    const task = data.tasks?.[0]
+    if (task?.status_code !== 20000) {
+        console.warn('[seoService] getRankedKeywords Fehler:', task?.status_code, task?.status_message)
+        console.warn('[seoService] getRankedKeywords Response:', JSON.stringify(data).slice(0, 600))
+        return []
+    }
+
+    const items = task.result?.[0]?.items || []
+
+    return items
+        .filter(item => item.keyword_data?.keyword && item.ranked_serp_element?.serp_item?.rank_absolute != null)
+        .map(item => ({
+            keyword:      item.keyword_data.keyword,
+            position:     item.ranked_serp_element.serp_item.rank_absolute,
+            searchVolume: item.keyword_data.keyword_info?.search_volume ?? null,
+            competition:  item.keyword_data.keyword_info?.competition_level ?? null,
+            cpc:          item.keyword_data.keyword_info?.cpc ?? null,
+        }))
+        .sort((a, b) => a.position - b.position || (b.searchVolume ?? 0) - (a.searchVolume ?? 0))
+        .slice(0, 100)
 }
 
 // ─── Backlinks ────────────────────────────────────────────────────────────────

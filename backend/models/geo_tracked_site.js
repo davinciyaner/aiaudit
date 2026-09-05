@@ -5,6 +5,13 @@ const geoTrackedSiteSchema = new Schema({
     domain:      { type: String, required: true },
     displayName: { type: String },
     keywords:    [{ type: String }],
+    // Eigene, frei formulierte Prompts (statt Keyword+Template) — laufen zusätzlich zu keywords
+    // mit, zaehlen aber gemeinsam gegen dasselbe maxKeywords-Kontingent (siehe countTotalKeywords).
+    customPrompts: [{
+        _id:     false,
+        prompt:  { type: String, required: true },
+        addedAt: { type: Date, default: Date.now },
+    }],
     language:    { type: String, default: 'de' },
     platforms:   { type: [String], default: ['claude'] },
     promptVariants: { type: Number, default: 1 },
