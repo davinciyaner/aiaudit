@@ -3,6 +3,7 @@ import { checkPlatformMention, classifySentimentSafe, buildQuery, PLATFORM_LABEL
 import { t } from '../utils/i18n/errors.js'
 
 const PLATFORMS = ['claude', 'chatgpt', 'perplexity', 'google_aio']
+const MAX_CUSTOM_PROMPT_LENGTH = 300
 
 const UNLIMITED_USER_IDS = new Set(
     (process.env.GEO_ONEOFF_UNLIMITED_USER_IDS || '').split(',').map(s => s.trim()).filter(Boolean)
@@ -38,14 +39,24 @@ export async function startCheck(req, res) {
     const domain = normalizeDomain(req.body?.domain)
     if (!domain) return res.status(400).json({ error: t('INVALID_DOMAIN', lang) })
 
-    const keyword = (req.body?.keyword || '').trim()
-    if (!keyword || keyword.length > 100) return res.status(400).json({ error: t('KEYWORD_REQUIRED', lang) })
+    // Eigener Prompt: statt Keyword+Template wird der Nutzertext unveraendert an die KI-Plattform
+    // gesendet (siehe buildQuery-Bypass in geoService.checkPlatformMention).
+    const customPrompt = (req.body?.customPrompt || '').trim()
+    const useCustomPrompt = customPrompt.length > 0
+    if (useCustomPrompt && customPrompt.length > MAX_CUSTOM_PROMPT_LENGTH) {
+        return res.status(400).json({ error: lang === 'en'
+            ? `Prompt too long (max ${MAX_CUSTOM_PROMPT_LENGTH} characters)`
+            : `Prompt zu lang (max. ${MAX_CUSTOM_PROMPT_LENGTH} Zeichen)` })
+    }
+
+    const keyword = useCustomPrompt ? customPrompt : (req.body?.keyword || '').trim()
+    if (!keyword || (!useCustomPrompt && keyword.length > 100)) return res.status(400).json({ error: t('KEYWORD_REQUIRED', lang) })
 
     const platform = req.body?.platform
     if (!PLATFORMS.includes(platform)) return res.status(400).json({ error: t('INVALID_PLATFORM', lang) })
 
     const identifier = identifierFor(req)
-    const prompt = buildQuery(keyword, lang, 'empfehlung')
+    const prompt = useCustomPrompt ? customPrompt : buildQuery(keyword, lang, 'empfehlung')
 
     let doc
     try {
@@ -56,11 +67,11 @@ export async function startCheck(req, res) {
     }
 
     res.status(202).json({ id: doc._id, platform, label: PLATFORM_LABELS[platform], prompt })
-    runOneOffCheckInBackground(doc._id, domain, keyword, lang, platform)
+    runOneOffCheckInBackground(doc._id, domain, keyword, lang, platform, useCustomPrompt ? customPrompt : null)
 }
 
-async function runOneOffCheckInBackground(id, domain, keyword, language, platform) {
-    const { mentioned, context } = await checkPlatformMention(platform, keyword, domain, language, 'empfehlung')
+async function runOneOffCheckInBackground(id, domain, keyword, language, platform, customPrompt = null) {
+    const { mentioned, context } = await checkPlatformMention(platform, keyword, domain, language, 'empfehlung', customPrompt)
 
     if (!mentioned) {
         await GeoOneoffCheck.findByIdAndUpdate(id, { status: 'done', 'result.mentioned': false, 'result.context': null })

@@ -81,7 +81,7 @@ GEO CHECKS:
 GEO ISSUES:
 ${auditData.geo?.issues?.join('\n') || none}
 
-Now write the report. Use exactly these eight section names, each on its own line in uppercase, with no additional characters:
+Now write the report. Use exactly these seven section names, each on its own line in uppercase, with no additional characters:
 
 SUMMARY
 2-3 sentences on the overall state. Direct, concrete, no filler.
@@ -94,9 +94,6 @@ Detailed assessment of SEO health. Concrete improvements with exact character co
 
 PERFORMANCE ANALYSIS
 What's concretely slowing the page down. Technical fixes, no code blocks.
-
-SECURITY ANALYSIS
-Which headers are missing, what they do, and how to set them in the relevant hosting configuration.
 
 KEYWORD STRATEGY
 Split into three paragraphs with the headings: Keywords to keep, Keywords to remove, New keywords to test.
@@ -168,7 +165,7 @@ GEO CHECKS:
 GEO PROBLEME:
 ${auditData.geo?.issues?.join('\n') || none}
 
-Schreibe jetzt den Bericht. Verwende genau diese acht Abschnittsnamen, jeden auf einer eigenen Zeile in Grossbuchstaben, ohne jegliche zusaetzliche Zeichen:
+Schreibe jetzt den Bericht. Verwende genau diese sieben Abschnittsnamen, jeden auf einer eigenen Zeile in Grossbuchstaben, ohne jegliche zusaetzliche Zeichen:
 
 ZUSAMMENFASSUNG
 2-3 Saetze zum Gesamtzustand. Direkt, konkret, keine Floskeln.
@@ -181,9 +178,6 @@ Detaillierte Bewertung des SEO-Zustands. Konkrete Verbesserungen mit genauen Zei
 
 PERFORMANCE-ANALYSE
 Was verlangsamt die Seite konkret. Technische Fixes ohne Code-Bloecke.
-
-SICHERHEITS-ANALYSE
-Welche Header fehlen, was sie bewirken und wie man sie in der jeweiligen Hosting-Konfiguration setzt.
 
 KEYWORD-STRATEGIE
 Unterteile in drei Absaetze mit den Ueberschriften: Keywords behalten, Keywords entfernen, Neue Keywords testen.

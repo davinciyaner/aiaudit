@@ -397,6 +397,27 @@ export default function RankscaleAlternativePage() {
                     </div>
                 </div>
 
+                {/* Cross-link: SEO + GEO Tool */}
+                <div className="mt-5 bg-white/[0.02] border border-white/[0.06] rounded-2xl p-6 sm:p-8">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 justify-between">
+                        <div>
+                            <span className="text-xs font-semibold text-emerald-400 uppercase tracking-wider mb-1 block">Passende Lösung</span>
+                            <h3 className="text-base sm:text-lg font-bold text-white mb-2">
+                                SEO + GEO Tool: Google-Rankings &amp; KI-Sichtbarkeit in einem Dashboard
+                            </h3>
+                            <p className="text-slate-400 text-sm leading-relaxed max-w-md">
+                                Google-Rankings und KI-Sichtbarkeit für dieselben Keywords im selben Dashboard – inklusive der Überschneidung zwischen beiden.
+                            </p>
+                        </div>
+                        <Link
+                            href="/loesungen/seo-geo-tool"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/[0.06] hover:bg-white/10 text-white text-sm font-semibold rounded-xl transition-all duration-200 shrink-0"
+                        >
+                            Seite ansehen
+                        </Link>
+                    </div>
+                </div>
+
                 {/* Cross-link */}
                 <div className="mt-5 bg-white/[0.02] border border-white/[0.06] rounded-2xl p-6 sm:p-8">
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 justify-between">

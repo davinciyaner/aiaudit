@@ -129,6 +129,8 @@ export default function Dashboard() {
     const [result, setResult] = useState(null)
     const [isLoggedIn, setIsLoggedIn] = useState(false)
     const [showRegisterModal, setShowRegisterModal] = useState(false)
+    const [selectedGeoKws, setSelectedGeoKws] = useState(new Set())
+    const [addingToGeo, setAddingToGeo] = useState(false)
 
     useEffect(() => {
         const token = localStorage.getItem('token')
@@ -192,6 +194,63 @@ export default function Dashboard() {
     const openRegisterModal = () => {
         if (auditUrl) sessionStorage.setItem('pendingAuditUrl', auditUrl)
         setShowRegisterModal(true)
+    }
+
+    const toggleGeoKw = (kw) => setSelectedGeoKws(prev => {
+        const n = new Set(prev); n.has(kw) ? n.delete(kw) : n.add(kw); return n
+    })
+
+    // Bringt die im Audit gefundenen Keyword-Vorschläge direkt in die GEO-Automatisierung ein —
+    // legt die Site an, falls für diese Domain noch keine existiert, statt den Nutzer die
+    // Keywords manuell rüberkopieren zu lassen.
+    const handleAddToGeo = async () => {
+        if (!isLoggedIn) { openRegisterModal(); return }
+        if (!selectedGeoKws.size) return
+
+        const token = localStorage.getItem('token')
+        const headers = { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` }
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL
+        let domain
+        try { domain = new URL(audit.url).hostname.replace(/^www\./, '') } catch { return }
+
+        setAddingToGeo(true)
+        try {
+            const planRes = await fetch(`${apiUrl}/geo/plan`, { headers })
+            const planData = await planRes.json()
+            if (!planData.plan) {
+                toast.error('GEO-Automatisierung erfordert ein aktives Abo')
+                router.push('/geo/pricing')
+                return
+            }
+
+            const sitesRes = await fetch(`${apiUrl}/geo/sites`, { headers })
+            const sitesData = await sitesRes.json()
+            const existingSite = (sitesData.sites || []).find(s => s.domain.replace(/^www\./, '') === domain)
+
+            const keywords = [...selectedGeoKws]
+
+            if (existingSite) {
+                const res = await fetch(`${apiUrl}/geo/sites/${existingSite._id}/keywords`, {
+                    method: 'POST', headers, body: JSON.stringify({ keywords }),
+                })
+                const d = await res.json()
+                if (!res.ok) throw new Error(d.error)
+                toast.success(`${d.added} Keyword${d.added !== 1 ? 's' : ''} zur GEO-Automatisierung hinzugefügt`)
+                router.push(`/geo/${existingSite._id}`)
+            } else {
+                const res = await fetch(`${apiUrl}/geo/sites`, {
+                    method: 'POST', headers, body: JSON.stringify({ domain, keywords }),
+                })
+                const d = await res.json()
+                if (!res.ok) throw new Error(d.error)
+                toast.success('Website mit Keywords zur GEO-Automatisierung hinzugefügt')
+                router.push(`/geo/${d.site._id}`)
+            }
+        } catch (err) {
+            toast.error(err.message || 'Fehler beim Hinzufügen zur GEO-Automatisierung')
+        } finally {
+            setAddingToGeo(false)
+        }
     }
 
     return (
@@ -314,7 +373,7 @@ export default function Dashboard() {
 
                         {/* SCORE CARDS */}
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
-                            <ScoreCard label="Overall" score={audit.overallScore ?? 0} />
+                            <ScoreCard label="Gesamt" score={audit.overallScore ?? 0} />
                             <ScoreCard label="SEO" score={audit?.seo?.score ?? 0} delay={0.1} />
                             <ScoreCard label="Performance" score={audit?.performance?.score ?? 0} delay={0.2} />
                             <ScoreCard label="GEO" score={audit?.geo?.score ?? 0} delay={0.3} />
@@ -326,7 +385,7 @@ export default function Dashboard() {
                             <>
                                 {/* AI REPORT — nur Pro/Agency */}
                                 {result.aiReport && (
-                                    <Section title="AI Analysis & Recommendations" icon="🤖">
+                                    <Section title="KI-Analyse & Empfehlungen" icon="🤖">
                                         <div
                                             className="text-slate-300 text-sm whitespace-pre-wrap break-words"
                                             dangerouslySetInnerHTML={{
@@ -517,7 +576,7 @@ export default function Dashboard() {
                                                             r.priority === 'critical' ? 'bg-red-500/15 text-red-400' :
                                                             r.priority === 'high' ? 'bg-amber-500/15 text-amber-400' :
                                                             'bg-blue-500/15 text-blue-400'
-                                                        }`}>{r.priority}</span>
+                                                        }`}>{{ critical: 'KRITISCH', high: 'HOCH', medium: 'MITTEL', low: 'NIEDRIG' }[r.priority] || r.priority}</span>
                                                         <div className="flex-1 min-w-0">
                                                             <div className="text-sm font-semibold text-white mb-1">{r.title}</div>
                                                             <div className="text-xs text-slate-500 leading-relaxed">{r.desc}</div>
@@ -539,6 +598,42 @@ export default function Dashboard() {
                                                 </pre>
                                             </div>
                                         )}
+                                    </Section>
+                                )}
+
+                                {/* KEYWORD INTELLIGENCE — Brücke zur GEO-Automatisierung, damit Nutzer die im
+                                    Audit gefundenen Vorschläge nicht manuell rüberkopieren müssen */}
+                                {(audit?.keywords?.topKeywords?.length > 0 || audit?.keywords?.longTailSuggestions?.length > 0) && (
+                                    <Section title="Keyword Intelligence" icon="🎯">
+                                        <p className="text-xs text-slate-500 mb-4">
+                                            Wähle Keywords aus und tracke automatisch, ob ChatGPT, Claude, Gemini, Perplexity oder Google AI Overview deine Website dafür nennen.
+                                        </p>
+                                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-4">
+                                            {[
+                                                ...(audit.keywords.topKeywords || []).slice(0, 10).map(k => k.keyword),
+                                                ...(audit.keywords.longTailSuggestions || []),
+                                            ].map(kw => {
+                                                const checked = selectedGeoKws.has(kw)
+                                                return (
+                                                    <button key={kw} type="button" onClick={() => toggleGeoKw(kw)}
+                                                        className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-xs font-medium text-left transition-all ${
+                                                            checked
+                                                                ? 'bg-[var(--accent-soft)] border-[var(--accent-border)] text-[var(--accent)]'
+                                                                : 'bg-[var(--surface-06)] border-[var(--border-subtle)] text-slate-400 hover:border-[var(--border-strong)]'
+                                                        }`}>
+                                                        <div className={`w-3 h-3 rounded border shrink-0 ${checked ? 'bg-[var(--accent)] border-[var(--accent)]' : 'border-[var(--border-strong)]'}`} />
+                                                        <span className="truncate">{kw}</span>
+                                                    </button>
+                                                )
+                                            })}
+                                        </div>
+                                        <button onClick={handleAddToGeo} disabled={!selectedGeoKws.size || addingToGeo}
+                                            className="flex items-center gap-2 px-4 py-2.5 bg-[var(--accent)] hover:opacity-90 disabled:opacity-40 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all">
+                                            <TrendingUp className="w-4 h-4" />
+                                            {addingToGeo
+                                                ? 'Wird hinzugefügt…'
+                                                : `${selectedGeoKws.size || ''} Keyword${selectedGeoKws.size === 1 ? '' : 's'} zur GEO-Automatisierung hinzufügen`.trim()}
+                                        </button>
                                     </Section>
                                 )}
 

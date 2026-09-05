@@ -6,6 +6,7 @@ import {
     getPlan, subscribePlan,
     getSites, getSite, addSite, deleteSite,
     addKeywords, removeKeywords,
+    addCustomPrompt, removeCustomPrompt,
     getResults, triggerCheck, updatePlatforms,
     analyzeCitation, getCompetitors, getMentionHistory, getCorrelation, getKeywordSuggestions,
     getMarketAnalytics, getHistoricalTrend,
@@ -43,6 +44,8 @@ router.delete('/sites/:id',  deleteSite)
 
 router.post('/sites/:id/keywords',   addKeywords)
 router.delete('/sites/:id/keywords', removeKeywords)
+router.post('/sites/:id/custom-prompts',   addCustomPrompt)
+router.delete('/sites/:id/custom-prompts', removeCustomPrompt)
 router.patch('/sites/:id/platforms', updatePlatforms)
 
 router.get('/sites/:id/results',         getResults)

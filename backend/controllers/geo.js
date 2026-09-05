@@ -30,8 +30,6 @@ export async function analyzeGEO(url, html) {
     }
 
     const hostname = new URL(url).origin
-    const bodyText = $('body').text().replace(/\s+/g, ' ').toLowerCase()
-    const metaDesc = ($('meta[name="description"]').attr('content') || '').toLowerCase()
     const pageTitle = $('title').text()
     const pageDescription = $('meta[name="description"]').attr('content') || ''
 
@@ -77,6 +75,12 @@ export async function analyzeGEO(url, html) {
     check(hasSoftwareApp || hasWebSite, 4,
         'WebSite oder SoftwareApplication Schema fehlt',
         'WebSite Schema mit SearchAction hinzufuegen, oder SoftwareApplication mit featureList und offers')
+
+    // Script/Style-Inhalte erst NACH der JSON-LD-Auswertung entfernen — sonst landen
+    // JS-Bundle-Tokens (const, queryselector, ...) in Wortanzahl und Keyword-Checks.
+    $('script, style, noscript').remove()
+    const bodyText = $('body').text().replace(/\s+/g, ' ').toLowerCase()
+    const metaDesc = ($('meta[name="description"]').attr('content') || '').toLowerCase()
 
     let hasLlmsTxt = false
     let hasLlmsFullTxt = false
@@ -258,6 +262,15 @@ export async function analyzeGEO(url, html) {
         desc: 'lang="de" oder lang="en" im HTML-Tag — wichtig damit KI-Modelle deinen Content der richtigen Sprache zuordnen.',
         effort: '5 Minuten',
     })
+    if (!hasLlmsFullTxt) recommendations.push({
+        priority: 'medium',
+        title: 'llms-full.txt ergaenzen',
+        desc: 'Erweiterter llms.txt-Standard mit vollstaendigem Seiteninhalt — hilft KI-Modellen, deine Inhalte vollstaendig zu erfassen.',
+        effort: '30 Minuten',
+    })
+
+    const PRIORITY_RANK = { critical: 0, high: 1, medium: 2, low: 3 }
+    recommendations.sort((a, b) => PRIORITY_RANK[a.priority] - PRIORITY_RANK[b.priority])
 
     return {
         score: scorePercent,
@@ -300,18 +313,18 @@ function generateLlmsTxt(url, title, description) {
 
 > ${description || 'Website'}
 
-## What is this?
-${title || hostname} is a web service available at ${url}.
+## Was ist das?
+${title || hostname} ist ein Webdienst, erreichbar unter ${url}.
 
-## Key Information
+## Wichtige Informationen
 - URL: ${url}
-- Description: ${description || 'See website for details'}
+- Beschreibung: ${description || 'Siehe Website fuer Details'}
 
 ## Sitemap
 - ${url}/sitemap.xml
 
-## For AI Systems
-This file follows the llms.txt standard (https://llmstxt.org).
+## Fuer KI-Systeme
+Diese Datei folgt dem llms.txt-Standard (https://llmstxt.org).
 `
 }
 

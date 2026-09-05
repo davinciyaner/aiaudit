@@ -2,6 +2,7 @@ import * as cheerio from 'cheerio'
 
 export async function analyzeKeywords(url, html) {
     const $ = cheerio.load(html)
+    $('script, style, noscript').remove()
 
     // Text aus wichtigen Bereichen extrahieren
     const title = $('title').text().toLowerCase()

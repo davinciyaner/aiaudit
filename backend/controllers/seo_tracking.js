@@ -3,16 +3,16 @@ import SeoKeywordRanking from '../models/seo_keyword_ranking.js'
 import SeoKeywordInsight from '../models/seo_keyword_insight.js'
 import ProductSubscription from '../models/product_subscription.js'
 import User from '../models/auth_model.js'
-import { checkSiteRankings, getKeywordIdeas, getCompetitors, getBacklinkSummary, getReferringDomains, getBacklinkGapAnalysis, getContentGap, generateKeywordContent, generateBacklinkIdeas, generateInsightsForKeywords } from '../services/seoService.js'
+import { checkSiteRankings, getKeywordIdeas, getCompetitors, getBacklinkSummary, getReferringDomains, getBacklinkGapAnalysis, getContentGap, getRankedKeywords, generateKeywordContent, generateBacklinkIdeas, generateInsightsForKeywords } from '../services/seoService.js'
 import SeoUsage from '../models/seo_usage.js'
 import { sendSeoRankingAlert } from '../utils/mailer.js'
 import { detectRankingChanges, ALERT_DROP_THRESHOLD } from '../jobs/seoTrackingJob.js'
 import { t } from '../utils/i18n/errors.js'
 
 const PLAN_LIMITS = {
-    einsteiger: { maxSites: 3,  maxKeywords: 50,  historyWeeks: 8,   contentGapPerMonth: 0,   backlinkGapPerMonth: 0,  manualChecksPerMonth: 2, keywordIdeasPerMonth: 6  },
-    pro:        { maxSites: 10, maxKeywords: 200, historyWeeks: 26,  contentGapPerMonth: 100, backlinkGapPerMonth: 20, manualChecksPerMonth: 4, keywordIdeasPerMonth: 20 },
-    expert:     { maxSites: 20, maxKeywords: 500, historyWeeks: 999, contentGapPerMonth: 300, backlinkGapPerMonth: 60, manualChecksPerMonth: 6, keywordIdeasPerMonth: 40 },
+    einsteiger: { maxSites: 3,  maxKeywords: 50,  historyWeeks: 8,   contentGapPerMonth: 0,   backlinkGapPerMonth: 0,  manualChecksPerMonth: 2, keywordIdeasPerMonth: 6,  rankedKeywordsPerMonth: 6  },
+    pro:        { maxSites: 10, maxKeywords: 200, historyWeeks: 26,  contentGapPerMonth: 100, backlinkGapPerMonth: 20, manualChecksPerMonth: 4, keywordIdeasPerMonth: 20, rankedKeywordsPerMonth: 20 },
+    expert:     { maxSites: 20, maxKeywords: 500, historyWeeks: 999, contentGapPerMonth: 300, backlinkGapPerMonth: 60, manualChecksPerMonth: 6, keywordIdeasPerMonth: 40, rankedKeywordsPerMonth: 40 },
 }
 
 async function getSeoPlan(userId) {
@@ -456,6 +456,54 @@ export async function getContentGapForSite(req, res) {
             { contentGapCache: { competitorDomain, data: gap, checkedAt: new Date() } }
         )
         res.json({ competitor: competitorDomain, gap, used: used + 1, limit: monthlyLimit, cached: false })
+    } catch (err) {
+        res.status(500).json({ error: err.message })
+    }
+}
+
+// GET /api/seo/sites/:id/ranked-keywords — "Wofür ranke ich schon?": Keywords, für die die eigene
+// Domain aktuell bei Google eine SERP-Position hat, inkl. echtem Suchvolumen. Beantwortet die
+// Ausgangsfrage vor jedem Tracking: welche Keywords lohnt es sich überhaupt zu tracken.
+// Bewusst KEIN zeitbasierter Cache-Ablauf — ein passiver Tab-Aufruf soll nie von selbst einen
+// bezahlten Call ausloesen, nur weil Zeit vergangen ist. Der Cache bleibt bestehen, bis der Nutzer
+// explizit "Neu laden" (force=true) klickt; das kostet dann einen von den monatlichen Kontingent-
+// Slots, wodurch die Kosten unabhaengig davon, wie lange eine Site offen bleibt, planbar bleiben.
+export async function getRankedKeywordsForSite(req, res) {
+    try {
+        const plan = await getSeoPlan(req.userId)
+        if (!plan) return res.status(403).json({ error: t('NO_ACTIVE_SEO_SUB', req.language) })
+
+        const site = await SeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId }).lean()
+        if (!site) return res.status(404).json({ error: t('SITE_NOT_FOUND', req.language) })
+
+        const monthlyLimit = PLAN_LIMITS[plan]?.rankedKeywordsPerMonth ?? 0
+        const month = new Date().toISOString().slice(0, 7)
+        const existing = await SeoUsage.findOne({ userId: req.userId, feature: 'ranked_keywords', month }).lean()
+        const used = existing?.count ?? 0
+
+        const force = req.query.force === 'true'
+        const cache = site.rankedKeywordsCache
+        if (!force && cache?.checkedAt) {
+            return res.json({ keywords: cache.data, checkedAt: cache.checkedAt, used, limit: monthlyLimit, cached: true })
+        }
+
+        if (used >= monthlyLimit) {
+            return res.status(429).json({ error: 'monthly_limit_reached', limit: monthlyLimit, used })
+        }
+
+        await SeoUsage.findOneAndUpdate(
+            { userId: req.userId, feature: 'ranked_keywords', month },
+            { $inc: { count: 1 } },
+            { upsert: true }
+        )
+
+        const keywords = await getRankedKeywords(site.domain, site.location, site.language)
+        const checkedAt = new Date()
+        await SeoTrackedSite.updateOne(
+            { _id: site._id },
+            { rankedKeywordsCache: { data: keywords, checkedAt } }
+        )
+        res.json({ keywords, checkedAt, used: used + 1, limit: monthlyLimit, cached: false })
     } catch (err) {
         res.status(500).json({ error: err.message })
     }

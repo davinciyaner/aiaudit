@@ -58,7 +58,7 @@ async function runWeeklyGeoChecks() {
         const sites = await GeoTrackedSite.find({
             userId: { $in: activeUserIds },
             isActive: true,
-            'keywords.0': { $exists: true },
+            $or: [{ 'keywords.0': { $exists: true } }, { 'customPrompts.0': { $exists: true } }],
         }).lean()
 
         console.log(`GEO wöchentlicher Check: ${sites.length} Sites`)
@@ -67,7 +67,8 @@ async function runWeeklyGeoChecks() {
             try {
                 const platforms = site.platforms?.length ? site.platforms : ['claude']
                 const previousMap = {}
-                for (const kw of site.keywords) {
+                const trackedQueries = [...site.keywords, ...(site.customPrompts || []).map(cp => cp.prompt)]
+                for (const kw of trackedQueries) {
                     for (const platform of platforms) {
                         const prev = await GeoMentionCheck.findOne({ siteId: site._id, keyword: kw, platform })
                             .sort({ checkedAt: -1 }).lean()

@@ -170,14 +170,14 @@ async function dfsPostWithRetry(endpoint, body, label, retries = 1) {
     }
 }
 
-async function checkWithGoogleAIOverview(keyword, domain, language, intent) {
+async function checkWithGoogleAIOverview(keyword, domain, language, intent, customPrompt = null) {
     if (!DFS_LOGIN || !DFS_PASSWORD) {
         console.warn('[geoService] DATAFORSEO_LOGIN/PASSWORD nicht gesetzt — Google AI Overview Check übersprungen')
         return { mentioned: false, context: null, citations: [] }
     }
 
     const data = await dfsPostWithRetry('/v3/serp/google/organic/live/advanced', [{
-        keyword: buildSearchQuery(keyword, language, intent),
+        keyword: customPrompt || buildSearchQuery(keyword, language, intent),
         location_name: language === 'de' ? 'Germany' : 'United States',
         language_code: language,
         device: 'desktop',
@@ -220,14 +220,14 @@ const LLM_RESPONSES_PATH_SEGMENT = {
     claude: 'claude', chatgpt: 'chat_gpt', gemini: 'gemini', perplexity: 'perplexity',
 }
 
-async function checkWithLlmResponses(platform, keyword, domain, language, intent) {
+async function checkWithLlmResponses(platform, keyword, domain, language, intent, customPrompt = null) {
     if (!DFS_LOGIN || !DFS_PASSWORD) {
         console.warn(`[geoService] DATAFORSEO_LOGIN/PASSWORD nicht gesetzt — ${platform}-Check übersprungen`)
         return { mentioned: false, context: null, citations: [] }
     }
 
     const data = await dfsPostWithRetry(`/v3/ai_optimization/${LLM_RESPONSES_PATH_SEGMENT[platform]}/llm_responses/live`, [{
-        user_prompt: buildQuery(keyword, language, intent),
+        user_prompt: customPrompt || buildQuery(keyword, language, intent),
         model_name: LLM_RESPONSES_MODEL[platform],
     }], `LLM Responses/${platform} "${keyword}"/${intent}`)
 
@@ -266,10 +266,10 @@ async function checkWithLlmResponses(platform, keyword, domain, language, intent
     return { mentioned: textMentioned || !!citationMatch, context: context || null, citations }
 }
 
-const checkWithClaude     = (keyword, domain, language, intent) => checkWithLlmResponses('claude', keyword, domain, language, intent)
-const checkWithChatGPT    = (keyword, domain, language, intent) => checkWithLlmResponses('chatgpt', keyword, domain, language, intent)
-const checkWithGemini     = (keyword, domain, language, intent) => checkWithLlmResponses('gemini', keyword, domain, language, intent)
-const checkWithPerplexity = (keyword, domain, language, intent) => checkWithLlmResponses('perplexity', keyword, domain, language, intent)
+const checkWithClaude     = (keyword, domain, language, intent, customPrompt) => checkWithLlmResponses('claude', keyword, domain, language, intent, customPrompt)
+const checkWithChatGPT    = (keyword, domain, language, intent, customPrompt) => checkWithLlmResponses('chatgpt', keyword, domain, language, intent, customPrompt)
+const checkWithGemini     = (keyword, domain, language, intent, customPrompt) => checkWithLlmResponses('gemini', keyword, domain, language, intent, customPrompt)
+const checkWithPerplexity = (keyword, domain, language, intent, customPrompt) => checkWithLlmResponses('perplexity', keyword, domain, language, intent, customPrompt)
 
 // Bestätigt gegen die reale DataForSEO-Doku (docs.dataforseo.com/v3/ai_optimization/llm_mentions/...):
 // alle Endpoints unten akzeptieren als "platform" nur 'google' oder 'chat_gpt'.
@@ -395,11 +395,11 @@ const PLATFORM_FNS = {
     google_aio: checkWithGoogleAIOverview,
 }
 
-async function checkOneCombination(site, keyword, platform, intent) {
+async function checkOneCombination(site, keyword, platform, intent, customPrompt = null) {
     const fn = PLATFORM_FNS[platform]
     if (!fn) return null
     try {
-        const result = await fn(keyword, site.domain, site.language, intent)
+        const result = await fn(keyword, site.domain, site.language, intent, customPrompt)
         const sentiment = result.mentioned ? await classifySentiment(result.context, site.domain) : null
         return { keyword, platform, promptIntent: intent, ...result, sentiment }
     } catch (err) {
@@ -411,11 +411,13 @@ async function checkOneCombination(site, keyword, platform, intent) {
 // Wie checkOneCombination, aber als zwei separat aufrufbare Stufen (Mention-Check und
 // Sentiment-Klassifizierung getrennt), damit ein Aufrufer den Fortschritt dazwischen
 // persistieren kann (z.B. für einen Live-Status beim einmaligen Gratis-Check).
-export async function checkPlatformMention(platform, keyword, domain, language, intent = 'empfehlung') {
+// customPrompt: wenn gesetzt, wird er unveraendert als Frage an die Plattform gesendet statt
+// keyword durch buildQuery/buildSearchQuery in ein festes Template einzusetzen.
+export async function checkPlatformMention(platform, keyword, domain, language, intent = 'empfehlung', customPrompt = null) {
     const fn = PLATFORM_FNS[platform]
     if (!fn) return { mentioned: false, context: null, citations: [] }
     try {
-        return await fn(keyword, domain, language, intent)
+        return await fn(keyword, domain, language, intent, customPrompt)
     } catch (err) {
         console.error('[geoService] %s/%s Fehler bei "%s":', platform, intent, keyword, err.message)
         return { mentioned: false, context: null, citations: [] }
@@ -436,24 +438,33 @@ const CHECK_CONCURRENCY = 5
 // (siehe triggerCheck in geo_tracking.js), damit ein manueller Check nicht zwingend die komplette
 // Site neu prüfen muss. Der wöchentliche Auto-Check (geoTrackingJob.js) ruft ohne dritten Parameter
 // auf und prüft dadurch weiterhin immer alle Keywords.
-export async function checkSiteMentions(site, variantCount = 1, keywordsOverride = null) {
+// customPromptsOverride: analog für site.customPrompts (eigene, frei formulierte Prompts) — laufen
+// nur einmal pro Plattform (kein Intent-Template, also keine Vergleich-Variante), da der Nutzer
+// bereits die exakte Frage vorgibt.
+export async function checkSiteMentions(site, variantCount = 1, keywordsOverride = null, customPromptsOverride = null) {
     const platforms = site.platforms?.length ? site.platforms : ['claude']
     const intents = PROMPT_INTENTS.slice(0, Math.max(1, Math.min(variantCount, PROMPT_INTENTS.length)))
     const keywords = keywordsOverride?.length ? keywordsOverride : site.keywords
+    const customPrompts = customPromptsOverride?.length
+        ? customPromptsOverride
+        : (site.customPrompts || []).map(cp => cp.prompt)
 
     const combos = []
     for (const keyword of keywords) {
         for (const intent of intents) {
-            combos.push({ keyword, intent })
+            combos.push({ keyword, intent, customPrompt: null })
         }
+    }
+    for (const prompt of customPrompts) {
+        combos.push({ keyword: prompt, intent: 'custom', customPrompt: prompt })
     }
 
     const results = []
     for (let i = 0; i < combos.length; i += CHECK_CONCURRENCY) {
         const batch = combos.slice(i, i + CHECK_CONCURRENCY)
-        const batchResults = await Promise.all(batch.map(async ({ keyword, intent }) => {
+        const batchResults = await Promise.all(batch.map(async ({ keyword, intent, customPrompt }) => {
             const perPlatform = await Promise.all(
-                platforms.map(platform => checkOneCombination(site, keyword, platform, intent))
+                platforms.map(platform => checkOneCombination(site, keyword, platform, intent, customPrompt))
             )
             return perPlatform.filter(Boolean)
         }))
