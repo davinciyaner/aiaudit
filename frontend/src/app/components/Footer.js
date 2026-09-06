@@ -12,7 +12,7 @@ const COLUMNS_DE = [
             { label: 'Features', href: '#features' },
             { label: 'Pricing', href: '#pricing' },
             { label: 'Dashboard', href: '/dashboard' },
-            { label: 'Über mich', href: '/about' },
+            { label: 'Über AuditAI', href: '/about' },
         ],
     },
     {
