@@ -436,6 +436,21 @@ function GeoCheckPageInner() {
                                     <p className="text-sm text-slate-400 mt-4">{extractDomain(normalizedDomain)} wurde bei "{queryLabel}" nicht erwähnt.</p>
                                 )}
 
+                                {statusData.citations?.length > 0 && (
+                                    <div className="mt-5 pt-5 border-t border-white/10 text-left">
+                                        <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider mb-2.5">
+                                            {statusData.mentioned ? 'Weitere in der Antwort genannte Quellen' : 'Stattdessen genannte Quellen'}
+                                        </p>
+                                        <div className="flex flex-wrap gap-1.5">
+                                            {statusData.citations.map((c, i) => (
+                                                <span key={i} className="text-xs px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-slate-300">
+                                                    {c.domain}
+                                                </span>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+
                                 {statusData.prompt && (
                                     <div className="mt-5 pt-5 border-t border-white/10 text-left">
                                         <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Gestellte Frage</p>

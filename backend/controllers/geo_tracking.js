@@ -5,7 +5,7 @@ import ProductSubscription from '../models/product_subscription.js'
 import SeoTrackedSite from '../models/seo_tracked_site.js'
 import SeoKeywordRanking from '../models/seo_keyword_ranking.js'
 import {
-    checkSiteMentions, PLATFORM_COSTS, PROMPT_INTENTS, classifyGeoSuitableKeywords, getAiKeywordVolume,
+    checkSiteMentions, PROMPT_INTENTS, classifyGeoSuitableKeywords, getAiKeywordVolume,
     getTopMentionedDomains, getKeywordMentionHistory,
 } from '../services/geoService.js'
 import { analyzeGEO } from './geo.js'
@@ -14,17 +14,10 @@ import { t } from '../utils/i18n/errors.js'
 
 const VALID_PLATFORMS = ['claude', 'chatgpt', 'gemini', 'perplexity', 'google_aio']
 
-// Preise/Limits per 2026-09: Kostenanalyse ergab, dass die alten Limits (30/100 Keywords,
-// 8/20 manuelle Checks — jeder manuelle Check = voller Rerun aller Keywords) bei voller
-// Ausschöpfung deutlich mehr an DataForSEO-API-Kosten verursachen als der Plan einbringt.
-// Keywords und manuelle Checks wurden gesenkt, Pro/Expert-Preise entsprechend angehoben
-// (siehe geo/pricing-Seiten), damit auch der Worst Case (volles Kontingent genutzt) nach
-// PayPal-Gebühr und 50% Steuerrücklage noch komfortabel Marge lässt.
-// keywordSuggestionsPerMonth per 2026-09: getKeywordSuggestions (Cross-Sell-Feature, nur aktiv wenn
-// derselbe Nutzer für dieselbe Domain zusätzlich ein SEO-Automatisierung-Abo hat) war nur über einen
+// keywordSuggestionsPerMonth: getKeywordSuggestions (Cross-Sell-Feature, nur aktiv wenn derselbe
+// Nutzer für dieselbe Domain zusätzlich ein SEO-Automatisierung-Abo hat) war nur über einen
 // 24h-Cache pro Site gedeckelt, kein echtes Monats-Kontingent — bei mehreren Sites theoretisch näher
-// an "täglich pro Site" als an einem echten Limit. Live getestet (ai_keyword_data + Claude Haiku):
-// ca. $0,02-0,035/Aufruf. Werte proportional zu maxSites, bleibt weit innerhalb des 1/4-Marge-Budgets.
+// an "täglich pro Site" als an einem echten Limit. Werte proportional zu maxSites.
 const PLAN_LIMITS = {
     einsteiger: { maxSites: 1,  maxKeywords: 10, platforms: ['claude', 'gemini'],                                      manualChecksPerMonth: 2, promptVariants: 1, competitorAnalyticsEnabled: false, historicalTrendsEnabled: false, keywordSuggestionsPerMonth: 5  },
     pro:        { maxSites: 3,  maxKeywords: 20, platforms: ['claude', 'chatgpt', 'gemini', 'perplexity', 'google_aio'], manualChecksPerMonth: 2, promptVariants: 2, competitorAnalyticsEnabled: true,  historicalTrendsEnabled: false, keywordSuggestionsPerMonth: 15 },
@@ -41,14 +34,6 @@ async function getGeoPlan(userId) {
 async function countTotalKeywords(userId) {
     const sites = await GeoTrackedSite.find({ userId, isActive: true }, 'keywords customPrompts').lean()
     return sites.reduce((sum, s) => sum + (s.keywords?.length || 0) + (s.customPrompts?.length || 0), 0)
-}
-
-// customPromptCount laeuft nur mit 1 Intent ('custom', keine Vergleich-Variante) statt variantCount —
-// der Nutzer gibt die exakte Frage bereits vor, ein zweites Template ergaebe keinen Sinn.
-function calcMonthlyCost(keywordCount, platforms, variantCount = 1, customPromptCount = 0) {
-    const checksPerMonth = (keywordCount * variantCount + customPromptCount) * platforms.length * 4
-    const costPerCheck = platforms.reduce((sum, p) => sum + (PLATFORM_COSTS[p] || 0), 0) / platforms.length
-    return Math.round(checksPerMonth * costPerCheck * 100) / 100
 }
 
 function activeIntents(promptVariants = 1) {
@@ -370,8 +355,7 @@ export async function updatePlatforms(req, res) {
         )
         if (!site) return res.status(404).json({ error: t('SITE_NOT_FOUND', req.language) })
 
-        const monthlyCost = calcMonthlyCost(site.keywords.length, allowedPlatforms, site.promptVariants, site.customPrompts?.length || 0)
-        res.json({ site, monthlyCost })
+        res.json({ site })
     } catch (err) {
         res.status(500).json({ error: err.message })
     }
@@ -430,14 +414,13 @@ export async function getResults(req, res) {
             })
         })
         const mentionRate = totalChecked > 0 ? Math.round((totalMentioned / totalChecked) * 100) : null
-        const monthlyCost = calcMonthlyCost(site.keywords.length, platforms, site.promptVariants, site.customPrompts?.length || 0)
 
         const month = new Date().toISOString().slice(0, 7)
         const usage = await GeoUsage.findOne({ userId: req.userId, feature: 'manual_check', month }).lean()
         const manualChecksUsed = usage?.count ?? 0
         const manualChecksLimit = PLAN_LIMITS[plan].manualChecksPerMonth
 
-        res.json({ site, results, intents, mentionRate, mentionedCount: totalMentioned, checkedCount: totalChecked, monthlyCost, manualChecksUsed, manualChecksLimit })
+        res.json({ site, results, intents, mentionRate, mentionedCount: totalMentioned, checkedCount: totalChecked, manualChecksUsed, manualChecksLimit })
     } catch (err) {
         res.status(500).json({ error: err.message })
     }
