@@ -1,11 +1,11 @@
 import Link from 'next/link'
-import { GraduationCap, Code2, Zap, Mail } from 'lucide-react'
+import { Sparkles, RefreshCw, Zap as ZapIcon, Mail } from 'lucide-react'
 import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
 
 export const metadata = {
-    title: { absolute: 'About – Finn Paustian | AuditAI' },
-    description: 'Finn Paustian built AuditAI to automate SEO and GEO analysis. Trained software developer, dozens of fullstack projects, a one-person product.',
+    title: { absolute: 'About AuditAI – Why This Tool Exists' },
+    description: 'AuditAI automatically tracks whether your website gets cited by ChatGPT, Claude, Perplexity, and Google AI Overview — and how it ranks on Google. One report instead of ten separate tools.',
     alternates: {
         canonical: 'https://www.sitecheckai.dev/en/about',
         languages: {
@@ -14,10 +14,10 @@ export const metadata = {
         },
     },
     openGraph: {
-        title: 'About – Finn Paustian | AuditAI',
-        description: 'Why I built AuditAI and who\'s behind it.',
+        title: 'About AuditAI',
+        description: 'Why AuditAI exists and what it automates.',
         url: 'https://www.sitecheckai.dev/en/about',
-        type: 'profile',
+        type: 'website',
         locale: 'en_US',
     },
 }
@@ -26,26 +26,20 @@ const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'AboutPage',
     url: 'https://www.sitecheckai.dev/en/about',
-    name: 'About – Finn Paustian',
+    name: 'About AuditAI',
     mainEntity: {
-        '@type': 'Person',
-        name: 'Finn Paustian',
-        jobTitle: 'Founder & Developer',
-        description: 'Software developer apprentice and fullstack engineer. Built AuditAI to automate time-consuming manual SEO and GEO analysis.',
-        email: 'mailto:sitecheckai@gmail.com',
-        url: 'https://www.sitecheckai.dev/en/about',
-        worksFor: {
-            '@type': 'Organization',
-            name: 'AuditAI',
-            url: 'https://www.sitecheckai.dev',
-        },
+        '@type': 'SoftwareApplication',
+        name: 'AuditAI',
+        applicationCategory: 'BusinessApplication',
+        description: 'Automated tracking of AI visibility (ChatGPT, Claude, Perplexity, Google AI Overview) and classic SEO rankings in a single report.',
+        url: 'https://www.sitecheckai.dev',
     },
 }
 
 const FACTS = [
-    { icon: GraduationCap, label: 'Trained software developer (application development)', color: '#7c3aed' },
-    { icon: Code2, label: 'Built dozens of fullstack websites', color: '#06b6d4' },
-    { icon: Zap, label: 'AuditAI: a one-person product', color: '#10b981' },
+    { icon: Sparkles, label: 'AI visibility & SEO in one report', color: '#7c3aed' },
+    { icon: ZapIcon, label: 'Audit in under 60 seconds', color: '#06b6d4' },
+    { icon: RefreshCw, label: 'Weekly automated tracking', color: '#10b981' },
 ]
 
 export default function AboutPageEn() {
@@ -65,12 +59,12 @@ export default function AboutPageEn() {
 
                 {/* Header */}
                 <div className="flex items-center gap-4 mb-10">
-                    <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-violet-600 to-cyan-600 flex items-center justify-center text-white text-2xl font-bold shrink-0">
-                        F
+                    <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-violet-600 to-cyan-600 flex items-center justify-center shrink-0">
+                        <ZapIcon className="w-7 h-7 text-white" strokeWidth={2.5} />
                     </div>
                     <div>
-                        <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">Finn Paustian</h1>
-                        <p className="text-slate-400 text-sm mt-1">Founder & Developer, AuditAI · Lübeck, Germany</p>
+                        <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">About AuditAI</h1>
+                        <p className="text-slate-400 text-sm mt-1">AI visibility & SEO tracking, one report</p>
                     </div>
                 </div>
 
@@ -90,19 +84,23 @@ export default function AboutPageEn() {
                 <div className="prose prose-invert prose-slate max-w-none text-slate-300 leading-relaxed space-y-5">
                     <h2 className="text-xl font-bold text-white mb-3">Why AuditAI?</h2>
                     <p>
-                        I built AuditAI because SEO and GEO are time-consuming. Constantly manually checking
-                        rankings, meta data, Core Web Vitals, and AI visibility eats time that should really go into
-                        product and content. To focus on what matters, I automated exactly that.
+                        Google isn't the only search engine anymore. More and more people ask ChatGPT, Claude, or
+                        Perplexity for recommendations instead of googling — and a website can sit at #1 on Google while
+                        being completely invisible to those AI models. Keeping an eye on both means, in practice: manually
+                        checking rankings, meta data, and Core Web Vitals — plus regularly asking several AI models
+                        yourself whether your site even gets mentioned. Spread across multiple tools, that quickly turns
+                        into a full-time job on its own.
                     </p>
                     <p>
-                        I'm training as a software developer specializing in application development and have built
-                        dozens of fullstack websites over the past few years. AuditAI is a side project of mine - I build,
-                        run, and maintain it myself.
+                        AuditAI automates exactly that: one audit that tracks both AI visibility across ChatGPT, Claude,
+                        Perplexity, and Google AI Overview, and classic Google rankings — with concrete, prioritized fixes
+                        instead of generic tips. Checks run automatically every week in the background, so a ranking drop
+                        or a lost AI mention gets caught before it costs traffic.
                     </p>
 
                     <h2 className="text-xl font-bold text-white mb-3 mt-10">Contact</h2>
                     <p>
-                        Questions, feedback, or just want to say hi:{' '}
+                        Questions or feedback about AuditAI:{' '}
                         <a href="mailto:sitecheckai@gmail.com" className="text-violet-400 hover:text-violet-300 inline-flex items-center gap-1.5">
                             <Mail className="w-3.5 h-3.5" />
                             sitecheckai@gmail.com
