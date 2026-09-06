@@ -19,19 +19,21 @@ export async function GET() {
             >
                 <div
                     style={{
-                        width: 220,
-                        height: 220,
-                        borderRadius: 56,
+                        width: 168,
+                        height: 168,
+                        borderRadius: 42,
                         background: 'linear-gradient(135deg, #7c3aed 0%, #06b6d4 100%)',
+                        boxShadow: '0 12px 40px rgba(124, 58, 237, 0.4)',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        fontSize: 120,
                     }}
                 >
-                    ⚡
+                    <svg width="92" height="92" viewBox="0 0 24 24" fill="white">
+                        <path d="M15.914 4a1.5 1.5 0 00-2.474-1.561l-9 9A1.5 1.5 0 005.5 14h4.002a.5.5 0 01.471.666L8.086 20a1.5 1.5 0 002.475 1.56l9-9A1.5 1.5 0 0018.5 10h-3.997a.5.5 0 01-.472-.667z" />
+                    </svg>
                 </div>
-                <span style={{ fontSize: 56, fontWeight: 700, color: 'white', letterSpacing: '-1px', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                <span style={{ fontSize: 46, fontWeight: 700, color: 'white', letterSpacing: '-1px', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
                     Audit<span style={{ color: '#a78bfa' }}>AI</span>
                 </span>
             </div>
