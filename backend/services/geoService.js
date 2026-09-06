@@ -41,19 +41,6 @@ export const PLATFORM_LABELS = {
     google_aio:  'Google AI Overview',
 }
 
-// Aus echten Live-Testcalls gegen DataForSEOs LLM Responses API übernommen — jeweils Mittelwert
-// aus den Prompts für beide Intents (empfehlung/vergleich), money_spent-Feld der Antwort +
-// 0,0006 $ DataForSEO-Grundgebühr, mit den produktiv genutzten Modellen (siehe LLM_RESPONSES_MODEL
-// unten). Nicht geschätzt — Antwortlänge (und damit Kosten) schwankt aber real pro Aufruf; die
-// echten money_spent-Werte werden pro Call zusätzlich geloggt (siehe checkWithLlmResponses).
-export const PLATFORM_COSTS = {
-    claude:     0.0121,  // getestet: claude-sonnet-4-6, Ø aus empfehlung ($0,0067) + vergleich ($0,0175)
-    chatgpt:    0.0040,  // getestet: gpt-4o, Ø aus empfehlung ($0,0033) + vergleich ($0,0048)
-    gemini:     0.0110,  // getestet: gemini-3.5-flash, Ø aus empfehlung ($0,0103) + vergleich ($0,0111) — antwortet sehr ausführlich (~1150 Output-Tokens)
-    perplexity: 0.0064,  // getestet: sonar, Ø aus empfehlung ($0,0059) + vergleich ($0,0063)
-    google_aio: 0.0026,  // DataForSEO SERP Live Advanced (~$0.002) + load_async_ai_overview surcharge ($0.0006, refunded when no AI Overview appears)
-}
-
 // DataForSEO "AI Optimization" API (Top Mentioned Domains, Historical): einheitlich 0,1 $
 // Grundgebühr pro Request + 0,001 $ pro Zeile (bestätigt gegen docs.dataforseo.com). Für
 // Wettbewerbs-Analytics ist "eine Zeile" eine Domain im Top-N-Ranking, für Historie ein
@@ -208,8 +195,7 @@ async function checkWithGoogleAIOverview(keyword, domain, language, intent, cust
 // Claude/ChatGPT/Gemini/Perplexity laufen alle über denselben DataForSEO-Endpoint
 // (/v3/ai_optimization/{plattform}/llm_responses/live) statt über vier separate Direct-API-Keys —
 // bestätigt gegen die echte API (Modell-Liste per GET .../models, Response-Form per Live-Testcall
-// mit echtem money_spent-Feld). Jede Plattform bekommt hier ein festes, aktuelles Modell; die
-// Kosten in PLATFORM_COSTS sind aus echten Testcalls übernommen, nicht geschätzt.
+// mit echtem money_spent-Feld). Jede Plattform bekommt hier ein festes, aktuelles Modell.
 const LLM_RESPONSES_MODEL = {
     claude:     'claude-sonnet-4-6',
     chatgpt:    'gpt-4o',
@@ -238,9 +224,6 @@ async function checkWithLlmResponses(platform, keyword, domain, language, intent
     }
 
     const result = task.result?.[0]
-    // Echte Kosten pro Call mitloggen (statt nur die PLATFORM_COSTS-Schätzung zu vertrauen) —
-    // damit sich vor allem der ungetestete ChatGPT-Wert später aus echten Produktionsdaten statt
-    // aus einem o4-mini-Platzhalter kalibrieren lässt.
     if (result?.money_spent != null) {
         console.log(`[geoService] ${platform} (${LLM_RESPONSES_MODEL[platform]}) money_spent=${result.money_spent} tokens=${result.input_tokens}/${result.output_tokens}`)
     }
@@ -267,9 +250,70 @@ async function checkWithLlmResponses(platform, keyword, domain, language, intent
 }
 
 const checkWithClaude     = (keyword, domain, language, intent, customPrompt) => checkWithLlmResponses('claude', keyword, domain, language, intent, customPrompt)
-const checkWithChatGPT    = (keyword, domain, language, intent, customPrompt) => checkWithLlmResponses('chatgpt', keyword, domain, language, intent, customPrompt)
-const checkWithGemini     = (keyword, domain, language, intent, customPrompt) => checkWithLlmResponses('gemini', keyword, domain, language, intent, customPrompt)
 const checkWithPerplexity = (keyword, domain, language, intent, customPrompt) => checkWithLlmResponses('perplexity', keyword, domain, language, intent, customPrompt)
+
+// ChatGPT/Gemini: LLM Scraper API statt LLM Responses — scrapt die echten Ergebnisse des jeweiligen
+// KI-Suchmodus (mit Web-Zugriff) statt einer rohen Modell-Completion. Liefert ein strukturiertes
+// "sources"-Array (url/domain/title/snippet), das direkt aufs citations-Schema passt — kein
+// Regex-Fallback wie bei checkWithLlmResponses noetig. Live gegen Produktion bestaetigt: $0,004/Call
+// fuer beide, echte Quellen statt Text-Heuristik. Claude/Perplexity haben bei DataForSEO keinen
+// Scraper-Endpoint, bleiben auf checkWithLlmResponses.
+function llmScraperLocale(language) {
+    return language === 'de' ? { location_name: 'Germany', language_name: 'German' } : { location_name: 'United States', language_name: 'English' }
+}
+
+async function checkWithLlmScraper(platform, keyword, domain, language, intent, customPrompt = null) {
+    if (!DFS_LOGIN || !DFS_PASSWORD) {
+        console.warn(`[geoService] DATAFORSEO_LOGIN/PASSWORD nicht gesetzt — ${platform}-Check übersprungen`)
+        return { mentioned: false, context: null, citations: [] }
+    }
+
+    const { location_name, language_name } = llmScraperLocale(language)
+    const body = {
+        keyword: customPrompt || buildQuery(keyword, language, intent),
+        location_name,
+        language_name,
+    }
+    // 'force_web_search' wird von Gemini nicht unterstuetzt (live gegen Produktion bestaetigt:
+    // "Invalid Field: this se does not support 'force_web_search'") — nur fuer ChatGPT setzen.
+    if (platform === 'chat_gpt') body.force_web_search = true
+
+    const data = await dfsPostWithRetry(`/v3/ai_optimization/${platform}/llm_scraper/live/advanced`, [body], `LLM Scraper/${platform} "${keyword}"/${intent}`)
+
+    const task = data.tasks?.[0]
+    if (task?.status_code !== 20000) {
+        console.warn('[geoService] %s-Scraper-Check endgültig fehlgeschlagen bei "%s":', platform, keyword, task?.status_code, task?.status_message)
+        return { mentioned: false, context: null, citations: [] }
+    }
+    if (task.cost != null) {
+        console.log(`[geoService] ${platform} (llm_scraper) cost=${task.cost}`)
+    }
+
+    const result = task.result?.[0]
+    if (!result) {
+        console.log(`[geoService] ${platform}-Scraper-Check "${keyword}": Status Ok, aber kein Ergebnis — raw=${JSON.stringify(task).slice(0, 400)}`)
+        return { mentioned: false, context: null, citations: [] }
+    }
+
+    const text = result.markdown || ''
+    const citations = (result.sources || [])
+        .map(s => ({
+            url:     s.url || null,
+            domain:  (s.domain || safeHostname(s.url) || '').replace(/^www\./, '').toLowerCase(),
+            title:   s.title || s.source_name || null,
+            snippet: s.snippet || null,
+        }))
+        .filter(c => c.domain)
+
+    const { mentioned: textMentioned, context } = extractMention(text, domain)
+    const normalizedDomain = domain.replace(/^www\./, '').toLowerCase()
+    const citationMatch = citations.find(c => c.domain === normalizedDomain || c.domain.endsWith(`.${normalizedDomain}`))
+
+    return { mentioned: textMentioned || !!citationMatch, context: context || null, citations }
+}
+
+const checkWithChatGPT = (keyword, domain, language, intent, customPrompt) => checkWithLlmScraper('chat_gpt', keyword, domain, language, intent, customPrompt)
+const checkWithGemini  = (keyword, domain, language, intent, customPrompt) => checkWithLlmScraper('gemini', keyword, domain, language, intent, customPrompt)
 
 // Bestätigt gegen die reale DataForSEO-Doku (docs.dataforseo.com/v3/ai_optimization/llm_mentions/...):
 // alle Endpoints unten akzeptieren als "platform" nur 'google' oder 'chat_gpt'.

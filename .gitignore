@@ -36,6 +36,7 @@ backend/reports/
 backend/scripts/dataforseo-backlink-compare.mjs
 backend/scripts/giveGeoExpert.js
 backend/scripts/giveSeoPro.js
+backend/scripts/grant-plan.js
 backend/scripts/migrateGoogleAioPlatform.js
 backend/scripts/migratePerplexityPlatforms.js
 backend/scripts/migratePromptVariants.js

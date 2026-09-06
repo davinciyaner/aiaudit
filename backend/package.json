@@ -32,6 +32,6 @@
   "resolutions": {
     "body-parser": ">=2.3.0",
     "qs": ">=6.16.0",
-    "undici": "^7.29.0"
+    "undici": "^7.29.1"
   }
 }
