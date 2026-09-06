@@ -12,6 +12,7 @@ export function getRootJsonLd(locale) {
                     logo: {
                         '@type': 'ImageObject',
                         url: 'https://www.sitecheckai.dev/logo',
+                        contentUrl: 'https://www.sitecheckai.dev/logo',
                         width: 512,
                         height: 512,
                     },
@@ -54,6 +55,7 @@ export function getRootJsonLd(locale) {
                 logo: {
                     '@type': 'ImageObject',
                     url: 'https://www.sitecheckai.dev/logo',
+                    contentUrl: 'https://www.sitecheckai.dev/logo',
                     width: 512,
                     height: 512,
                 },
@@ -78,6 +80,22 @@ export function getRootJsonLd(locale) {
                     { '@type': 'Offer', name: 'Free', price: '0', priceCurrency: 'EUR', description: '1 Audit pro Monat' },
                     { '@type': 'Offer', name: 'Pro', price: '29', priceCurrency: 'EUR', description: '10 Audits pro Monat' },
                     { '@type': 'Offer', name: 'Agency', price: '99', priceCurrency: 'EUR', description: 'Unbegrenzte Audits' },
+                ],
+            },
+            {
+                '@context': 'https://schema.org',
+                '@type': 'Article',
+                headline: 'AI Visibility & SEO prüfen: Wirst du von ChatGPT, Perplexity und Google zitiert?',
+                mainEntityOfPage: 'https://www.sitecheckai.dev',
+                inLanguage: 'de-DE',
+                author: { '@id': 'https://www.sitecheckai.dev/#organization' },
+                publisher: { '@id': 'https://www.sitecheckai.dev/#organization' },
+                datePublished: '2026-01-15',
+                dateModified: '2026-09-06',
+                about: [
+                    { '@type': 'Thing', name: 'Generative Engine Optimization' },
+                    { '@type': 'Thing', name: 'AI Visibility' },
+                    { '@type': 'Thing', name: 'SEO-Audit' },
                 ],
             },
         ],

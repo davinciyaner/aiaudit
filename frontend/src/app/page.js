@@ -11,8 +11,8 @@ import FAQ from './components/FAQ'
 import { FAQS } from './components/faqData'
 
 export const metadata = {
-    title: 'AI Visibility & SEO prüfen – Audit in 60s | AuditAI',
-    description: 'Kostenloser Website-Audit für AI Visibility & SEO in 60 Sekunden: Sichtbarkeit bei ChatGPT, Claude, Perplexity & Google AI Overview sowie Title-Tags und Google-Rankings prüfen.',
+    title: 'AI Visibility & SEO prüfen – Kostenlos in 60s | AuditAI',
+    description: 'Kostenloser Audit in 60 Sekunden: Prüfe SEO-Rankings & KI-Sichtbarkeit bei ChatGPT, Claude, Perplexity & Google AI Overview. Jetzt kostenlos starten!',
     keywords: 'ai visibility, ai visibility tracker, ai visibility score, geo check, ki sichtbarkeit, ki sichtbarkeit messen, geo automatisierung, seo automatisierung, mention rate tracking, share of voice ki, chatgpt sichtbarkeit tracken, ki erwähnungen tracken, seo test, seo test kostenlos, seo check, website seo check, kostenloser seo check, seo analyse kostenlos, website audit kostenlos, SEO analyse tool, GEO optimierung, website checker, lighthouse alternative 2026',
     openGraph: {
         title: 'AI Visibility & SEO prüfen | AuditAI',
