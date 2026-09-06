@@ -38,7 +38,7 @@ export default function FAQ() {
                                 onClick={() => setOpen(open === i ? null : i)}
                                 className="w-full flex items-center justify-between gap-4 px-5 py-4 text-left hover:bg-[var(--surface-08)] transition-colors"
                             >
-                                <span className="text-sm font-medium text-white leading-snug">{faq.q}</span>
+                                <h3 className="m-0 text-sm font-medium text-white leading-snug">{faq.q}</h3>
                                 <ChevronDown
                                     className="w-4 h-4 text-slate-500 shrink-0 transition-transform duration-200"
                                     style={{ transform: open === i ? 'rotate(180deg)' : 'rotate(0deg)' }}

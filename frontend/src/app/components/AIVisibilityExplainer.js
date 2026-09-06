@@ -85,6 +85,12 @@ export default function AIVisibilityExplainer() {
                         zitierbaren Inhalten und klaren Vertrauenssignalen. Eine Seite kann bei Google auf Platz 1 stehen
                         und für KI-Modelle trotzdem unsichtbar sein.
                     </p>
+                    <p className="text-slate-500 text-sm sm:text-base leading-relaxed mt-4">
+                        AuditAI ist ein KI-gestütztes Audit-Tool, das in unter 60 Sekunden misst, wie sichtbar eine Website bei
+                        ChatGPT, Claude, Perplexity und Google AI Overview ist — und wie sie in den klassischen Google-Rankings
+                        abschneidet. Der Report liefert einen AI-Visibility-Score (0–100), einen SEO-Score und
+                        Performance-Metriken (TTFB, FCP) sowie priorisierte Fixes statt generischer Tipps.
+                    </p>
                 </motion.div>
 
                 {/* Stats */}
