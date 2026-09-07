@@ -29,8 +29,19 @@ async function getGeoPlan(userId) {
     return sub ? sub.plan : null
 }
 
-// Eigene Prompts zaehlen gegen dasselbe Kontingent wie Keywords — ein API-Call kostet gleich viel,
-// unabhaengig davon ob die Frage aus einem Keyword-Template oder einem eigenen Prompt stammt.
+async function getLimits(userId, plan) {
+    const base = PLAN_LIMITS[plan]
+    if (!base) return base
+    const sub = await ProductSubscription.findOne({ userId, product: 'geo', status: 'ACTIVE' }, 'unlimited').lean()
+    if (!sub?.unlimited) return base
+    return Object.fromEntries(Object.entries(base).map(([k, v]) => {
+        if (typeof v === 'number') return [k, Infinity]
+        if (typeof v === 'boolean') return [k, true]
+        if (Array.isArray(v)) return [k, VALID_PLATFORMS]
+        return [k, v]
+    }))
+}
+
 async function countTotalKeywords(userId) {
     const sites = await GeoTrackedSite.find({ userId, isActive: true }, 'keywords customPrompts').lean()
     return sites.reduce((sum, s) => sum + (s.keywords?.length || 0) + (s.customPrompts?.length || 0), 0)
@@ -85,7 +96,7 @@ export async function getSites(req, res) {
         if (!plan) return res.status(403).json({ error: t('NO_ACTIVE_GEO_SUB', req.language) })
 
         const sites = await GeoTrackedSite.find({ userId: req.userId, isActive: true }).lean()
-        const limits = PLAN_LIMITS[plan]
+        const limits = await getLimits(req.userId, plan)
 
         const enriched = await Promise.all(sites.map(async (site) => {
             const customPrompts = site.customPrompts || []
@@ -153,7 +164,7 @@ export async function addSite(req, res) {
         const plan = await getGeoPlan(req.userId)
         if (!plan) return res.status(403).json({ error: t('NO_ACTIVE_GEO_SUB', req.language) })
 
-        const limits = PLAN_LIMITS[plan]
+        const limits = await getLimits(req.userId, plan)
 
         const siteCount = await GeoTrackedSite.countDocuments({ userId: req.userId, isActive: true })
         if (siteCount >= limits.maxSites) {
@@ -230,7 +241,7 @@ export async function addKeywords(req, res) {
         const site = await GeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId })
         if (!site) return res.status(404).json({ error: t('SITE_NOT_FOUND', req.language) })
 
-        const limits = PLAN_LIMITS[plan]
+        const limits = await getLimits(req.userId, plan)
         const totalKeywords = await countTotalKeywords(req.userId)
         const slotsLeft = limits.maxKeywords - totalKeywords
         if (slotsLeft <= 0) return res.status(403).json({ error: req.language === 'en'
@@ -294,7 +305,7 @@ export async function addCustomPrompt(req, res) {
         const site = await GeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId })
         if (!site) return res.status(404).json({ error: t('SITE_NOT_FOUND', req.language) })
 
-        const limits = PLAN_LIMITS[plan]
+        const limits = await getLimits(req.userId, plan)
         const totalKeywords = await countTotalKeywords(req.userId)
         if (totalKeywords >= limits.maxKeywords) {
             return res.status(403).json({ error: req.language === 'en'
@@ -344,7 +355,7 @@ export async function updatePlatforms(req, res) {
         const plan = await getGeoPlan(req.userId)
         if (!plan) return res.status(403).json({ error: t('NO_ACTIVE_GEO_SUB', req.language) })
 
-        const limits = PLAN_LIMITS[plan]
+        const limits = await getLimits(req.userId, plan)
         const allowedPlatforms = platforms.filter(p => VALID_PLATFORMS.includes(p) && limits.platforms.includes(p))
         if (!allowedPlatforms.length) return res.status(400).json({ error: t('NO_ALLOWED_PLATFORMS_FOR_PLAN', req.language) })
 
@@ -418,7 +429,7 @@ export async function getResults(req, res) {
         const month = new Date().toISOString().slice(0, 7)
         const usage = await GeoUsage.findOne({ userId: req.userId, feature: 'manual_check', month }).lean()
         const manualChecksUsed = usage?.count ?? 0
-        const manualChecksLimit = PLAN_LIMITS[plan].manualChecksPerMonth
+        const manualChecksLimit = (await getLimits(req.userId, plan)).manualChecksPerMonth
 
         res.json({ site, results, intents, mentionRate, mentionedCount: totalMentioned, checkedCount: totalChecked, manualChecksUsed, manualChecksLimit })
     } catch (err) {
@@ -442,6 +453,8 @@ async function runCheckInBackground(site, userId, keywords, customPrompts) {
             context:      r.context,
             citations:    r.citations || [],
             sentiment:    r.sentiment || null,
+            ownPosition:      r.ownPosition ?? null,
+            ownPositionTotal: r.ownPositionTotal ?? null,
             checkedAt:    new Date(),
         })))
 
@@ -492,7 +505,7 @@ export async function triggerCheck(req, res) {
         }
 
         const month = new Date().toISOString().slice(0, 7)
-        const manualLimit = PLAN_LIMITS[plan].manualChecksPerMonth
+        const manualLimit = (await getLimits(req.userId, plan)).manualChecksPerMonth
         const usage = await GeoUsage.findOne({ userId: req.userId, feature: 'manual_check', month }).lean()
         const used = usage?.count ?? 0
         if (used >= manualLimit) {
@@ -678,7 +691,7 @@ export async function getMarketAnalytics(req, res) {
     try {
         const plan = await getGeoPlan(req.userId)
         if (!plan) return res.status(403).json({ error: t('NO_ACTIVE_GEO_SUB', req.language) })
-        if (!PLAN_LIMITS[plan].competitorAnalyticsEnabled) {
+        if (!(await getLimits(req.userId, plan)).competitorAnalyticsEnabled) {
             return res.status(403).json({ error: req.language === 'en'
                 ? 'Competitor analytics requires the Pro or Expert plan'
                 : 'Wettbewerbs-Analytics erfordert den Pro- oder Expert-Plan' })
@@ -749,7 +762,7 @@ export async function getHistoricalTrend(req, res) {
     try {
         const plan = await getGeoPlan(req.userId)
         if (!plan) return res.status(403).json({ error: t('NO_ACTIVE_GEO_SUB', req.language) })
-        if (!PLAN_LIMITS[plan].historicalTrendsEnabled) {
+        if (!(await getLimits(req.userId, plan)).historicalTrendsEnabled) {
             return res.status(403).json({ error: req.language === 'en'
                 ? 'Historical trends require the Expert plan'
                 : 'Historien-Trends erfordern den Expert-Plan' })
@@ -921,7 +934,7 @@ export async function getKeywordSuggestions(req, res) {
             return res.json({ linked: true, suggestions: cached.data, cached: true })
         }
 
-        const monthlyLimit = PLAN_LIMITS[plan]?.keywordSuggestionsPerMonth ?? 5
+        const monthlyLimit = (await getLimits(req.userId, plan))?.keywordSuggestionsPerMonth ?? 5
         const month = new Date().toISOString().slice(0, 7)
         const usage = await GeoUsage.findOne({ userId: req.userId, feature: 'keyword_suggestions', month }).lean()
         const used = usage?.count ?? 0

@@ -8,7 +8,8 @@
   "scripts": {
     "dev": "node server.js",
     "audit": "node src/cli.js",
-    "grant-plan": "node scripts/grant-plan.js"
+    "grant-plan": "node scripts/grant-plan.js",
+    "grant-product-plan": "node scripts/grant-product-plan.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.96.0",

@@ -110,6 +110,38 @@ function safeHostname(url) {
     }
 }
 
+function extractInlineLinkDomains(markdownText) {
+    if (!markdownText) return []
+    const linkRegex = /\[[^\]]*\]\((https?:\/\/[^\s)]+)\)/g
+    const seen = new Set()
+    const ordered = []
+    let match
+    while ((match = linkRegex.exec(markdownText)) !== null) {
+        const domain = safeHostname(match[1])
+        if (domain && !seen.has(domain)) {
+            seen.add(domain)
+            ordered.push(domain)
+        }
+    }
+    return ordered
+}
+
+// Eigene Position (1-basiert) + Gesamtzahl der Liste, aus der sie stammt. Bevorzugt die im
+// Antworttext tatsaechlich genannten/verlinkten Domains (namedDomains) vor der vollen
+// citations/sources-Liste — faellt auf citations zurueck, wenn keine Inline-Links gefunden wurden
+// (z.B. Plattform ohne Markdown-Antwort, oder Modell hat ohne Links geantwortet).
+function findOwnPosition({ citations, namedDomains }, domain) {
+    const normalizedDomain = domain.replace(/^www\./, '').toLowerCase()
+    const matches = (d) => d === normalizedDomain || d?.endsWith(`.${normalizedDomain}`)
+
+    if (namedDomains?.length) {
+        const idx = namedDomains.findIndex(matches)
+        if (idx !== -1) return { position: idx + 1, total: namedDomains.length }
+    }
+    const idx = citations.findIndex(c => matches(c.domain))
+    return { position: idx === -1 ? null : idx + 1, total: citations.length }
+}
+
 const DOMAIN_MENTION_REGEX = /\b[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?(?:\.[a-z0-9-]+)*\.(?:com|de|net|org|io|co|app|ai|dev|info|eu|at|ch|tools?|shop)\b/gi
 
 function extractDomainMentions(text, excludeDomain) {
@@ -192,10 +224,6 @@ async function checkWithGoogleAIOverview(keyword, domain, language, intent, cust
     return { mentioned: !!match, context: match?.snippet || null, citations }
 }
 
-// Claude/ChatGPT/Gemini/Perplexity laufen alle über denselben DataForSEO-Endpoint
-// (/v3/ai_optimization/{plattform}/llm_responses/live) statt über vier separate Direct-API-Keys —
-// bestätigt gegen die echte API (Modell-Liste per GET .../models, Response-Form per Live-Testcall
-// mit echtem money_spent-Feld). Jede Plattform bekommt hier ein festes, aktuelles Modell.
 const LLM_RESPONSES_MODEL = {
     claude:     'claude-sonnet-4-6',
     chatgpt:    'gpt-4o',
@@ -245,8 +273,9 @@ async function checkWithLlmResponses(platform, keyword, domain, language, intent
     const { mentioned: textMentioned, context } = extractMention(text, domain)
     const normalizedDomain = domain.replace(/^www\./, '').toLowerCase()
     const citationMatch = citations.find(c => c.domain === normalizedDomain || c.domain?.endsWith(`.${normalizedDomain}`))
+    const namedDomains = extractInlineLinkDomains(text)
 
-    return { mentioned: textMentioned || !!citationMatch, context: context || null, citations }
+    return { mentioned: textMentioned || !!citationMatch, context: context || null, citations, namedDomains }
 }
 
 const checkWithClaude     = (keyword, domain, language, intent, customPrompt) => checkWithLlmResponses('claude', keyword, domain, language, intent, customPrompt)
@@ -308,8 +337,9 @@ async function checkWithLlmScraper(platform, keyword, domain, language, intent, 
     const { mentioned: textMentioned, context } = extractMention(text, domain)
     const normalizedDomain = domain.replace(/^www\./, '').toLowerCase()
     const citationMatch = citations.find(c => c.domain === normalizedDomain || c.domain.endsWith(`.${normalizedDomain}`))
+    const namedDomains = extractInlineLinkDomains(text)
 
-    return { mentioned: textMentioned || !!citationMatch, context: context || null, citations }
+    return { mentioned: textMentioned || !!citationMatch, context: context || null, citations, namedDomains }
 }
 
 const checkWithChatGPT = (keyword, domain, language, intent, customPrompt) => checkWithLlmScraper('chat_gpt', keyword, domain, language, intent, customPrompt)
@@ -445,10 +475,13 @@ async function checkOneCombination(site, keyword, platform, intent, customPrompt
     try {
         const result = await fn(keyword, site.domain, site.language, intent, customPrompt)
         const sentiment = result.mentioned ? await classifySentiment(result.context, site.domain) : null
-        return { keyword, platform, promptIntent: intent, ...result, sentiment }
+        const { position: ownPosition, total: ownPositionTotal } = result.mentioned
+            ? findOwnPosition(result, site.domain)
+            : { position: null, total: null }
+        return { keyword, platform, promptIntent: intent, ...result, sentiment, ownPosition, ownPositionTotal }
     } catch (err) {
         console.error(`[geoService] ${platform}/${intent} Fehler bei "${keyword}":`, err.message)
-        return { keyword, platform, promptIntent: intent, mentioned: false, context: null, citations: [], sentiment: null }
+        return { keyword, platform, promptIntent: intent, mentioned: false, context: null, citations: [], sentiment: null, ownPosition: null, ownPositionTotal: null }
     }
 }
 
@@ -459,12 +492,16 @@ async function checkOneCombination(site, keyword, platform, intent, customPrompt
 // keyword durch buildQuery/buildSearchQuery in ein festes Template einzusetzen.
 export async function checkPlatformMention(platform, keyword, domain, language, intent = 'empfehlung', customPrompt = null) {
     const fn = PLATFORM_FNS[platform]
-    if (!fn) return { mentioned: false, context: null, citations: [] }
+    if (!fn) return { mentioned: false, context: null, citations: [], ownPosition: null, ownPositionTotal: null }
     try {
-        return await fn(keyword, domain, language, intent, customPrompt)
+        const result = await fn(keyword, domain, language, intent, customPrompt)
+        const { position: ownPosition, total: ownPositionTotal } = result.mentioned
+            ? findOwnPosition(result, domain)
+            : { position: null, total: null }
+        return { ...result, ownPosition, ownPositionTotal }
     } catch (err) {
         console.error('[geoService] %s/%s Fehler bei "%s":', platform, intent, keyword, err.message)
-        return { mentioned: false, context: null, citations: [] }
+        return { mentioned: false, context: null, citations: [], ownPosition: null, ownPositionTotal: null }
     }
 }
 

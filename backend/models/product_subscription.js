@@ -7,6 +7,7 @@ const productSubscriptionSchema = new Schema({
     plan:                 { type: String, enum: ['einsteiger', 'pro', 'expert'], required: true },
     paypalSubscriptionId: { type: String, required: true, unique: true },
     status:               { type: String, default: 'ACTIVE' },
+    unlimited:            { type: Boolean, default: false },
 }, { timestamps: true })
 
 // Ein Abo pro Produkt pro User
