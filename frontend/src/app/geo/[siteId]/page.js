@@ -57,6 +57,25 @@ function aggregateMention(checks, platform, intents) {
     return docs.some(d => d.mentioned)
 }
 
+function positionTrendFor(history, platform, intent) {
+    const withPosition = (history || []).filter(h => h.platform === platform && h.promptIntent === intent && h.ownPosition != null)
+    if (withPosition.length < 2) return null
+    const current  = withPosition[withPosition.length - 1].ownPosition
+    const previous = withPosition[withPosition.length - 2].ownPosition
+    return previous - current
+}
+
+function keywordRateStats(history) {
+    const n = history?.length || 0
+    if (!n) return { rate: null, delta: null }
+    const rate = Math.round((history.filter(h => h.mentioned).length / n) * 100)
+    if (n < 4) return { rate, delta: null }
+    const mid = Math.floor(n / 2)
+    const firstRate  = Math.round((history.slice(0, mid).filter(h => h.mentioned).length / mid) * 100)
+    const secondRate = Math.round((history.slice(mid).filter(h => h.mentioned).length / (n - mid)) * 100)
+    return { rate, delta: secondRate - firstRate }
+}
+
 function MentionBadge({ mentioned }) {
     if (mentioned == null) return <span className="text-xs text-slate-600">—</span>
     return mentioned
@@ -64,9 +83,6 @@ function MentionBadge({ mentioned }) {
         : <span className="inline-flex items-center gap-1 text-xs font-semibold text-slate-500 bg-[var(--surface-08)] border border-[var(--border-subtle)] px-2 py-0.5 rounded-md"><X className="w-3 h-3 opacity-50" />Nein</span>
 }
 
-// Kompakter Punkt statt Text-Badge für die Tabellen-Übersicht — bei vielen Zeilen und
-// überwiegend negativen Ergebnissen soll das Auge sofort zu den (wenigen) Treffern springen,
-// statt "Nein" 4× pro Zeile lesen zu müssen. Details gibt's weiterhin beim Aufklappen.
 function MentionDot({ mentioned }) {
     if (mentioned == null) return <span className="inline-block w-2 h-2 rounded-full bg-[var(--surface-10)]" title="Nicht getestet" />
     return mentioned
@@ -86,6 +102,32 @@ function SentimentBadge({ sentiment }) {
     return (
         <span className={`inline-flex items-center text-[10px] font-semibold px-1.5 py-0.5 rounded ml-1.5 ${meta.color} ${meta.bg} border ${meta.border}`}>
             {meta.label}
+        </span>
+    )
+}
+
+function KeywordRateBadge({ rate, delta }) {
+    if (rate == null) return null
+    const color = rate >= 70 ? 'text-[var(--accent)]' : rate >= 40 ? 'text-amber-400' : 'text-slate-500'
+    return (
+        <span className={`inline-flex items-center gap-0.5 text-xs font-semibold ${color}`}
+            title="Mention-Rate über die komplette Check-Historie dieses Keywords">
+            {rate}%
+            {delta > 0 && <ArrowUp className="w-2.5 h-2.5 text-emerald-400" strokeWidth={3} />}
+            {delta < 0 && <ArrowDown className="w-2.5 h-2.5 text-red-400" strokeWidth={3} />}
+        </span>
+    )
+}
+
+function PositionBadge({ position, citationsCount, trend }) {
+    if (position == null) return null
+    return (
+        <span className="inline-flex items-center gap-1 text-[10px] font-semibold px-1.5 py-0.5 rounded ml-1.5 text-slate-300 bg-[var(--surface-08)] border border-[var(--border-subtle)]"
+            title="Position innerhalb der zitierten Quellen dieser Antwort">
+            Platz {position}{citationsCount ? `/${citationsCount}` : ''}
+            {trend > 0 && <ArrowUp className="w-2.5 h-2.5 text-emerald-400" strokeWidth={3} />}
+            {trend < 0 && <ArrowDown className="w-2.5 h-2.5 text-red-400" strokeWidth={3} />}
+            {trend === 0 && <Minus className="w-2.5 h-2.5 text-slate-500" strokeWidth={3} />}
         </span>
     )
 }
@@ -1396,6 +1438,7 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
                                         .filter(Boolean)
                                         .sort()
                                         .pop()
+                                    const { rate: keywordRate, delta: keywordDelta } = keywordRateStats(history)
 
                                     return (
                                         <React.Fragment key={keyword}>
@@ -1409,6 +1452,7 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
                                                             <span className="shrink-0 text-[9px] font-semibold uppercase tracking-wider text-violet-400 bg-violet-500/10 border border-violet-500/25 rounded px-1.5 py-0.5">Prompt</span>
                                                         )}
                                                         <span className="text-sm text-slate-200">{keyword}</span>
+                                                        <KeywordRateBadge rate={keywordRate} delta={keywordDelta} />
                                                         {hasDetail && (
                                                             <span className={`transition-colors ${isExpanded ? 'text-[var(--accent)]' : 'text-slate-700'}`}>
                                                                 {isExpanded ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
@@ -1452,6 +1496,8 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
                                                                                         <div className="flex-1 min-w-0">
                                                                                             <MentionBadge mentioned={c.mentioned} />
                                                                                             <SentimentBadge sentiment={c.sentiment} />
+                                                                                            <PositionBadge position={c.ownPosition} citationsCount={c.ownPositionTotal ?? c.citations?.length}
+                                                                                                trend={positionTrendFor(history, p, i)} />
                                                                                             {c.context && (
                                                                                                 <p className="text-sm text-slate-300 italic leading-relaxed mt-1">&ldquo;{c.context}&rdquo;</p>
                                                                                             )}

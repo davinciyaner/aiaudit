@@ -71,14 +71,14 @@ export async function startCheck(req, res) {
 }
 
 async function runOneOffCheckInBackground(id, domain, keyword, language, platform, customPrompt = null) {
-    const { mentioned, context, citations } = await checkPlatformMention(platform, keyword, domain, language, 'empfehlung', customPrompt)
+    const { mentioned, context, citations, ownPosition, ownPositionTotal } = await checkPlatformMention(platform, keyword, domain, language, 'empfehlung', customPrompt)
 
     if (!mentioned) {
         await GeoOneoffCheck.findByIdAndUpdate(id, { status: 'done', 'result.mentioned': false, 'result.context': null, 'result.citations': citations || [] })
         return
     }
 
-    await GeoOneoffCheck.findByIdAndUpdate(id, { status: 'sentiment', 'result.mentioned': true, 'result.context': context, 'result.citations': citations || [] })
+    await GeoOneoffCheck.findByIdAndUpdate(id, { status: 'sentiment', 'result.mentioned': true, 'result.context': context, 'result.citations': citations || [], 'result.ownPosition': ownPosition ?? null, 'result.ownPositionTotal': ownPositionTotal ?? null })
     const sentiment = await classifySentimentSafe(context, domain)
     await GeoOneoffCheck.findByIdAndUpdate(id, { status: 'done', 'result.sentiment': sentiment })
 }
@@ -99,6 +99,6 @@ export async function getCheckStatus(req, res) {
         platform: doc.platform,
         label: PLATFORM_LABELS[doc.platform],
         prompt: doc.prompt,
-        ...(doc.status === 'done' ? { mentioned: doc.result.mentioned, context: doc.result.context, sentiment: doc.result.sentiment, citations: doc.result.citations || [] } : {}),
+        ...(doc.status === 'done' ? { mentioned: doc.result.mentioned, context: doc.result.context, sentiment: doc.result.sentiment, citations: doc.result.citations || [], ownPosition: doc.result.ownPosition ?? null, ownPositionTotal: doc.result.ownPositionTotal ?? null } : {}),
     })
 }

@@ -18,8 +18,10 @@ const geoMentionCheckSchema = new Schema({
         title:   { type: String, default: null },
         snippet: { type: String, default: null },
     }],
-    // Nur bei mentioned:true berechnet (siehe geoService.classifySentiment)
+
     sentiment: { type: String, enum: ['positive', 'neutral', 'negative'], default: null },
+    ownPosition: { type: Number, default: null },
+    ownPositionTotal: { type: Number, default: null },
     checkedAt:    { type: Date, default: Date.now },
 })
 

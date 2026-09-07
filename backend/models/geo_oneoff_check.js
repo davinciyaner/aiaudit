@@ -12,6 +12,8 @@ const geoOneoffCheckSchema = new Schema({
         mentioned: { type: Boolean, default: null },
         context: { type: String, default: null },
         sentiment: { type: String, enum: ['positive', 'neutral', 'negative'], default: null },
+        ownPosition: { type: Number, default: null },
+        ownPositionTotal: { type: Number, default: null },
         citations: [{
             _id: false,
             url: String,
