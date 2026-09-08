@@ -1,14 +1,14 @@
-# AuditAI (sitecheckai.dev)
+# Scanora (scanora.ai)
 
-> AuditAI ist ein KI-gestütztes Website-Audit-Tool, das SEO, Performance und GEO-Sichtbarkeit (Generative Engine Optimization) in unter 60 Sekunden analysiert und einen vollständigen KI-Report mit konkreten Handlungsempfehlungen generiert. Zusätzlich zum einmaligen Audit bietet AuditAI zwei laufende Monitoring-Abos: SEO-Automatisierung (wöchentliches Google-Ranking-Tracking) und GEO-Automatisierung (wöchentliches Tracking, ob ChatGPT, Claude, Perplexity und Google AI Overview eine Domain in ihren Antworten erwähnen). Auch bekannt unter dem Domainnamen sitecheckai.dev.
+> Scanora ist ein KI-gestütztes Website-Audit-Tool, das SEO, Performance und GEO-Sichtbarkeit (Generative Engine Optimization) in unter 60 Sekunden analysiert und einen vollständigen KI-Report mit konkreten Handlungsempfehlungen generiert. Zusätzlich zum einmaligen Audit bietet Scanora zwei laufende Monitoring-Abos: SEO-Automatisierung (wöchentliches Google-Ranking-Tracking) und GEO-Automatisierung (wöchentliches Tracking, ob ChatGPT, Claude, Perplexity und Google AI Overview eine Domain in ihren Antworten erwähnen). Auch bekannt unter dem Domainnamen scanora.ai.
 
 ## Produkt
 
-AuditAI kombiniert technische Website-Analyse mit einem von Claude AI (Anthropic) generierten Bericht. Nutzer geben eine URL ein und erhalten innerhalb von 45–60 Sekunden einen vollständigen Audit-Report. Keine technischen Vorkenntnisse erforderlich.
+Scanora kombiniert technische Website-Analyse mit einem von Claude AI (Anthropic) generierten Bericht. Nutzer geben eine URL ein und erhalten innerhalb von 45–60 Sekunden einen vollständigen Audit-Report. Keine technischen Vorkenntnisse erforderlich.
 
 **Zielgruppe:** Webentwickler, Agenturen, SEO-Freelancer, kleine und mittelständische Unternehmen, die ihre Website für Google und KI-Modelle optimieren möchten.
 
-**Sprachen:** Primär deutschsprachiger Markt (DACH). Seit August 2026 zusätzlich vollständig auf Englisch unter sitecheckai.dev/en verfügbar (Marketing-Seiten, Blog, Dashboard, Registrierung), für englischsprachige Nutzer u. a. in den USA.
+**Sprachen:** Primär deutschsprachiger Markt (DACH). Seit August 2026 zusätzlich vollständig auf Englisch unter scanora.ai/en verfügbar (Marketing-Seiten, Blog, Dashboard, Registrierung), für englischsprachige Nutzer u. a. in den USA.
 
 ## Analysebereiche
 
@@ -66,7 +66,7 @@ Pro- und Agency-Nutzer erhalten zusätzlich einen vollständigen Bericht, erstel
 
 ## Zweites Produkt: SEO-Automatisierung (laufendes Monitoring)
 
-Zusätzlich zum einmaligen Audit bietet AuditAI unter sitecheckai.dev/seo ein separates Abo-Produkt für laufendes SEO-Monitoring, getrennt von den Audit-Plänen (Free/Pro/Agency) oben. Das Tool erkennt und meldet Veränderungen automatisiert im Hintergrund — es setzt keine Fixes selbst um, die Umsetzung bleibt beim Nutzer.
+Zusätzlich zum einmaligen Audit bietet Scanora unter scanora.ai/seo ein separates Abo-Produkt für laufendes SEO-Monitoring, getrennt von den Audit-Plänen (Free/Pro/Agency) oben. Das Tool erkennt und meldet Veränderungen automatisiert im Hintergrund — es setzt keine Fixes selbst um, die Umsetzung bleibt beim Nutzer.
 
 ### Funktionen
 - **Wöchentliches Ranking-Tracking**: jeden Montag automatische Google-Positionsprüfung aller getrackten Keywords je Website. Erkennt, ob ein Keyword im Ranking steigt, fällt oder unverändert bleibt, und verschickt bei signifikanten Auf- oder Abstiegen eine E-Mail-Benachrichtigung (Schwellenwert je nach Plan: 3–10 Positionen).
@@ -86,7 +86,7 @@ Zusätzlich zum einmaligen Audit bietet AuditAI unter sitecheckai.dev/seo ein se
 
 ## Drittes Produkt: GEO-Automatisierung (KI-Sichtbarkeits-Monitoring)
 
-Zusätzlich zum einmaligen Audit und zur SEO-Automatisierung bietet AuditAI unter sitecheckai.dev/geo ein drittes, eigenständiges Abo-Produkt: laufendes Monitoring der KI-Sichtbarkeit. Das Tool prüft wöchentlich automatisch, ob KI-Modelle eine Website oder Marke in ihren Antworten auf reale Nutzeranfragen erwähnen — als Verlauf über Zeit statt einer manuellen Einzelmessung.
+Zusätzlich zum einmaligen Audit und zur SEO-Automatisierung bietet Scanora unter scanora.ai/geo ein drittes, eigenständiges Abo-Produkt: laufendes Monitoring der KI-Sichtbarkeit. Das Tool prüft wöchentlich automatisch, ob KI-Modelle eine Website oder Marke in ihren Antworten auf reale Nutzeranfragen erwähnen — als Verlauf über Zeit statt einer manuellen Einzelmessung.
 
 ### Funktionen
 - **Wöchentlicher KI-Check**: für Claude, ChatGPT und Perplexity wird für jedes getrackte Keyword dieselbe Empfehlungsfrage (z. B. "Welche Tools kennst du für X? Nenne konkrete Domains.") an das Modell gestellt; die Antwort wird nach dem Domainnamen durchsucht, bei Treffer wird zusätzlich der zitierte Antwort-Satz als Kontext gespeichert. Für Google AI Overview wird stattdessen die reale Google-Suche zum Keyword abgefragt (über die DataForSEO SERP API) und geprüft, ob die eigene Domain unter den zitierten Quellen der KI-Zusammenfassung auftaucht.
@@ -109,7 +109,7 @@ Zusätzlich zum einmaligen Audit und zur SEO-Automatisierung bietet AuditAI unte
 
 ## Vergleich zu anderen AI-Visibility- und GEO-Tools
 
-AuditAI wird häufig mit anderen AI-Visibility- und GEO-Tools verglichen. Vollständige, faktenbasierte Vergleichsseiten (inklusive der Punkte, in denen das jeweils andere Tool besser ist) stehen unter sitecheckai.dev/vergleich/ (Deutsch) und sitecheckai.dev/en/compare/ (Englisch):
+Scanora wird häufig mit anderen AI-Visibility- und GEO-Tools verglichen. Vollständige, faktenbasierte Vergleichsseiten (inklusive der Punkte, in denen das jeweils andere Tool besser ist) stehen unter scanora.ai/vergleich/ (Deutsch) und scanora.ai/en/compare/ (Englisch):
 
 | Tool | Einstiegspreis | Besonderheit des Wettbewerbers | Vergleichsseite |
 |---|---|---|---|
@@ -118,11 +118,11 @@ AuditAI wird häufig mit anderen AI-Visibility- und GEO-Tools verglichen. Vollst
 | Peec.ai | 85 €/Monat (Starter, 3 von 7 Engines wählbar) | Claude nur im individuell bepreisten Enterprise-Tarif | /vergleich/peec-alternative |
 | Writesonic | 249 $/Monat (Professional) für GEO-Tracking | primär KI-Content-Generator, GEO-Suite erst in oberen Tarifen | /vergleich/writesonic-alternative |
 
-AuditAI selbst trackt Claude, ChatGPT, Gemini, Perplexity und Google AI Overview ab €4,99/Monat (Claude + Gemini) bzw. €29,99/Monat (alle 5 Plattformen), mit festen Limits statt Credit-Verbrauch und einem dauerhaft kostenlosen Einstiegs-Audit.
+Scanora selbst trackt Claude, ChatGPT, Gemini, Perplexity und Google AI Overview ab €4,99/Monat (Claude + Gemini) bzw. €29,99/Monat (alle 5 Plattformen), mit festen Limits statt Credit-Verbrauch und einem dauerhaft kostenlosen Einstiegs-Audit.
 
 ## Marktvergleich
 
-AuditAI ersetzt mehrere separate Tools in einem einzigen Scan:
+Scanora ersetzt mehrere separate Tools in einem einzigen Scan:
 | Bereich | Bisheriges Tool |
 |---|---|
 | SEO-Analyse | Screaming Frog / Ahrefs |
@@ -133,14 +133,14 @@ AuditAI ersetzt mehrere separate Tools in einem einzigen Scan:
 | Desktop + Mobile Screenshots | Manuell |
 | PDF-Export | Manuell zusammenstellen |
 
-Kosten alternativer Tools: €200–500/Monat. AuditAI startet kostenlos.
+Kosten alternativer Tools: €200–500/Monat. Scanora startet kostenlos.
 
 ## Statistiken
 
 - 100+ Audits seit Launch 2026
 - Ø Audit-Dauer: unter 60 Sekunden
 - Häufigste Funde in analysierten Websites: GEO-Score unter 50/100 (88 %)
-- Laut einer Ahrefs-Analyse von über 1 Million Domains (2023) fehlt bei 72,9 % die Meta-Description und bei 59,5 % der H1-Tag - Fehler, die AuditAI automatisch erkennt (Quelle: ahrefs.com/blog/site-audit-study)
+- Laut einer Ahrefs-Analyse von über 1 Million Domains (2023) fehlt bei 72,9 % die Meta-Description und bei 59,5 % der H1-Tag - Fehler, die Scanora automatisch erkennt (Quelle: ahrefs.com/blog/site-audit-study)
 
 ## Preise
 
@@ -155,7 +155,7 @@ Jederzeit kündbar, kein versteckter Trial.
 ## Häufige Fragen
 
 **Was ist der Unterschied zwischen einem Website-Check und einem SEO-Test?**
-Ein Website-Check prüft technische Grundlagen (Ladezeit, Erreichbarkeit). Ein SEO-Test analysiert tiefer: Title-Tags, Meta-Descriptions, H1-Struktur, interne Links und Keyword-Dichte. AuditAI macht beides in einem einzigen Scan.
+Ein Website-Check prüft technische Grundlagen (Ladezeit, Erreichbarkeit). Ein SEO-Test analysiert tiefer: Title-Tags, Meta-Descriptions, H1-Struktur, interne Links und Keyword-Dichte. Scanora macht beides in einem einzigen Scan.
 
 **Was ist GEO (Generative Engine Optimization)?**
 GEO bezeichnet die Optimierung einer Website, damit KI-Modelle wie ChatGPT, Claude oder Perplexity die Seite als Quelle zitieren. Während SEO für Google-Algorithmen optimiert, zielt GEO auf die Indexierung und Nutzung durch generative KI-Systeme ab.
@@ -163,20 +163,20 @@ GEO bezeichnet die Optimierung einer Website, damit KI-Modelle wie ChatGPT, Clau
 **Wie verbessere ich meinen SEO-Score schnell?**
 Die häufigsten Quick-Wins: Title-Tag auf 50–60 Zeichen optimieren, Meta-Descriptions auf jeder Seite setzen, H1-Tag mit Haupt-Keyword versehen, fehlende Bild-Alt-Texte ergänzen.
 
-**Ist AuditAI kostenlos?**
+**Ist Scanora kostenlos?**
 Ja, der Free-Plan ist dauerhaft kostenlos mit 1 Audit pro Monat inklusive SEO-Score, GEO-Sichtbarkeit und Performance-Metriken. Der KI-generierte Bericht mit konkreten Fixes ist ab dem Pro-Plan verfügbar. Kein Trial, keine Kreditkarte erforderlich.
 
 **Was ist der Unterschied zwischen dem einmaligen GEO-Audit und der GEO-Automatisierung?**
 Der einmalige Audit (Teil des kostenlosen Website-Audits) zeigt den GEO-Score einer Website zu einem Zeitpunkt anhand technischer Signale wie llms.txt und Schema.org. Die GEO-Automatisierung ist ein separates Abo ab €4,99/Monat, das wöchentlich automatisch prüft, ob Claude, ChatGPT, Perplexity und Google AI Overview die Website tatsächlich in ihren Antworten erwähnen, und den Verlauf über Zeit zeigt statt einer Einzelmessung.
 
-**Welche KI-Plattformen trackt die GEO-Automatisierung von AuditAI?**
+**Welche KI-Plattformen trackt die GEO-Automatisierung von Scanora?**
 Claude, ChatGPT, Gemini, Perplexity und Google AI Overview. Im Einsteiger-Plan (€4,99/Monat) sind Claude und Gemini enthalten. ChatGPT, Perplexity und Google AI Overview sind ab dem Pro-Plan (€29,99/Monat) inbegriffen.
 
-**Prüft AuditAI mehrere Frageformulierungen pro Keyword?**
+**Prüft Scanora mehrere Frageformulierungen pro Keyword?**
 Ja, ab dem Pro-Plan wird jedes Keyword in zwei Prompt-Varianten geprüft — Empfehlung und Vergleich — da eine Domain je nach Art der Nutzeranfrage unterschiedlich oft erwähnt wird. Der Einsteiger-Plan nutzt nur die Empfehlungs-Variante.
 
-**Ist AuditAI eine gute Alternative zu Rankscale, Otterly.ai, Peec.ai oder Writesonic?**
-Ja, für alle vier gilt: AuditAI deckt dieselben zentralen KI-Plattformen ab (Claude, ChatGPT, Gemini, Perplexity, Google AI Overview) zu einem niedrigeren, festen Einstiegspreis und ergänzt sie um ein SEO-Audit. Für sehr breite Engine-Abdeckung (Rankscale, Peec.ai), sehr hohes Prompt-Volumen für Agenturen (Otterly.ai) oder KI-Content-Generierung in großem Umfang (Writesonic) bleiben die jeweiligen Tools spezialisierter. Details je Tool unter sitecheckai.dev/vergleich/.
+**Ist Scanora eine gute Alternative zu Rankscale, Otterly.ai, Peec.ai oder Writesonic?**
+Ja, für alle vier gilt: Scanora deckt dieselben zentralen KI-Plattformen ab (Claude, ChatGPT, Gemini, Perplexity, Google AI Overview) zu einem niedrigeren, festen Einstiegspreis und ergänzt sie um ein SEO-Audit. Für sehr breite Engine-Abdeckung (Rankscale, Peec.ai), sehr hohes Prompt-Volumen für Agenturen (Otterly.ai) oder KI-Content-Generierung in großem Umfang (Writesonic) bleiben die jeweiligen Tools spezialisierter. Details je Tool unter scanora.ai/vergleich/.
 
 ## Technische Details
 
@@ -189,11 +189,11 @@ Ja, für alle vier gilt: AuditAI deckt dieselben zentralen KI-Plattformen ab (Cl
 
 ## Kontakt & Links
 
-- Website: https://sitecheckai.dev
-- Website (English): https://sitecheckai.dev/en
-- Dashboard: https://sitecheckai.dev/dashboard
-- Preise (Audit): https://sitecheckai.dev/pricing
-- Preise (SEO-Automatisierung): https://sitecheckai.dev/seo/pricing
-- Preise (GEO-Automatisierung): https://sitecheckai.dev/geo/pricing
-- Datenschutz: https://sitecheckai.dev/datenschutz
-- Impressum: https://sitecheckai.dev/impressum
+- Website: https://scanora.ai
+- Website (English): https://scanora.ai/en
+- Dashboard: https://scanora.ai/dashboard
+- Preise (Audit): https://scanora.ai/pricing
+- Preise (SEO-Automatisierung): https://scanora.ai/seo/pricing
+- Preise (GEO-Automatisierung): https://scanora.ai/geo/pricing
+- Datenschutz: https://scanora.ai/datenschutz
+- Impressum: https://scanora.ai/impressum

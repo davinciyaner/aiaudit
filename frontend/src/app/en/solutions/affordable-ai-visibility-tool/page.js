@@ -3,20 +3,20 @@ import Navbar from '../../../components/Navbar'
 import Footer from '../../../components/Footer'
 
 export const metadata = {
-    title: 'Affordable AI Visibility Tool from €4.99 | AuditAI',
-    description: 'Looking for an affordable AI visibility tool that also covers SEO? AuditAI combines GEO tracking (ChatGPT, Claude, Perplexity) and SEO rankings from €4.99/month — with a real free plan.',
+    title: 'Affordable AI Visibility Tool from €4.99 | Scanora',
+    description: 'Looking for an affordable AI visibility tool that also covers SEO? Scanora combines GEO tracking (ChatGPT, Claude, Perplexity) and SEO rankings from €4.99/month — with a real free plan.',
     keywords: 'affordable ai visibility tool, cheap ai visibility tool, seo and ai visibility tracker combined, ai visibility and seo in one tool, affordable geo tool, ai visibility tool pricing comparison',
     alternates: {
-        canonical: 'https://www.sitecheckai.dev/en/solutions/affordable-ai-visibility-tool',
+        canonical: 'https://www.scanora.ai/en/solutions/affordable-ai-visibility-tool',
         languages: {
-            'de-DE': 'https://www.sitecheckai.dev/loesungen/guenstiges-ki-sichtbarkeit-tool',
-            'en-US': 'https://www.sitecheckai.dev/en/solutions/affordable-ai-visibility-tool',
+            'de-DE': 'https://www.scanora.ai/loesungen/guenstiges-ki-sichtbarkeit-tool',
+            'en-US': 'https://www.scanora.ai/en/solutions/affordable-ai-visibility-tool',
         },
     },
     openGraph: {
         title: 'Affordable AI Visibility Tool: SEO and AI Visibility in One Plan',
-        description: 'AuditAI combines GEO tracking (ChatGPT, Claude, Perplexity, Google AI Overview) and SEO rankings from €4.99/month — with a real free plan.',
-        url: 'https://www.sitecheckai.dev/en/solutions/affordable-ai-visibility-tool',
+        description: 'Scanora combines GEO tracking (ChatGPT, Claude, Perplexity, Google AI Overview) and SEO rankings from €4.99/month — with a real free plan.',
+        url: 'https://www.scanora.ai/en/solutions/affordable-ai-visibility-tool',
         type: 'article',
         locale: 'en_US',
     },
@@ -26,19 +26,19 @@ const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: 'Affordable AI Visibility Tool: SEO and AI Visibility in One Plan',
-    description: 'AuditAI combines GEO tracking (ChatGPT, Claude, Perplexity, Google AI Overview) and SEO rankings from €4.99/month — with a real free plan.',
-    image: 'https://www.sitecheckai.dev/en/solutions/affordable-ai-visibility-tool/opengraph-image',
+    description: 'Scanora combines GEO tracking (ChatGPT, Claude, Perplexity, Google AI Overview) and SEO rankings from €4.99/month — with a real free plan.',
+    image: 'https://www.scanora.ai/en/solutions/affordable-ai-visibility-tool/opengraph-image',
     datePublished: '2026-08-28T09:00:00+02:00',
     dateModified: '2026-08-28T09:00:00+02:00',
-    author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev/about' },
+    author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.scanora.ai/about' },
     publisher: {
         '@type': 'Organization',
-        name: 'AuditAI',
-        url: 'https://www.sitecheckai.dev',
-        logo: { '@type': 'ImageObject', url: 'https://www.sitecheckai.dev/logo', width: 512, height: 512 },
+        name: 'Scanora',
+        url: 'https://www.scanora.ai',
+        logo: { '@type': 'ImageObject', url: 'https://www.scanora.ai/logo', width: 512, height: 512 },
     },
-    url: 'https://www.sitecheckai.dev/en/solutions/affordable-ai-visibility-tool',
-    mainEntityOfPage: 'https://www.sitecheckai.dev/en/solutions/affordable-ai-visibility-tool',
+    url: 'https://www.scanora.ai/en/solutions/affordable-ai-visibility-tool',
+    mainEntityOfPage: 'https://www.scanora.ai/en/solutions/affordable-ai-visibility-tool',
     about: [
         { '@type': 'Thing', name: 'AI Visibility Tracking' },
         { '@type': 'Thing', name: 'Generative Engine Optimization' },
@@ -50,9 +50,9 @@ const breadcrumbLd = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'AuditAI', item: 'https://www.sitecheckai.dev/en' },
-        { '@type': 'ListItem', position: 2, name: 'Solutions', item: 'https://www.sitecheckai.dev/en/solutions' },
-        { '@type': 'ListItem', position: 3, name: 'Affordable AI Visibility Tool', item: 'https://www.sitecheckai.dev/en/solutions/affordable-ai-visibility-tool' },
+        { '@type': 'ListItem', position: 1, name: 'Scanora', item: 'https://www.scanora.ai/en' },
+        { '@type': 'ListItem', position: 2, name: 'Solutions', item: 'https://www.scanora.ai/en/solutions' },
+        { '@type': 'ListItem', position: 3, name: 'Affordable AI Visibility Tool', item: 'https://www.scanora.ai/en/solutions/affordable-ai-visibility-tool' },
     ],
 }
 
@@ -65,7 +65,7 @@ const faqLd = {
             name: 'What is an affordable AI visibility tool?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'An AI visibility tool (also called a GEO or AI monitoring tool) checks whether and how often ChatGPT, Claude, Perplexity, or Google AI Overview mention your website. "Affordable" means a low entry price without per-platform add-on fees or a mandatory agency package. AuditAI starts at €4.99/month for Claude tracking.',
+                text: 'An AI visibility tool (also called a GEO or AI monitoring tool) checks whether and how often ChatGPT, Claude, Perplexity, or Google AI Overview mention your website. "Affordable" means a low entry price without per-platform add-on fees or a mandatory agency package. Scanora starts at €4.99/month for Claude tracking.',
             },
         },
         {
@@ -73,12 +73,12 @@ const faqLd = {
             name: 'Is there a tool that combines SEO and AI visibility tracking?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'Yes. AuditAI offers SEO automation (weekly Google rankings, keyword ideas, competitor analysis, backlinks) and GEO automation (AI visibility across ChatGPT, Claude, Perplexity, Google AI Overview) from one account — bookable separately or together. Most pure AI-visibility tools don\'t cover classic SEO at all.',
+                text: 'Yes. Scanora offers SEO automation (weekly Google rankings, keyword ideas, competitor analysis, backlinks) and GEO automation (AI visibility across ChatGPT, Claude, Perplexity, Google AI Overview) from one account — bookable separately or together. Most pure AI-visibility tools don\'t cover classic SEO at all.',
             },
         },
         {
             '@type': 'Question',
-            name: 'How much does AI visibility tracking cost with AuditAI?',
+            name: 'How much does AI visibility tracking cost with Scanora?',
             acceptedAnswer: {
                 '@type': 'Answer',
                 text: 'GEO automation starts at €4.99/month (Claude + Gemini, 1 website, 10 keywords, weekly auto-check). The Pro plan at €29.99/month covers all five AI platforms. SEO automation starts separately at €19/month. All automation plans include a 14-day free trial.',
@@ -86,7 +86,7 @@ const faqLd = {
         },
         {
             '@type': 'Question',
-            name: 'Is AuditAI really free to use?',
+            name: 'Is Scanora really free to use?',
             acceptedAnswer: {
                 '@type': 'Answer',
                 text: 'Yes. The Free plan is permanently free and includes 1 audit per month with an SEO score, GEO visibility, and performance metrics — no credit card required. The automation subscriptions (ongoing weekly checks) are optional add-ons.',
@@ -143,7 +143,7 @@ export default function AffordableGeoToolPageEn() {
 
                 {/* Breadcrumb */}
                 <div className="flex items-center gap-2 text-xs text-slate-600 mb-8">
-                    <Link href="/en" className="hover:text-slate-400 transition-colors">AuditAI</Link>
+                    <Link href="/en" className="hover:text-slate-400 transition-colors">Scanora</Link>
                     <span>/</span>
                     <Link href="/en/solutions" className="hover:text-slate-400 transition-colors">Solutions</Link>
                     <span>/</span>
@@ -163,7 +163,7 @@ export default function AffordableGeoToolPageEn() {
                         Affordable AI Visibility Tool: SEO and AI Visibility in One Plan
                     </h1>
                     <p className="text-lg text-slate-400 leading-relaxed">
-                        Most AI visibility tools are pure prompt-monitoring dashboards — no SEO, often starting at $25–30/month, with every extra AI platform billed separately. If you need both, you end up paying for two subscriptions. AuditAI combines GEO automation (AI visibility across ChatGPT, Claude, Perplexity, and Google AI Overview) with SEO automation in one account — starting at €4.99/month, with a permanently free plan.
+                        Most AI visibility tools are pure prompt-monitoring dashboards — no SEO, often starting at $25–30/month, with every extra AI platform billed separately. If you need both, you end up paying for two subscriptions. Scanora combines GEO automation (AI visibility across ChatGPT, Claude, Perplexity, and Google AI Overview) with SEO automation in one account — starting at €4.99/month, with a permanently free plan.
                     </p>
                     <div className="mt-5 flex items-center gap-2 text-xs text-slate-600">
                         <Link href="/en/about" className="flex items-center gap-2 hover:text-slate-300 transition-colors">
@@ -171,7 +171,7 @@ export default function AffordableGeoToolPageEn() {
                             <span>Finn Paustian</span>
                         </Link>
                         <span>·</span>
-                        <span>Founder, AuditAI</span>
+                        <span>Founder, Scanora</span>
                     </div>
                 </div>
 
@@ -185,7 +185,7 @@ export default function AffordableGeoToolPageEn() {
                             Classic SEO optimizes for Google showing you in the blue link list. GEO (Generative Engine Optimization) optimizes for ChatGPT, Claude, Perplexity, or Google AI Overview <em>citing</em> you inside a generated answer. The two are connected — structured data, clear product definitions, and technically clean pages help with both — but they're usually measured by completely separate tools: an SEO rank tracker here, an AI visibility dashboard there. Two subscriptions, two logins, two invoices.
                         </p>
                         <p className="mt-4">
-                            AuditAI bundles both into one account. You see your Google rankings and your AI mentions side by side, but you can also book just one of the two if that's all you need.
+                            Scanora bundles both into one account. You see your Google rankings and your AI mentions side by side, but you can also book just one of the two if that's all you need.
                         </p>
                     </section>
 
@@ -256,7 +256,7 @@ export default function AffordableGeoToolPageEn() {
                         <p className="mt-4 text-sm text-slate-500">
                             For very high-volume agency monitoring across many client workspaces, a specialized, pricier tool like{' '}
                             <Link href="/en/compare/otterly-alternative" className="text-slate-400 hover:text-[var(--accent)] underline underline-offset-2">Otterly.ai</Link>{' '}
-                            may offer more capacity — but for most single sites, freelancers, and small teams, AuditAI's cheaper combined approach is enough.
+                            may offer more capacity — but for most single sites, freelancers, and small teams, Scanora's cheaper combined approach is enough.
                         </p>
                     </section>
 
@@ -304,7 +304,7 @@ export default function AffordableGeoToolPageEn() {
                                 Otterly.ai alternative: the full comparison
                             </h3>
                             <p className="text-slate-400 text-sm leading-relaxed max-w-md">
-                                How AuditAI stacks up against the best-known pure AI-visibility tracker — including pricing and where it falls short.
+                                How Scanora stacks up against the best-known pure AI-visibility tracker — including pricing and where it falls short.
                             </p>
                         </div>
                         <Link
@@ -325,7 +325,7 @@ export default function AffordableGeoToolPageEn() {
                                 SEO rank tracker & AI visibility monitor
                             </h3>
                             <p className="text-slate-400 text-sm leading-relaxed max-w-md">
-                                How SEO automation and GEO automation work in detail at AuditAI — including pricing.
+                                How SEO automation and GEO automation work in detail at Scanora — including pricing.
                             </p>
                         </div>
                         <Link

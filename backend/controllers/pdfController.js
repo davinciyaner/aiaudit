@@ -142,7 +142,7 @@ function buildHTML(doc) {
 <div class="header">
   <div class="header-top">
     <div>
-      <div class="brand">SiteCheckAI — Test Report</div>
+      <div class="brand">Scanora — Test Report</div>
       <div class="title">${name}</div>
       <div class="date">${date}</div>
     </div>
@@ -176,7 +176,7 @@ function buildHTML(doc) {
 ${stepsHTML}
 
 <div class="footer">
-  <span>Generiert von SiteCheckAI · sitecheckai.dev</span>
+  <span>Generiert von Scanora · scanora.ai</span>
   <span>${new Date().toLocaleDateString('de-DE')}</span>
 </div>
 

@@ -8,16 +8,16 @@ export const metadata = {
     description: 'GEO (Generative Engine Optimization) explained: how to optimize your website so ChatGPT, Claude, Perplexity, and Google AI Overview cite it as a source. Concrete 19-signal checklist.',
     keywords: 'what is geo, GEO optimization, Generative Engine Optimization, ChatGPT SEO, AI search optimization, AI visibility, llms.txt, GEO vs SEO',
     alternates: {
-        canonical: 'https://www.sitecheckai.dev/en/blog/what-is-geo',
+        canonical: 'https://www.scanora.ai/en/blog/what-is-geo',
         languages: {
-            'de-DE': 'https://www.sitecheckai.dev/blog/geo-optimierung-2026',
-            'en-US': 'https://www.sitecheckai.dev/en/blog/what-is-geo',
+            'de-DE': 'https://www.scanora.ai/blog/geo-optimierung-2026',
+            'en-US': 'https://www.scanora.ai/en/blog/what-is-geo',
         },
     },
     openGraph: {
         title: 'What is GEO? Generative Engine Optimization Explained (+ 2026 Checklist)',
         description: 'How to optimize your website for AI models. With a concrete checklist and GEO score tool.',
-        url: 'https://www.sitecheckai.dev/en/blog/what-is-geo',
+        url: 'https://www.scanora.ai/en/blog/what-is-geo',
         type: 'article',
         locale: 'en_US',
     },
@@ -28,18 +28,18 @@ const jsonLd = {
     '@type': 'Article',
     headline: 'What is GEO? Generative Engine Optimization Explained (+ 2026 Checklist)',
     description: 'GEO (Generative Engine Optimization) explained: how to optimize your website so ChatGPT, Claude, Perplexity, and Google AI Overview cite it as a source.',
-    image: 'https://www.sitecheckai.dev/en/blog/what-is-geo/opengraph-image',
+    image: 'https://www.scanora.ai/en/blog/what-is-geo/opengraph-image',
     datePublished: '2026-06-10T09:00:00+02:00',
     dateModified: '2026-08-24T09:00:00+02:00',
-    author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev/about' },
+    author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.scanora.ai/about' },
     publisher: {
         '@type': 'Organization',
-        name: 'AuditAI',
-        url: 'https://www.sitecheckai.dev',
-        logo: { '@type': 'ImageObject', url: 'https://www.sitecheckai.dev/logo', width: 512, height: 512 },
+        name: 'Scanora',
+        url: 'https://www.scanora.ai',
+        logo: { '@type': 'ImageObject', url: 'https://www.scanora.ai/logo', width: 512, height: 512 },
     },
-    url: 'https://www.sitecheckai.dev/en/blog/what-is-geo',
-    mainEntityOfPage: 'https://www.sitecheckai.dev/en/blog/what-is-geo',
+    url: 'https://www.scanora.ai/en/blog/what-is-geo',
+    mainEntityOfPage: 'https://www.scanora.ai/en/blog/what-is-geo',
     about: [
         { '@type': 'Thing', name: 'Generative Engine Optimization' },
         { '@type': 'Thing', name: 'AI visibility' },
@@ -56,9 +56,9 @@ const breadcrumbLd = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'AuditAI', item: 'https://www.sitecheckai.dev/en' },
-        { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.sitecheckai.dev/en/blog' },
-        { '@type': 'ListItem', position: 3, name: 'What is GEO?', item: 'https://www.sitecheckai.dev/en/blog/what-is-geo' },
+        { '@type': 'ListItem', position: 1, name: 'Scanora', item: 'https://www.scanora.ai/en' },
+        { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.scanora.ai/en/blog' },
+        { '@type': 'ListItem', position: 3, name: 'What is GEO?', item: 'https://www.scanora.ai/en/blog/what-is-geo' },
     ],
 }
 
@@ -192,7 +192,7 @@ export default function WhatIsGeoPageEn() {
 
                 {/* Breadcrumb */}
                 <div className="flex items-center gap-2 text-xs text-slate-600 mb-8">
-                    <Link href="/en" className="hover:text-slate-400 transition-colors">AuditAI</Link>
+                    <Link href="/en" className="hover:text-slate-400 transition-colors">Scanora</Link>
                     <span>/</span>
                     <Link href="/en/blog" className="hover:text-slate-400 transition-colors">Blog</Link>
                     <span>/</span>
@@ -221,7 +221,7 @@ export default function WhatIsGeoPageEn() {
                             <span>Finn Paustian</span>
                         </Link>
                         <span>·</span>
-                        <span>Founder, AuditAI</span>
+                        <span>Founder, Scanora</span>
                     </div>
                 </div>
 
@@ -308,17 +308,17 @@ export default function WhatIsGeoPageEn() {
 
                     <section>
                         <h2 className="text-2xl font-bold text-white mb-2">What are the 6 most important GEO signals?</h2>
-                        <p className="text-slate-400 mb-6">AuditAI checks 19 GEO signals in total. These are the six with the biggest impact:</p>
+                        <p className="text-slate-400 mb-6">Scanora checks 19 GEO signals in total. These are the six with the biggest impact:</p>
                         <figure className="mb-6">
                             <Image
                                 src="/blog/auditai-geo-report.png"
-                                alt="AuditAI GEO report showing checked AI visibility signals like llms.txt, Organization schema, AI crawler access, and sitemap.xml"
+                                alt="Scanora GEO report showing checked AI visibility signals like llms.txt, Organization schema, AI crawler access, and sitemap.xml"
                                 width={960}
                                 height={411}
                                 className="w-full h-auto rounded-2xl border border-white/[0.07]"
                             />
                             <figcaption className="text-xs text-slate-600 mt-2">
-                                A real GEO score report from AuditAI — all 12 AI visibility signals at a glance, including a found issue.
+                                A real GEO score report from Scanora — all 12 AI visibility signals at a glance, including a found issue.
                             </figcaption>
                         </figure>
                         <div className="space-y-4">
@@ -444,7 +444,7 @@ export default function WhatIsGeoPageEn() {
                         How good is your GEO score?
                     </h2>
                     <p className="text-slate-400 text-sm mb-6 max-w-md mx-auto leading-relaxed">
-                        AuditAI checks all 19 GEO signals in under 60 seconds - including llms.txt, Schema.org, AI crawler access, and content quality. Start without registration, sign up free for the full report with all scores.
+                        Scanora checks all 19 GEO signals in under 60 seconds - including llms.txt, Schema.org, AI crawler access, and content quality. Start without registration, sign up free for the full report with all scores.
                     </p>
                     <Link
                         href="/dashboard"

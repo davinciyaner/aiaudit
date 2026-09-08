@@ -60,4 +60,4 @@ Allow: /
 User-agent: OAI-SearchBot
 Allow: /
 
-Sitemap: https://www.sitecheckai.dev/sitemap.xml
+Sitemap: https://www.scanora.ai/sitemap.xml

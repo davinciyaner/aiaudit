@@ -2,13 +2,13 @@ import { ImageResponse } from 'next/og'
 import { blogOgImage } from '../../../blog/ogImageTemplate'
 
 export const runtime = 'edge'
-export const alt = 'Writesonic Alternative: How AuditAI Compares'
+export const alt = 'Writesonic Alternative: How Scanora Compares'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
 export default function Image() {
     return new ImageResponse(
-        blogOgImage('Writesonic Alternative: An Honest Look at AuditAI', 'Comparison'),
+        blogOgImage('Writesonic Alternative: An Honest Look at Scanora', 'Comparison'),
         { ...size },
     )
 }

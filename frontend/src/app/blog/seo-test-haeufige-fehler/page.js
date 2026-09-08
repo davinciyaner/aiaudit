@@ -8,16 +8,16 @@ export const metadata = {
     description: 'Diese 10 SEO-Fehler machen die meisten Websites - und keiner merkt es. Mit kostenlosem SEO-Test-Tool checken und sofort beheben.',
     keywords: 'seo test, seo fehler, seo check kostenlos, seo analyse, website seo prüfen, meta description fehlt, h1 tag, core web vitals',
     alternates: {
-        canonical: 'https://www.sitecheckai.dev/blog/seo-test-haeufige-fehler',
+        canonical: 'https://www.scanora.ai/blog/seo-test-haeufige-fehler',
         languages: {
-            'de-DE': 'https://www.sitecheckai.dev/blog/seo-test-haeufige-fehler',
-            'en-US': 'https://www.sitecheckai.dev/en/blog/common-seo-mistakes',
+            'de-DE': 'https://www.scanora.ai/blog/seo-test-haeufige-fehler',
+            'en-US': 'https://www.scanora.ai/en/blog/common-seo-mistakes',
         },
     },
     openGraph: {
         title: 'SEO-Test: Die 10 häufigsten Fehler die deinen Google-Rank kosten',
         description: 'Diese 10 SEO-Fehler machen die meisten Websites. Mit kostenlosem SEO-Test sofort beheben.',
-        url: 'https://www.sitecheckai.dev/blog/seo-test-haeufige-fehler',
+        url: 'https://www.scanora.ai/blog/seo-test-haeufige-fehler',
         type: 'article',
         locale: 'de_DE',
     },
@@ -28,27 +28,27 @@ const jsonLd = {
     '@type': 'Article',
     headline: 'SEO-Test: Die 10 häufigsten Fehler die deinen Google-Rank kosten',
     description: 'Diese 10 SEO-Fehler machen die meisten Websites - und keiner merkt es.',
-    image: 'https://www.sitecheckai.dev/blog/seo-test-haeufige-fehler/opengraph-image',
+    image: 'https://www.scanora.ai/blog/seo-test-haeufige-fehler/opengraph-image',
     datePublished: '2026-06-10T09:00:00+02:00',
     dateModified: '2026-07-30T09:00:00+02:00',
-    author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev/about' },
+    author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.scanora.ai/about' },
     publisher: {
         '@type': 'Organization',
-        name: 'AuditAI',
-        url: 'https://www.sitecheckai.dev',
-        logo: { '@type': 'ImageObject', url: 'https://www.sitecheckai.dev/logo', width: 512, height: 512 },
+        name: 'Scanora',
+        url: 'https://www.scanora.ai',
+        logo: { '@type': 'ImageObject', url: 'https://www.scanora.ai/logo', width: 512, height: 512 },
     },
-    url: 'https://www.sitecheckai.dev/blog/seo-test-haeufige-fehler',
-    mainEntityOfPage: 'https://www.sitecheckai.dev/blog/seo-test-haeufige-fehler',
+    url: 'https://www.scanora.ai/blog/seo-test-haeufige-fehler',
+    mainEntityOfPage: 'https://www.scanora.ai/blog/seo-test-haeufige-fehler',
 }
 
 const breadcrumbLd = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'AuditAI', item: 'https://www.sitecheckai.dev' },
-        { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.sitecheckai.dev/blog' },
-        { '@type': 'ListItem', position: 3, name: 'SEO-Test: Die 10 häufigsten Fehler', item: 'https://www.sitecheckai.dev/blog/seo-test-haeufige-fehler' },
+        { '@type': 'ListItem', position: 1, name: 'Scanora', item: 'https://www.scanora.ai' },
+        { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.scanora.ai/blog' },
+        { '@type': 'ListItem', position: 3, name: 'SEO-Test: Die 10 häufigsten Fehler', item: 'https://www.scanora.ai/blog/seo-test-haeufige-fehler' },
     ],
 }
 
@@ -85,7 +85,7 @@ const faqLd = {
             name: 'Kann ich einen SEO-Test kostenlos durchführen?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'Ja. AuditAI bietet einen kostenlosen SEO-Test mit 14 Checks - inklusive Title-Tag, Meta-Description, H1, Alt-Texte, Canonical, Open Graph, Structured Data und mehr. Der Free-Plan erlaubt 1 vollständigen Audit pro Monat ohne Kreditkarte.',
+                text: 'Ja. Scanora bietet einen kostenlosen SEO-Test mit 14 Checks - inklusive Title-Tag, Meta-Description, H1, Alt-Texte, Canonical, Open Graph, Structured Data und mehr. Der Free-Plan erlaubt 1 vollständigen Audit pro Monat ohne Kreditkarte.',
             },
         },
     ],
@@ -98,16 +98,16 @@ const howToLd = {
     description: 'Die zentralen On-Page-Faktoren prüfen, die am häufigsten Rankings kosten.',
     totalTime: 'PT15M',
     step: [
-        { '@type': 'HowToStep', name: 'Meta-Description prüfen', text: 'Prüfe, ob jede Seite eine individuelle Meta-Description mit 120–160 Zeichen hat.', url: 'https://www.sitecheckai.dev/blog/seo-test-haeufige-fehler#fehler-01' },
-        { '@type': 'HowToStep', name: 'H1-Tag prüfen', text: 'Stelle sicher, dass jede Seite genau einen H1-Tag mit dem primären Keyword hat.', url: 'https://www.sitecheckai.dev/blog/seo-test-haeufige-fehler#fehler-02' },
-        { '@type': 'HowToStep', name: 'Ladezeit messen', text: 'Miss Core Web Vitals (LCP, INP, CLS) und TTFB in den Chrome DevTools oder per automatisiertem Test.', url: 'https://www.sitecheckai.dev/blog/seo-test-haeufige-fehler#fehler-03' },
-        { '@type': 'HowToStep', name: 'Bild-Alt-Texte prüfen', text: 'Kontrolliere, ob alle inhaltlichen Bilder einen beschreibenden Alt-Text haben.', url: 'https://www.sitecheckai.dev/blog/seo-test-haeufige-fehler#fehler-04' },
-        { '@type': 'HowToStep', name: 'Canonical-Tag prüfen', text: 'Prüfe, ob jede Seite einen korrekten self-referencing Canonical-Tag hat.', url: 'https://www.sitecheckai.dev/blog/seo-test-haeufige-fehler#fehler-05' },
-        { '@type': 'HowToStep', name: 'Title-Tag prüfen', text: 'Kontrolliere Länge (50–60 Zeichen) und Einzigartigkeit jedes Title-Tags.', url: 'https://www.sitecheckai.dev/blog/seo-test-haeufige-fehler#fehler-06' },
-        { '@type': 'HowToStep', name: 'Open-Graph-Tags prüfen', text: 'Prüfe og:title, og:description und og:image auf jeder Seite.', url: 'https://www.sitecheckai.dev/blog/seo-test-haeufige-fehler#fehler-07' },
-        { '@type': 'HowToStep', name: 'Content-Umfang prüfen', text: 'Stelle sicher, dass wichtige Seiten mindestens 300 Wörter relevanten Content haben.', url: 'https://www.sitecheckai.dev/blog/seo-test-haeufige-fehler#fehler-08' },
-        { '@type': 'HowToStep', name: 'Structured Data prüfen', text: 'Prüfe, ob Organization-, WebSite- und ggf. Article- oder FAQPage-Schema als JSON-LD vorhanden ist.', url: 'https://www.sitecheckai.dev/blog/seo-test-haeufige-fehler#fehler-09' },
-        { '@type': 'HowToStep', name: 'Indexierbarkeit prüfen', text: 'Prüfe wichtige Seiten per URL-Inspection in der Google Search Console auf versehentliches noindex.', url: 'https://www.sitecheckai.dev/blog/seo-test-haeufige-fehler#fehler-10' },
+        { '@type': 'HowToStep', name: 'Meta-Description prüfen', text: 'Prüfe, ob jede Seite eine individuelle Meta-Description mit 120–160 Zeichen hat.', url: 'https://www.scanora.ai/blog/seo-test-haeufige-fehler#fehler-01' },
+        { '@type': 'HowToStep', name: 'H1-Tag prüfen', text: 'Stelle sicher, dass jede Seite genau einen H1-Tag mit dem primären Keyword hat.', url: 'https://www.scanora.ai/blog/seo-test-haeufige-fehler#fehler-02' },
+        { '@type': 'HowToStep', name: 'Ladezeit messen', text: 'Miss Core Web Vitals (LCP, INP, CLS) und TTFB in den Chrome DevTools oder per automatisiertem Test.', url: 'https://www.scanora.ai/blog/seo-test-haeufige-fehler#fehler-03' },
+        { '@type': 'HowToStep', name: 'Bild-Alt-Texte prüfen', text: 'Kontrolliere, ob alle inhaltlichen Bilder einen beschreibenden Alt-Text haben.', url: 'https://www.scanora.ai/blog/seo-test-haeufige-fehler#fehler-04' },
+        { '@type': 'HowToStep', name: 'Canonical-Tag prüfen', text: 'Prüfe, ob jede Seite einen korrekten self-referencing Canonical-Tag hat.', url: 'https://www.scanora.ai/blog/seo-test-haeufige-fehler#fehler-05' },
+        { '@type': 'HowToStep', name: 'Title-Tag prüfen', text: 'Kontrolliere Länge (50–60 Zeichen) und Einzigartigkeit jedes Title-Tags.', url: 'https://www.scanora.ai/blog/seo-test-haeufige-fehler#fehler-06' },
+        { '@type': 'HowToStep', name: 'Open-Graph-Tags prüfen', text: 'Prüfe og:title, og:description und og:image auf jeder Seite.', url: 'https://www.scanora.ai/blog/seo-test-haeufige-fehler#fehler-07' },
+        { '@type': 'HowToStep', name: 'Content-Umfang prüfen', text: 'Stelle sicher, dass wichtige Seiten mindestens 300 Wörter relevanten Content haben.', url: 'https://www.scanora.ai/blog/seo-test-haeufige-fehler#fehler-08' },
+        { '@type': 'HowToStep', name: 'Structured Data prüfen', text: 'Prüfe, ob Organization-, WebSite- und ggf. Article- oder FAQPage-Schema als JSON-LD vorhanden ist.', url: 'https://www.scanora.ai/blog/seo-test-haeufige-fehler#fehler-09' },
+        { '@type': 'HowToStep', name: 'Indexierbarkeit prüfen', text: 'Prüfe wichtige Seiten per URL-Inspection in der Google Search Console auf versehentliches noindex.', url: 'https://www.scanora.ai/blog/seo-test-haeufige-fehler#fehler-10' },
     ],
 }
 
@@ -213,7 +213,7 @@ const ERRORS = [
         title: 'Versehentliches "noindex" auf wichtigen Seiten',
         impact: 'Seite verschwindet komplett aus der Google-Suche',
         desc: 'Ein einzelner robots-Meta-Tag mit "noindex" oder ein falsch gesetzter X-Robots-Tag in der Server-Antwort reicht aus, damit Google eine Seite komplett aus dem Index entfernt - unabhängig davon wie gut Title, Content oder Backlinks sind. Das passiert häufiger als man denkt: ein Staging-Flag, das nach dem Launch vergessen wird, ein CMS-Default oder ein Plugin-Update, das die Robots-Einstellung zurücksetzt.',
-        fix: 'Nach jedem Deployment die wichtigsten Seiten per URL-Inspection in der Google Search Console prüfen, oder automatisiert mit einem SEO-Test - AuditAI markiert versehentliches noindex sofort als kritischen Fehler.',
+        fix: 'Nach jedem Deployment die wichtigsten Seiten per URL-Inspection in der Google Search Console prüfen, oder automatisiert mit einem SEO-Test - Scanora markiert versehentliches noindex sofort als kritischen Fehler.',
         ctaLink: '/dashboard',
         stat: null,
     },
@@ -232,7 +232,7 @@ export default function SeoTestArtikelPage() {
 
                 {/* Breadcrumb */}
                 <div className="flex items-center gap-2 text-xs text-slate-600 mb-8">
-                    <Link href="/" className="hover:text-slate-400 transition-colors">AuditAI</Link>
+                    <Link href="/" className="hover:text-slate-400 transition-colors">Scanora</Link>
                     <span>/</span>
                     <Link href="/blog" className="hover:text-slate-400 transition-colors">Blog</Link>
                     <span>/</span>
@@ -261,7 +261,7 @@ export default function SeoTestArtikelPage() {
                             <span>Finn Paustian</span>
                         </Link>
                         <span>·</span>
-                        <span>Gründer, AuditAI</span>
+                        <span>Gründer, Scanora</span>
                     </div>
                 </div>
 
@@ -316,13 +316,13 @@ export default function SeoTestArtikelPage() {
                         <figure className="mb-6">
                             <Image
                                 src="/blog/auditai-seo-issues.png"
-                                alt="AuditAI SEO-Report zeigt echte gefundene Fehler wie zu lange Title-Tags und zu lange Meta-Descriptions"
+                                alt="Scanora SEO-Report zeigt echte gefundene Fehler wie zu lange Title-Tags und zu lange Meta-Descriptions"
                                 width={926}
                                 height={168}
                                 className="w-full h-auto rounded-2xl border border-white/[0.07]"
                             />
                             <figcaption className="text-xs text-slate-600 mt-2">
-                                So markiert AuditAI erkannte Fehler in einem echten Report — hier Title-Tag- und Meta-Description-Probleme aus einem Live-Audit.
+                                So markiert Scanora erkannte Fehler in einem echten Report — hier Title-Tag- und Meta-Description-Probleme aus einem Live-Audit.
                             </figcaption>
                         </figure>
                         <div className="space-y-5">
@@ -383,7 +383,7 @@ export default function SeoTestArtikelPage() {
                         <figure className="my-6">
                             <Image
                                 src="/blog/auditai-seo-checks.png"
-                                alt="AuditAI Check-Grid zeigt fehlgeschlagene Checks für Title-Tag (69 Zeichen) und Meta-Description (169 Zeichen) sowie bestandene Checks für H1-Tag, Alt-Texte, Canonical und Structured Data"
+                                alt="Scanora Check-Grid zeigt fehlgeschlagene Checks für Title-Tag (69 Zeichen) und Meta-Description (169 Zeichen) sowie bestandene Checks für H1-Tag, Alt-Texte, Canonical und Structured Data"
                                 width={910}
                                 height={103}
                                 className="w-full h-auto rounded-2xl border border-white/[0.07]"
@@ -461,7 +461,7 @@ export default function SeoTestArtikelPage() {
                             Das Problem mit manuellen Checks: du prüfst nie die komplette Website. Die meisten SEO-Fehler sitzen nicht auf der Startseite - sie stecken auf Unterseiten, in Produktpages oder in Blogartikeln die niemand mehr aktiv bearbeitet. Ein automatisierter SEO-Test crawlt bis zu 25 Seiten gleichzeitig und findet genau diese versteckten Probleme.
                         </p>
                         <p className="mt-4">
-                            AuditAI prüft alle 14 SEO-Checks aus diesem Artikel in unter 60 Sekunden - inklusive H1, Meta-Descriptions, Alt-Texte, Canonical, Open Graph, Structured Data und Core Web Vitals.
+                            Scanora prüft alle 14 SEO-Checks aus diesem Artikel in unter 60 Sekunden - inklusive H1, Meta-Descriptions, Alt-Texte, Canonical, Open Graph, Structured Data und Core Web Vitals.
                         </p>
                     </section>
 
@@ -483,7 +483,7 @@ export default function SeoTestArtikelPage() {
                                 },
                                 {
                                     q: 'Kann ich einen SEO-Test kostenlos durchführen?',
-                                    a: 'Ja. AuditAI bietet einen kostenlosen SEO-Test mit 14 Checks - inklusive Title-Tag, Meta-Description, H1, Alt-Texte, Canonical, Open Graph, Structured Data und mehr. Der Free-Plan erlaubt 1 vollständigen Audit pro Monat ohne Kreditkarte.',
+                                    a: 'Ja. Scanora bietet einen kostenlosen SEO-Test mit 14 Checks - inklusive Title-Tag, Meta-Description, H1, Alt-Texte, Canonical, Open Graph, Structured Data und mehr. Der Free-Plan erlaubt 1 vollständigen Audit pro Monat ohne Kreditkarte.',
                                 },
                             ].map((faq, i) => (
                                 <div key={i} className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5">
@@ -502,12 +502,12 @@ export default function SeoTestArtikelPage() {
                         Wie viele dieser Fehler hat deine Website?
                     </h2>
                     <p className="text-slate-400 text-sm mb-6 max-w-md mx-auto leading-relaxed">
-                        AuditAI prüft alle 14 SEO-Checks in unter 60 Sekunden - inklusive der 10 Fehler aus diesem Artikel. Start ohne Registrierung, für den vollständigen Report mit allen Scores meldest du dich kostenlos an.
+                        Scanora prüft alle 14 SEO-Checks in unter 60 Sekunden - inklusive der 10 Fehler aus diesem Artikel. Start ohne Registrierung, für den vollständigen Report mit allen Scores meldest du dich kostenlos an.
                     </p>
                     <figure className="max-w-md mx-auto mb-6">
                         <Image
                             src="/blog/auditai-score-overview.png"
-                            alt="AuditAI Score-Übersicht mit Overall-Score 90, SEO-Score 78, Performance-Score 100 und GEO-Score 96"
+                            alt="Scanora Score-Übersicht mit Overall-Score 90, SEO-Score 78, Performance-Score 100 und GEO-Score 96"
                             width={960}
                             height={194}
                             className="w-full h-auto rounded-xl border border-white/[0.07]"

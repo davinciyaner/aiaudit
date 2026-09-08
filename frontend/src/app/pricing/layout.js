@@ -1,17 +1,17 @@
 export const metadata = {
     title: 'Preise & Pläne',
-    description: 'AuditAI kostenlos testen oder auf Pro/Agency upgraden. Free: 1 Audit/Monat. Pro: €29/Monat mit 10 Audits. Agency: €99/Monat, unbegrenzte Audits. Jederzeit kündbar.',
+    description: 'Scanora kostenlos testen oder auf Pro/Agency upgraden. Free: 1 Audit/Monat. Pro: €29/Monat mit 10 Audits. Agency: €99/Monat, unbegrenzte Audits. Jederzeit kündbar.',
     alternates: {
-        canonical: 'https://www.sitecheckai.dev/pricing',
+        canonical: 'https://www.scanora.ai/pricing',
         languages: {
-            'de-DE': 'https://www.sitecheckai.dev/pricing',
-            'en-US': 'https://www.sitecheckai.dev/en/pricing',
+            'de-DE': 'https://www.scanora.ai/pricing',
+            'en-US': 'https://www.scanora.ai/en/pricing',
         },
     },
     openGraph: {
-        title: 'Preise & Pläne | AuditAI',
+        title: 'Preise & Pläne | Scanora',
         description: 'Kostenlos starten oder upgraden — SEO, Performance & GEO-Audits für Freelancer und Agenturen.',
-        url: 'https://www.sitecheckai.dev/pricing',
+        url: 'https://www.scanora.ai/pricing',
     },
 }
 

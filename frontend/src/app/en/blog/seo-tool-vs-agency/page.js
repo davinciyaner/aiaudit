@@ -7,16 +7,16 @@ export const metadata = {
     description: 'DIY SEO audit vs. hiring an SEO agency: real costs, what each option actually covers, and who each one is really for - no sales pitch.',
     keywords: 'seo tool vs agency, diy seo audit, seo agency cost, seo agency vs software, is an seo agency worth it, seo audit software',
     alternates: {
-        canonical: 'https://www.sitecheckai.dev/en/blog/seo-tool-vs-agency',
+        canonical: 'https://www.scanora.ai/en/blog/seo-tool-vs-agency',
         languages: {
-            'de-DE': 'https://www.sitecheckai.dev/blog/seo-test-vs-agentur',
-            'en-US': 'https://www.sitecheckai.dev/en/blog/seo-tool-vs-agency',
+            'de-DE': 'https://www.scanora.ai/blog/seo-test-vs-agentur',
+            'en-US': 'https://www.scanora.ai/en/blog/seo-tool-vs-agency',
         },
     },
     openGraph: {
         title: 'SEO Tool vs. SEO Agency: The Honest Cost Comparison',
         description: 'Costs, scope, and who each option is really for - the honest comparison, no sales pitch.',
-        url: 'https://www.sitecheckai.dev/en/blog/seo-tool-vs-agency',
+        url: 'https://www.scanora.ai/en/blog/seo-tool-vs-agency',
         type: 'article',
         locale: 'en_US',
     },
@@ -27,27 +27,27 @@ const jsonLd = {
     '@type': 'Article',
     headline: 'SEO Tool vs. SEO Agency: The Honest Cost Comparison',
     description: 'DIY SEO audit vs. hiring an SEO agency: real costs, what each option actually covers, and who each one is really for.',
-    image: 'https://www.sitecheckai.dev/en/blog/seo-tool-vs-agency/opengraph-image',
+    image: 'https://www.scanora.ai/en/blog/seo-tool-vs-agency/opengraph-image',
     datePublished: '2026-07-26T09:00:00+02:00',
     dateModified: '2026-08-01T09:00:00+02:00',
-    author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev/about' },
+    author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.scanora.ai/about' },
     publisher: {
         '@type': 'Organization',
-        name: 'AuditAI',
-        url: 'https://www.sitecheckai.dev',
-        logo: { '@type': 'ImageObject', url: 'https://www.sitecheckai.dev/logo', width: 512, height: 512 },
+        name: 'Scanora',
+        url: 'https://www.scanora.ai',
+        logo: { '@type': 'ImageObject', url: 'https://www.scanora.ai/logo', width: 512, height: 512 },
     },
-    url: 'https://www.sitecheckai.dev/en/blog/seo-tool-vs-agency',
-    mainEntityOfPage: 'https://www.sitecheckai.dev/en/blog/seo-tool-vs-agency',
+    url: 'https://www.scanora.ai/en/blog/seo-tool-vs-agency',
+    mainEntityOfPage: 'https://www.scanora.ai/en/blog/seo-tool-vs-agency',
 }
 
 const breadcrumbLd = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'AuditAI', item: 'https://www.sitecheckai.dev/en' },
-        { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.sitecheckai.dev/en/blog' },
-        { '@type': 'ListItem', position: 3, name: 'SEO Tool vs. Agency', item: 'https://www.sitecheckai.dev/en/blog/seo-tool-vs-agency' },
+        { '@type': 'ListItem', position: 1, name: 'Scanora', item: 'https://www.scanora.ai/en' },
+        { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.scanora.ai/en/blog' },
+        { '@type': 'ListItem', position: 3, name: 'SEO Tool vs. Agency', item: 'https://www.scanora.ai/en/blog/seo-tool-vs-agency' },
     ],
 }
 
@@ -106,7 +106,7 @@ const TEST_SCOPE = [
 ]
 
 const COMPARISON = [
-    ['Cost per month', 'from €29/month (AuditAI Pro)', '€500 - €8,000+ (retainer)'],
+    ['Cost per month', 'from €29/month (Scanora Pro)', '€500 - €8,000+ (retainer)'],
     ['Setup time', 'Instant, no contract commitment', 'Weeks to months (onboarding, strategy)'],
     ['Covers technical SEO errors', 'Yes, automated', 'Yes, usually part of the package'],
     ['Covers GEO / AI visibility', 'Yes, dedicated', 'Rarely - depends heavily on the agency'],
@@ -127,7 +127,7 @@ export default function SeoToolVsAgencyPageEn() {
 
                 {/* Breadcrumb */}
                 <div className="flex items-center gap-2 text-xs text-slate-600 mb-8">
-                    <Link href="/en" className="hover:text-slate-400 transition-colors">AuditAI</Link>
+                    <Link href="/en" className="hover:text-slate-400 transition-colors">Scanora</Link>
                     <span>/</span>
                     <Link href="/en/blog" className="hover:text-slate-400 transition-colors">Blog</Link>
                     <span>/</span>
@@ -156,7 +156,7 @@ export default function SeoToolVsAgencyPageEn() {
                             <span>Finn Paustian</span>
                         </Link>
                         <span>·</span>
-                        <span>Founder, AuditAI</span>
+                        <span>Founder, Scanora</span>
                     </div>
                 </div>
 
@@ -185,7 +185,7 @@ export default function SeoToolVsAgencyPageEn() {
                     <section>
                         <h2 className="text-2xl font-bold text-white mb-4">What an automated SEO tool covers - and what it doesn&apos;t</h2>
                         <p>
-                            A tool like AuditAI is a diagnostic instrument, not an agency replacement. It finds technical problems automatically and repeatedly - but it doesn&apos;t write content and doesn&apos;t build backlinks. For exactly which mistakes that means, with numbers and fix instructions, see our article on the{' '}
+                            A tool like Scanora is a diagnostic instrument, not an agency replacement. It finds technical problems automatically and repeatedly - but it doesn&apos;t write content and doesn&apos;t build backlinks. For exactly which mistakes that means, with numbers and fix instructions, see our article on the{' '}
                             <Link href="/en/blog/common-seo-mistakes" className="text-amber-400 hover:text-amber-300 underline underline-offset-2">
                                 10 most common SEO mistakes
                             </Link>.
@@ -287,7 +287,7 @@ export default function SeoToolVsAgencyPageEn() {
                         <div>
                             <span className="text-xs font-semibold text-violet-400 uppercase tracking-wider mb-1 block">Keep reading</span>
                             <h3 className="text-base sm:text-lg font-bold text-white mb-2">
-                                AuditAI: The SEO Tool With GEO Analysis
+                                Scanora: The SEO Tool With GEO Analysis
                             </h3>
                             <p className="text-slate-400 text-sm leading-relaxed max-w-md">
                                 Want to test things yourself first? All the features at a glance, including the free audit.

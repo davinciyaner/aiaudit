@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { Zap, CheckCircle, LogIn, AlertCircle } from 'lucide-react'
+import { CheckCircle, LogIn, AlertCircle } from 'lucide-react'
 
 // Diese Seite wird von der Chrome Extension geöffnet.
 // Sie liest den JWT aus localStorage und sendet ihn via postMessage an die Extension.
@@ -35,11 +35,11 @@ export default function ExtensionAuthPage() {
 
                 {/* Logo */}
                 <div className="flex items-center justify-center gap-2.5 mb-8">
-                    <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-500 to-cyan-500 flex items-center justify-center shadow-lg shadow-violet-500/30">
-                        <Zap className="w-4.5 h-4.5 text-white" strokeWidth={2.5} />
+                    <div className="w-9 h-9 rounded-xl bg-[var(--accent)] flex items-center justify-center shadow-lg shadow-[var(--accent-border)]">
+                        <svg className="w-4.5 h-4.5 text-white" viewBox="0 0 192 192" fill="none"><circle cx="96" cy="96" r="50" stroke="currentColor" strokeWidth="14" /><circle cx="110" cy="82" r="13" fill="currentColor" /></svg>
                     </div>
                     <span className="text-xl font-bold text-white tracking-tight">
-                        Audit<span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-cyan-400">AI</span>
+                        Scanora
                     </span>
                 </div>
 
@@ -79,7 +79,7 @@ export default function ExtensionAuthPage() {
                         </div>
                         <h1 className="text-xl font-bold text-white mb-2">Noch nicht eingeloggt</h1>
                         <p className="text-slate-400 text-sm leading-relaxed mb-6">
-                            Logge dich zuerst auf SiteCheckAI ein. Danach öffne die Extension erneut — sie verbindet sich automatisch.
+                            Logge dich zuerst auf Scanora ein. Danach öffne die Extension erneut — sie verbindet sich automatisch.
                         </p>
                         <a
                             href="/login"

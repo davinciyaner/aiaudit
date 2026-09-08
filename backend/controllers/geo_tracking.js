@@ -564,7 +564,7 @@ export async function analyzeCitation(req, res) {
         let pageRes
         try {
             pageRes = await fetchSafely(normalizedUrl, {
-                headers: { 'User-Agent': 'AuditAI-GEO-Bot/1.0' },
+                headers: { 'User-Agent': 'Scanora-GEO-Bot/1.0' },
                 timeoutMs: 10000,
             })
         } catch (err) {

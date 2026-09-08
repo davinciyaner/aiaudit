@@ -3,20 +3,20 @@ import Navbar from '../../../components/Navbar'
 import Footer from '../../../components/Footer'
 
 export const metadata = {
-    title: 'Rankscale Alternative: How AuditAI Compares (2026)',
-    description: 'Looking for a Rankscale alternative? AuditAI tracks AI visibility across ChatGPT, Claude, Gemini, Perplexity & Google AI Overview from €29.99/month with fixed pricing instead of a credit system — plus a built-in SEO audit.',
+    title: 'Rankscale Alternative: How Scanora Compares (2026)',
+    description: 'Looking for a Rankscale alternative? Scanora tracks AI visibility across ChatGPT, Claude, Gemini, Perplexity & Google AI Overview from €29.99/month with fixed pricing instead of a credit system — plus a built-in SEO audit.',
     keywords: 'rankscale alternative, rankscale ai competitor, cheap ai visibility tool, geo tracking tool without credits, ai visibility software',
     alternates: {
-        canonical: 'https://www.sitecheckai.dev/en/compare/rankscale-alternative',
+        canonical: 'https://www.scanora.ai/en/compare/rankscale-alternative',
         languages: {
-            'de-DE': 'https://www.sitecheckai.dev/vergleich/rankscale-alternative',
-            'en-US': 'https://www.sitecheckai.dev/en/compare/rankscale-alternative',
+            'de-DE': 'https://www.scanora.ai/vergleich/rankscale-alternative',
+            'en-US': 'https://www.scanora.ai/en/compare/rankscale-alternative',
         },
     },
     openGraph: {
-        title: 'Rankscale Alternative: How AuditAI Compares (2026)',
-        description: 'AuditAI tracks AI visibility across ChatGPT, Claude, Gemini, Perplexity & Google AI Overview from €29.99/month with fixed pricing instead of a credit system. A fact-checked look at Rankscale.',
-        url: 'https://www.sitecheckai.dev/en/compare/rankscale-alternative',
+        title: 'Rankscale Alternative: How Scanora Compares (2026)',
+        description: 'Scanora tracks AI visibility across ChatGPT, Claude, Gemini, Perplexity & Google AI Overview from €29.99/month with fixed pricing instead of a credit system. A fact-checked look at Rankscale.',
+        url: 'https://www.scanora.ai/en/compare/rankscale-alternative',
         type: 'article',
         locale: 'en_US',
     },
@@ -25,20 +25,20 @@ export const metadata = {
 const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
-    headline: 'Rankscale Alternative: An Honest Look at AuditAI',
-    description: 'AuditAI tracks AI visibility across ChatGPT, Claude, Gemini, Perplexity & Google AI Overview from €29.99/month with fixed pricing instead of a credit system. A fact-checked comparison with Rankscale.',
-    image: 'https://www.sitecheckai.dev/en/compare/rankscale-alternative/opengraph-image',
+    headline: 'Rankscale Alternative: An Honest Look at Scanora',
+    description: 'Scanora tracks AI visibility across ChatGPT, Claude, Gemini, Perplexity & Google AI Overview from €29.99/month with fixed pricing instead of a credit system. A fact-checked comparison with Rankscale.',
+    image: 'https://www.scanora.ai/en/compare/rankscale-alternative/opengraph-image',
     datePublished: '2026-08-29T09:00:00+02:00',
     dateModified: '2026-09-03T12:00:00+02:00',
-    author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev/about' },
+    author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.scanora.ai/about' },
     publisher: {
         '@type': 'Organization',
-        name: 'AuditAI',
-        url: 'https://www.sitecheckai.dev',
-        logo: { '@type': 'ImageObject', url: 'https://www.sitecheckai.dev/logo', width: 512, height: 512 },
+        name: 'Scanora',
+        url: 'https://www.scanora.ai',
+        logo: { '@type': 'ImageObject', url: 'https://www.scanora.ai/logo', width: 512, height: 512 },
     },
-    url: 'https://www.sitecheckai.dev/en/compare/rankscale-alternative',
-    mainEntityOfPage: 'https://www.sitecheckai.dev/en/compare/rankscale-alternative',
+    url: 'https://www.scanora.ai/en/compare/rankscale-alternative',
+    mainEntityOfPage: 'https://www.scanora.ai/en/compare/rankscale-alternative',
     about: [
         { '@type': 'Thing', name: 'AI Visibility Tracking' },
         { '@type': 'Thing', name: 'Generative Engine Optimization' },
@@ -46,17 +46,17 @@ const jsonLd = {
     ],
     mentions: [
         { '@type': 'SoftwareApplication', name: 'Rankscale', url: 'https://rankscale.ai', sameAs: 'https://rankscale.ai' },
-        { '@id': 'https://www.sitecheckai.dev/#software' },
+        { '@id': 'https://www.scanora.ai/#software' },
     ],
 }
 
 const softwareLd = {
     '@context': 'https://schema.org',
     '@type': 'SoftwareApplication',
-    '@id': 'https://www.sitecheckai.dev/#software',
-    name: 'AuditAI',
-    alternateName: 'SiteCheckAI',
-    url: 'https://www.sitecheckai.dev',
+    '@id': 'https://www.scanora.ai/#software',
+    name: 'Scanora',
+    alternateName: 'Scanora',
+    url: 'https://www.scanora.ai',
     applicationCategory: 'BusinessApplication',
     applicationSubCategory: 'AI Visibility & SEO Monitoring',
     operatingSystem: 'Web',
@@ -69,7 +69,7 @@ const softwareLd = {
             priceCurrency: 'EUR',
             priceValidUntil: '2026-12-31',
             billingDuration: 'P1M',
-            url: 'https://www.sitecheckai.dev/geo/pricing',
+            url: 'https://www.scanora.ai/geo/pricing',
         },
         {
             '@type': 'Offer',
@@ -78,7 +78,7 @@ const softwareLd = {
             priceCurrency: 'EUR',
             priceValidUntil: '2026-12-31',
             billingDuration: 'P1M',
-            url: 'https://www.sitecheckai.dev/geo/pricing',
+            url: 'https://www.scanora.ai/geo/pricing',
         },
         {
             '@type': 'Offer',
@@ -86,7 +86,7 @@ const softwareLd = {
             price: '0',
             priceCurrency: 'EUR',
             billingDuration: 'P1M',
-            url: 'https://www.sitecheckai.dev/pricing',
+            url: 'https://www.scanora.ai/pricing',
         },
     ],
 }
@@ -95,9 +95,9 @@ const breadcrumbLd = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'AuditAI', item: 'https://www.sitecheckai.dev/en' },
-        { '@type': 'ListItem', position: 2, name: 'Compare', item: 'https://www.sitecheckai.dev/en/compare' },
-        { '@type': 'ListItem', position: 3, name: 'Rankscale Alternative', item: 'https://www.sitecheckai.dev/en/compare/rankscale-alternative' },
+        { '@type': 'ListItem', position: 1, name: 'Scanora', item: 'https://www.scanora.ai/en' },
+        { '@type': 'ListItem', position: 2, name: 'Compare', item: 'https://www.scanora.ai/en/compare' },
+        { '@type': 'ListItem', position: 3, name: 'Rankscale Alternative', item: 'https://www.scanora.ai/en/compare/rankscale-alternative' },
     ],
 }
 
@@ -107,18 +107,18 @@ const faqLd = {
     mainEntity: [
         {
             '@type': 'Question',
-            name: 'Is AuditAI a real alternative to Rankscale?',
+            name: 'Is Scanora a real alternative to Rankscale?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: "If you want fixed, predictable pricing instead of a credit system, yes. AuditAI covers the five most important AI platforms (ChatGPT, Claude, Gemini, Perplexity, Google AI Overview) and adds a full SEO audit on top. For very broad coverage across 17+ engines and international regional tracking, Rankscale remains the more specialized option.",
+                text: "If you want fixed, predictable pricing instead of a credit system, yes. Scanora covers the five most important AI platforms (ChatGPT, Claude, Gemini, Perplexity, Google AI Overview) and adds a full SEO audit on top. For very broad coverage across 17+ engines and international regional tracking, Rankscale remains the more specialized option.",
             },
         },
         {
             '@type': 'Question',
-            name: 'How does AuditAI pricing compare to Rankscale?',
+            name: 'How does Scanora pricing compare to Rankscale?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: "AuditAI's GEO automation starts at €4.99/month for Claude-only tracking, or €29.99/month for all five platforms, with fixed monthly limits. Rankscale starts at $20/month (Essential plan, 120 credits, 10 web audits) with no permanent free plan, only a 7-day trial.",
+                text: "Scanora's GEO automation starts at €4.99/month for Claude-only tracking, or €29.99/month for all five platforms, with fixed monthly limits. Rankscale starts at $20/month (Essential plan, 120 credits, 10 web audits) with no permanent free plan, only a 7-day trial.",
             },
         },
         {
@@ -126,20 +126,20 @@ const faqLd = {
             name: "What does Rankscale's credit system actually mean?",
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'Rankscale bills checks, audits, and queries against a monthly credit allowance that varies by plan. Reviews note that real-world usage can burn through credits faster than expected depending on how heavily you use the tool, and that Rankscale has since removed a cheaper entry tier that used to serve smaller teams. AuditAI instead uses fixed website and keyword limits per plan, with no consumption logic.',
+                text: 'Rankscale bills checks, audits, and queries against a monthly credit allowance that varies by plan. Reviews note that real-world usage can burn through credits faster than expected depending on how heavily you use the tool, and that Rankscale has since removed a cheaper entry tier that used to serve smaller teams. Scanora instead uses fixed website and keyword limits per plan, with no consumption logic.',
             },
         },
         {
             '@type': 'Question',
-            name: 'Does AuditAI also cover traditional SEO?',
+            name: 'Does Scanora also cover traditional SEO?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'Yes. Alongside GEO automation, AuditAI offers separate SEO automation with weekly ranking updates, keyword ideas, competitor analysis, and a backlink overview. Rankscale focuses on AI visibility and GEO site audits, without traditional Google rank tracking.',
+                text: 'Yes. Alongside GEO automation, Scanora offers separate SEO automation with weekly ranking updates, keyword ideas, competitor analysis, and a backlink overview. Rankscale focuses on AI visibility and GEO site audits, without traditional Google rank tracking.',
             },
         },
         {
             '@type': 'Question',
-            name: 'Can I try AuditAI for free?',
+            name: 'Can I try Scanora for free?',
             acceptedAnswer: {
                 '@type': 'Answer',
                 text: 'Yes, no signup and no credit card required. Enter your URL and get a result in about 60 seconds. The free plan stays free forever; the automation subscriptions additionally come with a 14-day free trial.',
@@ -147,10 +147,10 @@ const faqLd = {
         },
         {
             '@type': 'Question',
-            name: 'Rankscale or AuditAI - which is better?',
+            name: 'Rankscale or Scanora - which is better?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: "It depends on the use case. For predictable costs, a genuine free tier, and SEO plus AI visibility from one vendor, AuditAI is the more practical choice. For maximum platform breadth across 17+ AI engines, international regional tracking, and very deep analytics, Rankscale is the more specialized option. Neither tool is strictly better in every situation.",
+                text: "It depends on the use case. For predictable costs, a genuine free tier, and SEO plus AI visibility from one vendor, Scanora is the more practical choice. For maximum platform breadth across 17+ AI engines, international regional tracking, and very deep analytics, Rankscale is the more specialized option. Neither tool is strictly better in every situation.",
             },
         },
         {
@@ -158,7 +158,7 @@ const faqLd = {
             name: 'Is there a free Rankscale alternative?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'AuditAI offers a permanently free plan with one website audit per month, including a GEO visibility check - no signup, no credit card, no time limit. Ongoing weekly AI-visibility monitoring requires a paid plan starting at €4.99/month; Rankscale itself has no permanent free tier, only a 7-day trial.',
+                text: 'Scanora offers a permanently free plan with one website audit per month, including a GEO visibility check - no signup, no credit card, no time limit. Ongoing weekly AI-visibility monitoring requires a paid plan starting at €4.99/month; Rankscale itself has no permanent free tier, only a 7-day trial.',
             },
         },
     ],
@@ -201,7 +201,7 @@ export default function RankscaleAlternativePage() {
 
                 {/* Breadcrumb */}
                 <div className="flex items-center gap-2 text-xs text-slate-600 mb-8">
-                    <Link href="/en" className="hover:text-slate-400 transition-colors">AuditAI</Link>
+                    <Link href="/en" className="hover:text-slate-400 transition-colors">Scanora</Link>
                     <span>/</span>
                     <Link href="/en/compare" className="hover:text-slate-400 transition-colors">Compare</Link>
                     <span>/</span>
@@ -218,13 +218,13 @@ export default function RankscaleAlternativePage() {
                         <span className="text-xs text-slate-600">· 7 min read</span>
                     </div>
                     <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight tracking-tight mb-5">
-                        Rankscale Alternative: An Honest Look at AuditAI
+                        Rankscale Alternative: An Honest Look at Scanora
                     </h1>
                     <p className="text-lg text-slate-400 leading-relaxed">
                         People go looking for a Rankscale alternative for one of two reasons: the credit system makes the real monthly bill hard to predict, or you don't actually need 17 AI platforms — you need the five that matter most, covered reliably and affordably. This page compares both tools honestly — including where Rankscale wins.
                     </p>
                     <p className="mt-4 text-slate-300 leading-relaxed">
-                        Short version: <strong className="text-white">AuditAI</strong> tracks your AI visibility across ChatGPT, Claude, Gemini, Perplexity, and Google AI Overview from €29.99/month with fixed, predictable limits, and bundles in an SEO audit plus Google rank tracking. <strong className="text-white">Rankscale</strong> is a GEO-native tool with unusually broad platform coverage and a credit-based billing model. Which one fits depends on whether you prioritize predictable costs or maximum platform breadth.
+                        Short version: <strong className="text-white">Scanora</strong> tracks your AI visibility across ChatGPT, Claude, Gemini, Perplexity, and Google AI Overview from €29.99/month with fixed, predictable limits, and bundles in an SEO audit plus Google rank tracking. <strong className="text-white">Rankscale</strong> is a GEO-native tool with unusually broad platform coverage and a credit-based billing model. Which one fits depends on whether you prioritize predictable costs or maximum platform breadth.
                     </p>
                     <div className="mt-5 flex items-center gap-2 text-xs text-slate-600">
                         <Link href="/about" className="flex items-center gap-2 hover:text-slate-300 transition-colors">
@@ -232,7 +232,7 @@ export default function RankscaleAlternativePage() {
                             <span>Finn Paustian</span>
                         </Link>
                         <span>·</span>
-                        <span>Founder, AuditAI</span>
+                        <span>Founder, Scanora</span>
                     </div>
                 </div>
 
@@ -247,7 +247,7 @@ export default function RankscaleAlternativePage() {
                                 <thead>
                                     <tr className="border-b border-white/5 bg-white/[0.02]">
                                         <th className="text-left px-5 py-3 text-slate-400 font-semibold">Aspect</th>
-                                        <th className="text-left px-5 py-3 text-violet-400 font-semibold">AuditAI</th>
+                                        <th className="text-left px-5 py-3 text-violet-400 font-semibold">Scanora</th>
                                         <th className="text-left px-5 py-3 text-cyan-400 font-semibold">Rankscale</th>
                                     </tr>
                                 </thead>
@@ -263,36 +263,36 @@ export default function RankscaleAlternativePage() {
                             </table>
                         </div>
                         <p className="text-xs text-slate-600 mt-3">
-                            Pricing as of August 2026, based on the vendor's publicly listed pricing and plan pages. Rankscale bills primarily in USD, AuditAI in EUR incl. VAT. Always double-check current terms directly with the vendor.
+                            Pricing as of August 2026, based on the vendor's publicly listed pricing and plan pages. Rankscale bills primarily in USD, Scanora in EUR incl. VAT. Always double-check current terms directly with the vendor.
                         </p>
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">Where AuditAI wins</h2>
+                        <h2 className="text-2xl font-bold text-white mb-4">Where Scanora wins</h2>
 
                         <h3 className="text-lg font-semibold text-white mt-6 mb-2">1. Fixed pricing instead of a credit system with variable consumption</h3>
                         <p>
-                            Rankscale bills checks, audits, and queries against a monthly credit allowance — how much you actually burn through depends on how heavily you use it. Reviews call this out as a real risk: the effective monthly cost can exceed the listed plan price once usage ramps up. AuditAI instead uses fixed website and keyword limits per plan — the bill at the end of the month is exactly what's on the pricing page.
+                            Rankscale bills checks, audits, and queries against a monthly credit allowance — how much you actually burn through depends on how heavily you use it. Reviews call this out as a real risk: the effective monthly cost can exceed the listed plan price once usage ramps up. Scanora instead uses fixed website and keyword limits per plan — the bill at the end of the month is exactly what's on the pricing page.
                         </p>
 
                         <h3 className="text-lg font-semibold text-white mt-6 mb-2">2. An actual free plan, not just a 7-day clock</h3>
                         <p>
-                            Rankscale has no permanent free tier, only a 7-day "Try Pro" trial. AuditAI lets you run one full audit a month, including GEO visibility, for free indefinitely — a low-risk way to find out whether AI visibility even matters for your site before you commit to a subscription.
+                            Rankscale has no permanent free tier, only a 7-day "Try Pro" trial. Scanora lets you run one full audit a month, including GEO visibility, for free indefinitely — a low-risk way to find out whether AI visibility even matters for your site before you commit to a subscription.
                         </p>
 
                         <h3 className="text-lg font-semibold text-white mt-6 mb-2">3. More accessible for small teams and solo operators</h3>
                         <p>
-                            Reviews of Rankscale note that an earlier, cheaper entry tier has since been removed — a real hurdle for small teams or anyone wanting to test before committing to a larger partnership. AuditAI starts at €4.99/month for Claude tracking, keeping it accessible for individuals and small sites too.
+                            Reviews of Rankscale note that an earlier, cheaper entry tier has since been removed — a real hurdle for small teams or anyone wanting to test before committing to a larger partnership. Scanora starts at €4.99/month for Claude tracking, keeping it accessible for individuals and small sites too.
                         </p>
 
                         <h3 className="text-lg font-semibold text-white mt-6 mb-2">4. AI visibility and SEO, one vendor</h3>
                         <p>
-                            Rankscale focuses on AI-visibility tracking and GEO site audits — it doesn't cover traditional SEO rank tracking. AuditAI pairs GEO automation with a separate SEO automation plan covering weekly Google ranking updates, keyword ideas, competitor analysis, and a backlink overview — one provider, bookable independently.
+                            Rankscale focuses on AI-visibility tracking and GEO site audits — it doesn't cover traditional SEO rank tracking. Scanora pairs GEO automation with a separate SEO automation plan covering weekly Google ranking updates, keyword ideas, competitor analysis, and a backlink overview — one provider, bookable independently.
                         </p>
 
                         <h3 className="text-lg font-semibold text-white mt-6 mb-2">5. Fixes, not just analytics depth</h3>
                         <p>
-                            Rankscale delivers an impressive number of analysis dimensions — but you still have to figure out what to do with them yourself. AuditAI goes a step further with a prioritized action plan: it checks for llms.txt, Schema.org markup, FAQ schema, and whether AI crawlers are even allowed in, then tells you exactly what to change to get cited.
+                            Rankscale delivers an impressive number of analysis dimensions — but you still have to figure out what to do with them yourself. Scanora goes a step further with a prioritized action plan: it checks for llms.txt, Schema.org markup, FAQ schema, and whether AI crawlers are even allowed in, then tells you exactly what to change to get cited.
                         </p>
                     </section>
 
@@ -302,7 +302,7 @@ export default function RankscaleAlternativePage() {
                             A fair comparison has to say where the other tool is genuinely stronger — and Rankscale is, on a few fronts:
                         </p>
                         <p className="mt-4">
-                            <strong className="text-white">Exceptional platform breadth.</strong> Rankscale tracks 17+ AI engines — beyond ChatGPT, Claude, Gemini, Perplexity, and Google AI Overview, it also covers Grok, DeepSeek, and Mistral. For brands that want to know how they perform on these niche models too, that's meaningfully broader coverage than AuditAI's five established platforms.
+                            <strong className="text-white">Exceptional platform breadth.</strong> Rankscale tracks 17+ AI engines — beyond ChatGPT, Claude, Gemini, Perplexity, and Google AI Overview, it also covers Grok, DeepSeek, and Mistral. For brands that want to know how they perform on these niche models too, that's meaningfully broader coverage than Scanora's five established platforms.
                         </p>
                         <p className="mt-4">
                             <strong className="text-white">International regional tracking.</strong> Over 240 countries and regions can be broken out individually — relevant for brands operating across multiple local markets.
@@ -311,7 +311,7 @@ export default function RankscaleAlternativePage() {
                             <strong className="text-white">Deeper analytics.</strong> Query fan-out tracking, sentiment analysis, source analysis, and custom dashboards go beyond raw visibility percentages, offering more nuanced insight for teams that want to do their own deep analysis.
                         </p>
                         <p className="mt-4">
-                            The short version: if you need maximum platform breadth and analytical depth and can plan around a variable credit budget, Rankscale is worth a look. If you'd rather have predictable costs, a genuine free entry point, and SEO covered in the same tool, AuditAI is the more practical fit.
+                            The short version: if you need maximum platform breadth and analytical depth and can plan around a variable credit budget, Rankscale is worth a look. If you'd rather have predictable costs, a genuine free entry point, and SEO covered in the same tool, Scanora is the more practical fit.
                         </p>
                     </section>
 
@@ -319,7 +319,7 @@ export default function RankscaleAlternativePage() {
                         <h2 className="text-2xl font-bold text-white mb-4">Which one is right for you?</h2>
                         <div className="grid sm:grid-cols-2 gap-4">
                             <div className="bg-violet-500/[0.04] border border-violet-500/15 rounded-2xl p-5">
-                                <h3 className="font-semibold text-white mb-3 text-sm">Pick AuditAI if …</h3>
+                                <h3 className="font-semibold text-white mb-3 text-sm">Pick Scanora if …</h3>
                                 <ul className="space-y-2">
                                     {AUDITAI_FOR.map((item, i) => (
                                         <li key={i} className="text-sm text-slate-400 leading-relaxed flex gap-2">
@@ -406,7 +406,7 @@ export default function RankscaleAlternativePage() {
                                 SEO Rank Tracker & AI Visibility Monitor
                             </h3>
                             <p className="text-slate-400 text-sm leading-relaxed max-w-md">
-                                How SEO automation and GEO automation work at AuditAI in detail — including pricing.
+                                How SEO automation and GEO automation work at Scanora in detail — including pricing.
                             </p>
                         </div>
                         <Link

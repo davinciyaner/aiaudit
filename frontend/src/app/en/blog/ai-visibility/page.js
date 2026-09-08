@@ -4,19 +4,19 @@ import Footer from '../../../components/Footer'
 
 export const metadata = {
     title: 'AI Visibility: How to Get Cited by ChatGPT, Claude & Perplexity',
-    description: 'AI visibility is more than llms.txt and schema markup. How to actually get cited by ChatGPT, Claude, Perplexity and Google AI Overview - including monitoring with AuditAI.',
+    description: 'AI visibility is more than llms.txt and schema markup. How to actually get cited by ChatGPT, Claude, Perplexity and Google AI Overview - including monitoring with Scanora.',
     keywords: 'ai visibility, ai visibility tool, get cited by chatgpt, get cited by claude, ai visibility tracker, generative engine optimization, llm visibility, ai search optimization',
     alternates: {
-        canonical: 'https://www.sitecheckai.dev/en/blog/ai-visibility',
+        canonical: 'https://www.scanora.ai/en/blog/ai-visibility',
         languages: {
-            'de-DE': 'https://www.sitecheckai.dev/blog/ki-sichtbarkeit-erlangen',
-            'en-US': 'https://www.sitecheckai.dev/en/blog/ai-visibility',
+            'de-DE': 'https://www.scanora.ai/blog/ki-sichtbarkeit-erlangen',
+            'en-US': 'https://www.scanora.ai/en/blog/ai-visibility',
         },
     },
     openGraph: {
         title: 'AI Visibility: How to Get Cited by ChatGPT, Claude & Perplexity',
         description: 'Technical GEO signals aren’t enough. How to actually earn AI visibility - content strategy, monitoring, and what matters on each platform.',
-        url: 'https://www.sitecheckai.dev/en/blog/ai-visibility',
+        url: 'https://www.scanora.ai/en/blog/ai-visibility',
         type: 'article',
         locale: 'en_US',
     },
@@ -26,20 +26,20 @@ const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: 'AI Visibility: How to Get Cited by ChatGPT, Claude & Perplexity',
-    description: 'AI visibility is more than llms.txt and schema markup. How to actually get cited by ChatGPT, Claude, Perplexity and Google AI Overview - including monitoring with AuditAI.',
-    image: 'https://www.sitecheckai.dev/en/blog/ai-visibility/opengraph-image',
+    description: 'AI visibility is more than llms.txt and schema markup. How to actually get cited by ChatGPT, Claude, Perplexity and Google AI Overview - including monitoring with Scanora.',
+    image: 'https://www.scanora.ai/en/blog/ai-visibility/opengraph-image',
     datePublished: '2026-08-10T09:00:00+02:00',
     dateModified: '2026-08-10T09:00:00+02:00',
     inLanguage: 'en-US',
-    author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev/en/about' },
+    author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.scanora.ai/en/about' },
     publisher: {
         '@type': 'Organization',
-        name: 'AuditAI',
-        url: 'https://www.sitecheckai.dev',
-        logo: { '@type': 'ImageObject', url: 'https://www.sitecheckai.dev/logo', width: 512, height: 512 },
+        name: 'Scanora',
+        url: 'https://www.scanora.ai',
+        logo: { '@type': 'ImageObject', url: 'https://www.scanora.ai/logo', width: 512, height: 512 },
     },
-    url: 'https://www.sitecheckai.dev/en/blog/ai-visibility',
-    mainEntityOfPage: 'https://www.sitecheckai.dev/en/blog/ai-visibility',
+    url: 'https://www.scanora.ai/en/blog/ai-visibility',
+    mainEntityOfPage: 'https://www.scanora.ai/en/blog/ai-visibility',
     about: [
         { '@type': 'Thing', name: 'AI Visibility' },
         { '@type': 'Thing', name: 'Generative Engine Optimization' },
@@ -55,9 +55,9 @@ const breadcrumbLd = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'AuditAI', item: 'https://www.sitecheckai.dev/en' },
-        { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.sitecheckai.dev/en/blog' },
-        { '@type': 'ListItem', position: 3, name: 'AI Visibility', item: 'https://www.sitecheckai.dev/en/blog/ai-visibility' },
+        { '@type': 'ListItem', position: 1, name: 'Scanora', item: 'https://www.scanora.ai/en' },
+        { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.scanora.ai/en/blog' },
+        { '@type': 'ListItem', position: 3, name: 'AI Visibility', item: 'https://www.scanora.ai/en/blog/ai-visibility' },
     ],
 }
 
@@ -147,7 +147,7 @@ export default function AiVisibilityPage() {
 
                 {/* Breadcrumb */}
                 <div className="flex items-center gap-2 text-xs text-slate-600 mb-8">
-                    <Link href="/en" className="hover:text-slate-400 transition-colors">AuditAI</Link>
+                    <Link href="/en" className="hover:text-slate-400 transition-colors">Scanora</Link>
                     <span>/</span>
                     <Link href="/en/blog" className="hover:text-slate-400 transition-colors">Blog</Link>
                     <span>/</span>
@@ -175,7 +175,7 @@ export default function AiVisibilityPage() {
                             <span>Finn Paustian</span>
                         </Link>
                         <span>·</span>
-                        <span>Founder, AuditAI</span>
+                        <span>Founder, Scanora</span>
                     </div>
                 </div>
 
@@ -296,7 +296,7 @@ export default function AiVisibilityPage() {
                         Are you getting cited by ChatGPT, Claude & Perplexity?
                     </h2>
                     <p className="text-slate-400 text-sm mb-6 max-w-md mx-auto leading-relaxed">
-                        AuditAI’s AI visibility tracking checks weekly and automatically whether your domain gets mentioned - including context, competitor comparison, and trend over time. Starting at $4.99/month, 14-day free trial.
+                        Scanora’s AI visibility tracking checks weekly and automatically whether your domain gets mentioned - including context, competitor comparison, and trend over time. Starting at $4.99/month, 14-day free trial.
                     </p>
                     <Link
                         href="/en/geo/pricing"

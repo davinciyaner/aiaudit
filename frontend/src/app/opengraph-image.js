@@ -1,7 +1,7 @@
 import { ImageResponse } from 'next/og'
 
 export const runtime = 'edge'
-export const alt = 'AuditAI – KI-Sichtbarkeit (AI Visibility) & SEO prüfen'
+export const alt = 'Scanora – KI-Sichtbarkeit (AI Visibility) & SEO prüfen'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
@@ -67,7 +67,7 @@ export default function Image() {
                         ⚡
                     </div>
                     <span style={{ fontSize: 30, fontWeight: 700, color: 'white', letterSpacing: '-0.5px' }}>
-                        Audit<span style={{ color: '#a78bfa' }}>AI</span>
+                        Scanora
                     </span>
                 </div>
 
@@ -107,7 +107,7 @@ export default function Image() {
                         & mehr.
                     </div>
                     <div style={{ fontSize: 26, color: '#64748b', marginTop: 16, fontWeight: 400 }}>
-                        Kostenloser KI-Audit in unter 60 Sekunden — sitecheckai.dev
+                        Kostenloser KI-Audit in unter 60 Sekunden — scanora.ai
                     </div>
                 </div>
 

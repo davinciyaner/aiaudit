@@ -11,7 +11,7 @@ import Navbar from '../../../components/Navbar'
 const FAQS = [
     {
         q: 'What does a GEO audit or GEO automation cost?',
-        a: 'GEO automation at AuditAI starts at €4.99/month for 1 website and 10 keywords with weekly Claude and Gemini tracking. The Pro plan (€29.99/month) adds ChatGPT, Perplexity, and Google AI Overview tracking for 3 websites and 20 keywords, 2 prompt variants per keyword, and topic visibility analysis, and the Expert plan (€89.99/month) covers up to 10 websites and 60 keywords plus historical trends per keyword. All plans include a 14-day free trial.',
+        a: 'GEO automation at Scanora starts at €4.99/month for 1 website and 10 keywords with weekly Claude and Gemini tracking. The Pro plan (€29.99/month) adds ChatGPT, Perplexity, and Google AI Overview tracking for 3 websites and 20 keywords, 2 prompt variants per keyword, and topic visibility analysis, and the Expert plan (€89.99/month) covers up to 10 websites and 60 keywords plus historical trends per keyword. All plans include a 14-day free trial.',
     },
     {
         q: 'Can I track my visibility on Claude (Claude AI)?',
@@ -19,11 +19,11 @@ const FAQS = [
     },
     {
         q: 'What\'s the difference between a one-time GEO audit and GEO automation?',
-        a: 'A one-time GEO audit (part of the free AuditAI website audit) shows your GEO score at a single point in time. GEO automation automatically checks every week whether ChatGPT, Claude, Gemini, Perplexity, and Google AI Overview mention your website, and shows the trend over time instead of a single snapshot.',
+        a: 'A one-time GEO audit (part of the free Scanora website audit) shows your GEO score at a single point in time. GEO automation automatically checks every week whether ChatGPT, Claude, Gemini, Perplexity, and Google AI Overview mention your website, and shows the trend over time instead of a single snapshot.',
     },
     {
         q: 'What are prompt variants and why do I need several?',
-        a: 'Real users ask AI systems in very different ways — sometimes recommendation-oriented ("What tool do you know for X?"), sometimes comparative ("What\'s the best tool for X compared to others?"). From the Pro plan, AuditAI checks both variants separately per keyword, so you see which type of query mentions you and which doesn\'t.',
+        a: 'Real users ask AI systems in very different ways — sometimes recommendation-oriented ("What tool do you know for X?"), sometimes comparative ("What\'s the best tool for X compared to others?"). From the Pro plan, Scanora checks both variants separately per keyword, so you see which type of query mentions you and which doesn\'t.',
     },
     {
         q: 'What do topic visibility analysis and historical trends show me?',

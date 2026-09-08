@@ -1,7 +1,7 @@
 'use client'
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Zap, Search, Mail, Hash, ArrowRight, Clock, Wrench, CheckCircle } from 'lucide-react'
+import { Search, Mail, Hash, ArrowRight, Clock, Wrench, CheckCircle } from 'lucide-react'
 import Link from 'next/link'
 
 const STATUS_CONFIG = {
@@ -49,10 +49,10 @@ export default function SupportPageEn() {
             <nav className="border-b border-white/5 bg-[#080b14]/90 backdrop-blur-xl">
                 <div className="max-w-5xl mx-auto px-5 sm:px-8 h-16 flex items-center">
                     <Link href="/en" className="flex items-center gap-2">
-                        <div className="w-8 h-8 rounded-lg bg-linear-to-br from-violet-500 to-cyan-500 flex items-center justify-center">
-                            <Zap className="w-4 h-4 text-white" />
+                        <div className="w-8 h-8 rounded-lg bg-[var(--accent)] flex items-center justify-center">
+                            <svg className="w-4 h-4 text-white" viewBox="0 0 192 192" fill="none"><circle cx="96" cy="96" r="50" stroke="currentColor" strokeWidth="14" /><circle cx="110" cy="82" r="13" fill="currentColor" /></svg>
                         </div>
-                        <span className="font-bold text-white">Audit<span className="text-cyan-400">AI</span></span>
+                        <span className="font-bold text-white">Scanora</span>
                     </Link>
                 </div>
             </nav>

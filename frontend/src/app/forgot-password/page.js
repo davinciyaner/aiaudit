@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { Zap, Mail, ArrowRight, ArrowLeft, CheckCircle } from 'lucide-react'
+import { Mail, ArrowRight, ArrowLeft, CheckCircle } from 'lucide-react'
 import toast, { Toaster } from 'react-hot-toast'
 
 export default function ForgotPasswordPage() {
@@ -44,9 +44,9 @@ export default function ForgotPasswordPage() {
                 <div className="flex justify-center mb-8">
                     <Link href="/" className="flex items-center gap-2.5">
                         <div className="w-9 h-9 rounded-xl bg-[var(--accent)] flex items-center justify-center shadow-lg shadow-[var(--accent-border)]">
-                            <Zap className="w-4 h-4 text-[var(--bg-base)]" strokeWidth={2.5} />
+                            <svg className="w-4 h-4 text-[var(--bg-base)]" viewBox="0 0 192 192" fill="none"><circle cx="96" cy="96" r="50" stroke="currentColor" strokeWidth="14" /><circle cx="110" cy="82" r="13" fill="currentColor" /></svg>
                         </div>
-                        <span className="text-xl font-bold text-white">AuditAI</span>
+                        <span className="text-xl font-bold text-white">Scanora</span>
                     </Link>
                 </div>
 

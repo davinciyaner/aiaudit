@@ -1,11 +1,10 @@
 import Link from 'next/link'
-import { Zap } from 'lucide-react'
 
 export const metadata = {
     title: 'Datenschutzerklärung',
-    description: 'Datenschutzerklärung für AuditAI gemäß DSGVO.',
+    description: 'Datenschutzerklärung für Scanora gemäß DSGVO.',
     robots: { index: false },
-    alternates: { canonical: 'https://www.sitecheckai.dev/datenschutz' },
+    alternates: { canonical: 'https://www.scanora.ai/datenschutz' },
 }
 
 function Section({ title, children }) {
@@ -33,8 +32,8 @@ export default function DatenschutzPage() {
 
                 <div className="mb-12">
                     <Link href="/" className="inline-flex items-center gap-2 text-sm">
-                        <Zap className="w-4 h-4 text-violet-400" />
-                        <span className="text-white font-bold">Audit<span className="text-transparent bg-clip-text bg-linear-to-r from-violet-400 to-cyan-400">AI</span></span>
+                        <svg className="w-4 h-4 text-violet-400" viewBox="0 0 192 192" fill="none"><circle cx="96" cy="96" r="50" stroke="currentColor" strokeWidth="14" /><circle cx="110" cy="82" r="13" fill="currentColor" /></svg>
+                        <span className="text-white font-bold">Scanora</span>
                     </Link>
                     <h1 className="text-3xl font-bold text-white mt-6 mb-2">Datenschutzerklärung</h1>
                     <p className="text-slate-500 text-sm">Stand: Juni 2026 · Gemäß DSGVO, BDSG und TTDSG</p>
@@ -166,20 +165,20 @@ export default function DatenschutzPage() {
 
                     <Section title="4. Zahlungsabwicklung über PayPal">
                         <p>
-                            Für kostenpflichtige Abonnements (Pro und Agency) nutzt AuditAI <strong className="text-slate-300">PayPal</strong> als Zahlungsdienstleister.
+                            Für kostenpflichtige Abonnements (Pro und Agency) nutzt Scanora <strong className="text-slate-300">PayPal</strong> als Zahlungsdienstleister.
                         </p>
                         <p>
                             Anbieter: PayPal (Europe) S.à.r.l. et Cie, S.C.A., 22-24 Boulevard Royal, 2449 Luxemburg.
                         </p>
                         <p>
-                            Bei einer Zahlung über PayPal werden folgende Daten von AuditAI an PayPal übermittelt:
+                            Bei einer Zahlung über PayPal werden folgende Daten von Scanora an PayPal übermittelt:
                         </p>
                         <ul className="list-disc list-inside space-y-1 ml-2">
                             <li>Der gewählte Abonnementplan</li>
                             <li>Die Subscription-ID zur Verifizierung der Zahlung</li>
                         </ul>
                         <p>
-                            Die eigentliche Zahlungsabwicklung (Bankdaten, Kartendaten etc.) erfolgt ausschließlich auf den Servern von PayPal. AuditAI erhält und speichert <strong className="text-slate-300">keine Zahlungsdaten</strong>. Es wird lediglich die PayPal Subscription-ID und der Planstatus gespeichert.
+                            Die eigentliche Zahlungsabwicklung (Bankdaten, Kartendaten etc.) erfolgt ausschließlich auf den Servern von PayPal. Scanora erhält und speichert <strong className="text-slate-300">keine Zahlungsdaten</strong>. Es wird lediglich die PayPal Subscription-ID und der Planstatus gespeichert.
                         </p>
                         <p>
                             <strong className="text-slate-300">Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung).<br />
@@ -189,7 +188,7 @@ export default function DatenschutzPage() {
 
                     <Section title="5. Nutzung der Claude API (Anthropic)">
                         <p>
-                            AuditAI nutzt die <strong className="text-slate-300">Claude API von Anthropic, Inc.</strong> zur Erstellung KI-generierter Website-Analysen und Berichte.
+                            Scanora nutzt die <strong className="text-slate-300">Claude API von Anthropic, Inc.</strong> zur Erstellung KI-generierter Website-Analysen und Berichte.
                         </p>
                         <p>
                             Anbieter: Anthropic, Inc., 548 Market Street, San Francisco, CA 94104, USA.
@@ -221,7 +220,7 @@ export default function DatenschutzPage() {
 
                     <Section title="5a. Nutzung der DataForSEO API">
                         <p>
-                            AuditAI nutzt die <strong className="text-slate-300">DataForSEO API</strong> zur Ermittlung von Google-Suchmaschinenrankings im Rahmen der SEO-Automatisierung.
+                            Scanora nutzt die <strong className="text-slate-300">DataForSEO API</strong> zur Ermittlung von Google-Suchmaschinenrankings im Rahmen der SEO-Automatisierung.
                         </p>
                         <p>
                             Anbieter: DataForSEO Ltd., Vilnius, Litauen (EU).
@@ -259,7 +258,7 @@ export default function DatenschutzPage() {
 
                     <Section title="7. Vercel Analytics und Speed Insights">
                         <p>
-                            AuditAI nutzt <strong className="text-slate-300">Vercel Analytics</strong> und <strong className="text-slate-300">Vercel Speed Insights</strong> zur Analyse von Seitenaufrufen und Performance-Metriken.
+                            Scanora nutzt <strong className="text-slate-300">Vercel Analytics</strong> und <strong className="text-slate-300">Vercel Speed Insights</strong> zur Analyse von Seitenaufrufen und Performance-Metriken.
                         </p>
                         <p>
                             Anbieter: Vercel Inc., 340 Pine Street, Suite 701, San Francisco, CA 94104, USA.
@@ -286,7 +285,7 @@ export default function DatenschutzPage() {
 
                     <Section title="8. Microsoft Clarity – Heatmaps und Sitzungsanalyse">
                         <p>
-                            Mit deiner Einwilligung verwendet AuditAI <strong className="text-slate-300">Microsoft Clarity</strong>, ein Analyse-Tool zur Verbesserung der Benutzerfreundlichkeit der Website.
+                            Mit deiner Einwilligung verwendet Scanora <strong className="text-slate-300">Microsoft Clarity</strong>, ein Analyse-Tool zur Verbesserung der Benutzerfreundlichkeit der Website.
                         </p>
                         <p>
                             Anbieter: Microsoft Corporation, One Microsoft Way, Redmond, WA 98052-6399, USA.
@@ -329,7 +328,7 @@ export default function DatenschutzPage() {
 
                     <Section title="9. Google Ads – Conversion-Tracking">
                         <p>
-                            Mit deiner Einwilligung nutzt AuditAI <strong className="text-slate-300">Google Ads Conversion-Tracking</strong> ausschließlich zur Messung der Wirksamkeit von Werbeanzeigen.
+                            Mit deiner Einwilligung nutzt Scanora <strong className="text-slate-300">Google Ads Conversion-Tracking</strong> ausschließlich zur Messung der Wirksamkeit von Werbeanzeigen.
                         </p>
                         <p>
                             Anbieter: Google LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA.
@@ -380,7 +379,7 @@ export default function DatenschutzPage() {
 
                     <Section title="12. Datensicherheit">
                         <p>
-                            AuditAI setzt technische und organisatorische Maßnahmen ein, um deine Daten zu schützen:
+                            Scanora setzt technische und organisatorische Maßnahmen ein, um deine Daten zu schützen:
                         </p>
                         <ul className="list-disc list-inside space-y-1 ml-2">
                             <li>Verschlüsselte Datenübertragung via HTTPS (TLS)</li>
@@ -394,7 +393,7 @@ export default function DatenschutzPage() {
 
                     <Section title="13. Änderungen dieser Datenschutzerklärung">
                         <p>
-                            Diese Datenschutzerklärung kann bei Änderungen des Dienstes oder der gesetzlichen Anforderungen aktualisiert werden. Die jeweils aktuelle Version ist unter <a href="https://sitecheckai.dev/datenschutz" className="text-violet-400 hover:text-violet-300">sitecheckai.dev/datenschutz</a> abrufbar. Bei wesentlichen Änderungen werden registrierte Nutzer per E-Mail informiert.
+                            Diese Datenschutzerklärung kann bei Änderungen des Dienstes oder der gesetzlichen Anforderungen aktualisiert werden. Die jeweils aktuelle Version ist unter <a href="https://scanora.ai/datenschutz" className="text-violet-400 hover:text-violet-300">scanora.ai/datenschutz</a> abrufbar. Bei wesentlichen Änderungen werden registrierte Nutzer per E-Mail informiert.
                         </p>
                     </Section>
 

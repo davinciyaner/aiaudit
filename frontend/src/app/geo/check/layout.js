@@ -3,16 +3,16 @@ export const metadata = {
     description: 'Kostenloser GEO Check: Prüfe einmalig, ob deine Website von ChatGPT, Claude, Perplexity oder Google AI Overview zitiert wird. Keine Registrierung nötig.',
     keywords: 'geo check kostenlos, chatgpt sichtbarkeit check, claude zitiert werden, ai visibility check, google ai overview check, ki sichtbarkeit test',
     alternates: {
-        canonical: 'https://www.sitecheckai.dev/geo/check',
+        canonical: 'https://www.scanora.ai/geo/check',
         languages: {
-            'de-DE': 'https://www.sitecheckai.dev/geo/check',
-            'en-US': 'https://www.sitecheckai.dev/en/geo/check',
+            'de-DE': 'https://www.scanora.ai/geo/check',
+            'en-US': 'https://www.scanora.ai/en/geo/check',
         },
     },
     openGraph: {
-        title: 'Gratis GEO Check | AuditAI',
+        title: 'Gratis GEO Check | Scanora',
         description: 'Prüfe einmalig kostenlos, ob deine Website von ChatGPT, Claude, Perplexity oder Google AI Overview zitiert wird.',
-        url: 'https://www.sitecheckai.dev/geo/check',
+        url: 'https://www.scanora.ai/geo/check',
         type: 'website',
         locale: 'de_DE',
     },
@@ -27,7 +27,7 @@ const faqJsonLd = {
             name: 'Wie kann ich prüfen, ob meine Website von ChatGPT oder Claude zitiert wird?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'Mit dem kostenlosen GEO Check von AuditAI: Domain und Keyword eingeben, eine Plattform (ChatGPT, Claude, Perplexity oder Google AI Overview) auswählen und in wenigen Sekunden siehst du, ob und wie deine Website dort erwähnt wird - ganz ohne Registrierung.',
+                text: 'Mit dem kostenlosen GEO Check von Scanora: Domain und Keyword eingeben, eine Plattform (ChatGPT, Claude, Perplexity oder Google AI Overview) auswählen und in wenigen Sekunden siehst du, ob und wie deine Website dort erwähnt wird - ganz ohne Registrierung.',
             },
         },
         {
@@ -61,12 +61,12 @@ const howToJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'HowTo',
     name: 'Wie kann ich prüfen, ob meine Website von ChatGPT oder Claude zitiert wird?',
-    description: 'Mit dem kostenlosen GEO Check von AuditAI in drei Schritten prüfen, ob eine Domain von ChatGPT, Claude, Perplexity oder Google AI Overview als Quelle genannt wird.',
+    description: 'Mit dem kostenlosen GEO Check von Scanora in drei Schritten prüfen, ob eine Domain von ChatGPT, Claude, Perplexity oder Google AI Overview als Quelle genannt wird.',
     totalTime: 'PT1M',
     step: [
         { '@type': 'HowToStep', name: 'Domain & Keyword eingeben', text: 'Website-Domain und ein Keyword eingeben, für das die Website gefunden werden soll.' },
         { '@type': 'HowToStep', name: 'Plattform auswählen', text: 'Eine der vier KI-Plattformen wählen: ChatGPT, Claude, Perplexity oder Google AI Overview.' },
-        { '@type': 'HowToStep', name: 'Ergebnis erhalten', text: 'Innerhalb weniger Sekunden zeigt AuditAI, ob und mit welchem Kontext die Domain zitiert wird.' },
+        { '@type': 'HowToStep', name: 'Ergebnis erhalten', text: 'Innerhalb weniger Sekunden zeigt Scanora, ob und mit welchem Kontext die Domain zitiert wird.' },
     ],
 }
 

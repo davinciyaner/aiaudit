@@ -17,7 +17,7 @@ const HOW_IT_WORKS = [
 const FAQS = [
     {
         q: 'How can I check if my website is cited by ChatGPT or Claude?',
-        a: 'Use the free AI visibility check from AuditAI: enter your domain and a keyword, pick a platform (ChatGPT, Claude, Perplexity, or Google AI Overview), and within seconds you\'ll see whether and how your website is mentioned there - no registration required.',
+        a: 'Use the free AI visibility check from Scanora: enter your domain and a keyword, pick a platform (ChatGPT, Claude, Perplexity, or Google AI Overview), and within seconds you\'ll see whether and how your website is mentioned there - no registration required.',
     },
     {
         q: 'Is the AI visibility check really free?',
@@ -221,7 +221,7 @@ function GeoCheckPageEnInner() {
                         {platformLocked && platform ? `Are you cited by ${PLATFORM_META[platform].label}?` : 'Are you cited by ChatGPT & co.?'}
                     </h1>
                     <p className="text-slate-400 leading-relaxed max-w-lg mx-auto">
-                        AuditAI's AI visibility check is a free tool for website owners that checks whether ChatGPT, Claude, Perplexity, or Google AI Overview name a domain as a source.
+                        Scanora's AI visibility check is a free tool for website owners that checks whether ChatGPT, Claude, Perplexity, or Google AI Overview name a domain as a source.
                     </p>
                     <div className="mt-4 flex items-center justify-center gap-2 text-xs text-slate-600">
                         <Link href="/about" className="flex items-center gap-2 hover:text-slate-300 transition-colors">
@@ -229,7 +229,7 @@ function GeoCheckPageEnInner() {
                             <span>Finn Paustian</span>
                         </Link>
                         <span>&middot;</span>
-                        <span>Founder, AuditAI</span>
+                        <span>Founder, Scanora</span>
                     </div>
                 </div>
 

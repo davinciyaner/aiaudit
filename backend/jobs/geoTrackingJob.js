@@ -16,7 +16,7 @@ const PRIORITY_WEIGHT = { critical: 0, high: 1, medium: 2 }
 async function getPossibleCauses(domain) {
     try {
         const url = `https://${domain}`
-        const pageRes = await fetchSafely(url, { headers: { 'User-Agent': 'AuditAI-GEO-Bot/1.0' }, timeoutMs: 10000 })
+        const pageRes = await fetchSafely(url, { headers: { 'User-Agent': 'Scanora-GEO-Bot/1.0' }, timeoutMs: 10000 })
         if (!pageRes.ok) return null
 
         const html = await pageRes.text()

@@ -17,7 +17,7 @@ export default function ResultsSection() {
                         Your AI Visibility,<br className="hidden sm:block" /> measured, not guessed.
                     </h2>
                     <p className="text-slate-400 max-w-2xl mx-auto text-base sm:text-lg leading-relaxed">
-                        AuditAI tracks your AI Visibility on ChatGPT, Claude, Perplexity and Google AI Overview just as
+                        Scanora tracks your AI Visibility on ChatGPT, Claude, Perplexity and Google AI Overview just as
                         precisely as your Google rankings — with clear trends instead of guesswork.
                     </p>
                 </motion.div>
@@ -38,7 +38,7 @@ export default function ResultsSection() {
                 </motion.div>
 
                 <p className="text-center text-xs text-slate-400 mt-6">
-                    Example data illustrating AuditAI's tracking — not a results guarantee for any specific website.
+                    Example data illustrating Scanora's tracking — not a results guarantee for any specific website.
                 </p>
             </div>
         </section>

@@ -4,20 +4,20 @@ import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
 
 export const metadata = {
-    title: 'Website SEO Check & Audit: AuditAI mit GEO-Analyse (2026)',
-    description: 'Website SEO Check und Website Audit mit AuditAI: SEO, Performance und GEO (KI-Sichtbarkeit für ChatGPT, Claude & Perplexity) in einem Report. Alle Features, Preise und was du als Nutzer bekommst.',
+    title: 'Website SEO Check & Audit: Scanora mit GEO-Analyse (2026)',
+    description: 'Website SEO Check und Website Audit mit Scanora: SEO, Performance und GEO (KI-Sichtbarkeit für ChatGPT, Claude & Perplexity) in einem Report. Alle Features, Preise und was du als Nutzer bekommst.',
     keywords: 'website seo check, website audit, website seo analyse, seo check, seo audit, seo tool, kostenloser seo test, seo software, seo automatisierung, geo tool, geo check, geo automatisierung, ki sichtbarkeit, generative engine optimization, chatgpt seo, core web vitals test, keyword tracking, google ranking tool, backlink check, llms.txt, schema markup',
     alternates: {
-        canonical: 'https://www.sitecheckai.dev/blog/beste-seo-check-tools-2026',
+        canonical: 'https://www.scanora.ai/blog/beste-seo-check-tools-2026',
         languages: {
-            'de-DE': 'https://www.sitecheckai.dev/blog/beste-seo-check-tools-2026',
-            'en-US': 'https://www.sitecheckai.dev/en/blog/best-seo-tools-2026',
+            'de-DE': 'https://www.scanora.ai/blog/beste-seo-check-tools-2026',
+            'en-US': 'https://www.scanora.ai/en/blog/best-seo-tools-2026',
         },
     },
     openGraph: {
-        title: 'Website SEO Check & Audit: AuditAI mit GEO-Analyse (2026)',
+        title: 'Website SEO Check & Audit: Scanora mit GEO-Analyse (2026)',
         description: 'SEO, Performance und GEO in einem Report - alle Features, Preise und was du bekommst.',
-        url: 'https://www.sitecheckai.dev/blog/beste-seo-check-tools-2026',
+        url: 'https://www.scanora.ai/blog/beste-seo-check-tools-2026',
         type: 'article',
         locale: 'de_DE',
     },
@@ -26,29 +26,29 @@ export const metadata = {
 const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
-    headline: 'Website SEO Check & Audit: AuditAI mit GEO-Analyse (2026)',
-    description: 'Website SEO Check und Website Audit mit AuditAI: SEO, Performance und GEO (KI-Sichtbarkeit für ChatGPT, Claude & Perplexity) in einem Report. Alle Features, Preise und was du als Nutzer bekommst.',
-    image: 'https://www.sitecheckai.dev/blog/beste-seo-check-tools-2026/opengraph-image',
+    headline: 'Website SEO Check & Audit: Scanora mit GEO-Analyse (2026)',
+    description: 'Website SEO Check und Website Audit mit Scanora: SEO, Performance und GEO (KI-Sichtbarkeit für ChatGPT, Claude & Perplexity) in einem Report. Alle Features, Preise und was du als Nutzer bekommst.',
+    image: 'https://www.scanora.ai/blog/beste-seo-check-tools-2026/opengraph-image',
     datePublished: '2026-07-15T09:00:00+02:00',
     dateModified: '2026-08-06T09:00:00+02:00',
-    author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev/about' },
+    author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.scanora.ai/about' },
     publisher: {
         '@type': 'Organization',
-        name: 'AuditAI',
-        url: 'https://www.sitecheckai.dev',
-        logo: { '@type': 'ImageObject', url: 'https://www.sitecheckai.dev/logo', width: 512, height: 512 },
+        name: 'Scanora',
+        url: 'https://www.scanora.ai',
+        logo: { '@type': 'ImageObject', url: 'https://www.scanora.ai/logo', width: 512, height: 512 },
     },
-    url: 'https://www.sitecheckai.dev/blog/beste-seo-check-tools-2026',
-    mainEntityOfPage: 'https://www.sitecheckai.dev/blog/beste-seo-check-tools-2026',
+    url: 'https://www.scanora.ai/blog/beste-seo-check-tools-2026',
+    mainEntityOfPage: 'https://www.scanora.ai/blog/beste-seo-check-tools-2026',
 }
 
 const breadcrumbLd = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'AuditAI', item: 'https://www.sitecheckai.dev' },
-        { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.sitecheckai.dev/blog' },
-        { '@type': 'ListItem', position: 3, name: 'Website SEO Check & Audit mit GEO-Analyse', item: 'https://www.sitecheckai.dev/blog/beste-seo-check-tools-2026' },
+        { '@type': 'ListItem', position: 1, name: 'Scanora', item: 'https://www.scanora.ai' },
+        { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.scanora.ai/blog' },
+        { '@type': 'ListItem', position: 3, name: 'Website SEO Check & Audit mit GEO-Analyse', item: 'https://www.scanora.ai/blog/beste-seo-check-tools-2026' },
     ],
 }
 
@@ -61,12 +61,12 @@ const faqLd = {
             name: 'Was ist ein Website SEO Check?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'Ein Website SEO Check ist eine automatisierte Analyse einer Website auf SEO-relevante Faktoren wie Title-Tags, Meta-Descriptions, Ladezeit, Seitenstruktur und technische Fehler. AuditAI führt diesen Check in unter 60 Sekunden durch und ergänzt ihn um einen GEO-Check, der prüft, ob KI-Modelle wie ChatGPT oder Claude die Website als Quelle erkennen und zitieren.',
+                text: 'Ein Website SEO Check ist eine automatisierte Analyse einer Website auf SEO-relevante Faktoren wie Title-Tags, Meta-Descriptions, Ladezeit, Seitenstruktur und technische Fehler. Scanora führt diesen Check in unter 60 Sekunden durch und ergänzt ihn um einen GEO-Check, der prüft, ob KI-Modelle wie ChatGPT oder Claude die Website als Quelle erkennen und zitieren.',
             },
         },
         {
             '@type': 'Question',
-            name: 'Ist AuditAI wirklich kostenlos nutzbar?',
+            name: 'Ist Scanora wirklich kostenlos nutzbar?',
             acceptedAnswer: {
                 '@type': 'Answer',
                 text: 'Ja. Der Audit lässt sich ohne Registrierung starten. Für den vollständigen Report mit allen Scores (SEO, Performance, GEO) reicht ein kostenloser Account - 1 Audit pro Monat, dauerhaft kostenlos, keine Kreditkarte nötig.',
@@ -82,7 +82,7 @@ const faqLd = {
         },
         {
             '@type': 'Question',
-            name: 'Prüft AuditAI auch, ob ich von ChatGPT oder Google AI Overviews empfohlen werde?',
+            name: 'Prüft Scanora auch, ob ich von ChatGPT oder Google AI Overviews empfohlen werde?',
             acceptedAnswer: {
                 '@type': 'Answer',
                 text: 'Ja, das ist der GEO-Teil des Produkts. Der einmalige Audit prüft 19 technische GEO-Signale (llms.txt, Schema-Markup, KI-Crawler-Zugriff). Die GEO-Automatisierung geht weiter und fragt wöchentlich Claude, ChatGPT, Perplexity und Google AI Overview direkt, ob sie deine Domain erwähnen.',
@@ -119,7 +119,7 @@ export default function AuditAiOverviewPage() {
 
                 {/* Breadcrumb */}
                 <div className="flex items-center gap-2 text-xs text-slate-600 mb-8">
-                    <Link href="/" className="hover:text-slate-400 transition-colors">AuditAI</Link>
+                    <Link href="/" className="hover:text-slate-400 transition-colors">Scanora</Link>
                     <span>/</span>
                     <Link href="/blog" className="hover:text-slate-400 transition-colors">Blog</Link>
                     <span>/</span>
@@ -137,10 +137,10 @@ export default function AuditAiOverviewPage() {
                         <span className="text-xs text-slate-600">· 8 min Lesezeit</span>
                     </div>
                     <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight tracking-tight mb-5">
-                        Website SEO Check & Audit mit AuditAI (inkl. GEO-Analyse)
+                        Website SEO Check & Audit mit Scanora (inkl. GEO-Analyse)
                     </h1>
                     <p className="text-lg text-slate-400 leading-relaxed">
-                        Ein Website SEO Check ist eine automatisierte Analyse deiner Website auf technische, inhaltliche und Performance-Probleme, die deine Google-Rankings beeinflussen. Die meisten SEO-Tools prüfen dabei nur, ob deine Website für Google okay aussieht - und ignorieren komplett, ob ChatGPT, Claude, Perplexity oder Google AI Overview dich überhaupt kennen. AuditAI prüft beides: klassisches SEO, Performance und GEO (KI-Sichtbarkeit), in einem Report, in unter 60 Sekunden. Hier ist alles, was du als Nutzer bekommst.
+                        Ein Website SEO Check ist eine automatisierte Analyse deiner Website auf technische, inhaltliche und Performance-Probleme, die deine Google-Rankings beeinflussen. Die meisten SEO-Tools prüfen dabei nur, ob deine Website für Google okay aussieht - und ignorieren komplett, ob ChatGPT, Claude, Perplexity oder Google AI Overview dich überhaupt kennen. Scanora prüft beides: klassisches SEO, Performance und GEO (KI-Sichtbarkeit), in einem Report, in unter 60 Sekunden. Hier ist alles, was du als Nutzer bekommst.
                     </p>
                     <div className="mt-5 flex items-center gap-2 text-xs text-slate-600">
                         <Link href="/about" className="flex items-center gap-2 hover:text-slate-300 transition-colors">
@@ -148,7 +148,7 @@ export default function AuditAiOverviewPage() {
                             <span>Finn Paustian</span>
                         </Link>
                         <span>·</span>
-                        <span>Gründer, AuditAI</span>
+                        <span>Gründer, Scanora</span>
                     </div>
                 </div>
 
@@ -159,7 +159,7 @@ export default function AuditAiOverviewPage() {
                     <nav aria-label="Inhaltsverzeichnis" className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
                         <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">In diesem Artikel</p>
                         <ol className="grid sm:grid-cols-2 gap-x-6 gap-y-1.5 text-sm">
-                            <li><a href="#was-ist-auditai" className="text-slate-400 hover:text-amber-300 transition-colors">Was ist AuditAI?</a></li>
+                            <li><a href="#was-ist-scanora" className="text-slate-400 hover:text-amber-300 transition-colors">Was ist Scanora?</a></li>
                             <li><a href="#kostenloser-audit" className="text-slate-400 hover:text-amber-300 transition-colors">Der kostenlose Audit</a></li>
                             <li><a href="#seo-analyse" className="text-slate-400 hover:text-amber-300 transition-colors">SEO-Analyse im Detail</a></li>
                             <li><a href="#performance" className="text-slate-400 hover:text-amber-300 transition-colors">Performance-Check</a></li>
@@ -167,19 +167,19 @@ export default function AuditAiOverviewPage() {
                             <li><a href="#ki-report" className="text-slate-400 hover:text-amber-300 transition-colors">Der KI-Report</a></li>
                             <li><a href="#seo-automatisierung" className="text-slate-400 hover:text-amber-300 transition-colors">SEO-Automatisierung</a></li>
                             <li><a href="#geo-automatisierung" className="text-slate-400 hover:text-amber-300 transition-colors">GEO-Automatisierung</a></li>
-                            <li><a href="#fuer-wen" className="text-slate-400 hover:text-amber-300 transition-colors">Für wen ist AuditAI?</a></li>
+                            <li><a href="#fuer-wen" className="text-slate-400 hover:text-amber-300 transition-colors">Für wen ist Scanora?</a></li>
                             <li><a href="#preise" className="text-slate-400 hover:text-amber-300 transition-colors">Preise im Überblick</a></li>
                             <li><a href="#faq" className="text-slate-400 hover:text-amber-300 transition-colors">Häufige Fragen</a></li>
                         </ol>
                     </nav>
 
-                    <section id="was-ist-auditai" className="scroll-mt-28">
-                        <h2 className="text-2xl font-bold text-white mb-4">Was ist AuditAI?</h2>
+                    <section id="was-ist-scanora" className="scroll-mt-28">
+                        <h2 className="text-2xl font-bold text-white mb-4">Was ist Scanora?</h2>
                         <p>
-                            AuditAI ist ein KI-gestütztes Website-Audit-Tool, das SEO, Performance und GEO (Generative Engine Optimization) in einem einzigen Scan zusammenführt. Statt für jeden Bereich ein eigenes Tool zu brauchen - einen SEO-Checker, ein Performance-Tool und (falls überhaupt vorhanden) ein separates GEO-Tool - bekommst du bei AuditAI alle drei Analysen gleichzeitig, ausgewertet von Claude (Anthropic).
+                            Scanora ist ein KI-gestütztes Website-Audit-Tool, das SEO, Performance und GEO (Generative Engine Optimization) in einem einzigen Scan zusammenführt. Statt für jeden Bereich ein eigenes Tool zu brauchen - einen SEO-Checker, ein Performance-Tool und (falls überhaupt vorhanden) ein separates GEO-Tool - bekommst du bei Scanora alle drei Analysen gleichzeitig, ausgewertet von Claude (Anthropic).
                         </p>
                         <p className="mt-4">
-                            Der Unterschied zu klassischen SEO-Checkern: die meisten davon wurden gebaut, lange bevor ChatGPT, Perplexity und Google AI Overview relevante Trafficquellen wurden. Ihre Checklisten enden bei Title-Tags und Backlinks. AuditAI prüft zusätzlich, ob KI-Modelle deine Website als Quelle erkennen und zitieren können.
+                            Der Unterschied zu klassischen SEO-Checkern: die meisten davon wurden gebaut, lange bevor ChatGPT, Perplexity und Google AI Overview relevante Trafficquellen wurden. Ihre Checklisten enden bei Title-Tags und Backlinks. Scanora prüft zusätzlich, ob KI-Modelle deine Website als Quelle erkennen und zitieren können.
                         </p>
                     </section>
 
@@ -191,13 +191,13 @@ export default function AuditAiOverviewPage() {
                         <figure className="mb-6">
                             <Image
                                 src="/blog/auditai-score-overview.png"
-                                alt="AuditAI Score-Übersicht mit Overall-, SEO-, Performance- und GEO-Score aus einem echten Audit-Report"
+                                alt="Scanora Score-Übersicht mit Overall-, SEO-, Performance- und GEO-Score aus einem echten Audit-Report"
                                 width={960}
                                 height={194}
                                 className="w-full h-auto rounded-2xl border border-white/[0.07]"
                             />
                             <figcaption className="text-xs text-slate-600 mt-2">
-                                Die Score-Übersicht eines echten AuditAI-Reports: SEO, Performance und GEO in einer Ansicht.
+                                Die Score-Übersicht eines echten Scanora-Reports: SEO, Performance und GEO in einer Ansicht.
                             </figcaption>
                         </figure>
                         <div className="space-y-2">
@@ -229,7 +229,7 @@ export default function AuditAiOverviewPage() {
                         <figure className="mb-6">
                             <Image
                                 src="/blog/auditai-seo-issues.png"
-                                alt="AuditAI SEO-Fehlerliste mit priorisierten Problemen und konkreten Fixes"
+                                alt="Scanora SEO-Fehlerliste mit priorisierten Problemen und konkreten Fixes"
                                 width={960}
                                 height={420}
                                 className="w-full h-auto rounded-2xl border border-white/[0.07]"
@@ -255,7 +255,7 @@ export default function AuditAiOverviewPage() {
                     <section id="performance" className="scroll-mt-28">
                         <h2 className="text-2xl font-bold text-white mb-4">Performance-Check</h2>
                         <p className="mb-4">
-                            Ladezeit ist sowohl ein Google-Rankingfaktor als auch ein direkter Umsatzfaktor - AuditAI misst die Kennzahlen, die wirklich zählen:
+                            Ladezeit ist sowohl ein Google-Rankingfaktor als auch ein direkter Umsatzfaktor - Scanora misst die Kennzahlen, die wirklich zählen:
                         </p>
                         <div className="grid sm:grid-cols-2 gap-x-6 gap-y-1.5 text-sm">
                             {[
@@ -278,7 +278,7 @@ export default function AuditAiOverviewPage() {
                         <figure className="mb-6">
                             <Image
                                 src="/blog/auditai-geo-report.png"
-                                alt="AuditAI GEO-Report mit geprüften KI-Sichtbarkeits-Signalen wie llms.txt, Organization-Schema, KI-Crawler-Zugriff und sitemap.xml"
+                                alt="Scanora GEO-Report mit geprüften KI-Sichtbarkeits-Signalen wie llms.txt, Organization-Schema, KI-Crawler-Zugriff und sitemap.xml"
                                 width={960}
                                 height={411}
                                 className="w-full h-auto rounded-2xl border border-white/[0.07]"
@@ -371,7 +371,7 @@ export default function AuditAiOverviewPage() {
                     </section>
 
                     <section id="fuer-wen" className="scroll-mt-28">
-                        <h2 className="text-2xl font-bold text-white mb-4">Für wen ist AuditAI gedacht?</h2>
+                        <h2 className="text-2xl font-bold text-white mb-4">Für wen ist Scanora gedacht?</h2>
                         <p>
                             Webentwickler und Agenturen, die schnell den Status einer Website (eigen oder Kunde) prüfen wollen, ohne drei Tools zu jonglieren. SEO-Freelancer, die ihren Kunden auch KI-Sichtbarkeit als Thema mitgeben wollen, bevor es zum Standard wird. Und kleine bis mittelständische Unternehmen, die selbst verstehen wollen, warum sie bei Google - oder bei ChatGPT - nicht auftauchen, ohne dafür eine Agentur zu beauftragen.
                         </p>

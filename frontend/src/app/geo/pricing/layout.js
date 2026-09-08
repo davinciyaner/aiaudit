@@ -3,16 +3,16 @@ export const metadata = {
     description: 'GEO Automatisierung ab 4,99€/Monat: Wöchentlich automatisch prüfen, ob ChatGPT, Claude, Gemini, Perplexity und Google AI Overview deine Website erwähnen. Themen-Sichtbarkeits-Analyse, Historien-Trends, Mention-Verlauf & Keyword-Tracking. 14 Tage kostenlos testen.',
     keywords: 'geo automatisierung preise, ki sichtbarkeit tracken, chatgpt sichtbarkeit tool, claude sichtbarkeit tool, gemini sichtbarkeit tool, perplexity sichtbarkeit tool, google ai overview tracken, generative engine optimization tool, geo tracking kosten',
     alternates: {
-        canonical: 'https://www.sitecheckai.dev/geo/pricing',
+        canonical: 'https://www.scanora.ai/geo/pricing',
         languages: {
-            'de-DE': 'https://www.sitecheckai.dev/geo/pricing',
-            'en-US': 'https://www.sitecheckai.dev/en/geo/pricing',
+            'de-DE': 'https://www.scanora.ai/geo/pricing',
+            'en-US': 'https://www.scanora.ai/en/geo/pricing',
         },
     },
     openGraph: {
-        title: 'GEO Automatisierung Preise | AuditAI',
+        title: 'GEO Automatisierung Preise | Scanora',
         description: 'Wöchentlich automatisch tracken, ob ChatGPT, Claude, Gemini, Perplexity und Google AI Overview deine Website erwähnen. Pläne ab 4,99€/Monat, 14 Tage kostenlos.',
-        url: 'https://www.sitecheckai.dev/geo/pricing',
+        url: 'https://www.scanora.ai/geo/pricing',
         type: 'website',
         locale: 'de_DE',
     },
@@ -27,7 +27,7 @@ const faqJsonLd = {
             name: 'Was kostet ein GEO Audit bzw. GEO Automatisierung?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'GEO Automatisierung bei AuditAI startet ab 4,99 €/Monat für 1 Website und 10 Keywords mit wöchentlichem Claude- und Gemini-Tracking. Der Pro-Plan (29,99 €/Monat) ergänzt ChatGPT-, Perplexity- und Google-AI-Overview-Tracking für 3 Websites und 20 Keywords, 2 Prompt-Varianten pro Keyword sowie eine Themen-Sichtbarkeits-Analyse, der Expert-Plan (89,99 €/Monat) deckt bis zu 10 Websites und 60 Keywords ab und ergänzt Historien-Trends pro Keyword. Alle Pläne bieten 14 Tage kostenlose Testphase.',
+                text: 'GEO Automatisierung bei Scanora startet ab 4,99 €/Monat für 1 Website und 10 Keywords mit wöchentlichem Claude- und Gemini-Tracking. Der Pro-Plan (29,99 €/Monat) ergänzt ChatGPT-, Perplexity- und Google-AI-Overview-Tracking für 3 Websites und 20 Keywords, 2 Prompt-Varianten pro Keyword sowie eine Themen-Sichtbarkeits-Analyse, der Expert-Plan (89,99 €/Monat) deckt bis zu 10 Websites und 60 Keywords ab und ergänzt Historien-Trends pro Keyword. Alle Pläne bieten 14 Tage kostenlose Testphase.',
             },
         },
         {
@@ -43,7 +43,7 @@ const faqJsonLd = {
             name: 'Was ist der Unterschied zwischen einem einmaligen GEO Audit und GEO Automatisierung?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'Ein einmaliger GEO Audit (Teil des kostenlosen AuditAI Website-Audits) zeigt deinen GEO-Score zu einem Zeitpunkt. GEO Automatisierung prüft wöchentlich automatisch, ob ChatGPT, Claude, Gemini, Perplexity und Google AI Overview deine Website erwähnen, und zeigt den Verlauf über Zeit statt einer Einzelmessung.',
+                text: 'Ein einmaliger GEO Audit (Teil des kostenlosen Scanora Website-Audits) zeigt deinen GEO-Score zu einem Zeitpunkt. GEO Automatisierung prüft wöchentlich automatisch, ob ChatGPT, Claude, Gemini, Perplexity und Google AI Overview deine Website erwähnen, und zeigt den Verlauf über Zeit statt einer Einzelmessung.',
             },
         },
         {
@@ -51,7 +51,7 @@ const faqJsonLd = {
             name: 'Was sind Prompt-Varianten und wozu brauche ich mehrere?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'Reale Nutzer fragen KI-Systeme auf sehr unterschiedliche Art — mal empfehlungsorientiert, mal vergleichend. Ab dem Pro-Plan prüft AuditAI pro Keyword beide Varianten separat, damit sichtbar wird, bei welcher Art von Anfrage eine Domain erwähnt wird und bei welcher nicht.',
+                text: 'Reale Nutzer fragen KI-Systeme auf sehr unterschiedliche Art — mal empfehlungsorientiert, mal vergleichend. Ab dem Pro-Plan prüft Scanora pro Keyword beide Varianten separat, damit sichtbar wird, bei welcher Art von Anfrage eine Domain erwähnt wird und bei welcher nicht.',
             },
         },
         {
@@ -76,9 +76,9 @@ const faqJsonLd = {
 const geoJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'SoftwareApplication',
-    '@id': 'https://www.sitecheckai.dev/geo/pricing#software',
-    name: 'AuditAI GEO Automatisierung',
-    url: 'https://www.sitecheckai.dev/geo/pricing',
+    '@id': 'https://www.scanora.ai/geo/pricing#software',
+    name: 'Scanora GEO Automatisierung',
+    url: 'https://www.scanora.ai/geo/pricing',
     applicationCategory: 'BusinessApplication',
     operatingSystem: 'Web',
     description: 'Wöchentliches Tracking, ob ChatGPT, Claude, Gemini, Perplexity und Google AI Overview deine Domain bei relevanten Anfragen als Quelle nennen.',

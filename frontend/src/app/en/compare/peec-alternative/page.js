@@ -3,20 +3,20 @@ import Navbar from '../../../components/Navbar'
 import Footer from '../../../components/Footer'
 
 export const metadata = {
-    title: 'Peec.ai Alternative: How AuditAI Compares (2026)',
-    description: 'Looking for a Peec.ai alternative? AuditAI tracks AI visibility across ChatGPT, Claude, Gemini, Perplexity & Google AI Overview from €29.99/month — plus a built-in SEO audit. Claude included from the entry tier.',
+    title: 'Peec.ai Alternative: How Scanora Compares (2026)',
+    description: 'Looking for a Peec.ai alternative? Scanora tracks AI visibility across ChatGPT, Claude, Gemini, Perplexity & Google AI Overview from €29.99/month — plus a built-in SEO audit. Claude included from the entry tier.',
     keywords: 'peec alternative, peec.ai alternative, peec ai competitor, cheap ai visibility tool, geo tracking tool, ai visibility software',
     alternates: {
-        canonical: 'https://www.sitecheckai.dev/en/compare/peec-alternative',
+        canonical: 'https://www.scanora.ai/en/compare/peec-alternative',
         languages: {
-            'de-DE': 'https://www.sitecheckai.dev/vergleich/peec-alternative',
-            'en-US': 'https://www.sitecheckai.dev/en/compare/peec-alternative',
+            'de-DE': 'https://www.scanora.ai/vergleich/peec-alternative',
+            'en-US': 'https://www.scanora.ai/en/compare/peec-alternative',
         },
     },
     openGraph: {
-        title: 'Peec.ai Alternative: How AuditAI Compares (2026)',
-        description: 'AuditAI tracks AI visibility across ChatGPT, Claude, Gemini, Perplexity & Google AI Overview from €29.99/month — plus a built-in SEO audit. A fact-checked look at Peec.ai.',
-        url: 'https://www.sitecheckai.dev/en/compare/peec-alternative',
+        title: 'Peec.ai Alternative: How Scanora Compares (2026)',
+        description: 'Scanora tracks AI visibility across ChatGPT, Claude, Gemini, Perplexity & Google AI Overview from €29.99/month — plus a built-in SEO audit. A fact-checked look at Peec.ai.',
+        url: 'https://www.scanora.ai/en/compare/peec-alternative',
         type: 'article',
         locale: 'en_US',
     },
@@ -25,20 +25,20 @@ export const metadata = {
 const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
-    headline: 'Peec.ai Alternative: An Honest Look at AuditAI',
-    description: 'AuditAI tracks AI visibility across ChatGPT, Claude, Gemini, Perplexity & Google AI Overview from €29.99/month — plus a built-in SEO audit. A fact-checked comparison with Peec.ai.',
-    image: 'https://www.sitecheckai.dev/en/compare/peec-alternative/opengraph-image',
+    headline: 'Peec.ai Alternative: An Honest Look at Scanora',
+    description: 'Scanora tracks AI visibility across ChatGPT, Claude, Gemini, Perplexity & Google AI Overview from €29.99/month — plus a built-in SEO audit. A fact-checked comparison with Peec.ai.',
+    image: 'https://www.scanora.ai/en/compare/peec-alternative/opengraph-image',
     datePublished: '2026-08-29T09:00:00+02:00',
     dateModified: '2026-08-29T09:00:00+02:00',
-    author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev/about' },
+    author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.scanora.ai/about' },
     publisher: {
         '@type': 'Organization',
-        name: 'AuditAI',
-        url: 'https://www.sitecheckai.dev',
-        logo: { '@type': 'ImageObject', url: 'https://www.sitecheckai.dev/logo', width: 512, height: 512 },
+        name: 'Scanora',
+        url: 'https://www.scanora.ai',
+        logo: { '@type': 'ImageObject', url: 'https://www.scanora.ai/logo', width: 512, height: 512 },
     },
-    url: 'https://www.sitecheckai.dev/en/compare/peec-alternative',
-    mainEntityOfPage: 'https://www.sitecheckai.dev/en/compare/peec-alternative',
+    url: 'https://www.scanora.ai/en/compare/peec-alternative',
+    mainEntityOfPage: 'https://www.scanora.ai/en/compare/peec-alternative',
     about: [
         { '@type': 'Thing', name: 'AI Visibility Tracking' },
         { '@type': 'Thing', name: 'Generative Engine Optimization' },
@@ -50,9 +50,9 @@ const breadcrumbLd = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'AuditAI', item: 'https://www.sitecheckai.dev/en' },
-        { '@type': 'ListItem', position: 2, name: 'Compare', item: 'https://www.sitecheckai.dev/en/compare' },
-        { '@type': 'ListItem', position: 3, name: 'Peec.ai Alternative', item: 'https://www.sitecheckai.dev/en/compare/peec-alternative' },
+        { '@type': 'ListItem', position: 1, name: 'Scanora', item: 'https://www.scanora.ai/en' },
+        { '@type': 'ListItem', position: 2, name: 'Compare', item: 'https://www.scanora.ai/en/compare' },
+        { '@type': 'ListItem', position: 3, name: 'Peec.ai Alternative', item: 'https://www.scanora.ai/en/compare/peec-alternative' },
     ],
 }
 
@@ -62,18 +62,18 @@ const faqLd = {
     mainEntity: [
         {
             '@type': 'Question',
-            name: 'Is AuditAI a real alternative to Peec.ai?',
+            name: 'Is Scanora a real alternative to Peec.ai?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'If what you want is affordable AI-visibility tracking, yes. AuditAI covers the five most important AI platforms (ChatGPT, Claude, Gemini, Perplexity, Google AI Overview) and adds a full SEO audit on top. For very deep analytics across seven engines and large-scale agency reporting, Peec.ai remains the more specialized — but also considerably more expensive — option.',
+                text: 'If what you want is affordable AI-visibility tracking, yes. Scanora covers the five most important AI platforms (ChatGPT, Claude, Gemini, Perplexity, Google AI Overview) and adds a full SEO audit on top. For very deep analytics across seven engines and large-scale agency reporting, Peec.ai remains the more specialized — but also considerably more expensive — option.',
             },
         },
         {
             '@type': 'Question',
-            name: 'How does AuditAI pricing compare to Peec.ai?',
+            name: 'How does Scanora pricing compare to Peec.ai?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: "AuditAI's GEO automation starts at €4.99/month for Claude-only tracking, or €29.99/month for all five AI platforms. Peec.ai starts at €85/month on its Starter plan for 50 prompts and three freely selectable engines, with no permanent free plan.",
+                text: "Scanora's GEO automation starts at €4.99/month for Claude-only tracking, or €29.99/month for all five AI platforms. Peec.ai starts at €85/month on its Starter plan for 50 prompts and three freely selectable engines, with no permanent free plan.",
             },
         },
         {
@@ -81,20 +81,20 @@ const faqLd = {
             name: "Is Claude included in Peec.ai's pricing?",
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: "No. Based on publicly available plan details, Claude isn't among the three selectable engines on Peec.ai's self-serve tiers — it's only available on the custom-priced Enterprise plan. AuditAI includes Claude tracking starting at the €4.99 entry tier.",
+                text: "No. Based on publicly available plan details, Claude isn't among the three selectable engines on Peec.ai's self-serve tiers — it's only available on the custom-priced Enterprise plan. Scanora includes Claude tracking starting at the €4.99 entry tier.",
             },
         },
         {
             '@type': 'Question',
-            name: 'Does AuditAI also cover traditional SEO?',
+            name: 'Does Scanora also cover traditional SEO?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'Yes. Alongside GEO automation, AuditAI offers separate SEO automation with weekly ranking updates, keyword ideas, competitor analysis, and a backlink overview. Peec.ai is a pure AI-visibility tool with no traditional SEO tracking.',
+                text: 'Yes. Alongside GEO automation, Scanora offers separate SEO automation with weekly ranking updates, keyword ideas, competitor analysis, and a backlink overview. Peec.ai is a pure AI-visibility tool with no traditional SEO tracking.',
             },
         },
         {
             '@type': 'Question',
-            name: 'Can I try AuditAI for free?',
+            name: 'Can I try Scanora for free?',
             acceptedAnswer: {
                 '@type': 'Answer',
                 text: 'Yes, no signup and no credit card required. Enter your URL and get a result in about 60 seconds. The free plan stays free forever; the automation subscriptions additionally come with a 14-day free trial.',
@@ -139,7 +139,7 @@ export default function PeecAlternativePage() {
 
                 {/* Breadcrumb */}
                 <div className="flex items-center gap-2 text-xs text-slate-600 mb-8">
-                    <Link href="/en" className="hover:text-slate-400 transition-colors">AuditAI</Link>
+                    <Link href="/en" className="hover:text-slate-400 transition-colors">Scanora</Link>
                     <span>/</span>
                     <Link href="/en/compare" className="hover:text-slate-400 transition-colors">Compare</Link>
                     <span>/</span>
@@ -156,13 +156,13 @@ export default function PeecAlternativePage() {
                         <span className="text-xs text-slate-600">· 7 min read</span>
                     </div>
                     <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight tracking-tight mb-5">
-                        Peec.ai Alternative: An Honest Look at AuditAI
+                        Peec.ai Alternative: An Honest Look at Scanora
                     </h1>
                     <p className="text-lg text-slate-400 leading-relaxed">
                         People go looking for a Peec.ai alternative for one of two reasons: the €85/month entry price is simply too steep for a solo operator or small team, or you want to track Claude without jumping straight to a custom-priced Enterprise plan. This page compares both tools honestly — including where Peec.ai wins.
                     </p>
                     <p className="mt-4 text-slate-300 leading-relaxed">
-                        Short version: <strong className="text-white">AuditAI</strong> tracks your AI visibility across ChatGPT, Claude, Gemini, Perplexity, and Google AI Overview from €29.99/month, and bundles in an SEO audit plus Google rank tracking. <strong className="text-white">Peec.ai</strong> is a specialized, highly analytical AI-visibility tool aimed at brands and agencies, with a much higher price point and broader platform selection. Which one fits depends on whether you want an affordable combined tool to get started, or a deeper, pricier analytics dashboard backed by a bigger budget.
+                        Short version: <strong className="text-white">Scanora</strong> tracks your AI visibility across ChatGPT, Claude, Gemini, Perplexity, and Google AI Overview from €29.99/month, and bundles in an SEO audit plus Google rank tracking. <strong className="text-white">Peec.ai</strong> is a specialized, highly analytical AI-visibility tool aimed at brands and agencies, with a much higher price point and broader platform selection. Which one fits depends on whether you want an affordable combined tool to get started, or a deeper, pricier analytics dashboard backed by a bigger budget.
                     </p>
                     <div className="mt-5 flex items-center gap-2 text-xs text-slate-600">
                         <Link href="/about" className="flex items-center gap-2 hover:text-slate-300 transition-colors">
@@ -170,7 +170,7 @@ export default function PeecAlternativePage() {
                             <span>Finn Paustian</span>
                         </Link>
                         <span>·</span>
-                        <span>Founder, AuditAI</span>
+                        <span>Founder, Scanora</span>
                     </div>
                 </div>
 
@@ -185,7 +185,7 @@ export default function PeecAlternativePage() {
                                 <thead>
                                     <tr className="border-b border-white/5 bg-white/[0.02]">
                                         <th className="text-left px-5 py-3 text-slate-400 font-semibold">Aspect</th>
-                                        <th className="text-left px-5 py-3 text-violet-400 font-semibold">AuditAI</th>
+                                        <th className="text-left px-5 py-3 text-violet-400 font-semibold">Scanora</th>
                                         <th className="text-left px-5 py-3 text-cyan-400 font-semibold">Peec.ai</th>
                                     </tr>
                                 </thead>
@@ -201,36 +201,36 @@ export default function PeecAlternativePage() {
                             </table>
                         </div>
                         <p className="text-xs text-slate-600 mt-3">
-                            Pricing as of August 2026, based on the vendor's publicly listed pricing and plan pages. Peec.ai bills primarily in EUR, as does AuditAI, incl. VAT. Always double-check current terms directly with the vendor.
+                            Pricing as of August 2026, based on the vendor's publicly listed pricing and plan pages. Peec.ai bills primarily in EUR, as does Scanora, incl. VAT. Always double-check current terms directly with the vendor.
                         </p>
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">Where AuditAI wins</h2>
+                        <h2 className="text-2xl font-bold text-white mb-4">Where Scanora wins</h2>
 
                         <h3 className="text-lg font-semibold text-white mt-6 mb-2">1. Claude from day one — not gated behind a custom-priced Enterprise plan</h3>
                         <p>
-                            Peec.ai offers seven AI platforms in total, but on its self-serve tiers (Starter, Pro, Advanced) you only get to pick three of them — and based on publicly available plan details, Claude isn't one of the selectable options. It's only available on the custom-priced Enterprise plan, which requires a sales conversation. If Claude visibility is what you actually want to measure, Peec.ai doesn't get you there without an Enterprise contract. AuditAI includes Claude tracking already on the €4.99 entry tier.
+                            Peec.ai offers seven AI platforms in total, but on its self-serve tiers (Starter, Pro, Advanced) you only get to pick three of them — and based on publicly available plan details, Claude isn't one of the selectable options. It's only available on the custom-priced Enterprise plan, which requires a sales conversation. If Claude visibility is what you actually want to measure, Peec.ai doesn't get you there without an Enterprise contract. Scanora includes Claude tracking already on the €4.99 entry tier.
                         </p>
 
                         <h3 className="text-lg font-semibold text-white mt-6 mb-2">2. An actual free plan, not just a 7-day clock</h3>
                         <p>
-                            Peec.ai has no permanent free tier, only a 7-day trial with no credit card required. AuditAI lets you run one full audit a month, including GEO visibility, for free indefinitely — a low-risk way to find out whether AI visibility even matters for your site before you commit to a subscription.
+                            Peec.ai has no permanent free tier, only a 7-day trial with no credit card required. Scanora lets you run one full audit a month, including GEO visibility, for free indefinitely — a low-risk way to find out whether AI visibility even matters for your site before you commit to a subscription.
                         </p>
 
                         <h3 className="text-lg font-semibold text-white mt-6 mb-2">3. No picking and add-ons — all five platforms are just included</h3>
                         <p>
-                            On every self-serve Peec.ai tier, you select only three of seven engines during onboarding, and each additional one costs noticeably extra depending on the plan. AuditAI tracks ChatGPT, Claude, Gemini, Perplexity, and Google AI Overview together starting at the GEO Pro tier for €29.99/month — no selection required, no per-platform surcharge.
+                            On every self-serve Peec.ai tier, you select only three of seven engines during onboarding, and each additional one costs noticeably extra depending on the plan. Scanora tracks ChatGPT, Claude, Gemini, Perplexity, and Google AI Overview together starting at the GEO Pro tier for €29.99/month — no selection required, no per-platform surcharge.
                         </p>
 
                         <h3 className="text-lg font-semibold text-white mt-6 mb-2">4. AI visibility and SEO, one vendor</h3>
                         <p>
-                            Peec.ai is a specialized AI-visibility tool with no traditional SEO tracking, such as Google rankings or backlink analysis. AuditAI pairs GEO automation with a separate SEO automation plan covering weekly Google ranking updates, keyword ideas, competitor analysis, and a backlink overview — one provider, bookable independently.
+                            Peec.ai is a specialized AI-visibility tool with no traditional SEO tracking, such as Google rankings or backlink analysis. Scanora pairs GEO automation with a separate SEO automation plan covering weekly Google ranking updates, keyword ideas, competitor analysis, and a backlink overview — one provider, bookable independently.
                         </p>
 
                         <h3 className="text-lg font-semibold text-white mt-6 mb-2">5. A dramatically lower entry price</h3>
                         <p>
-                            At €85/month for its Starter plan, Peec.ai positions itself squarely in the brand and agency segment for larger teams. AuditAI starts at €4.99/month for Claude tracking and €29.99/month for all five platforms — a far softer landing for freelancers, small sites, and anyone who just wants to try it out first.
+                            At €85/month for its Starter plan, Peec.ai positions itself squarely in the brand and agency segment for larger teams. Scanora starts at €4.99/month for Claude tracking and €29.99/month for all five platforms — a far softer landing for freelancers, small sites, and anyone who just wants to try it out first.
                         </p>
                     </section>
 
@@ -243,16 +243,16 @@ export default function PeecAlternativePage() {
                             <strong className="text-white">Deeper analytics.</strong> Citation Intelligence, Response Position Analysis, Share of Voice, and Content Gap Analysis go beyond raw visibility percentages, offering more nuanced insight into how and where a brand shows up in AI answers.
                         </p>
                         <p className="mt-4">
-                            <strong className="text-white">Broader platform coverage.</strong> Seven engines are available in total, including Grok (three at a time depending on the plan), while AuditAI focuses on the five most established platforms.
+                            <strong className="text-white">Broader platform coverage.</strong> Seven engines are available in total, including Grok (three at a time depending on the plan), while Scanora focuses on the five most established platforms.
                         </p>
                         <p className="mt-4">
-                            <strong className="text-white">AI Shopping Analytics.</strong> Since June 2026, Peec.ai additionally tracks which products, at the SKU level, are recommended by AI assistants and at what price — a niche AuditAI doesn't currently cover.
+                            <strong className="text-white">AI Shopping Analytics.</strong> Since June 2026, Peec.ai additionally tracks which products, at the SKU level, are recommended by AI assistants and at what price — a niche Scanora doesn't currently cover.
                         </p>
                         <p className="mt-4">
                             <strong className="text-white">Agency and enterprise maturity.</strong> Multiple projects, multi-country tracking, a Looker Studio connector, and API access on higher tiers are clearly built for larger teams with the budget to match.
                         </p>
                         <p className="mt-4">
-                            The short version: if you have a larger brand or agency budget and want maximum analytical depth across many platforms, Peec.ai is worth a look. If you'd rather start small, track Claude from day one, and cover SEO in the same tool, AuditAI is the more practical fit.
+                            The short version: if you have a larger brand or agency budget and want maximum analytical depth across many platforms, Peec.ai is worth a look. If you'd rather start small, track Claude from day one, and cover SEO in the same tool, Scanora is the more practical fit.
                         </p>
                     </section>
 
@@ -260,7 +260,7 @@ export default function PeecAlternativePage() {
                         <h2 className="text-2xl font-bold text-white mb-4">Which one is right for you?</h2>
                         <div className="grid sm:grid-cols-2 gap-4">
                             <div className="bg-violet-500/[0.04] border border-violet-500/15 rounded-2xl p-5">
-                                <h3 className="font-semibold text-white mb-3 text-sm">Pick AuditAI if …</h3>
+                                <h3 className="font-semibold text-white mb-3 text-sm">Pick Scanora if …</h3>
                                 <ul className="space-y-2">
                                     {AUDITAI_FOR.map((item, i) => (
                                         <li key={i} className="text-sm text-slate-400 leading-relaxed flex gap-2">
@@ -347,7 +347,7 @@ export default function PeecAlternativePage() {
                                 SEO Rank Tracker & AI Visibility Monitor
                             </h3>
                             <p className="text-slate-400 text-sm leading-relaxed max-w-md">
-                                How SEO automation and GEO automation work at AuditAI in detail — including pricing.
+                                How SEO automation and GEO automation work at Scanora in detail — including pricing.
                             </p>
                         </div>
                         <Link

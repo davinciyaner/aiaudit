@@ -19,7 +19,7 @@ async function createProduct(token) {
     const res = await fetch(`${BASE}/v1/catalogs/products`, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: 'AuditAI', type: 'SERVICE', category: 'SOFTWARE' })
+        body: JSON.stringify({ name: 'Scanora', type: 'SERVICE', category: 'SOFTWARE' })
     })
     const data = await res.json()
     console.log('Product ID:', data.id)
@@ -51,5 +51,5 @@ async function createPlan(token, productId, name, price) {
 
 const token = await getToken()
 const productId = await createProduct(token)
-await createPlan(token, productId, 'AuditAI Pro', '29.00')
-await createPlan(token, productId, 'AuditAI Agency', '99.00')
+await createPlan(token, productId, 'Scanora Pro', '29.00')
+await createPlan(token, productId, 'Scanora Agency', '99.00')

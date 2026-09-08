@@ -7,13 +7,13 @@ export const metadata = {
     description: 'Google-Rankings und KI-Sichtbarkeit bei ChatGPT, Claude, Gemini & Perplexity in einem Dashboard - inklusive der Überschneidung zwischen beiden.',
     keywords: 'seo geo tool, seo geo, geoseo, seo und geo, generative engine optimization, generative optimization engine, geo tool, ki sichtbarkeit, ai visibility, geo automatisierung, seo automatisierung',
     alternates: {
-        canonical: 'https://www.sitecheckai.dev/loesungen/seo-geo-tool',
+        canonical: 'https://www.scanora.ai/loesungen/seo-geo-tool',
     },
     openGraph: {
         title: 'SEO + GEO Tool: Google-Rankings & KI-Sichtbarkeit',
         description: 'Google-Rankings und KI-Sichtbarkeit bei ChatGPT, Claude, Gemini & Perplexity in einem Dashboard - inklusive der Überschneidung zwischen beiden.',
-        url: 'https://www.sitecheckai.dev/loesungen/seo-geo-tool',
-        siteName: 'AuditAI',
+        url: 'https://www.scanora.ai/loesungen/seo-geo-tool',
+        siteName: 'Scanora',
         type: 'website',
         locale: 'de_DE',
     },
@@ -27,10 +27,10 @@ export const metadata = {
 const softwareLd = {
     '@context': 'https://schema.org',
     '@type': 'SoftwareApplication',
-    '@id': 'https://www.sitecheckai.dev/#software',
-    name: 'AuditAI',
-    alternateName: 'SiteCheckAI',
-    url: 'https://www.sitecheckai.dev',
+    '@id': 'https://www.scanora.ai/#software',
+    name: 'Scanora',
+    alternateName: 'Scanora',
+    url: 'https://www.scanora.ai',
     applicationCategory: 'BusinessApplication',
     applicationSubCategory: 'SEO & Generative Engine Optimization',
     operatingSystem: 'Web',
@@ -41,9 +41,9 @@ const breadcrumbLd = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'AuditAI', item: 'https://www.sitecheckai.dev' },
-        { '@type': 'ListItem', position: 2, name: 'Lösungen', item: 'https://www.sitecheckai.dev/loesungen' },
-        { '@type': 'ListItem', position: 3, name: 'SEO + GEO Tool', item: 'https://www.sitecheckai.dev/loesungen/seo-geo-tool' },
+        { '@type': 'ListItem', position: 1, name: 'Scanora', item: 'https://www.scanora.ai' },
+        { '@type': 'ListItem', position: 2, name: 'Lösungen', item: 'https://www.scanora.ai/loesungen' },
+        { '@type': 'ListItem', position: 3, name: 'SEO + GEO Tool', item: 'https://www.scanora.ai/loesungen/seo-geo-tool' },
     ],
 }
 
@@ -69,7 +69,7 @@ const faqLd = {
         },
         {
             '@type': 'Question',
-            name: 'Welche KI-Plattformen werden bei AuditAI getrackt?',
+            name: 'Welche KI-Plattformen werden bei Scanora getrackt?',
             acceptedAnswer: {
                 '@type': 'Answer',
                 text: 'ChatGPT, Claude, Gemini, Perplexity und Google AI Overview - wöchentlich automatisch, plus beliebige eigene Fragen jederzeit manuell prüfbar.',
@@ -80,7 +80,7 @@ const faqLd = {
             name: 'Brauche ich zwei separate Tools für SEO und GEO?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'Nein. AuditAI bietet beides in einem Konto: ein SEO-Dashboard mit Google-Rankings und ein GEO-Dashboard mit KI-Sichtbarkeit - plus eine Überschneidungs-Ansicht, die zeigt, wo du bei Google rankst, aber von KI-Modellen nicht erwähnt wirst, oder umgekehrt.',
+                text: 'Nein. Scanora bietet beides in einem Konto: ein SEO-Dashboard mit Google-Rankings und ein GEO-Dashboard mit KI-Sichtbarkeit - plus eine Überschneidungs-Ansicht, die zeigt, wo du bei Google rankst, aber von KI-Modellen nicht erwähnt wirst, oder umgekehrt.',
             },
         },
         {
@@ -139,7 +139,7 @@ export default function SeoGeoToolPage() {
             <Navbar />
 
             <div className="max-w-4xl mx-auto px-5 sm:px-8 pt-28 flex items-center gap-2 text-xs text-slate-600">
-                <Link href="/" className="hover:text-slate-400 transition-colors">AuditAI</Link>
+                <Link href="/" className="hover:text-slate-400 transition-colors">Scanora</Link>
                 <span>/</span>
                 <Link href="/loesungen" className="hover:text-slate-400 transition-colors">Lösungen</Link>
                 <span>/</span>
@@ -149,11 +149,11 @@ export default function SeoGeoToolPage() {
             {/* HERO */}
             <section className="max-w-4xl mx-auto px-5 sm:px-8 pt-8 sm:pt-10 pb-16 text-center">
                 <h1 className="text-3xl sm:text-5xl font-bold text-white leading-[1.15] tracking-tight mb-6">
-                    AuditAI ist ein <span className="text-[var(--accent)]">SEO + GEO Tool</span>,<br className="hidden sm:block" />
+                    Scanora ist ein <span className="text-[var(--accent)]">SEO + GEO Tool</span>,<br className="hidden sm:block" />
                     das deine Google-Rankings und deine KI-Sichtbarkeit in einem Dashboard zeigt.
                 </h1>
                 <p className="text-base sm:text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed mb-8">
-                    AuditAI ist ein Tool für SEO-Automatisierung und GEO-Automatisierung: Es verfolgt automatisch, ob du bei Google rankst - und ob dich ChatGPT, Claude, Gemini und Perplexity ihren Nutzern empfehlen. Eine Plattform statt zwei separate Tools, ein gemeinsamer Blick auf beide Sichtbarkeits-Kanäle statt zweier getrennter Anmeldungen und Rechnungen.
+                    Scanora ist ein Tool für SEO-Automatisierung und GEO-Automatisierung: Es verfolgt automatisch, ob du bei Google rankst - und ob dich ChatGPT, Claude, Gemini und Perplexity ihren Nutzern empfehlen. Eine Plattform statt zwei separate Tools, ein gemeinsamer Blick auf beide Sichtbarkeits-Kanäle statt zweier getrennter Anmeldungen und Rechnungen.
                 </p>
                 <div className="flex flex-wrap items-center justify-center gap-3 mb-3">
                     <Link href="/dashboard"
@@ -194,7 +194,7 @@ export default function SeoGeoToolPage() {
                     </div>
                 </div>
                 <div className="bg-[var(--accent-soft)] border border-[var(--accent-border)] rounded-2xl p-6">
-                    <h3 className="font-bold text-white mb-2">AuditAI: beides zusammen</h3>
+                    <h3 className="font-bold text-white mb-2">Scanora: beides zusammen</h3>
                     <p className="text-sm text-slate-300 leading-relaxed">SEO-Rankings und KI-Sichtbarkeit für dieselben Keywords, im selben Dashboard - inklusive der Überschneidung: rankst du bei Google, aber die KI kennt dich nicht? Oder umgekehrt? Genau das siehst du hier zuerst.</p>
                 </div>
             </section>

@@ -1,11 +1,10 @@
 import Link from 'next/link'
-import { Zap } from 'lucide-react'
 
 export const metadata = {
-    title: 'Allgemeine Geschäftsbedingungen – AuditAI',
-    description: 'AGB für die Nutzung von AuditAI.',
+    title: 'Allgemeine Geschäftsbedingungen – Scanora',
+    description: 'AGB für die Nutzung von Scanora.',
     robots: { index: false },
-    alternates: { canonical: 'https://www.sitecheckai.dev/agb' },
+    alternates: { canonical: 'https://www.scanora.ai/agb' },
 }
 
 function Section({ title, children }) {
@@ -41,8 +40,8 @@ export default function AgbPage() {
 
                 <div className="mb-12">
                     <Link href="/" className="inline-flex items-center gap-2 text-sm">
-                        <Zap className="w-4 h-4 text-violet-400" />
-                        <span className="text-white font-bold">Audit<span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-cyan-400">AI</span></span>
+                        <svg className="w-4 h-4 text-violet-400" viewBox="0 0 192 192" fill="none"><circle cx="96" cy="96" r="50" stroke="currentColor" strokeWidth="14" /><circle cx="110" cy="82" r="13" fill="currentColor" /></svg>
+                        <span className="text-white font-bold">Scanora</span>
                     </Link>
                     <h1 className="text-3xl font-bold text-white mt-6 mb-2">Allgemeine Geschäftsbedingungen</h1>
                     <p className="text-slate-500 text-sm">Stand: Juni 2026</p>
@@ -61,7 +60,7 @@ export default function AgbPage() {
                             (nachfolgend „Anbieter")
                         </p>
                         <p>
-                            und natürlichen oder juristischen Personen, die die Dienste von AuditAI unter <strong className="text-slate-300">sitecheckai.dev</strong> nutzen (nachfolgend „Nutzer").
+                            und natürlichen oder juristischen Personen, die die Dienste von Scanora unter <strong className="text-slate-300">scanora.ai</strong> nutzen (nachfolgend „Nutzer").
                         </p>
                         <p>
                             Abweichende Bedingungen des Nutzers werden nicht anerkannt, es sei denn, der Anbieter stimmt diesen ausdrücklich schriftlich zu.
@@ -71,7 +70,7 @@ export default function AgbPage() {
                     <Section title="§ 2 Leistungsbeschreibung">
                         <Sub title="2.1 Website-Audit">
                             <p>
-                                AuditAI stellt ein Online-Tool zur automatisierten Analyse von Websites bereit. Die Analyse umfasst je nach gewähltem Tarif folgende Bereiche:
+                                Scanora stellt ein Online-Tool zur automatisierten Analyse von Websites bereit. Die Analyse umfasst je nach gewähltem Tarif folgende Bereiche:
                             </p>
                             <ul className="list-disc list-inside space-y-1 ml-2">
                                 <li>SEO-Analyse (Suchmaschinenoptimierung)</li>
@@ -111,7 +110,7 @@ export default function AgbPage() {
 
                     <Section title="§ 3 Vertragsschluss und Nutzerkonto">
                         <p>
-                            Der Vertrag kommt durch die Registrierung auf AuditAI und die Bestätigung dieser AGB zustande. Mit der Registrierung versichert der Nutzer, dass er:
+                            Der Vertrag kommt durch die Registrierung auf Scanora und die Bestätigung dieser AGB zustande. Mit der Registrierung versichert der Nutzer, dass er:
                         </p>
                         <ul className="list-disc list-inside space-y-1 ml-2">
                             <li>volljährig und geschäftsfähig ist, oder</li>
@@ -125,11 +124,11 @@ export default function AgbPage() {
                     <Section title="§ 4 Vergütung und Zahlung">
                         <Sub title="4.1 Tarife">
                             <p>
-                                AuditAI bietet verschiedene Abo-Tarife an, deren jeweils aktuelle Preise und Leistungsumfang auf den folgenden Preisseiten einsehbar sind:
+                                Scanora bietet verschiedene Abo-Tarife an, deren jeweils aktuelle Preise und Leistungsumfang auf den folgenden Preisseiten einsehbar sind:
                             </p>
                             <ul className="list-disc list-inside space-y-1 ml-2">
-                                <li>Website-Audit: <a href="/pricing" className="text-violet-400 hover:text-violet-300">sitecheckai.dev/pricing</a></li>
-                                <li>SEO Automatisierung: <a href="/seo/pricing" className="text-violet-400 hover:text-violet-300">sitecheckai.dev/seo/pricing</a></li>
+                                <li>Website-Audit: <a href="/pricing" className="text-violet-400 hover:text-violet-300">scanora.ai/pricing</a></li>
+                                <li>SEO Automatisierung: <a href="/seo/pricing" className="text-violet-400 hover:text-violet-300">scanora.ai/seo/pricing</a></li>
                             </ul>
                             <p>
                             Es gilt die zum Zeitpunkt der Bestellung gültige Preisliste.
@@ -206,7 +205,7 @@ export default function AgbPage() {
                             Das Widerrufsrecht erlischt vorzeitig, wenn der Anbieter mit der Ausführung des Vertrags begonnen hat und der Verbraucher ausdrücklich zugestimmt hat, dass der Anbieter vor Ablauf der Widerrufsfrist mit der Ausführung beginnt, und seine Kenntnis davon bestätigt hat, dass er durch seine Zustimmung mit Beginn der Ausführung sein Widerrufsrecht verliert (§ 356 Abs. 5 BGB).
                         </p>
                         <p>
-                            <strong className="text-slate-300">Sofortiger Beginn der Leistungserbringung:</strong> Mit Abschluss eines Abonnements beginnt AuditAI unmittelbar mit der Bereitstellung des Dienstes (Freischaltung von Audits). Der Nutzer stimmt mit dem Abschluss des Abonnements ausdrücklich zu, dass die Leistungserbringung sofort beginnt, und bestätigt seine Kenntnis, dass er dadurch sein Widerrufsrecht verliert.
+                            <strong className="text-slate-300">Sofortiger Beginn der Leistungserbringung:</strong> Mit Abschluss eines Abonnements beginnt Scanora unmittelbar mit der Bereitstellung des Dienstes (Freischaltung von Audits). Der Nutzer stimmt mit dem Abschluss des Abonnements ausdrücklich zu, dass die Leistungserbringung sofort beginnt, und bestätigt seine Kenntnis, dass er dadurch sein Widerrufsrecht verliert.
                         </p>
                         <p>
                             Das Recht zur ordentlichen Kündigung laufender Abonnements gemäß § 6 bleibt unberührt.

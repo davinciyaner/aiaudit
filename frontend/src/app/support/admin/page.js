@@ -1,7 +1,7 @@
 'use client'
 import { useState, useEffect, useCallback } from 'react'
 import { motion } from 'framer-motion'
-import { Zap, RefreshCw, LogOut } from 'lucide-react'
+import { RefreshCw, LogOut } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
@@ -59,10 +59,10 @@ export default function SupportAdminPage() {
                 <div className="max-w-5xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between">
                     <div className="flex items-center gap-3">
                         <Link href="/" className="flex items-center gap-2">
-                            <div className="w-8 h-8 rounded-lg bg-linear-to-br from-violet-500 to-cyan-500 flex items-center justify-center">
-                                <Zap className="w-4 h-4 text-white" />
+                            <div className="w-8 h-8 rounded-lg bg-[var(--accent)] flex items-center justify-center">
+                                <svg className="w-4 h-4 text-white" viewBox="0 0 192 192" fill="none"><circle cx="96" cy="96" r="50" stroke="currentColor" strokeWidth="14" /><circle cx="110" cy="82" r="13" fill="currentColor" /></svg>
                             </div>
-                            <span className="font-bold text-white">Audit<span className="text-cyan-400">AI</span></span>
+                            <span className="font-bold text-white">Scanora</span>
                         </Link>
                         <span className="text-xs text-slate-600">/ Support Admin</span>
                     </div>

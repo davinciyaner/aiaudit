@@ -50,7 +50,7 @@ tbody td:last-child { text-align: right; font-weight: 600; color: #0f172a; }
 <div class="header">
     <div class="logo">
         <div class="logo-icon">⚡</div>
-        <div class="logo-name">Audit<span>AI</span></div>
+        <div class="logo-name">Scanora</div>
     </div>
     <div style="text-align:right">
         <div class="invoice-label">Rechnung</div>
@@ -63,8 +63,8 @@ tbody td:last-child { text-align: right; font-weight: 600; color: #0f172a; }
 <div class="parties">
     <div>
         <div class="party-label">Von</div>
-        <div class="party-name">AuditAI</div>
-        <div class="party-detail">auditai.io<br/>support@auditai.io</div>
+        <div class="party-name">Scanora</div>
+        <div class="party-detail">scanora.ai<br/>support@scanora.ai</div>
     </div>
     <div>
         <div class="party-label">An</div>
@@ -99,7 +99,7 @@ tbody td:last-child { text-align: right; font-weight: 600; color: #0f172a; }
     <tbody>
         <tr>
             <td>
-                <div style="font-weight:600;color:#0f172a;margin-bottom:3px">AuditAI ${PLAN_NAMES[plan] || plan}</div>
+                <div style="font-weight:600;color:#0f172a;margin-bottom:3px">Scanora ${PLAN_NAMES[plan] || plan}</div>
                 <div style="font-size:12px;color:#94a3b8">Monatliches Abonnement</div>
             </td>
             <td style="color:#64748b">${date}</td>
@@ -117,7 +117,7 @@ tbody td:last-child { text-align: right; font-weight: 600; color: #0f172a; }
 
 <div class="footer">
     <div class="footer-note">
-        Vielen Dank für dein Vertrauen in AuditAI.<br/>
+        Vielen Dank für dein Vertrauen in Scanora.<br/>
         Bezahlt via PayPal · Transaktion: ${transaction.id}
     </div>
     <div class="paid-badge">✓ Bezahlt</div>

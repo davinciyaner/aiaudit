@@ -87,18 +87,18 @@ export default function Hero() {
 
                     <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }}
                         className="text-sm font-semibold text-[var(--accent)] mb-4">
-                        AuditAI – AI Visibility & SEO Tool
+                        Scanora – AI Visibility & SEO Tool
                     </motion.p>
 
                     <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
                         className="text-base sm:text-lg text-slate-400 mb-6 max-w-2xl leading-relaxed">
-                        AuditAI tracks your AI Visibility on ChatGPT, Claude, Perplexity and Google AI Overview —
+                        Scanora tracks your AI Visibility on ChatGPT, Claude, Perplexity and Google AI Overview —
                         and your SEO rankings on Google. One audit, concrete fixes instead of generic tips.
                     </motion.p>
 
                     <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.12 }}
                         className="text-xs sm:text-sm text-slate-500 mb-10 max-w-2xl leading-relaxed">
-                        AuditAI is an AI-powered website audit tool that checks your AI Visibility (GEO) on ChatGPT, Claude,
+                        Scanora is an AI-powered website audit tool that checks your AI Visibility (GEO) on ChatGPT, Claude,
                         Perplexity, and Google AI Overview alongside your classic SEO rankings on Google — in one report, in
                         under 60 seconds. Free plan: 1 audit/month. Pro (€29/month): AI-generated fix report, weekly
                         automated tracking. Founded 2026 in Germany, available in German and English.

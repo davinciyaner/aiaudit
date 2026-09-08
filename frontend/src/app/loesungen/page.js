@@ -3,13 +3,13 @@ import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 
 export const metadata = {
-    title: 'Lösungen | AuditAI',
-    description: 'AuditAI-Lösungen für konkrete Anwendungsfälle: günstiges KI-Sichtbarkeit Tool, SEO und AI Visibility kombiniert, und mehr.',
+    title: 'Lösungen | Scanora',
+    description: 'Scanora-Lösungen für konkrete Anwendungsfälle: günstiges KI-Sichtbarkeit Tool, SEO und AI Visibility kombiniert, und mehr.',
     alternates: {
-        canonical: 'https://www.sitecheckai.dev/loesungen',
+        canonical: 'https://www.scanora.ai/loesungen',
         languages: {
-            'de-DE': 'https://www.sitecheckai.dev/loesungen',
-            'en-US': 'https://www.sitecheckai.dev/en/solutions',
+            'de-DE': 'https://www.scanora.ai/loesungen',
+            'en-US': 'https://www.scanora.ai/en/solutions',
         },
     },
 }
@@ -18,8 +18,8 @@ const breadcrumbLd = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'AuditAI', item: 'https://www.sitecheckai.dev' },
-        { '@type': 'ListItem', position: 2, name: 'Lösungen', item: 'https://www.sitecheckai.dev/loesungen' },
+        { '@type': 'ListItem', position: 1, name: 'Scanora', item: 'https://www.scanora.ai' },
+        { '@type': 'ListItem', position: 2, name: 'Lösungen', item: 'https://www.scanora.ai/loesungen' },
     ],
 }
 
@@ -39,7 +39,7 @@ const SOLUTIONS = [
     {
         slug: 'claude-ai-sichtbarkeit-tracken',
         title: 'Claude AI Sichtbarkeit tracken: So siehst du, ob Claude dich empfiehlt',
-        description: 'Bei den meisten Tools ist Claude-Tracking ein teures Enterprise-Add-on oder gar nicht verfügbar. So funktioniert es bei AuditAI ab 4,99 €/Monat.',
+        description: 'Bei den meisten Tools ist Claude-Tracking ein teures Enterprise-Add-on oder gar nicht verfügbar. So funktioniert es bei Scanora ab 4,99 €/Monat.',
         tag: 'Ab 4,99 €/Monat',
     },
 ]
@@ -53,7 +53,7 @@ export default function LoesungenHubPage() {
 
                 {/* Breadcrumb */}
                 <div className="flex items-center gap-2 text-xs text-slate-600 mb-8">
-                    <Link href="/" className="hover:text-slate-400 transition-colors">AuditAI</Link>
+                    <Link href="/" className="hover:text-slate-400 transition-colors">Scanora</Link>
                     <span>/</span>
                     <span className="text-slate-500">Lösungen</span>
                 </div>
@@ -61,7 +61,7 @@ export default function LoesungenHubPage() {
                 <div className="mb-12">
                     <h1 className="text-3xl sm:text-5xl font-bold text-white tracking-tight mb-4">Lösungen</h1>
                     <p className="text-slate-400 text-lg max-w-2xl leading-relaxed">
-                        AuditAI-Lösungen für konkrete Situationen und Budgets – abseits des direkten Tool-zu-Tool-Vergleichs.
+                        Scanora-Lösungen für konkrete Situationen und Budgets – abseits des direkten Tool-zu-Tool-Vergleichs.
                         Suchst du stattdessen einen Vergleich zu einem bestimmten Anbieter, findest du den auf der{' '}
                         <Link href="/vergleich" className="text-slate-300 hover:text-[var(--accent)] underline underline-offset-2">Vergleichsseite</Link>.
                     </p>

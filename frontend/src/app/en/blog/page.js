@@ -3,13 +3,13 @@ import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
 
 export const metadata = {
-    title: { absolute: 'Blog – SEO, GEO & Website Optimization | AuditAI' },
+    title: { absolute: 'Blog – SEO, GEO & Website Optimization | Scanora' },
     description: 'Practical articles on SEO, GEO optimization, and performance. Learn how to optimize your website for Google and AI models.',
     alternates: {
-        canonical: 'https://www.sitecheckai.dev/en/blog',
+        canonical: 'https://www.scanora.ai/en/blog',
         languages: {
-            'de-DE': 'https://www.sitecheckai.dev/blog',
-            'en-US': 'https://www.sitecheckai.dev/en/blog',
+            'de-DE': 'https://www.scanora.ai/blog',
+            'en-US': 'https://www.scanora.ai/en/blog',
         },
     },
 }
@@ -18,8 +18,8 @@ const breadcrumbLd = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'AuditAI', item: 'https://www.sitecheckai.dev/en' },
-        { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.sitecheckai.dev/en/blog' },
+        { '@type': 'ListItem', position: 1, name: 'Scanora', item: 'https://www.scanora.ai/en' },
+        { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.scanora.ai/en/blog' },
     ],
 }
 
@@ -27,7 +27,7 @@ const ARTICLES = [
     {
         slug: 'ai-visibility',
         title: 'AI Visibility: How to Get Cited by ChatGPT, Claude & Perplexity',
-        description: 'AI visibility is more than llms.txt and schema markup. How to actually get cited by ChatGPT, Claude, Perplexity and Google AI Overview - including monitoring with AuditAI.',
+        description: 'AI visibility is more than llms.txt and schema markup. How to actually get cited by ChatGPT, Claude, Perplexity and Google AI Overview - including monitoring with Scanora.',
         category: 'GEO',
         categoryColor: '#06b6d4',
         date: 'Aug 10, 2026',
@@ -80,8 +80,8 @@ const ARTICLES = [
     },
     {
         slug: 'best-seo-tools-2026',
-        title: 'AuditAI: The SEO Tool With GEO Analysis (2026)',
-        description: 'AuditAI checks SEO, performance, and GEO (AI visibility for ChatGPT, Claude & Perplexity) in one report. All the features, pricing, and what you get as a user.',
+        title: 'Scanora: The SEO Tool With GEO Analysis (2026)',
+        description: 'Scanora checks SEO, performance, and GEO (AI visibility for ChatGPT, Claude & Perplexity) in one report. All the features, pricing, and what you get as a user.',
         category: 'Tools',
         categoryColor: '#f59e0b',
         date: 'Jul 15, 2026',
@@ -90,7 +90,7 @@ const ARTICLES = [
     {
         slug: 'seo-checklist-2026',
         title: 'SEO Checklist 2026: Find Every Mistake Yourself in 15 Minutes',
-        description: 'The complete SEO checklist for 2026, in a fixed order: 6 phases, 15 minutes, every important SEO and GEO signal. Check it yourself or run it automatically with AuditAI.',
+        description: 'The complete SEO checklist for 2026, in a fixed order: 6 phases, 15 minutes, every important SEO and GEO signal. Check it yourself or run it automatically with Scanora.',
         category: 'SEO',
         categoryColor: '#7c3aed',
         date: 'Jul 15, 2026',

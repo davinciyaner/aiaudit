@@ -1,11 +1,10 @@
 import Link from 'next/link'
-import { Zap } from 'lucide-react'
 
 export const metadata = {
-    title: 'Nutzungsbedingungen – AuditAI',
-    description: 'Nutzungsbedingungen für die Nutzung von AuditAI.',
+    title: 'Nutzungsbedingungen – Scanora',
+    description: 'Nutzungsbedingungen für die Nutzung von Scanora.',
     robots: { index: false },
-    alternates: { canonical: 'https://www.sitecheckai.dev/nutzungsbedingungen' },
+    alternates: { canonical: 'https://www.scanora.ai/nutzungsbedingungen' },
 }
 
 function Section({ title, children }) {
@@ -33,8 +32,8 @@ export default function NutzungsbedingungenPage() {
 
                 <div className="mb-12">
                     <Link href="/" className="inline-flex items-center gap-2 text-sm">
-                        <Zap className="w-4 h-4 text-violet-400" />
-                        <span className="text-white font-bold">Audit<span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-cyan-400">AI</span></span>
+                        <svg className="w-4 h-4 text-violet-400" viewBox="0 0 192 192" fill="none"><circle cx="96" cy="96" r="50" stroke="currentColor" strokeWidth="14" /><circle cx="110" cy="82" r="13" fill="currentColor" /></svg>
+                        <span className="text-white font-bold">Scanora</span>
                     </Link>
                     <h1 className="text-3xl font-bold text-white mt-6 mb-2">Nutzungsbedingungen</h1>
                     <p className="text-slate-500 text-sm">Stand: Juni 2026 · Anbieter: Finn Paustian, 23566 Lübeck</p>
@@ -44,7 +43,7 @@ export default function NutzungsbedingungenPage() {
 
                     <Section title="1. Geltungsbereich">
                         <p>
-                            Diese Nutzungsbedingungen gelten für die Nutzung der Webanwendung <strong className="text-slate-300">AuditAI</strong> unter <strong className="text-slate-300">sitecheckai.dev</strong> sowie aller zugehörigen Dienste (Website-Audit, SEO Automatisierung). Mit der Registrierung oder der Nutzung des Dienstes erklärt der Nutzer sein Einverständnis mit diesen Bedingungen.
+                            Diese Nutzungsbedingungen gelten für die Nutzung der Webanwendung <strong className="text-slate-300">Scanora</strong> unter <strong className="text-slate-300">scanora.ai</strong> sowie aller zugehörigen Dienste (Website-Audit, SEO Automatisierung). Mit der Registrierung oder der Nutzung des Dienstes erklärt der Nutzer sein Einverständnis mit diesen Bedingungen.
                         </p>
                         <p>
                             Ergänzend gelten die <Link href="/agb" className="text-violet-400 hover:text-violet-300">Allgemeinen Geschäftsbedingungen (AGB)</Link> für kostenpflichtige Abonnements sowie die <Link href="/datenschutz" className="text-violet-400 hover:text-violet-300">Datenschutzerklärung</Link> und der <Link href="/avv" className="text-violet-400 hover:text-violet-300">Auftragsverarbeitungsvertrag (AVV)</Link> für die SEO Automatisierung.
@@ -53,7 +52,7 @@ export default function NutzungsbedingungenPage() {
 
                     <Section title="2. Leistung und Zugang">
                         <p>
-                            AuditAI stellt ein Online-Tool zur automatisierten Analyse von Websites bereit. Die Nutzung des kostenlosen Tarifs ist nach Registrierung unmittelbar möglich. Kostenpflichtige Funktionen stehen nach Abschluss eines Abonnements zur Verfügung.
+                            Scanora stellt ein Online-Tool zur automatisierten Analyse von Websites bereit. Die Nutzung des kostenlosen Tarifs ist nach Registrierung unmittelbar möglich. Kostenpflichtige Funktionen stehen nach Abschluss eines Abonnements zur Verfügung.
                         </p>
                         <p>
                             Der Anbieter behält sich vor, den Dienst jederzeit weiterzuentwickeln, Funktionen hinzuzufügen oder zu entfernen sowie den Dienst vorübergehend für Wartungsarbeiten einzuschränken. Ein Anspruch auf ununterbrochene Verfügbarkeit besteht nicht.
@@ -61,7 +60,7 @@ export default function NutzungsbedingungenPage() {
                     </Section>
 
                     <Section title="3. Erlaubte Nutzung">
-                        <p>Der Nutzer darf AuditAI ausschließlich für folgende Zwecke verwenden:</p>
+                        <p>Der Nutzer darf Scanora ausschließlich für folgende Zwecke verwenden:</p>
                         <ul className="list-disc list-inside space-y-1 ml-2">
                             <li>Analyse eigener Websites oder Websites, für deren Analyse der Nutzer eine ausdrückliche Genehmigung des Betreibers besitzt</li>
                             <li>Überwachung eigener Websites oder solcher, für die der Nutzer als Betreiber, Webmaster oder beauftragter Dienstleister zuständig ist</li>
@@ -88,12 +87,12 @@ export default function NutzungsbedingungenPage() {
                     <Section title="5. Nutzerverantwortung">
                         <Sub title="5.1 Eigene Inhalte und Eingaben">
                             <p>
-                                Der Nutzer ist allein verantwortlich für die Websites und URLs, die er in AuditAI eingibt. Der Anbieter überprüft nicht, ob der Nutzer zur Analyse der eingegebenen Websites berechtigt ist. Die Verantwortung für die Rechtmäßigkeit der Nutzung liegt ausschließlich beim Nutzer.
+                                Der Nutzer ist allein verantwortlich für die Websites und URLs, die er in Scanora eingibt. Der Anbieter überprüft nicht, ob der Nutzer zur Analyse der eingegebenen Websites berechtigt ist. Die Verantwortung für die Rechtmäßigkeit der Nutzung liegt ausschließlich beim Nutzer.
                             </p>
                         </Sub>
                         <Sub title="5.2 Analyseergebnisse">
                             <p>
-                                Die von AuditAI bereitgestellten Analysen, Scores und Empfehlungen — insbesondere KI-generierte Inhalte — dienen ausschließlich als unverbindliche Hinweise. Der Nutzer ist für alle Entscheidungen, die er auf Basis dieser Ergebnisse trifft, selbst verantwortlich. Der Anbieter übernimmt keine Haftung für Schäden, die durch die Umsetzung von Empfehlungen entstehen.
+                                Die von Scanora bereitgestellten Analysen, Scores und Empfehlungen — insbesondere KI-generierte Inhalte — dienen ausschließlich als unverbindliche Hinweise. Der Nutzer ist für alle Entscheidungen, die er auf Basis dieser Ergebnisse trifft, selbst verantwortlich. Der Anbieter übernimmt keine Haftung für Schäden, die durch die Umsetzung von Empfehlungen entstehen.
                             </p>
                         </Sub>
                         <Sub title="5.3 Zugangsdaten">
@@ -105,7 +104,7 @@ export default function NutzungsbedingungenPage() {
 
                     <Section title="6. KI-generierte Inhalte">
                         <p>
-                            AuditAI nutzt KI-Modelle (Claude API, Anthropic) zur Erstellung von Analyseergebnissen und Empfehlungen. Der Nutzer nimmt zur Kenntnis, dass:
+                            Scanora nutzt KI-Modelle (Claude API, Anthropic) zur Erstellung von Analyseergebnissen und Empfehlungen. Der Nutzer nimmt zur Kenntnis, dass:
                         </p>
                         <ul className="list-disc list-inside space-y-1 ml-2">
                             <li>KI-generierte Inhalte fehlerhaft, unvollständig oder veraltet sein können</li>
@@ -140,7 +139,7 @@ export default function NutzungsbedingungenPage() {
 
                     <Section title="9. Änderungen der Nutzungsbedingungen">
                         <p>
-                            Der Anbieter behält sich vor, diese Nutzungsbedingungen jederzeit zu ändern. Registrierte Nutzer werden über wesentliche Änderungen per E-Mail informiert. Die jeweils aktuelle Fassung ist unter <strong className="text-slate-300">sitecheckai.dev/nutzungsbedingungen</strong> abrufbar. Die fortgesetzte Nutzung des Dienstes nach Inkrafttreten der Änderungen gilt als Zustimmung.
+                            Der Anbieter behält sich vor, diese Nutzungsbedingungen jederzeit zu ändern. Registrierte Nutzer werden über wesentliche Änderungen per E-Mail informiert. Die jeweils aktuelle Fassung ist unter <strong className="text-slate-300">scanora.ai/nutzungsbedingungen</strong> abrufbar. Die fortgesetzte Nutzung des Dienstes nach Inkrafttreten der Änderungen gilt als Zustimmung.
                         </p>
                     </Section>
 

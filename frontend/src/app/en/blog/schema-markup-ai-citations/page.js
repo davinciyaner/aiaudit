@@ -7,16 +7,16 @@ export const metadata = {
     description: 'Schema markup (JSON-LD) explained simply: priority order, ready-to-copy code, free generators & testing tools, and the most common mistake that kills rich results.',
     keywords: 'schema markup, schema markup generator, structured data testing free, schema markup ai, json-ld generator, json-ld example, faq schema, organization schema, rich results test',
     alternates: {
-        canonical: 'https://www.sitecheckai.dev/en/blog/schema-markup-ai-citations',
+        canonical: 'https://www.scanora.ai/en/blog/schema-markup-ai-citations',
         languages: {
-            'de-DE': 'https://www.sitecheckai.dev/blog/schema-markup-ki-zitate',
-            'en-US': 'https://www.sitecheckai.dev/en/blog/schema-markup-ai-citations',
+            'de-DE': 'https://www.scanora.ai/blog/schema-markup-ki-zitate',
+            'en-US': 'https://www.scanora.ai/en/blog/schema-markup-ai-citations',
         },
     },
     openGraph: {
         title: 'Schema Markup for AI Citations 2026: How to Get Cited by ChatGPT & Co.',
         description: 'Priority order, ready-to-copy JSON-LD code, free generators & testing tools, and the most common mistake that kills rich results.',
-        url: 'https://www.sitecheckai.dev/en/blog/schema-markup-ai-citations',
+        url: 'https://www.scanora.ai/en/blog/schema-markup-ai-citations',
         type: 'article',
         locale: 'en_US',
     },
@@ -27,27 +27,27 @@ const jsonLd = {
     '@type': 'Article',
     headline: 'Schema Markup for AI Citations 2026: How to Get Cited by ChatGPT & Co.',
     description: 'Schema markup (JSON-LD) explained simply: priority order, ready-to-copy code, free generators & testing tools, and the most common mistake that kills rich results.',
-    image: 'https://www.sitecheckai.dev/en/blog/schema-markup-ai-citations/opengraph-image',
+    image: 'https://www.scanora.ai/en/blog/schema-markup-ai-citations/opengraph-image',
     datePublished: '2026-07-26T09:00:00+02:00',
     dateModified: '2026-08-29T09:00:00+02:00',
-    author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev/about' },
+    author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.scanora.ai/about' },
     publisher: {
         '@type': 'Organization',
-        name: 'AuditAI',
-        url: 'https://www.sitecheckai.dev',
-        logo: { '@type': 'ImageObject', url: 'https://www.sitecheckai.dev/logo', width: 512, height: 512 },
+        name: 'Scanora',
+        url: 'https://www.scanora.ai',
+        logo: { '@type': 'ImageObject', url: 'https://www.scanora.ai/logo', width: 512, height: 512 },
     },
-    url: 'https://www.sitecheckai.dev/en/blog/schema-markup-ai-citations',
-    mainEntityOfPage: 'https://www.sitecheckai.dev/en/blog/schema-markup-ai-citations',
+    url: 'https://www.scanora.ai/en/blog/schema-markup-ai-citations',
+    mainEntityOfPage: 'https://www.scanora.ai/en/blog/schema-markup-ai-citations',
 }
 
 const breadcrumbLd = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'AuditAI', item: 'https://www.sitecheckai.dev/en' },
-        { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.sitecheckai.dev/en/blog' },
-        { '@type': 'ListItem', position: 3, name: 'Schema Markup for AI Citations', item: 'https://www.sitecheckai.dev/en/blog/schema-markup-ai-citations' },
+        { '@type': 'ListItem', position: 1, name: 'Scanora', item: 'https://www.scanora.ai/en' },
+        { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.scanora.ai/en/blog' },
+        { '@type': 'ListItem', position: 3, name: 'Schema Markup for AI Citations', item: 'https://www.scanora.ai/en/blog/schema-markup-ai-citations' },
     ],
 }
 
@@ -139,7 +139,7 @@ export default function SchemaMarkupPageEn() {
 
                 {/* Breadcrumb */}
                 <div className="flex items-center gap-2 text-xs text-slate-600 mb-8">
-                    <Link href="/en" className="hover:text-slate-400 transition-colors">AuditAI</Link>
+                    <Link href="/en" className="hover:text-slate-400 transition-colors">Scanora</Link>
                     <span>/</span>
                     <Link href="/en/blog" className="hover:text-slate-400 transition-colors">Blog</Link>
                     <span>/</span>
@@ -168,7 +168,7 @@ export default function SchemaMarkupPageEn() {
                             <span>Finn Paustian</span>
                         </Link>
                         <span>·</span>
-                        <span>Founder, AuditAI</span>
+                        <span>Founder, Scanora</span>
                     </div>
                 </div>
 
@@ -320,7 +320,7 @@ export default function SchemaMarkupPageEn() {
                         Does your schema match your visible content?
                     </h2>
                     <p className="text-slate-400 text-sm mb-6 max-w-md mx-auto leading-relaxed">
-                        AuditAI automatically checks whether Organization, FAQ, and other schema types are present and correct - as part of 19 GEO signals in under 60 seconds. Start without registration, sign up free for the full report with all scores.
+                        Scanora automatically checks whether Organization, FAQ, and other schema types are present and correct - as part of 19 GEO signals in under 60 seconds. Start without registration, sign up free for the full report with all scores.
                     </p>
                     <Link
                         href="/dashboard"

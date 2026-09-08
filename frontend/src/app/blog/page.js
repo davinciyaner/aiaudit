@@ -6,10 +6,10 @@ export const metadata = {
     title: 'Blog – SEO, GEO & Website-Optimierung',
     description: 'Praxisnahe Artikel über SEO, GEO-Optimierung und Performance. Lerne wie du deine Website für Google und KI-Modelle optimierst.',
     alternates: {
-        canonical: 'https://www.sitecheckai.dev/blog',
+        canonical: 'https://www.scanora.ai/blog',
         languages: {
-            'de-DE': 'https://www.sitecheckai.dev/blog',
-            'en-US': 'https://www.sitecheckai.dev/en/blog',
+            'de-DE': 'https://www.scanora.ai/blog',
+            'en-US': 'https://www.scanora.ai/en/blog',
         },
     },
 }
@@ -18,8 +18,8 @@ const breadcrumbLd = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'AuditAI', item: 'https://www.sitecheckai.dev' },
-        { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.sitecheckai.dev/blog' },
+        { '@type': 'ListItem', position: 1, name: 'Scanora', item: 'https://www.scanora.ai' },
+        { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.scanora.ai/blog' },
     ],
 }
 
@@ -27,7 +27,7 @@ const ARTICLES = [
     {
         slug: 'ki-sichtbarkeit-erlangen',
         title: 'KI-Sichtbarkeit erlangen: So wirst du von ChatGPT, Claude & Perplexity zitiert',
-        description: 'KI-Sichtbarkeit ist mehr als llms.txt und Schema Markup. Wie du wirklich von ChatGPT, Claude, Perplexity und Google AI Overview zitiert wirst - inklusive Monitoring mit AuditAI.',
+        description: 'KI-Sichtbarkeit ist mehr als llms.txt und Schema Markup. Wie du wirklich von ChatGPT, Claude, Perplexity und Google AI Overview zitiert wirst - inklusive Monitoring mit Scanora.',
         category: 'GEO',
         categoryColor: '#06b6d4',
         date: '10. August 2026',
@@ -80,8 +80,8 @@ const ARTICLES = [
     },
     {
         slug: 'beste-seo-check-tools-2026',
-        title: 'Website SEO Check & Audit: AuditAI mit GEO-Analyse (2026)',
-        description: 'Website SEO Check und Website Audit mit AuditAI: SEO, Performance und GEO (KI-Sichtbarkeit für ChatGPT, Claude & Perplexity) in einem Report. Alle Features, Preise und was du als Nutzer bekommst.',
+        title: 'Website SEO Check & Audit: Scanora mit GEO-Analyse (2026)',
+        description: 'Website SEO Check und Website Audit mit Scanora: SEO, Performance und GEO (KI-Sichtbarkeit für ChatGPT, Claude & Perplexity) in einem Report. Alle Features, Preise und was du als Nutzer bekommst.',
         category: 'Tools',
         categoryColor: '#f59e0b',
         date: '15. Juli 2026',

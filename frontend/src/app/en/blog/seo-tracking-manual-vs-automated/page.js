@@ -8,16 +8,16 @@ export const metadata = {
     description: 'Manual SEO and GEO tracking vs. automation compared: time cost, price, and why AI visibility is nearly impossible to track reliably by hand.',
     keywords: 'manual seo tracking, automated seo monitoring, is seo automation worth it, rank tracking manual vs automated, track ai visibility, geo tracking manual',
     alternates: {
-        canonical: 'https://www.sitecheckai.dev/en/blog/seo-tracking-manual-vs-automated',
+        canonical: 'https://www.scanora.ai/en/blog/seo-tracking-manual-vs-automated',
         languages: {
-            'de-DE': 'https://www.sitecheckai.dev/blog/seo-tracking-manuell-vs-automatisiert',
-            'en-US': 'https://www.sitecheckai.dev/en/blog/seo-tracking-manual-vs-automated',
+            'de-DE': 'https://www.scanora.ai/blog/seo-tracking-manuell-vs-automatisiert',
+            'en-US': 'https://www.scanora.ai/en/blog/seo-tracking-manual-vs-automated',
         },
     },
     openGraph: {
         title: "Manual vs. Automated SEO Tracking: What's Actually Worth It?",
         description: 'Time cost, price, and the blind spot in manual tracking: AI visibility.',
-        url: 'https://www.sitecheckai.dev/en/blog/seo-tracking-manual-vs-automated',
+        url: 'https://www.scanora.ai/en/blog/seo-tracking-manual-vs-automated',
         type: 'article',
         locale: 'en_US',
     },
@@ -28,27 +28,27 @@ const jsonLd = {
     '@type': 'Article',
     headline: "Manual vs. Automated SEO Tracking: What's Actually Worth It?",
     description: 'Manual SEO and GEO tracking vs. automation compared: time cost, price, and why AI visibility is nearly impossible to track reliably by hand.',
-    image: 'https://www.sitecheckai.dev/en/blog/seo-tracking-manual-vs-automated/opengraph-image',
+    image: 'https://www.scanora.ai/en/blog/seo-tracking-manual-vs-automated/opengraph-image',
     datePublished: '2026-07-15T09:00:00+02:00',
     dateModified: '2026-08-01T09:00:00+02:00',
-    author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev/about' },
+    author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.scanora.ai/about' },
     publisher: {
         '@type': 'Organization',
-        name: 'AuditAI',
-        url: 'https://www.sitecheckai.dev',
-        logo: { '@type': 'ImageObject', url: 'https://www.sitecheckai.dev/logo', width: 512, height: 512 },
+        name: 'Scanora',
+        url: 'https://www.scanora.ai',
+        logo: { '@type': 'ImageObject', url: 'https://www.scanora.ai/logo', width: 512, height: 512 },
     },
-    url: 'https://www.sitecheckai.dev/en/blog/seo-tracking-manual-vs-automated',
-    mainEntityOfPage: 'https://www.sitecheckai.dev/en/blog/seo-tracking-manual-vs-automated',
+    url: 'https://www.scanora.ai/en/blog/seo-tracking-manual-vs-automated',
+    mainEntityOfPage: 'https://www.scanora.ai/en/blog/seo-tracking-manual-vs-automated',
 }
 
 const breadcrumbLd = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'AuditAI', item: 'https://www.sitecheckai.dev/en' },
-        { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.sitecheckai.dev/en/blog' },
-        { '@type': 'ListItem', position: 3, name: 'Manual vs. Automated', item: 'https://www.sitecheckai.dev/en/blog/seo-tracking-manual-vs-automated' },
+        { '@type': 'ListItem', position: 1, name: 'Scanora', item: 'https://www.scanora.ai/en' },
+        { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.scanora.ai/en/blog' },
+        { '@type': 'ListItem', position: 3, name: 'Manual vs. Automated', item: 'https://www.scanora.ai/en/blog/seo-tracking-manual-vs-automated' },
     ],
 }
 
@@ -112,7 +112,7 @@ export default function SeoTrackingManualVsAutomatedPageEn() {
 
                 {/* Breadcrumb */}
                 <div className="flex items-center gap-2 text-xs text-slate-600 mb-8">
-                    <Link href="/en" className="hover:text-slate-400 transition-colors">AuditAI</Link>
+                    <Link href="/en" className="hover:text-slate-400 transition-colors">Scanora</Link>
                     <span>/</span>
                     <Link href="/en/blog" className="hover:text-slate-400 transition-colors">Blog</Link>
                     <span>/</span>
@@ -144,7 +144,7 @@ export default function SeoTrackingManualVsAutomatedPageEn() {
                             <span>Finn Paustian</span>
                         </Link>
                         <span>·</span>
-                        <span>Founder, AuditAI</span>
+                        <span>Founder, Scanora</span>
                     </div>
                 </div>
 
@@ -179,7 +179,7 @@ export default function SeoTrackingManualVsAutomatedPageEn() {
                         <figure className="mt-6 max-w-md">
                             <Image
                                 src="/blog/auditai-score-overview.png"
-                                alt="AuditAI score overview with overall, SEO, performance, and GEO score from a real audit report"
+                                alt="Scanora score overview with overall, SEO, performance, and GEO score from a real audit report"
                                 width={960}
                                 height={194}
                                 className="w-full h-auto rounded-xl border border-white/[0.07]"
