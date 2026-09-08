@@ -36,6 +36,15 @@ const jsonLd = {
     },
 }
 
+const breadcrumbLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'AuditAI', item: 'https://www.sitecheckai.dev/en' },
+        { '@type': 'ListItem', position: 2, name: 'About', item: 'https://www.sitecheckai.dev/en/about' },
+    ],
+}
+
 const FACTS = [
     { icon: Sparkles, label: 'AI visibility & SEO in one report', color: '#7c3aed' },
     { icon: ZapIcon, label: 'Audit in under 60 seconds', color: '#06b6d4' },
@@ -46,6 +55,7 @@ export default function AboutPageEn() {
     return (
         <main className="bg-[#05080f] min-h-screen">
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
             <Navbar locale="en" />
 
             <article className="max-w-3xl mx-auto px-5 sm:px-8 pt-32 pb-24">

@@ -25,6 +25,7 @@ export function getRootJsonLd(locale) {
                     name: 'AuditAI',
                     publisher: { '@id': 'https://www.sitecheckai.dev/en/#organization' },
                     inLanguage: 'en-US',
+                    dateModified: '2026-09-08',
                 },
                 {
                     '@type': 'SoftwareApplication',
@@ -33,6 +34,7 @@ export function getRootJsonLd(locale) {
                     applicationCategory: 'BusinessApplication',
                     operatingSystem: 'Web',
                     description: 'Full website audit powered by AI: SEO, performance, and GEO (AI search) visibility in under 60 seconds.',
+                    dateModified: '2026-09-08',
                     offers: [
                         { '@type': 'Offer', name: 'Free', price: '0', priceCurrency: 'EUR', description: '1 audit per month' },
                         { '@type': 'Offer', name: 'Pro', price: '29', priceCurrency: 'EUR', description: '10 audits per month' },
@@ -68,6 +70,7 @@ export function getRootJsonLd(locale) {
                 name: 'AuditAI',
                 publisher: { '@id': 'https://www.sitecheckai.dev/#organization' },
                 inLanguage: 'de-DE',
+                dateModified: '2026-09-08',
             },
             {
                 '@type': 'SoftwareApplication',
@@ -76,6 +79,7 @@ export function getRootJsonLd(locale) {
                 applicationCategory: 'BusinessApplication',
                 operatingSystem: 'Web',
                 description: 'Vollständiger Website-Audit mit KI: SEO, Performance und GEO-Sichtbarkeit in unter 60 Sekunden.',
+                dateModified: '2026-09-08',
                 offers: [
                     { '@type': 'Offer', name: 'Free', price: '0', priceCurrency: 'EUR', description: '1 Audit pro Monat' },
                     { '@type': 'Offer', name: 'Pro', price: '29', priceCurrency: 'EUR', description: '10 Audits pro Monat' },
@@ -83,15 +87,15 @@ export function getRootJsonLd(locale) {
                 ],
             },
             {
-                '@context': 'https://schema.org',
-                '@type': 'Article',
-                headline: 'AI Visibility & SEO prüfen: Wirst du von ChatGPT, Perplexity und Google zitiert?',
-                mainEntityOfPage: 'https://www.sitecheckai.dev',
+                '@type': 'WebPage',
+                '@id': 'https://www.sitecheckai.dev/#webpage',
+                url: 'https://www.sitecheckai.dev',
+                name: 'AI Visibility & SEO prüfen: Wirst du von ChatGPT, Perplexity und Google zitiert?',
+                isPartOf: { '@id': 'https://www.sitecheckai.dev/#website' },
                 inLanguage: 'de-DE',
-                author: { '@id': 'https://www.sitecheckai.dev/#organization' },
-                publisher: { '@id': 'https://www.sitecheckai.dev/#organization' },
+                primaryImageOfPage: { '@id': 'https://www.sitecheckai.dev/logo' },
                 datePublished: '2026-01-15',
-                dateModified: '2026-09-06',
+                dateModified: '2026-09-08',
                 about: [
                     { '@type': 'Thing', name: 'Generative Engine Optimization' },
                     { '@type': 'Thing', name: 'AI Visibility' },
