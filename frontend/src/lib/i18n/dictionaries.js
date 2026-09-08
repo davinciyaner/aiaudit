@@ -18,7 +18,7 @@ export const dictionaries = {
             product: 'Produkt',
             blogHeading: 'Blog',
             legal: 'Rechtliches',
-            copyright: '© 2026 AuditAI. Alle Rechte vorbehalten.',
+            copyright: '© 2026 Scanora. Alle Rechte vorbehalten.',
             support: 'Support kontaktieren',
         },
         common: {
@@ -45,7 +45,7 @@ export const dictionaries = {
             product: 'Product',
             blogHeading: 'Blog',
             legal: 'Legal',
-            copyright: '© 2026 AuditAI. All rights reserved.',
+            copyright: '© 2026 Scanora. All rights reserved.',
             support: 'Contact support',
         },
         common: {

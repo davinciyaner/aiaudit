@@ -1,7 +1,7 @@
 'use client'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Zap, Lock } from 'lucide-react'
+import { Lock } from 'lucide-react'
 
 export default function AdminLoginPage() {
     const [token, setToken] = useState('')
@@ -33,11 +33,11 @@ export default function AdminLoginPage() {
         <div className="min-h-screen bg-[#080b14] flex items-center justify-center px-5">
             <div className="w-full max-w-sm">
                 <div className="flex items-center justify-center gap-2 mb-8">
-                    <div className="w-8 h-8 rounded-lg bg-linear-to-br from-violet-500 to-cyan-500 flex items-center justify-center">
-                        <Zap className="w-4 h-4 text-white" />
+                    <div className="w-8 h-8 rounded-lg bg-[var(--accent)] flex items-center justify-center">
+                        <svg className="w-4 h-4 text-white" viewBox="0 0 192 192" fill="none"><circle cx="96" cy="96" r="50" stroke="currentColor" strokeWidth="14" /><circle cx="110" cy="82" r="13" fill="currentColor" /></svg>
                     </div>
                     <span className="font-bold text-white">
-                        Audit<span className="text-cyan-400">AI</span>
+                        Scanora
                     </span>
                 </div>
 

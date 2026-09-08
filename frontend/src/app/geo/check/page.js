@@ -17,7 +17,7 @@ const HOW_IT_WORKS = [
 const FAQS = [
     {
         q: 'Wie kann ich prüfen, ob meine Website von ChatGPT oder Claude zitiert wird?',
-        a: 'Mit dem kostenlosen KI-Sichtbarkeits-Check von AuditAI: Domain und Keyword eingeben, eine Plattform (ChatGPT, Claude, Perplexity oder Google AI Overview) auswählen und in wenigen Sekunden siehst du, ob und wie deine Website dort erwähnt wird - ganz ohne Registrierung.',
+        a: 'Mit dem kostenlosen KI-Sichtbarkeits-Check von Scanora: Domain und Keyword eingeben, eine Plattform (ChatGPT, Claude, Perplexity oder Google AI Overview) auswählen und in wenigen Sekunden siehst du, ob und wie deine Website dort erwähnt wird - ganz ohne Registrierung.',
     },
     {
         q: 'Ist der KI-Sichtbarkeits-Check wirklich kostenlos?',
@@ -231,7 +231,7 @@ function GeoCheckPageInner() {
                         {platformLocked && platform ? `Wirst du von ${PLATFORM_META[platform].label} zitiert?` : 'Wirst du von ChatGPT & Co. zitiert?'}
                     </h1>
                     <p className="text-slate-400 leading-relaxed max-w-lg mx-auto">
-                        Der KI-Sichtbarkeits-Check von AuditAI ist ein kostenloses Tool für Websitebetreiber, das prüft, ob ChatGPT, Claude, Perplexity oder Google AI Overview eine Domain als Quelle nennen.
+                        Der KI-Sichtbarkeits-Check von Scanora ist ein kostenloses Tool für Websitebetreiber, das prüft, ob ChatGPT, Claude, Perplexity oder Google AI Overview eine Domain als Quelle nennen.
                     </p>
                 </div>
 

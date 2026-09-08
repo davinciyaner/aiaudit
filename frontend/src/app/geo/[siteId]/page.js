@@ -172,7 +172,7 @@ function CorrelationPanel({ siteId }) {
             <div className="bg-[var(--bg-surface)] border border-dashed border-[var(--border-subtle)] rounded-2xl p-5 mb-6">
                 <h3 className="text-sm font-semibold text-white mb-1.5">SEO-Ranking + KI-Erwähnung vergleichen</h3>
                 <p className="text-xs text-slate-500 leading-relaxed">
-                    Für diese Domain läuft noch keine SEO-Automatisierung. Sobald beide Produkte dieselbe Domain tracken, zeigt AuditAI hier direkt,
+                    Für diese Domain läuft noch keine SEO-Automatisierung. Sobald beide Produkte dieselbe Domain tracken, zeigt Scanora hier direkt,
                     ob eine Seite bei Google rankt, aber nie von KI-Modellen genannt wird — oder umgekehrt.
                 </p>
             </div>

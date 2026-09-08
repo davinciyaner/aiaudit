@@ -8,16 +8,16 @@ export const metadata = {
     description: 'Ein automatisierter SEO Rank Tracker und Keyword Tracker, plus KI-Sichtbarkeits-Monitoring für ChatGPT, Claude, Perplexity & Google AI Overview - wöchentlich automatisch statt manuell geprüft. Mit Preisen und Vergleich.',
     keywords: 'seo tool, rank tracker, keyword tracker, seo monitoring, google ranking tool, keyword monitoring, seo tracking tool, seo automatisierung, geo automatisierung, ki sichtbarkeit, automatisiertes seo tracking, seo monitoring tool',
     alternates: {
-        canonical: 'https://www.sitecheckai.dev/blog/seo-geo-automatisierung',
+        canonical: 'https://www.scanora.ai/blog/seo-geo-automatisierung',
         languages: {
-            'de-DE': 'https://www.sitecheckai.dev/blog/seo-geo-automatisierung',
-            'en-US': 'https://www.sitecheckai.dev/en/blog/seo-geo-automation',
+            'de-DE': 'https://www.scanora.ai/blog/seo-geo-automatisierung',
+            'en-US': 'https://www.scanora.ai/en/blog/seo-geo-automation',
         },
     },
     openGraph: {
         title: 'SEO Rank Tracker & KI-Sichtbarkeits-Monitor: SEO- und GEO-Tracking automatisieren',
         description: 'Ein automatisierter Rank Tracker und Keyword Tracker, plus KI-Sichtbarkeits-Monitoring für ChatGPT, Claude, Perplexity & Google AI Overview - wöchentlich automatisch statt manuell geprüft.',
-        url: 'https://www.sitecheckai.dev/blog/seo-geo-automatisierung',
+        url: 'https://www.scanora.ai/blog/seo-geo-automatisierung',
         type: 'article',
         locale: 'de_DE',
     },
@@ -28,18 +28,18 @@ const jsonLd = {
     '@type': 'Article',
     headline: 'SEO Rank Tracker & KI-Sichtbarkeits-Monitor: SEO- und GEO-Tracking automatisieren',
     description: 'Ein automatisierter SEO Rank Tracker und Keyword Tracker, plus KI-Sichtbarkeits-Monitoring für ChatGPT, Claude, Perplexity & Google AI Overview - wöchentlich automatisch statt manuell geprüft.',
-    image: 'https://www.sitecheckai.dev/blog/seo-geo-automatisierung/opengraph-image',
+    image: 'https://www.scanora.ai/blog/seo-geo-automatisierung/opengraph-image',
     datePublished: '2026-07-05T09:00:00+02:00',
     dateModified: '2026-07-30T09:00:00+02:00',
-    author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev/about' },
+    author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.scanora.ai/about' },
     publisher: {
         '@type': 'Organization',
-        name: 'AuditAI',
-        url: 'https://www.sitecheckai.dev',
-        logo: { '@type': 'ImageObject', url: 'https://www.sitecheckai.dev/logo', width: 512, height: 512 },
+        name: 'Scanora',
+        url: 'https://www.scanora.ai',
+        logo: { '@type': 'ImageObject', url: 'https://www.scanora.ai/logo', width: 512, height: 512 },
     },
-    url: 'https://www.sitecheckai.dev/blog/seo-geo-automatisierung',
-    mainEntityOfPage: 'https://www.sitecheckai.dev/blog/seo-geo-automatisierung',
+    url: 'https://www.scanora.ai/blog/seo-geo-automatisierung',
+    mainEntityOfPage: 'https://www.scanora.ai/blog/seo-geo-automatisierung',
     about: [
         { '@type': 'Thing', name: 'SEO Rank Tracker' },
         { '@type': 'Thing', name: 'Keyword Tracker' },
@@ -56,9 +56,9 @@ const breadcrumbLd = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'AuditAI', item: 'https://www.sitecheckai.dev' },
-        { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.sitecheckai.dev/blog' },
-        { '@type': 'ListItem', position: 3, name: 'SEO Rank Tracker & KI-Sichtbarkeits-Monitor', item: 'https://www.sitecheckai.dev/blog/seo-geo-automatisierung' },
+        { '@type': 'ListItem', position: 1, name: 'Scanora', item: 'https://www.scanora.ai' },
+        { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.scanora.ai/blog' },
+        { '@type': 'ListItem', position: 3, name: 'SEO Rank Tracker & KI-Sichtbarkeits-Monitor', item: 'https://www.scanora.ai/blog/seo-geo-automatisierung' },
     ],
 }
 
@@ -143,7 +143,7 @@ export default function SeoGeoAutomatisierungPage() {
 
                 {/* Breadcrumb */}
                 <div className="flex items-center gap-2 text-xs text-slate-600 mb-8">
-                    <Link href="/" className="hover:text-slate-400 transition-colors">AuditAI</Link>
+                    <Link href="/" className="hover:text-slate-400 transition-colors">Scanora</Link>
                     <span>/</span>
                     <Link href="/blog" className="hover:text-slate-400 transition-colors">Blog</Link>
                     <span>/</span>
@@ -175,7 +175,7 @@ export default function SeoGeoAutomatisierungPage() {
                             <span>Finn Paustian</span>
                         </Link>
                         <span>·</span>
-                        <span>Gründer, AuditAI</span>
+                        <span>Gründer, Scanora</span>
                     </div>
                 </div>
 
@@ -219,7 +219,7 @@ export default function SeoGeoAutomatisierungPage() {
                         <figure className="mt-6">
                             <Image
                                 src="/blog/auditai-geo-report.png"
-                                alt="AuditAI GEO-Report zeigt geprüfte KI-Sichtbarkeits-Signale wie llms.txt, Organization-Schema, KI-Crawler-Erlaubnis und externe Quellenverweise"
+                                alt="Scanora GEO-Report zeigt geprüfte KI-Sichtbarkeits-Signale wie llms.txt, Organization-Schema, KI-Crawler-Erlaubnis und externe Quellenverweise"
                                 width={960}
                                 height={411}
                                 className="w-full h-auto rounded-2xl border border-white/[0.07]"

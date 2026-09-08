@@ -7,16 +7,16 @@ export const metadata = {
     description: 'SEO-Check selbst durchführen oder eine SEO-Check-Agentur beauftragen: Kosten, was jede Option wirklich abdeckt, und für wen sich was lohnt - ohne Verkaufsrhetorik.',
     keywords: 'seo test vs agentur, seo audit selbst machen, seo agentur kosten, seo agentur oder selbst machen, lohnt sich seo agentur, seo selbst optimieren, seo-check agentur, seo check agentur',
     alternates: {
-        canonical: 'https://www.sitecheckai.dev/blog/seo-test-vs-agentur',
+        canonical: 'https://www.scanora.ai/blog/seo-test-vs-agentur',
         languages: {
-            'de-DE': 'https://www.sitecheckai.dev/blog/seo-test-vs-agentur',
-            'en-US': 'https://www.sitecheckai.dev/en/blog/seo-tool-vs-agency',
+            'de-DE': 'https://www.scanora.ai/blog/seo-test-vs-agentur',
+            'en-US': 'https://www.scanora.ai/en/blog/seo-tool-vs-agency',
         },
     },
     openGraph: {
         title: 'SEO-Test selbst machen oder Agentur beauftragen? Der ehrliche Kostenvergleich',
         description: 'SEO-Check selbst machen oder SEO-Check-Agentur beauftragen: Kosten, Leistungsumfang und für wen sich was lohnt - der ehrliche Vergleich ohne Verkaufsrhetorik.',
-        url: 'https://www.sitecheckai.dev/blog/seo-test-vs-agentur',
+        url: 'https://www.scanora.ai/blog/seo-test-vs-agentur',
         type: 'article',
         locale: 'de_DE',
     },
@@ -27,27 +27,27 @@ const jsonLd = {
     '@type': 'Article',
     headline: 'SEO-Test selbst machen oder Agentur beauftragen? Der ehrliche Kostenvergleich',
     description: 'SEO-Check selbst durchführen oder eine SEO-Check-Agentur beauftragen: Kosten, was jede Option wirklich abdeckt, und für wen sich was lohnt.',
-    image: 'https://www.sitecheckai.dev/blog/seo-test-vs-agentur/opengraph-image',
+    image: 'https://www.scanora.ai/blog/seo-test-vs-agentur/opengraph-image',
     datePublished: '2026-07-26T09:00:00+02:00',
     dateModified: '2026-07-30T09:00:00+02:00',
-    author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev/about' },
+    author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.scanora.ai/about' },
     publisher: {
         '@type': 'Organization',
-        name: 'AuditAI',
-        url: 'https://www.sitecheckai.dev',
-        logo: { '@type': 'ImageObject', url: 'https://www.sitecheckai.dev/logo', width: 512, height: 512 },
+        name: 'Scanora',
+        url: 'https://www.scanora.ai',
+        logo: { '@type': 'ImageObject', url: 'https://www.scanora.ai/logo', width: 512, height: 512 },
     },
-    url: 'https://www.sitecheckai.dev/blog/seo-test-vs-agentur',
-    mainEntityOfPage: 'https://www.sitecheckai.dev/blog/seo-test-vs-agentur',
+    url: 'https://www.scanora.ai/blog/seo-test-vs-agentur',
+    mainEntityOfPage: 'https://www.scanora.ai/blog/seo-test-vs-agentur',
 }
 
 const breadcrumbLd = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'AuditAI', item: 'https://www.sitecheckai.dev' },
-        { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.sitecheckai.dev/blog' },
-        { '@type': 'ListItem', position: 3, name: 'SEO-Test vs. Agentur', item: 'https://www.sitecheckai.dev/blog/seo-test-vs-agentur' },
+        { '@type': 'ListItem', position: 1, name: 'Scanora', item: 'https://www.scanora.ai' },
+        { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.scanora.ai/blog' },
+        { '@type': 'ListItem', position: 3, name: 'SEO-Test vs. Agentur', item: 'https://www.scanora.ai/blog/seo-test-vs-agentur' },
     ],
 }
 
@@ -106,7 +106,7 @@ const TEST_SCOPE = [
 ]
 
 const COMPARISON = [
-    ['Kosten pro Monat', 'ab 29 €/Monat (AuditAI Pro)', '500 € - 8.000+ € (Retainer)'],
+    ['Kosten pro Monat', 'ab 29 €/Monat (Scanora Pro)', '500 € - 8.000+ € (Retainer)'],
     ['Setup-Zeit', 'Sofort, ohne Vertragslaufzeit', 'Wochen bis Monate (Onboarding, Strategie)'],
     ['Deckt technische SEO-Fehler ab', 'Ja, automatisiert', 'Ja, meist als Teil des Pakets'],
     ['Deckt GEO/KI-Sichtbarkeit ab', 'Ja, dediziert', 'Selten, hängt stark von der Agentur ab'],
@@ -127,7 +127,7 @@ export default function SeoTestVsAgenturPage() {
 
                 {/* Breadcrumb */}
                 <div className="flex items-center gap-2 text-xs text-slate-600 mb-8">
-                    <Link href="/" className="hover:text-slate-400 transition-colors">AuditAI</Link>
+                    <Link href="/" className="hover:text-slate-400 transition-colors">Scanora</Link>
                     <span>/</span>
                     <Link href="/blog" className="hover:text-slate-400 transition-colors">Blog</Link>
                     <span>/</span>
@@ -156,7 +156,7 @@ export default function SeoTestVsAgenturPage() {
                             <span>Finn Paustian</span>
                         </Link>
                         <span>·</span>
-                        <span>Gründer, AuditAI</span>
+                        <span>Gründer, Scanora</span>
                     </div>
                 </div>
 
@@ -185,7 +185,7 @@ export default function SeoTestVsAgenturPage() {
                     <section>
                         <h2 className="text-2xl font-bold text-white mb-4">Was ein automatisierter SEO-Test abdeckt - und was nicht</h2>
                         <p>
-                            Ein Tool wie AuditAI ist ein Diagnose-Instrument, keine Ersatz-Agentur. Es findet technische Probleme automatisch und wiederholt - schreibt aber keine Inhalte und baut keine Backlinks auf. Welche Fehler das konkret sind, steht mit Zahlen und Fix-Anleitung in unserem Artikel zu den{' '}
+                            Ein Tool wie Scanora ist ein Diagnose-Instrument, keine Ersatz-Agentur. Es findet technische Probleme automatisch und wiederholt - schreibt aber keine Inhalte und baut keine Backlinks auf. Welche Fehler das konkret sind, steht mit Zahlen und Fix-Anleitung in unserem Artikel zu den{' '}
                             <Link href="/blog/seo-test-haeufige-fehler" className="text-amber-400 hover:text-amber-300 underline underline-offset-2">
                                 10 häufigsten SEO-Fehlern
                             </Link>.
@@ -287,7 +287,7 @@ export default function SeoTestVsAgenturPage() {
                         <div>
                             <span className="text-xs font-semibold text-violet-400 uppercase tracking-wider mb-1 block">Weiterlesen</span>
                             <h3 className="text-base sm:text-lg font-bold text-white mb-2">
-                                Website SEO Check & Audit mit AuditAI
+                                Website SEO Check & Audit mit Scanora
                             </h3>
                             <p className="text-slate-400 text-sm leading-relaxed max-w-md">
                                 Falls du erstmal selbst testen willst: alle Features im Überblick, inklusive kostenlosem Audit.

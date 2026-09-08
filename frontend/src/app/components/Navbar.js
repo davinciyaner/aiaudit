@@ -2,7 +2,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
-    Zap, Menu, X, ArrowRight, LogOut, User, ChevronDown,
+    Menu, X, ArrowRight, LogOut, User, ChevronDown,
     LayoutDashboard, Search, Globe, BookOpen, CreditCard, TrendingUp,
     Layers, Wallet, Bot,
 } from 'lucide-react'
@@ -233,10 +233,13 @@ export default function Navbar({ locale = 'de' }) {
                     {/* Logo */}
                     <Link href={locale === 'en' ? '/en' : '/'} className="flex items-center gap-2.5 group">
                         <div className="w-8 h-8 rounded-lg bg-[var(--accent)] flex items-center justify-center shadow-lg shadow-[var(--accent-border)] transition-shadow">
-                            <Zap className="w-4 h-4 text-[var(--bg-base)]" strokeWidth={2.5} />
+                            <svg className="w-4 h-4 text-[var(--bg-base)]" viewBox="0 0 192 192" fill="none">
+                                <circle cx="96" cy="96" r="50" stroke="currentColor" strokeWidth="14" />
+                                <circle cx="110" cy="82" r="13" fill="currentColor" />
+                            </svg>
                         </div>
                         <span className="font-bold text-white text-lg tracking-tight">
-                            AuditAI
+                            Scanora
                         </span>
                     </Link>
 

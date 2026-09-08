@@ -22,7 +22,7 @@ export default function RankingBars() {
                         <h3 className="text-sm font-semibold text-white">Ranking Improvement</h3>
                         <span className="text-[10px] px-1.5 py-0.5 rounded-md bg-[var(--surface-08)] text-slate-500 font-medium">Example</span>
                     </div>
-                    <p className="text-xs text-slate-500 mt-0.5">Google position before and after AuditAI fixes were implemented</p>
+                    <p className="text-xs text-slate-500 mt-0.5">Google position before and after Scanora fixes were implemented</p>
                 </div>
             </div>
 

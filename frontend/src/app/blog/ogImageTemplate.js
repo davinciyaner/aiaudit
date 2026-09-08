@@ -57,7 +57,7 @@ export function blogOgImage(title, tag) {
                     ⚡
                 </div>
                 <span style={{ fontSize: 30, fontWeight: 700, color: 'white', letterSpacing: '-0.5px' }}>
-                    Audit<span style={{ color: '#a78bfa' }}>AI</span>
+                    Scanora
                 </span>
             </div>
 
@@ -96,7 +96,7 @@ export function blogOgImage(title, tag) {
                     </div>
                 )}
                 <div style={{ fontSize: 20, color: '#64748b', fontWeight: 400 }}>
-                    sitecheckai.dev/blog
+                    scanora.ai/blog
                 </div>
             </div>
         </div>

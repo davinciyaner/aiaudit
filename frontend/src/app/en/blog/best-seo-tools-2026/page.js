@@ -4,20 +4,20 @@ import Navbar from '../../../components/Navbar'
 import Footer from '../../../components/Footer'
 
 export const metadata = {
-    title: { absolute: 'AuditAI: The SEO Tool With GEO Analysis (2026)' },
-    description: 'AuditAI checks SEO, performance, and GEO (AI visibility for ChatGPT, Claude & Perplexity) in one report. All the features, pricing, and what you get as a user.',
+    title: { absolute: 'Scanora: The SEO Tool With GEO Analysis (2026)' },
+    description: 'Scanora checks SEO, performance, and GEO (AI visibility for ChatGPT, Claude & Perplexity) in one report. All the features, pricing, and what you get as a user.',
     keywords: 'seo tool, seo check, seo audit, website audit, free seo test, seo software, seo automation, geo tool, geo check, geo automation, ai visibility, generative engine optimization, chatgpt seo, core web vitals test, keyword tracking, google ranking tool, backlink check, llms.txt, schema markup, website analysis',
     alternates: {
-        canonical: 'https://www.sitecheckai.dev/en/blog/best-seo-tools-2026',
+        canonical: 'https://www.scanora.ai/en/blog/best-seo-tools-2026',
         languages: {
-            'de-DE': 'https://www.sitecheckai.dev/blog/beste-seo-check-tools-2026',
-            'en-US': 'https://www.sitecheckai.dev/en/blog/best-seo-tools-2026',
+            'de-DE': 'https://www.scanora.ai/blog/beste-seo-check-tools-2026',
+            'en-US': 'https://www.scanora.ai/en/blog/best-seo-tools-2026',
         },
     },
     openGraph: {
-        title: 'AuditAI: The SEO Tool With GEO Analysis (2026)',
+        title: 'Scanora: The SEO Tool With GEO Analysis (2026)',
         description: 'SEO, performance, and GEO in one report - all the features, pricing, and what you get.',
-        url: 'https://www.sitecheckai.dev/en/blog/best-seo-tools-2026',
+        url: 'https://www.scanora.ai/en/blog/best-seo-tools-2026',
         type: 'article',
         locale: 'en_US',
     },
@@ -26,29 +26,29 @@ export const metadata = {
 const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
-    headline: 'AuditAI: The SEO Tool With GEO Analysis (2026)',
-    description: 'AuditAI checks SEO, performance, and GEO (AI visibility for ChatGPT, Claude & Perplexity) in one report. All the features, pricing, and what you get as a user.',
-    image: 'https://www.sitecheckai.dev/en/blog/best-seo-tools-2026/opengraph-image',
+    headline: 'Scanora: The SEO Tool With GEO Analysis (2026)',
+    description: 'Scanora checks SEO, performance, and GEO (AI visibility for ChatGPT, Claude & Perplexity) in one report. All the features, pricing, and what you get as a user.',
+    image: 'https://www.scanora.ai/en/blog/best-seo-tools-2026/opengraph-image',
     datePublished: '2026-07-15T09:00:00+02:00',
     dateModified: '2026-08-04T09:00:00+02:00',
-    author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev/about' },
+    author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.scanora.ai/about' },
     publisher: {
         '@type': 'Organization',
-        name: 'AuditAI',
-        url: 'https://www.sitecheckai.dev',
-        logo: { '@type': 'ImageObject', url: 'https://www.sitecheckai.dev/logo', width: 512, height: 512 },
+        name: 'Scanora',
+        url: 'https://www.scanora.ai',
+        logo: { '@type': 'ImageObject', url: 'https://www.scanora.ai/logo', width: 512, height: 512 },
     },
-    url: 'https://www.sitecheckai.dev/en/blog/best-seo-tools-2026',
-    mainEntityOfPage: 'https://www.sitecheckai.dev/en/blog/best-seo-tools-2026',
+    url: 'https://www.scanora.ai/en/blog/best-seo-tools-2026',
+    mainEntityOfPage: 'https://www.scanora.ai/en/blog/best-seo-tools-2026',
 }
 
 const breadcrumbLd = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'AuditAI', item: 'https://www.sitecheckai.dev/en' },
-        { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.sitecheckai.dev/en/blog' },
-        { '@type': 'ListItem', position: 3, name: 'AuditAI: SEO Tool With GEO Analysis', item: 'https://www.sitecheckai.dev/en/blog/best-seo-tools-2026' },
+        { '@type': 'ListItem', position: 1, name: 'Scanora', item: 'https://www.scanora.ai/en' },
+        { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.scanora.ai/en/blog' },
+        { '@type': 'ListItem', position: 3, name: 'Scanora: SEO Tool With GEO Analysis', item: 'https://www.scanora.ai/en/blog/best-seo-tools-2026' },
     ],
 }
 
@@ -58,7 +58,7 @@ const faqLd = {
     mainEntity: [
         {
             '@type': 'Question',
-            name: 'Is AuditAI really free to use?',
+            name: 'Is Scanora really free to use?',
             acceptedAnswer: {
                 '@type': 'Answer',
                 text: 'Yes. The audit can be started without registration. The full report with all scores (SEO, performance, GEO) just needs a free account - 1 audit per month, free forever, no credit card required.',
@@ -74,7 +74,7 @@ const faqLd = {
         },
         {
             '@type': 'Question',
-            name: 'Does AuditAI check whether ChatGPT or Google AI Overviews recommend me?',
+            name: 'Does Scanora check whether ChatGPT or Google AI Overviews recommend me?',
             acceptedAnswer: {
                 '@type': 'Answer',
                 text: 'Yes, that\'s the GEO part of the product. The one-time audit checks 19 technical GEO signals (llms.txt, schema markup, AI crawler access). GEO automation goes further and asks Claude, ChatGPT, Perplexity, and Google AI Overview directly, every week, whether they mention your domain.',
@@ -111,11 +111,11 @@ export default function AuditAiOverviewPageEn() {
 
                 {/* Breadcrumb */}
                 <div className="flex items-center gap-2 text-xs text-slate-600 mb-8">
-                    <Link href="/en" className="hover:text-slate-400 transition-colors">AuditAI</Link>
+                    <Link href="/en" className="hover:text-slate-400 transition-colors">Scanora</Link>
                     <span>/</span>
                     <Link href="/en/blog" className="hover:text-slate-400 transition-colors">Blog</Link>
                     <span>/</span>
-                    <span className="text-slate-500">AuditAI: SEO Tool With GEO Analysis</span>
+                    <span className="text-slate-500">Scanora: SEO Tool With GEO Analysis</span>
                 </div>
 
                 {/* Header */}
@@ -129,10 +129,10 @@ export default function AuditAiOverviewPageEn() {
                         <span className="text-xs text-slate-600">· 8 min read</span>
                     </div>
                     <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight tracking-tight mb-5">
-                        AuditAI: The SEO Tool With GEO Analysis
+                        Scanora: The SEO Tool With GEO Analysis
                     </h1>
                     <p className="text-lg text-slate-400 leading-relaxed">
-                        Most SEO tools check whether your website looks okay to Google - and completely ignore whether ChatGPT, Claude, Perplexity, or Google AI Overview even know you exist. AuditAI checks both: classic SEO, performance, and GEO (AI visibility), in one report, in under 60 seconds. Here&apos;s everything you get as a user.
+                        Most SEO tools check whether your website looks okay to Google - and completely ignore whether ChatGPT, Claude, Perplexity, or Google AI Overview even know you exist. Scanora checks both: classic SEO, performance, and GEO (AI visibility), in one report, in under 60 seconds. Here&apos;s everything you get as a user.
                     </p>
                     <div className="mt-5 flex items-center gap-2 text-xs text-slate-600">
                         <Link href="/en/about" className="flex items-center gap-2 hover:text-slate-300 transition-colors">
@@ -140,7 +140,7 @@ export default function AuditAiOverviewPageEn() {
                             <span>Finn Paustian</span>
                         </Link>
                         <span>·</span>
-                        <span>Founder, AuditAI</span>
+                        <span>Founder, Scanora</span>
                     </div>
                 </div>
 
@@ -151,7 +151,7 @@ export default function AuditAiOverviewPageEn() {
                     <nav aria-label="Table of contents" className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
                         <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">In this article</p>
                         <ol className="grid sm:grid-cols-2 gap-x-6 gap-y-1.5 text-sm">
-                            <li><a href="#what-is-auditai" className="text-slate-400 hover:text-amber-300 transition-colors">What is AuditAI?</a></li>
+                            <li><a href="#what-is-scanora" className="text-slate-400 hover:text-amber-300 transition-colors">What is Scanora?</a></li>
                             <li><a href="#free-audit" className="text-slate-400 hover:text-amber-300 transition-colors">The free audit</a></li>
                             <li><a href="#seo-analysis" className="text-slate-400 hover:text-amber-300 transition-colors">SEO analysis in detail</a></li>
                             <li><a href="#performance" className="text-slate-400 hover:text-amber-300 transition-colors">Performance check</a></li>
@@ -159,19 +159,19 @@ export default function AuditAiOverviewPageEn() {
                             <li><a href="#ai-report" className="text-slate-400 hover:text-amber-300 transition-colors">The AI report</a></li>
                             <li><a href="#seo-automation" className="text-slate-400 hover:text-amber-300 transition-colors">SEO automation</a></li>
                             <li><a href="#geo-automation" className="text-slate-400 hover:text-amber-300 transition-colors">GEO automation</a></li>
-                            <li><a href="#who-its-for" className="text-slate-400 hover:text-amber-300 transition-colors">Who is AuditAI for?</a></li>
+                            <li><a href="#who-its-for" className="text-slate-400 hover:text-amber-300 transition-colors">Who is Scanora for?</a></li>
                             <li><a href="#pricing" className="text-slate-400 hover:text-amber-300 transition-colors">Pricing overview</a></li>
                             <li><a href="#faq" className="text-slate-400 hover:text-amber-300 transition-colors">Frequently asked questions</a></li>
                         </ol>
                     </nav>
 
-                    <section id="what-is-auditai" className="scroll-mt-28">
-                        <h2 className="text-2xl font-bold text-white mb-4">What is AuditAI?</h2>
+                    <section id="what-is-scanora" className="scroll-mt-28">
+                        <h2 className="text-2xl font-bold text-white mb-4">What is Scanora?</h2>
                         <p>
-                            AuditAI is an AI-powered website audit tool that combines SEO, performance, and GEO (Generative Engine Optimization) in a single scan. Instead of needing a separate tool for each - an SEO checker, a performance tool, and (if one even exists) a separate GEO tool - AuditAI runs all three analyses at once, evaluated by Claude (Anthropic).
+                            Scanora is an AI-powered website audit tool that combines SEO, performance, and GEO (Generative Engine Optimization) in a single scan. Instead of needing a separate tool for each - an SEO checker, a performance tool, and (if one even exists) a separate GEO tool - Scanora runs all three analyses at once, evaluated by Claude (Anthropic).
                         </p>
                         <p className="mt-4">
-                            The difference from classic SEO checkers: most of them were built long before ChatGPT, Perplexity, and Google AI Overview became meaningful traffic sources. Their checklists stop at title tags and backlinks. AuditAI also checks whether AI models can recognize and cite your website as a source.
+                            The difference from classic SEO checkers: most of them were built long before ChatGPT, Perplexity, and Google AI Overview became meaningful traffic sources. Their checklists stop at title tags and backlinks. Scanora also checks whether AI models can recognize and cite your website as a source.
                         </p>
                     </section>
 
@@ -183,13 +183,13 @@ export default function AuditAiOverviewPageEn() {
                         <figure className="mb-6">
                             <Image
                                 src="/blog/auditai-score-overview.png"
-                                alt="AuditAI score overview showing overall, SEO, performance, and GEO scores from a real audit report"
+                                alt="Scanora score overview showing overall, SEO, performance, and GEO scores from a real audit report"
                                 width={960}
                                 height={194}
                                 className="w-full h-auto rounded-2xl border border-white/[0.07]"
                             />
                             <figcaption className="text-xs text-slate-600 mt-2">
-                                The score overview from a real AuditAI report: SEO, performance, and GEO in one view.
+                                The score overview from a real Scanora report: SEO, performance, and GEO in one view.
                             </figcaption>
                         </figure>
                         <div className="space-y-2">
@@ -221,7 +221,7 @@ export default function AuditAiOverviewPageEn() {
                         <figure className="mb-6">
                             <Image
                                 src="/blog/auditai-seo-issues.png"
-                                alt="AuditAI SEO issue list with prioritized problems and concrete fixes"
+                                alt="Scanora SEO issue list with prioritized problems and concrete fixes"
                                 width={960}
                                 height={420}
                                 className="w-full h-auto rounded-2xl border border-white/[0.07]"
@@ -247,7 +247,7 @@ export default function AuditAiOverviewPageEn() {
                     <section id="performance" className="scroll-mt-28">
                         <h2 className="text-2xl font-bold text-white mb-4">Performance check</h2>
                         <p className="mb-4">
-                            Load time is both a Google ranking factor and a direct revenue factor - AuditAI measures the metrics that actually matter:
+                            Load time is both a Google ranking factor and a direct revenue factor - Scanora measures the metrics that actually matter:
                         </p>
                         <div className="grid sm:grid-cols-2 gap-x-6 gap-y-1.5 text-sm">
                             {[
@@ -270,7 +270,7 @@ export default function AuditAiOverviewPageEn() {
                         <figure className="mb-6">
                             <Image
                                 src="/blog/auditai-geo-report.png"
-                                alt="AuditAI GEO report showing checked AI visibility signals like llms.txt, Organization schema, AI crawler access, and sitemap.xml"
+                                alt="Scanora GEO report showing checked AI visibility signals like llms.txt, Organization schema, AI crawler access, and sitemap.xml"
                                 width={960}
                                 height={411}
                                 className="w-full h-auto rounded-2xl border border-white/[0.07]"
@@ -363,7 +363,7 @@ export default function AuditAiOverviewPageEn() {
                     </section>
 
                     <section id="who-its-for" className="scroll-mt-28">
-                        <h2 className="text-2xl font-bold text-white mb-4">Who is AuditAI for?</h2>
+                        <h2 className="text-2xl font-bold text-white mb-4">Who is Scanora for?</h2>
                         <p>
                             Web developers and agencies who want a fast status check on a website (their own or a client&apos;s) without juggling three tools. SEO freelancers who want to bring AI visibility to their clients&apos; attention before it becomes standard practice. And small to mid-size businesses who want to understand for themselves why they&apos;re not showing up on Google - or in ChatGPT - without hiring an agency to find out.
                         </p>

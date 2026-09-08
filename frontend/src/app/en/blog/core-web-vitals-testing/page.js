@@ -7,16 +7,16 @@ export const metadata = {
     description: 'Core Web Vitals explained simply: LCP, INP, and CLS with Google\'s official thresholds. Plus how to test them for free in under 2 minutes.',
     keywords: 'core web vitals, core web vitals testing, core web vitals test free, free core web vitals check, lcp inp cls, free page speed test, pagespeed insights',
     alternates: {
-        canonical: 'https://www.sitecheckai.dev/en/blog/core-web-vitals-testing',
+        canonical: 'https://www.scanora.ai/en/blog/core-web-vitals-testing',
         languages: {
-            'de-DE': 'https://www.sitecheckai.dev/blog/core-web-vitals-testen',
-            'en-US': 'https://www.sitecheckai.dev/en/blog/core-web-vitals-testing',
+            'de-DE': 'https://www.scanora.ai/blog/core-web-vitals-testen',
+            'en-US': 'https://www.scanora.ai/en/blog/core-web-vitals-testing',
         },
     },
     openGraph: {
         title: 'Core Web Vitals in 2026: What They Are and How to Test Them for Free',
         description: 'LCP, INP, and CLS explained - with the official thresholds and free testing tools.',
-        url: 'https://www.sitecheckai.dev/en/blog/core-web-vitals-testing',
+        url: 'https://www.scanora.ai/en/blog/core-web-vitals-testing',
         type: 'article',
         locale: 'en_US',
     },
@@ -27,27 +27,27 @@ const jsonLd = {
     '@type': 'Article',
     headline: 'Core Web Vitals in 2026: What They Are and How to Test Them for Free',
     description: 'Core Web Vitals explained simply: LCP, INP, and CLS with Google\'s official thresholds. Plus how to test them for free.',
-    image: 'https://www.sitecheckai.dev/en/blog/core-web-vitals-testing/opengraph-image',
+    image: 'https://www.scanora.ai/en/blog/core-web-vitals-testing/opengraph-image',
     datePublished: '2026-07-26T09:00:00+02:00',
     dateModified: '2026-08-01T09:00:00+02:00',
-    author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev/about' },
+    author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.scanora.ai/about' },
     publisher: {
         '@type': 'Organization',
-        name: 'AuditAI',
-        url: 'https://www.sitecheckai.dev',
-        logo: { '@type': 'ImageObject', url: 'https://www.sitecheckai.dev/logo', width: 512, height: 512 },
+        name: 'Scanora',
+        url: 'https://www.scanora.ai',
+        logo: { '@type': 'ImageObject', url: 'https://www.scanora.ai/logo', width: 512, height: 512 },
     },
-    url: 'https://www.sitecheckai.dev/en/blog/core-web-vitals-testing',
-    mainEntityOfPage: 'https://www.sitecheckai.dev/en/blog/core-web-vitals-testing',
+    url: 'https://www.scanora.ai/en/blog/core-web-vitals-testing',
+    mainEntityOfPage: 'https://www.scanora.ai/en/blog/core-web-vitals-testing',
 }
 
 const breadcrumbLd = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'AuditAI', item: 'https://www.sitecheckai.dev/en' },
-        { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.sitecheckai.dev/en/blog' },
-        { '@type': 'ListItem', position: 3, name: 'Core Web Vitals Testing', item: 'https://www.sitecheckai.dev/en/blog/core-web-vitals-testing' },
+        { '@type': 'ListItem', position: 1, name: 'Scanora', item: 'https://www.scanora.ai/en' },
+        { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.scanora.ai/en/blog' },
+        { '@type': 'ListItem', position: 3, name: 'Core Web Vitals Testing', item: 'https://www.scanora.ai/en/blog/core-web-vitals-testing' },
     ],
 }
 
@@ -68,7 +68,7 @@ const faqLd = {
             name: 'How do I test my Core Web Vitals for free?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'The fastest way is Google\'s own PageSpeed Insights (pagespeed.web.dev) - enter a URL, get results in seconds. For checking multiple pages at once, an automated SEO test tool like AuditAI works better, since PageSpeed Insights only checks one URL per run.',
+                text: 'The fastest way is Google\'s own PageSpeed Insights (pagespeed.web.dev) - enter a URL, get results in seconds. For checking multiple pages at once, an automated SEO test tool like Scanora works better, since PageSpeed Insights only checks one URL per run.',
             },
         },
         {
@@ -165,7 +165,7 @@ export default function CoreWebVitalsPageEn() {
 
                 {/* Breadcrumb */}
                 <div className="flex items-center gap-2 text-xs text-slate-600 mb-8">
-                    <Link href="/en" className="hover:text-slate-400 transition-colors">AuditAI</Link>
+                    <Link href="/en" className="hover:text-slate-400 transition-colors">Scanora</Link>
                     <span>/</span>
                     <Link href="/en/blog" className="hover:text-slate-400 transition-colors">Blog</Link>
                     <span>/</span>
@@ -194,7 +194,7 @@ export default function CoreWebVitalsPageEn() {
                             <span>Finn Paustian</span>
                         </Link>
                         <span>·</span>
-                        <span>Founder, AuditAI</span>
+                        <span>Founder, Scanora</span>
                     </div>
                 </div>
 
@@ -307,7 +307,7 @@ export default function CoreWebVitalsPageEn() {
                         Check Core Web Vitals across every subpage
                     </h2>
                     <p className="text-slate-400 text-sm mb-6 max-w-md mx-auto leading-relaxed">
-                        AuditAI measures LCP, TTFB, FCP, and load time across up to 25 subpages at once - alongside SEO and GEO signals in the same report. Start without registration, sign up free for the full report with all scores.
+                        Scanora measures LCP, TTFB, FCP, and load time across up to 25 subpages at once - alongside SEO and GEO signals in the same report. Start without registration, sign up free for the full report with all scores.
                     </p>
                     <Link
                         href="/dashboard"

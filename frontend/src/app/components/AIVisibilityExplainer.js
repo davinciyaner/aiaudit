@@ -28,7 +28,7 @@ const CONCEPTS = [
     {
         icon: Quote,
         title: 'Zitierung & Kontext',
-        desc: 'Es zählt nicht nur ob, sondern wie du genannt wirst. AuditAI zeigt dir den genauen Satz, in dem die KI dich erwähnt — und welche anderen Quellen sie daneben zitiert.',
+        desc: 'Es zählt nicht nur ob, sondern wie du genannt wirst. Scanora zeigt dir den genauen Satz, in dem die KI dich erwähnt — und welche anderen Quellen sie daneben zitiert.',
     },
     {
         icon: Trophy,
@@ -86,7 +86,7 @@ export default function AIVisibilityExplainer() {
                         und für KI-Modelle trotzdem unsichtbar sein.
                     </p>
                     <p className="text-slate-500 text-sm sm:text-base leading-relaxed mt-4">
-                        AuditAI ist ein KI-gestütztes Audit-Tool, das in unter 60 Sekunden misst, wie sichtbar eine Website bei
+                        Scanora ist ein KI-gestütztes Audit-Tool, das in unter 60 Sekunden misst, wie sichtbar eine Website bei
                         ChatGPT, Claude, Perplexity und Google AI Overview ist — und wie sie in den klassischen Google-Rankings
                         abschneidet. Der Report liefert einen AI-Visibility-Score (0–100), einen SEO-Score und
                         Performance-Metriken (TTFB, FCP) sowie priorisierte Fixes statt generischer Tipps.
@@ -119,7 +119,7 @@ export default function AIVisibilityExplainer() {
 
                     <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}
                         className="lg:col-span-3">
-                        <h3 className="text-xl font-bold text-white mb-5">Was AuditAI misst</h3>
+                        <h3 className="text-xl font-bold text-white mb-5">Was Scanora misst</h3>
                         <div className="space-y-4">
                             {CONCEPTS.map(c => (
                                 <div key={c.title} className="flex gap-4">
@@ -139,7 +139,7 @@ export default function AIVisibilityExplainer() {
                 {/* Signal checklist */}
                 <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12">
                     <h3 className="text-2xl sm:text-3xl font-bold text-center mb-3 tracking-tight">
-                        19 Signale, die AuditAI prüft
+                        19 Signale, die Scanora prüft
                     </h3>
                     <p className="text-slate-400 text-center text-sm mb-8 sm:mb-10 max-w-lg mx-auto leading-relaxed">
                         Alles, was darüber entscheidet, ob KI-Modelle deine Website als Quelle erkennen und zitieren.

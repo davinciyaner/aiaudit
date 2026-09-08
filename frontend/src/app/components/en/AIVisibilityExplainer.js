@@ -28,7 +28,7 @@ const CONCEPTS = [
     {
         icon: Quote,
         title: 'Citation & Context',
-        desc: "It's not just whether you're named that counts, but how. AuditAI shows you the exact sentence where the AI mentions you — and which other sources it cites alongside you.",
+        desc: "It's not just whether you're named that counts, but how. Scanora shows you the exact sentence where the AI mentions you — and which other sources it cites alongside you.",
     },
     {
         icon: Trophy,
@@ -113,7 +113,7 @@ export default function AIVisibilityExplainer() {
 
                     <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}
                         className="lg:col-span-3">
-                        <h3 className="text-xl font-bold text-white mb-5">What AuditAI measures</h3>
+                        <h3 className="text-xl font-bold text-white mb-5">What Scanora measures</h3>
                         <div className="space-y-4">
                             {CONCEPTS.map(c => (
                                 <div key={c.title} className="flex gap-4">
@@ -133,7 +133,7 @@ export default function AIVisibilityExplainer() {
                 {/* Signal checklist */}
                 <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12">
                     <h3 className="text-2xl sm:text-3xl font-bold text-center mb-3 tracking-tight">
-                        19 signals AuditAI checks
+                        19 signals Scanora checks
                     </h3>
                     <p className="text-slate-400 text-center text-sm mb-8 sm:mb-10 max-w-lg mx-auto leading-relaxed">
                         Everything that determines whether AI models recognize your website as a source and cite it.

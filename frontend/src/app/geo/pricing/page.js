@@ -11,7 +11,7 @@ import Navbar from '../../components/Navbar'
 const FAQS = [
     {
         q: 'Was kostet ein GEO Audit bzw. GEO Automatisierung?',
-        a: 'GEO Automatisierung bei AuditAI startet ab 4,99 €/Monat für 1 Website und 10 Keywords mit wöchentlichem Claude- und Gemini-Tracking. Der Pro-Plan (29,99 €/Monat) ergänzt ChatGPT-, Perplexity- und Google-AI-Overview-Tracking für 3 Websites und 20 Keywords, 2 Prompt-Varianten pro Keyword sowie eine Themen-Sichtbarkeits-Analyse, der Expert-Plan (89,99 €/Monat) deckt bis zu 10 Websites und 60 Keywords ab und ergänzt Historien-Trends pro Keyword. Alle Pläne bieten 14 Tage kostenlose Testphase.',
+        a: 'GEO Automatisierung bei Scanora startet ab 4,99 €/Monat für 1 Website und 10 Keywords mit wöchentlichem Claude- und Gemini-Tracking. Der Pro-Plan (29,99 €/Monat) ergänzt ChatGPT-, Perplexity- und Google-AI-Overview-Tracking für 3 Websites und 20 Keywords, 2 Prompt-Varianten pro Keyword sowie eine Themen-Sichtbarkeits-Analyse, der Expert-Plan (89,99 €/Monat) deckt bis zu 10 Websites und 60 Keywords ab und ergänzt Historien-Trends pro Keyword. Alle Pläne bieten 14 Tage kostenlose Testphase.',
     },
     {
         q: 'Kann ich meine Sichtbarkeit bei Claude (Claude AI) tracken?',
@@ -19,11 +19,11 @@ const FAQS = [
     },
     {
         q: 'Was ist der Unterschied zwischen einem einmaligen GEO Audit und GEO Automatisierung?',
-        a: 'Ein einmaliger GEO Audit (Teil des kostenlosen AuditAI Website-Audits) zeigt deinen GEO-Score zu einem Zeitpunkt. GEO Automatisierung prüft wöchentlich automatisch, ob ChatGPT, Claude, Gemini, Perplexity und Google AI Overview deine Website erwähnen, und zeigt den Verlauf über Zeit statt einer Einzelmessung.',
+        a: 'Ein einmaliger GEO Audit (Teil des kostenlosen Scanora Website-Audits) zeigt deinen GEO-Score zu einem Zeitpunkt. GEO Automatisierung prüft wöchentlich automatisch, ob ChatGPT, Claude, Gemini, Perplexity und Google AI Overview deine Website erwähnen, und zeigt den Verlauf über Zeit statt einer Einzelmessung.',
     },
     {
         q: 'Was sind Prompt-Varianten und wozu brauche ich mehrere?',
-        a: 'Reale Nutzer fragen KI-Systeme auf sehr unterschiedliche Art — mal empfehlungsorientiert ("Welches Tool kennst du für X?"), mal vergleichend ("Was ist das beste Tool für X im Vergleich?"). Ab dem Pro-Plan prüft AuditAI pro Keyword beide Varianten separat, damit du siehst, bei welcher Art von Anfrage du erwähnt wirst und bei welcher nicht.',
+        a: 'Reale Nutzer fragen KI-Systeme auf sehr unterschiedliche Art — mal empfehlungsorientiert ("Welches Tool kennst du für X?"), mal vergleichend ("Was ist das beste Tool für X im Vergleich?"). Ab dem Pro-Plan prüft Scanora pro Keyword beide Varianten separat, damit du siehst, bei welcher Art von Anfrage du erwähnt wirst und bei welcher nicht.',
     },
     {
         q: 'Was zeigen mir die Themen-Sichtbarkeits-Analyse und Historien-Trends?',

@@ -3,20 +3,20 @@ import Navbar from '../../../components/Navbar'
 import Footer from '../../../components/Footer'
 
 export const metadata = {
-    title: 'Writesonic Alternative: How AuditAI Compares (2026)',
-    description: 'Looking for a Writesonic alternative? AuditAI tracks AI visibility across ChatGPT, Claude, Gemini, Perplexity & Google AI Overview from €29.99/month - while GEO tracking on Writesonic only starts on its $249 tier.',
+    title: 'Writesonic Alternative: How Scanora Compares (2026)',
+    description: 'Looking for a Writesonic alternative? Scanora tracks AI visibility across ChatGPT, Claude, Gemini, Perplexity & Google AI Overview from €29.99/month - while GEO tracking on Writesonic only starts on its $249 tier.',
     keywords: 'writesonic alternative, writesonic geo comparison, cheap ai visibility tool, geo tracking tool without credits, ai visibility software',
     alternates: {
-        canonical: 'https://www.sitecheckai.dev/en/compare/writesonic-alternative',
+        canonical: 'https://www.scanora.ai/en/compare/writesonic-alternative',
         languages: {
-            'de-DE': 'https://www.sitecheckai.dev/vergleich/writesonic-alternative',
-            'en-US': 'https://www.sitecheckai.dev/en/compare/writesonic-alternative',
+            'de-DE': 'https://www.scanora.ai/vergleich/writesonic-alternative',
+            'en-US': 'https://www.scanora.ai/en/compare/writesonic-alternative',
         },
     },
     openGraph: {
-        title: 'Writesonic Alternative: How AuditAI Compares (2026)',
-        description: 'AuditAI tracks AI visibility across ChatGPT, Claude, Gemini, Perplexity & Google AI Overview from €29.99/month - while GEO tracking on Writesonic only starts on its $249 tier. A fact-checked comparison.',
-        url: 'https://www.sitecheckai.dev/en/compare/writesonic-alternative',
+        title: 'Writesonic Alternative: How Scanora Compares (2026)',
+        description: 'Scanora tracks AI visibility across ChatGPT, Claude, Gemini, Perplexity & Google AI Overview from €29.99/month - while GEO tracking on Writesonic only starts on its $249 tier. A fact-checked comparison.',
+        url: 'https://www.scanora.ai/en/compare/writesonic-alternative',
         type: 'article',
         locale: 'en_US',
     },
@@ -25,20 +25,20 @@ export const metadata = {
 const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
-    headline: 'Writesonic Alternative: An Honest Look at AuditAI',
-    description: 'AuditAI tracks AI visibility across ChatGPT, Claude, Gemini, Perplexity & Google AI Overview from €29.99/month - while GEO tracking on Writesonic only starts on its $249 tier. A fact-checked comparison with Writesonic.',
-    image: 'https://www.sitecheckai.dev/en/compare/writesonic-alternative/opengraph-image',
+    headline: 'Writesonic Alternative: An Honest Look at Scanora',
+    description: 'Scanora tracks AI visibility across ChatGPT, Claude, Gemini, Perplexity & Google AI Overview from €29.99/month - while GEO tracking on Writesonic only starts on its $249 tier. A fact-checked comparison with Writesonic.',
+    image: 'https://www.scanora.ai/en/compare/writesonic-alternative/opengraph-image',
     datePublished: '2026-08-29T09:00:00+02:00',
     dateModified: '2026-08-29T09:00:00+02:00',
-    author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev/about' },
+    author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.scanora.ai/about' },
     publisher: {
         '@type': 'Organization',
-        name: 'AuditAI',
-        url: 'https://www.sitecheckai.dev',
-        logo: { '@type': 'ImageObject', url: 'https://www.sitecheckai.dev/logo', width: 512, height: 512 },
+        name: 'Scanora',
+        url: 'https://www.scanora.ai',
+        logo: { '@type': 'ImageObject', url: 'https://www.scanora.ai/logo', width: 512, height: 512 },
     },
-    url: 'https://www.sitecheckai.dev/en/compare/writesonic-alternative',
-    mainEntityOfPage: 'https://www.sitecheckai.dev/en/compare/writesonic-alternative',
+    url: 'https://www.scanora.ai/en/compare/writesonic-alternative',
+    mainEntityOfPage: 'https://www.scanora.ai/en/compare/writesonic-alternative',
     about: [
         { '@type': 'Thing', name: 'AI Visibility Tracking' },
         { '@type': 'Thing', name: 'Generative Engine Optimization' },
@@ -50,9 +50,9 @@ const breadcrumbLd = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'AuditAI', item: 'https://www.sitecheckai.dev/en' },
-        { '@type': 'ListItem', position: 2, name: 'Compare', item: 'https://www.sitecheckai.dev/en/compare' },
-        { '@type': 'ListItem', position: 3, name: 'Writesonic Alternative', item: 'https://www.sitecheckai.dev/en/compare/writesonic-alternative' },
+        { '@type': 'ListItem', position: 1, name: 'Scanora', item: 'https://www.scanora.ai/en' },
+        { '@type': 'ListItem', position: 2, name: 'Compare', item: 'https://www.scanora.ai/en/compare' },
+        { '@type': 'ListItem', position: 3, name: 'Writesonic Alternative', item: 'https://www.scanora.ai/en/compare/writesonic-alternative' },
     ],
 }
 
@@ -62,7 +62,7 @@ const faqLd = {
     mainEntity: [
         {
             '@type': 'Question',
-            name: 'Is AuditAI a real alternative to Writesonic?',
+            name: 'Is Scanora a real alternative to Writesonic?',
             acceptedAnswer: {
                 '@type': 'Answer',
                 text: "If you mainly want AI-visibility tracking and SEO, yes - and considerably cheaper. If you also want to produce AI-generated articles at scale, Writesonic offers a broader content tool that happens to include GEO tracking.",
@@ -70,10 +70,10 @@ const faqLd = {
         },
         {
             '@type': 'Question',
-            name: 'How does AuditAI pricing compare to Writesonic?',
+            name: 'How does Scanora pricing compare to Writesonic?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: "AuditAI's GEO automation starts at €4.99/month for Claude-only tracking, or €29.99/month for all five platforms. On Writesonic, GEO tracking is only included starting on the Professional plan at $249/month ($199/month billed annually) per current pricing - the cheaper Lite and Standard tiers don't include GEO at all.",
+                text: "Scanora's GEO automation starts at €4.99/month for Claude-only tracking, or €29.99/month for all five platforms. On Writesonic, GEO tracking is only included starting on the Professional plan at $249/month ($199/month billed annually) per current pricing - the cheaper Lite and Standard tiers don't include GEO at all.",
             },
         },
         {
@@ -81,7 +81,7 @@ const faqLd = {
             name: 'At what Writesonic tier does GEO tracking actually start?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: "Per current vendor pricing and reviews, AI-visibility tracking only becomes available on the Professional tier ($249/month), and even there several reviews say it isn't the full suite - that reportedly requires the custom-priced Enterprise plan. AuditAI includes full GEO tracking already on its cheapest plan, from €4.99/month.",
+                text: "Per current vendor pricing and reviews, AI-visibility tracking only becomes available on the Professional tier ($249/month), and even there several reviews say it isn't the full suite - that reportedly requires the custom-priced Enterprise plan. Scanora includes full GEO tracking already on its cheapest plan, from €4.99/month.",
             },
         },
         {
@@ -89,12 +89,12 @@ const faqLd = {
             name: "What does Writesonic's credit system mean for cost planning?",
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'Unused credits reportedly expire at the end of each billing cycle instead of rolling over, according to several reviews. That penalizes inconsistent usage and makes real cost planning harder. AuditAI instead uses fixed website and keyword limits per plan, with no expiration logic.',
+                text: 'Unused credits reportedly expire at the end of each billing cycle instead of rolling over, according to several reviews. That penalizes inconsistent usage and makes real cost planning harder. Scanora instead uses fixed website and keyword limits per plan, with no expiration logic.',
             },
         },
         {
             '@type': 'Question',
-            name: 'Can I try AuditAI for free?',
+            name: 'Can I try Scanora for free?',
             acceptedAnswer: {
                 '@type': 'Answer',
                 text: 'Yes, no signup and no credit card required. Enter your URL and get a result in about 60 seconds. The free plan stays free forever; the automation subscriptions additionally come with a 14-day free trial.',
@@ -139,7 +139,7 @@ export default function WritesonicAlternativePage() {
 
                 {/* Breadcrumb */}
                 <div className="flex items-center gap-2 text-xs text-slate-600 mb-8">
-                    <Link href="/en" className="hover:text-slate-400 transition-colors">AuditAI</Link>
+                    <Link href="/en" className="hover:text-slate-400 transition-colors">Scanora</Link>
                     <span>/</span>
                     <Link href="/en/compare" className="hover:text-slate-400 transition-colors">Compare</Link>
                     <span>/</span>
@@ -156,13 +156,13 @@ export default function WritesonicAlternativePage() {
                         <span className="text-xs text-slate-600">· 7 min read</span>
                     </div>
                     <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight tracking-tight mb-5">
-                        Writesonic Alternative: An Honest Look at AuditAI
+                        Writesonic Alternative: An Honest Look at Scanora
                     </h1>
                     <p className="text-lg text-slate-400 leading-relaxed">
                         People go looking for a Writesonic alternative for one of two reasons: they don't want an AI article generator at all, just reliable GEO tracking, and discover that GEO only starts on Writesonic's $249 tier. Or the credit system with an expiration date doesn't match how they actually use the tool. This page compares both tools honestly — including where Writesonic wins.
                     </p>
                     <p className="mt-4 text-slate-300 leading-relaxed">
-                        Short version: <strong className="text-white">AuditAI</strong> tracks your AI visibility across ChatGPT, Claude, Gemini, Perplexity, and Google AI Overview from €29.99/month, built from the ground up as a GEO/SEO tool. <strong className="text-white">Writesonic</strong> is primarily an AI content generator with an AI-visibility suite added on top — broader platform coverage, but only at the higher price tiers. Which one fits depends on whether you want pure, affordable GEO tracking or already need content production at scale.
+                        Short version: <strong className="text-white">Scanora</strong> tracks your AI visibility across ChatGPT, Claude, Gemini, Perplexity, and Google AI Overview from €29.99/month, built from the ground up as a GEO/SEO tool. <strong className="text-white">Writesonic</strong> is primarily an AI content generator with an AI-visibility suite added on top — broader platform coverage, but only at the higher price tiers. Which one fits depends on whether you want pure, affordable GEO tracking or already need content production at scale.
                     </p>
                     <div className="mt-5 flex items-center gap-2 text-xs text-slate-600">
                         <Link href="/about" className="flex items-center gap-2 hover:text-slate-300 transition-colors">
@@ -170,7 +170,7 @@ export default function WritesonicAlternativePage() {
                             <span>Finn Paustian</span>
                         </Link>
                         <span>·</span>
-                        <span>Founder, AuditAI</span>
+                        <span>Founder, Scanora</span>
                     </div>
                 </div>
 
@@ -185,7 +185,7 @@ export default function WritesonicAlternativePage() {
                                 <thead>
                                     <tr className="border-b border-white/5 bg-white/[0.02]">
                                         <th className="text-left px-5 py-3 text-slate-400 font-semibold">Aspect</th>
-                                        <th className="text-left px-5 py-3 text-violet-400 font-semibold">AuditAI</th>
+                                        <th className="text-left px-5 py-3 text-violet-400 font-semibold">Scanora</th>
                                         <th className="text-left px-5 py-3 text-cyan-400 font-semibold">Writesonic</th>
                                     </tr>
                                 </thead>
@@ -201,36 +201,36 @@ export default function WritesonicAlternativePage() {
                             </table>
                         </div>
                         <p className="text-xs text-slate-600 mt-3">
-                            Pricing as of August 2026, based on the vendor's publicly listed pricing and plan pages. Writesonic bills primarily in USD, AuditAI in EUR incl. VAT. Multiple sources note Writesonic's tier names and limits change fairly often — always double-check current terms directly with the vendor.
+                            Pricing as of August 2026, based on the vendor's publicly listed pricing and plan pages. Writesonic bills primarily in USD, Scanora in EUR incl. VAT. Multiple sources note Writesonic's tier names and limits change fairly often — always double-check current terms directly with the vendor.
                         </p>
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">Where AuditAI wins</h2>
+                        <h2 className="text-2xl font-bold text-white mb-4">Where Scanora wins</h2>
 
                         <h3 className="text-lg font-semibold text-white mt-6 mb-2">1. GEO tracking from day one — not gated behind $249/month</h3>
                         <p>
-                            On Writesonic, AI-visibility tracking is only included starting on the Professional plan per current pricing — the cheaper Lite and Standard tiers are pure content tools with no GEO. Even on Professional, several reviews say the full AI-visibility suite isn't complete — that reportedly requires the custom-priced Enterprise plan. AuditAI tracks Claude from €4.99/month and all five core platforms from €29.99/month, in full, with no Enterprise sales call needed.
+                            On Writesonic, AI-visibility tracking is only included starting on the Professional plan per current pricing — the cheaper Lite and Standard tiers are pure content tools with no GEO. Even on Professional, several reviews say the full AI-visibility suite isn't complete — that reportedly requires the custom-priced Enterprise plan. Scanora tracks Claude from €4.99/month and all five core platforms from €29.99/month, in full, with no Enterprise sales call needed.
                         </p>
 
                         <h3 className="text-lg font-semibold text-white mt-6 mb-2">2. An actual free plan, not just a trial window</h3>
                         <p>
-                            Writesonic has no permanent free tier for GEO tracking, only a trial with no credit card required. AuditAI lets you run one full audit a month, including GEO visibility, for free indefinitely — a low-risk way to find out whether AI visibility even matters for your site before you commit to a subscription.
+                            Writesonic has no permanent free tier for GEO tracking, only a trial with no credit card required. Scanora lets you run one full audit a month, including GEO visibility, for free indefinitely — a low-risk way to find out whether AI visibility even matters for your site before you commit to a subscription.
                         </p>
 
                         <h3 className="text-lg font-semibold text-white mt-6 mb-2">3. Fixed limits instead of expiring credits</h3>
                         <p>
-                            Several reviews call out the credit system as Writesonic's biggest friction point: unused credits expire at the end of each billing cycle instead of rolling over, penalizing inconsistent usage and making cost planning harder. AuditAI uses fixed website and keyword limits per plan, with no expiration logic.
+                            Several reviews call out the credit system as Writesonic's biggest friction point: unused credits expire at the end of each billing cycle instead of rolling over, penalizing inconsistent usage and making cost planning harder. Scanora uses fixed website and keyword limits per plan, with no expiration logic.
                         </p>
 
                         <h3 className="text-lg font-semibold text-white mt-6 mb-2">4. A GEO-native product, not a bolted-on module</h3>
                         <p>
-                            Reviews describe Writesonic's GEO suite as built on top of "a platform that was never designed with AEO in mind," with real tension between content generation and visibility tracking as the core product. AuditAI is built from the ground up for GEO and SEO diagnostics, without that conflict of purpose.
+                            Reviews describe Writesonic's GEO suite as built on top of "a platform that was never designed with AEO in mind," with real tension between content generation and visibility tracking as the core product. Scanora is built from the ground up for GEO and SEO diagnostics, without that conflict of purpose.
                         </p>
 
                         <h3 className="text-lg font-semibold text-white mt-6 mb-2">5. AI visibility and SEO, without content-tool overhead</h3>
                         <p>
-                            If all you want is visibility tracking and prioritized fixes, Writesonic makes you pay for an article-production infrastructure you're not using. AuditAI keeps GEO automation and SEO automation cleanly separate, so you only book what you actually need.
+                            If all you want is visibility tracking and prioritized fixes, Writesonic makes you pay for an article-production infrastructure you're not using. Scanora keeps GEO automation and SEO automation cleanly separate, so you only book what you actually need.
                         </p>
                     </section>
 
@@ -243,13 +243,13 @@ export default function WritesonicAlternativePage() {
                             <strong className="text-white">Content production included.</strong> If you already need AI-generated articles at scale, Writesonic gives you the writing tool and GEO tracking in one place — no need for two separate subscriptions if both matter to you.
                         </p>
                         <p className="mt-4">
-                            <strong className="text-white">Broader platform coverage.</strong> Roughly ten AI platforms are available, including Claude, Copilot, and Meta AI — more than AuditAI's five established core platforms.
+                            <strong className="text-white">Broader platform coverage.</strong> Roughly ten AI platforms are available, including Claude, Copilot, and Meta AI — more than Scanora's five established core platforms.
                         </p>
                         <p className="mt-4">
                             <strong className="text-white">Prompt Explorer and Action Center.</strong> Dedicated features for deeper prompt research and structured next steps, especially useful for teams that want to experiment heavily with prompt variants.
                         </p>
                         <p className="mt-4">
-                            The short version: if you need content production at scale anyway and are willing to go toward Enterprise-level pricing for the full suite, Writesonic is worth a look. If you'd rather have pure, affordable GEO tracking without content-tool overhead and without expiring credits, AuditAI is the more practical fit.
+                            The short version: if you need content production at scale anyway and are willing to go toward Enterprise-level pricing for the full suite, Writesonic is worth a look. If you'd rather have pure, affordable GEO tracking without content-tool overhead and without expiring credits, Scanora is the more practical fit.
                         </p>
                     </section>
 
@@ -257,7 +257,7 @@ export default function WritesonicAlternativePage() {
                         <h2 className="text-2xl font-bold text-white mb-4">Which one is right for you?</h2>
                         <div className="grid sm:grid-cols-2 gap-4">
                             <div className="bg-violet-500/[0.04] border border-violet-500/15 rounded-2xl p-5">
-                                <h3 className="font-semibold text-white mb-3 text-sm">Pick AuditAI if …</h3>
+                                <h3 className="font-semibold text-white mb-3 text-sm">Pick Scanora if …</h3>
                                 <ul className="space-y-2">
                                     {AUDITAI_FOR.map((item, i) => (
                                         <li key={i} className="text-sm text-slate-400 leading-relaxed flex gap-2">
@@ -344,7 +344,7 @@ export default function WritesonicAlternativePage() {
                                 SEO Rank Tracker & AI Visibility Monitor
                             </h3>
                             <p className="text-slate-400 text-sm leading-relaxed max-w-md">
-                                How SEO automation and GEO automation work at AuditAI in detail — including pricing.
+                                How SEO automation and GEO automation work at Scanora in detail — including pricing.
                             </p>
                         </div>
                         <Link

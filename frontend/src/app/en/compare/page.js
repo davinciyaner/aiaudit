@@ -3,13 +3,13 @@ import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
 
 export const metadata = {
-    title: 'Alternatives | AuditAI',
-    description: 'AuditAI compared honestly to well-known AI visibility and SEO tools: pricing, features, and who each tool is really for.',
+    title: 'Alternatives | Scanora',
+    description: 'Scanora compared honestly to well-known AI visibility and SEO tools: pricing, features, and who each tool is really for.',
     alternates: {
-        canonical: 'https://www.sitecheckai.dev/en/compare',
+        canonical: 'https://www.scanora.ai/en/compare',
         languages: {
-            'de-DE': 'https://www.sitecheckai.dev/vergleich',
-            'en-US': 'https://www.sitecheckai.dev/en/compare',
+            'de-DE': 'https://www.scanora.ai/vergleich',
+            'en-US': 'https://www.scanora.ai/en/compare',
         },
     },
 }
@@ -18,33 +18,33 @@ const breadcrumbLd = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'AuditAI', item: 'https://www.sitecheckai.dev/en' },
-        { '@type': 'ListItem', position: 2, name: 'Compare', item: 'https://www.sitecheckai.dev/en/compare' },
+        { '@type': 'ListItem', position: 1, name: 'Scanora', item: 'https://www.scanora.ai/en' },
+        { '@type': 'ListItem', position: 2, name: 'Compare', item: 'https://www.scanora.ai/en/compare' },
     ],
 }
 
 const ALTERNATIVES = [
     {
         slug: 'otterly-alternative',
-        title: 'Otterly.ai Alternative: An Honest Look at AuditAI',
+        title: 'Otterly.ai Alternative: An Honest Look at Scanora',
         description: 'Pricing, covered AI platforms, and feature scope side by side — including the areas where Otterly.ai is still ahead.',
         tag: 'From €29.99/month',
     },
     {
         slug: 'peec-alternative',
-        title: 'Peec.ai Alternative: An Honest Look at AuditAI',
+        title: 'Peec.ai Alternative: An Honest Look at Scanora',
         description: 'Pricing, covered AI platforms, and feature scope side by side — including the areas where Peec.ai is still ahead.',
         tag: 'From €29.99/month',
     },
     {
         slug: 'rankscale-alternative',
-        title: 'Rankscale Alternative: An Honest Look at AuditAI',
+        title: 'Rankscale Alternative: An Honest Look at Scanora',
         description: 'Fixed pricing instead of a credit system, covered AI platforms, and feature scope side by side — including the areas where Rankscale is still ahead.',
         tag: 'From €29.99/month',
     },
     {
         slug: 'writesonic-alternative',
-        title: 'Writesonic Alternative: An Honest Look at AuditAI',
+        title: 'Writesonic Alternative: An Honest Look at Scanora',
         description: 'GEO tracking from day one instead of gated behind a $249 tier, fixed limits instead of expiring credits — including the areas where Writesonic is still ahead.',
         tag: 'From €29.99/month',
     },
@@ -59,7 +59,7 @@ export default function CompareHubPageEn() {
 
                 {/* Breadcrumb */}
                 <div className="flex items-center gap-2 text-xs text-slate-600 mb-8">
-                    <Link href="/en" className="hover:text-slate-400 transition-colors">AuditAI</Link>
+                    <Link href="/en" className="hover:text-slate-400 transition-colors">Scanora</Link>
                     <span>/</span>
                     <span className="text-slate-500">Compare</span>
                 </div>
@@ -67,7 +67,7 @@ export default function CompareHubPageEn() {
                 <div className="mb-12">
                     <h1 className="text-3xl sm:text-5xl font-bold text-white tracking-tight mb-4">Alternatives</h1>
                     <p className="text-slate-400 text-lg max-w-2xl leading-relaxed">
-                        Honest, fact-checked comparisons of AuditAI against well-known AI visibility and SEO tools — including where the competitor is actually stronger.
+                        Honest, fact-checked comparisons of Scanora against well-known AI visibility and SEO tools — including where the competitor is actually stronger.
                         Looking for a solution for a specific budget or use case instead? Check the{' '}
                         <Link href="/en/solutions" className="text-slate-300 hover:text-[var(--accent)] underline underline-offset-2">solutions page</Link>.
                     </p>

@@ -4,13 +4,13 @@ import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 
 export const metadata = {
-    title: 'Über AuditAI – Warum es dieses Tool gibt',
-    description: 'AuditAI trackt automatisiert, ob deine Website bei ChatGPT, Claude, Perplexity und Google AI Overview zitiert wird — und wie sie bei Google rankt. Ein Report statt zehn Einzeltools.',
-    alternates: { canonical: 'https://www.sitecheckai.dev/about' },
+    title: 'Über Scanora – Warum es dieses Tool gibt',
+    description: 'Scanora trackt automatisiert, ob deine Website bei ChatGPT, Claude, Perplexity und Google AI Overview zitiert wird — und wie sie bei Google rankt. Ein Report statt zehn Einzeltools.',
+    alternates: { canonical: 'https://www.scanora.ai/about' },
     openGraph: {
-        title: 'Über AuditAI',
-        description: 'Warum es AuditAI gibt und was es automatisiert.',
-        url: 'https://www.sitecheckai.dev/about',
+        title: 'Über Scanora',
+        description: 'Warum es Scanora gibt und was es automatisiert.',
+        url: 'https://www.scanora.ai/about',
         type: 'website',
         locale: 'de_DE',
     },
@@ -19,14 +19,14 @@ export const metadata = {
 const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'AboutPage',
-    url: 'https://www.sitecheckai.dev/about',
-    name: 'Über AuditAI',
+    url: 'https://www.scanora.ai/about',
+    name: 'Über Scanora',
     mainEntity: {
         '@type': 'SoftwareApplication',
-        name: 'AuditAI',
+        name: 'Scanora',
         applicationCategory: 'BusinessApplication',
         description: 'Automatisiertes Tracking von AI Visibility (ChatGPT, Claude, Perplexity, Google AI Overview) und klassischen SEO-Rankings in einem Report.',
-        url: 'https://www.sitecheckai.dev',
+        url: 'https://www.scanora.ai',
     },
 }
 
@@ -34,8 +34,8 @@ const breadcrumbLd = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'AuditAI', item: 'https://www.sitecheckai.dev' },
-        { '@type': 'ListItem', position: 2, name: 'Über AuditAI', item: 'https://www.sitecheckai.dev/about' },
+        { '@type': 'ListItem', position: 1, name: 'Scanora', item: 'https://www.scanora.ai' },
+        { '@type': 'ListItem', position: 2, name: 'Über Scanora', item: 'https://www.scanora.ai/about' },
     ],
 }
 
@@ -56,9 +56,9 @@ export default function AboutPage() {
 
                 {/* Breadcrumb */}
                 <div className="flex items-center gap-2 text-xs text-slate-600 mb-8">
-                    <Link href="/" className="hover:text-slate-400 transition-colors">AuditAI</Link>
+                    <Link href="/" className="hover:text-slate-400 transition-colors">Scanora</Link>
                     <span>/</span>
-                    <span className="text-slate-500">Über AuditAI</span>
+                    <span className="text-slate-500">Über Scanora</span>
                 </div>
 
                 {/* Header */}
@@ -67,7 +67,7 @@ export default function AboutPage() {
                         <ZapIcon className="w-7 h-7 text-white" strokeWidth={2.5} />
                     </div>
                     <div>
-                        <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">Über AuditAI</h1>
+                        <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">Über Scanora</h1>
                         <p className="text-slate-400 text-sm mt-1">AI Visibility & SEO Tracking, ein Report</p>
                     </div>
                 </div>
@@ -86,7 +86,7 @@ export default function AboutPage() {
 
                 {/* Bio */}
                 <div className="prose prose-invert prose-slate max-w-none text-slate-300 leading-relaxed space-y-5">
-                    <h2 className="text-xl font-bold text-white mb-3">Warum AuditAI?</h2>
+                    <h2 className="text-xl font-bold text-white mb-3">Warum Scanora?</h2>
                     <p>
                         Google ist nicht mehr die einzige Suchmaschine. Immer mehr Menschen fragen ChatGPT, Claude oder
                         Perplexity nach Empfehlungen, statt zu googeln — und eine Website kann bei Google auf Platz 1 stehen
@@ -96,7 +96,7 @@ export default function AboutPage() {
                         verteilt, ist das schnell ein Vollzeitjob für sich.
                     </p>
                     <p>
-                        AuditAI automatisiert genau das: ein Audit, das sowohl die AI Visibility bei ChatGPT, Claude,
+                        Scanora automatisiert genau das: ein Audit, das sowohl die AI Visibility bei ChatGPT, Claude,
                         Perplexity und Google AI Overview als auch die klassischen Google-Rankings trackt — mit konkreten,
                         priorisierten Fixes statt generischen Tipps. Checks laufen wöchentlich automatisch im Hintergrund,
                         damit ein Ranking-Abfall oder eine verlorene KI-Erwähnung auffällt, bevor sie Traffic kostet.
@@ -104,7 +104,7 @@ export default function AboutPage() {
 
                     <h2 className="text-xl font-bold text-white mb-3 mt-10">Kontakt</h2>
                     <p>
-                        Fragen oder Feedback zu AuditAI:{' '}
+                        Fragen oder Feedback zu Scanora:{' '}
                         <a href="mailto:sitecheckai@gmail.com" className="text-violet-400 hover:text-violet-300 inline-flex items-center gap-1.5">
                             <Mail className="w-3.5 h-3.5" />
                             sitecheckai@gmail.com

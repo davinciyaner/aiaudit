@@ -9,7 +9,7 @@ import ScoreRegisterModal from '../ScoreRegisterModal'
 const plans = [
     {
         id: 'free', name: 'Free', price: '0', period: 'forever',
-        desc: 'To try out AuditAI',
+        desc: 'To try out Scanora',
         features: ['1 audit per month', 'GEO visibility (AI Visibility)', 'SEO score & analysis', 'Performance metrics', 'Audit history'],
         cta: 'Start for free', highlight: false,
     },
@@ -139,7 +139,7 @@ export default function Pricing() {
                 <p className="text-center text-sm text-slate-500 mt-8">
                     Comparing tools?{' '}
                     <Link href="/en/compare/otterly-alternative" className="text-slate-300 hover:text-[var(--accent)] underline underline-offset-2">
-                        AuditAI vs. Otterly.ai
+                        Scanora vs. Otterly.ai
                     </Link>
                 </p>
             </div>

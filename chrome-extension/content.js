@@ -188,7 +188,7 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
   return true;
 });
 
-// ─── Auth: sitecheckai.dev/extension-auth sendet Token via postMessage ────────
+// ─── Auth: scanora.ai/extension-auth sendet Token via postMessage ────────
 
 window.addEventListener('message', (e) => {
   if (e.data?.type !== 'SITECHECK_EXT_AUTH') return;

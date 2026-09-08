@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer';
 
-const APP_URL = process.env.APP_URL || process.env.ALLOWED_ORIGIN || 'https://www.sitecheckai.dev';
+const APP_URL = process.env.APP_URL || process.env.ALLOWED_ORIGIN || 'https://www.scanora.ai';
 
 const transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST,
@@ -57,8 +57,8 @@ export async function sendTicketStatusChanged(ticket, newStatus) {
         to: ticket.email,
         subject: cfg.subject,
         text: language === 'en'
-            ? `Hi ${ticket.name},\n\n${cfg.body}\n\nTicket number: ${ticket.ticketNumber}\nSubject: ${ticket.subject}\n\nTrack status: ${statusUrl}\n\nYour AuditAI Team`
-            : `Hallo ${ticket.name},\n\n${cfg.body}\n\nTicketnummer: ${ticket.ticketNumber}\nBetreff: ${ticket.subject}\n\nStatus verfolgen: ${statusUrl}\n\nDein AuditAI Team`,
+            ? `Hi ${ticket.name},\n\n${cfg.body}\n\nTicket number: ${ticket.ticketNumber}\nSubject: ${ticket.subject}\n\nTrack status: ${statusUrl}\n\nYour Scanora Team`
+            : `Hallo ${ticket.name},\n\n${cfg.body}\n\nTicketnummer: ${ticket.ticketNumber}\nBetreff: ${ticket.subject}\n\nStatus verfolgen: ${statusUrl}\n\nDein Scanora Team`,
         html: ticketStatusChangedHtml(ticket, cfg, statusUrl, language),
     })
 }
@@ -78,7 +78,7 @@ function ticketStatusChangedHtml(ticket, cfg, statusUrl, language = 'de') {
               <span style="color:#fff;font-size:18px;font-weight:bold;">&#x26A1;</span>
             </td>
             <td style="padding-left:10px;vertical-align:middle;">
-              <span style="color:#ffffff;font-size:20px;font-weight:700;">Audit<span style="color:#22d3ee;">AI</span></span>
+              <span style="color:#ffffff;font-size:20px;font-weight:700;">Scanora</span>
             </td>
           </tr></table>
         </td></tr>
@@ -103,10 +103,10 @@ function ticketStatusChangedHtml(ticket, cfg, statusUrl, language = 'de') {
             </td>
           </tr></table>
           <hr style="border:none;border-top:1px solid rgba(255,255,255,0.06);margin:28px 0;"/>
-          <p style="margin:0;font-size:14px;color:#64748b;">Talk soon,<br/><strong style="color:#94a3b8;">Your AuditAI Support Team</strong></p>
+          <p style="margin:0;font-size:14px;color:#64748b;">Talk soon,<br/><strong style="color:#94a3b8;">Your Scanora Support Team</strong></p>
         </td></tr>
         <tr><td align="center" style="padding-top:24px;">
-          <p style="margin:0;font-size:11px;color:#334155;">You're receiving this email because you opened a support ticket on <a href="${APP_URL}" style="color:#475569;text-decoration:none;">sitecheckai.dev</a>.</p>
+          <p style="margin:0;font-size:11px;color:#334155;">You're receiving this email because you opened a support ticket on <a href="${APP_URL}" style="color:#475569;text-decoration:none;">scanora.ai</a>.</p>
         </td></tr>
       </table>
     </td></tr>
@@ -128,7 +128,7 @@ function ticketStatusChangedHtml(ticket, cfg, statusUrl, language = 'de') {
               <span style="color:#fff;font-size:18px;font-weight:bold;">&#x26A1;</span>
             </td>
             <td style="padding-left:10px;vertical-align:middle;">
-              <span style="color:#ffffff;font-size:20px;font-weight:700;">Audit<span style="color:#22d3ee;">AI</span></span>
+              <span style="color:#ffffff;font-size:20px;font-weight:700;">Scanora</span>
             </td>
           </tr></table>
         </td></tr>
@@ -153,10 +153,10 @@ function ticketStatusChangedHtml(ticket, cfg, statusUrl, language = 'de') {
             </td>
           </tr></table>
           <hr style="border:none;border-top:1px solid rgba(255,255,255,0.06);margin:28px 0;"/>
-          <p style="margin:0;font-size:14px;color:#64748b;">Bis bald,<br/><strong style="color:#94a3b8;">Dein AuditAI Support-Team</strong></p>
+          <p style="margin:0;font-size:14px;color:#64748b;">Bis bald,<br/><strong style="color:#94a3b8;">Dein Scanora Support-Team</strong></p>
         </td></tr>
         <tr><td align="center" style="padding-top:24px;">
-          <p style="margin:0;font-size:11px;color:#334155;">Du erhältst diese E-Mail, weil du ein Support-Ticket auf <a href="${APP_URL}" style="color:#475569;text-decoration:none;">sitecheckai.dev</a> erstellt hast.</p>
+          <p style="margin:0;font-size:11px;color:#334155;">Du erhältst diese E-Mail, weil du ein Support-Ticket auf <a href="${APP_URL}" style="color:#475569;text-decoration:none;">scanora.ai</a> erstellt hast.</p>
         </td></tr>
       </table>
     </td></tr>
@@ -175,8 +175,8 @@ export async function sendTicketCreatedUser(ticket) {
             ? `[${ticket.ticketNumber}] Your support ticket has been created`
             : `[${ticket.ticketNumber}] Dein Support-Ticket wurde erstellt`,
         text: language === 'en'
-            ? `Hi ${ticket.name},\n\nyour ticket "${ticket.subject}" has been created successfully.\nTicket number: ${ticket.ticketNumber}\n\nCheck status: ${statusUrl}\n\nWe'll get back to you as soon as possible.\n\nYour AuditAI Team`
-            : `Hallo ${ticket.name},\n\ndein Ticket "${ticket.subject}" wurde erfolgreich erstellt.\nTicketnummer: ${ticket.ticketNumber}\n\nStatus prüfen: ${statusUrl}\n\nWir melden uns so schnell wie möglich.\n\nDein AuditAI Team`,
+            ? `Hi ${ticket.name},\n\nyour ticket "${ticket.subject}" has been created successfully.\nTicket number: ${ticket.ticketNumber}\n\nCheck status: ${statusUrl}\n\nWe'll get back to you as soon as possible.\n\nYour Scanora Team`
+            : `Hallo ${ticket.name},\n\ndein Ticket "${ticket.subject}" wurde erfolgreich erstellt.\nTicketnummer: ${ticket.ticketNumber}\n\nStatus prüfen: ${statusUrl}\n\nWir melden uns so schnell wie möglich.\n\nDein Scanora Team`,
         html: ticketUserHtml(ticket, statusUrl, language),
     })
 }
@@ -208,7 +208,7 @@ function ticketUserHtml(ticket, statusUrl, language = 'de') {
               <span style="color:#fff;font-size:18px;font-weight:bold;">&#x26A1;</span>
             </td>
             <td style="padding-left:10px;vertical-align:middle;">
-              <span style="color:#ffffff;font-size:20px;font-weight:700;">Audit<span style="color:#22d3ee;">AI</span></span>
+              <span style="color:#ffffff;font-size:20px;font-weight:700;">Scanora</span>
             </td>
           </tr></table>
         </td></tr>
@@ -233,10 +233,10 @@ function ticketUserHtml(ticket, statusUrl, language = 'de') {
             </td>
           </tr></table>
           <hr style="border:none;border-top:1px solid rgba(255,255,255,0.06);margin:28px 0;"/>
-          <p style="margin:0;font-size:14px;color:#64748b;">Talk soon,<br/><strong style="color:#94a3b8;">Your AuditAI Support Team</strong></p>
+          <p style="margin:0;font-size:14px;color:#64748b;">Talk soon,<br/><strong style="color:#94a3b8;">Your Scanora Support Team</strong></p>
         </td></tr>
         <tr><td align="center" style="padding-top:24px;">
-          <p style="margin:0;font-size:11px;color:#334155;">You're receiving this email because you opened a support ticket on <a href="${APP_URL}" style="color:#475569;text-decoration:none;">sitecheckai.dev</a>.</p>
+          <p style="margin:0;font-size:11px;color:#334155;">You're receiving this email because you opened a support ticket on <a href="${APP_URL}" style="color:#475569;text-decoration:none;">scanora.ai</a>.</p>
         </td></tr>
       </table>
     </td></tr>
@@ -258,7 +258,7 @@ function ticketUserHtml(ticket, statusUrl, language = 'de') {
               <span style="color:#fff;font-size:18px;font-weight:bold;">&#x26A1;</span>
             </td>
             <td style="padding-left:10px;vertical-align:middle;">
-              <span style="color:#ffffff;font-size:20px;font-weight:700;">Audit<span style="color:#22d3ee;">AI</span></span>
+              <span style="color:#ffffff;font-size:20px;font-weight:700;">Scanora</span>
             </td>
           </tr></table>
         </td></tr>
@@ -283,10 +283,10 @@ function ticketUserHtml(ticket, statusUrl, language = 'de') {
             </td>
           </tr></table>
           <hr style="border:none;border-top:1px solid rgba(255,255,255,0.06);margin:28px 0;"/>
-          <p style="margin:0;font-size:14px;color:#64748b;">Bis bald,<br/><strong style="color:#94a3b8;">Dein AuditAI Support-Team</strong></p>
+          <p style="margin:0;font-size:14px;color:#64748b;">Bis bald,<br/><strong style="color:#94a3b8;">Dein Scanora Support-Team</strong></p>
         </td></tr>
         <tr><td align="center" style="padding-top:24px;">
-          <p style="margin:0;font-size:11px;color:#334155;">Du erhältst diese E-Mail, weil du ein Support-Ticket auf <a href="${APP_URL}" style="color:#475569;text-decoration:none;">sitecheckai.dev</a> erstellt hast.</p>
+          <p style="margin:0;font-size:11px;color:#334155;">Du erhältst diese E-Mail, weil du ein Support-Ticket auf <a href="${APP_URL}" style="color:#475569;text-decoration:none;">scanora.ai</a> erstellt hast.</p>
         </td></tr>
       </table>
     </td></tr>
@@ -335,7 +335,7 @@ export async function sendWelcome({ name, email, language = 'de' }) {
     await transporter.sendMail({
         from: process.env.SMTP_FROM || process.env.SMTP_USER,
         to: email,
-        subject: language === 'en' ? 'Welcome to AuditAI!' : 'Willkommen bei AuditAI!',
+        subject: language === 'en' ? 'Welcome to Scanora!' : 'Willkommen bei Scanora!',
         html: welcomeHtml(name, language),
     })
 }
@@ -352,8 +352,8 @@ export async function sendSubscriptionConfirmation({ name, email, plan, language
         from: process.env.SMTP_FROM || process.env.SMTP_USER,
         to: email,
         subject: language === 'en'
-            ? `Your AuditAI ${planLabel} subscription is active`
-            : `Dein AuditAI ${planLabel}-Abo ist aktiv`,
+            ? `Your Scanora ${planLabel} subscription is active`
+            : `Dein Scanora ${planLabel}-Abo ist aktiv`,
         html: subscriptionConfirmHtml(name, planLabel, planPrice, auditLimit, language),
     })
 }
@@ -373,14 +373,14 @@ function welcomeHtml(name, language = 'de') {
               <span style="color:#fff;font-size:18px;font-weight:bold;">&#x26A1;</span>
             </td>
             <td style="padding-left:10px;vertical-align:middle;">
-              <span style="color:#ffffff;font-size:20px;font-weight:700;">Audit<span style="color:#22d3ee;">AI</span></span>
+              <span style="color:#ffffff;font-size:20px;font-weight:700;">Scanora</span>
             </td>
           </tr></table>
         </td></tr>
         <tr><td style="background:#0d1117;border:1px solid rgba(255,255,255,0.07);border-radius:20px;padding:40px;">
           <p style="margin:0 0 8px;font-size:24px;font-weight:700;color:#ffffff;">Welcome, ${name}!</p>
           <p style="margin:0 0 28px;font-size:15px;color:#94a3b8;line-height:1.6;">
-            Glad to have you. With AuditAI you can analyze your website for SEO, GEO, security, and performance &mdash; in seconds.
+            Glad to have you. With Scanora you can analyze your website for SEO, GEO, security, and performance &mdash; in seconds.
           </p>
           <table cellpadding="0" cellspacing="0" width="100%" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:20px;margin-bottom:28px;">
             <tr><td>
@@ -399,10 +399,10 @@ function welcomeHtml(name, language = 'de') {
             </td>
           </tr></table>
           <hr style="border:none;border-top:1px solid rgba(255,255,255,0.06);margin:28px 0;"/>
-          <p style="margin:0;font-size:14px;color:#64748b;">Good luck,<br/><strong style="color:#94a3b8;">Your AuditAI Team</strong></p>
+          <p style="margin:0;font-size:14px;color:#64748b;">Good luck,<br/><strong style="color:#94a3b8;">Your Scanora Team</strong></p>
         </td></tr>
         <tr><td align="center" style="padding-top:24px;">
-          <p style="margin:0;font-size:11px;color:#334155;">You're receiving this email because you signed up at <a href="${APP_URL}" style="color:#475569;text-decoration:none;">sitecheckai.dev</a>.</p>
+          <p style="margin:0;font-size:11px;color:#334155;">You're receiving this email because you signed up at <a href="${APP_URL}" style="color:#475569;text-decoration:none;">scanora.ai</a>.</p>
         </td></tr>
       </table>
     </td></tr>
@@ -424,14 +424,14 @@ function welcomeHtml(name, language = 'de') {
               <span style="color:#fff;font-size:18px;font-weight:bold;">&#x26A1;</span>
             </td>
             <td style="padding-left:10px;vertical-align:middle;">
-              <span style="color:#ffffff;font-size:20px;font-weight:700;">Audit<span style="color:#22d3ee;">AI</span></span>
+              <span style="color:#ffffff;font-size:20px;font-weight:700;">Scanora</span>
             </td>
           </tr></table>
         </td></tr>
         <tr><td style="background:#0d1117;border:1px solid rgba(255,255,255,0.07);border-radius:20px;padding:40px;">
           <p style="margin:0 0 8px;font-size:24px;font-weight:700;color:#ffffff;">Willkommen, ${name}!</p>
           <p style="margin:0 0 28px;font-size:15px;color:#94a3b8;line-height:1.6;">
-            Schön, dass du dabei bist. Mit AuditAI kannst du deine Website auf SEO, GEO, Sicherheit und Performance analysieren &mdash; in Sekunden.
+            Schön, dass du dabei bist. Mit Scanora kannst du deine Website auf SEO, GEO, Sicherheit und Performance analysieren &mdash; in Sekunden.
           </p>
           <table cellpadding="0" cellspacing="0" width="100%" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:20px;margin-bottom:28px;">
             <tr><td>
@@ -450,10 +450,10 @@ function welcomeHtml(name, language = 'de') {
             </td>
           </tr></table>
           <hr style="border:none;border-top:1px solid rgba(255,255,255,0.06);margin:28px 0;"/>
-          <p style="margin:0;font-size:14px;color:#64748b;">Viel Erfolg,<br/><strong style="color:#94a3b8;">Dein AuditAI Team</strong></p>
+          <p style="margin:0;font-size:14px;color:#64748b;">Viel Erfolg,<br/><strong style="color:#94a3b8;">Dein Scanora Team</strong></p>
         </td></tr>
         <tr><td align="center" style="padding-top:24px;">
-          <p style="margin:0;font-size:11px;color:#334155;">Du erhältst diese E-Mail, weil du dich auf <a href="${APP_URL}" style="color:#475569;text-decoration:none;">sitecheckai.dev</a> registriert hast.</p>
+          <p style="margin:0;font-size:11px;color:#334155;">Du erhältst diese E-Mail, weil du dich auf <a href="${APP_URL}" style="color:#475569;text-decoration:none;">scanora.ai</a> registriert hast.</p>
         </td></tr>
       </table>
     </td></tr>
@@ -477,7 +477,7 @@ function subscriptionConfirmHtml(name, planLabel, planPrice, auditLimit, languag
               <span style="color:#fff;font-size:18px;font-weight:bold;">&#x26A1;</span>
             </td>
             <td style="padding-left:10px;vertical-align:middle;">
-              <span style="color:#ffffff;font-size:20px;font-weight:700;">Audit<span style="color:#22d3ee;">AI</span></span>
+              <span style="color:#ffffff;font-size:20px;font-weight:700;">Scanora</span>
             </td>
           </tr></table>
         </td></tr>
@@ -504,10 +504,10 @@ function subscriptionConfirmHtml(name, planLabel, planPrice, auditLimit, languag
             </td>
           </tr></table>
           <hr style="border:none;border-top:1px solid rgba(255,255,255,0.06);margin:28px 0;"/>
-          <p style="margin:0;font-size:14px;color:#64748b;">Congratulations and good luck,<br/><strong style="color:#94a3b8;">Your AuditAI Team</strong></p>
+          <p style="margin:0;font-size:14px;color:#64748b;">Congratulations and good luck,<br/><strong style="color:#94a3b8;">Your Scanora Team</strong></p>
         </td></tr>
         <tr><td align="center" style="padding-top:24px;">
-          <p style="margin:0;font-size:11px;color:#334155;">You're receiving this email because you subscribed on <a href="${APP_URL}" style="color:#475569;text-decoration:none;">sitecheckai.dev</a>.</p>
+          <p style="margin:0;font-size:11px;color:#334155;">You're receiving this email because you subscribed on <a href="${APP_URL}" style="color:#475569;text-decoration:none;">scanora.ai</a>.</p>
         </td></tr>
       </table>
     </td></tr>
@@ -529,7 +529,7 @@ function subscriptionConfirmHtml(name, planLabel, planPrice, auditLimit, languag
               <span style="color:#fff;font-size:18px;font-weight:bold;">&#x26A1;</span>
             </td>
             <td style="padding-left:10px;vertical-align:middle;">
-              <span style="color:#ffffff;font-size:20px;font-weight:700;">Audit<span style="color:#22d3ee;">AI</span></span>
+              <span style="color:#ffffff;font-size:20px;font-weight:700;">Scanora</span>
             </td>
           </tr></table>
         </td></tr>
@@ -556,10 +556,10 @@ function subscriptionConfirmHtml(name, planLabel, planPrice, auditLimit, languag
             </td>
           </tr></table>
           <hr style="border:none;border-top:1px solid rgba(255,255,255,0.06);margin:28px 0;"/>
-          <p style="margin:0;font-size:14px;color:#64748b;">Herzlichen Glückwunsch und viel Erfolg,<br/><strong style="color:#94a3b8;">Dein AuditAI Team</strong></p>
+          <p style="margin:0;font-size:14px;color:#64748b;">Herzlichen Glückwunsch und viel Erfolg,<br/><strong style="color:#94a3b8;">Dein Scanora Team</strong></p>
         </td></tr>
         <tr><td align="center" style="padding-top:24px;">
-          <p style="margin:0;font-size:11px;color:#334155;">Du erhältst diese E-Mail, weil du ein Abo auf <a href="${APP_URL}" style="color:#475569;text-decoration:none;">sitecheckai.dev</a> abgeschlossen hast.</p>
+          <p style="margin:0;font-size:11px;color:#334155;">Du erhältst diese E-Mail, weil du ein Abo auf <a href="${APP_URL}" style="color:#475569;text-decoration:none;">scanora.ai</a> abgeschlossen hast.</p>
         </td></tr>
       </table>
     </td></tr>
@@ -630,7 +630,7 @@ function adminNotifyHtml(title, rows) {
     <tr><td align="center">
       <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
         <tr><td style="background:#0d1117;border:1px solid rgba(255,255,255,0.07);border-radius:20px;padding:32px 40px;">
-          <p style="margin:0 0 4px;font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.1em;">AuditAI &middot; Admin</p>
+          <p style="margin:0 0 4px;font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.1em;">Scanora &middot; Admin</p>
           <p style="margin:0 0 24px;font-size:20px;font-weight:700;color:#ffffff;">${title}</p>
           <table cellpadding="0" cellspacing="0" width="100%" style="border-top:1px solid rgba(255,255,255,0.06);">
             ${rowsHtml}
@@ -649,10 +649,10 @@ export async function sendPasswordReset({ name, email, token, language = 'de' })
     await transporter.sendMail({
         from: process.env.SMTP_FROM || process.env.SMTP_USER,
         to: email,
-        subject: isEn ? 'Reset your password — AuditAI' : 'Passwort zurücksetzen — AuditAI',
+        subject: isEn ? 'Reset your password — Scanora' : 'Passwort zurücksetzen — Scanora',
         text: isEn
-            ? `Hi ${name},\n\nyou requested to reset your password.\n\nClick this link (valid for 1 hour):\n${resetUrl}\n\nIf you didn't request this, you can ignore this email.\n\nYour AuditAI Team`
-            : `Hallo ${name},\n\ndu hast angefordert, dein Passwort zurückzusetzen.\n\nKlicke auf diesen Link (gültig für 1 Stunde):\n${resetUrl}\n\nFalls du das nicht angefordert hast, kannst du diese E-Mail ignorieren.\n\nDein AuditAI Team`,
+            ? `Hi ${name},\n\nyou requested to reset your password.\n\nClick this link (valid for 1 hour):\n${resetUrl}\n\nIf you didn't request this, you can ignore this email.\n\nYour Scanora Team`
+            : `Hallo ${name},\n\ndu hast angefordert, dein Passwort zurückzusetzen.\n\nKlicke auf diesen Link (gültig für 1 Stunde):\n${resetUrl}\n\nFalls du das nicht angefordert hast, kannst du diese E-Mail ignorieren.\n\nDein Scanora Team`,
         html: passwordResetHtml(name, resetUrl, language),
     })
 }
@@ -672,7 +672,7 @@ function passwordResetHtml(name, resetUrl, language = 'de') {
               <span style="color:#fff;font-size:18px;font-weight:bold;">&#x26A1;</span>
             </td>
             <td style="padding-left:10px;vertical-align:middle;">
-              <span style="color:#ffffff;font-size:20px;font-weight:700;">Audit<span style="color:#22d3ee;">AI</span></span>
+              <span style="color:#ffffff;font-size:20px;font-weight:700;">Scanora</span>
             </td>
           </tr></table>
         </td></tr>
@@ -697,10 +697,10 @@ function passwordResetHtml(name, resetUrl, language = 'de') {
           <hr style="border:none;border-top:1px solid rgba(255,255,255,0.06);margin:24px 0;"/>
           <p style="margin:0;font-size:13px;color:#64748b;">If you didn't request a password reset, you can ignore this email &mdash; your password stays unchanged.</p>
           <hr style="border:none;border-top:1px solid rgba(255,255,255,0.06);margin:24px 0;"/>
-          <p style="margin:0;font-size:14px;color:#64748b;">Your AuditAI Team</p>
+          <p style="margin:0;font-size:14px;color:#64748b;">Your Scanora Team</p>
         </td></tr>
         <tr><td align="center" style="padding-top:24px;">
-          <p style="margin:0;font-size:11px;color:#334155;">You're receiving this email because a password reset was requested for your account on <a href="${APP_URL}" style="color:#475569;text-decoration:none;">sitecheckai.dev</a>.</p>
+          <p style="margin:0;font-size:11px;color:#334155;">You're receiving this email because a password reset was requested for your account on <a href="${APP_URL}" style="color:#475569;text-decoration:none;">scanora.ai</a>.</p>
         </td></tr>
       </table>
     </td></tr>
@@ -722,7 +722,7 @@ function passwordResetHtml(name, resetUrl, language = 'de') {
               <span style="color:#fff;font-size:18px;font-weight:bold;">&#x26A1;</span>
             </td>
             <td style="padding-left:10px;vertical-align:middle;">
-              <span style="color:#ffffff;font-size:20px;font-weight:700;">Audit<span style="color:#22d3ee;">AI</span></span>
+              <span style="color:#ffffff;font-size:20px;font-weight:700;">Scanora</span>
             </td>
           </tr></table>
         </td></tr>
@@ -747,10 +747,10 @@ function passwordResetHtml(name, resetUrl, language = 'de') {
           <hr style="border:none;border-top:1px solid rgba(255,255,255,0.06);margin:24px 0;"/>
           <p style="margin:0;font-size:13px;color:#64748b;">Falls du kein neues Passwort angefordert hast, kannst du diese E-Mail ignorieren &mdash; dein Passwort bleibt unverändert.</p>
           <hr style="border:none;border-top:1px solid rgba(255,255,255,0.06);margin:24px 0;"/>
-          <p style="margin:0;font-size:14px;color:#64748b;">Dein AuditAI Team</p>
+          <p style="margin:0;font-size:14px;color:#64748b;">Dein Scanora Team</p>
         </td></tr>
         <tr><td align="center" style="padding-top:24px;">
-          <p style="margin:0;font-size:11px;color:#334155;">Du erhältst diese E-Mail, weil ein Passwort-Reset für deinen Account auf <a href="${APP_URL}" style="color:#475569;text-decoration:none;">sitecheckai.dev</a> angefordert wurde.</p>
+          <p style="margin:0;font-size:11px;color:#334155;">Du erhältst diese E-Mail, weil ein Passwort-Reset für deinen Account auf <a href="${APP_URL}" style="color:#475569;text-decoration:none;">scanora.ai</a> angefordert wurde.</p>
         </td></tr>
       </table>
     </td></tr>
@@ -772,14 +772,14 @@ export async function sendSeoRankingAlert({ email, domain, gains, losses, conten
         mixed: (d) => `Mixed ranking signals for ${d}`, dropped: (d) => `Ranking drops for ${d}`, newTop: (d) => `New top positions for ${d}`,
         subjWarn: (d) => `Heads up: ranking changes for ${d}`, subjGood: (d) => `Good news: ranking improvements for ${d}`,
         alertLabel: 'SEO Ranking Alert', weeklyCheck: 'Weekly check', viewRankings: 'View rankings',
-        footer1: 'Your AuditAI SEO Automation', footer2: 'This email was triggered automatically by your weekly SEO check.',
+        footer1: 'Your Scanora SEO Automation', footer2: 'This email was triggered automatically by your weekly SEO check.',
     } : {
         worse: 'Verschlechtert', better: 'Verbessert', keyword: 'Keyword', before: 'Vorher', now: 'Jetzt',
         gapHeading: (d) => `Diese Keywords rankt ${d}, du nicht`, volume: 'Suchvolumen',
         mixed: (d) => `Gemischte Ranking-Signale für ${d}`, dropped: (d) => `Ranking-Verluste bei ${d}`, newTop: (d) => `Neue Top-Positionen bei ${d}`,
         subjWarn: (d) => `Achtung: Ranking-Änderungen bei ${d}`, subjGood: (d) => `Gute Nachrichten: Ranking-Verbesserungen bei ${d}`,
         alertLabel: 'SEO Ranking-Alert', weeklyCheck: 'Wöchentlicher Check', viewRankings: 'Rankings ansehen',
-        footer1: 'Dein AuditAI SEO-Automatisierung', footer2: 'Diese E-Mail wurde automatisch von deinem wöchentlichen SEO-Check ausgelöst.',
+        footer1: 'Dein Scanora SEO-Automatisierung', footer2: 'Diese E-Mail wurde automatisch von deinem wöchentlichen SEO-Check ausgelöst.',
     }
 
     const lossRows = losses.map(({ keyword, from, to }) => `
@@ -853,7 +853,7 @@ export async function sendSeoRankingAlert({ email, domain, gains, losses, conten
               <span style="color:#fff;font-size:18px;font-weight:bold;">&#x26A1;</span>
             </td>
             <td style="padding-left:10px;vertical-align:middle;">
-              <span style="color:#ffffff;font-size:20px;font-weight:700;">Audit<span style="color:#34d399;">AI</span></span>
+              <span style="color:#ffffff;font-size:20px;font-weight:700;">Scanora</span>
             </td>
           </tr></table>
         </td></tr>
@@ -910,7 +910,7 @@ export async function sendGeoRankingAlert({ email, domain, gains, losses, possib
         mixed: (d) => `Mixed AI visibility for ${d}`, down: (d) => `AI visibility dropped for ${d}`, newMentions: (d) => `New AI mentions for ${d}`,
         subjWarn: (d) => `Heads up: lost AI mentions for ${d}`, subjGood: (d) => `Good news: new AI mentions for ${d}`,
         alertLabel: 'GEO Visibility Alert', weeklyCheck: 'Weekly check', viewVisibility: 'View AI visibility',
-        footer1: 'Your AuditAI GEO Automation', footer2: 'This email was triggered automatically by your weekly GEO check.',
+        footer1: 'Your Scanora GEO Automation', footer2: 'This email was triggered automatically by your weekly GEO check.',
     } : {
         noLongerMentioned: 'Nicht mehr erwähnt', newlyMentioned: 'Neu erwähnt',
         causesHeading: 'Mögliche Gründe (aktueller technischer Zustand, kein Beweis)',
@@ -918,7 +918,7 @@ export async function sendGeoRankingAlert({ email, domain, gains, losses, possib
         mixed: (d) => `Gemischte KI-Sichtbarkeit für ${d}`, down: (d) => `KI-Sichtbarkeit gesunken bei ${d}`, newMentions: (d) => `Neue KI-Erwähnungen für ${d}`,
         subjWarn: (d) => `Achtung: KI-Erwähnungen verloren bei ${d}`, subjGood: (d) => `Gute Nachrichten: Neue KI-Erwähnungen bei ${d}`,
         alertLabel: 'GEO Sichtbarkeits-Alert', weeklyCheck: 'Wöchentlicher Check', viewVisibility: 'KI-Sichtbarkeit ansehen',
-        footer1: 'Deine AuditAI GEO-Automatisierung', footer2: 'Diese E-Mail wurde automatisch von deinem wöchentlichen GEO-Check ausgelöst.',
+        footer1: 'Deine Scanora GEO-Automatisierung', footer2: 'Diese E-Mail wurde automatisch von deinem wöchentlichen GEO-Check ausgelöst.',
     }
 
     const label = ({ keyword, platform, promptIntent }) => {
@@ -989,7 +989,7 @@ export async function sendGeoRankingAlert({ email, domain, gains, losses, possib
               <span style="color:#fff;font-size:18px;font-weight:bold;">&#x2728;</span>
             </td>
             <td style="padding-left:10px;vertical-align:middle;">
-              <span style="color:#ffffff;font-size:20px;font-weight:700;">Audit<span style="color:#a78bfa;">AI</span></span>
+              <span style="color:#ffffff;font-size:20px;font-weight:700;">Scanora</span>
             </td>
           </tr></table>
         </td></tr>
@@ -1076,7 +1076,7 @@ function newKeywordsAlertHtml(domain, keywords, dashboardUrl, language = 'de') {
               <span style="color:#fff;font-size:18px;font-weight:bold;">&#x26A1;</span>
             </td>
             <td style="padding-left:10px;vertical-align:middle;">
-              <span style="color:#ffffff;font-size:20px;font-weight:700;">Audit<span style="color:#34d399;">AI</span></span>
+              <span style="color:#ffffff;font-size:20px;font-weight:700;">Scanora</span>
             </td>
           </tr></table>
         </td></tr>
@@ -1107,7 +1107,7 @@ function newKeywordsAlertHtml(domain, keywords, dashboardUrl, language = 'de') {
             </td>
           </tr></table>
           <hr style="border:none;border-top:1px solid rgba(255,255,255,0.06);margin:28px 0;"/>
-          <p style="margin:0;font-size:13px;color:#64748b;">Your AuditAI SEO Automation</p>
+          <p style="margin:0;font-size:13px;color:#64748b;">Your Scanora SEO Automation</p>
         </td></tr>
         <tr><td align="center" style="padding-top:24px;">
           <p style="margin:0;font-size:11px;color:#334155;">This email was triggered automatically by new content on your website.</p>
@@ -1132,7 +1132,7 @@ function newKeywordsAlertHtml(domain, keywords, dashboardUrl, language = 'de') {
               <span style="color:#fff;font-size:18px;font-weight:bold;">&#x26A1;</span>
             </td>
             <td style="padding-left:10px;vertical-align:middle;">
-              <span style="color:#ffffff;font-size:20px;font-weight:700;">Audit<span style="color:#34d399;">AI</span></span>
+              <span style="color:#ffffff;font-size:20px;font-weight:700;">Scanora</span>
             </td>
           </tr></table>
         </td></tr>
@@ -1163,7 +1163,7 @@ function newKeywordsAlertHtml(domain, keywords, dashboardUrl, language = 'de') {
             </td>
           </tr></table>
           <hr style="border:none;border-top:1px solid rgba(255,255,255,0.06);margin:28px 0;"/>
-          <p style="margin:0;font-size:13px;color:#64748b;">Dein AuditAI SEO-Automatisierung</p>
+          <p style="margin:0;font-size:13px;color:#64748b;">Dein Scanora SEO-Automatisierung</p>
         </td></tr>
         <tr><td align="center" style="padding-top:24px;">
           <p style="margin:0;font-size:11px;color:#334155;">Diese E-Mail wurde automatisch durch neue Inhalte auf deiner Website ausgel&ouml;st.</p>

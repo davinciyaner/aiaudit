@@ -8,16 +8,16 @@ export const metadata = {
     description: 'GEO (Generative Engine Optimization) bezeichnet die Optimierung von Content für KI-Antworten wie ChatGPT, Claude und Google AI Overview. Definition, Unterschied zu SEO, 19-Punkte-Checkliste und wie du eine GEO-Strategie 2026 Schritt für Schritt aufbaust.',
     keywords: 'was ist geo, GEO Optimierung, Generative Engine Optimization, ChatGPT SEO, KI Suchmaschinenoptimierung, ChatGPT Sichtbarkeit, Claude Sichtbarkeit, llms.txt, KI Sichtbarkeit, GEO SEO Unterschied, geo strategie 2026, geo strategie aufbauen',
     alternates: {
-        canonical: 'https://www.sitecheckai.dev/blog/geo-optimierung-2026',
+        canonical: 'https://www.scanora.ai/blog/geo-optimierung-2026',
         languages: {
-            'de-DE': 'https://www.sitecheckai.dev/blog/geo-optimierung-2026',
-            'en-US': 'https://www.sitecheckai.dev/en/blog/what-is-geo',
+            'de-DE': 'https://www.scanora.ai/blog/geo-optimierung-2026',
+            'en-US': 'https://www.scanora.ai/en/blog/what-is-geo',
         },
     },
     openGraph: {
         title: 'Was ist GEO? Generative Engine Optimization einfach erklärt (+ Checkliste 2026)',
         description: 'GEO (Generative Engine Optimization) erklärt: Definition, Unterschied zu SEO, konkrete Checkliste mit 19 Signalen und eine GEO-Strategie 2026 zum Aufbauen in drei Phasen.',
-        url: 'https://www.sitecheckai.dev/blog/geo-optimierung-2026',
+        url: 'https://www.scanora.ai/blog/geo-optimierung-2026',
         type: 'article',
         locale: 'de_DE',
     },
@@ -28,18 +28,18 @@ const jsonLd = {
     '@type': 'Article',
     headline: 'Was ist GEO? Generative Engine Optimization einfach erklärt (+ Checkliste 2026)',
     description: 'GEO (Generative Engine Optimization) bezeichnet die Optimierung von Content für KI-Antworten wie ChatGPT, Claude und Google AI Overview. Definition, Unterschied zu SEO, 19-Punkte-Checkliste und wie du eine GEO-Strategie 2026 Schritt für Schritt aufbaust.',
-    image: 'https://www.sitecheckai.dev/blog/geo-optimierung-2026/opengraph-image',
+    image: 'https://www.scanora.ai/blog/geo-optimierung-2026/opengraph-image',
     datePublished: '2026-06-10T09:00:00+02:00',
     dateModified: '2026-08-24T09:00:00+02:00',
-    author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev/about' },
+    author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.scanora.ai/about' },
     publisher: {
         '@type': 'Organization',
-        name: 'AuditAI',
-        url: 'https://www.sitecheckai.dev',
-        logo: { '@type': 'ImageObject', url: 'https://www.sitecheckai.dev/logo', width: 512, height: 512 },
+        name: 'Scanora',
+        url: 'https://www.scanora.ai',
+        logo: { '@type': 'ImageObject', url: 'https://www.scanora.ai/logo', width: 512, height: 512 },
     },
-    url: 'https://www.sitecheckai.dev/blog/geo-optimierung-2026',
-    mainEntityOfPage: 'https://www.sitecheckai.dev/blog/geo-optimierung-2026',
+    url: 'https://www.scanora.ai/blog/geo-optimierung-2026',
+    mainEntityOfPage: 'https://www.scanora.ai/blog/geo-optimierung-2026',
     about: [
         { '@type': 'Thing', name: 'Generative Engine Optimization' },
         { '@type': 'Thing', name: 'KI-Sichtbarkeit' },
@@ -56,9 +56,9 @@ const breadcrumbLd = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'AuditAI', item: 'https://www.sitecheckai.dev' },
-        { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.sitecheckai.dev/blog' },
-        { '@type': 'ListItem', position: 3, name: 'Was ist GEO?', item: 'https://www.sitecheckai.dev/blog/geo-optimierung-2026' },
+        { '@type': 'ListItem', position: 1, name: 'Scanora', item: 'https://www.scanora.ai' },
+        { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.scanora.ai/blog' },
+        { '@type': 'ListItem', position: 3, name: 'Was ist GEO?', item: 'https://www.scanora.ai/blog/geo-optimierung-2026' },
     ],
 }
 
@@ -200,7 +200,7 @@ export default function GeoArtikelPage() {
 
                 {/* Breadcrumb */}
                 <div className="flex items-center gap-2 text-xs text-slate-600 mb-8">
-                    <Link href="/" className="hover:text-slate-400 transition-colors">AuditAI</Link>
+                    <Link href="/" className="hover:text-slate-400 transition-colors">Scanora</Link>
                     <span>/</span>
                     <Link href="/blog" className="hover:text-slate-400 transition-colors">Blog</Link>
                     <span>/</span>
@@ -229,7 +229,7 @@ export default function GeoArtikelPage() {
                             <span>Finn Paustian</span>
                         </Link>
                         <span>·</span>
-                        <span>Gründer, AuditAI</span>
+                        <span>Gründer, Scanora</span>
                     </div>
                 </div>
 
@@ -317,17 +317,17 @@ export default function GeoArtikelPage() {
 
                     <section>
                         <h2 className="text-2xl font-bold text-white mb-2">Was sind die 6 wichtigsten GEO-Signale?</h2>
-                        <p className="text-slate-400 mb-6">AuditAI prüft insgesamt 19 GEO-Signale. Das sind die sechs mit dem größten Einfluss:</p>
+                        <p className="text-slate-400 mb-6">Scanora prüft insgesamt 19 GEO-Signale. Das sind die sechs mit dem größten Einfluss:</p>
                         <figure className="mb-6">
                             <Image
                                 src="/blog/auditai-geo-report.png"
-                                alt="AuditAI GEO-Report zeigt geprüfte KI-Sichtbarkeits-Signale wie llms.txt, Organization-Schema, KI-Crawler-Erlaubnis und sitemap.xml"
+                                alt="Scanora GEO-Report zeigt geprüfte KI-Sichtbarkeits-Signale wie llms.txt, Organization-Schema, KI-Crawler-Erlaubnis und sitemap.xml"
                                 width={960}
                                 height={411}
                                 className="w-full h-auto rounded-2xl border border-white/[0.07]"
                             />
                             <figcaption className="text-xs text-slate-600 mt-2">
-                                Ein echter GEO-Score-Report aus AuditAI — alle 12 KI-Sichtbarkeits-Signale auf einen Blick, inklusive gefundenem Fehler.
+                                Ein echter GEO-Score-Report aus Scanora — alle 12 KI-Sichtbarkeits-Signale auf einen Blick, inklusive gefundenem Fehler.
                             </figcaption>
                         </figure>
                         <div className="space-y-4">
@@ -490,7 +490,7 @@ export default function GeoArtikelPage() {
                         Wie gut ist dein GEO-Score?
                     </h2>
                     <p className="text-slate-400 text-sm mb-6 max-w-md mx-auto leading-relaxed">
-                        AuditAI prüft alle 19 GEO-Signale in unter 60 Sekunden - inklusive llms.txt, Schema.org, KI-Crawler-Erlaubnis und Content-Qualität. Start ohne Registrierung, für den vollständigen Report mit allen Scores meldest du dich kostenlos an.
+                        Scanora prüft alle 19 GEO-Signale in unter 60 Sekunden - inklusive llms.txt, Schema.org, KI-Crawler-Erlaubnis und Content-Qualität. Start ohne Registrierung, für den vollständigen Report mit allen Scores meldest du dich kostenlos an.
                     </p>
                     <Link
                         href="/dashboard"

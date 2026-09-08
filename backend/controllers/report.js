@@ -1,7 +1,7 @@
 import { mkdirSync } from 'fs'
 import { chromium } from 'playwright'
 
-const SITE_URL = 'https://www.sitecheckai.dev'
+const SITE_URL = 'https://www.scanora.ai'
 
 const LABELS = {
     en: {
@@ -146,7 +146,7 @@ export function generateHTMLReport(auditData, aiReport, language = 'de') {
                 <div style="font-size:19px;font-weight:700;color:#f8fafc">${title}</div>
                 ${subtitle ? `<div style="font-size:11px;color:#64748b;margin-top:2px">${subtitle}</div>` : ''}
             </div>
-            <a href="${SITE_URL}" style="font-size:10px;color:#475569;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;text-decoration:none">AuditAI</a>
+            <a href="${SITE_URL}" style="font-size:10px;color:#475569;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;text-decoration:none">Scanora</a>
         </div>`
 
     const pageStyle = `width:210mm;min-height:297mm;padding:32px 36px;page-break-after:always;break-after:page;display:flex;flex-direction:column;background:#0a0e1a;position:relative;overflow:hidden;box-sizing:border-box`
@@ -167,7 +167,7 @@ export function generateHTMLReport(auditData, aiReport, language = 'de') {
         ${glow(null, null, -60, -60, 'rgba(6,182,212,0.08)')}
         <div style="flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;position:relative;z-index:1">
             <div style="display:flex;flex-direction:column;align-items:center;gap:6px;margin-bottom:24px">
-                <span style="font-size:28px;font-weight:800;background:linear-gradient(to right,#a78bfa,#22d3ee);-webkit-background-clip:text;-webkit-text-fill-color:transparent">AuditAI</span>
+                <span style="font-size:28px;font-weight:800;background:linear-gradient(to right,#a78bfa,#22d3ee);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Scanora</span>
                 <a href="${SITE_URL}" style="font-size:12px;color:#67e8f9;text-decoration:none;font-weight:600">${SITE_URL}</a>
             </div>
             <div style="font-size:10px;color:#64748b;text-transform:uppercase;letter-spacing:0.15em;font-weight:600;margin-bottom:12px">${T.websitePerformanceReport}</div>

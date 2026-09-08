@@ -4,19 +4,19 @@ import Footer from '../../components/Footer'
 
 export const metadata = {
     title: 'KI-Sichtbarkeit erlangen: So wirst du von ChatGPT, Claude & Perplexity zitiert',
-    description: 'KI-Sichtbarkeit ist mehr als llms.txt und Schema Markup. Wie du wirklich von ChatGPT, Claude, Perplexity und Google AI Overview zitiert wirst - inklusive Monitoring mit AuditAI.',
+    description: 'KI-Sichtbarkeit ist mehr als llms.txt und Schema Markup. Wie du wirklich von ChatGPT, Claude, Perplexity und Google AI Overview zitiert wirst - inklusive Monitoring mit Scanora.',
     keywords: 'ki sichtbarkeit, ki sichtbarkeit erlangen, ai visibility, ki sichtbarkeit verbessern, von chatgpt zitiert werden, von claude empfohlen werden, ki sichtbarkeit messen, generative engine optimization',
     alternates: {
-        canonical: 'https://www.sitecheckai.dev/blog/ki-sichtbarkeit-erlangen',
+        canonical: 'https://www.scanora.ai/blog/ki-sichtbarkeit-erlangen',
         languages: {
-            'de-DE': 'https://www.sitecheckai.dev/blog/ki-sichtbarkeit-erlangen',
-            'en-US': 'https://www.sitecheckai.dev/en/blog/ai-visibility',
+            'de-DE': 'https://www.scanora.ai/blog/ki-sichtbarkeit-erlangen',
+            'en-US': 'https://www.scanora.ai/en/blog/ai-visibility',
         },
     },
     openGraph: {
         title: 'KI-Sichtbarkeit erlangen: So wirst du von ChatGPT, Claude & Perplexity zitiert',
         description: 'Technische GEO-Signale reichen nicht. Wie du wirklich KI-Sichtbarkeit erlangst - Content-Strategie, Monitoring und was pro Plattform tatsächlich zählt.',
-        url: 'https://www.sitecheckai.dev/blog/ki-sichtbarkeit-erlangen',
+        url: 'https://www.scanora.ai/blog/ki-sichtbarkeit-erlangen',
         type: 'article',
         locale: 'de_DE',
     },
@@ -26,19 +26,19 @@ const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: 'KI-Sichtbarkeit erlangen: So wirst du von ChatGPT, Claude & Perplexity zitiert',
-    description: 'KI-Sichtbarkeit ist mehr als llms.txt und Schema Markup. Wie du wirklich von ChatGPT, Claude, Perplexity und Google AI Overview zitiert wirst - inklusive Monitoring mit AuditAI.',
-    image: 'https://www.sitecheckai.dev/blog/ki-sichtbarkeit-erlangen/opengraph-image',
+    description: 'KI-Sichtbarkeit ist mehr als llms.txt und Schema Markup. Wie du wirklich von ChatGPT, Claude, Perplexity und Google AI Overview zitiert wirst - inklusive Monitoring mit Scanora.',
+    image: 'https://www.scanora.ai/blog/ki-sichtbarkeit-erlangen/opengraph-image',
     datePublished: '2026-08-10T09:00:00+02:00',
     dateModified: '2026-08-10T09:00:00+02:00',
-    author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev/about' },
+    author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.scanora.ai/about' },
     publisher: {
         '@type': 'Organization',
-        name: 'AuditAI',
-        url: 'https://www.sitecheckai.dev',
-        logo: { '@type': 'ImageObject', url: 'https://www.sitecheckai.dev/logo', width: 512, height: 512 },
+        name: 'Scanora',
+        url: 'https://www.scanora.ai',
+        logo: { '@type': 'ImageObject', url: 'https://www.scanora.ai/logo', width: 512, height: 512 },
     },
-    url: 'https://www.sitecheckai.dev/blog/ki-sichtbarkeit-erlangen',
-    mainEntityOfPage: 'https://www.sitecheckai.dev/blog/ki-sichtbarkeit-erlangen',
+    url: 'https://www.scanora.ai/blog/ki-sichtbarkeit-erlangen',
+    mainEntityOfPage: 'https://www.scanora.ai/blog/ki-sichtbarkeit-erlangen',
     about: [
         { '@type': 'Thing', name: 'KI-Sichtbarkeit' },
         { '@type': 'Thing', name: 'Generative Engine Optimization' },
@@ -55,9 +55,9 @@ const breadcrumbLd = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'AuditAI', item: 'https://www.sitecheckai.dev' },
-        { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.sitecheckai.dev/blog' },
-        { '@type': 'ListItem', position: 3, name: 'KI-Sichtbarkeit erlangen', item: 'https://www.sitecheckai.dev/blog/ki-sichtbarkeit-erlangen' },
+        { '@type': 'ListItem', position: 1, name: 'Scanora', item: 'https://www.scanora.ai' },
+        { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.scanora.ai/blog' },
+        { '@type': 'ListItem', position: 3, name: 'KI-Sichtbarkeit erlangen', item: 'https://www.scanora.ai/blog/ki-sichtbarkeit-erlangen' },
     ],
 }
 
@@ -149,7 +149,7 @@ export default function KiSichtbarkeitErlangenPage() {
 
                 {/* Breadcrumb */}
                 <div className="flex items-center gap-2 text-xs text-slate-600 mb-8">
-                    <Link href="/" className="hover:text-slate-400 transition-colors">AuditAI</Link>
+                    <Link href="/" className="hover:text-slate-400 transition-colors">Scanora</Link>
                     <span>/</span>
                     <Link href="/blog" className="hover:text-slate-400 transition-colors">Blog</Link>
                     <span>/</span>
@@ -177,7 +177,7 @@ export default function KiSichtbarkeitErlangenPage() {
                             <span>Finn Paustian</span>
                         </Link>
                         <span>·</span>
-                        <span>Gründer, AuditAI</span>
+                        <span>Gründer, Scanora</span>
                     </div>
                 </div>
 
@@ -306,7 +306,7 @@ export default function KiSichtbarkeitErlangenPage() {
                         Wirst du bei ChatGPT, Claude & Perplexity zitiert?
                     </h2>
                     <p className="text-slate-400 text-sm mb-6 max-w-md mx-auto leading-relaxed">
-                        GEO Automatisierung von AuditAI testet wöchentlich automatisch, ob deine Domain erwähnt wird - inklusive Kontext, Konkurrenzvergleich und Verlauf über Zeit. Ab 4,99 €/Monat, 14 Tage kostenlos testen.
+                        GEO Automatisierung von Scanora testet wöchentlich automatisch, ob deine Domain erwähnt wird - inklusive Kontext, Konkurrenzvergleich und Verlauf über Zeit. Ab 4,99 €/Monat, 14 Tage kostenlos testen.
                     </p>
                     <Link
                         href="/geo/pricing"

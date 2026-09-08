@@ -1,6 +1,5 @@
 'use client'
 import { useState } from 'react'
-import { Zap } from 'lucide-react'
 import Link from 'next/link'
 import SupportModal from './SupportModal'
 import { t } from '../../lib/i18n/dictionaries'
@@ -12,7 +11,7 @@ const COLUMNS_DE = [
             { label: 'Features', href: '#features' },
             { label: 'Pricing', href: '#pricing' },
             { label: 'Dashboard', href: '/dashboard' },
-            { label: 'Über AuditAI', href: '/about' },
+            { label: 'Über Scanora', href: '/about' },
         ],
     },
     {
@@ -117,10 +116,13 @@ export default function Footer({ locale = 'de' }) {
                         <div className="col-span-2 sm:col-span-3 lg:col-span-1">
                             <Link href={locale === 'en' ? '/en' : '/'} className="inline-flex items-center gap-2.5 mb-3">
                                 <div className="w-7 h-7 rounded-lg bg-[var(--accent)] flex items-center justify-center">
-                                    <Zap className="w-3.5 h-3.5 text-[var(--bg-base)]" strokeWidth={2.5} />
+                                    <svg className="w-3.5 h-3.5 text-[var(--bg-base)]" viewBox="0 0 192 192" fill="none">
+                                        <circle cx="96" cy="96" r="50" stroke="currentColor" strokeWidth="14" />
+                                        <circle cx="110" cy="82" r="13" fill="currentColor" />
+                                    </svg>
                                 </div>
                                 <span className="font-bold text-white">
-                                    AuditAI
+                                    Scanora
                                 </span>
                             </Link>
                             <p className="text-xs text-slate-400 leading-relaxed max-w-[180px]">

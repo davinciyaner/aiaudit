@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'next/navigation'
 import { motion } from 'framer-motion'
-import { CheckCircle, XCircle, AlertTriangle, Zap, ChevronDown, ChevronUp, Clock, BarChart2 } from 'lucide-react'
+import { CheckCircle, XCircle, AlertTriangle, ChevronDown, ChevronUp, Clock, BarChart2 } from 'lucide-react'
 import Link from 'next/link'
 
 function StatusBadge({ status }) {
@@ -127,11 +127,11 @@ export default function TestResultPage() {
             <nav className="sticky top-0 z-50 bg-[#080b14]/90 backdrop-blur-xl border-b border-white/5">
                 <div className="max-w-4xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between">
                     <Link href="/" className="flex items-center gap-2">
-                        <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-500 to-cyan-500 flex items-center justify-center">
-                            <Zap className="w-4 h-4 text-white" />
+                        <div className="w-8 h-8 rounded-lg bg-[var(--accent)] flex items-center justify-center">
+                            <svg className="w-4 h-4 text-white" viewBox="0 0 192 192" fill="none"><circle cx="96" cy="96" r="50" stroke="currentColor" strokeWidth="14" /><circle cx="110" cy="82" r="13" fill="currentColor" /></svg>
                         </div>
                         <span className="font-bold text-white">
-                            Audit<span className="text-cyan-400">AI</span>
+                            Scanora
                         </span>
                     </Link>
                     {data && <StatusBadge status={data.status} />}

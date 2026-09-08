@@ -8,16 +8,16 @@ export const metadata = {
     description: 'Manuelles SEO- und GEO-Tracking vs. Automatisierung im Vergleich: Zeitaufwand, Kosten und warum KI-Sichtbarkeit manuell kaum zuverlässig messbar ist.',
     keywords: 'seo tracking manuell, seo monitoring automatisch, seo automatisierung lohnt sich, ranking tracking manuell vs automatisch, ki sichtbarkeit tracken, geo tracking manuell',
     alternates: {
-        canonical: 'https://www.sitecheckai.dev/blog/seo-tracking-manuell-vs-automatisiert',
+        canonical: 'https://www.scanora.ai/blog/seo-tracking-manuell-vs-automatisiert',
         languages: {
-            'de-DE': 'https://www.sitecheckai.dev/blog/seo-tracking-manuell-vs-automatisiert',
-            'en-US': 'https://www.sitecheckai.dev/en/blog/seo-tracking-manual-vs-automated',
+            'de-DE': 'https://www.scanora.ai/blog/seo-tracking-manuell-vs-automatisiert',
+            'en-US': 'https://www.scanora.ai/en/blog/seo-tracking-manual-vs-automated',
         },
     },
     openGraph: {
         title: 'Manuelles SEO-Tracking vs. automatisiert: Was lohnt sich wirklich?',
         description: 'Zeitaufwand, Kosten und der blinde Fleck beim manuellen Tracking: KI-Sichtbarkeit.',
-        url: 'https://www.sitecheckai.dev/blog/seo-tracking-manuell-vs-automatisiert',
+        url: 'https://www.scanora.ai/blog/seo-tracking-manuell-vs-automatisiert',
         type: 'article',
         locale: 'de_DE',
     },
@@ -28,27 +28,27 @@ const jsonLd = {
     '@type': 'Article',
     headline: 'Manuelles SEO-Tracking vs. automatisiert: Was lohnt sich wirklich?',
     description: 'Manuelles SEO- und GEO-Tracking vs. Automatisierung im Vergleich: Zeitaufwand, Kosten und warum KI-Sichtbarkeit manuell kaum zuverlässig messbar ist.',
-    image: 'https://www.sitecheckai.dev/blog/seo-tracking-manuell-vs-automatisiert/opengraph-image',
+    image: 'https://www.scanora.ai/blog/seo-tracking-manuell-vs-automatisiert/opengraph-image',
     datePublished: '2026-07-15T09:00:00+02:00',
     dateModified: '2026-07-30T09:00:00+02:00',
-    author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev/about' },
+    author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.scanora.ai/about' },
     publisher: {
         '@type': 'Organization',
-        name: 'AuditAI',
-        url: 'https://www.sitecheckai.dev',
-        logo: { '@type': 'ImageObject', url: 'https://www.sitecheckai.dev/logo', width: 512, height: 512 },
+        name: 'Scanora',
+        url: 'https://www.scanora.ai',
+        logo: { '@type': 'ImageObject', url: 'https://www.scanora.ai/logo', width: 512, height: 512 },
     },
-    url: 'https://www.sitecheckai.dev/blog/seo-tracking-manuell-vs-automatisiert',
-    mainEntityOfPage: 'https://www.sitecheckai.dev/blog/seo-tracking-manuell-vs-automatisiert',
+    url: 'https://www.scanora.ai/blog/seo-tracking-manuell-vs-automatisiert',
+    mainEntityOfPage: 'https://www.scanora.ai/blog/seo-tracking-manuell-vs-automatisiert',
 }
 
 const breadcrumbLd = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'AuditAI', item: 'https://www.sitecheckai.dev' },
-        { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.sitecheckai.dev/blog' },
-        { '@type': 'ListItem', position: 3, name: 'Manuell vs. automatisiert', item: 'https://www.sitecheckai.dev/blog/seo-tracking-manuell-vs-automatisiert' },
+        { '@type': 'ListItem', position: 1, name: 'Scanora', item: 'https://www.scanora.ai' },
+        { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.scanora.ai/blog' },
+        { '@type': 'ListItem', position: 3, name: 'Manuell vs. automatisiert', item: 'https://www.scanora.ai/blog/seo-tracking-manuell-vs-automatisiert' },
     ],
 }
 
@@ -112,7 +112,7 @@ export default function SeoTrackingVergleichPage() {
 
                 {/* Breadcrumb */}
                 <div className="flex items-center gap-2 text-xs text-slate-600 mb-8">
-                    <Link href="/" className="hover:text-slate-400 transition-colors">AuditAI</Link>
+                    <Link href="/" className="hover:text-slate-400 transition-colors">Scanora</Link>
                     <span>/</span>
                     <Link href="/blog" className="hover:text-slate-400 transition-colors">Blog</Link>
                     <span>/</span>
@@ -144,7 +144,7 @@ export default function SeoTrackingVergleichPage() {
                             <span>Finn Paustian</span>
                         </Link>
                         <span>·</span>
-                        <span>Gründer, AuditAI</span>
+                        <span>Gründer, Scanora</span>
                     </div>
                 </div>
 
@@ -179,7 +179,7 @@ export default function SeoTrackingVergleichPage() {
                         <figure className="mt-6 max-w-md">
                             <Image
                                 src="/blog/auditai-score-overview.png"
-                                alt="AuditAI Score-Übersicht mit Overall-, SEO-, Performance- und GEO-Score aus einem echten Audit-Report"
+                                alt="Scanora Score-Übersicht mit Overall-, SEO-, Performance- und GEO-Score aus einem echten Audit-Report"
                                 width={960}
                                 height={194}
                                 className="w-full h-auto rounded-xl border border-white/[0.07]"

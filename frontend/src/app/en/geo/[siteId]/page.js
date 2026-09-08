@@ -118,7 +118,7 @@ function CorrelationPanel({ siteId }) {
             <div className="bg-[var(--bg-surface)] border border-dashed border-[var(--border-subtle)] rounded-2xl p-5 mb-6">
                 <h3 className="text-sm font-semibold text-white mb-1.5">Compare SEO ranking + AI mention</h3>
                 <p className="text-xs text-slate-500 leading-relaxed">
-                    No SEO automation is running for this domain yet. Once both products track the same domain, AuditAI shows you directly here
+                    No SEO automation is running for this domain yet. Once both products track the same domain, Scanora shows you directly here
                     whether a page ranks on Google but is never mentioned by AI models — or vice versa.
                 </p>
             </div>

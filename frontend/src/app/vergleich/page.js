@@ -3,13 +3,13 @@ import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 
 export const metadata = {
-    title: 'Alternativen | AuditAI',
-    description: 'AuditAI im ehrlichen Vergleich zu bekannten AI-Visibility- und SEO-Tools: Preise, Features und für wen sich welches Tool eignet.',
+    title: 'Alternativen | Scanora',
+    description: 'Scanora im ehrlichen Vergleich zu bekannten AI-Visibility- und SEO-Tools: Preise, Features und für wen sich welches Tool eignet.',
     alternates: {
-        canonical: 'https://www.sitecheckai.dev/vergleich',
+        canonical: 'https://www.scanora.ai/vergleich',
         languages: {
-            'de-DE': 'https://www.sitecheckai.dev/vergleich',
-            'en-US': 'https://www.sitecheckai.dev/en/compare',
+            'de-DE': 'https://www.scanora.ai/vergleich',
+            'en-US': 'https://www.scanora.ai/en/compare',
         },
     },
 }
@@ -18,33 +18,33 @@ const breadcrumbLd = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'AuditAI', item: 'https://www.sitecheckai.dev' },
-        { '@type': 'ListItem', position: 2, name: 'Vergleich', item: 'https://www.sitecheckai.dev/vergleich' },
+        { '@type': 'ListItem', position: 1, name: 'Scanora', item: 'https://www.scanora.ai' },
+        { '@type': 'ListItem', position: 2, name: 'Vergleich', item: 'https://www.scanora.ai/vergleich' },
     ],
 }
 
 const ALTERNATIVES = [
     {
         slug: 'otterly-alternative',
-        title: 'Otterly.ai Alternative: AuditAI im ehrlichen Vergleich',
+        title: 'Otterly.ai Alternative: Scanora im ehrlichen Vergleich',
         description: 'Preise, abgedeckte KI-Plattformen und Funktionsumfang im direkten Vergleich – inklusive der Punkte, in denen Otterly.ai besser ist.',
         tag: 'Ab 29,99 €/Monat',
     },
     {
         slug: 'peec-alternative',
-        title: 'Peec.ai Alternative: AuditAI im ehrlichen Vergleich',
+        title: 'Peec.ai Alternative: Scanora im ehrlichen Vergleich',
         description: 'Preise, abgedeckte KI-Plattformen und Funktionsumfang im direkten Vergleich – inklusive der Punkte, in denen Peec.ai besser ist.',
         tag: 'Ab 29,99 €/Monat',
     },
     {
         slug: 'rankscale-alternative',
-        title: 'Rankscale Alternative: AuditAI im ehrlichen Vergleich',
+        title: 'Rankscale Alternative: Scanora im ehrlichen Vergleich',
         description: 'Feste Preise statt Credit-System, abgedeckte KI-Plattformen und Funktionsumfang im direkten Vergleich – inklusive der Punkte, in denen Rankscale besser ist.',
         tag: 'Ab 29,99 €/Monat',
     },
     {
         slug: 'writesonic-alternative',
-        title: 'Writesonic Alternative: AuditAI im ehrlichen Vergleich',
+        title: 'Writesonic Alternative: Scanora im ehrlichen Vergleich',
         description: 'GEO-Tracking von Anfang an statt erst im 249-$-Tarif, feste Limits statt verfallender Credits – inklusive der Punkte, in denen Writesonic besser ist.',
         tag: 'Ab 29,99 €/Monat',
     },
@@ -59,7 +59,7 @@ export default function VergleichHubPage() {
 
                 {/* Breadcrumb */}
                 <div className="flex items-center gap-2 text-xs text-slate-600 mb-8">
-                    <Link href="/" className="hover:text-slate-400 transition-colors">AuditAI</Link>
+                    <Link href="/" className="hover:text-slate-400 transition-colors">Scanora</Link>
                     <span>/</span>
                     <span className="text-slate-500">Vergleich</span>
                 </div>
@@ -67,7 +67,7 @@ export default function VergleichHubPage() {
                 <div className="mb-12">
                     <h1 className="text-3xl sm:text-5xl font-bold text-white tracking-tight mb-4">Alternativen</h1>
                     <p className="text-slate-400 text-lg max-w-2xl leading-relaxed">
-                        Ehrliche, faktenbasierte Vergleiche von AuditAI zu bekannten AI-Visibility- und SEO-Tools – inklusive der Punkte, in denen der jeweilige Wettbewerber besser ist.
+                        Ehrliche, faktenbasierte Vergleiche von Scanora zu bekannten AI-Visibility- und SEO-Tools – inklusive der Punkte, in denen der jeweilige Wettbewerber besser ist.
                         Suchst du stattdessen eine Lösung für ein konkretes Budget oder einen bestimmten Anwendungsfall, findest du die auf der{' '}
                         <Link href="/loesungen" className="text-slate-300 hover:text-[var(--accent)] underline underline-offset-2">Lösungen-Seite</Link>.
                     </p>

@@ -11,11 +11,11 @@ import Navbar from '../../components/Navbar'
 const FAQS = [
     {
         q: 'Was kostet SEO Automatisierung?',
-        a: 'SEO Automatisierung bei AuditAI startet ab 19 €/Monat für 3 Websites und 50 Keywords mit wöchentlichem Ranking-Update. Der Pro-Plan (59 €/Monat) erweitert auf 10 Websites und 200 Keywords inkl. Content-Gap-Analyse, der Expert-Plan (149 €/Monat) deckt bis zu 20 Websites und 500 Keywords ab. Alle Pläne bieten 14 Tage kostenlose Testphase.',
+        a: 'SEO Automatisierung bei Scanora startet ab 19 €/Monat für 3 Websites und 50 Keywords mit wöchentlichem Ranking-Update. Der Pro-Plan (59 €/Monat) erweitert auf 10 Websites und 200 Keywords inkl. Content-Gap-Analyse, der Expert-Plan (149 €/Monat) deckt bis zu 20 Websites und 500 Keywords ab. Alle Pläne bieten 14 Tage kostenlose Testphase.',
     },
     {
         q: 'Was ist der Unterschied zwischen einem einmaligen SEO-Audit und SEO Automatisierung?',
-        a: 'Ein einmaliger SEO-Audit (Teil des kostenlosen AuditAI Website-Audits) zeigt deinen SEO-Score zu einem Zeitpunkt. SEO Automatisierung trackt wöchentlich automatisch deine Google-Rankings, Keyword-Ideen, Konkurrenzanalyse und Backlink-Übersicht - als laufenden Verlauf statt Einzelmessung.',
+        a: 'Ein einmaliger SEO-Audit (Teil des kostenlosen Scanora Website-Audits) zeigt deinen SEO-Score zu einem Zeitpunkt. SEO Automatisierung trackt wöchentlich automatisch deine Google-Rankings, Keyword-Ideen, Konkurrenzanalyse und Backlink-Übersicht - als laufenden Verlauf statt Einzelmessung.',
     },
     {
         q: 'Gibt es eine kostenlose Testphase für SEO Automatisierung?',

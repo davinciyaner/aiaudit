@@ -86,7 +86,7 @@ export default function ProductShowcase() {
                             Do AI models cite you?
                         </h2>
                         <p className="text-slate-400 text-base leading-relaxed mb-8">
-                            ChatGPT, Perplexity and Claude decide every day which websites they recommend. AuditAI checks
+                            ChatGPT, Perplexity and Claude decide every day which websites they recommend. Scanora checks
                             llms.txt, Schema.org, FAQ markup and AI crawler permissions — the signals that determine
                             whether you show up in AI answers.
                         </p>
@@ -104,7 +104,7 @@ export default function ProductShowcase() {
                     </motion.div>
 
                     <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.1 }}>
-                        <ResultCard title="GEO / AI Visibility" score="Score: 41/100" checksLabel="19 checks · AuditAI" results={GEO_RESULTS} />
+                        <ResultCard title="GEO / AI Visibility" score="Score: 41/100" checksLabel="19 checks · Scanora" results={GEO_RESULTS} />
                     </motion.div>
                 </div>
 
@@ -112,7 +112,7 @@ export default function ProductShowcase() {
                 <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
                     <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.1 }}
                         className="order-2 lg:order-1">
-                        <ResultCard title="SEO Analysis" score="Score: 64/100" checksLabel="14 checks · 12 pages analyzed · AuditAI" results={SEO_RESULTS} />
+                        <ResultCard title="SEO Analysis" score="Score: 64/100" checksLabel="14 checks · 12 pages analyzed · Scanora" results={SEO_RESULTS} />
                     </motion.div>
 
                     <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
@@ -121,7 +121,7 @@ export default function ProductShowcase() {
                             Every mistake costs rankings.
                         </h2>
                         <p className="text-slate-400 text-base leading-relaxed mb-8">
-                            AuditAI crawls your entire website up to 25 pages deep and checks title tags, meta descriptions,
+                            Scanora crawls your entire website up to 25 pages deep and checks title tags, meta descriptions,
                             headings, internal links and structured data — not just the homepage.
                         </p>
                         <div className="flex flex-wrap items-center gap-3">

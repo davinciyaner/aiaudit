@@ -7,16 +7,16 @@ export const metadata = {
     description: 'Claude AI Sichtbarkeit tracken ab 4,99 €/Monat - während Claude-Tracking bei den meisten AI-Visibility-Tools nur als teures Enterprise-Add-on verfügbar ist. So funktioniert es und was du dafür bezahlst.',
     keywords: 'claude ai sichtbarkeit, claude sichtbarkeit tracken, claude visibility tracking, claude ai tracking tool, claude ki sichtbarkeit, generative engine optimization claude',
     alternates: {
-        canonical: 'https://www.sitecheckai.dev/loesungen/claude-ai-sichtbarkeit-tracken',
+        canonical: 'https://www.scanora.ai/loesungen/claude-ai-sichtbarkeit-tracken',
         languages: {
-            'de-DE': 'https://www.sitecheckai.dev/loesungen/claude-ai-sichtbarkeit-tracken',
-            'en-US': 'https://www.sitecheckai.dev/en/solutions/claude-ai-visibility-tracking',
+            'de-DE': 'https://www.scanora.ai/loesungen/claude-ai-sichtbarkeit-tracken',
+            'en-US': 'https://www.scanora.ai/en/solutions/claude-ai-visibility-tracking',
         },
     },
     openGraph: {
         title: 'Claude AI Sichtbarkeit tracken 2026: So siehst du, ob Claude dich empfiehlt',
-        description: 'Claude-Tracking ist bei den meisten AI-Visibility-Tools ein teures Enterprise-Add-on oder gar nicht verfügbar. AuditAI trackt es ab 4,99 €/Monat inklusive.',
-        url: 'https://www.sitecheckai.dev/loesungen/claude-ai-sichtbarkeit-tracken',
+        description: 'Claude-Tracking ist bei den meisten AI-Visibility-Tools ein teures Enterprise-Add-on oder gar nicht verfügbar. Scanora trackt es ab 4,99 €/Monat inklusive.',
+        url: 'https://www.scanora.ai/loesungen/claude-ai-sichtbarkeit-tracken',
         type: 'article',
         locale: 'de_DE',
     },
@@ -26,19 +26,19 @@ const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: 'Claude AI Sichtbarkeit tracken 2026: So siehst du, ob Claude dich empfiehlt',
-    description: 'Claude-Tracking ist bei den meisten AI-Visibility-Tools ein teures Enterprise-Add-on oder gar nicht verfügbar. AuditAI trackt es ab 4,99 €/Monat inklusive.',
-    image: 'https://www.sitecheckai.dev/loesungen/claude-ai-sichtbarkeit-tracken/opengraph-image',
+    description: 'Claude-Tracking ist bei den meisten AI-Visibility-Tools ein teures Enterprise-Add-on oder gar nicht verfügbar. Scanora trackt es ab 4,99 €/Monat inklusive.',
+    image: 'https://www.scanora.ai/loesungen/claude-ai-sichtbarkeit-tracken/opengraph-image',
     datePublished: '2026-08-29T09:00:00+02:00',
     dateModified: '2026-08-29T09:00:00+02:00',
-    author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev/about' },
+    author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.scanora.ai/about' },
     publisher: {
         '@type': 'Organization',
-        name: 'AuditAI',
-        url: 'https://www.sitecheckai.dev',
-        logo: { '@type': 'ImageObject', url: 'https://www.sitecheckai.dev/logo', width: 512, height: 512 },
+        name: 'Scanora',
+        url: 'https://www.scanora.ai',
+        logo: { '@type': 'ImageObject', url: 'https://www.scanora.ai/logo', width: 512, height: 512 },
     },
-    url: 'https://www.sitecheckai.dev/loesungen/claude-ai-sichtbarkeit-tracken',
-    mainEntityOfPage: 'https://www.sitecheckai.dev/loesungen/claude-ai-sichtbarkeit-tracken',
+    url: 'https://www.scanora.ai/loesungen/claude-ai-sichtbarkeit-tracken',
+    mainEntityOfPage: 'https://www.scanora.ai/loesungen/claude-ai-sichtbarkeit-tracken',
     about: [
         { '@type': 'Thing', name: 'AI Visibility Tracking' },
         { '@type': 'Thing', name: 'Generative Engine Optimization' },
@@ -50,9 +50,9 @@ const breadcrumbLd = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'AuditAI', item: 'https://www.sitecheckai.dev' },
-        { '@type': 'ListItem', position: 2, name: 'Lösungen', item: 'https://www.sitecheckai.dev/loesungen' },
-        { '@type': 'ListItem', position: 3, name: 'Claude AI Sichtbarkeit tracken', item: 'https://www.sitecheckai.dev/loesungen/claude-ai-sichtbarkeit-tracken' },
+        { '@type': 'ListItem', position: 1, name: 'Scanora', item: 'https://www.scanora.ai' },
+        { '@type': 'ListItem', position: 2, name: 'Lösungen', item: 'https://www.scanora.ai/loesungen' },
+        { '@type': 'ListItem', position: 3, name: 'Claude AI Sichtbarkeit tracken', item: 'https://www.scanora.ai/loesungen/claude-ai-sichtbarkeit-tracken' },
     ],
 }
 
@@ -73,7 +73,7 @@ const faqLd = {
             name: 'Warum ist Claude-Tracking bei vielen Tools so teuer oder gar nicht verfügbar?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'Bei mehreren bekannten AI-Visibility-Tools ist Claude entweder nur im individuell bepreisten Enterprise-Tarif enthalten oder ein separates Add-on, das erst ab höheren Preisstufen buchbar ist. Das liegt vermutlich an den API-Kosten und daran, dass viele Tools ursprünglich primär auf ChatGPT und Google AI Overview ausgerichtet waren. AuditAI hat Claude von Anfang an in den günstigsten Plan integriert.',
+                text: 'Bei mehreren bekannten AI-Visibility-Tools ist Claude entweder nur im individuell bepreisten Enterprise-Tarif enthalten oder ein separates Add-on, das erst ab höheren Preisstufen buchbar ist. Das liegt vermutlich an den API-Kosten und daran, dass viele Tools ursprünglich primär auf ChatGPT und Google AI Overview ausgerichtet waren. Scanora hat Claude von Anfang an in den günstigsten Plan integriert.',
             },
         },
         {
@@ -117,7 +117,7 @@ const howToLd = {
 }
 
 const MARKET_ROWS = [
-    ['AuditAI', '4,99 €/Monat', 'Ja, von Anfang an im Einsteiger-Plan enthalten'],
+    ['Scanora', '4,99 €/Monat', 'Ja, von Anfang an im Einsteiger-Plan enthalten'],
     ['Peec.ai', '85 €/Monat', 'Nein, nur im individuell bepreisten Enterprise-Tarif'],
     ['LLM Pulse', '49 €/Monat', 'Nein, nur als kostenpflichtiges Add-on auf dem Enterprise-Plan'],
     ['Rankscale', '20 $/Monat', 'Ja, aber über ein Credit-System statt Fixpreis abgerechnet'],
@@ -143,7 +143,7 @@ export default function ClaudeAiSichtbarkeitPage() {
 
                 {/* Breadcrumb */}
                 <div className="flex items-center gap-2 text-xs text-slate-600 mb-8">
-                    <Link href="/" className="hover:text-slate-400 transition-colors">AuditAI</Link>
+                    <Link href="/" className="hover:text-slate-400 transition-colors">Scanora</Link>
                     <span>/</span>
                     <Link href="/loesungen" className="hover:text-slate-400 transition-colors">Lösungen</Link>
                     <span>/</span>
@@ -166,7 +166,7 @@ export default function ClaudeAiSichtbarkeitPage() {
                         Claude hat sich als eigenständige Antwort-Quelle etabliert - auch weil Claude Code für viele Entwickler und Teams der erste Anlaufpunkt ist, um neue Tools zu bewerten. Wer nur ChatGPT trackt, sieht bestenfalls die halbe Wahrheit. Das Problem: Bei den meisten AI-Visibility-Tools ist Claude-Tracking entweder ein teures Enterprise-Add-on oder gar nicht buchbar.
                     </p>
                     <p className="mt-4 text-slate-300 leading-relaxed">
-                        AuditAI trackt Claude-Sichtbarkeit ab <strong className="text-white">4,99 €/Monat</strong> - inklusive, ohne Enterprise-Gespräch, ohne Add-on-Aufpreis. Hier die Marktlage im Überblick, wie das Tracking technisch funktioniert und was du konkret damit machst.
+                        Scanora trackt Claude-Sichtbarkeit ab <strong className="text-white">4,99 €/Monat</strong> - inklusive, ohne Enterprise-Gespräch, ohne Add-on-Aufpreis. Hier die Marktlage im Überblick, wie das Tracking technisch funktioniert und was du konkret damit machst.
                     </p>
                     <div className="mt-5 flex items-center gap-2 text-xs text-slate-600">
                         <Link href="/about" className="flex items-center gap-2 hover:text-slate-300 transition-colors">
@@ -174,7 +174,7 @@ export default function ClaudeAiSichtbarkeitPage() {
                             <span>Finn Paustian</span>
                         </Link>
                         <span>·</span>
-                        <span>Gründer, AuditAI</span>
+                        <span>Gründer, Scanora</span>
                     </div>
                 </div>
 
@@ -229,12 +229,12 @@ export default function ClaudeAiSichtbarkeitPage() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">Was AuditAI konkret liefert</h2>
+                        <h2 className="text-2xl font-bold text-white mb-4">Was Scanora konkret liefert</h2>
                         <p>
-                            Ab dem Einsteiger-Plan (4,99 €/Monat, 1 Website, 10 Keywords) prüft AuditAI wöchentlich automatisch, ob Claude und Gemini deine Website erwähnen - inklusive Mention-Verlauf über Zeit. Der Pro-Plan (29,99 €/Monat) ergänzt ChatGPT, Perplexity und Google AI Overview im selben Dashboard, plus zwei Prompt-Varianten pro Keyword statt einer.
+                            Ab dem Einsteiger-Plan (4,99 €/Monat, 1 Website, 10 Keywords) prüft Scanora wöchentlich automatisch, ob Claude und Gemini deine Website erwähnen - inklusive Mention-Verlauf über Zeit. Der Pro-Plan (29,99 €/Monat) ergänzt ChatGPT, Perplexity und Google AI Overview im selben Dashboard, plus zwei Prompt-Varianten pro Keyword statt einer.
                         </p>
                         <p className="mt-4">
-                            Anders als reine Analytics-Dashboards bleibt es nicht bei der Zahl: AuditAI prüft zusätzlich, ob llms.txt vorhanden ist, ob Schema Markup korrekt gesetzt ist und ob ClaudeBot überhaupt crawlen darf - und zeigt dir priorisiert, was zu tun ist, um öfter zitiert zu werden.
+                            Anders als reine Analytics-Dashboards bleibt es nicht bei der Zahl: Scanora prüft zusätzlich, ob llms.txt vorhanden ist, ob Schema Markup korrekt gesetzt ist und ob ClaudeBot überhaupt crawlen darf - und zeigt dir priorisiert, was zu tun ist, um öfter zitiert zu werden.
                         </p>
                     </section>
 

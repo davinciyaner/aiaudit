@@ -536,7 +536,7 @@ async function fetchSitemapEntries(domain) {
 async function scrapePageText(url) {
     const res = await fetch(url, {
         signal:  AbortSignal.timeout(12000),
-        headers: { 'User-Agent': 'AuditAI-SEO-Bot/1.0' },
+        headers: { 'User-Agent': 'Scanora-SEO-Bot/1.0' },
     })
     if (!res.ok) return ''
     const html = await res.text()

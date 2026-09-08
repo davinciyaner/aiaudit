@@ -8,16 +8,16 @@ import CookieBanner from './components/CookieBanner'
 import { getRootJsonLd } from '../lib/i18n/rootJsonLd'
 
 export const metadata = {
-    metadataBase: new URL('https://www.sitecheckai.dev'),
+    metadataBase: new URL('https://www.scanora.ai'),
     title: {
-        default: 'SEO Automatisierung & KI-Sichtbarkeit | AuditAI',
-        template: '%s | AuditAI',
+        default: 'SEO Automatisierung & KI-Sichtbarkeit | Scanora',
+        template: '%s | Scanora',
     },
     description: 'Kostenloser SEO-Test in unter 60 Sekunden: SEO-Automatisierung, KI-Sichtbarkeit, Title-Tags, Meta-Descriptions und Core Web Vitals prüfen. Vollständiger Website-Audit mit KI-Report und konkreten Fixes.',
     keywords: 'seo automatisierung, ki sichtbarkeit, seo test, seo test kostenlos, seo check, kostenloser seo check, website seo check, seo analyse kostenlos, website audit, core web vitals test, performance test, GEO, llms.txt, website checker kostenlos',
-    authors: [{ name: 'AuditAI' }],
-    creator: 'AuditAI',
-    publisher: 'AuditAI',
+    authors: [{ name: 'Scanora' }],
+    creator: 'Scanora',
+    publisher: 'Scanora',
     robots: {
         index: true,
         follow: true,
@@ -26,18 +26,18 @@ export const metadata = {
     openGraph: {
         type: 'website',
         locale: 'de_DE',
-        url: 'https://www.sitecheckai.dev',
-        siteName: 'AuditAI',
-        title: 'AuditAI – KI-gestützter Website Audit',
+        url: 'https://www.scanora.ai',
+        siteName: 'Scanora',
+        title: 'Scanora – KI-gestützter Website Audit',
         description: 'SEO, Performance & KI-Sichtbarkeit — ein vollständiger Audit in unter 60 Sekunden.',
     },
     twitter: {
         card: 'summary_large_image',
-        title: 'AuditAI – KI-gestützter Website Audit',
+        title: 'Scanora – KI-gestützter Website Audit',
         description: 'SEO, Performance & GEO in 60 Sekunden. Kostenlos starten.',
-        creator: '@auditai',
+        creator: '@scanoraai',
     },
-    alternates: { canonical: 'https://www.sitecheckai.dev' },
+    alternates: { canonical: 'https://www.scanora.ai' },
 }
 
 export default async function RootLayout({ children }) {

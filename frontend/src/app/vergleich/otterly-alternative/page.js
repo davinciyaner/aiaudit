@@ -3,20 +3,20 @@ import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
 
 export const metadata = {
-    title: 'Otterly.ai Alternative: AuditAI im Vergleich (2026)',
-    description: 'Otterly.ai-Alternative gesucht? AuditAI trackt KI-Sichtbarkeit bei ChatGPT, Claude, Gemini, Perplexity & Google AI Overview ab 29,99 €/Monat – plus SEO-Audit im selben Tool. Echter Free-Plan.',
+    title: 'Otterly.ai Alternative: Scanora im Vergleich (2026)',
+    description: 'Otterly.ai-Alternative gesucht? Scanora trackt KI-Sichtbarkeit bei ChatGPT, Claude, Gemini, Perplexity & Google AI Overview ab 29,99 €/Monat – plus SEO-Audit im selben Tool. Echter Free-Plan.',
     keywords: 'otterly alternative, otterly.ai alternative, otterly ai vergleich, günstige ai visibility tool, geo tracking tool, ki sichtbarkeit tool',
     alternates: {
-        canonical: 'https://www.sitecheckai.dev/vergleich/otterly-alternative',
+        canonical: 'https://www.scanora.ai/vergleich/otterly-alternative',
         languages: {
-            'de-DE': 'https://www.sitecheckai.dev/vergleich/otterly-alternative',
-            'en-US': 'https://www.sitecheckai.dev/en/compare/otterly-alternative',
+            'de-DE': 'https://www.scanora.ai/vergleich/otterly-alternative',
+            'en-US': 'https://www.scanora.ai/en/compare/otterly-alternative',
         },
     },
     openGraph: {
-        title: 'Otterly.ai Alternative: AuditAI im Vergleich (2026)',
-        description: 'AuditAI trackt KI-Sichtbarkeit bei ChatGPT, Claude, Gemini, Perplexity & Google AI Overview ab 29,99 €/Monat – plus SEO-Audit im selben Tool. Der ehrliche Vergleich zu Otterly.ai.',
-        url: 'https://www.sitecheckai.dev/vergleich/otterly-alternative',
+        title: 'Otterly.ai Alternative: Scanora im Vergleich (2026)',
+        description: 'Scanora trackt KI-Sichtbarkeit bei ChatGPT, Claude, Gemini, Perplexity & Google AI Overview ab 29,99 €/Monat – plus SEO-Audit im selben Tool. Der ehrliche Vergleich zu Otterly.ai.',
+        url: 'https://www.scanora.ai/vergleich/otterly-alternative',
         type: 'article',
         locale: 'de_DE',
     },
@@ -25,20 +25,20 @@ export const metadata = {
 const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
-    headline: 'Otterly.ai Alternative: AuditAI im ehrlichen Vergleich',
-    description: 'AuditAI trackt KI-Sichtbarkeit bei ChatGPT, Claude, Gemini, Perplexity & Google AI Overview ab 29,99 €/Monat – plus SEO-Audit im selben Tool. Der faktenbasierte Vergleich zu Otterly.ai.',
-    image: 'https://www.sitecheckai.dev/vergleich/otterly-alternative/opengraph-image',
+    headline: 'Otterly.ai Alternative: Scanora im ehrlichen Vergleich',
+    description: 'Scanora trackt KI-Sichtbarkeit bei ChatGPT, Claude, Gemini, Perplexity & Google AI Overview ab 29,99 €/Monat – plus SEO-Audit im selben Tool. Der faktenbasierte Vergleich zu Otterly.ai.',
+    image: 'https://www.scanora.ai/vergleich/otterly-alternative/opengraph-image',
     datePublished: '2026-08-27T09:00:00+02:00',
     dateModified: '2026-08-27T09:00:00+02:00',
-    author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev/about' },
+    author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.scanora.ai/about' },
     publisher: {
         '@type': 'Organization',
-        name: 'AuditAI',
-        url: 'https://www.sitecheckai.dev',
-        logo: { '@type': 'ImageObject', url: 'https://www.sitecheckai.dev/logo', width: 512, height: 512 },
+        name: 'Scanora',
+        url: 'https://www.scanora.ai',
+        logo: { '@type': 'ImageObject', url: 'https://www.scanora.ai/logo', width: 512, height: 512 },
     },
-    url: 'https://www.sitecheckai.dev/vergleich/otterly-alternative',
-    mainEntityOfPage: 'https://www.sitecheckai.dev/vergleich/otterly-alternative',
+    url: 'https://www.scanora.ai/vergleich/otterly-alternative',
+    mainEntityOfPage: 'https://www.scanora.ai/vergleich/otterly-alternative',
     about: [
         { '@type': 'Thing', name: 'AI Visibility Tracking' },
         { '@type': 'Thing', name: 'Generative Engine Optimization' },
@@ -50,9 +50,9 @@ const breadcrumbLd = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'AuditAI', item: 'https://www.sitecheckai.dev' },
-        { '@type': 'ListItem', position: 2, name: 'Vergleich', item: 'https://www.sitecheckai.dev/vergleich' },
-        { '@type': 'ListItem', position: 3, name: 'Otterly.ai Alternative', item: 'https://www.sitecheckai.dev/vergleich/otterly-alternative' },
+        { '@type': 'ListItem', position: 1, name: 'Scanora', item: 'https://www.scanora.ai' },
+        { '@type': 'ListItem', position: 2, name: 'Vergleich', item: 'https://www.scanora.ai/vergleich' },
+        { '@type': 'ListItem', position: 3, name: 'Otterly.ai Alternative', item: 'https://www.scanora.ai/vergleich/otterly-alternative' },
     ],
 }
 
@@ -62,23 +62,23 @@ const faqLd = {
     mainEntity: [
         {
             '@type': 'Question',
-            name: 'Ist AuditAI eine echte Alternative zu Otterly.ai?',
+            name: 'Ist Scanora eine echte Alternative zu Otterly.ai?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'Ja – für alle, die KI-Sichtbarkeit tracken wollen. AuditAI deckt dieselben zentralen KI-Plattformen ab (ChatGPT, Claude, Gemini, Perplexity, Google AI Overview) und ergänzt sie um ein SEO-Audit. Für reines, sehr großvolumiges und internationales Agentur-Monitoring bleibt Otterly.ai spezialisierter.',
+                text: 'Ja – für alle, die KI-Sichtbarkeit tracken wollen. Scanora deckt dieselben zentralen KI-Plattformen ab (ChatGPT, Claude, Gemini, Perplexity, Google AI Overview) und ergänzt sie um ein SEO-Audit. Für reines, sehr großvolumiges und internationales Agentur-Monitoring bleibt Otterly.ai spezialisierter.',
             },
         },
         {
             '@type': 'Question',
-            name: 'Was kostet AuditAI im Vergleich zu Otterly.ai?',
+            name: 'Was kostet Scanora im Vergleich zu Otterly.ai?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'AuditAIs GEO-Automatisierung startet bei 4,99 €/Monat für Claude-Tracking bzw. 29,99 €/Monat für alle fünf KI-Plattformen und bietet einen dauerhaft kostenlosen Plan. Otterly.ai beginnt bei 29 $/Monat ohne dauerhaften Gratis-Tarif – und Claude, Google Gemini sowie Google AI Mode kosten dort zusätzlich als kostenpflichtiges Add-on.',
+                text: 'Scanoras GEO-Automatisierung startet bei 4,99 €/Monat für Claude-Tracking bzw. 29,99 €/Monat für alle fünf KI-Plattformen und bietet einen dauerhaft kostenlosen Plan. Otterly.ai beginnt bei 29 $/Monat ohne dauerhaften Gratis-Tarif – und Claude, Google Gemini sowie Google AI Mode kosten dort zusätzlich als kostenpflichtiges Add-on.',
             },
         },
         {
             '@type': 'Question',
-            name: 'Deckt AuditAI auch klassisches SEO ab?',
+            name: 'Deckt Scanora auch klassisches SEO ab?',
             acceptedAnswer: {
                 '@type': 'Answer',
                 text: 'Ja. Neben der GEO-Automatisierung gibt es eine separate SEO-Automatisierung mit wöchentlichen Ranking-Updates, Keyword-Ideen, Konkurrenzanalyse und Backlink-Übersicht. Zusätzlich prüft das Audit Title-Tags, Meta-Descriptions, Überschriften, interne Links und strukturierte Daten über mehrere Seiten. Otterly.ai ist ein reines AI-Visibility-Tool ohne SEO-Funktionen.',
@@ -94,7 +94,7 @@ const faqLd = {
         },
         {
             '@type': 'Question',
-            name: 'Kann ich AuditAI kostenlos testen?',
+            name: 'Kann ich Scanora kostenlos testen?',
             acceptedAnswer: {
                 '@type': 'Answer',
                 text: 'Ja, ohne Anmeldung und ohne Kreditkarte. Du gibst deine URL ein und erhältst in etwa 60 Sekunden ein Ergebnis. Der Free-Plan bleibt dauerhaft kostenlos; die Automatisierungs-Abos haben zusätzlich eine 14-tägige Testphase.',
@@ -138,7 +138,7 @@ export default function OtterlyAlternativePage() {
 
                 {/* Breadcrumb */}
                 <div className="flex items-center gap-2 text-xs text-slate-600 mb-8">
-                    <Link href="/" className="hover:text-slate-400 transition-colors">AuditAI</Link>
+                    <Link href="/" className="hover:text-slate-400 transition-colors">Scanora</Link>
                     <span>/</span>
                     <Link href="/vergleich" className="hover:text-slate-400 transition-colors">Vergleich</Link>
                     <span>/</span>
@@ -155,13 +155,13 @@ export default function OtterlyAlternativePage() {
                         <span className="text-xs text-slate-600">· 8 min Lesezeit</span>
                     </div>
                     <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight tracking-tight mb-5">
-                        Otterly.ai-Alternative: AuditAI im ehrlichen Vergleich
+                        Otterly.ai-Alternative: Scanora im ehrlichen Vergleich
                     </h1>
                     <p className="text-lg text-slate-400 leading-relaxed">
                         Du suchst eine Alternative zu Otterly.ai – meistens aus einem von zwei Gründen: Der Einstieg ist dir bei 15 getrackten Prompts zu knapp, oder die Rechnung wird teuer, sobald du die KI-Plattformen dazubuchst, die du eigentlich brauchst. Diese Seite vergleicht beide Tools fair und faktenbasiert – inklusive der Punkte, in denen Otterly.ai besser ist.
                     </p>
                     <p className="mt-4 text-slate-300 leading-relaxed">
-                        Kurzfassung vorweg: <strong className="text-white">AuditAI</strong> trackt deine KI-Sichtbarkeit bei ChatGPT, Claude, Gemini, Perplexity und Google AI Overview ab 29,99 €/Monat – und bringt SEO-Audit sowie Google-Rankings im selben Haus mit. <strong className="text-white">Otterly.ai</strong> ist ein reiner, sehr ausgereifter AI-Visibility-Tracker mit hohem Prompt-Volumen in den oberen Tarifen. Welches Tool passt, hängt davon ab, ob du ein bezahlbares Kombi-Tool oder ein spezialisiertes, großvolumiges GEO-Dashboard willst.
+                        Kurzfassung vorweg: <strong className="text-white">Scanora</strong> trackt deine KI-Sichtbarkeit bei ChatGPT, Claude, Gemini, Perplexity und Google AI Overview ab 29,99 €/Monat – und bringt SEO-Audit sowie Google-Rankings im selben Haus mit. <strong className="text-white">Otterly.ai</strong> ist ein reiner, sehr ausgereifter AI-Visibility-Tracker mit hohem Prompt-Volumen in den oberen Tarifen. Welches Tool passt, hängt davon ab, ob du ein bezahlbares Kombi-Tool oder ein spezialisiertes, großvolumiges GEO-Dashboard willst.
                     </p>
                     <div className="mt-5 flex items-center gap-2 text-xs text-slate-600">
                         <Link href="/about" className="flex items-center gap-2 hover:text-slate-300 transition-colors">
@@ -169,7 +169,7 @@ export default function OtterlyAlternativePage() {
                             <span>Finn Paustian</span>
                         </Link>
                         <span>·</span>
-                        <span>Gründer, AuditAI</span>
+                        <span>Gründer, Scanora</span>
                     </div>
                 </div>
 
@@ -184,7 +184,7 @@ export default function OtterlyAlternativePage() {
                                 <thead>
                                     <tr className="border-b border-white/5 bg-white/[0.02]">
                                         <th className="text-left px-5 py-3 text-slate-400 font-semibold">Aspekt</th>
-                                        <th className="text-left px-5 py-3 text-violet-400 font-semibold">AuditAI</th>
+                                        <th className="text-left px-5 py-3 text-violet-400 font-semibold">Scanora</th>
                                         <th className="text-left px-5 py-3 text-cyan-400 font-semibold">Otterly.ai</th>
                                     </tr>
                                 </thead>
@@ -200,7 +200,7 @@ export default function OtterlyAlternativePage() {
                             </table>
                         </div>
                         <p className="text-xs text-slate-600 mt-3">
-                            Preise Stand August 2026. Otterly rechnet in US-Dollar, AuditAI in Euro inkl. MwSt. Otterly-Zahlen laut{' '}
+                            Preise Stand August 2026. Otterly rechnet in US-Dollar, Scanora in Euro inkl. MwSt. Otterly-Zahlen laut{' '}
                             <a href="https://otterly.ai/pricing" target="_blank" rel="noopener noreferrer" className="text-slate-500 hover:text-slate-300 underline underline-offset-2">
                                 offizieller Otterly.ai-Preisseite
                             </a>. Prüfe die aktuellen Konditionen jeweils direkt beim Anbieter.
@@ -208,31 +208,31 @@ export default function OtterlyAlternativePage() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">Wo AuditAI die bessere Wahl ist</h2>
+                        <h2 className="text-2xl font-bold text-white mb-4">Wo Scanora die bessere Wahl ist</h2>
 
                         <h3 className="text-lg font-semibold text-white mt-6 mb-2">1. Alle fünf großen KI-Plattformen für 29,99 €/Monat – ohne Add-on-Mathematik</h3>
                         <p>
-                            Im Kernplan von Otterly.ai sind vier Engines enthalten – aber das sind ChatGPT, Google AI Overview, Perplexity und Microsoft Copilot. Ausgerechnet die Plattform, die im deutschsprachigen Raum oft zuerst gefragt ist, kostet extra: Claude ist bei Otterly.ai ein Add-on für 29 bis 439 $/Monat je nach Tarif, Google Gemini und Google AI Mode kommen mit je 9 bis 149 $/Monat hinzu. AuditAI trackt ChatGPT, Claude, Gemini, Perplexity und Google AI Overview zusammen ab dem GEO-Pro-Tarif für 29,99 €/Monat. Kein Nachrechnen, keine Plattform-Aufpreise.
+                            Im Kernplan von Otterly.ai sind vier Engines enthalten – aber das sind ChatGPT, Google AI Overview, Perplexity und Microsoft Copilot. Ausgerechnet die Plattform, die im deutschsprachigen Raum oft zuerst gefragt ist, kostet extra: Claude ist bei Otterly.ai ein Add-on für 29 bis 439 $/Monat je nach Tarif, Google Gemini und Google AI Mode kommen mit je 9 bis 149 $/Monat hinzu. Scanora trackt ChatGPT, Claude, Gemini, Perplexity und Google AI Overview zusammen ab dem GEO-Pro-Tarif für 29,99 €/Monat. Kein Nachrechnen, keine Plattform-Aufpreise.
                         </p>
 
                         <h3 className="text-lg font-semibold text-white mt-6 mb-2">2. Ein echter kostenloser Plan statt nur einer Testphase</h3>
                         <p>
-                            Otterly.ai bietet keinen dauerhaften Gratis-Tarif, sondern nur eine zeitlich begrenzte Testphase. Bei AuditAI kannst du dauerhaft kostenlos ein Audit pro Monat inklusive GEO-Sichtbarkeit fahren – ideal, um zu prüfen, ob KI-Sichtbarkeit für dich überhaupt ein Thema ist, bevor du zahlst.
+                            Otterly.ai bietet keinen dauerhaften Gratis-Tarif, sondern nur eine zeitlich begrenzte Testphase. Bei Scanora kannst du dauerhaft kostenlos ein Audit pro Monat inklusive GEO-Sichtbarkeit fahren – ideal, um zu prüfen, ob KI-Sichtbarkeit für dich überhaupt ein Thema ist, bevor du zahlst.
                         </p>
 
                         <h3 className="text-lg font-semibold text-white mt-6 mb-2">3. KI-Sichtbarkeit und SEO unter einem Dach</h3>
                         <p>
-                            Otterly.ai ist ein reiner AI-Visibility-Tracker – klassisches SEO deckt es nicht ab. Wer beides will, zahlt in der Praxis für zwei Tools. AuditAI bietet zusätzlich zur GEO-Automatisierung eine SEO-Automatisierung mit wöchentlichen Google-Ranking-Updates, Keyword-Ideen, Konkurrenzanalyse und Backlink-Übersicht – aus einem Anbieter, wahlweise als separates Abo buchbar.
+                            Otterly.ai ist ein reiner AI-Visibility-Tracker – klassisches SEO deckt es nicht ab. Wer beides will, zahlt in der Praxis für zwei Tools. Scanora bietet zusätzlich zur GEO-Automatisierung eine SEO-Automatisierung mit wöchentlichen Google-Ranking-Updates, Keyword-Ideen, Konkurrenzanalyse und Backlink-Übersicht – aus einem Anbieter, wahlweise als separates Abo buchbar.
                         </p>
 
                         <h3 className="text-lg font-semibold text-white mt-6 mb-2">4. Audit-first: konkrete Fixes statt roher Zahlen</h3>
                         <p>
-                            Otterly.ai zeigt dir, <em>wie oft</em> und <em>wo</em> du in KI-Antworten auftauchst. AuditAI geht einen Schritt weiter und liefert einen priorisierten Maßnahmenplan: Es prüft llms.txt, Schema.org, FAQ-Markup und die Erlaubnis für KI-Crawler (GPTBot, ClaudeBot, PerplexityBot) und sagt dir konkret, was du ändern musst, um zitiert zu werden.
+                            Otterly.ai zeigt dir, <em>wie oft</em> und <em>wo</em> du in KI-Antworten auftauchst. Scanora geht einen Schritt weiter und liefert einen priorisierten Maßnahmenplan: Es prüft llms.txt, Schema.org, FAQ-Markup und die Erlaubnis für KI-Crawler (GPTBot, ClaudeBot, PerplexityBot) und sagt dir konkret, was du ändern musst, um zitiert zu werden.
                         </p>
 
                         <h3 className="text-lg font-semibold text-white mt-6 mb-2">5. Niedrigerer Einstieg in Euro</h3>
                         <p>
-                            AuditAI startet bei 4,99 €/Monat für Claude-Tracking und bei 29,99 €/Monat für alle fünf Plattformen – deutlich unter dem Otterly-Einstieg von 29 $/Monat, und ohne Währungsumrechnung für Kunden im DACH-Raum. Für Selbstständige und kleine Websites ist das die risikoärmere Einstiegshürde.
+                            Scanora startet bei 4,99 €/Monat für Claude-Tracking und bei 29,99 €/Monat für alle fünf Plattformen – deutlich unter dem Otterly-Einstieg von 29 $/Monat, und ohne Währungsumrechnung für Kunden im DACH-Raum. Für Selbstständige und kleine Websites ist das die risikoärmere Einstiegshürde.
                         </p>
                     </section>
 
@@ -242,7 +242,7 @@ export default function OtterlyAlternativePage() {
                             Fairness gehört zu einem echten Vergleich – und Otterly.ai ist in einigen Punkten stärker:
                         </p>
                         <p className="mt-4">
-                            <strong className="text-white">Höheres Prompt-Volumen und Agentur-Strukturen.</strong> Otterly.ai skaliert bis 400 getrackte Prompts im Premium-Tarif und bietet ein Agentur-Partner-Modell mit eigenen Client-Workspaces und bis zu 500 Prompts. Wer sehr viele Prompts über viele Kunden trackt, findet dort mehr Kapazität als bei AuditAIs 100 Keywords im GEO-Expert-Tarif.
+                            <strong className="text-white">Höheres Prompt-Volumen und Agentur-Strukturen.</strong> Otterly.ai skaliert bis 400 getrackte Prompts im Premium-Tarif und bietet ein Agentur-Partner-Modell mit eigenen Client-Workspaces und bis zu 500 Prompts. Wer sehr viele Prompts über viele Kunden trackt, findet dort mehr Kapazität als bei Scanoras 100 Keywords im GEO-Expert-Tarif.
                         </p>
                         <p className="mt-4">
                             <strong className="text-white">Reife und Reichweite des reinen GEO-Trackings.</strong> Otterly.ai ist auf AI-Visibility spezialisiert und bringt Features wie Multi-Country-Tracking über 50+ Märkte, einen Looker-Studio-Connector sowie API- und MCP-Zugang in den höheren Tarifen mit. Für Teams, die ausschließlich tiefes, internationales GEO-Monitoring als eigenen Kanal betreiben, ist diese Spezialisierung ein echter Vorteil.
@@ -251,7 +251,7 @@ export default function OtterlyAlternativePage() {
                             <strong className="text-white">Etabliertes Produkt.</strong> Otterly.ai ist länger am Markt und in vielen Tool-Vergleichen als einer der bekannteren AI-Visibility-Tracker etabliert.
                         </p>
                         <p className="mt-4">
-                            Kurz gesagt: Wenn du ein reines, hochskalierbares und internationales GEO-Monitoring für eine Agentur mit vielen Kunden brauchst, ist Otterly.ai einen Blick wert. Wenn du KI-Sichtbarkeit <em>und</em> SEO in einem bezahlbaren Tool willst und Wert auf konkrete Handlungsempfehlungen legst, ist AuditAI die passendere Wahl.
+                            Kurz gesagt: Wenn du ein reines, hochskalierbares und internationales GEO-Monitoring für eine Agentur mit vielen Kunden brauchst, ist Otterly.ai einen Blick wert. Wenn du KI-Sichtbarkeit <em>und</em> SEO in einem bezahlbaren Tool willst und Wert auf konkrete Handlungsempfehlungen legst, ist Scanora die passendere Wahl.
                         </p>
                     </section>
 
@@ -259,7 +259,7 @@ export default function OtterlyAlternativePage() {
                         <h2 className="text-2xl font-bold text-white mb-4">Für wen eignet sich was?</h2>
                         <div className="grid sm:grid-cols-2 gap-4">
                             <div className="bg-violet-500/[0.04] border border-violet-500/15 rounded-2xl p-5">
-                                <h3 className="font-semibold text-white mb-3 text-sm">Wähle AuditAI, wenn du …</h3>
+                                <h3 className="font-semibold text-white mb-3 text-sm">Wähle Scanora, wenn du …</h3>
                                 <ul className="space-y-2">
                                     {AUDITAI_FOR.map((item, i) => (
                                         <li key={i} className="text-sm text-slate-400 leading-relaxed flex gap-2">
@@ -367,7 +367,7 @@ export default function OtterlyAlternativePage() {
                                 SEO Rank Tracker & KI-Sichtbarkeits-Monitor
                             </h3>
                             <p className="text-slate-400 text-sm leading-relaxed max-w-md">
-                                Wie SEO Automatisierung und GEO Automatisierung bei AuditAI im Detail funktionieren – inklusive Preisen.
+                                Wie SEO Automatisierung und GEO Automatisierung bei Scanora im Detail funktionieren – inklusive Preisen.
                             </p>
                         </div>
                         <Link

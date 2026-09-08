@@ -4,19 +4,19 @@ import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
 
 export const metadata = {
-    title: { absolute: 'About AuditAI – Why This Tool Exists' },
-    description: 'AuditAI automatically tracks whether your website gets cited by ChatGPT, Claude, Perplexity, and Google AI Overview — and how it ranks on Google. One report instead of ten separate tools.',
+    title: { absolute: 'About Scanora – Why This Tool Exists' },
+    description: 'Scanora automatically tracks whether your website gets cited by ChatGPT, Claude, Perplexity, and Google AI Overview — and how it ranks on Google. One report instead of ten separate tools.',
     alternates: {
-        canonical: 'https://www.sitecheckai.dev/en/about',
+        canonical: 'https://www.scanora.ai/en/about',
         languages: {
-            'de-DE': 'https://www.sitecheckai.dev/about',
-            'en-US': 'https://www.sitecheckai.dev/en/about',
+            'de-DE': 'https://www.scanora.ai/about',
+            'en-US': 'https://www.scanora.ai/en/about',
         },
     },
     openGraph: {
-        title: 'About AuditAI',
-        description: 'Why AuditAI exists and what it automates.',
-        url: 'https://www.sitecheckai.dev/en/about',
+        title: 'About Scanora',
+        description: 'Why Scanora exists and what it automates.',
+        url: 'https://www.scanora.ai/en/about',
         type: 'website',
         locale: 'en_US',
     },
@@ -25,14 +25,14 @@ export const metadata = {
 const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'AboutPage',
-    url: 'https://www.sitecheckai.dev/en/about',
-    name: 'About AuditAI',
+    url: 'https://www.scanora.ai/en/about',
+    name: 'About Scanora',
     mainEntity: {
         '@type': 'SoftwareApplication',
-        name: 'AuditAI',
+        name: 'Scanora',
         applicationCategory: 'BusinessApplication',
         description: 'Automated tracking of AI visibility (ChatGPT, Claude, Perplexity, Google AI Overview) and classic SEO rankings in a single report.',
-        url: 'https://www.sitecheckai.dev',
+        url: 'https://www.scanora.ai',
     },
 }
 
@@ -40,8 +40,8 @@ const breadcrumbLd = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'AuditAI', item: 'https://www.sitecheckai.dev/en' },
-        { '@type': 'ListItem', position: 2, name: 'About', item: 'https://www.sitecheckai.dev/en/about' },
+        { '@type': 'ListItem', position: 1, name: 'Scanora', item: 'https://www.scanora.ai/en' },
+        { '@type': 'ListItem', position: 2, name: 'About', item: 'https://www.scanora.ai/en/about' },
     ],
 }
 
@@ -62,7 +62,7 @@ export default function AboutPageEn() {
 
                 {/* Breadcrumb */}
                 <div className="flex items-center gap-2 text-xs text-slate-600 mb-8">
-                    <Link href="/en" className="hover:text-slate-400 transition-colors">AuditAI</Link>
+                    <Link href="/en" className="hover:text-slate-400 transition-colors">Scanora</Link>
                     <span>/</span>
                     <span className="text-slate-500">About</span>
                 </div>
@@ -73,7 +73,7 @@ export default function AboutPageEn() {
                         <ZapIcon className="w-7 h-7 text-white" strokeWidth={2.5} />
                     </div>
                     <div>
-                        <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">About AuditAI</h1>
+                        <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">About Scanora</h1>
                         <p className="text-slate-400 text-sm mt-1">AI visibility & SEO tracking, one report</p>
                     </div>
                 </div>
@@ -92,7 +92,7 @@ export default function AboutPageEn() {
 
                 {/* Bio */}
                 <div className="prose prose-invert prose-slate max-w-none text-slate-300 leading-relaxed space-y-5">
-                    <h2 className="text-xl font-bold text-white mb-3">Why AuditAI?</h2>
+                    <h2 className="text-xl font-bold text-white mb-3">Why Scanora?</h2>
                     <p>
                         Google isn't the only search engine anymore. More and more people ask ChatGPT, Claude, or
                         Perplexity for recommendations instead of googling — and a website can sit at #1 on Google while
@@ -102,7 +102,7 @@ export default function AboutPageEn() {
                         into a full-time job on its own.
                     </p>
                     <p>
-                        AuditAI automates exactly that: one audit that tracks both AI visibility across ChatGPT, Claude,
+                        Scanora automates exactly that: one audit that tracks both AI visibility across ChatGPT, Claude,
                         Perplexity, and Google AI Overview, and classic Google rankings — with concrete, prioritized fixes
                         instead of generic tips. Checks run automatically every week in the background, so a ranking drop
                         or a lost AI mention gets caught before it costs traffic.
@@ -110,7 +110,7 @@ export default function AboutPageEn() {
 
                     <h2 className="text-xl font-bold text-white mb-3 mt-10">Contact</h2>
                     <p>
-                        Questions or feedback about AuditAI:{' '}
+                        Questions or feedback about Scanora:{' '}
                         <a href="mailto:sitecheckai@gmail.com" className="text-violet-400 hover:text-violet-300 inline-flex items-center gap-1.5">
                             <Mail className="w-3.5 h-3.5" />
                             sitecheckai@gmail.com

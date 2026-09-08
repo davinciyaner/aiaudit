@@ -7,16 +7,16 @@ export const metadata = {
     description: 'llms.txt einfach erklärt: die robots.txt für KI-Modelle. Herkunft, Aufbau, Unterschied zu llms-full.txt und eine Schritt-für-Schritt-Anleitung zum Erstellen.',
     keywords: 'llms.txt einrichten, llms.txt, llms.txt was ist das, llms.txt erstellen, llms-full.txt, ai crawler datei, llms.txt beispiel, llms.txt generator',
     alternates: {
-        canonical: 'https://www.sitecheckai.dev/blog/llms-txt-erklaert',
+        canonical: 'https://www.scanora.ai/blog/llms-txt-erklaert',
         languages: {
-            'de-DE': 'https://www.sitecheckai.dev/blog/llms-txt-erklaert',
-            'en-US': 'https://www.sitecheckai.dev/en/blog/llms-txt-explained',
+            'de-DE': 'https://www.scanora.ai/blog/llms-txt-erklaert',
+            'en-US': 'https://www.scanora.ai/en/blog/llms-txt-explained',
         },
     },
     openGraph: {
         title: 'llms.txt erklärt: Was es ist und wie du es richtig einrichtest',
         description: 'Die robots.txt für KI-Modelle: Herkunft, Aufbau und Schritt-für-Schritt-Anleitung.',
-        url: 'https://www.sitecheckai.dev/blog/llms-txt-erklaert',
+        url: 'https://www.scanora.ai/blog/llms-txt-erklaert',
         type: 'article',
         locale: 'de_DE',
     },
@@ -27,27 +27,27 @@ const jsonLd = {
     '@type': 'Article',
     headline: 'llms.txt erklärt: Was es ist und wie du es richtig einrichtest',
     description: 'llms.txt einfach erklärt: die robots.txt für KI-Modelle. Herkunft, Aufbau, Unterschied zu llms-full.txt und eine Schritt-für-Schritt-Anleitung.',
-    image: 'https://www.sitecheckai.dev/blog/llms-txt-erklaert/opengraph-image',
+    image: 'https://www.scanora.ai/blog/llms-txt-erklaert/opengraph-image',
     datePublished: '2026-07-26T09:00:00+02:00',
     dateModified: '2026-08-24T09:00:00+02:00',
-    author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev/about' },
+    author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.scanora.ai/about' },
     publisher: {
         '@type': 'Organization',
-        name: 'AuditAI',
-        url: 'https://www.sitecheckai.dev',
-        logo: { '@type': 'ImageObject', url: 'https://www.sitecheckai.dev/logo', width: 512, height: 512 },
+        name: 'Scanora',
+        url: 'https://www.scanora.ai',
+        logo: { '@type': 'ImageObject', url: 'https://www.scanora.ai/logo', width: 512, height: 512 },
     },
-    url: 'https://www.sitecheckai.dev/blog/llms-txt-erklaert',
-    mainEntityOfPage: 'https://www.sitecheckai.dev/blog/llms-txt-erklaert',
+    url: 'https://www.scanora.ai/blog/llms-txt-erklaert',
+    mainEntityOfPage: 'https://www.scanora.ai/blog/llms-txt-erklaert',
 }
 
 const breadcrumbLd = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'AuditAI', item: 'https://www.sitecheckai.dev' },
-        { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.sitecheckai.dev/blog' },
-        { '@type': 'ListItem', position: 3, name: 'llms.txt erklärt', item: 'https://www.sitecheckai.dev/blog/llms-txt-erklaert' },
+        { '@type': 'ListItem', position: 1, name: 'Scanora', item: 'https://www.scanora.ai' },
+        { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.scanora.ai/blog' },
+        { '@type': 'ListItem', position: 3, name: 'llms.txt erklärt', item: 'https://www.scanora.ai/blog/llms-txt-erklaert' },
     ],
 }
 
@@ -148,7 +148,7 @@ export default function LlmsTxtPage() {
 
                 {/* Breadcrumb */}
                 <div className="flex items-center gap-2 text-xs text-slate-600 mb-8">
-                    <Link href="/" className="hover:text-slate-400 transition-colors">AuditAI</Link>
+                    <Link href="/" className="hover:text-slate-400 transition-colors">Scanora</Link>
                     <span>/</span>
                     <Link href="/blog" className="hover:text-slate-400 transition-colors">Blog</Link>
                     <span>/</span>
@@ -177,7 +177,7 @@ export default function LlmsTxtPage() {
                             <span>Finn Paustian</span>
                         </Link>
                         <span>·</span>
-                        <span>Gründer, AuditAI</span>
+                        <span>Gründer, Scanora</span>
                     </div>
                 </div>
 
@@ -283,7 +283,7 @@ export default function LlmsTxtPage() {
                         Hast du bereits eine llms.txt?
                     </h2>
                     <p className="text-slate-400 text-sm mb-6 max-w-md mx-auto leading-relaxed">
-                        AuditAI prüft automatisch, ob llms.txt und llms-full.txt vorhanden und korrekt formatiert sind - als Teil von 19 GEO-Signalen in unter 60 Sekunden. Start ohne Registrierung, für den vollständigen Report mit allen Scores meldest du dich kostenlos an.
+                        Scanora prüft automatisch, ob llms.txt und llms-full.txt vorhanden und korrekt formatiert sind - als Teil von 19 GEO-Signalen in unter 60 Sekunden. Start ohne Registrierung, für den vollständigen Report mit allen Scores meldest du dich kostenlos an.
                     </p>
                     <Link
                         href="/dashboard"

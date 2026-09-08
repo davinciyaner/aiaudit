@@ -182,7 +182,7 @@ btnCsv.addEventListener('click', async () => {
   downloadCSV(state?.steps || []);
 });
 
-// ─── Upload zu sitecheckai.dev ────────────────────────────────────────────────
+// ─── Upload zu scanora.ai ────────────────────────────────────────────────
 
 btnUpload.addEventListener('click', async () => {
   const auth  = await getAuth();

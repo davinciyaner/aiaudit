@@ -1,11 +1,10 @@
 import Link from 'next/link'
-import { Zap } from 'lucide-react'
 
 export const metadata = {
-    title: 'Auftragsverarbeitungsvertrag – AuditAI',
-    description: 'AVV gemäß Art. 28 DSGVO für die Nutzung von AuditAI.',
+    title: 'Auftragsverarbeitungsvertrag – Scanora',
+    description: 'AVV gemäß Art. 28 DSGVO für die Nutzung von Scanora.',
     robots: { index: false },
-    alternates: { canonical: 'https://www.sitecheckai.dev/avv' },
+    alternates: { canonical: 'https://www.scanora.ai/avv' },
 }
 
 function Section({ title, children }) {
@@ -42,8 +41,8 @@ export default function AvvPage() {
 
                 <div className="mb-12">
                     <Link href="/" className="inline-flex items-center gap-2 text-sm">
-                        <Zap className="w-4 h-4 text-violet-400" />
-                        <span className="text-white font-bold">Audit<span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-cyan-400">AI</span></span>
+                        <svg className="w-4 h-4 text-violet-400" viewBox="0 0 192 192" fill="none"><circle cx="96" cy="96" r="50" stroke="currentColor" strokeWidth="14" /><circle cx="110" cy="82" r="13" fill="currentColor" /></svg>
+                        <span className="text-white font-bold">Scanora</span>
                     </Link>
                     <h1 className="text-3xl font-bold text-white mt-6 mb-2">Auftragsverarbeitungsvertrag</h1>
                     <p className="text-slate-500 text-sm">Gemäß Art. 28 DSGVO · Stand: Juni 2026</p>
@@ -53,17 +52,17 @@ export default function AvvPage() {
 
                     <Section title="Präambel">
                         <p>
-                            Dieser Auftragsverarbeitungsvertrag (AVV) regelt die datenschutzrechtliche Beziehung zwischen dem Nutzer von AuditAI (nachfolgend <strong className="text-slate-300">„Verantwortlicher"</strong>) und dem Anbieter des Dienstes (nachfolgend <strong className="text-slate-300">„Auftragsverarbeiter"</strong>) gemäß Art. 28 DSGVO.
+                            Dieser Auftragsverarbeitungsvertrag (AVV) regelt die datenschutzrechtliche Beziehung zwischen dem Nutzer von Scanora (nachfolgend <strong className="text-slate-300">„Verantwortlicher"</strong>) und dem Anbieter des Dienstes (nachfolgend <strong className="text-slate-300">„Auftragsverarbeiter"</strong>) gemäß Art. 28 DSGVO.
                         </p>
                         <p>
-                            Dieser AVV gilt automatisch als geschlossen, sobald der Nutzer kostenpflichtige Dienste von AuditAI — insbesondere die SEO Automatisierung — in Anspruch nimmt, bei deren Nutzung personenbezogene Daten im Auftrag des Nutzers verarbeitet werden. Durch die Nutzung des Dienstes erklärt der Nutzer sein Einverständnis mit den Bedingungen dieses AVV.
+                            Dieser AVV gilt automatisch als geschlossen, sobald der Nutzer kostenpflichtige Dienste von Scanora — insbesondere die SEO Automatisierung — in Anspruch nimmt, bei deren Nutzung personenbezogene Daten im Auftrag des Nutzers verarbeitet werden. Durch die Nutzung des Dienstes erklärt der Nutzer sein Einverständnis mit den Bedingungen dieses AVV.
                         </p>
                         <p className="bg-white/2 border border-white/5 rounded-xl p-4 not-prose text-sm">
                             <strong className="text-slate-300">Auftragsverarbeiter:</strong><br />
                             Finn Paustian, Am Rund 6, 23566 Lübeck<br />
                             E-Mail: <a href="mailto:sitecheckai@gmail.com" className="text-violet-400 hover:text-violet-300">sitecheckai@gmail.com</a><br /><br />
                             <strong className="text-slate-300">Verantwortlicher:</strong><br />
-                            Der jeweilige Nutzer des AuditAI-Dienstes (gemäß Registrierungsdaten)
+                            Der jeweilige Nutzer des Scanora-Dienstes (gemäß Registrierungsdaten)
                         </p>
                     </Section>
 

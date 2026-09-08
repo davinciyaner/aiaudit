@@ -11,11 +11,11 @@ import Navbar from '../../../components/Navbar'
 const FAQS = [
     {
         q: 'What does SEO automation cost?',
-        a: 'SEO automation at AuditAI starts at €19/month for 3 websites and 50 keywords with weekly ranking updates. The Pro plan (€59/month) expands to 10 websites and 200 keywords including content gap analysis, the Expert plan (€149/month) covers up to 20 websites and 500 keywords. All plans include a 14-day free trial.',
+        a: 'SEO automation at Scanora starts at €19/month for 3 websites and 50 keywords with weekly ranking updates. The Pro plan (€59/month) expands to 10 websites and 200 keywords including content gap analysis, the Expert plan (€149/month) covers up to 20 websites and 500 keywords. All plans include a 14-day free trial.',
     },
     {
         q: 'What\'s the difference between a one-time SEO audit and SEO automation?',
-        a: 'A one-time SEO audit (part of the free AuditAI website audit) shows your SEO score at a single point in time. SEO automation tracks your Google rankings, keyword ideas, competitor analysis, and backlink overview automatically every week — as an ongoing history rather than a single snapshot.',
+        a: 'A one-time SEO audit (part of the free Scanora website audit) shows your SEO score at a single point in time. SEO automation tracks your Google rankings, keyword ideas, competitor analysis, and backlink overview automatically every week — as an ongoing history rather than a single snapshot.',
     },
     {
         q: 'Is there a free trial for SEO automation?',

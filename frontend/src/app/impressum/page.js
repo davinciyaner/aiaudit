@@ -1,11 +1,10 @@
 import Link from 'next/link'
-import { Zap } from 'lucide-react'
 
 export const metadata = {
     title: 'Impressum',
-    description: 'Impressum und rechtliche Angaben für AuditAI.',
+    description: 'Impressum und rechtliche Angaben für Scanora.',
     robots: { index: false },
-    alternates: { canonical: 'https://www.sitecheckai.dev/impressum' },
+    alternates: { canonical: 'https://www.scanora.ai/impressum' },
 }
 
 export default function ImpressumPage() {
@@ -15,8 +14,8 @@ export default function ImpressumPage() {
 
                 <div className="mb-12">
                     <Link href="/" className="inline-flex items-center gap-2 text-slate-500 hover:text-white transition-colors mb-8 text-sm">
-                        <Zap className="w-4 h-4 text-violet-400" />
-                        <span className="text-white font-bold">Audit<span className="text-transparent bg-clip-text bg-linear-to-r from-violet-400 to-cyan-400">AI</span></span>
+                        <svg className="w-4 h-4 text-violet-400" viewBox="0 0 192 192" fill="none"><circle cx="96" cy="96" r="50" stroke="currentColor" strokeWidth="14" /><circle cx="110" cy="82" r="13" fill="currentColor" /></svg>
+                        <span className="text-white font-bold">Scanora</span>
                     </Link>
                     <h1 className="text-3xl font-bold text-white mt-6 mb-2">Impressum</h1>
                     <p className="text-slate-500 text-sm">Angaben gemäß § 5 TMG</p>
@@ -83,7 +82,7 @@ export default function ImpressumPage() {
                         <section className="mb-8">
                             <h3 className="text-white font-semibold mb-3">Haftung für KI-generierte Inhalte</h3>
                             <p className="text-slate-400">
-                                AuditAI nutzt die Claude API von Anthropic zur Erstellung von KI-generierten Website-Analysen und Berichten. Die durch die KI erstellten Inhalte, Empfehlungen und Bewertungen dienen ausschließlich als unverbindliche Hinweise und stellen keine rechtlich bindende Beratung dar. Für die Korrektheit, Vollständigkeit oder Aktualität der KI-generierten Analyseergebnisse wird ausdrücklich keine Haftung übernommen. Die Nutzung der Analyseergebnisse erfolgt auf eigene Verantwortung des Nutzers. Es wird keinerlei Haftung für Schäden übernommen, die aus der Umsetzung der KI-generierten Empfehlungen entstehen.
+                                Scanora nutzt die Claude API von Anthropic zur Erstellung von KI-generierten Website-Analysen und Berichten. Die durch die KI erstellten Inhalte, Empfehlungen und Bewertungen dienen ausschließlich als unverbindliche Hinweise und stellen keine rechtlich bindende Beratung dar. Für die Korrektheit, Vollständigkeit oder Aktualität der KI-generierten Analyseergebnisse wird ausdrücklich keine Haftung übernommen. Die Nutzung der Analyseergebnisse erfolgt auf eigene Verantwortung des Nutzers. Es wird keinerlei Haftung für Schäden übernommen, die aus der Umsetzung der KI-generierten Empfehlungen entstehen.
                             </p>
                         </section>
 

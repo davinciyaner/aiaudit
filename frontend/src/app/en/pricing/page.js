@@ -14,7 +14,7 @@ const PLANS = [
         name: 'Free',
         price: 0,
         period: 'forever',
-        desc: 'To try out AuditAI',
+        desc: 'To try out Scanora',
         features: [
             '1 audit per month',
             'SEO score & analysis',

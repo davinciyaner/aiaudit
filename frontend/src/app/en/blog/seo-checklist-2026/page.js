@@ -5,19 +5,19 @@ import Footer from '../../../components/Footer'
 
 export const metadata = {
     title: { absolute: 'SEO Checklist 2026: Find Every Mistake Yourself in 15 Minutes' },
-    description: 'The complete SEO checklist for 2026, in a fixed order: 6 phases, 15 minutes, every important SEO and GEO signal. Check it yourself or run it automatically with AuditAI.',
+    description: 'The complete SEO checklist for 2026, in a fixed order: 6 phases, 15 minutes, every important SEO and GEO signal. Check it yourself or run it automatically with Scanora.',
     keywords: 'seo checklist 2026, seo checklist, seo mistakes checklist, find seo mistakes, technical seo checklist, free seo test',
     alternates: {
-        canonical: 'https://www.sitecheckai.dev/en/blog/seo-checklist-2026',
+        canonical: 'https://www.scanora.ai/en/blog/seo-checklist-2026',
         languages: {
-            'de-DE': 'https://www.sitecheckai.dev/blog/seo-checkliste-2026',
-            'en-US': 'https://www.sitecheckai.dev/en/blog/seo-checklist-2026',
+            'de-DE': 'https://www.scanora.ai/blog/seo-checkliste-2026',
+            'en-US': 'https://www.scanora.ai/en/blog/seo-checklist-2026',
         },
     },
     openGraph: {
         title: 'SEO Checklist 2026: Find Every Mistake Yourself in 15 Minutes',
         description: '6 phases, 15 minutes, every important SEO and GEO signal in a fixed order.',
-        url: 'https://www.sitecheckai.dev/en/blog/seo-checklist-2026',
+        url: 'https://www.scanora.ai/en/blog/seo-checklist-2026',
         type: 'article',
         locale: 'en_US',
     },
@@ -28,27 +28,27 @@ const jsonLd = {
     '@type': 'Article',
     headline: 'SEO Checklist 2026: Find Every Mistake Yourself in 15 Minutes',
     description: 'The complete SEO checklist for 2026, in a fixed order: 6 phases, 15 minutes, every important SEO and GEO signal.',
-    image: 'https://www.sitecheckai.dev/en/blog/seo-checklist-2026/opengraph-image',
+    image: 'https://www.scanora.ai/en/blog/seo-checklist-2026/opengraph-image',
     datePublished: '2026-07-15T09:00:00+02:00',
     dateModified: '2026-08-01T09:00:00+02:00',
-    author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.sitecheckai.dev/about' },
+    author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.scanora.ai/about' },
     publisher: {
         '@type': 'Organization',
-        name: 'AuditAI',
-        url: 'https://www.sitecheckai.dev',
-        logo: { '@type': 'ImageObject', url: 'https://www.sitecheckai.dev/logo', width: 512, height: 512 },
+        name: 'Scanora',
+        url: 'https://www.scanora.ai',
+        logo: { '@type': 'ImageObject', url: 'https://www.scanora.ai/logo', width: 512, height: 512 },
     },
-    url: 'https://www.sitecheckai.dev/en/blog/seo-checklist-2026',
-    mainEntityOfPage: 'https://www.sitecheckai.dev/en/blog/seo-checklist-2026',
+    url: 'https://www.scanora.ai/en/blog/seo-checklist-2026',
+    mainEntityOfPage: 'https://www.scanora.ai/en/blog/seo-checklist-2026',
 }
 
 const breadcrumbLd = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'AuditAI', item: 'https://www.sitecheckai.dev/en' },
-        { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.sitecheckai.dev/en/blog' },
-        { '@type': 'ListItem', position: 3, name: 'SEO Checklist 2026', item: 'https://www.sitecheckai.dev/en/blog/seo-checklist-2026' },
+        { '@type': 'ListItem', position: 1, name: 'Scanora', item: 'https://www.scanora.ai/en' },
+        { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.scanora.ai/en/blog' },
+        { '@type': 'ListItem', position: 3, name: 'SEO Checklist 2026', item: 'https://www.scanora.ai/en/blog/seo-checklist-2026' },
     ],
 }
 
@@ -85,7 +85,7 @@ const faqLd = {
             name: 'Is a manual SEO checklist enough, or do I need a tool?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'For a single page, the manual checklist is enough. Once you\'re managing multiple pages, regular deployments, or several domains, manual effort quickly becomes unrealistic. An automated SEO test like AuditAI checks the same points across up to 25 subpages at once - including GEO signals that classic checklists often miss.',
+                text: 'For a single page, the manual checklist is enough. Once you\'re managing multiple pages, regular deployments, or several domains, manual effort quickly becomes unrealistic. An automated SEO test like Scanora checks the same points across up to 25 subpages at once - including GEO signals that classic checklists often miss.',
             },
         },
     ],
@@ -98,12 +98,12 @@ const howToLd = {
     description: 'Six phases, 24 points, fixed order - from the biggest wins per minute to the GEO bonus check.',
     totalTime: 'PT15M',
     step: [
-        { '@type': 'HowToStep', name: 'Crawlability & indexing', text: 'Check robots.txt, noindex directives, XML sitemap, and crawl errors in Search Console.', url: 'https://www.sitecheckai.dev/en/blog/seo-checklist-2026#phase-01' },
-        { '@type': 'HowToStep', name: 'Meta basics', text: 'Check the title tag, meta description, H1 tag, and heading hierarchy.', url: 'https://www.sitecheckai.dev/en/blog/seo-checklist-2026#phase-02' },
-        { '@type': 'HowToStep', name: 'Load time & Core Web Vitals', text: 'Check PageSpeed score, LCP, image compression, and the mobile-friendly test.', url: 'https://www.sitecheckai.dev/en/blog/seo-checklist-2026#phase-03' },
-        { '@type': 'HowToStep', name: 'Content & internal structure', text: 'Check word count, internal links, duplicate content, and the canonical tag.', url: 'https://www.sitecheckai.dev/en/blog/seo-checklist-2026#phase-04' },
-        { '@type': 'HowToStep', name: 'Technical trust & security', text: 'Check HTTPS, the HSTS header, broken links, and legal/privacy pages.', url: 'https://www.sitecheckai.dev/en/blog/seo-checklist-2026#phase-05' },
-        { '@type': 'HowToStep', name: 'GEO bonus check: AI visibility', text: 'Check llms.txt, Organization and FAQPage schema, and AI crawler access in robots.txt.', url: 'https://www.sitecheckai.dev/en/blog/seo-checklist-2026#phase-06' },
+        { '@type': 'HowToStep', name: 'Crawlability & indexing', text: 'Check robots.txt, noindex directives, XML sitemap, and crawl errors in Search Console.', url: 'https://www.scanora.ai/en/blog/seo-checklist-2026#phase-01' },
+        { '@type': 'HowToStep', name: 'Meta basics', text: 'Check the title tag, meta description, H1 tag, and heading hierarchy.', url: 'https://www.scanora.ai/en/blog/seo-checklist-2026#phase-02' },
+        { '@type': 'HowToStep', name: 'Load time & Core Web Vitals', text: 'Check PageSpeed score, LCP, image compression, and the mobile-friendly test.', url: 'https://www.scanora.ai/en/blog/seo-checklist-2026#phase-03' },
+        { '@type': 'HowToStep', name: 'Content & internal structure', text: 'Check word count, internal links, duplicate content, and the canonical tag.', url: 'https://www.scanora.ai/en/blog/seo-checklist-2026#phase-04' },
+        { '@type': 'HowToStep', name: 'Technical trust & security', text: 'Check HTTPS, the HSTS header, broken links, and legal/privacy pages.', url: 'https://www.scanora.ai/en/blog/seo-checklist-2026#phase-05' },
+        { '@type': 'HowToStep', name: 'GEO bonus check: AI visibility', text: 'Check llms.txt, Organization and FAQPage schema, and AI crawler access in robots.txt.', url: 'https://www.scanora.ai/en/blog/seo-checklist-2026#phase-06' },
     ],
 }
 
@@ -199,7 +199,7 @@ export default function SeoChecklistPageEn() {
 
                 {/* Breadcrumb */}
                 <div className="flex items-center gap-2 text-xs text-slate-600 mb-8">
-                    <Link href="/en" className="hover:text-slate-400 transition-colors">AuditAI</Link>
+                    <Link href="/en" className="hover:text-slate-400 transition-colors">Scanora</Link>
                     <span>/</span>
                     <Link href="/en/blog" className="hover:text-slate-400 transition-colors">Blog</Link>
                     <span>/</span>
@@ -228,7 +228,7 @@ export default function SeoChecklistPageEn() {
                             <span>Finn Paustian</span>
                         </Link>
                         <span>·</span>
-                        <span>Founder, AuditAI</span>
+                        <span>Founder, Scanora</span>
                     </div>
                 </div>
 
@@ -277,13 +277,13 @@ export default function SeoChecklistPageEn() {
                         <figure className="mb-6">
                             <Image
                                 src="/blog/auditai-seo-checks.png"
-                                alt="AuditAI check grid showing passed and failed points like title tag, meta description, H1 tag, and alt texts"
+                                alt="Scanora check grid showing passed and failed points like title tag, meta description, H1 tag, and alt texts"
                                 width={910}
                                 height={103}
                                 className="w-full h-auto rounded-2xl border border-white/[0.07]"
                             />
                             <figcaption className="text-xs text-slate-600 mt-2">
-                                This is exactly the kind of check AuditAI runs automatically — green for passed, red with a concrete reason for failed.
+                                This is exactly the kind of check Scanora runs automatically — green for passed, red with a concrete reason for failed.
                             </figcaption>
                         </figure>
                         <div className="space-y-5">
@@ -366,7 +366,7 @@ export default function SeoChecklistPageEn() {
                         Phases 1, 2, 3, 4 & 6 in 60 seconds instead of 13 minutes
                     </h2>
                     <p className="text-slate-400 text-sm mb-6 max-w-md mx-auto leading-relaxed">
-                        AuditAI automatically covers crawlability, metadata, Core Web Vitals, content structure, and GEO signals - across up to 25 subpages at once. Only phase 5 (security headers) still needs a manual check today. Start without registration, sign up free for the full report with all scores.
+                        Scanora automatically covers crawlability, metadata, Core Web Vitals, content structure, and GEO signals - across up to 25 subpages at once. Only phase 5 (security headers) still needs a manual check today. Start without registration, sign up free for the full report with all scores.
                     </p>
                     <Link
                         href="/dashboard"
