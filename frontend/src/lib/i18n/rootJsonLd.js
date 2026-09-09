@@ -25,7 +25,7 @@ export function getRootJsonLd(locale) {
                     name: 'Scanora',
                     publisher: { '@id': 'https://www.scanora.ai/en/#organization' },
                     inLanguage: 'en-US',
-                    dateModified: '2026-09-08',
+                    dateModified: '2026-09-09',
                 },
                 {
                     '@type': 'SoftwareApplication',
@@ -34,7 +34,7 @@ export function getRootJsonLd(locale) {
                     applicationCategory: 'BusinessApplication',
                     operatingSystem: 'Web',
                     description: 'Full website audit powered by AI: SEO, performance, and GEO (AI search) visibility in under 60 seconds.',
-                    dateModified: '2026-09-08',
+                    dateModified: '2026-09-09',
                     offers: [
                         { '@type': 'Offer', name: 'Free', price: '0', priceCurrency: 'EUR', description: '1 audit per month' },
                         { '@type': 'Offer', name: 'Pro', price: '29', priceCurrency: 'EUR', description: '10 audits per month' },
@@ -70,7 +70,7 @@ export function getRootJsonLd(locale) {
                 name: 'Scanora',
                 publisher: { '@id': 'https://www.scanora.ai/#organization' },
                 inLanguage: 'de-DE',
-                dateModified: '2026-09-08',
+                dateModified: '2026-09-09',
             },
             {
                 '@type': 'SoftwareApplication',
@@ -79,7 +79,7 @@ export function getRootJsonLd(locale) {
                 applicationCategory: 'BusinessApplication',
                 operatingSystem: 'Web',
                 description: 'Vollständiger Website-Audit mit KI: SEO, Performance und GEO-Sichtbarkeit in unter 60 Sekunden.',
-                dateModified: '2026-09-08',
+                dateModified: '2026-09-09',
                 offers: [
                     { '@type': 'Offer', name: 'Free', price: '0', priceCurrency: 'EUR', description: '1 Audit pro Monat' },
                     { '@type': 'Offer', name: 'Pro', price: '29', priceCurrency: 'EUR', description: '10 Audits pro Monat' },
@@ -95,7 +95,7 @@ export function getRootJsonLd(locale) {
                 inLanguage: 'de-DE',
                 primaryImageOfPage: { '@id': 'https://www.scanora.ai/logo' },
                 datePublished: '2026-01-15',
-                dateModified: '2026-09-08',
+                dateModified: '2026-09-09',
                 about: [
                     { '@type': 'Thing', name: 'Generative Engine Optimization' },
                     { '@type': 'Thing', name: 'AI Visibility' },
@@ -110,7 +110,7 @@ export function getRootJsonLd(locale) {
                 author: { '@type': 'Organization', '@id': 'https://www.scanora.ai/#organization', name: 'Scanora' },
                 publisher: { '@id': 'https://www.scanora.ai/#organization' },
                 datePublished: '2026-01-15',
-                dateModified: '2026-09-08',
+                dateModified: '2026-09-09',
                 mainEntityOfPage: { '@id': 'https://www.scanora.ai/#webpage' },
                 about: [
                     { '@type': 'Thing', name: 'Generative Engine Optimization' },
