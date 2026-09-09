@@ -60,4 +60,13 @@ Allow: /
 User-agent: OAI-SearchBot
 Allow: /
 
+User-agent: Timpibot
+Allow: /
+
+User-agent: Diffbot
+Allow: /
+
+User-agent: PetalBot
+Allow: /
+
 Sitemap: https://www.scanora.ai/sitemap.xml

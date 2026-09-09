@@ -27,4 +27,20 @@ export const FAQS = [
         q: 'Wie verbessere ich meinen SEO-Score schnell?',
         a: 'Die häufigsten Quick-Wins: Title-Tag auf 50–60 Zeichen optimieren, Meta-Descriptions auf jeder Seite setzen, H1-Tag mit Haupt-Keyword versehen und fehlende Bild-Alt-Texte ergänzen. Scanora zeigt dir nach dem Audit genau welche dieser Punkte bei dir fehlen — priorisiert nach Wirkung.',
     },
+    {
+        q: 'Was ist der Unterschied zwischen dem einmaligen Audit und der GEO-Automatisierung?',
+        a: 'Der einmalige Audit (Teil des kostenlosen Scanora Website-Audits) zeigt den GEO-Score deiner Website zu einem Zeitpunkt anhand technischer Signale wie llms.txt und Schema.org. Die GEO-Automatisierung ist ein separates Abo ab €4,99/Monat, das wöchentlich automatisch prüft, ob Claude, ChatGPT, Gemini, Perplexity und Google AI Overview deine Website tatsächlich in ihren Antworten erwähnen, und den Verlauf über Zeit zeigt statt einer Einzelmessung.',
+    },
+    {
+        q: 'Welche KI-Plattformen trackt die GEO-Automatisierung von Scanora?',
+        a: 'Claude, ChatGPT, Gemini, Perplexity und Google AI Overview (5 Plattformen). Im Einsteiger-Plan der GEO-Automatisierung (€4,99/Monat) sind Claude und Gemini enthalten, die übrigen drei Plattformen sind ab dem Pro-Plan (€29,99/Monat) inbegriffen.',
+    },
+    {
+        q: 'Prüft Scanora mehrere Frageformulierungen pro Keyword?',
+        a: 'Ja, ab dem Pro-Plan der GEO-Automatisierung wird jedes Keyword in zwei Prompt-Varianten geprüft — „Empfehlung" und „Vergleich" —, da eine Domain je nach Art der Nutzeranfrage unterschiedlich oft erwähnt wird. Der Einsteiger-Plan nutzt nur die Empfehlungs-Variante.',
+    },
+    {
+        q: 'Wie unterscheidet sich Scanora von Ahrefs oder Semrush?',
+        a: 'Scanora kombiniert klassisches SEO-Ranking-Tracking mit KI-Sichtbarkeits-Tracking (GEO) in einem Produkt und einem Preis, während Ahrefs und Semrush primär auf SEO ausgerichtet sind und KI-Sichtbarkeit erst nachträglich als separates, teureres Zusatzmodul anbieten.',
+    },
 ]
