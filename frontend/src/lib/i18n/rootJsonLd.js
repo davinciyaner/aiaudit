@@ -102,6 +102,23 @@ export function getRootJsonLd(locale) {
                     { '@type': 'Thing', name: 'SEO-Audit' },
                 ],
             },
+            {
+                '@type': 'Article',
+                '@id': 'https://www.scanora.ai/#article',
+                headline: 'AI Visibility & SEO prüfen: Wirst du von ChatGPT, Perplexity und Google zitiert?',
+                description: 'Scanora prüft in unter 60 Sekunden kostenlos, ob eine Website bei ChatGPT, Claude, Perplexity und Google AI Overview zitiert wird, plus klassische SEO-Rankings.',
+                author: { '@type': 'Organization', '@id': 'https://www.scanora.ai/#organization', name: 'Scanora' },
+                publisher: { '@id': 'https://www.scanora.ai/#organization' },
+                datePublished: '2026-01-15',
+                dateModified: '2026-09-08',
+                mainEntityOfPage: { '@id': 'https://www.scanora.ai/#webpage' },
+                about: [
+                    { '@type': 'Thing', name: 'Generative Engine Optimization' },
+                    { '@type': 'Thing', name: 'AI Visibility' },
+                    { '@type': 'Thing', name: 'SEO-Audit' },
+                ],
+                isPartOf: { '@id': 'https://www.scanora.ai/#website' },
+            },
         ],
     }
 }

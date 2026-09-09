@@ -42,7 +42,11 @@ export default function ScoreGauges() {
     const reduceMotion = useReducedMotion()
 
     return (
-        <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl p-5 sm:p-6 h-full">
+        <div
+            className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl p-5 sm:p-6 h-full"
+            role="img"
+            aria-label="Scanora Audit-Score: 95 von 100 Punkten bei GEO-Sichtbarkeit, 92 von 100 Punkten bei SEO"
+        >
             <div className="flex items-center gap-2 mb-6">
                 <h3 className="text-sm font-semibold text-white">Audit-Scores</h3>
                 <span className="text-[10px] px-1.5 py-0.5 rounded-md bg-[var(--surface-08)] text-slate-500 font-medium">Beispiel</span>

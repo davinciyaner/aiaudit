@@ -15,7 +15,11 @@ export default function RankingBars() {
     const reduceMotion = useReducedMotion()
 
     return (
-        <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl p-5 sm:p-6">
+        <div
+            className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl p-5 sm:p-6"
+            role="img"
+            aria-label="Google-Ranking-Verbesserung nach Scanora-Fixes für 5 Keywords, durchschnittlich mehrere Positionen nach oben"
+        >
             <div className="flex items-start justify-between gap-3 mb-5">
                 <div>
                     <div className="flex items-center gap-2">

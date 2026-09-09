@@ -89,7 +89,7 @@ Scanora ersetzt mehrere separate Tools: Screaming Frog (SEO), Google Lighthouse 
 
 **Was ist der Unterschied zwischen dem Audit und der GEO-Automatisierung?** Der einmalige Audit zeigt den GEO-Score einer Website zu einem Zeitpunkt (technische Signale wie llms.txt und Schema.org). Die GEO-Automatisierung ist ein separates Abo ab €4,99/Monat, das wöchentlich automatisch prüft, ob KI-Modelle die Website tatsächlich in Antworten erwähnen, und den Verlauf über Zeit zeigt.
 
-**Welche KI-Plattformen trackt die GEO-Automatisierung von Scanora?** Claude, ChatGPT, Perplexity und Google AI Overview. Im günstigsten Plan (Einsteiger, €4,99/Monat) ist nur Claude enthalten, die übrigen drei Plattformen sind ab dem Pro-Plan (€9,99/Monat) inbegriffen.
+**Welche KI-Plattformen trackt die GEO-Automatisierung von Scanora?** Claude, ChatGPT, Gemini, Perplexity und Google AI Overview (5 Plattformen). Im günstigsten Plan (Einsteiger, €4,99/Monat) sind Claude und Gemini enthalten, die übrigen drei Plattformen sind ab dem Pro-Plan (€29,99/Monat) inbegriffen.
 
 **Prüft Scanora mehrere Frageformulierungen pro Keyword?** Ja, ab dem Pro-Plan wird jedes Keyword in zwei Prompt-Varianten geprüft (Empfehlung und Vergleich), da eine Domain je nach Art der Nutzeranfrage unterschiedlich oft erwähnt wird.
 

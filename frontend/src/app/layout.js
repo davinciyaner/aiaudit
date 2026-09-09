@@ -37,7 +37,14 @@ export const metadata = {
         description: 'SEO, Performance & GEO in 60 Sekunden. Kostenlos starten.',
         creator: '@scanoraai',
     },
-    alternates: { canonical: 'https://www.scanora.ai' },
+    alternates: {
+        canonical: 'https://www.scanora.ai',
+        languages: {
+            de: 'https://www.scanora.ai',
+            en: 'https://www.scanora.ai/en',
+            'x-default': 'https://www.scanora.ai',
+        },
+    },
 }
 
 export default async function RootLayout({ children }) {

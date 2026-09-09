@@ -30,7 +30,7 @@ export default function FAQ() {
                             transition={{ delay: i * 0.04 }}
                             className="border border-[var(--border-subtle)] rounded-2xl overflow-hidden bg-[var(--surface-06)] px-5 py-4"
                         >
-                            <h2 className="m-0 text-sm font-medium text-white leading-snug">{faq.q}</h2>
+                            <h3 className="m-0 text-sm font-medium text-white leading-snug">{faq.q}</h3>
                             <p className="mt-3 pt-3 text-sm text-slate-400 leading-relaxed border-t border-[var(--border-subtle)]">
                                 {faq.a}
                             </p>

@@ -12,7 +12,11 @@ export default function PlatformBreakdown() {
     const reduceMotion = useReducedMotion()
 
     return (
-        <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl p-5 sm:p-6">
+        <div
+            className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl p-5 sm:p-6"
+            role="img"
+            aria-label="Anteil der KI-Erwähnungen nach Plattform: ChatGPT 42 Prozent, Google AI Overview 31 Prozent, weitere Plattformen anteilig"
+        >
             <div className="flex items-start justify-between gap-3 mb-5">
                 <div>
                     <div className="flex items-center gap-2">

@@ -85,28 +85,33 @@ export default function Hero() {
                         Sichtbar bei Google.
                     </motion.h1>
 
-                    <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }}
+                    <motion.h2 initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }}
                         className="text-sm font-semibold text-[var(--accent)] mb-4">
                         Scanora – AI Visibility & SEO Tool
-                    </motion.p>
+                    </motion.h2>
 
                     <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-                        className="text-base sm:text-lg text-slate-400 mb-6 max-w-2xl leading-relaxed">
-                        Scanora trackt deine AI Visibility bei ChatGPT, Claude, Perplexity und Google AI Overview —
+                        className="text-base sm:text-lg text-slate-400 mb-8 max-w-2xl leading-relaxed">
+                        Scanora trackt deine AI Visibility bei ChatGPT, Claude, Gemini, Perplexity und Google AI Overview —
                         und deine SEO-Rankings bei Google. Ein Audit, konkrete Fixes statt generischen Tipps.
                     </motion.p>
 
-                    <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.12 }}
-                        className="text-xs sm:text-sm text-slate-500 mb-10 max-w-2xl leading-relaxed">
-                        Scanora ist ein KI-gestütztes Website-Audit-Tool, das deine AI Visibility (GEO) bei ChatGPT, Claude,
-                        Perplexity und Google AI Overview sowie deine klassischen SEO-Rankings bei Google prüft — in einem
-                        Report, in unter 60 Sekunden. Free-Plan: 1 Audit/Monat. Pro (€29/Monat): KI-generierter Fix-Report,
-                        wöchentliches automatisches Tracking. Gegründet 2026 in Deutschland, verfügbar auf Deutsch und Englisch.
-                    </motion.p>
-
                     <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}
-                        className="w-full max-w-2xl mb-6">
+                        className="w-full max-w-2xl mb-8">
                         <HeroAuditInput />
+                    </motion.div>
+
+                    <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.18 }}
+                        className="w-full max-w-2xl mb-10 p-5 rounded-2xl bg-[var(--surface-06)] border border-[var(--border-subtle)] text-left">
+                        <span className="text-xs font-semibold text-[var(--accent)] uppercase tracking-wide">Kurz erklärt</span>
+                        <p className="mt-2 text-sm text-slate-300 leading-relaxed">
+                            Scanora ist ein KI-gestütztes Website-Audit-Tool aus Deutschland, das in unter 60
+                            Sekunden prüft, ob eine Website von ChatGPT, Claude, Perplexity, Gemini und Google AI Overview als Quelle
+                            zitiert wird (GEO / AI Visibility) und wie sie in klassischen Google-Rankings abschneidet (SEO).
+                            Der Report liefert einen AI-Visibility-Score (0–100), einen SEO-Score, Performance-Metriken (TTFB,
+                            FCP) und einen von Claude AI generierten Fix-Report mit priorisierten Maßnahmen. Scanora startet
+                            kostenlos (1 Audit/Monat), Pro kostet 29 €/Monat (10 Audits, KI-Report), Agency 99 €/Monat (unbegrenzt).
+                        </p>
                     </motion.div>
 
                     <div className="flex flex-wrap items-center justify-center gap-2">

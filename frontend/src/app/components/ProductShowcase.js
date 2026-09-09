@@ -27,9 +27,13 @@ const GEO_RESULTS = [
     { label: 'Produktdefinition', ok: false, note: 'Nicht klar erkennbar' },
 ]
 
-function ResultCard({ title, score, checksLabel, results }) {
+function ResultCard({ title, score, checksLabel, results, ariaLabel }) {
     return (
-        <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl overflow-hidden shadow-2xl shadow-black/30">
+        <div
+            className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl overflow-hidden shadow-2xl shadow-black/30"
+            role="img"
+            aria-label={ariaLabel}
+        >
             <div className="px-5 py-4 border-b border-[var(--border-subtle)] flex items-center justify-between">
                 <span className="text-sm font-semibold text-white">{title}</span>
                 <span className="text-xs px-2.5 py-1 rounded-full bg-[var(--accent-soft)] text-[var(--accent)] font-semibold">{score}</span>
@@ -104,7 +108,8 @@ export default function ProductShowcase() {
                     </motion.div>
 
                     <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.1 }}>
-                        <ResultCard title="GEO / KI-Sichtbarkeit" score="Score: 41/100" checksLabel="19 Checks · Scanora" results={GEO_RESULTS} />
+                        <ResultCard title="GEO / KI-Sichtbarkeit" score="Score: 41/100" checksLabel="19 Checks · Scanora" results={GEO_RESULTS}
+                            ariaLabel="Beispiel eines GEO-Audits: geprüfte Signale wie llms.txt, Schema.org und FAQ-Markup mit Status erfüllt oder fehlend" />
                     </motion.div>
                 </div>
 
@@ -112,7 +117,8 @@ export default function ProductShowcase() {
                 <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
                     <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.1 }}
                         className="order-2 lg:order-1">
-                        <ResultCard title="SEO-Analyse" score="Score: 64/100" checksLabel="14 Checks · 12 Seiten analysiert · Scanora" results={SEO_RESULTS} />
+                        <ResultCard title="SEO-Analyse" score="Score: 64/100" checksLabel="14 Checks · 12 Seiten analysiert · Scanora" results={SEO_RESULTS}
+                            ariaLabel="Beispiel eines SEO-Audits: geprüfte Signale wie Title, Meta-Description, Headings und interne Links mit Status erfüllt oder fehlend" />
                     </motion.div>
 
                     <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
