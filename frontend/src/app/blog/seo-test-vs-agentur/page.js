@@ -3,9 +3,9 @@ import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
 
 export const metadata = {
-    title: 'SEO-Test selbst machen oder Agentur beauftragen? Der ehrliche Kostenvergleich',
-    description: 'SEO-Check selbst durchführen oder eine SEO-Check-Agentur beauftragen: Kosten, was jede Option wirklich abdeckt, und für wen sich was lohnt - ohne Verkaufsrhetorik.',
-    keywords: 'seo test vs agentur, seo audit selbst machen, seo agentur kosten, seo agentur oder selbst machen, lohnt sich seo agentur, seo selbst optimieren, seo-check agentur, seo check agentur',
+    title: 'Was kostet ein SEO-Audit? Tool vs. Agentur im ehrlichen Kostenvergleich',
+    description: 'Was kostet ein SEO-Audit oder eine SEO-Analyse? Automatisierter Audit ab 0€ vs. SEO-Agentur (500-8.000€): Kosten, was jede Option wirklich abdeckt, und für wen sich was lohnt - ohne Verkaufsrhetorik.',
+    keywords: 'seo audit kosten, seo analyse preise, was kostet ein seo audit, seo test vs agentur, seo audit selbst machen, seo agentur kosten, seo agentur oder selbst machen, lohnt sich seo agentur, seo-check agentur, seo check agentur',
     alternates: {
         canonical: 'https://www.scanora.ai/blog/seo-test-vs-agentur',
         languages: {
@@ -14,8 +14,8 @@ export const metadata = {
         },
     },
     openGraph: {
-        title: 'SEO-Test selbst machen oder Agentur beauftragen? Der ehrliche Kostenvergleich',
-        description: 'SEO-Check selbst machen oder SEO-Check-Agentur beauftragen: Kosten, Leistungsumfang und für wen sich was lohnt - der ehrliche Vergleich ohne Verkaufsrhetorik.',
+        title: 'Was kostet ein SEO-Audit? Tool vs. Agentur im ehrlichen Kostenvergleich',
+        description: 'Automatisierter SEO-Audit ab 0€ vs. SEO-Agentur (500-8.000€): Kosten, Leistungsumfang und für wen sich was lohnt - der ehrliche Vergleich ohne Verkaufsrhetorik.',
         url: 'https://www.scanora.ai/blog/seo-test-vs-agentur',
         type: 'article',
         locale: 'de_DE',
@@ -25,8 +25,8 @@ export const metadata = {
 const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
-    headline: 'SEO-Test selbst machen oder Agentur beauftragen? Der ehrliche Kostenvergleich',
-    description: 'SEO-Check selbst durchführen oder eine SEO-Check-Agentur beauftragen: Kosten, was jede Option wirklich abdeckt, und für wen sich was lohnt.',
+    headline: 'Was kostet ein SEO-Audit? Tool vs. Agentur im ehrlichen Kostenvergleich',
+    description: 'Was kostet ein SEO-Audit oder eine SEO-Analyse? Automatisierter Audit ab 0€ vs. SEO-Agentur (500-8.000€): Kosten, was jede Option wirklich abdeckt, und für wen sich was lohnt.',
     image: 'https://www.scanora.ai/blog/seo-test-vs-agentur/opengraph-image',
     datePublished: '2026-07-26T09:00:00+02:00',
     dateModified: '2026-07-30T09:00:00+02:00',
@@ -47,7 +47,7 @@ const breadcrumbLd = {
     itemListElement: [
         { '@type': 'ListItem', position: 1, name: 'Scanora', item: 'https://www.scanora.ai' },
         { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.scanora.ai/blog' },
-        { '@type': 'ListItem', position: 3, name: 'SEO-Test vs. Agentur', item: 'https://www.scanora.ai/blog/seo-test-vs-agentur' },
+        { '@type': 'ListItem', position: 3, name: 'SEO-Audit vs. Agentur', item: 'https://www.scanora.ai/blog/seo-test-vs-agentur' },
     ],
 }
 
@@ -57,10 +57,18 @@ const faqLd = {
     mainEntity: [
         {
             '@type': 'Question',
-            name: 'Kann ein SEO-Test eine Agentur ersetzen?',
+            name: 'Was kostet ein SEO-Audit?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'Für die technische Diagnose ja, für die Umsetzung nein. Ein automatisierter SEO-Test findet Fehler und zeigt Scores - er schreibt keinen Content, baut keine Backlinks auf und entwickelt keine Content-Strategie. Für reine technische Fehlerdiagnose ist er oft die günstigere und schnellere Wahl, für strategische Weiterentwicklung bleibt eine Agentur oder ein Freelancer relevant.',
+                text: 'Ein automatisierter SEO-Audit kostet bei Scanora ab 0 € (Free-Plan, 1 Audit/Monat) bzw. ab 29 €/Monat im Pro-Plan mit KI-generiertem Fix-Report. Ein SEO-Audit durch eine Agentur oder einen Freelancer kostet dagegen als Einzelprojekt meist 500-2.500 €, bei laufender monatlicher Betreuung (Retainer) 500-8.000+ € pro Monat, abhängig von Website-Größe, Branche und Leistungsumfang.',
+            },
+        },
+        {
+            '@type': 'Question',
+            name: 'Kann ein SEO-Audit eine Agentur ersetzen?',
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Für die technische Diagnose ja, für die Umsetzung nein. Ein automatisierter SEO-Audit findet Fehler und zeigt Scores - er schreibt keinen Content, baut keine Backlinks auf und entwickelt keine Content-Strategie. Für reine technische Fehlerdiagnose ist er oft die günstigere und schnellere Wahl, für strategische Weiterentwicklung bleibt eine Agentur oder ein Freelancer relevant.',
             },
         },
         {
@@ -73,18 +81,18 @@ const faqLd = {
         },
         {
             '@type': 'Question',
-            name: 'Wann lohnt sich ein automatisierter SEO-Test statt einer Agentur?',
+            name: 'Wann lohnt sich ein automatisierter SEO-Audit statt einer Agentur?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'Wenn das Hauptproblem technische Fehler sind (fehlende Meta-Descriptions, langsame Ladezeit, kaputte Canonicals) statt fehlender Content-Strategie oder Backlink-Aufbau. Auch für Freelancer, kleine Unternehmen oder als laufendes Monitoring zwischen Agentur-Zyklen ist ein SEO-Test die günstigere, schnellere Option.',
+                text: 'Wenn das Hauptproblem technische Fehler sind (fehlende Meta-Descriptions, langsame Ladezeit, kaputte Canonicals) statt fehlender Content-Strategie oder Backlink-Aufbau. Auch für Freelancer, kleine Unternehmen oder als laufendes Monitoring zwischen Agentur-Zyklen ist ein SEO-Audit die günstigere, schnellere Option.',
             },
         },
         {
             '@type': 'Question',
-            name: 'Kann ich SEO-Test und Agentur kombinieren?',
+            name: 'Kann ich SEO-Audit und Agentur kombinieren?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'Das ist in der Praxis die häufigste sinnvolle Kombination: ein automatisierter SEO-Test übernimmt das laufende technische Monitoring zwischen den Terminen, die Agentur oder der Freelancer kümmert sich um Content-Strategie, Backlink-Aufbau und komplexere Optimierungen. So werden technische Probleme sofort sichtbar, statt erst beim nächsten Agentur-Report aufzufallen.',
+                text: 'Das ist in der Praxis die häufigste sinnvolle Kombination: ein automatisierter SEO-Audit übernimmt das laufende technische Monitoring zwischen den Terminen, die Agentur oder der Freelancer kümmert sich um Content-Strategie, Backlink-Aufbau und komplexere Optimierungen. So werden technische Probleme sofort sichtbar, statt erst beim nächsten Agentur-Report aufzufallen.',
             },
         },
     ],
@@ -131,7 +139,7 @@ export default function SeoTestVsAgenturPage() {
                     <span>/</span>
                     <Link href="/blog" className="hover:text-slate-400 transition-colors">Blog</Link>
                     <span>/</span>
-                    <span className="text-slate-500">SEO-Test vs. Agentur</span>
+                    <span className="text-slate-500">SEO-Audit vs. Agentur</span>
                 </div>
 
                 {/* Header */}
@@ -145,10 +153,10 @@ export default function SeoTestVsAgenturPage() {
                         <span className="text-xs text-slate-600">· Aktualisiert am 30. Juli 2026</span>
                     </div>
                     <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight tracking-tight mb-5">
-                        SEO-Test selbst machen oder Agentur beauftragen?
+                        Was kostet ein SEO-Audit? Tool oder Agentur beauftragen?
                     </h1>
                     <p className="text-lg text-slate-400 leading-relaxed">
-                        Die ehrliche Antwort: Es kommt darauf an, was dein eigentliches Problem ist. Egal ob du nach einem SEO-Check, einer SEO-Check-Agentur oder einem eigenständigen SEO-Test suchst - ein automatisiertes Tool und eine SEO-Agentur lösen unterschiedliche Probleme. Hier der Vergleich ohne Verkaufsrhetorik, inklusive echter Preisspannen.
+                        Kurz gesagt: Ein automatisierter SEO-Audit kostet ab 0 €, eine SEO-Agentur meist 500-8.000+ € pro Monat. Die ehrliche Antwort auf die Frage, was für dich richtig ist, kommt aber darauf an, was dein eigentliches Problem ist. Egal ob du nach den Kosten für ein SEO-Audit, eine SEO-Analyse, einen SEO-Check oder eine SEO-Agentur suchst - ein automatisiertes Tool und eine SEO-Agentur lösen unterschiedliche Probleme. Hier der Vergleich ohne Verkaufsrhetorik, inklusive echter Preisspannen.
                     </p>
                     <div className="mt-5 flex items-center gap-2 text-xs text-slate-600">
                         <Link href="/about" className="flex items-center gap-2 hover:text-slate-300 transition-colors">
@@ -183,7 +191,7 @@ export default function SeoTestVsAgenturPage() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">Was ein automatisierter SEO-Test abdeckt - und was nicht</h2>
+                        <h2 className="text-2xl font-bold text-white mb-4">Was ein automatisierter SEO-Audit abdeckt - und was nicht</h2>
                         <p>
                             Ein Tool wie Scanora ist ein Diagnose-Instrument, keine Ersatz-Agentur. Es findet technische Probleme automatisch und wiederholt - schreibt aber keine Inhalte und baut keine Backlinks auf. Welche Fehler das konkret sind, steht mit Zahlen und Fix-Anleitung in unserem Artikel zu den{' '}
                             <Link href="/blog/seo-test-haeufige-fehler" className="text-amber-400 hover:text-amber-300 underline underline-offset-2">
@@ -204,13 +212,13 @@ export default function SeoTestVsAgenturPage() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-6">Der Kostenvergleich im Überblick</h2>
+                        <h2 className="text-2xl font-bold text-white mb-6">Was kostet ein SEO-Audit im Vergleich zur Agentur?</h2>
                         <div className="overflow-x-auto rounded-2xl border border-white/[0.07]">
                             <table className="w-full text-sm min-w-[600px]">
                                 <thead>
                                     <tr className="border-b border-white/5 bg-white/[0.02]">
                                         <th className="text-left px-5 py-3 text-slate-400 font-semibold">Kriterium</th>
-                                        <th className="text-left px-5 py-3 text-amber-400 font-semibold">Automatisierter SEO-Test</th>
+                                        <th className="text-left px-5 py-3 text-amber-400 font-semibold">Automatisierter SEO-Audit</th>
                                         <th className="text-left px-5 py-3 text-violet-400 font-semibold">SEO-Agentur</th>
                                     </tr>
                                 </thead>
@@ -237,7 +245,7 @@ export default function SeoTestVsAgenturPage() {
                     <section>
                         <h2 className="text-2xl font-bold text-white mb-4">Wann lohnt sich was?</h2>
                         <p>
-                            Wenn dein Hauptproblem technische Fehler sind - langsame Ladezeit, fehlende Meta-Descriptions, kaputte Canonicals, mangelnde KI-Sichtbarkeit - ist ein automatisierter SEO-Test fast immer die schnellere und günstigere erste Wahl. Das gilt besonders für Freelancer, kleine Unternehmen und alle, die zuerst wissen wollen, wo sie überhaupt stehen, bevor sie einen größeren Betrag investieren.
+                            Wenn dein Hauptproblem technische Fehler sind - langsame Ladezeit, fehlende Meta-Descriptions, kaputte Canonicals, mangelnde KI-Sichtbarkeit - ist ein automatisierter SEO-Audit fast immer die schnellere und günstigere erste Wahl. Das gilt besonders für Freelancer, kleine Unternehmen und alle, die zuerst wissen wollen, wo sie überhaupt stehen, bevor sie einen größeren Betrag investieren.
                         </p>
                         <p className="mt-4">
                             Eine Agentur wird relevant, sobald es um Content-Strategie, Backlink-Aufbau oder komplexe technische Migrationen geht - Arbeit, die Erfahrung, Kreativität und Ausführung braucht, nicht nur Diagnose.
@@ -251,7 +259,7 @@ export default function SeoTestVsAgenturPage() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">Häufige Fragen zu SEO-Test vs. Agentur</h2>
+                        <h2 className="text-2xl font-bold text-white mb-4">Häufige Fragen zu SEO-Audit-Kosten vs. Agentur</h2>
                         <div className="space-y-4">
                             {faqLd.mainEntity.map((faq, i) => (
                                 <div key={i} className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5">
@@ -276,7 +284,7 @@ export default function SeoTestVsAgenturPage() {
                         href="/dashboard"
                         className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-violet-500/20"
                     >
-                        Kostenlosen SEO-Test starten
+                        Kostenlosen SEO-Audit starten
                     </Link>
                     <div className="mt-3 text-xs text-slate-600">Ohne Registrierung starten · Voller Report kostenlos · 60 Sekunden</div>
                 </div>
