@@ -10,8 +10,8 @@ import Navbar from '../../components/Navbar'
 
 const FAQS = [
     {
-        q: 'Was kostet ein GEO Audit bzw. GEO Automatisierung?',
-        a: 'GEO Automatisierung bei Scanora startet ab 4,99 €/Monat für 1 Website und 10 Keywords mit wöchentlichem Claude- und Gemini-Tracking. Der Pro-Plan (29,99 €/Monat) ergänzt ChatGPT-, Perplexity- und Google-AI-Overview-Tracking für 3 Websites und 20 Keywords, 2 Prompt-Varianten pro Keyword sowie eine Themen-Sichtbarkeits-Analyse, der Expert-Plan (89,99 €/Monat) deckt bis zu 10 Websites und 60 Keywords ab und ergänzt Historien-Trends pro Keyword. Alle Pläne bieten 14 Tage kostenlose Testphase.',
+        q: 'Was kostet ein GEO-Audit?',
+        a: 'Ein einmaliger GEO-Audit ist bei Scanora kostenlos (Teil des Website-Audits im Free-Plan, 1x pro Monat) bzw. ab 29 €/Monat im Pro-Plan mit KI-generiertem Fix-Report. Das laufende, wöchentliche Monitoring - die GEO-Automatisierung - ist ein separates Abo und startet ab 4,99 €/Monat für 1 Website und 10 Keywords mit Claude- und Gemini-Tracking. Der Pro-Plan (29,99 €/Monat) ergänzt ChatGPT-, Perplexity- und Google-AI-Overview-Tracking für 3 Websites und 20 Keywords, 2 Prompt-Varianten pro Keyword sowie eine Themen-Sichtbarkeits-Analyse, der Expert-Plan (89,99 €/Monat) deckt bis zu 10 Websites und 60 Keywords ab und ergänzt Historien-Trends pro Keyword. Alle Automatisierungs-Pläne bieten 14 Tage kostenlose Testphase.',
     },
     {
         q: 'Kann ich meine Sichtbarkeit bei Claude (Claude AI) tracken?',

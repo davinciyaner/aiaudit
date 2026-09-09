@@ -5,7 +5,7 @@ import Footer from '../../components/Footer'
 export const metadata = {
     title: 'SEO + GEO Tool: Google-Rankings & KI-Sichtbarkeit',
     description: 'Google-Rankings und KI-Sichtbarkeit bei ChatGPT, Claude, Gemini & Perplexity in einem Dashboard - inklusive der Überschneidung zwischen beiden.',
-    keywords: 'seo geo tool, seo geo, geoseo, seo und geo, generative engine optimization, generative optimization engine, geo tool, ki sichtbarkeit, ai visibility, geo automatisierung, seo automatisierung',
+    keywords: 'seo geo tool, seo geo, geoseo, seo und geo, geo audit, generative engine optimization, generative optimization engine, geo tool, ki sichtbarkeit, ai visibility, geo automatisierung, seo automatisierung',
     alternates: {
         canonical: 'https://www.scanora.ai/loesungen/seo-geo-tool',
     },
@@ -51,6 +51,14 @@ const faqLd = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
     mainEntity: [
+        {
+            '@type': 'Question',
+            name: 'Was ist ein GEO-Audit und was kostet er?',
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Ein GEO-Audit prüft einmalig, wie sichtbar eine Website bei ChatGPT, Claude, Gemini, Perplexity und Google AI Overview ist - unter anderem llms.txt, Schema.org-Markup, FAQ-Struktur und KI-Crawler-Erlaubnis. Bei Scanora ist der GEO-Audit kostenlos (Teil des Website-Audits, 1x pro Monat im Free-Plan) bzw. ab 29 €/Monat im Pro-Plan mit KI-generiertem Fix-Report. Für laufendes wöchentliches Monitoring gibt es separat die GEO-Automatisierung ab 4,99 €/Monat.',
+            },
+        },
         {
             '@type': 'Question',
             name: 'Was ist der Unterschied zwischen SEO und GEO?',

@@ -4,9 +4,9 @@ import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
 
 export const metadata = {
-    title: 'SEO-Test: Die 10 häufigsten Fehler die deinen Google-Rank kosten',
-    description: 'Diese 10 SEO-Fehler machen die meisten Websites - und keiner merkt es. Mit kostenlosem SEO-Test-Tool checken und sofort beheben.',
-    keywords: 'seo test, seo fehler, seo check kostenlos, seo analyse, website seo prüfen, meta description fehlt, h1 tag, core web vitals',
+    title: 'SEO-Fehler finden: Die 10 häufigsten Probleme, die deinen Google-Rank kosten',
+    description: 'SEO-Fehler finden und sofort beheben: Diese 10 Probleme machen die meisten Websites - und keiner merkt es. Mit kostenlosem SEO-Audit-Tool checken.',
+    keywords: 'seo fehler finden, seo audit, seo test, seo fehler, seo check kostenlos, seo analyse, website seo prüfen, meta description fehlt, h1 tag, core web vitals',
     alternates: {
         canonical: 'https://www.scanora.ai/blog/seo-test-haeufige-fehler',
         languages: {
@@ -15,8 +15,8 @@ export const metadata = {
         },
     },
     openGraph: {
-        title: 'SEO-Test: Die 10 häufigsten Fehler die deinen Google-Rank kosten',
-        description: 'Diese 10 SEO-Fehler machen die meisten Websites. Mit kostenlosem SEO-Test sofort beheben.',
+        title: 'SEO-Fehler finden: Die 10 häufigsten Probleme, die deinen Google-Rank kosten',
+        description: 'Diese 10 SEO-Fehler machen die meisten Websites. Mit kostenlosem SEO-Audit sofort finden und beheben.',
         url: 'https://www.scanora.ai/blog/seo-test-haeufige-fehler',
         type: 'article',
         locale: 'de_DE',
@@ -26,8 +26,8 @@ export const metadata = {
 const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
-    headline: 'SEO-Test: Die 10 häufigsten Fehler die deinen Google-Rank kosten',
-    description: 'Diese 10 SEO-Fehler machen die meisten Websites - und keiner merkt es.',
+    headline: 'SEO-Fehler finden: Die 10 häufigsten Probleme, die deinen Google-Rank kosten',
+    description: 'SEO-Fehler finden und sofort beheben: Diese 10 Probleme machen die meisten Websites - und keiner merkt es.',
     image: 'https://www.scanora.ai/blog/seo-test-haeufige-fehler/opengraph-image',
     datePublished: '2026-06-10T09:00:00+02:00',
     dateModified: '2026-07-30T09:00:00+02:00',
@@ -48,7 +48,7 @@ const breadcrumbLd = {
     itemListElement: [
         { '@type': 'ListItem', position: 1, name: 'Scanora', item: 'https://www.scanora.ai' },
         { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.scanora.ai/blog' },
-        { '@type': 'ListItem', position: 3, name: 'SEO-Test: Die 10 häufigsten Fehler', item: 'https://www.scanora.ai/blog/seo-test-haeufige-fehler' },
+        { '@type': 'ListItem', position: 3, name: 'SEO-Audit: Die 10 häufigsten Fehler', item: 'https://www.scanora.ai/blog/seo-test-haeufige-fehler' },
     ],
 }
 
@@ -58,15 +58,15 @@ const faqLd = {
     mainEntity: [
         {
             '@type': 'Question',
-            name: 'Was prüft ein SEO-Test?',
+            name: 'Was prüft ein SEO-Audit?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'Ein SEO-Test prüft alle relevanten On-Page-Faktoren einer Website: Title-Tag, Meta-Description, H1-Tag, Bild-Alt-Texte, Canonical-Tag, interne Links, Ladezeit (Core Web Vitals), Structured Data, Open-Graph-Tags und weitere technische Signale. Ein vollständiger SEO-Test crawlt dabei nicht nur die Startseite, sondern bis zu 25 Unterseiten.',
+                text: 'Ein SEO-Audit prüft alle relevanten On-Page-Faktoren einer Website: Title-Tag, Meta-Description, H1-Tag, Bild-Alt-Texte, Canonical-Tag, interne Links, Ladezeit (Core Web Vitals), Structured Data, Open-Graph-Tags und weitere technische Signale. Ein vollständiger SEO-Audit crawlt dabei nicht nur die Startseite, sondern bis zu 25 Unterseiten.',
             },
         },
         {
             '@type': 'Question',
-            name: 'Wie oft sollte ich einen SEO-Test durchführen?',
+            name: 'Wie oft sollte ich einen SEO-Audit durchführen?',
             acceptedAnswer: {
                 '@type': 'Answer',
                 text: 'Nach jedem größeren Deployment, nach Content-Updates und nach Google Core Updates - mindestens aber wöchentlich für aktive Websites. SEO-Fehler entstehen nicht nur durch aktive Änderungen: ein Update eines Plugins, ein neues Bild ohne Alt-Text oder eine versehentlich gesetzte noindex-Direktive können unbemerkt Rankings kosten. Je häufiger du prüfst, desto früher erkennst du Probleme.',
@@ -82,10 +82,10 @@ const faqLd = {
         },
         {
             '@type': 'Question',
-            name: 'Kann ich einen SEO-Test kostenlos durchführen?',
+            name: 'Kann ich einen SEO-Audit kostenlos durchführen?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'Ja. Scanora bietet einen kostenlosen SEO-Test mit 14 Checks - inklusive Title-Tag, Meta-Description, H1, Alt-Texte, Canonical, Open Graph, Structured Data und mehr. Der Free-Plan erlaubt 1 vollständigen Audit pro Monat ohne Kreditkarte.',
+                text: 'Ja. Scanora bietet einen kostenlosen SEO-Audit mit 14 Checks - inklusive Title-Tag, Meta-Description, H1, Alt-Texte, Canonical, Open Graph, Structured Data und mehr. Der Free-Plan erlaubt 1 vollständigen Audit pro Monat ohne Kreditkarte.',
             },
         },
     ],
@@ -94,7 +94,7 @@ const faqLd = {
 const howToLd = {
     '@context': 'https://schema.org',
     '@type': 'HowTo',
-    name: 'Wie du einen SEO-Test auf deiner Website durchführst',
+    name: 'Wie du einen SEO-Audit auf deiner Website durchführst',
     description: 'Die zentralen On-Page-Faktoren prüfen, die am häufigsten Rankings kosten.',
     totalTime: 'PT15M',
     step: [
@@ -213,7 +213,7 @@ const ERRORS = [
         title: 'Versehentliches "noindex" auf wichtigen Seiten',
         impact: 'Seite verschwindet komplett aus der Google-Suche',
         desc: 'Ein einzelner robots-Meta-Tag mit "noindex" oder ein falsch gesetzter X-Robots-Tag in der Server-Antwort reicht aus, damit Google eine Seite komplett aus dem Index entfernt - unabhängig davon wie gut Title, Content oder Backlinks sind. Das passiert häufiger als man denkt: ein Staging-Flag, das nach dem Launch vergessen wird, ein CMS-Default oder ein Plugin-Update, das die Robots-Einstellung zurücksetzt.',
-        fix: 'Nach jedem Deployment die wichtigsten Seiten per URL-Inspection in der Google Search Console prüfen, oder automatisiert mit einem SEO-Test - Scanora markiert versehentliches noindex sofort als kritischen Fehler.',
+        fix: 'Nach jedem Deployment die wichtigsten Seiten per URL-Inspection in der Google Search Console prüfen, oder automatisiert mit einem SEO-Audit - Scanora markiert versehentliches noindex sofort als kritischen Fehler.',
         ctaLink: '/dashboard',
         stat: null,
     },
@@ -236,7 +236,7 @@ export default function SeoTestArtikelPage() {
                     <span>/</span>
                     <Link href="/blog" className="hover:text-slate-400 transition-colors">Blog</Link>
                     <span>/</span>
-                    <span className="text-slate-500">SEO-Test: Die 10 häufigsten Fehler</span>
+                    <span className="text-slate-500">SEO-Audit: Die 10 häufigsten Fehler</span>
                 </div>
 
                 {/* Header */}
@@ -250,10 +250,10 @@ export default function SeoTestArtikelPage() {
                         <span className="text-xs text-slate-600">· Aktualisiert am 30. Juli 2026</span>
                     </div>
                     <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight tracking-tight mb-5">
-                        SEO-Test: Die 10 häufigsten Fehler die deinen Google-Rank kosten
+                        SEO-Fehler finden: Die 10 häufigsten Probleme, die deinen Google-Rank kosten
                     </h1>
                     <p className="text-lg text-slate-400 leading-relaxed">
-                        Die meisten SEO-Fehler sind keine Geheimnisse - sie sind einfach unsichtbar. Kein Fehler in der Konsole, kein Alarm. Die Seite läuft, der Traffic stagniert. Hier sind die 10 häufigsten Probleme die wir in Website-Audits immer wieder finden, warum sie Rankings kosten und wie du sie in 60 Minuten behebst.
+                        Die meisten SEO-Fehler sind keine Geheimnisse - sie sind einfach unsichtbar. Kein Fehler in der Konsole, kein Alarm. Die Seite läuft, der Traffic stagniert. Hier erfährst du, wie du diese 10 häufigsten Probleme in deinem eigenen SEO-Audit findest, warum sie Rankings kosten und wie du sie in 60 Minuten behebst.
                     </p>
                     <div className="mt-5 flex items-center gap-2 text-xs text-slate-600">
                         <Link href="/about" className="flex items-center gap-2 hover:text-slate-300 transition-colors">
@@ -270,9 +270,9 @@ export default function SeoTestArtikelPage() {
                 <div className="space-y-10 text-slate-300 leading-relaxed">
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">Was ist ein SEO-Test und warum brauchst du ihn?</h2>
+                        <h2 className="text-2xl font-bold text-white mb-4">Was ist ein SEO-Audit und warum brauchst du ihn?</h2>
                         <p>
-                            Ein SEO-Test ist eine systematische Analyse aller On-Page-Faktoren einer Website - also alles was du direkt kontrollieren kannst: Title-Tags, Meta-Descriptions, Überschriften, Ladezeit, Bilder, interne Links und technische Signale wie Canonical-Tags oder Structured Data.
+                            Ein SEO-Audit ist eine systematische Analyse aller On-Page-Faktoren einer Website - also alles was du direkt kontrollieren kannst: Title-Tags, Meta-Descriptions, Überschriften, Ladezeit, Bilder, interne Links und technische Signale wie Canonical-Tags oder Structured Data.
                         </p>
                         <p className="mt-4">
                             Der Unterschied zu einem einmaligen Setup: SEO verfällt. Google nimmt laut eigenen Angaben{' '}
@@ -303,7 +303,7 @@ export default function SeoTestArtikelPage() {
                                 </li>
                             ))}
                             <li>
-                                <a href="#wie-durchfuehren" className="text-slate-400 hover:text-violet-300 transition-colors">Wie führe ich einen SEO-Test durch?</a>
+                                <a href="#wie-durchfuehren" className="text-slate-400 hover:text-violet-300 transition-colors">Wie führe ich einen SEO-Audit durch?</a>
                             </li>
                             <li>
                                 <a href="#faq" className="text-slate-400 hover:text-violet-300 transition-colors">Häufige Fragen</a>
@@ -450,7 +450,7 @@ export default function SeoTestArtikelPage() {
                     </section>
 
                     <section id="wie-durchfuehren" className="scroll-mt-28">
-                        <h2 className="text-2xl font-bold text-white mb-4">Wie führe ich einen SEO-Test durch?</h2>
+                        <h2 className="text-2xl font-bold text-white mb-4">Wie führe ich einen SEO-Audit durch?</h2>
                         <p>
                             Du kannst SEO-Fehler manuell prüfen - Title-Tag im Browser-Tab lesen, Quelltext nach Meta-Tags durchsuchen, Ladezeit in Chrome DevTools messen. Das dauert pro Seite 15–30 Minuten, ist fehleranfällig und skaliert nicht auf mehrere Seiten oder regelmäßige Checks. Eine feste Prüfreihenfolge für den manuellen Weg findest du in der{' '}
                             <Link href="/blog/seo-checkliste-2026" className="text-violet-400 hover:text-violet-300 underline underline-offset-2">
@@ -458,7 +458,7 @@ export default function SeoTestArtikelPage() {
                             </Link>.
                         </p>
                         <p className="mt-4">
-                            Das Problem mit manuellen Checks: du prüfst nie die komplette Website. Die meisten SEO-Fehler sitzen nicht auf der Startseite - sie stecken auf Unterseiten, in Produktpages oder in Blogartikeln die niemand mehr aktiv bearbeitet. Ein automatisierter SEO-Test crawlt bis zu 25 Seiten gleichzeitig und findet genau diese versteckten Probleme.
+                            Das Problem mit manuellen Checks: du prüfst nie die komplette Website. Die meisten SEO-Fehler sitzen nicht auf der Startseite - sie stecken auf Unterseiten, in Produktpages oder in Blogartikeln die niemand mehr aktiv bearbeitet. Ein automatisierter SEO-Audit crawlt bis zu 25 Seiten gleichzeitig und findet genau diese versteckten Probleme.
                         </p>
                         <p className="mt-4">
                             Scanora prüft alle 14 SEO-Checks aus diesem Artikel in unter 60 Sekunden - inklusive H1, Meta-Descriptions, Alt-Texte, Canonical, Open Graph, Structured Data und Core Web Vitals.
@@ -466,15 +466,15 @@ export default function SeoTestArtikelPage() {
                     </section>
 
                     <section id="faq" className="scroll-mt-28">
-                        <h2 className="text-2xl font-bold text-white mb-4">Häufige Fragen zum SEO-Test</h2>
+                        <h2 className="text-2xl font-bold text-white mb-4">Häufige Fragen zum SEO-Audit</h2>
                         <div className="space-y-4">
                             {[
                                 {
-                                    q: 'Was prüft ein SEO-Test?',
-                                    a: 'Ein SEO-Test prüft alle relevanten On-Page-Faktoren einer Website: Title-Tag, Meta-Description, H1-Tag, Bild-Alt-Texte, Canonical-Tag, interne Links, Ladezeit (Core Web Vitals), Structured Data, Open-Graph-Tags und weitere technische Signale. Ein vollständiger SEO-Test crawlt dabei nicht nur die Startseite, sondern bis zu 25 Unterseiten.',
+                                    q: 'Was prüft ein SEO-Audit?',
+                                    a: 'Ein SEO-Audit prüft alle relevanten On-Page-Faktoren einer Website: Title-Tag, Meta-Description, H1-Tag, Bild-Alt-Texte, Canonical-Tag, interne Links, Ladezeit (Core Web Vitals), Structured Data, Open-Graph-Tags und weitere technische Signale. Ein vollständiger SEO-Audit crawlt dabei nicht nur die Startseite, sondern bis zu 25 Unterseiten.',
                                 },
                                 {
-                                    q: 'Wie oft sollte ich einen SEO-Test durchführen?',
+                                    q: 'Wie oft sollte ich einen SEO-Audit durchführen?',
                                     a: 'Nach jedem größeren Deployment, nach Content-Updates und nach Google Core Updates - mindestens aber wöchentlich für aktive Websites. SEO-Fehler entstehen nicht nur durch aktive Änderungen: ein Update eines Plugins, ein neues Bild ohne Alt-Text oder eine versehentlich gesetzte noindex-Direktive können unbemerkt Rankings kosten. Je häufiger du prüfst, desto früher erkennst du Probleme bevor Google sie bewertet.',
                                 },
                                 {
@@ -482,8 +482,8 @@ export default function SeoTestArtikelPage() {
                                     a: 'Es gibt keinen einzelnen wichtigsten Faktor - SEO ist ein Zusammenspiel vieler Signale. Aber die drei häufigsten Probleme mit dem größten Einfluss sind: fehlende Meta-Descriptions, fehlender H1-Tag und schlechte Core Web Vitals (Ladezeit über 3 Sekunden).',
                                 },
                                 {
-                                    q: 'Kann ich einen SEO-Test kostenlos durchführen?',
-                                    a: 'Ja. Scanora bietet einen kostenlosen SEO-Test mit 14 Checks - inklusive Title-Tag, Meta-Description, H1, Alt-Texte, Canonical, Open Graph, Structured Data und mehr. Der Free-Plan erlaubt 1 vollständigen Audit pro Monat ohne Kreditkarte.',
+                                    q: 'Kann ich einen SEO-Audit kostenlos durchführen?',
+                                    a: 'Ja. Scanora bietet einen kostenlosen SEO-Audit mit 14 Checks - inklusive Title-Tag, Meta-Description, H1, Alt-Texte, Canonical, Open Graph, Structured Data und mehr. Der Free-Plan erlaubt 1 vollständigen Audit pro Monat ohne Kreditkarte.',
                                 },
                             ].map((faq, i) => (
                                 <div key={i} className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5">
@@ -517,7 +517,7 @@ export default function SeoTestArtikelPage() {
                         href="/dashboard"
                         className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-violet-500/20"
                     >
-                        SEO-Test jetzt starten
+                        SEO-Audit jetzt starten
                     </Link>
                     <div className="mt-3 text-xs text-slate-600">Ohne Registrierung starten · Voller Report kostenlos · 60 Sekunden</div>
                 </div>
