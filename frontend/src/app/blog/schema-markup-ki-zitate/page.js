@@ -3,7 +3,7 @@ import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
 
 export const metadata = {
-    title: 'Schema Markup für KI-Zitate 2026: So wirst du für ChatGPT & Co. zitierfähig',
+    title: 'Schema Markup KI-Zitate 2026: So wirst du für ChatGPT & Co. zitierfähig',
     description: 'Schema Markup (JSON-LD) einfach erklärt: Prioritäten-Reihenfolge, fertiger Code zum Kopieren, kostenlose Generatoren & Test-Tools sowie der häufigste Fehler, der Rich Results kostet.',
     keywords: 'schema markup, schema markup generator, structured data prüfen kostenlos, schema markup ki, json-ld generator, json-ld beispiel, faq schema, organization schema, rich results test',
     alternates: {
@@ -14,7 +14,7 @@ export const metadata = {
         },
     },
     openGraph: {
-        title: 'Schema Markup für KI-Zitate 2026: So wirst du für ChatGPT & Co. zitierfähig',
+        title: 'Schema Markup KI-Zitate 2026: So wirst du für ChatGPT & Co. zitierfähig',
         description: 'Prioritäten-Reihenfolge, fertiger JSON-LD-Code zum Kopieren, kostenlose Generatoren & Test-Tools sowie der häufigste Fehler, der Rich Results kostet.',
         url: 'https://www.scanora.ai/blog/schema-markup-ki-zitate',
         type: 'article',
@@ -25,7 +25,7 @@ export const metadata = {
 const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
-    headline: 'Schema Markup für KI-Zitate 2026: So wirst du für ChatGPT & Co. zitierfähig',
+    headline: 'Schema Markup KI-Zitate 2026: So wirst du für ChatGPT & Co. zitierfähig',
     description: 'Schema Markup (JSON-LD) einfach erklärt: Prioritäten-Reihenfolge, fertiger Code zum Kopieren, kostenlose Generatoren & Test-Tools sowie der häufigste Fehler, der Rich Results kostet.',
     image: 'https://www.scanora.ai/blog/schema-markup-ki-zitate/opengraph-image',
     datePublished: '2026-07-26T09:00:00+02:00',
@@ -157,7 +157,7 @@ export default function SchemaMarkupPage() {
                         <span className="text-xs text-slate-600">· Aktualisiert am 29. August 2026</span>
                     </div>
                     <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight tracking-tight mb-5">
-                        Schema Markup für KI-Zitate 2026: So wirst du für ChatGPT & Co. zitierfähig
+                        Schema Markup KI-Zitate 2026: So wirst du für ChatGPT & Co. zitierfähig
                     </h1>
                     <p className="text-lg text-slate-400 leading-relaxed">
                         Schema Markup ist unsichtbar für Besucher - aber genau die Sprache, die Google und KI-Modelle nutzen, um Inhalte präzise zu verstehen und zu zitieren. Die wichtigsten Typen in der richtigen Reihenfolge, fertiger JSON-LD-Code zum Kopieren, kostenlose Generatoren und Test-Tools, und der Fehler, der am häufigsten alles wirkungslos macht.

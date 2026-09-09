@@ -1,7 +1,7 @@
 export const metadata = {
     title: 'GEO Automatisierung Preise – KI-Sichtbarkeit bei ChatGPT, Claude, Gemini, Perplexity & Google AI Overview tracken',
     description: 'GEO Automatisierung ab 4,99€/Monat: Wöchentlich automatisch prüfen, ob ChatGPT, Claude, Gemini, Perplexity und Google AI Overview deine Website erwähnen. Themen-Sichtbarkeits-Analyse, Historien-Trends, Mention-Verlauf & Keyword-Tracking. 14 Tage kostenlos testen.',
-    keywords: 'geo automatisierung preise, ki sichtbarkeit tracken, chatgpt sichtbarkeit tool, claude sichtbarkeit tool, gemini sichtbarkeit tool, perplexity sichtbarkeit tool, google ai overview tracken, generative engine optimization tool, geo tracking kosten',
+    keywords: 'geo audit preis, geo audit kosten, geo audit, geo automatisierung preise, ki sichtbarkeit tracken, chatgpt sichtbarkeit tool, claude sichtbarkeit tool, gemini sichtbarkeit tool, perplexity sichtbarkeit tool, google ai overview tracken, generative engine optimization tool, geo tracking kosten',
     alternates: {
         canonical: 'https://www.scanora.ai/geo/pricing',
         languages: {
@@ -24,10 +24,10 @@ const faqJsonLd = {
     mainEntity: [
         {
             '@type': 'Question',
-            name: 'Was kostet ein GEO Audit bzw. GEO Automatisierung?',
+            name: 'Was kostet ein GEO-Audit?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'GEO Automatisierung bei Scanora startet ab 4,99 €/Monat für 1 Website und 10 Keywords mit wöchentlichem Claude- und Gemini-Tracking. Der Pro-Plan (29,99 €/Monat) ergänzt ChatGPT-, Perplexity- und Google-AI-Overview-Tracking für 3 Websites und 20 Keywords, 2 Prompt-Varianten pro Keyword sowie eine Themen-Sichtbarkeits-Analyse, der Expert-Plan (89,99 €/Monat) deckt bis zu 10 Websites und 60 Keywords ab und ergänzt Historien-Trends pro Keyword. Alle Pläne bieten 14 Tage kostenlose Testphase.',
+                text: 'Ein einmaliger GEO-Audit ist bei Scanora kostenlos (Teil des Website-Audits im Free-Plan, 1x pro Monat) bzw. ab 29 €/Monat im Pro-Plan mit KI-generiertem Fix-Report. Das laufende, wöchentliche Monitoring - die GEO-Automatisierung - ist ein separates Abo und startet ab 4,99 €/Monat für 1 Website und 10 Keywords mit Claude- und Gemini-Tracking. Der Pro-Plan (29,99 €/Monat) ergänzt ChatGPT-, Perplexity- und Google-AI-Overview-Tracking für 3 Websites und 20 Keywords, 2 Prompt-Varianten pro Keyword sowie eine Themen-Sichtbarkeits-Analyse, der Expert-Plan (89,99 €/Monat) deckt bis zu 10 Websites und 60 Keywords ab und ergänzt Historien-Trends pro Keyword. Alle Automatisierungs-Pläne bieten 14 Tage kostenlose Testphase.',
             },
         },
         {
