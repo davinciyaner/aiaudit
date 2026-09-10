@@ -14,18 +14,19 @@ import Navbar from '../../../components/Navbar'
 const PLATFORM_META = {
     claude:     { label: 'Claude',             color: 'text-violet-400', bg: 'bg-violet-500/10', border: 'border-violet-500/20' },
     chatgpt:    { label: 'ChatGPT',            color: 'text-green-400',  bg: 'bg-green-500/10',  border: 'border-green-500/20'  },
+    gemini:     { label: 'Gemini',             color: 'text-amber-400',  bg: 'bg-amber-500/10',  border: 'border-amber-500/20'  },
     perplexity: { label: 'Perplexity',         color: 'text-teal-400',   bg: 'bg-teal-500/10',   border: 'border-teal-500/20'   },
     google_aio: { label: 'Google AI Overview', color: 'text-blue-400',   bg: 'bg-blue-500/10',   border: 'border-blue-500/20'   },
 }
 
-const COST_PER_CHECK = { claude: 0.0066, chatgpt: 0.0045, perplexity: 0.0056, google_aio: 0.0026 }
+const COST_PER_CHECK = { claude: 0.0066, chatgpt: 0.0045, gemini: 0.0110, perplexity: 0.0056, google_aio: 0.0026 }
 
 const PLAN_PLATFORMS = {
-    einsteiger: ['claude'],
-    pro:        ['claude', 'chatgpt', 'perplexity', 'google_aio'],
-    expert:     ['claude', 'chatgpt', 'perplexity', 'google_aio'],
+    einsteiger: ['claude', 'gemini'],
+    pro:        ['claude', 'chatgpt', 'gemini', 'perplexity', 'google_aio'],
+    expert:     ['claude', 'chatgpt', 'gemini', 'perplexity', 'google_aio'],
 }
-const ALL_PLATFORMS = ['claude', 'chatgpt', 'perplexity', 'google_aio']
+const ALL_PLATFORMS = ['claude', 'chatgpt', 'gemini', 'perplexity', 'google_aio']
 
 const INTENT_META = {
     empfehlung: { label: 'Recommendation' },
