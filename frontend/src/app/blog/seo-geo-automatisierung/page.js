@@ -218,7 +218,7 @@ export default function SeoGeoAutomatisierungPage() {
                         </p>
                         <figure className="mt-6">
                             <Image
-                                src="/blog/auditai-geo-report.png"
+                                src="/blog/scanora-geo-report.png"
                                 alt="Scanora GEO-Report zeigt geprüfte KI-Sichtbarkeits-Signale wie llms.txt, Organization-Schema, KI-Crawler-Erlaubnis und externe Quellenverweise"
                                 width={960}
                                 height={411}

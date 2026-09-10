@@ -269,7 +269,7 @@ export default function AuditAiOverviewPageEn() {
                         </p>
                         <figure className="mb-6">
                             <Image
-                                src="/blog/auditai-geo-report.png"
+                                src="/blog/scanora-geo-report.png"
                                 alt="Scanora GEO report showing checked AI visibility signals like llms.txt, Organization schema, AI crawler access, and sitemap.xml"
                                 width={960}
                                 height={411}
