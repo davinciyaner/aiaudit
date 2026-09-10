@@ -320,7 +320,7 @@ export default function GeoArtikelPage() {
                         <p className="text-slate-400 mb-6">Scanora prüft insgesamt 19 GEO-Signale. Das sind die sechs mit dem größten Einfluss:</p>
                         <figure className="mb-6">
                             <Image
-                                src="/blog/auditai-geo-report.png"
+                                src="/blog/scanora-geo-report.png"
                                 alt="Scanora GEO-Report zeigt geprüfte KI-Sichtbarkeits-Signale wie llms.txt, Organization-Schema, KI-Crawler-Erlaubnis und sitemap.xml"
                                 width={960}
                                 height={411}

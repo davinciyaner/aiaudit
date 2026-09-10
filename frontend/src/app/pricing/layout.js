@@ -15,6 +15,20 @@ export const metadata = {
     },
 }
 
+const breadcrumbLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Scanora', item: 'https://www.scanora.ai' },
+        { '@type': 'ListItem', position: 2, name: 'Preise & Pläne', item: 'https://www.scanora.ai/pricing' },
+    ],
+}
+
 export default function PricingLayout({ children }) {
-    return children
+    return (
+        <>
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
+            {children}
+        </>
+    )
 }

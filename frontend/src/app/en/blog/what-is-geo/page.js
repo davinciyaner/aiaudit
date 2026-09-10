@@ -311,7 +311,7 @@ export default function WhatIsGeoPageEn() {
                         <p className="text-slate-400 mb-6">Scanora checks 19 GEO signals in total. These are the six with the biggest impact:</p>
                         <figure className="mb-6">
                             <Image
-                                src="/blog/auditai-geo-report.png"
+                                src="/blog/scanora-geo-report.png"
                                 alt="Scanora GEO report showing checked AI visibility signals like llms.txt, Organization schema, AI crawler access, and sitemap.xml"
                                 width={960}
                                 height={411}

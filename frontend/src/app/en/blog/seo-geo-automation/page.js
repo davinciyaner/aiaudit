@@ -219,7 +219,7 @@ export default function SeoGeoAutomationPageEn() {
                         </p>
                         <figure className="mt-6">
                             <Image
-                                src="/blog/auditai-geo-report.png"
+                                src="/blog/scanora-geo-report.png"
                                 alt="Scanora GEO report showing checked AI visibility signals like llms.txt, Organization schema, AI crawler access, and external source links"
                                 width={960}
                                 height={411}
