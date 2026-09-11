@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import {
     ArrowLeft, Globe, Loader2, RefreshCw, Plus, Trash2, X,
     Sparkles, Check, ChevronDown, ChevronUp, Settings2, Lock,
-    LayoutDashboard, Users, GitCompare, Lightbulb, ArrowUp, ArrowDown, Minus,
+    ArrowUp, ArrowDown, Minus,
 } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter, useParams } from 'next/navigation'
@@ -44,11 +44,11 @@ const INTENT_META = {
 }
 
 const NAV_ITEMS = [
-    { id: 'overview',    label: 'Übersicht',                   description: 'Deine Mention-Rate, Verlauf und alle getrackten Keywords im Detail.',                icon: LayoutDashboard },
-    { id: 'competitors', label: 'Wettbewerber',                 description: 'Welche anderen Domains KI-Modelle neben dir zitieren — als Liste oder Diagramm.',     icon: Users },
-    { id: 'market',      label: 'Themen-Sichtbarkeit',           description: 'Welche Domains in KI-Antworten zu deinen Keywords am häufigsten zitiert werden — über alle Kontexte hinweg (Erklärungen, Vergleiche, Tutorials), nicht nur Empfehlungen. Für Konkurrenz-Tools siehe „Wettbewerber".', icon: Sparkles },
-    { id: 'correlation', label: 'SEO-Ranking + KI-Erwähnungen', description: 'Rankt eine Seite bei Google, wird aber nie von KI-Modellen genannt — oder umgekehrt?', icon: GitCompare },
-    { id: 'suggestions', label: 'Keywords vorschlagen',         description: 'SEO-Keywords, die sich auch für GEO-Tracking eignen würden.',                        icon: Lightbulb },
+    { id: 'overview',    label: 'Übersicht',                   description: 'Deine Mention-Rate, Verlauf und alle getrackten Keywords im Detail.' },
+    { id: 'competitors', label: 'Wettbewerber',                 description: 'Welche anderen Domains KI-Modelle neben dir zitieren — als Liste oder Diagramm.' },
+    { id: 'market',      label: 'Themen-Sichtbarkeit',           description: 'Welche Domains in KI-Antworten zu deinen Keywords am häufigsten zitiert werden — über alle Kontexte hinweg (Erklärungen, Vergleiche, Tutorials), nicht nur Empfehlungen. Für Konkurrenz-Tools siehe „Wettbewerber".' },
+    { id: 'correlation', label: 'SEO-Ranking + KI-Erwähnungen', description: 'Rankt eine Seite bei Google, wird aber nie von KI-Modellen genannt — oder umgekehrt?' },
+    { id: 'suggestions', label: 'Keywords vorschlagen',         description: 'SEO-Keywords, die sich auch für GEO-Tracking eignen würden.' },
 ]
 
 function aggregateMention(checks, platform, intents) {
@@ -585,8 +585,10 @@ function MarketAnalyticsPanel({ siteId, plan }) {
     const [error, setError]     = useState(false)
     const enabled = PLAN_FEATURES[plan]?.competitorAnalytics
 
-    useEffect(() => {
+    const load = useCallback(() => {
         if (!enabled) { setLoading(false); return }
+        setLoading(true)
+        setError(false)
         const token = localStorage.getItem('token')
         fetch(`${process.env.NEXT_PUBLIC_API_URL}/geo/sites/${siteId}/market-analytics`, {
             headers: { Authorization: `Bearer ${token}` },
@@ -596,6 +598,8 @@ function MarketAnalyticsPanel({ siteId, plan }) {
             .catch(() => setError(true))
             .finally(() => setLoading(false))
     }, [siteId, enabled])
+
+    useEffect(() => { load() }, [load])
 
     if (!enabled) {
         return <UpsellCard label="Themen-Sichtbarkeit zeigt dir, welche Domains in KI-Antworten zu deinen Keywords am häufigsten zitiert werden — ab dem Pro-Plan verfügbar." />
@@ -609,7 +613,11 @@ function MarketAnalyticsPanel({ siteId, plan }) {
     )
     if (error) return (
         <div className="flex flex-col items-center justify-center py-20 gap-3">
-            <span className="text-sm text-slate-500">Marktdaten konnten nicht geladen werden. Versuch es später erneut.</span>
+            <span className="text-sm text-slate-500">Marktdaten konnten nicht geladen werden.</span>
+            <button onClick={load}
+                className="mt-1 flex items-center gap-2 px-3.5 py-2 text-xs font-semibold rounded-xl bg-[var(--surface-08)] hover:bg-[var(--surface-10)] text-slate-300 border border-[var(--border-subtle)] transition-all">
+                <RefreshCw className="w-3.5 h-3.5" />Neu laden
+            </button>
         </div>
     )
     if (!data?.domains?.length) return (
@@ -755,7 +763,9 @@ function KeywordTrendPanel({ siteId, keyword, language }) {
     const [loading, setLoading] = useState(true)
     const [error, setError]     = useState(false)
 
-    useEffect(() => {
+    const load = useCallback(() => {
+        setLoading(true)
+        setError(false)
         const token = localStorage.getItem('token')
         fetch(`${process.env.NEXT_PUBLIC_API_URL}/geo/sites/${siteId}/keywords/${encodeURIComponent(keyword)}/trend`, {
             headers: { Authorization: `Bearer ${token}` },
@@ -766,8 +776,14 @@ function KeywordTrendPanel({ siteId, keyword, language }) {
             .finally(() => setLoading(false))
     }, [siteId, keyword])
 
+    useEffect(() => { load() }, [load])
+
     if (loading) return <div className="flex items-center gap-2 text-xs text-slate-500 py-2"><Loader2 className="w-3.5 h-3.5 animate-spin" />Daten werden geladen…</div>
-    if (error) return <p className="text-xs text-slate-600 py-2">Daten konnten nicht geladen werden.</p>
+    if (error) return (
+        <button onClick={load} className="flex items-center gap-1.5 text-xs text-slate-600 hover:text-slate-400 py-2 transition-colors">
+            <RefreshCw className="w-3 h-3" />Daten konnten nicht geladen werden — erneut versuchen
+        </button>
+    )
     if (!data?.length) return <p className="text-xs text-slate-600 py-2">Noch keine Daten für dieses Keyword (verfügbar ab August 2025).</p>
 
     const platformLabel = { google: 'Google AI Overview', chat_gpt: 'ChatGPT' }
@@ -958,7 +974,7 @@ function HistoryDots({ history }) {
 }
 
 
-function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
+function ResultsTab({ siteId, site, plan, onSiteUpdated, onStatsChange }) {
     const [data, setData]           = useState(null)
     const [loading, setLoading]     = useState(true)
     const [checking, setChecking]   = useState(false)
@@ -1029,9 +1045,10 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
             const d = await res.json()
             if (!res.ok) throw new Error(d.error)
             setData(d)
+            onStatsChange?.(d)
         } catch { toast.error('Fehler beim Laden') }
         finally { setLoading(false) }
-    }, [siteId])
+    }, [siteId, onStatsChange])
 
     useEffect(() => { fetchResults() }, [fetchResults])
 
@@ -1258,14 +1275,13 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
                     </button>
                 </div>
             </div>
-            <div className="text-xs text-slate-600 mb-5">
-                {site?.lastChecked
-                    ? `Zuletzt geprüft: ${new Date(site.lastChecked).toLocaleString('de-DE', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' })}`
-                    : 'Noch nicht geprüft'}
-                {baseIntents.length > 1 && ` · ${baseIntents.length} Prompt-Varianten pro Keyword (${baseIntents.map(i => INTENT_META[i]?.label || i).join(', ')})`}
-                {data?.manualChecksLimit != null &&
-                    ` · ${data.manualChecksUsed}/${data.manualChecksLimit} manuelle Checks diesen Monat genutzt`}
-            </div>
+            {/* Zuletzt geprüft + Kontingent stehen jetzt prominent in der Überblick-Leiste oben —
+                hier nur noch die Prompt-Varianten-Konfiguration, die dort keinen Platz hat. */}
+            {baseIntents.length > 1 && (
+                <div className="text-xs text-slate-600 mb-5">
+                    {baseIntents.length} Prompt-Varianten pro Keyword ({baseIntents.map(i => INTENT_META[i]?.label || i).join(', ')})
+                </div>
+            )}
 
             {/* Plattformen bearbeiten */}
             <AnimatePresence>
@@ -1527,6 +1543,45 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
     )
 }
 
+// Zeigt die wichtigsten Zahlen sofort und unabhängig von der aktiven Ansicht — analog zu
+// OverviewStats im SEO-Dashboard, statt sie in einer Textzeile im Übersicht-Tab zu verstecken.
+function GeoOverviewStats({ site, overview }) {
+    const stats = [
+        { label: 'Mention-Rate', value: overview.mentionRate != null ? `${overview.mentionRate}%` : '—', icon: Sparkles },
+        {
+            label: 'Erwähnungen',
+            value: overview.checkedCount ? `${overview.mentionedCount ?? 0} von ${overview.checkedCount}` : '—',
+            icon: Check,
+        },
+        {
+            label: 'Zuletzt geprüft',
+            value: site?.lastChecked
+                ? new Date(site.lastChecked).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit' })
+                : 'Noch nie',
+            icon: RefreshCw,
+        },
+        {
+            label: 'Checks diesen Monat',
+            value: overview.manualChecksLimit != null ? `${overview.manualChecksUsed ?? 0}/${overview.manualChecksLimit}` : '—',
+            icon: Lock,
+        },
+    ]
+
+    return (
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
+            {stats.map(s => (
+                <div key={s.label} className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-xl p-4">
+                    <div className="flex items-center gap-1.5 text-xs text-slate-500 mb-1.5 whitespace-nowrap">
+                        <s.icon className="w-3.5 h-3.5 shrink-0" />
+                        {s.label}
+                    </div>
+                    <div className="text-2xl font-bold text-white tracking-tight">{s.value}</div>
+                </div>
+            ))}
+        </div>
+    )
+}
+
 export default function GeoSitePage() {
     const router     = useRouter()
     const { siteId } = useParams()
@@ -1534,6 +1589,7 @@ export default function GeoSitePage() {
     const [plan, setPlan]           = useState(null)
     const [loading, setLoading]     = useState(true)
     const [activeView, setActiveView] = useState('overview')
+    const [overview, setOverview]   = useState({ mentionRate: null, mentionedCount: 0, checkedCount: 0, manualChecksUsed: null, manualChecksLimit: null })
 
     const fetchSite = useCallback(async () => {
         try {
@@ -1598,37 +1654,35 @@ export default function GeoSitePage() {
                     </div>
                 </div>
 
+                {/* Überblick — die wichtigsten Zahlen, unabhängig von der aktiven Ansicht immer sichtbar */}
+                <GeoOverviewStats site={site} overview={overview} />
+
                 {/* Mobile: horizontal tab strip instead of a side drawer */}
                 <div className="flex lg:hidden items-center gap-1.5 mb-6 overflow-x-auto pb-1">
-                    {NAV_ITEMS.map(item => {
-                        const Icon = item.icon
-                        return (
-                            <button key={item.id} onClick={() => setActiveView(item.id)}
-                                className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all shrink-0 ${
-                                    activeView === item.id
-                                        ? 'bg-[var(--accent-soft)] border border-[var(--accent-border)] text-[var(--accent)]'
-                                        : 'bg-[var(--surface-06)] border border-[var(--border-subtle)] text-slate-500 hover:text-slate-300'
-                                }`}>
-                                <Icon className="w-3.5 h-3.5" />{item.label}
-                            </button>
-                        )
-                    })}
+                    {NAV_ITEMS.map(item => (
+                        <button key={item.id} onClick={() => setActiveView(item.id)}
+                            className={`px-3 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all shrink-0 ${
+                                activeView === item.id
+                                    ? 'bg-[var(--accent-soft)] border border-[var(--accent-border)] text-[var(--accent)]'
+                                    : 'bg-[var(--surface-06)] border border-[var(--border-subtle)] text-slate-500 hover:text-slate-300'
+                            }`}>
+                            {item.label}
+                        </button>
+                    ))}
                 </div>
 
-                <div className="flex gap-6 items-start">
+                <div className="flex gap-8 items-start">
                     {/* Desktop: left drawer */}
-                    <nav className="hidden lg:flex flex-col gap-1 w-60 shrink-0 sticky top-24">
+                    <nav className="hidden lg:flex flex-col gap-3 w-60 shrink-0 sticky top-24">
                         {NAV_ITEMS.map(item => {
-                            const Icon = item.icon
                             const active = activeView === item.id
                             return (
                                 <button key={item.id} onClick={() => setActiveView(item.id)}
-                                    className={`flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl text-left text-sm font-medium transition-all ${
+                                    className={`text-left px-4 py-3 rounded-xl text-sm font-medium transition-all ${
                                         active
-                                            ? 'bg-[var(--accent-soft)] border border-[var(--accent-border)] text-white'
-                                            : 'border border-transparent text-slate-500 hover:text-slate-300 hover:bg-[var(--surface-06)]'
+                                            ? 'bg-[var(--accent-soft)] text-[var(--accent)]'
+                                            : 'text-slate-500 hover:text-slate-300 hover:bg-[var(--surface-08)]'
                                     }`}>
-                                    <Icon className={`w-4 h-4 shrink-0 ${active ? 'text-[var(--accent)]' : ''}`} />
                                     {item.label}
                                 </button>
                             )
@@ -1643,7 +1697,7 @@ export default function GeoSitePage() {
                                 <p className="text-sm text-slate-500">{activeItem.description}</p>
                             </div>
                         )}
-                        {activeView === 'overview'    && <ResultsTab siteId={siteId} site={site} plan={plan} onSiteUpdated={fetchSite} />}
+                        {activeView === 'overview'    && <ResultsTab siteId={siteId} site={site} plan={plan} onSiteUpdated={fetchSite} onStatsChange={setOverview} />}
                         {activeView === 'competitors' && <CompetitorsPanel siteId={siteId} />}
                         {activeView === 'market'      && <MarketAnalyticsPanel siteId={siteId} plan={plan} />}
                         {activeView === 'correlation' && <CorrelationPanel siteId={siteId} />}

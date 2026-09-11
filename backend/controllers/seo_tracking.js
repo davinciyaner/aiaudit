@@ -25,6 +25,18 @@ async function countTotalKeywords(userId) {
     return sites.reduce((sum, s) => sum + (s.keywords?.length || 0), 0)
 }
 
+// In-Memory-Fortschritt für laufende manuelle Checks (siteId -> { done, total, startedAt }), damit
+// das Frontend während des einen langen POST /check per separatem GET pollen und einen echten
+// Fortschrittsbalken + ETA zeigen kann, statt nur einen Spinner ohne jede Zeitangabe.
+const checkProgressMap = new Map()
+
+// GET /api/seo/sites/:id/check-progress
+export function getCheckProgress(req, res) {
+    const progress = checkProgressMap.get(req.params.id)
+    if (!progress) return res.json({ active: false })
+    res.json({ active: true, done: progress.done, total: progress.total, startedAt: progress.startedAt })
+}
+
 // GET /api/seo/plan
 export async function getPlan(req, res) {
     try {
@@ -312,7 +324,17 @@ export async function triggerCheck(req, res) {
             if (prev) previousMap[kw] = prev.position
         }
 
-        const results = await checkSiteRankings(site)
+        const siteKey = site._id.toString()
+        checkProgressMap.set(siteKey, { done: 0, total: site.keywords.length, startedAt: Date.now() })
+        let results
+        try {
+            results = await checkSiteRankings(site, (done, total) => {
+                const prevProgress = checkProgressMap.get(siteKey)
+                checkProgressMap.set(siteKey, { done, total, startedAt: prevProgress?.startedAt ?? Date.now() })
+            })
+        } finally {
+            checkProgressMap.delete(siteKey)
+        }
 
         await SeoKeywordRanking.insertMany(results.map(r => ({
             siteId: site._id,

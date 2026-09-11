@@ -1,5 +1,4 @@
 import './globals.css'
-import { headers } from 'next/headers'
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { MotionConfig } from 'framer-motion'
@@ -47,14 +46,15 @@ export const metadata = {
     },
 }
 
-export default async function RootLayout({ children }) {
-    const headerList = await headers()
-    const pathname = headerList.get('x-pathname') || ''
-    const locale = pathname.startsWith('/en') ? 'en' : 'de'
-    const jsonLd = getRootJsonLd(locale)
+// Bewusst KEIN headers()/cookies() hier — das würde jede abhängige Route zur Laufzeit dynamisch
+// rendern lassen (kein Prerendering, kein CDN-Cache) statt sie einmal statisch zu bauen. lang="de"
+// ist der Default für alle Routen außer /en/*; die englischen Routen überschreiben lang clientseitig
+// via SetHtmlLang in app/en/layout.js und liefern ihr eigenes JSON-LD dort.
+const jsonLd = getRootJsonLd('de')
 
+export default function RootLayout({ children }) {
     return (
-        <html lang={locale} className="dark">
+        <html lang="de" className="dark">
         <head>
         <script
             type="application/ld+json"
@@ -84,7 +84,7 @@ export default async function RootLayout({ children }) {
                 gtag('config', 'AW-691789119');
             `}
         </Script>
-        <CookieBanner locale={locale} />
+        <CookieBanner />
         <Analytics />
         <SpeedInsights />
         </body>

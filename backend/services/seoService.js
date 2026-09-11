@@ -96,8 +96,9 @@ async function checkKeywordRanking(keyword, domain, location = 'Germany', langua
     return { position: null, url: null }
 }
 
-export async function checkSiteRankings(site) {
+export async function checkSiteRankings(site, onProgress) {
     const results = []
+    const total = site.keywords.length
     for (const keyword of site.keywords) {
         try {
             const ranking = await checkKeywordRanking(keyword, site.domain, site.location, site.language)
@@ -106,6 +107,7 @@ export async function checkSiteRankings(site) {
             console.error(`SEO check fehlgeschlagen für "${keyword}" auf ${site.domain}:`, err.message)
             results.push({ keyword, position: null, url: null })
         }
+        onProgress?.(results.length, total, keyword)
         await new Promise(r => setTimeout(r, 200))
     }
     return results

@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 function loadClarity() {
     if (typeof window === 'undefined' || window.clarity) return
@@ -24,7 +25,12 @@ function updateConsent(granted) {
     }])
 }
 
-export default function CookieBanner({ locale = 'de' }) {
+// Locale wird clientseitig aus dem Pfad gelesen statt als Prop von einem serverseitigen
+// headers()-Aufruf im Layout — der würde die ganze Seite zur Laufzeit dynamisch rendern
+// lassen statt sie statisch zu bauen (siehe Kommentar in app/layout.js).
+export default function CookieBanner() {
+    const pathname = usePathname()
+    const locale = pathname?.startsWith('/en') ? 'en' : 'de'
     const [visible, setVisible] = useState(false)
 
     useEffect(() => {
