@@ -1,11 +1,17 @@
 'use client'
 import { motion } from 'framer-motion'
 
-export default function ScoreCard({ label, score, delay = 0, onClick }) {
+const LABELS = {
+    de: { good: 'Stark', warn: 'Ausbaufähig', bad: 'Kritisch' },
+    en: { good: 'Good', warn: 'Needs Work', bad: 'Critical' },
+}
+
+export default function ScoreCard({ label, score, delay = 0, onClick, locale = 'de' }) {
     const color = score >= 80 ? '#22c55e' : score >= 60 ? '#f59e0b' : '#ef4444'
     const bgColor = score >= 80 ? 'rgba(34,197,94,0.1)' : score >= 60 ? 'rgba(245,158,11,0.1)' : 'rgba(239,68,68,0.1)'
     const borderColor = score >= 80 ? 'rgba(34,197,94,0.2)' : score >= 60 ? 'rgba(245,158,11,0.2)' : 'rgba(239,68,68,0.2)'
-    const label2 = score >= 80 ? 'Good' : score >= 60 ? 'Needs Work' : 'Critical'
+    const t = LABELS[locale] ?? LABELS.de
+    const label2 = score >= 80 ? t.good : score >= 60 ? t.warn : t.bad
     const r = 28
     const circ = 2 * Math.PI * r
 
