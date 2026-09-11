@@ -28,16 +28,25 @@ const PLAN_PLATFORMS = {
 }
 const ALL_PLATFORMS = ['claude', 'chatgpt', 'gemini', 'perplexity', 'google_aio']
 
+const RESULT_FILTERS = [
+    { id: 'alle',        label: 'All' },
+    { id: 'erwaehnt',    label: '✓ Mentioned' },
+    { id: 'nicht',       label: '✗ Never mentioned' },
+    { id: 'ungetestet',  label: 'Untested' },
+]
+
 const INTENT_META = {
     empfehlung: { label: 'Recommendation' },
     vergleich:  { label: 'Comparison' },
 }
 
+// Ordered by Serial Position: "Overview" opens as the most important item, "SEO Ranking + AI
+// Mentions" closes as the strongest differentiator — both stick better than sitting mid-list.
 const NAV_ITEMS = [
     { id: 'overview',    label: 'Overview',                     description: 'Your mention rate, trend over time, and every tracked keyword in detail.',   icon: LayoutDashboard },
     { id: 'competitors', label: 'Competitors',                  description: 'Which other domains AI models cite alongside you - as a list or a chart.',    icon: Users },
-    { id: 'correlation', label: 'SEO Ranking + AI Mentions',    description: 'Does a page rank on Google but never get mentioned by AI models, or the other way around?', icon: GitCompare },
     { id: 'suggestions', label: 'Suggest Keywords',             description: 'SEO keywords that would also make sense to track for GEO.',                   icon: Lightbulb },
+    { id: 'correlation', label: 'SEO Ranking + AI Mentions',    description: 'Does a page rank on Google but never get mentioned by AI models, or the other way around?', icon: GitCompare },
 ]
 
 function aggregateMention(checks, platform, intents) {
@@ -90,7 +99,7 @@ const CORRELATION_VERDICT_META = {
 // position can exist (e.g. #91), but only counts as "findable on Google" from here on (page 1-2).
 const SEO_VISIBLE_THRESHOLD = 20
 
-function CorrelationPanel({ siteId }) {
+function CorrelationPanel({ siteId, onGoToSuggestions }) {
     const [data, setData]       = useState(null)
     const [loading, setLoading] = useState(true)
     const [expanded, setExpanded] = useState(false)
@@ -116,24 +125,42 @@ function CorrelationPanel({ siteId }) {
 
     if (!data.linked) {
         return (
-            <div className="bg-[var(--bg-surface)] border border-dashed border-[var(--border-subtle)] rounded-2xl p-5 mb-6">
-                <h3 className="text-sm font-semibold text-white mb-1.5">Compare SEO ranking + AI mention</h3>
-                <p className="text-xs text-slate-500 leading-relaxed">
-                    No SEO automation is running for this domain yet. Once both products track the same domain, Scanora shows you directly here
-                    whether a page ranks on Google but is never mentioned by AI models — or vice versa.
-                </p>
+            <div className="flex flex-col items-center text-center gap-3 bg-[var(--bg-surface)] border border-dashed border-[var(--border-subtle)] rounded-2xl p-8">
+                <div className="w-10 h-10 rounded-xl bg-[var(--surface-08)] flex items-center justify-center">
+                    <GitCompare className="w-4.5 h-4.5 text-slate-500" />
+                </div>
+                <div>
+                    <h3 className="text-sm font-semibold text-white mb-1.5">Compare SEO ranking + AI mention</h3>
+                    <p className="text-xs text-slate-500 leading-relaxed max-w-sm">
+                        No SEO automation is running for this domain yet. Once both products track the same domain, Scanora shows you directly here
+                        whether a page ranks on Google but is never mentioned by AI models — or vice versa.
+                    </p>
+                </div>
+                <Link href="/en/seo/pricing" className="text-xs font-semibold text-[var(--accent)] hover:opacity-80">
+                    Start SEO automation →
+                </Link>
             </div>
         )
     }
 
     if (!data.matched.length) {
         return (
-            <div className="bg-[var(--bg-surface)] border border-dashed border-[var(--border-subtle)] rounded-2xl p-5 mb-6">
-                <h3 className="text-sm font-semibold text-white mb-1.5">Compare SEO ranking + AI mention</h3>
-                <p className="text-xs text-slate-500 leading-relaxed">
-                    No shared keywords between SEO and GEO tracking ({data.seoOnlyKeywords.length} SEO only, {data.geoOnlyKeywords.length} GEO only).
-                    Add the same keywords in both products to see Google ranking and AI mention side by side.
-                </p>
+            <div className="flex flex-col items-center text-center gap-3 bg-[var(--bg-surface)] border border-dashed border-[var(--border-subtle)] rounded-2xl p-8">
+                <div className="w-10 h-10 rounded-xl bg-[var(--surface-08)] flex items-center justify-center">
+                    <GitCompare className="w-4.5 h-4.5 text-slate-500" />
+                </div>
+                <div>
+                    <h3 className="text-sm font-semibold text-white mb-1.5">Compare SEO ranking + AI mention</h3>
+                    <p className="text-xs text-slate-500 leading-relaxed max-w-sm">
+                        No shared keywords between SEO and GEO tracking ({data.seoOnlyKeywords.length} SEO only, {data.geoOnlyKeywords.length} GEO only).
+                        Add the same keywords in both products to see Google ranking and AI mention side by side.
+                    </p>
+                </div>
+                {onGoToSuggestions && (
+                    <button onClick={onGoToSuggestions} className="text-xs font-semibold text-[var(--accent)] hover:opacity-80">
+                        Get matching keywords suggested →
+                    </button>
+                )}
             </div>
         )
     }
@@ -194,7 +221,7 @@ function CorrelationPanel({ siteId }) {
                                         {m.seoPosition == null ? (
                                             <span className="text-slate-600">—</span>
                                         ) : seoVisible ? (
-                                            <span className="text-emerald-400 font-semibold">#{m.seoPosition}</span>
+                                            <span className="text-[var(--success)] font-semibold">#{m.seoPosition}</span>
                                         ) : (
                                             <span className="text-slate-600" title={`Position ${m.seoPosition} — outside the first 20 results, practically unfindable`}>
                                                 #{m.seoPosition} <span className="text-[10px]">(not visible)</span>
@@ -263,7 +290,7 @@ function KeywordSuggestionsPanel({ siteId, onAdded }) {
             onAdded?.()
             await fetchSuggestions() // list updates automatically since fewer seoOnlyKeywords remain
         } catch (err) {
-            toast.error(err.message || 'Error adding')
+            toast.error(err.message || 'Keywords could not be added — please try again.')
         } finally {
             setAdding(false)
         }
@@ -275,7 +302,19 @@ function KeywordSuggestionsPanel({ siteId, onAdded }) {
             <span className="text-sm text-slate-500">Loading data…</span>
         </div>
     )
-    if (!suggestions?.length) return null
+    if (!suggestions?.length) return (
+        <div className="flex flex-col items-center justify-center text-center gap-3 bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl py-16 px-6">
+            <div className="w-10 h-10 rounded-xl bg-[var(--surface-08)] flex items-center justify-center">
+                <Lightbulb className="w-4.5 h-4.5 text-slate-500" />
+            </div>
+            <p className="text-sm text-slate-500 max-w-sm">
+                No matching SEO keywords found. Once SEO automation tracks keywords for this domain, we'll suggest which ones also make sense for GEO.
+            </p>
+            <Link href="/en/seo/pricing" className="text-xs font-semibold text-[var(--accent)] hover:opacity-80">
+                Start SEO automation →
+            </Link>
+        </div>
+    )
 
     return (
         <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl p-5 mb-6">
@@ -416,7 +455,7 @@ function CompetitorBarChart({ competitors }) {
     )
 }
 
-function CompetitorsPanel({ siteId }) {
+function CompetitorsPanel({ siteId, onGoToOverview }) {
     const [data, setData]       = useState(null)
     const [loading, setLoading] = useState(true)
     const [expanded, setExpanded] = useState(false)
@@ -439,7 +478,21 @@ function CompetitorsPanel({ siteId }) {
             <span className="text-sm text-slate-500">Loading data…</span>
         </div>
     )
-    if (!data?.competitors?.length) return null
+    if (!data?.competitors?.length) return (
+        <div className="flex flex-col items-center justify-center text-center gap-3 bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl py-16 px-6">
+            <div className="w-10 h-10 rounded-xl bg-[var(--surface-08)] flex items-center justify-center">
+                <Users className="w-4.5 h-4.5 text-slate-500" />
+            </div>
+            <p className="text-sm text-slate-500 max-w-sm">
+                No competitors found yet — AI answers for your keywords need to be evaluated first.
+            </p>
+            {onGoToOverview && (
+                <button onClick={onGoToOverview} className="text-xs font-semibold text-[var(--accent)] hover:opacity-80">
+                    Go to overview to start a check →
+                </button>
+            )}
+        </div>
+    )
 
     const visible = expanded ? data.competitors : data.competitors.slice(0, 5)
 
@@ -612,8 +665,8 @@ function CitationChip({ citation: cit }) {
 }
 
 function TrendArrow({ delta }) {
-    if (delta > 0) return <span className="inline-flex items-center gap-0.5 text-emerald-400"><ArrowUp className="w-3.5 h-3.5" strokeWidth={2.5} />{delta}</span>
-    if (delta < 0) return <span className="inline-flex items-center gap-0.5 text-red-400"><ArrowDown className="w-3.5 h-3.5" strokeWidth={2.5} />{Math.abs(delta)}</span>
+    if (delta > 0) return <span className="inline-flex items-center gap-0.5 text-[var(--success)]"><ArrowUp className="w-3.5 h-3.5" strokeWidth={2.5} />{delta}</span>
+    if (delta < 0) return <span className="inline-flex items-center gap-0.5 text-[var(--danger)]"><ArrowDown className="w-3.5 h-3.5" strokeWidth={2.5} />{Math.abs(delta)}</span>
     return <span className="inline-flex items-center gap-0.5 text-slate-500"><Minus className="w-3.5 h-3.5" /></span>
 }
 
@@ -756,6 +809,25 @@ function HistoryDots({ history }) {
 }
 
 
+// Mirrors the known table shape instead of a bare spinner while results load.
+function ResultsTableSkeleton({ columns = 5, rows = 6 }) {
+    return (
+        <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl overflow-hidden">
+            <div className="animate-pulse divide-y divide-[var(--border-subtle)]">
+                {Array.from({ length: rows }).map((_, i) => (
+                    <div key={i} className="flex items-center gap-4 px-5 py-3.5">
+                        <div className="w-3.5 h-3.5 rounded bg-[var(--surface-08)] shrink-0" />
+                        <div className="h-3 w-32 rounded bg-[var(--surface-08)]" />
+                        {Array.from({ length: columns }).map((__, j) => (
+                            <div key={j} className="h-3 w-8 rounded-full bg-[var(--surface-08)] ml-auto" />
+                        ))}
+                    </div>
+                ))}
+            </div>
+        </div>
+    )
+}
+
 function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
     const [data, setData]           = useState(null)
     const [loading, setLoading]     = useState(true)
@@ -811,7 +883,7 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
             setShowPlatformEdit(false)
             onSiteUpdated()
             await fetchResults()
-        } catch (err) { toast.error(err.message || 'Error saving') }
+        } catch (err) { toast.error(err.message || 'Platforms could not be saved — please try again.') }
         finally { setSavingPlatforms(false) }
     }
 
@@ -824,7 +896,7 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
             const d = await res.json()
             if (!res.ok) throw new Error(d.error)
             setData(d)
-        } catch { toast.error('Error loading') }
+        } catch { toast.error('Results could not be loaded — please reload the page.') }
         finally { setLoading(false) }
     }, [siteId])
 
@@ -869,7 +941,7 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
 
             await fetchResults()
             onSiteUpdated()
-        } catch (err) { toast.error(err.message || 'Error') }
+        } catch (err) { toast.error(err.message || 'Check could not be started — please try again.') }
         finally { setChecking(false) }
     }
 
@@ -905,24 +977,49 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
             setNewKws(''); setShowAdd(false)
             onSiteUpdated()
             await fetchResults()
-        } catch (err) { toast.error(err.message || 'Error') }
+        } catch (err) { toast.error(err.message || 'Keywords could not be added — please try again.') }
         finally { setAddingKws(false) }
     }
 
-    const handleRemoveSelected = async () => {
-        if (!selected.size || !confirm(`Remove ${selected.size} keyword${selected.size > 1 ? 's' : ''}?`)) return
-        try {
-            const token = localStorage.getItem('token')
-            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/geo/sites/${siteId}/keywords`, {
-                method: 'DELETE',
-                headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-                body: JSON.stringify({ keywords: [...selected] }),
-            })
-            toast.success('Keywords removed')
-            setSelected(new Set())
-            onSiteUpdated()
-            await fetchResults()
-        } catch { toast.error('Error removing') }
+    // No native confirm() — remove optimistically right away and only fire the DELETE request
+    // after the undo window, so "Undo" doesn't lose any keyword history.
+    const handleRemoveSelected = () => {
+        if (!selected.size) return
+        const toRemove = [...selected]
+        const removedResults = results.filter(r => toRemove.includes(r.keyword))
+
+        setData(prev => prev ? { ...prev, results: prev.results.filter(r => !toRemove.includes(r.keyword)) } : prev)
+        setSelected(new Set())
+
+        let undone = false
+        const restore = () => setData(prev => prev ? { ...prev, results: [...prev.results, ...removedResults] } : prev)
+        const timer = setTimeout(async () => {
+            if (undone) return
+            try {
+                const token = localStorage.getItem('token')
+                await fetch(`${process.env.NEXT_PUBLIC_API_URL}/geo/sites/${siteId}/keywords`, {
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+                    body: JSON.stringify({ keywords: toRemove }),
+                })
+                onSiteUpdated()
+            } catch {
+                toast.error('Removing failed — entries were restored, please try again.')
+                restore()
+            }
+        }, 5000)
+
+        toast((t) => (
+            <div className="flex items-center gap-3">
+                <span>{toRemove.length} keyword{toRemove.length > 1 ? 's' : ''} removed</span>
+                <button
+                    onClick={() => { undone = true; clearTimeout(timer); restore(); toast.dismiss(t.id) }}
+                    className="font-semibold text-[var(--accent)] hover:underline underline-offset-2 whitespace-nowrap"
+                >
+                    Undo
+                </button>
+            </div>
+        ), { duration: 5000 })
     }
 
     const toggleSelect = (kw) => setSelected(prev => {
@@ -946,6 +1043,10 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
             const bMentioned = platforms.some(p => aggregateMention(b.checks, p, intents) === true)
             return aMentioned === bMentioned ? 0 : aMentioned ? -1 : 1
         })
+
+    const allVisibleSelected  = filtered.length > 0 && filtered.every(r => selected.has(r.keyword))
+    const someVisibleSelected = !allVisibleSelected && filtered.some(r => selected.has(r.keyword))
+    const toggleSelectAll = () => setSelected(allVisibleSelected ? new Set() : new Set(filtered.map(r => r.keyword)))
 
     const totalChecks = platforms.length * intents.length * (site?.keywords?.length || 0)
     const estSeconds   = totalChecks * 6.4 // avg. duration per check, measured live
@@ -1063,12 +1164,7 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
             {/* Filter */}
             {results.length > 0 && (
                 <div className="flex items-center gap-1.5 mb-5 flex-wrap">
-                    {[
-                        { id: 'alle',        label: 'All' },
-                        { id: 'erwaehnt',    label: '✓ Mentioned' },
-                        { id: 'nicht',       label: '✗ Never mentioned' },
-                        { id: 'ungetestet',  label: 'Untested' },
-                    ].map(f => (
+                    {RESULT_FILTERS.map(f => (
                         <button key={f.id} onClick={() => setFilter(f.id)}
                             className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${
                                 filter === f.id
@@ -1107,19 +1203,24 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
 
             {/* Results table */}
             {loading ? (
-                <div className="flex flex-col items-center justify-center py-20 gap-3">
-                    <Loader2 className="w-6 h-6 text-[var(--accent)] animate-spin" />
-                    <span className="text-sm text-slate-500">Loading data…</span>
-                </div>
+                <ResultsTableSkeleton columns={platforms.length} />
             ) : results.length === 0 ? (
                 <div className="flex flex-col items-center justify-center py-20 gap-3">
                     <Sparkles className="w-8 h-8 text-slate-700" />
-                    <span className="text-sm text-slate-500">No keywords yet. Add keywords and start a check.</span>
+                    <span className="text-sm text-slate-500 text-center max-w-sm">No keywords tracked yet. Add your first keyword to see if AI models mention you for it.</span>
+                    <button onClick={() => setShowAdd(true)}
+                        className="mt-1 flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold rounded-xl bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] transition-all">
+                        <Plus className="w-3.5 h-3.5" />Add first keyword
+                    </button>
                 </div>
             ) : filtered.length === 0 ? (
                 <div className="flex flex-col items-center justify-center py-16 gap-3">
                     <Sparkles className="w-8 h-8 text-slate-700" />
-                    <span className="text-sm text-slate-500">No keywords for this filter.</span>
+                    <span className="text-sm text-slate-500">No keyword matches "{RESULT_FILTERS.find(f => f.id === filter)?.label}".</span>
+                    <button onClick={() => setFilter('alle')}
+                        className="mt-1 flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold rounded-xl bg-[var(--surface-08)] hover:bg-[var(--surface-10)] text-slate-300 border border-[var(--border-subtle)] transition-all">
+                        Show all keywords
+                    </button>
                 </div>
             ) : (
                 <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl overflow-hidden">
@@ -1127,7 +1228,13 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
                         <table className="w-full">
                             <thead>
                                 <tr className="border-b border-[var(--border-subtle)]">
-                                    <th className="w-8 px-5 py-3" />
+                                    <th className="w-8 px-5 py-3">
+                                        <input type="checkbox" checked={allVisibleSelected}
+                                            ref={el => { if (el) el.indeterminate = someVisibleSelected }}
+                                            onChange={toggleSelectAll}
+                                            aria-label="Select all visible entries"
+                                            className="w-3.5 h-3.5 rounded border-[var(--border-strong)] accent-red-500 cursor-pointer" />
+                                    </th>
                                     <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Keyword</th>
                                     {platforms.map(p => (
                                         <th key={p} className={`px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider ${PLATFORM_META[p]?.color || 'text-slate-500'}`}>
@@ -1152,16 +1259,21 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
                                     return (
                                         <React.Fragment key={keyword}>
                                             <tr className={`border-b border-[var(--border-subtle)] last:border-0 transition-colors ${isSelected ? 'bg-red-500/5' : isExpanded ? 'bg-[var(--surface-06)]' : 'hover:bg-[var(--surface-08)]'}`}>
-                                                <td className="px-5 py-3.5 cursor-pointer" onClick={() => toggleSelect(keyword)}>
-                                                    <div className={`w-3.5 h-3.5 rounded border transition-all ${isSelected ? 'bg-red-500/40 border-red-500/60' : 'border-[var(--border-strong)]'}`} />
+                                                <td className="px-5 py-3.5">
+                                                    <input type="checkbox" checked={isSelected} onChange={() => toggleSelect(keyword)}
+                                                        aria-label={`Select ${keyword}`}
+                                                        className="w-3.5 h-3.5 rounded border-[var(--border-strong)] accent-red-500 cursor-pointer" />
                                                 </td>
-                                                <td className="px-5 py-3.5 cursor-pointer" onClick={() => hasDetail && setExpanded(prev => prev === keyword ? null : keyword)}>
+                                                <td className="px-5 py-3.5">
                                                     <div className="flex items-center gap-2">
                                                         <span className="text-sm text-slate-200">{keyword}</span>
                                                         {hasDetail && (
-                                                            <span className={`transition-colors ${isExpanded ? 'text-[var(--accent)]' : 'text-slate-700'}`}>
+                                                            <button type="button" onClick={() => setExpanded(prev => prev === keyword ? null : keyword)}
+                                                                aria-expanded={isExpanded} aria-controls={`geo-detail-${keyword}`}
+                                                                aria-label={isExpanded ? 'Collapse details' : 'Expand details'}
+                                                                className={`transition-colors ${isExpanded ? 'text-[var(--accent)]' : 'text-slate-600 hover:text-slate-300'}`}>
                                                                 {isExpanded ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
-                                                            </span>
+                                                            </button>
                                                         )}
                                                     </div>
                                                 </td>
@@ -1181,7 +1293,7 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
                                             </tr>
                                             {isExpanded && (
                                                 <tr className="border-b border-[var(--border-subtle)] last:border-0">
-                                                    <td colSpan={3 + platforms.length} className="px-5 py-4 bg-[var(--surface-06)]">
+                                                    <td id={`geo-detail-${keyword}`} colSpan={3 + platforms.length} className="px-5 py-4 bg-[var(--surface-06)]">
                                                         <div className="space-y-4">
                                                             {platforms.filter(p => intents.some(i => checks?.[p]?.[i])).map(p => {
                                                                 const m = PLATFORM_META[p]
@@ -1277,7 +1389,7 @@ export default function GeoSitePageEn() {
 
     return (
         <div className="min-h-screen bg-[var(--bg-base)]">
-            <Toaster position="top-right" toastOptions={{
+            <Toaster position="bottom-right" toastOptions={{
                 style: { background: 'var(--bg-surface)', color: '#fff', border: '1px solid var(--border-subtle)' },
             }} />
             <Navbar locale="en" />
@@ -1346,8 +1458,8 @@ export default function GeoSitePageEn() {
                             </div>
                         )}
                         {activeView === 'overview'    && <ResultsTab siteId={siteId} site={site} plan={plan} onSiteUpdated={fetchSite} />}
-                        {activeView === 'competitors' && <CompetitorsPanel siteId={siteId} />}
-                        {activeView === 'correlation' && <CorrelationPanel siteId={siteId} />}
+                        {activeView === 'competitors' && <CompetitorsPanel siteId={siteId} onGoToOverview={() => setActiveView('overview')} />}
+                        {activeView === 'correlation' && <CorrelationPanel siteId={siteId} onGoToSuggestions={() => setActiveView('suggestions')} />}
                         {activeView === 'suggestions' && <KeywordSuggestionsPanel siteId={siteId} onAdded={fetchSite} />}
                     </div>
                 </div>

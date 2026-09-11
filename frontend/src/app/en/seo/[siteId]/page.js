@@ -5,7 +5,7 @@ import {
     ArrowLeft, TrendingUp, TrendingDown, Minus, Plus, Trash2,
     Loader2, RefreshCw, Globe, X, Lightbulb, Users, Link2,
     ExternalLink, ChevronUp, ChevronDown, GitCompare, Check, Lock, Download, Bell, Settings,
-    FileText, Copy,
+    FileText, Copy, Award, AlertTriangle,
 } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter, useParams } from 'next/navigation'
@@ -14,16 +14,26 @@ import Navbar from '../../../components/Navbar'
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
+// Tiers pair color with a shape/icon signal (not color alone) so top-3 vs. the rest stays
+// distinguishable for color-blind users — same tokens as the DE dashboard's globals.css.
 function PositionCell({ position }) {
     if (position == null) return <span className="text-slate-600 text-sm">—</span>
-    const color = position <= 3 ? 'text-emerald-400' : position <= 10 ? 'text-teal-400' : position <= 30 ? 'text-amber-400' : 'text-slate-400'
-    return <span className={`text-sm font-bold ${color}`}>#{position}</span>
+    const tier =
+        position <= 10 ? { chip: 'bg-[var(--success-soft)] border-[var(--success-border)]', text: 'text-[var(--success)]', icon: position <= 3 ? Award : null } :
+        position <= 30 ? { chip: 'bg-[var(--warning-soft)] border-[var(--warning-border)]',  text: 'text-[var(--warning)]', icon: null } :
+                         { chip: 'border-transparent',                                       text: 'text-slate-400',        icon: null }
+    return (
+        <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md border text-sm font-bold ${tier.chip} ${tier.text}`}>
+            {tier.icon && <tier.icon className="w-3 h-3" strokeWidth={2.5} />}
+            #{position}
+        </span>
+    )
 }
 
 function ChangeCell({ change }) {
     if (change == null) return <span className="text-slate-600 text-xs">—</span>
-    if (change > 0) return <span className="flex items-center gap-0.5 text-emerald-400 text-xs font-semibold"><ChevronUp className="w-3 h-3" />+{change}</span>
-    if (change < 0) return <span className="flex items-center gap-0.5 text-red-400 text-xs font-semibold"><ChevronDown className="w-3 h-3" />{change}</span>
+    if (change > 0) return <span className="flex items-center gap-0.5 text-[var(--success)] text-xs font-semibold"><ChevronUp className="w-3 h-3" />+{change}</span>
+    if (change < 0) return <span className="flex items-center gap-0.5 text-[var(--danger)] text-xs font-semibold"><ChevronDown className="w-3 h-3" />{change}</span>
     return <span className="flex items-center gap-0.5 text-slate-500 text-xs"><Minus className="w-3 h-3" />0</span>
 }
 
@@ -54,6 +64,26 @@ function EmptyTab({ icon: Icon, text }) {
         <div className="flex flex-col items-center justify-center py-20 gap-3">
             <Icon className="w-8 h-8 text-slate-700" />
             <span className="text-sm text-slate-500">{text}</span>
+        </div>
+    )
+}
+
+// Mirrors the known table shape instead of a bare spinner while rankings load.
+function TableSkeleton({ rows = 6 }) {
+    return (
+        <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl overflow-hidden">
+            <div className="animate-pulse divide-y divide-[var(--border-subtle)]">
+                {Array.from({ length: rows }).map((_, i) => (
+                    <div key={i} className="flex items-center gap-4 px-5 py-3.5">
+                        <div className="w-3.5 h-3.5 rounded bg-[var(--surface-08)] shrink-0" />
+                        <div className="h-3 w-32 rounded bg-[var(--surface-08)]" />
+                        <div className="h-3 w-10 rounded bg-[var(--surface-08)] ml-auto" />
+                        <div className="h-3 w-14 rounded bg-[var(--surface-08)] hidden sm:block" />
+                        <div className="h-3 w-24 rounded bg-[var(--surface-08)] hidden sm:block" />
+                        <div className="h-3 w-16 rounded bg-[var(--surface-08)] hidden md:block" />
+                    </div>
+                ))}
+            </div>
         </div>
     )
 }
@@ -175,9 +205,9 @@ const FILTERS = [
 ]
 
 const DIFFICULTY_COLORS = {
-    low:    { text: 'text-emerald-400', bg: 'bg-emerald-500/10 border-emerald-500/20', label: 'Low' },
-    medium: { text: 'text-amber-400',   bg: 'bg-amber-500/10 border-amber-500/20',     label: 'Medium' },
-    high:   { text: 'text-red-400',     bg: 'bg-red-500/10 border-red-500/20',         label: 'High' },
+    low:    { text: 'text-[var(--success)]', bg: 'bg-[var(--success-soft)] border-[var(--success-border)]', label: 'Low' },
+    medium: { text: 'text-[var(--warning)]', bg: 'bg-[var(--warning-soft)] border-[var(--warning-border)]', label: 'Medium' },
+    high:   { text: 'text-[var(--danger)]',  bg: 'bg-[var(--danger-soft)] border-[var(--danger-border)]',   label: 'High' },
 }
 
 function DifficultyBadge({ difficulty }) {
@@ -506,7 +536,7 @@ function RankingHistoryChart({ siteId, refreshKey }) {
     )
 }
 
-function RankingsTab({ siteId, site, onSiteUpdated }) {
+function RankingsTab({ siteId, site, onSiteUpdated, onStatsChange }) {
     const [rankings, setRankings]       = useState([])
     const [insights, setInsights]       = useState({})
     const [loading, setLoading]         = useState(true)
@@ -518,6 +548,8 @@ function RankingsTab({ siteId, site, onSiteUpdated }) {
     const [expandedKw, setExpandedKw]   = useState(null)
     const [filter, setFilter]           = useState('alle')
     const [chartKey, setChartKey]       = useState(0)
+    const [manualChecksUsed, setManualChecksUsed]   = useState(null)
+    const [manualChecksLimit, setManualChecksLimit] = useState(null)
 
     const fetchInsights = useCallback(async () => {
         try {
@@ -539,9 +571,16 @@ function RankingsTab({ siteId, site, onSiteUpdated }) {
             const data = await res.json()
             if (!res.ok) throw new Error(data.error)
             setRankings(data.rankings || [])
-        } catch { toast.error('Error loading rankings') }
+            setManualChecksUsed(data.manualChecksUsed ?? null)
+            setManualChecksLimit(data.manualChecksLimit ?? null)
+            onStatsChange?.({
+                rankings: data.rankings || [],
+                manualChecksUsed: data.manualChecksUsed ?? null,
+                manualChecksLimit: data.manualChecksLimit ?? null,
+            })
+        } catch { toast.error('Rankings could not be loaded — please reload the page.') }
         finally { setLoading(false) }
-    }, [siteId])
+    }, [siteId, onStatsChange])
 
     useEffect(() => {
         fetchRankings()
@@ -568,7 +607,7 @@ function RankingsTab({ siteId, site, onSiteUpdated }) {
             toast.success('Check complete')
             await fetchRankings()
             setChartKey(k => k + 1)
-        } catch (err) { toast.error(err.message || 'Error') }
+        } catch (err) { toast.error(err.message || 'Check could not be started — please try again.') }
         finally { setChecking(false) }
     }
 
@@ -596,22 +635,51 @@ function RankingsTab({ siteId, site, onSiteUpdated }) {
         finally { setAddingKws(false) }
     }
 
-    const handleRemoveSelected = async () => {
-        if (!selected.size || !confirm(`Remove ${selected.size} keyword${selected.size > 1 ? 's' : ''}?`)) return
-        try {
-            const token = localStorage.getItem('token')
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/seo/sites/${siteId}/keywords`, {
-                method: 'DELETE',
-                headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-                body: JSON.stringify({ keywords: [...selected] }),
-            })
-            if (!res.ok) throw new Error()
-            toast.success('Keywords removed')
-            setSelected(new Set())
-            onSiteUpdated()
-            await fetchRankings()
-            setChartKey(k => k + 1)
-        } catch { toast.error('Error removing') }
+    // No native confirm() — remove optimistically right away and only fire the DELETE request
+    // after the undo window, so "Undo" doesn't lose any keyword history.
+    const handleRemoveSelected = () => {
+        if (!selected.size) return
+        const toRemove = [...selected]
+        const removedRankings = rankings.filter(r => toRemove.includes(r.keyword))
+
+        setRankings(prev => prev.filter(r => !toRemove.includes(r.keyword)))
+        setSelected(new Set())
+
+        let undone = false
+        const timer = setTimeout(async () => {
+            if (undone) return
+            try {
+                const token = localStorage.getItem('token')
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/seo/sites/${siteId}/keywords`, {
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+                    body: JSON.stringify({ keywords: toRemove }),
+                })
+                if (!res.ok) throw new Error()
+                onSiteUpdated()
+                setChartKey(k => k + 1)
+            } catch {
+                toast.error('Removing failed')
+                setRankings(prev => [...prev, ...removedRankings])
+            }
+        }, 5000)
+
+        toast((t) => (
+            <div className="flex items-center gap-3">
+                <span>{toRemove.length} keyword{toRemove.length > 1 ? 's' : ''} removed</span>
+                <button
+                    onClick={() => {
+                        undone = true
+                        clearTimeout(timer)
+                        setRankings(prev => [...prev, ...removedRankings])
+                        toast.dismiss(t.id)
+                    }}
+                    className="font-semibold text-[var(--accent)] hover:underline underline-offset-2 whitespace-nowrap"
+                >
+                    Undo
+                </button>
+            </div>
+        ), { duration: 5000 })
     }
 
     const toggleSelect = (kw) => setSelected(prev => {
@@ -627,6 +695,10 @@ function RankingsTab({ siteId, site, onSiteUpdated }) {
         if (filter === 'gefallen')  return r.change < 0
         return true
     })
+
+    const allVisibleSelected  = filteredRankings.length > 0 && filteredRankings.every(r => selected.has(r.keyword))
+    const someVisibleSelected = !allVisibleSelected && filteredRankings.some(r => selected.has(r.keyword))
+    const toggleSelectAll = () => setSelected(allVisibleSelected ? new Set() : new Set(filteredRankings.map(r => r.keyword)))
 
     const exportCSV = () => {
         const headers = ['Keyword', 'Position', 'Change', 'CTR (est. %)', 'URL', 'Date']
@@ -725,7 +797,7 @@ function RankingsTab({ siteId, site, onSiteUpdated }) {
             </AnimatePresence>
 
             {/* Table */}
-            {loading ? <LoadingTab /> : rankings.length === 0 ? (
+            {loading ? <TableSkeleton /> : rankings.length === 0 ? (
                 <EmptyTab icon={TrendingUp} text="No keywords yet. Add keywords and start a check." />
             ) : filteredRankings.length === 0 ? (
                 <EmptyTab icon={TrendingUp} text={`No keywords for filter "${FILTERS.find(f => f.id === filter)?.label}".`} />
@@ -735,7 +807,13 @@ function RankingsTab({ siteId, site, onSiteUpdated }) {
                         <table className="w-full">
                             <thead>
                                 <tr className="border-b border-[var(--border-subtle)]">
-                                    <th className="w-8 px-5 py-3" />
+                                    <th className="w-8 px-5 py-3">
+                                        <input type="checkbox" checked={allVisibleSelected}
+                                            ref={el => { if (el) el.indeterminate = someVisibleSelected }}
+                                            onChange={toggleSelectAll}
+                                            aria-label="Select all visible keywords"
+                                            className="w-3.5 h-3.5 rounded border-[var(--border-strong)] accent-red-500 cursor-pointer" />
+                                    </th>
                                     <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Keyword</th>
                                     <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Position</th>
                                     <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Change</th>
@@ -756,19 +834,22 @@ function RankingsTab({ siteId, site, onSiteUpdated }) {
                                         <React.Fragment key={keyword}>
                                             <tr onClick={() => toggleExpand(keyword)}
                                                 className={`border-b border-[var(--border-subtle)] cursor-pointer transition-colors ${isSelected ? 'bg-red-500/5' : isExpanded ? 'bg-[var(--surface-06)]' : 'hover:bg-[var(--surface-08)]'} ${!isExpanded ? 'last:border-0' : ''}`}>
-                                                <td className="px-5 py-3.5" onClick={e => { e.stopPropagation(); toggleSelect(keyword) }}>
-                                                    <div className={`w-3.5 h-3.5 rounded border transition-all ${isSelected ? 'bg-red-500/40 border-red-500/60' : 'border-[var(--border-strong)]'}`} />
+                                                <td className="px-5 py-3.5" onClick={e => e.stopPropagation()}>
+                                                    <input type="checkbox" checked={isSelected} onChange={() => toggleSelect(keyword)}
+                                                        aria-label={`Select ${keyword}`}
+                                                        className="w-3.5 h-3.5 rounded border-[var(--border-strong)] accent-red-500 cursor-pointer" />
                                                 </td>
                                                 <td className="px-5 py-3.5">
                                                     <div className="flex items-center gap-2">
                                                         <span className="text-sm text-slate-200">{keyword}</span>
                                                         {insightDone && <span className="w-1.5 h-1.5 rounded-full bg-emerald-500/70 shrink-0" title="Content plan available" />}
                                                         {insightPending && <Loader2 className="w-2.5 h-2.5 text-slate-600 animate-spin shrink-0" />}
-                                                        {(hasHistory || insightDone) && (
-                                                            <span className={`transition-colors ${isExpanded ? 'text-[var(--accent)]' : 'text-slate-700'}`}>
-                                                                {isExpanded ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
-                                                            </span>
-                                                        )}
+                                                        <button type="button" onClick={e => { e.stopPropagation(); toggleExpand(keyword) }}
+                                                            aria-expanded={isExpanded} aria-controls={`kw-detail-${keyword}`}
+                                                            aria-label={isExpanded ? 'Collapse details' : 'Expand details'}
+                                                            className={`transition-colors ${isExpanded ? 'text-[var(--accent)]' : 'text-slate-600 hover:text-slate-300'}`}>
+                                                            {isExpanded ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
+                                                        </button>
                                                     </div>
                                                 </td>
                                                 <td className="px-5 py-3.5"><PositionCell position={current?.position} /></td>
@@ -794,7 +875,7 @@ function RankingsTab({ siteId, site, onSiteUpdated }) {
                                             </tr>
                                             {isExpanded && (
                                                 <tr className="border-b border-[var(--border-subtle)] last:border-0">
-                                                    <td colSpan={7} className="px-5 py-5 bg-[var(--surface-06)]">
+                                                    <td id={`kw-detail-${keyword}`} colSpan={7} className="px-5 py-5 bg-[var(--surface-06)]">
                                                         {hasHistory && (
                                                             <div className="mb-5">
                                                                 <p className="text-xs text-slate-500 mb-3 uppercase tracking-wider font-semibold">History — {keyword}</p>
@@ -1147,7 +1228,7 @@ function BacklinksTab({ siteId }) {
         { label: 'Referring IPs',        value: summary.referringIPs?.toLocaleString('en-US') ?? '—', color: 'text-[var(--accent)]' },
         { label: 'Dofollow',             value: summary.dofollow?.toLocaleString('en-US') ?? '—', color: 'text-[var(--accent)]' },
         { label: 'Nofollow',             value: summary.nofollow?.toLocaleString('en-US') ?? '—', color: 'text-slate-400' },
-        { label: 'Spam Score',           value: summary.spamScore != null ? `${summary.spamScore}%` : '—', color: summary.spamScore > 30 ? 'text-red-400' : 'text-[var(--accent)]' },
+        { label: 'Spam Score',           value: summary.spamScore != null ? `${summary.spamScore}%` : '—', risky: summary.spamScore > 30 },
     ]
 
     return (
@@ -1156,7 +1237,10 @@ function BacklinksTab({ siteId }) {
                 {stats.map(s => (
                     <div key={s.label} className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-xl p-4">
                         <div className="text-xs text-slate-500 mb-1.5">{s.label}</div>
-                        <div className={`text-xl font-bold ${s.color}`}>{s.value}</div>
+                        <div className={`flex items-center gap-1.5 text-xl font-bold ${s.risky ? 'text-[var(--danger)]' : (s.color || 'text-white')}`}>
+                            {s.risky && <AlertTriangle className="w-4 h-4 shrink-0" strokeWidth={2.5} />}
+                            {s.value}
+                        </div>
                     </div>
                 ))}
             </div>
@@ -1491,13 +1575,52 @@ function SettingsTab({ siteId }) {
 // ─── Main Page ────────────────────────────────────────────────────────────────
 
 const TABS = [
-    { id: 'rankings',    label: 'Rankings',       icon: TrendingUp },
-    { id: 'ideas',       label: 'Keyword Ideas',  icon: Lightbulb },
-    { id: 'gap',         label: 'Content Gap',    icon: GitCompare },
-    { id: 'competitors', label: 'Competitors',    icon: Users },
-    { id: 'backlinks',   label: 'Backlinks',      icon: Link2 },
-    { id: 'settings',    label: 'Settings',       icon: Settings },
+    { id: 'rankings',    label: 'Rankings' },
+    { id: 'ideas',       label: 'Keyword Ideas' },
+    { id: 'gap',         label: 'Content Gap' },
+    { id: 'competitors', label: 'Competitors' },
+    { id: 'backlinks',   label: 'Backlinks' },
+    { id: 'settings',    label: 'Settings' },
 ]
+
+// Surfaces the key numbers immediately, independent of the active tab — mirrors OverviewStats
+// on the DE dashboard instead of hiding them inside the Rankings tab.
+function OverviewStats({ site, overview }) {
+    const positions = (overview.rankings || []).map(r => r.current?.position).filter(p => p != null)
+    const avgPosition = positions.length ? (positions.reduce((a, b) => a + b, 0) / positions.length).toFixed(1) : null
+    const top10Count  = positions.filter(p => p <= 10).length
+
+    const stats = [
+        { label: 'Avg. Position', value: avgPosition ?? '—', icon: TrendingUp },
+        { label: 'Top 10', value: positions.length ? `${top10Count} of ${positions.length}` : '—', icon: Check },
+        {
+            label: 'Last checked',
+            value: site?.lastChecked
+                ? new Date(site.lastChecked).toLocaleDateString('en-US', { day: '2-digit', month: '2-digit' })
+                : 'Never',
+            icon: RefreshCw,
+        },
+        {
+            label: 'Checks this month',
+            value: overview.manualChecksLimit != null ? `${overview.manualChecksUsed ?? 0}/${overview.manualChecksLimit}` : '—',
+            icon: Lock,
+        },
+    ]
+
+    return (
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
+            {stats.map(s => (
+                <div key={s.label} className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-xl p-4">
+                    <div className="flex items-center gap-1.5 text-xs text-slate-500 mb-1.5 whitespace-nowrap">
+                        <s.icon className="w-3.5 h-3.5 shrink-0" />
+                        {s.label}
+                    </div>
+                    <div className="text-2xl font-bold text-white tracking-tight">{s.value}</div>
+                </div>
+            ))}
+        </div>
+    )
+}
 
 export default function SeoSitePageEn() {
     const router     = useRouter()
@@ -1506,6 +1629,7 @@ export default function SeoSitePageEn() {
     const [plan, setPlan]       = useState(null)
     const [loading, setLoading] = useState(true)
     const [tab, setTab]         = useState('rankings')
+    const [overview, setOverview] = useState({ rankings: [], manualChecksUsed: null, manualChecksLimit: null })
 
     const fetchSite = useCallback(async () => {
         try {
@@ -1540,12 +1664,12 @@ export default function SeoSitePageEn() {
 
     return (
         <div className="min-h-screen bg-[var(--bg-base)]">
-            <Toaster position="top-right" toastOptions={{
+            <Toaster position="bottom-right" toastOptions={{
                 style: { background: 'var(--bg-surface)', color: '#fff', border: '1px solid var(--border-subtle)' },
             }} />
             <Navbar locale="en" />
 
-            <div className="max-w-5xl mx-auto px-5 sm:px-8 pt-28 pb-16">
+            <div className="max-w-6xl mx-auto px-5 sm:px-8 pt-28 pb-16">
 
                 {/* Back + Header */}
                 <div className="mb-8">
@@ -1557,34 +1681,41 @@ export default function SeoSitePageEn() {
                             <Globe className="w-5 h-5 text-[var(--accent)]" />
                         </div>
                         <div>
-                            <h1 className="text-xl font-bold text-white">{site?.displayName || site?.domain}</h1>
+                            <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">{site?.displayName || site?.domain}</h1>
                             <div className="text-sm text-slate-500">{site?.domain}</div>
                         </div>
                     </div>
                 </div>
 
-                {/* Tabs */}
-                <div className="flex items-center gap-1 mb-6 border-b border-[var(--border-subtle)] overflow-x-auto">
-                    {TABS.map(t => (
-                        <button key={t.id} onClick={() => setTab(t.id)}
-                            className={`flex items-center gap-2 px-4 py-3 text-sm font-medium whitespace-nowrap border-b-2 transition-all -mb-px ${
-                                tab === t.id
-                                    ? 'text-[var(--accent)] border-[var(--accent)]'
-                                    : 'text-slate-500 hover:text-slate-300 border-transparent'
-                            }`}>
-                            <t.icon className="w-3.5 h-3.5" />
-                            {t.label}
-                        </button>
-                    ))}
-                </div>
+                {/* Overview — the key numbers, always visible regardless of the active tab */}
+                <OverviewStats site={site} overview={overview} />
 
-                {/* Tab Content */}
-                {tab === 'rankings'    && <RankingsTab siteId={siteId} site={site} onSiteUpdated={fetchSite} />}
-                {tab === 'ideas'       && <KeywordIdeasTab siteId={siteId} />}
-                {tab === 'gap'         && <ContentGapTab siteId={siteId} plan={plan} />}
-                {tab === 'competitors' && <CompetitorsTab siteId={siteId} />}
-                {tab === 'backlinks'   && <BacklinksTab siteId={siteId} />}
-                {tab === 'settings'    && <SettingsTab siteId={siteId} />}
+                <div className="flex flex-col md:flex-row gap-8">
+                    {/* Tabs — a left nav column instead of a row, so all 6 entries stay reachable
+                        without clipping or wrapping. */}
+                    <nav className="flex flex-col gap-3 md:w-52 shrink-0">
+                        {TABS.map(t => (
+                            <button key={t.id} onClick={() => setTab(t.id)}
+                                className={`text-left px-4 py-3 text-sm font-medium rounded-xl transition-all ${
+                                    tab === t.id
+                                        ? 'bg-[var(--accent-soft)] text-[var(--accent)]'
+                                        : 'text-slate-500 hover:text-slate-300 hover:bg-[var(--surface-08)]'
+                                }`}>
+                                {t.label}
+                            </button>
+                        ))}
+                    </nav>
+
+                    {/* Tab Content */}
+                    <div className="flex-1 min-w-0">
+                        {tab === 'rankings'    && <RankingsTab siteId={siteId} site={site} onSiteUpdated={fetchSite} onStatsChange={setOverview} />}
+                        {tab === 'ideas'       && <KeywordIdeasTab siteId={siteId} />}
+                        {tab === 'gap'         && <ContentGapTab siteId={siteId} plan={plan} />}
+                        {tab === 'competitors' && <CompetitorsTab siteId={siteId} />}
+                        {tab === 'backlinks'   && <BacklinksTab siteId={siteId} />}
+                        {tab === 'settings'    && <SettingsTab siteId={siteId} />}
+                    </div>
+                </div>
             </div>
         </div>
     )
