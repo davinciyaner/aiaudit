@@ -6,7 +6,7 @@ import {
     getPlan, subscribePlan,
     getSites, addSite, getSite, deleteSite,
     addKeywords, removeKeywords,
-    getRankings, getRankingHistory, triggerCheck,
+    getRankings, getRankingHistory, triggerCheck, getCheckProgress,
     getKeywordIdeasForSite, getCompetitorsForSite, getBacklinksForSite, getReferringDomainsForSite, getBacklinkGapForSite, getContentGapForSite, getRankedKeywordsForSite,
     getAlertSettings, updateAlertSettings,
     generateContent, generateBacklinkIdeasForKeyword,
@@ -44,6 +44,9 @@ const apiRateLimit = rateLimit({
     handler: (req, res) => res.status(429).json({ error: t('API_RATE_LIMIT', req.language) }),
     standardHeaders: false,
     legacyHeaders: false,
+    // Der Fortschritts-Poll während eines laufenden Checks fragt alle paar Sekunden einen simplen
+    // In-Memory-Status ab — das darf nicht gegen dasselbe Kontingent wie echte Datenabfragen zählen.
+    skip: (req) => req.path.endsWith('/check-progress'),
 })
 
 const router = express.Router()
@@ -67,6 +70,7 @@ router.delete('/sites/:id/keywords', removeKeywords)
 router.get('/sites/:id/rankings', getRankings)
 router.get('/sites/:id/history',  getRankingHistory)
 router.post('/sites/:id/check', checkRateLimit, triggerCheck)
+router.get('/sites/:id/check-progress', getCheckProgress)
 
 router.get('/sites/:id/keyword-ideas', checkRateLimit, getKeywordIdeasForSite)
 router.get('/sites/:id/competitors', checkRateLimit, getCompetitorsForSite)
@@ -74,7 +78,10 @@ router.get('/sites/:id/backlinks', manualRefreshRateLimit, getBacklinksForSite)
 router.get('/sites/:id/referring-domains', manualRefreshRateLimit, getReferringDomainsForSite)
 router.get('/sites/:id/backlink-gap', manualRefreshRateLimit, getBacklinkGapForSite)
 router.get('/sites/:id/content-gap', checkRateLimit, getContentGapForSite)
-router.get('/sites/:id/ranked-keywords', checkRateLimit, getRankedKeywordsForSite)
+// Wie Backlinks: ein passiver Tab-Aufruf liefert nur den (potenziell unbegrenzt lange gültigen)
+// Cache und darf nie blockiert werden. Nur "Neu laden" (force=true) macht einen echten, vom
+// Monatslimit gedeckelten Call — dafür reicht ein leichtes Cooldown gegen Doppel-Klicks.
+router.get('/sites/:id/ranked-keywords', manualRefreshRateLimit, getRankedKeywordsForSite)
 
 router.post('/sites/:id/keyword-content', checkRateLimit, generateContent)
 router.post('/sites/:id/backlink-ideas', checkRateLimit, generateBacklinkIdeasForKeyword)

@@ -24,6 +24,19 @@
   --accent-border: oklch(68.5% 0.169 237.323 / 35%);
   --accent-glow: oklch(68.5% 0.169 237.323 / 10%);
   --text-muted: oklch(58% 0.02 259.733);
+
+  /* Semantic status colors — layered on top of the primitives above so every
+     "good/warning/danger" state in the app (rankings, difficulty, spam score)
+     reads from one place instead of scattered Tailwind palette classes. */
+  --success: oklch(72% 0.15 155);
+  --success-soft: oklch(72% 0.15 155 / 12%);
+  --success-border: oklch(72% 0.15 155 / 30%);
+  --warning: oklch(80% 0.15 80);
+  --warning-soft: oklch(80% 0.15 80 / 12%);
+  --warning-border: oklch(80% 0.15 80 / 30%);
+  --danger: oklch(65% 0.19 25);
+  --danger-soft: oklch(65% 0.19 25 / 12%);
+  --danger-border: oklch(65% 0.19 25 / 30%);
 }
 
 * {
