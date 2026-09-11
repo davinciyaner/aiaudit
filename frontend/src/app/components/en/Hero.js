@@ -72,7 +72,7 @@ export default function Hero() {
     }
 
     return (
-        <main className="relative flex items-center pt-28 pb-16 sm:pt-36 sm:pb-24 overflow-hidden">
+        <main id="hero" className="relative flex items-center pt-28 pb-16 sm:pt-36 sm:pb-24 overflow-hidden">
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[500px] rounded-full blur-3xl pointer-events-none"
                 style={{ background: 'radial-gradient(ellipse, var(--accent-glow) 0%, transparent 70%)' }} />
 
@@ -92,8 +92,9 @@ export default function Hero() {
 
                     <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
                         className="text-base sm:text-lg text-slate-400 mb-6 max-w-2xl leading-relaxed">
-                        Scanora tracks your AI Visibility on ChatGPT, Claude, Perplexity and Google AI Overview —
-                        and your SEO rankings on Google. One audit, concrete fixes instead of generic tips.
+                        For marketing teams and agencies: Scanora checks whether ChatGPT, Claude, Gemini, Perplexity
+                        and Google AI Overview know your site — and how you rank on Google. One audit, concrete
+                        fixes instead of generic tips.
                     </motion.p>
 
                     <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.12 }}

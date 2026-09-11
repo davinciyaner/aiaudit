@@ -81,7 +81,12 @@ function NavDropdown({ item, isOpen, onOpen, onClose }) {
 
     return (
         <div className="relative" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-            <button className={`flex items-center gap-1 px-4 py-2 text-sm rounded-lg transition-all ${
+            <button
+                onClick={() => (isOpen ? onClose() : onOpen())}
+                aria-haspopup="true"
+                aria-expanded={isOpen}
+                aria-controls={`navdrop-${item.key}`}
+                className={`flex items-center gap-1 px-4 py-2 text-sm rounded-lg transition-all ${
                 isOpen ? 'text-white bg-[var(--surface-06)]' : 'text-white hover:bg-[var(--surface-06)]'
             }`}>
                 {item.label}
@@ -91,6 +96,8 @@ function NavDropdown({ item, isOpen, onOpen, onClose }) {
             <AnimatePresence>
                 {isOpen && (
                     <motion.div
+                        id={`navdrop-${item.key}`}
+                        role="menu"
                         initial={{ opacity: 0, y: 8, scale: 0.97 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 8, scale: 0.97 }}

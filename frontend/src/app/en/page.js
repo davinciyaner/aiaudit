@@ -5,6 +5,7 @@ import ProductShowcase from '../components/en/ProductShowcase'
 import WhyAudit from '../components/en/WhyAudit'
 import AIVisibilityExplainer from '../components/en/AIVisibilityExplainer'
 import Pricing from '../components/en/Pricing'
+import FinalCTA from '../components/en/FinalCTA'
 import Footer from '../components/Footer'
 import LandingFeedback from '../components/en/LandingFeedback'
 import FAQ from '../components/en/FAQ'
@@ -60,6 +61,7 @@ export default function LandingPageEn() {
             <WhyAudit />
             <Pricing />
             <FAQ />
+            <FinalCTA />
             <Footer locale="en" />
             <LandingFeedback />
         </main>

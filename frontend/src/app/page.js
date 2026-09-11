@@ -5,6 +5,7 @@ import ProductShowcase from './components/ProductShowcase'
 import WhyAudit from './components/WhyAudit'
 import AIVisibilityExplainer from './components/AIVisibilityExplainer'
 import Pricing from './components/Pricing'
+import FinalCTA from './components/FinalCTA'
 import Footer from './components/Footer'
 import LandingFeedback from './components/LandingFeedback'
 import FAQ from './components/FAQ'
@@ -60,6 +61,7 @@ export default function LandingPage() {
             <WhyAudit />
             <Pricing />
             <FAQ />
+            <FinalCTA />
             <Footer />
             <LandingFeedback />
         </main>

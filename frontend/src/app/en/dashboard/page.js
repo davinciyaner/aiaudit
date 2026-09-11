@@ -315,10 +315,10 @@ export default function DashboardEn() {
 
                         {/* SCORE CARDS */}
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
-                            <ScoreCard label="Overall" score={audit.overallScore ?? 0} />
-                            <ScoreCard label="SEO" score={audit?.seo?.score ?? 0} delay={0.1} />
-                            <ScoreCard label="Performance" score={audit?.performance?.score ?? 0} delay={0.2} />
-                            <ScoreCard label="GEO" score={audit?.geo?.score ?? 0} delay={0.3} />
+                            <ScoreCard label="Overall" score={audit.overallScore ?? 0} locale="en" />
+                            <ScoreCard label="SEO" score={audit?.seo?.score ?? 0} delay={0.1} locale="en" />
+                            <ScoreCard label="Performance" score={audit?.performance?.score ?? 0} delay={0.2} locale="en" />
+                            <ScoreCard label="GEO" score={audit?.geo?.score ?? 0} delay={0.3} locale="en" />
                         </div>
 
 
