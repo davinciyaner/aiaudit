@@ -113,46 +113,53 @@ export default function Hero() {
             <div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-8 w-full">
                 <div className="flex flex-col items-center text-center">
 
+                    {/* Source order first (Answer-First for GEO/crawlers) but visually placed after the
+                        CTA via `order-6` — decouples HTML text order from render position. */}
                     <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
-                        className="w-full max-w-2xl mb-8 p-5 rounded-2xl bg-[var(--surface-06)] border border-[var(--border-subtle)] text-left">
+                        className="order-6 w-full max-w-2xl mt-10 mb-4 p-5 rounded-2xl bg-[var(--surface-06)] border border-[var(--border-subtle)] text-left">
                         <h2 className="text-xs font-semibold text-[var(--accent)] uppercase tracking-wide">Kurz erklärt</h2>
                         <p className="mt-2 text-sm text-[var(--text-body)] leading-relaxed">
-                            Scanora ist ein KI-gestütztes Website-Audit-Tool aus Deutschland, das in unter 60
-                            Sekunden prüft, ob eine Website von ChatGPT, Claude, Perplexity, Gemini und Google AI Overview als Quelle
-                            zitiert wird (GEO / AI Visibility) und wie sie in klassischen Google-Rankings abschneidet (SEO).
-                            Der Report liefert einen AI-Visibility-Score (0–100), einen SEO-Score, Performance-Metriken (TTFB,
-                            FCP) und einen von Claude AI generierten Fix-Report mit priorisierten Maßnahmen. Scanora startet
-                            kostenlos (1 Audit/Monat), Pro kostet 29 €/Monat (10 Audits, KI-Report), Agency 99 €/Monat (unbegrenzt).
+                            Scanora ist eine SEO- &amp; GEO-Monitoring-Plattform aus Deutschland. Fürs SEO-Tracking bekommst du
+                            wöchentlich automatisch aktualisierte Google-Rankings pro Keyword, Konkurrenzanalyse mit Content- und
+                            Backlink-Gaps sowie Keyword-Ideen inkl. echtem Suchvolumen. Fürs GEO-Monitoring siehst du deine
+                            Mention-Rate bei ChatGPT, Claude, Gemini, Perplexity und Google AI Overview, Zitate mit
+                            Quellenkontext sowie deinen Share-of-Voice gegenüber Wettbewerbern — inklusive Abgleich, wo du bei
+                            Google rankst vs. wo dich KI-Systeme nennen.
+                        </p>
+                        <p className="mt-2 text-sm text-[var(--text-body)] leading-relaxed">
+                            Bei Ranking-Einbrüchen oder verlorenen KI-Erwähnungen bekommst du automatisch eine E-Mail mit
+                            möglichen Ursachen. Einstieg kostenlos mit einem 60-Sekunden-Audit, danach laufendes automatisiertes
+                            Monitoring ab 29 €/Monat (Pro, 10 Audits) oder 99 €/Monat (Agency, unbegrenzt).
                         </p>
                         <p className="mt-3 pt-3 border-t border-[var(--border-subtle)] text-xs text-[var(--text-faint)]">
-                            Zuletzt aktualisiert: 9. September 2026 · Von Finn Paustian, Gründer von Scanora
+                            Zuletzt aktualisiert: 12. September 2026 · Von Finn Paustian, Gründer von Scanora
                         </p>
                     </motion.div>
 
                     <motion.h1 initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
-                        className="text-4xl sm:text-6xl lg:text-7xl font-bold leading-[1.08] tracking-tight mb-5">
+                        className="order-1 text-4xl sm:text-6xl lg:text-7xl font-bold leading-[1.08] tracking-tight mb-5">
                         AI Visibility &amp; SEO<br />
                         Google kennt dich - KI auch?
                     </motion.h1>
 
                     <motion.h2 initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }}
-                        className="text-sm font-semibold text-[var(--accent)] mb-4">
+                        className="order-2 text-sm font-semibold text-[var(--accent)] mb-4">
                         Scanora – AI Visibility & SEO Tool
                     </motion.h2>
 
                     <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-                        className="text-base sm:text-lg text-[var(--text-muted)] mb-8 max-w-2xl leading-relaxed">
+                        className="order-3 text-base sm:text-lg text-[var(--text-muted)] mb-8 max-w-2xl leading-relaxed">
                         Für Marketing-Teams und Agenturen: Scanora prüft, ob ChatGPT, Claude, Gemini, Perplexity und
                         Google AI Overview deine Seite kennen — und wie du bei Google rankst. Ein Audit, konkrete
                         Fixes statt generischen Tipps.
                     </motion.p>
 
                     <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}
-                        className="w-full max-w-2xl mb-8">
+                        className="order-4 w-full max-w-2xl mb-8">
                         <HeroAuditInput />
                     </motion.div>
 
-                    <div className="flex flex-wrap items-center justify-center gap-2">
+                    <div className="order-5 flex flex-wrap items-center justify-center gap-2">
                         <Link href="/geo/dashboard"
                             onClick={e => goToAutomation(e, '/geo/dashboard', '/geo/pricing')}
                             className="group inline-flex items-center gap-1.5 pl-3 pr-2.5 py-2.5 rounded-full bg-[var(--surface-08)] border border-[var(--border-subtle)] hover:border-[var(--accent-border)] hover:bg-[var(--surface-10)] transition-all duration-200">
@@ -170,7 +177,7 @@ export default function Hero() {
                     </div>
 
                     <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
-                        className="w-full max-w-3xl mt-14 pt-10 border-t border-[var(--border-subtle)]">
+                        className="order-7 w-full max-w-3xl mt-14 pt-10 border-t border-[var(--border-subtle)]">
                         <h2 className="text-base sm:text-lg font-bold text-[var(--text-white)] mb-1.5 text-center">GEO Check pro KI-Tool starten</h2>
                         <p className="text-sm text-[var(--text-muted)] mb-5 max-w-lg mx-auto text-center">
                             Wähle ChatGPT, Claude, Perplexity oder Google AI Overview — Ergebnis in wenigen Sekunden, ganz ohne Anmeldung.

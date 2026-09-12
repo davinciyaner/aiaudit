@@ -113,38 +113,53 @@ export default function Hero() {
             <div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-8 w-full">
                 <div className="flex flex-col items-center text-center">
 
+                    {/* Source order first (Answer-First for GEO/crawlers) but visually placed after the
+                        CTA via `order-6` — decouples HTML text order from render position. */}
+                    <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
+                        className="order-6 w-full max-w-2xl mt-10 mb-4 p-5 rounded-2xl bg-[var(--surface-06)] border border-[var(--border-subtle)] text-left">
+                        <h2 className="text-xs font-semibold text-[var(--accent)] uppercase tracking-wide">In short</h2>
+                        <p className="mt-2 text-sm text-[var(--text-body)] leading-relaxed">
+                            Scanora is an SEO &amp; GEO monitoring platform built in Germany. For SEO tracking, you get
+                            weekly automated Google ranking updates per keyword, competitor analysis with content and
+                            backlink gaps, and keyword ideas with real search volume. For GEO monitoring, you see your
+                            mention rate across ChatGPT, Claude, Gemini, Perplexity, and Google AI Overview, citations
+                            with source context, and your share of voice against competitors — including a side-by-side
+                            of where you rank on Google vs. where AI systems mention you.
+                        </p>
+                        <p className="mt-2 text-sm text-[var(--text-body)] leading-relaxed">
+                            If your rankings drop or you lose AI mentions, you get an automatic email with likely
+                            causes. Start free with a 60-second audit, then get ongoing automated monitoring from
+                            €29/month (Pro, 10 audits) or €99/month (Agency, unlimited).
+                        </p>
+                        <p className="mt-3 pt-3 border-t border-[var(--border-subtle)] text-xs text-[var(--text-faint)]">
+                            Updated: September 12, 2026 · By Finn Paustian, Founder of Scanora
+                        </p>
+                    </motion.div>
+
                     <motion.h1 initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
-                        className="text-4xl sm:text-6xl lg:text-7xl font-bold leading-[1.08] tracking-tight mb-5">
+                        className="order-1 text-4xl sm:text-6xl lg:text-7xl font-bold leading-[1.08] tracking-tight mb-5">
                         AI Visibility &amp; SEO<br />
                         Google knows you - Does AI?
                     </motion.h1>
 
                     <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }}
-                        className="text-sm font-semibold text-[var(--accent)] mb-4">
+                        className="order-2 text-sm font-semibold text-[var(--accent)] mb-4">
                         Scanora – AI Visibility & SEO Tool
                     </motion.p>
 
                     <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-                        className="text-base sm:text-lg text-[var(--text-muted)] mb-6 max-w-2xl leading-relaxed">
+                        className="order-3 text-base sm:text-lg text-[var(--text-muted)] mb-10 max-w-2xl leading-relaxed">
                         For marketing teams and agencies: Scanora checks whether ChatGPT, Claude, Gemini, Perplexity
                         and Google AI Overview know your site — and how you rank on Google. One audit, concrete
                         fixes instead of generic tips.
                     </motion.p>
 
-                    <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.12 }}
-                        className="text-xs sm:text-sm text-[var(--text-faint)] mb-10 max-w-2xl leading-relaxed">
-                        Scanora is an AI-powered website audit tool that checks your AI Visibility (GEO) on ChatGPT, Claude,
-                        Perplexity, and Google AI Overview alongside your classic SEO rankings on Google — in one report, in
-                        under 60 seconds. Free plan: 1 audit/month. Pro (€29/month): AI-generated fix report, weekly
-                        automated tracking. Founded 2026 in Germany, available in German and English.
-                    </motion.p>
-
                     <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}
-                        className="w-full max-w-2xl mb-6">
+                        className="order-4 w-full max-w-2xl mb-6">
                         <HeroAuditInput />
                     </motion.div>
 
-                    <div className="flex flex-wrap items-center justify-center gap-2">
+                    <div className="order-5 flex flex-wrap items-center justify-center gap-2">
                         <Link href="/geo/dashboard"
                             onClick={e => goToAutomation(e, '/geo/dashboard', '/geo/pricing')}
                             className="group inline-flex items-center gap-1.5 pl-3 pr-2.5 py-2.5 rounded-full bg-[var(--surface-08)] border border-[var(--border-subtle)] hover:border-[var(--accent-border)] hover:bg-[var(--surface-10)] transition-all duration-200">
@@ -162,7 +177,7 @@ export default function Hero() {
                     </div>
 
                     <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
-                        className="w-full max-w-3xl mt-14 pt-10 border-t border-[var(--border-subtle)]">
+                        className="order-7 w-full max-w-3xl mt-14 pt-10 border-t border-[var(--border-subtle)]">
                         <h2 className="text-base sm:text-lg font-bold text-[var(--text-white)] mb-1.5 text-center">Run a GEO Check per AI tool</h2>
                         <p className="text-sm text-[var(--text-muted)] mb-5 max-w-lg mx-auto text-center">
                             Pick ChatGPT, Claude, Perplexity, or Google AI Overview — results in seconds, no sign-up required.
