@@ -6,18 +6,46 @@ export async function analyzePerformance(url, page, metrics) {
     const timing = metrics.timing || {}
     const resources = metrics.resources || []
 
-    const ttfb = timing.responseStart - timing.requestStart || 0
-    const fcp = timing.firstContentfulPaint || 0
-    const domLoad = timing.domContentLoadedEventEnd || 0
-    const fullLoad = timing.loadEventEnd || 0
+    const isMeasured = v => typeof v === 'number' && Number.isFinite(v) && v >= 0
+
+    // `null` bei fehlender Messung statt `0` — ein Messfehler ist kein Bestwert.
+    const ttfb = isMeasured(timing.responseStart) && isMeasured(timing.requestStart)
+        ? timing.responseStart - timing.requestStart
+        : null
+    const fcp = isMeasured(timing.firstContentfulPaint) ? timing.firstContentfulPaint : null
+    const domLoad = isMeasured(timing.domContentLoadedEventEnd) ? timing.domContentLoadedEventEnd : null
+    const fullLoad = isMeasured(timing.loadEventEnd) ? timing.loadEventEnd : null
+    const lcp = isMeasured(timing.largestContentfulPaint) ? timing.largestContentfulPaint : null
+    // CLS darf 0 sein (kein Layout-Shift) — negative/undefined Werte gelten als nicht gemessen.
+    const cls = typeof timing.cumulativeLayoutShift === 'number' && Number.isFinite(timing.cumulativeLayoutShift) && timing.cumulativeLayoutShift >= 0
+        ? timing.cumulativeLayoutShift
+        : null
 
     // Score berechnen
     let score = 100
 
-    if (ttfb > 600) { score -= 20; issues.push(`TTFB zu hoch: ${ttfb}ms (Ziel: <600ms)`); suggestions.push('Server-Response-Zeit optimieren, CDN verwenden') }
-    if (fcp > 1800) { score -= 20; issues.push(`First Contentful Paint zu langsam: ${fcp}ms (Ziel: <1800ms)`); suggestions.push('Kritisches CSS inline einbinden, render-blocking Resources entfernen') }
-    if (domLoad > 3000) { score -= 15; issues.push(`DOM Load zu langsam: ${domLoad}ms`); suggestions.push('JavaScript minimieren und defer/async verwenden') }
-    if (fullLoad > 5000) { score -= 15; issues.push(`Vollständige Ladezeit zu hoch: ${fullLoad}ms (Ziel: <5000ms)`); suggestions.push('Bilder komprimieren, unnötige Third-Party Scripts entfernen') }
+    if (ttfb === null) { score -= 20; issues.push('TTFB konnte nicht gemessen werden'); suggestions.push('Audit erneut ausführen — Navigation-Timing wurde nicht erfasst') }
+    else if (ttfb > 600) { score -= 20; issues.push(`TTFB zu hoch: ${Math.round(ttfb)}ms (Ziel: <600ms)`); suggestions.push('Server-Response-Zeit optimieren, CDN verwenden') }
+
+    if (fcp === null) { score -= 20; issues.push('First Contentful Paint konnte nicht gemessen werden'); suggestions.push('Audit erneut ausführen — Paint-Timing wurde nicht erfasst') }
+    else if (fcp > 1800) { score -= 20; issues.push(`First Contentful Paint zu langsam: ${Math.round(fcp)}ms (Ziel: <1800ms)`); suggestions.push('Kritisches CSS inline einbinden, render-blocking Resources entfernen') }
+
+    if (domLoad === null) { score -= 15; issues.push('DOM Load konnte nicht gemessen werden'); suggestions.push('Audit erneut ausführen — Navigation-Timing wurde nicht erfasst') }
+    else if (domLoad > 3000) { score -= 15; issues.push(`DOM Load zu langsam: ${Math.round(domLoad)}ms`); suggestions.push('JavaScript minimieren und defer/async verwenden') }
+
+    if (fullLoad === null) { score -= 15; issues.push('Vollständige Ladezeit konnte nicht gemessen werden'); suggestions.push('Audit erneut ausführen — Navigation-Timing wurde nicht erfasst') }
+    else if (fullLoad > 5000) { score -= 15; issues.push(`Vollständige Ladezeit zu hoch: ${Math.round(fullLoad)}ms (Ziel: <5000ms)`); suggestions.push('Bilder komprimieren, unnötige Third-Party Scripts entfernen') }
+
+    // Echte Core Web Vitals (LCP/CLS). INP ist bewusst nicht enthalten — es erfordert eine
+    // echte Nutzerinteraktion und lässt sich in einem automatisierten, interaktionslosen
+    // Crawl nicht seriös messen (kein Fake-Wert statt echter Messung).
+    if (lcp === null) { score -= 10; issues.push('Largest Contentful Paint (LCP) konnte nicht gemessen werden'); suggestions.push('Audit erneut ausführen') }
+    else if (lcp > 4000) { score -= 20; issues.push(`LCP zu langsam: ${Math.round(lcp)}ms (Ziel: <2500ms)`); suggestions.push('Größtes Above-the-Fold-Element priorisiert laden (z.B. Preload für Hero-Bild), render-blocking Resources reduzieren') }
+    else if (lcp > 2500) { score -= 10; issues.push(`LCP verbesserungswürdig: ${Math.round(lcp)}ms (Ziel: <2500ms)`); suggestions.push('Hero-Bild/-Text schneller sichtbar machen') }
+
+    if (cls === null) { score -= 8; issues.push('Cumulative Layout Shift (CLS) konnte nicht gemessen werden'); suggestions.push('Audit erneut ausführen') }
+    else if (cls > 0.25) { score -= 15; issues.push(`CLS zu hoch: ${cls.toFixed(3)} (Ziel: <0.1)`); suggestions.push('Feste Breiten/Höhen für Bilder und eingebettete Inhalte setzen, Web-Fonts mit font-display: optional laden') }
+    else if (cls > 0.1) { score -= 8; issues.push(`CLS verbesserungswürdig: ${cls.toFixed(3)} (Ziel: <0.1)`); suggestions.push('Layout-Verschiebungen durch nachladende Inhalte (Ads, Fonts, Bilder ohne Dimensionen) reduzieren') }
 
     // Ressourcen analysieren
     const largeResources = resources.filter(r => r.size > 500000)
@@ -54,10 +82,12 @@ export async function analyzePerformance(url, page, metrics) {
     return {
         score: Math.max(0, score),
         metrics: {
-            ttfb: Math.round(ttfb),
-            fcp: Math.round(fcp),
-            domLoad: Math.round(domLoad),
-            fullLoad: Math.round(fullLoad),
+            ttfb: ttfb === null ? null : Math.round(ttfb),
+            fcp: fcp === null ? null : Math.round(fcp),
+            domLoad: domLoad === null ? null : Math.round(domLoad),
+            fullLoad: fullLoad === null ? null : Math.round(fullLoad),
+            lcp: lcp === null ? null : Math.round(lcp),
+            cls: cls === null ? null : Number(cls.toFixed(3)),
             totalSize: Math.round(totalSize / 1024),
             resourceCount: resources.length,
         },

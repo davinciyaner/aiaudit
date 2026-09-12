@@ -171,14 +171,32 @@ export async function runAudit(url) {
         console.log(`Geladen in ${Date.now() - startTime}ms (Status: ${responseStatus})`)
 
         timing = await page.evaluate(() => {
-            const nav = performance.getEntriesByType('navigation')[0] || {}
-            const fcp = performance.getEntriesByName('first-contentful-paint')[0]
+            // `null` statt `0` fuer nicht messbare Werte — sonst wird ein fehlgeschlagener
+            // Messwert im Scoring wie eine perfekte 0ms-Zeit behandelt statt als Mangel.
+            const nav = performance.getEntriesByType('navigation')[0] || null
+            const fcpEntry = performance.getEntriesByName('first-contentful-paint')[0] || null
+
+            let lcp = null
+            try {
+                const lcpEntries = performance.getEntriesByType('largest-contentful-paint')
+                if (lcpEntries.length) lcp = lcpEntries[lcpEntries.length - 1].startTime
+            } catch {}
+
+            let cls = null
+            try {
+                cls = performance.getEntriesByType('layout-shift')
+                    .filter(e => !e.hadRecentInput)
+                    .reduce((sum, e) => sum + e.value, 0)
+            } catch {}
+
             return {
-                requestStart: nav.requestStart || 0,
-                responseStart: nav.responseStart || 0,
-                domContentLoadedEventEnd: nav.domContentLoadedEventEnd || 0,
-                loadEventEnd: nav.loadEventEnd || 0,
-                firstContentfulPaint: fcp ? fcp.startTime : 0
+                requestStart: nav ? nav.requestStart : null,
+                responseStart: nav ? nav.responseStart : null,
+                domContentLoadedEventEnd: nav ? nav.domContentLoadedEventEnd : null,
+                loadEventEnd: nav ? nav.loadEventEnd : null,
+                firstContentfulPaint: fcpEntry ? fcpEntry.startTime : null,
+                largestContentfulPaint: lcp,
+                cumulativeLayoutShift: cls,
             }
         })
 
