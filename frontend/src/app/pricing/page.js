@@ -371,6 +371,9 @@ export default function PricingPage() {
                             <p className="text-lg text-[var(--text-muted)] max-w-xl mx-auto">
                                 Keine versteckten Gebühren. Monatliches Abo. Jederzeit kündbar.
                             </p>
+                            <p className="text-sm text-[var(--text-faint)] max-w-xl mx-auto mt-4">
+                                Jeder Plan enthält einen vollständigen Audit aus SEO-Score, Performance-Metriken (TTFB, FCP, LCP, CLS) und GEO-Sichtbarkeit — also ob ChatGPT, Claude, Gemini und Perplexity deine Website zitieren.
+                            </p>
                         </motion.div>
 
                         {user ? (
