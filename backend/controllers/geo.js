@@ -41,6 +41,17 @@ export async function analyzeGEO(url, html) {
     let hasWebSite = false
     let hasArticle = false
     let hasBreadcrumb = false
+    const faqAnswers = []       // { question, answer } aus allen FAQPage-Schemas
+    const schemaImageUrls = new Set()
+
+    const collectImageUrl = (val) => {
+        if (!val) return
+        if (typeof val === 'string') schemaImageUrls.add(val)
+        else if (typeof val === 'object') {
+            if (val.url) schemaImageUrls.add(val.url)
+            if (val.contentUrl) schemaImageUrls.add(val.contentUrl)
+        }
+    }
 
     structuredDataScripts.each((_, el) => {
         try {
@@ -59,6 +70,17 @@ export async function analyzeGEO(url, html) {
                 if (type === 'WebSite') hasWebSite = true
                 if (type === 'Article' || type === 'BlogPosting' || type === 'NewsArticle') hasArticle = true
                 if (type === 'BreadcrumbList') hasBreadcrumb = true
+
+                if (type === 'FAQPage' && Array.isArray(item.mainEntity)) {
+                    item.mainEntity.forEach(q => {
+                        const answer = (q.acceptedAnswer?.text || '').trim()
+                        if (answer) faqAnswers.push({ question: q.name || '', answer })
+                    })
+                }
+
+                collectImageUrl(item.image)
+                collectImageUrl(item.logo)
+                collectImageUrl(item.primaryImageOfPage)
             })
         } catch {}
     })
@@ -75,12 +97,54 @@ export async function analyzeGEO(url, html) {
     check(hasSoftwareApp || hasWebSite, 4,
         'WebSite oder SoftwareApplication Schema fehlt',
         'WebSite Schema mit SearchAction hinzufuegen, oder SoftwareApplication mit featureList und offers')
+    check(hasBreadcrumb, 3,
+        'BreadcrumbList Schema fehlt',
+        'BreadcrumbList Schema hinzufuegen — hilft KI-Modellen und Google, die Seitenhierarchie zu verstehen')
+
+    // Bild-Links aus JSON-LD (Person.image, Organization.logo, primaryImageOfPage) muessen
+    // erreichbar sein — ein 404 in strukturierten Daten schadet der Glaubwuerdigkeit.
+    let brokenSchemaImages = []
+    if (schemaImageUrls.size > 0) {
+        const checkedImages = await Promise.all(Array.from(schemaImageUrls).slice(0, 10).map(async imgUrl => {
+            try {
+                const res = await fetch(imgUrl, { method: 'HEAD', signal: AbortSignal.timeout(5000) })
+                return { imgUrl, ok: res.ok }
+            } catch {
+                return { imgUrl, ok: false }
+            }
+        }))
+        brokenSchemaImages = checkedImages.filter(r => !r.ok).map(r => r.imgUrl)
+    }
+    check(brokenSchemaImages.length === 0, 6,
+        brokenSchemaImages.length > 0
+            ? `Bild-Link(s) in strukturierten Daten sind kaputt (404): ${brokenSchemaImages.join(', ')}`
+            : 'Bild-Links in strukturierten Daten kaputt',
+        'Alle image/logo-URLs im JSON-LD muessen erreichbar sein, sonst wirken die strukturierten Daten unglaubwuerdig')
 
     // Script/Style-Inhalte erst NACH der JSON-LD-Auswertung entfernen — sonst landen
     // JS-Bundle-Tokens (const, queryselector, ...) in Wortanzahl und Keyword-Checks.
     $('script, style, noscript').remove()
     const bodyText = $('body').text().replace(/\s+/g, ' ').toLowerCase()
     const metaDesc = ($('meta[name="description"]').attr('content') || '').toLowerCase()
+
+    // FAQ-Schema vs. sichtbarer Content: prueft, ob jede im FAQPage-Schema versprochene
+    // Antwort auch tatsaechlich als Text im Server-HTML steht — nicht nur die Frage.
+    // Deckt genau das Akkordeon-Problem ab, bei dem Antworten erst per Klick ins DOM
+    // gemountet werden und Crawler ohne JS-Ausfuehrung sie nie zu Gesicht bekommen.
+    const faqAnswersMissingFromContent = faqAnswers.filter(({ answer }) => {
+        const snippet = answer.slice(0, 40).toLowerCase().trim()
+        return snippet.length > 10 && !bodyText.includes(snippet)
+    })
+    if (hasFAQ) {
+        check(faqAnswersMissingFromContent.length === 0, 8,
+            `${faqAnswersMissingFromContent.length} von ${faqAnswers.length} FAQ-Antworten stehen im Schema, aber nicht im sichtbaren Server-HTML`,
+            'Alle FAQ-Antworten muessen als Text im initialen HTML vorhanden sein (z.B. via CSS-Transition statt Conditional-Unmount) — sonst sehen Crawler/LLMs nur die Fragen, nicht die Antworten')
+    }
+
+    const hasTestimonials = $('blockquote').length > 0 || $('[class*="testimonial" i], [class*="review" i]').length > 0
+    check(hasTestimonials, 4,
+        'Keine Kundenstimmen/Testimonials gefunden',
+        'Echte Kundenzitate oder Case Studies ergaenzen (z.B. als <blockquote>) — starkes Vertrauenssignal fuer Nutzer und KI-Systeme')
 
     let hasLlmsTxt = false
     let hasLlmsFullTxt = false
@@ -232,6 +296,18 @@ export async function analyzeGEO(url, html) {
         desc: `${blockedCrawlers.join(', ')} sind in robots.txt blockiert. Solange das der Fall ist, erscheinst du nicht in KI-Antworten dieser Dienste.`,
         effort: '5 Minuten',
     })
+    if (faqAnswersMissingFromContent.length > 0) recommendations.push({
+        priority: 'critical',
+        title: 'FAQ-Antworten fehlen im Server-HTML',
+        desc: `${faqAnswersMissingFromContent.length} FAQ-Antwort(en) stehen zwar im Schema, aber nicht als Text im HTML — vermutlich ein Akkordeon, das Antworten erst per Klick ins DOM laedt. Crawler ohne JS sehen sie nie.`,
+        effort: '30 Minuten',
+    })
+    if (brokenSchemaImages.length > 0) recommendations.push({
+        priority: 'high',
+        title: 'Kaputte Bild-Links in strukturierten Daten reparieren',
+        desc: `${brokenSchemaImages.length} Bild-URL(en) im JSON-LD liefern 404: ${brokenSchemaImages.join(', ')}`,
+        effort: '15 Minuten',
+    })
     if (!hasOrganization) recommendations.push({
         priority: 'high',
         title: 'Organization Schema',
@@ -291,6 +367,9 @@ export async function analyzeGEO(url, html) {
             hasSitemap,
             hasDirectDefinition,
             hasStatistics,
+            hasTestimonials,
+            faqAnswersMissingFromContent: faqAnswersMissingFromContent.length,
+            brokenSchemaImages,
             hasAuthorInfo,
             hasContactInfo,
             hasPrivacyPolicy,

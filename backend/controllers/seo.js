@@ -67,10 +67,51 @@ export async function analyzeSEO(url, html) {
         'Twitter Card Tags hinzufügen für bessere Twitter-Vorschau.')
 
     // Structured Data
-    const structuredData = $('script[type="application/ld+json"]').length
+    const structuredDataScripts = $('script[type="application/ld+json"]')
+    const structuredData = structuredDataScripts.length
     check(structuredData > 0, 7,
         'Kein Structured Data (JSON-LD) gefunden.',
         'Schema.org Markup hinzufügen (WebSite, Organization, etc.).')
+
+    // Bild-Links aus JSON-LD (Person.image, Organization.logo, primaryImageOfPage) muessen
+    // erreichbar sein — ein 404 in strukturierten Daten kostet Rich-Result-Glaubwuerdigkeit.
+    const schemaImageUrls = new Set()
+    const collectImageUrl = (val) => {
+        if (!val) return
+        if (typeof val === 'string') schemaImageUrls.add(val)
+        else if (typeof val === 'object') {
+            if (val.url) schemaImageUrls.add(val.url)
+            if (val.contentUrl) schemaImageUrls.add(val.contentUrl)
+        }
+    }
+    structuredDataScripts.each((_, el) => {
+        try {
+            const data = JSON.parse($(el).html())
+            const items = Array.isArray(data) ? data : data['@graph'] ? data['@graph'] : [data]
+            items.forEach(item => {
+                collectImageUrl(item.image)
+                collectImageUrl(item.logo)
+                collectImageUrl(item.primaryImageOfPage)
+            })
+        } catch {}
+    })
+    let brokenSchemaImages = []
+    if (schemaImageUrls.size > 0) {
+        const checkedImages = await Promise.all(Array.from(schemaImageUrls).slice(0, 10).map(async imgUrl => {
+            try {
+                const res = await fetch(imgUrl, { method: 'HEAD', signal: AbortSignal.timeout(5000) })
+                return { imgUrl, ok: res.ok }
+            } catch {
+                return { imgUrl, ok: false }
+            }
+        }))
+        brokenSchemaImages = checkedImages.filter(r => !r.ok).map(r => r.imgUrl)
+    }
+    check(brokenSchemaImages.length === 0, 6,
+        brokenSchemaImages.length > 0
+            ? `Bild-Link(s) in strukturierten Daten sind kaputt (404): ${brokenSchemaImages.join(', ')}`
+            : 'Bild-Links in strukturierten Daten kaputt',
+        'Alle image/logo-URLs im JSON-LD muessen erreichbar sein, sonst verliert Google Vertrauen in die Rich-Result-Daten.')
 
     // Script/Style-Inhalte raus, bevor wir Fliesstext extrahieren — sonst landen JS-Bundle-Tokens
     // (const, queryselector, ...) und CSS-Klassennamen in Wortanzahl und Keyword-Analyse.
@@ -124,6 +165,11 @@ export async function analyzeSEO(url, html) {
         `Zu wenig Text auf der Seite (${wordCount} Wörter, Minimum: 300).`,
         'Mindestens 300 Wörter relevanten Content auf der Seite haben.')
 
+    const hasTestimonials = $('blockquote').length > 0 || $('[class*="testimonial" i], [class*="review" i]').length > 0
+    check(hasTestimonials, 4,
+        'Keine Kundenstimmen/Testimonials gefunden.',
+        'Echte Kundenzitate oder Case Studies ergänzen (z.B. als <blockquote>) — starkes Vertrauens- und Content-Signal.')
+
     // Keywords aus Title extrahieren
     const keywords = title.toLowerCase()
         .split(/[\s\-|,]+/)
@@ -149,6 +195,8 @@ export async function analyzeSEO(url, html) {
         keywords,
         canonical,
         structuredData: structuredData > 0,
+        brokenSchemaImages,
+        hasTestimonials,
         issues,
         suggestions,
     }
