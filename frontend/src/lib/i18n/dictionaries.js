@@ -12,6 +12,8 @@ export const dictionaries = {
             geoPreise: 'GEO Preise',
             seoAutomatisierung: 'SEO Automatisierung',
             geoAutomatisierung: 'GEO Automatisierung',
+            themeToLight: 'Light Mode aktivieren',
+            themeToDark: 'Dark Mode aktivieren',
         },
         footer: {
             tagline: 'AI Visibility & SEO - in 60 Sekunden.',
@@ -39,6 +41,8 @@ export const dictionaries = {
             geoPreise: 'GEO Pricing',
             seoAutomatisierung: 'SEO Automation',
             geoAutomatisierung: 'GEO Automation',
+            themeToLight: 'Activate light mode',
+            themeToDark: 'Activate dark mode',
         },
         footer: {
             tagline: 'AI Visibility & SEO - in 60 seconds.',

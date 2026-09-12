@@ -58,18 +58,18 @@ export default function VergleichHubPage() {
             <div className="max-w-4xl mx-auto px-5 sm:px-8 pt-32 pb-24">
 
                 {/* Breadcrumb */}
-                <div className="flex items-center gap-2 text-xs text-slate-600 mb-8">
-                    <Link href="/" className="hover:text-slate-400 transition-colors">Scanora</Link>
+                <div className="flex items-center gap-2 text-xs text-[var(--text-faint)] mb-8">
+                    <Link href="/" className="hover:text-[var(--text-muted)] transition-colors">Scanora</Link>
                     <span>/</span>
-                    <span className="text-slate-500">Vergleich</span>
+                    <span className="text-[var(--text-faint)]">Vergleich</span>
                 </div>
 
                 <div className="mb-12">
-                    <h1 className="text-3xl sm:text-5xl font-bold text-white tracking-tight mb-4">Alternativen</h1>
-                    <p className="text-slate-400 text-lg max-w-2xl leading-relaxed">
+                    <h1 className="text-3xl sm:text-5xl font-bold text-[var(--text-white)] tracking-tight mb-4">Alternativen</h1>
+                    <p className="text-[var(--text-muted)] text-lg max-w-2xl leading-relaxed">
                         Ehrliche, faktenbasierte Vergleiche von Scanora zu bekannten AI-Visibility- und SEO-Tools – inklusive der Punkte, in denen der jeweilige Wettbewerber besser ist.
                         Suchst du stattdessen eine Lösung für ein konkretes Budget oder einen bestimmten Anwendungsfall, findest du die auf der{' '}
-                        <Link href="/loesungen" className="text-slate-300 hover:text-[var(--accent)] underline underline-offset-2">Lösungen-Seite</Link>.
+                        <Link href="/loesungen" className="text-[var(--text-body)] hover:text-[var(--accent)] underline underline-offset-2">Lösungen-Seite</Link>.
                     </p>
                 </div>
 
@@ -85,10 +85,10 @@ export default function VergleichHubPage() {
                                     {alt.tag}
                                 </span>
                             </div>
-                            <h2 className="text-lg sm:text-xl font-bold text-white mb-2 group-hover:text-[var(--accent)] transition-colors leading-snug">
+                            <h2 className="text-lg sm:text-xl font-bold text-[var(--text-white)] mb-2 group-hover:text-[var(--accent)] transition-colors leading-snug">
                                 {alt.title}
                             </h2>
-                            <p className="text-sm text-slate-400 leading-relaxed">{alt.description}</p>
+                            <p className="text-sm text-[var(--text-muted)] leading-relaxed">{alt.description}</p>
                             <div className="mt-4 text-xs text-[var(--accent)] font-medium">
                                 Vergleich lesen →
                             </div>

@@ -9,7 +9,7 @@ import {
 } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import toast, { Toaster } from 'react-hot-toast'
+import toast from 'react-hot-toast'
 import Navbar from '../components/Navbar'
 import SupportModal from '../components/SupportModal'
 
@@ -28,9 +28,9 @@ const PLAN_META = {
 function StatCard({ label, value, sub, color }) {
     return (
         <div className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl p-4 sm:p-6">
-            <div className="text-xs sm:text-sm text-slate-500 mb-1">{label}</div>
-            <div className="text-2xl sm:text-3xl font-bold text-white" style={color ? { color } : {}}>{value}</div>
-            {sub && <div className="text-xs text-slate-600 mt-1">{sub}</div>}
+            <div className="text-xs sm:text-sm text-[var(--text-faint)] mb-1">{label}</div>
+            <div className="text-2xl sm:text-3xl font-bold text-[var(--text-white)]" style={color ? { color } : {}}>{value}</div>
+            {sub && <div className="text-xs text-[var(--text-faint)] mt-1">{sub}</div>}
         </div>
     )
 }
@@ -171,7 +171,6 @@ export default function ProfilePage() {
 
     return (
         <div className="min-h-screen bg-[var(--bg-base)]">
-            <Toaster position="top-right" toastOptions={{ style: { background: 'var(--bg-surface)', color: '#fff', border: '1px solid var(--border-subtle)', maxWidth: 'calc(100vw - 2rem)' } }} />
             <Navbar />
 
             <div className="relative pt-28 pb-24 px-5 sm:px-8">
@@ -184,23 +183,23 @@ export default function ProfilePage() {
                     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
                         className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl p-5 sm:p-8">
                         <div className="flex items-center gap-4 sm:gap-6">
-                            <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-[var(--accent)] flex items-center justify-center text-[var(--bg-base)] text-xl font-bold shrink-0 shadow-lg shadow-[var(--accent-border)]">
+                            <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-[var(--accent)] flex items-center justify-center text-[var(--bg-base)] text-xl font-bold shrink-0 shadow-lg shadow-[var(--accent-border)] active:scale-[0.97] active:duration-75">
                                 {initials}
                             </div>
                             <div className="flex-1 min-w-0">
-                                <h1 className="text-xl sm:text-2xl font-bold text-white truncate">{data?.user?.name}</h1>
-                                <div className="flex items-center gap-2 text-slate-400 text-sm mt-1 min-w-0">
+                                <h1 className="text-xl sm:text-2xl font-bold text-[var(--text-white)] truncate">{data?.user?.name}</h1>
+                                <div className="flex items-center gap-2 text-[var(--text-muted)] text-sm mt-1 min-w-0">
                                     <Mail className="w-3.5 h-3.5 shrink-0" />
                                     <span className="truncate">{data?.user?.email}</span>
                                 </div>
                                 <div className="mt-2 sm:hidden">
-                                    <div className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-semibold ${plan === 'free' ? 'border-[var(--border-strong)] bg-[var(--surface-08)] text-slate-300' : 'border-[var(--accent-border)] bg-[var(--accent-soft)] text-[var(--accent)]'}`}>
+                                    <div className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-semibold ${plan === 'free' ? 'border-[var(--border-strong)] bg-[var(--surface-08)] text-[var(--text-body)]' : 'border-[var(--accent-border)] bg-[var(--accent-soft)] text-[var(--accent)]'}`}>
                                         <PlanIcon className="w-3.5 h-3.5" />
                                         {planMeta.label}
                                     </div>
                                 </div>
                             </div>
-                            <div className={`hidden sm:flex items-center gap-2 px-4 py-2 rounded-xl border shrink-0 ${plan === 'free' ? 'border-[var(--border-strong)] bg-[var(--surface-08)] text-slate-300' : 'border-[var(--accent-border)] bg-[var(--accent-soft)] text-[var(--accent)]'}`}>
+                            <div className={`hidden sm:flex items-center gap-2 px-4 py-2 rounded-xl border shrink-0 ${plan === 'free' ? 'border-[var(--border-strong)] bg-[var(--surface-08)] text-[var(--text-body)]' : 'border-[var(--accent-border)] bg-[var(--accent-soft)] text-[var(--accent)]'}`}>
                                 <PlanIcon className="w-4 h-4" />
                                 <span className="text-sm font-semibold">{planMeta.label}</span>
                             </div>
@@ -224,10 +223,10 @@ export default function ProfilePage() {
                             className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl p-6">
                             <div className="flex justify-between items-center mb-3">
                                 <div className="flex items-center gap-2">
-                                    <BarChart2 className="w-4 h-4 text-slate-400" />
-                                    <span className="text-sm font-medium text-slate-300">Audit-Nutzung diesen Monat</span>
+                                    <BarChart2 className="w-4 h-4 text-[var(--text-muted)]" />
+                                    <span className="text-sm font-medium text-[var(--text-body)]">Audit-Nutzung diesen Monat</span>
                                 </div>
-                                <span className="text-sm font-bold text-white">{auditsUsed} / {auditsLimit}</span>
+                                <span className="text-sm font-bold text-[var(--text-white)]">{auditsUsed} / {auditsLimit}</span>
                             </div>
                             <div className="h-2 bg-[var(--surface-08)] rounded-full overflow-hidden">
                                 <motion.div
@@ -253,18 +252,18 @@ export default function ProfilePage() {
                     {/* Audit History */}
                     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.12 }}
                         className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl p-6">
-                        <h2 className="text-base font-semibold text-white mb-5 flex items-center gap-2">
+                        <h2 className="text-base font-semibold text-[var(--text-white)] mb-5 flex items-center gap-2">
                             <History className="w-4 h-4 text-[var(--accent)]" /> Audit-Verlauf
                             {historyTotal > 0 && (
-                                <span className="text-xs text-slate-600 font-normal ml-1">{historyTotal} gesamt</span>
+                                <span className="text-xs text-[var(--text-faint)] font-normal ml-1">{historyTotal} gesamt</span>
                             )}
                         </h2>
                         {historyLoading ? (
-                            <div className="flex items-center gap-2 text-slate-500 text-sm py-6 justify-center">
+                            <div className="flex items-center gap-2 text-[var(--text-faint)] text-sm py-6 justify-center">
                                 <Loader2 className="w-4 h-4 animate-spin" /> Lade Verlauf...
                             </div>
                         ) : history.length === 0 ? (
-                            <div className="text-center py-10 text-slate-600 text-sm">
+                            <div className="text-center py-10 text-[var(--text-faint)] text-sm">
                                 Noch keine Audits durchgeführt
                             </div>
                         ) : (
@@ -280,30 +279,30 @@ export default function ProfilePage() {
                                         return (
                                             <div key={report._id} className="flex items-center gap-4 py-3.5 border-b border-[var(--border-subtle)] last:border-0">
                                                 <div className="flex-1 min-w-0">
-                                                    <div className="text-sm font-medium text-slate-200 truncate">{domain}</div>
-                                                    <div className="text-xs text-slate-600 mt-0.5">{date}</div>
+                                                    <div className="text-sm font-medium text-[var(--text-body)] truncate">{domain}</div>
+                                                    <div className="text-xs text-[var(--text-faint)] mt-0.5">{date}</div>
                                                 </div>
                                                 <div className="flex items-center gap-3 shrink-0">
                                                     {[['Ges', report.scores.overall], ['SEO', report.scores.seo], ['Perf', report.scores.performance], ['GEO', report.scores.geo]].map(([label, score]) => (
                                                         <div key={label} className="text-center hidden sm:block">
                                                             <div className={`text-sm font-bold ${scoreColor(score)}`}>{score}</div>
-                                                            <div className="text-[9px] text-slate-600 uppercase tracking-wide">{label}</div>
+                                                            <div className="text-[9px] text-[var(--text-faint)] uppercase tracking-wide">{label}</div>
                                                         </div>
                                                     ))}
                                                     <div className="text-center sm:hidden">
                                                         <div className={`text-sm font-bold ${scoreColor(report.scores.overall)}`}>{report.scores.overall}</div>
-                                                        <div className="text-[9px] text-slate-600 uppercase tracking-wide">Ges</div>
+                                                        <div className="text-[9px] text-[var(--text-faint)] uppercase tracking-wide">Ges</div>
                                                     </div>
                                                     {plan === 'free' ? (
                                                         <Link href="/pricing"
-                                                            className="flex items-center gap-1 px-2.5 py-1.5 border border-[var(--border-subtle)] text-slate-600 text-xs rounded-lg cursor-pointer opacity-50 hover:opacity-75 transition-opacity"
+                                                            className="flex items-center gap-1 px-2.5 py-1.5 border border-[var(--border-subtle)] text-[var(--text-faint)] text-xs rounded-lg cursor-pointer opacity-50 hover:opacity-75 transition-opacity"
                                                             title="PDF-Export nur mit Pro">
                                                             <Lock className="w-3 h-3" />
                                                             <span className="hidden sm:inline">PDF</span>
                                                         </Link>
                                                     ) : pdfUrl ? (
                                                         <a href={pdfUrl} target="_blank" rel="noopener noreferrer"
-                                                            className="flex items-center gap-1 px-2.5 py-1.5 border border-[var(--border-subtle)] text-slate-400 hover:text-white hover:border-[var(--border-strong)] text-xs rounded-lg transition-all">
+                                                            className="flex items-center gap-1 px-2.5 py-1.5 border border-[var(--border-subtle)] text-[var(--text-muted)] hover:text-[var(--text-white)] hover:border-[var(--border-strong)] text-xs rounded-lg transition-all">
                                                             <Download className="w-3 h-3" />
                                                             <span className="hidden sm:inline">PDF</span>
                                                         </a>
@@ -315,14 +314,14 @@ export default function ProfilePage() {
                                 </div>
                                 {historyTotal > 10 && (
                                     <div className="flex items-center justify-between mt-4 pt-4 border-t border-[var(--border-subtle)]">
-                                        <span className="text-xs text-slate-600">Seite {historyPage} von {Math.ceil(historyTotal / 10)}</span>
+                                        <span className="text-xs text-[var(--text-faint)]">Seite {historyPage} von {Math.ceil(historyTotal / 10)}</span>
                                         <div className="flex gap-2">
                                             <button onClick={() => handleHistoryPage(historyPage - 1)} disabled={historyPage <= 1}
-                                                className="p-1.5 border border-[var(--border-subtle)] text-slate-400 hover:text-white hover:border-[var(--border-strong)] rounded-lg transition-all disabled:opacity-30 disabled:cursor-not-allowed">
+                                                className="p-1.5 border border-[var(--border-subtle)] text-[var(--text-muted)] hover:text-[var(--text-white)] hover:border-[var(--border-strong)] rounded-lg transition-all disabled:opacity-30 disabled:cursor-not-allowed">
                                                 <ChevronLeft className="w-3.5 h-3.5" />
                                             </button>
                                             <button onClick={() => handleHistoryPage(historyPage + 1)} disabled={historyPage >= Math.ceil(historyTotal / 10)}
-                                                className="p-1.5 border border-[var(--border-subtle)] text-slate-400 hover:text-white hover:border-[var(--border-strong)] rounded-lg transition-all disabled:opacity-30 disabled:cursor-not-allowed">
+                                                className="p-1.5 border border-[var(--border-subtle)] text-[var(--text-muted)] hover:text-[var(--text-white)] hover:border-[var(--border-strong)] rounded-lg transition-all disabled:opacity-30 disabled:cursor-not-allowed">
                                                 <ChevronRight className="w-3.5 h-3.5" />
                                             </button>
                                         </div>
@@ -335,18 +334,18 @@ export default function ProfilePage() {
                     {/* Subscription Management */}
                     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}
                         className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl p-6">
-                        <h2 className="text-base font-semibold text-white mb-5 flex items-center gap-2">
+                        <h2 className="text-base font-semibold text-[var(--text-white)] mb-5 flex items-center gap-2">
                             <Crown className="w-4 h-4 text-[var(--accent)]" /> Abonnement
                         </h2>
 
                         {plan === 'free' ? (
                             <div className="flex items-center justify-between">
                                 <div>
-                                    <div className="text-slate-300 text-sm">Du nutzt aktuell den Free-Plan</div>
-                                    <div className="text-slate-500 text-xs mt-1">1 Audit pro Monat inklusive</div>
+                                    <div className="text-[var(--text-body)] text-sm">Du nutzt aktuell den Free-Plan</div>
+                                    <div className="text-[var(--text-faint)] text-xs mt-1">1 Audit pro Monat inklusive</div>
                                 </div>
                                 <Link href="/pricing"
-                                    className="px-5 py-2.5 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-[var(--accent-border)]">
+                                    className="px-5 py-2.5 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-[var(--accent-border)] active:scale-[0.97] active:duration-75">
                                     Upgrade
                                 </Link>
                             </div>
@@ -354,14 +353,14 @@ export default function ProfilePage() {
                             <div>
                                 <div className="flex items-center justify-between mb-4">
                                     <div>
-                                        <div className="text-slate-300 text-sm">
+                                        <div className="text-[var(--text-body)] text-sm">
                                             {planMeta.label}-Plan ·{' '}
                                             <span style={{ color: planMeta.color }}>
                                                 {data?.subscription?.status === 'ACTIVE' ? 'Aktiv' : 'Gekündigt'}
                                             </span>
                                         </div>
                                         {data?.subscription?.since && (
-                                            <div className="text-slate-500 text-xs mt-1">
+                                            <div className="text-[var(--text-faint)] text-xs mt-1">
                                                 Seit {new Date(data.subscription.since).toLocaleDateString('de-DE', { day: '2-digit', month: 'long', year: 'numeric' })}
                                             </div>
                                         )}
@@ -381,7 +380,7 @@ export default function ProfilePage() {
                                             <AlertTriangle className="w-5 h-5 text-red-400 shrink-0 mt-0.5" />
                                             <div>
                                                 <div className="text-sm font-semibold text-red-300 mb-1">Abo wirklich kündigen?</div>
-                                                <div className="text-xs text-slate-400 leading-relaxed">
+                                                <div className="text-xs text-[var(--text-muted)] leading-relaxed">
                                                     Dein Abo bleibt bis zum Ende des aktuellen Abrechnungszeitraums aktiv.
                                                     Danach wirst du auf den Free-Plan zurückgestuft.
                                                 </div>
@@ -389,12 +388,12 @@ export default function ProfilePage() {
                                         </div>
                                         <div className="flex gap-3">
                                             <button onClick={handleCancel} disabled={cancelling}
-                                                className="flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-500 text-white text-sm font-semibold rounded-xl transition-all disabled:opacity-50">
+                                                className="flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-500 text-[var(--text-white)] text-sm font-semibold rounded-xl transition-all disabled:opacity-50">
                                                 {cancelling ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <XCircle className="w-3.5 h-3.5" />}
                                                 Ja, jetzt kündigen
                                             </button>
                                             <button onClick={() => setShowCancelConfirm(false)}
-                                                className="px-4 py-2 border border-[var(--border-subtle)] text-slate-300 hover:text-white text-sm rounded-xl transition-all">
+                                                className="px-4 py-2 border border-[var(--border-subtle)] text-[var(--text-body)] hover:text-[var(--text-white)] text-sm rounded-xl transition-all">
                                                 Abbrechen
                                             </button>
                                         </div>
@@ -407,12 +406,12 @@ export default function ProfilePage() {
                     {/* Billing History */}
                     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
                         className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl p-6">
-                        <h2 className="text-base font-semibold text-white mb-5 flex items-center gap-2">
+                        <h2 className="text-base font-semibold text-[var(--text-white)] mb-5 flex items-center gap-2">
                             <Receipt className="w-4 h-4 text-[var(--accent)]" /> Abrechnungen
                         </h2>
 
                         {billing.length === 0 ? (
-                            <div className="text-center py-10 text-slate-600 text-sm">
+                            <div className="text-center py-10 text-[var(--text-faint)] text-sm">
                                 Noch keine Abrechnungen vorhanden
                             </div>
                         ) : (
@@ -423,20 +422,20 @@ export default function ProfilePage() {
                                     return (
                                         <div key={t.id} className="flex items-center justify-between py-3.5 border-b border-[var(--border-subtle)] last:border-0">
                                             <div>
-                                                <div className="text-sm text-slate-300 font-medium">{date}</div>
-                                                <div className="text-xs text-slate-600 mt-0.5">{t.id}</div>
+                                                <div className="text-sm text-[var(--text-body)] font-medium">{date}</div>
+                                                <div className="text-xs text-[var(--text-faint)] mt-0.5">{t.id}</div>
                                             </div>
                                             <div className="flex items-center gap-4">
                                                 <div className="flex items-center gap-1.5">
                                                     <CheckCircle className="w-3.5 h-3.5 text-emerald-500" />
-                                                    <span className="text-sm font-semibold text-white">
+                                                    <span className="text-sm font-semibold text-[var(--text-white)]">
                                                         {amount?.value} {amount?.currency_code}
                                                     </span>
                                                 </div>
                                                 <button
                                                     onClick={() => handleDownloadInvoice(t.id)}
                                                     disabled={downloadingId === t.id}
-                                                    className="flex items-center gap-1.5 px-3 py-1.5 border border-[var(--border-subtle)] text-slate-400 hover:text-white hover:border-[var(--border-strong)] text-xs rounded-lg transition-all disabled:opacity-50">
+                                                    className="flex items-center gap-1.5 px-3 py-1.5 border border-[var(--border-subtle)] text-[var(--text-muted)] hover:text-[var(--text-white)] hover:border-[var(--border-strong)] text-xs rounded-lg transition-all disabled:opacity-50">
                                                     {downloadingId === t.id
                                                         ? <Loader2 className="w-3 h-3 animate-spin" />
                                                         : <Download className="w-3 h-3" />
@@ -455,7 +454,7 @@ export default function ProfilePage() {
                     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}
                         className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl p-6">
                         <div className="flex items-center justify-between mb-5">
-                            <h2 className="text-base font-semibold text-white flex items-center gap-2">
+                            <h2 className="text-base font-semibold text-[var(--text-white)] flex items-center gap-2">
                                 <MessageSquare className="w-4 h-4 text-[var(--accent)]" /> Support-Tickets
                             </h2>
                             <button
@@ -467,13 +466,13 @@ export default function ProfilePage() {
                         </div>
 
                         {ticketsLoading ? (
-                            <div className="flex items-center gap-2 text-slate-500 text-sm py-4">
+                            <div className="flex items-center gap-2 text-[var(--text-faint)] text-sm py-4">
                                 <Loader2 className="w-4 h-4 animate-spin" /> Lade Tickets...
                             </div>
                         ) : (() => {
                             const activeTickets = tickets.filter(t => t.status !== 'closed')
                             if (activeTickets.length === 0) return (
-                                <div className="text-center py-8 text-slate-600 text-sm">
+                                <div className="text-center py-8 text-[var(--text-faint)] text-sm">
                                     Keine offenen Support-Tickets vorhanden
                                 </div>
                             )
@@ -498,12 +497,12 @@ export default function ProfilePage() {
                                                                 {cfg.label}
                                                             </span>
                                                         </div>
-                                                        <p className="text-sm text-slate-300 truncate">{ticket.subject}</p>
-                                                        <p className="text-xs text-slate-600 mt-0.5">
+                                                        <p className="text-sm text-[var(--text-body)] truncate">{ticket.subject}</p>
+                                                        <p className="text-xs text-[var(--text-faint)] mt-0.5">
                                                             {new Date(ticket.createdAt).toLocaleDateString('de-DE', { day: '2-digit', month: 'short', year: 'numeric' })}
                                                         </p>
                                                     </div>
-                                                    <ArrowRight className="w-4 h-4 text-slate-600 group-hover:text-slate-400 shrink-0 transition-colors" />
+                                                    <ArrowRight className="w-4 h-4 text-[var(--text-faint)] group-hover:text-[var(--text-muted)] shrink-0 transition-colors" />
                                                 </Link>
                                             )
                                         })}
@@ -511,7 +510,7 @@ export default function ProfilePage() {
                                     {activeTickets.length > 1 && (
                                         <button
                                             onClick={() => setTicketsExpanded(e => !e)}
-                                            className="mt-4 w-full flex items-center justify-center gap-2 py-2 text-xs text-slate-500 hover:text-slate-300 border border-[var(--border-subtle)] hover:border-[var(--border-strong)] rounded-xl transition-all"
+                                            className="mt-4 w-full flex items-center justify-center gap-2 py-2 text-xs text-[var(--text-faint)] hover:text-[var(--text-body)] border border-[var(--border-subtle)] hover:border-[var(--border-strong)] rounded-xl transition-all"
                                         >
                                             <ArrowRight className={`w-3.5 h-3.5 transition-transform ${ticketsExpanded ? '-rotate-90' : 'rotate-90'}`} />
                                             {ticketsExpanded ? 'Weniger anzeigen' : `${activeTickets.length - 1} weitere${activeTickets.length - 1 !== 1 ? '' : 's'} Ticket anzeigen`}

@@ -50,8 +50,8 @@ export default function Loading({ url, locale = 'de' }) {
                     </div>
                 </div>
 
-                <h3 className="text-white font-semibold mb-1">{locale === 'en' ? 'Auditing website' : 'Website wird auditiert'}</h3>
-                {url && <p className="text-slate-500 text-sm mb-6 truncate">{url}</p>}
+                <h3 className="text-[var(--text-white)] font-semibold mb-1">{locale === 'en' ? 'Auditing website' : 'Website wird auditiert'}</h3>
+                {url && <p className="text-[var(--text-faint)] text-sm mb-6 truncate">{url}</p>}
 
                 <AnimatePresence mode="wait">
                     <motion.p key={currentStep} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
@@ -72,7 +72,7 @@ export default function Loading({ url, locale = 'de' }) {
                         <div key={i} className={`h-1 rounded-full transition-all duration-500 ${i <= currentStep ? 'bg-[var(--accent)]' : 'bg-[var(--surface-08)]'}`} />
                     ))}
                 </div>
-                <p className="text-slate-600 text-xs mt-4">{locale === 'en' ? 'Can take up to 60 seconds' : 'Kann bis zu 60 Sekunden dauern'}</p>
+                <p className="text-[var(--text-faint)] text-xs mt-4">{locale === 'en' ? 'Can take up to 60 seconds' : 'Kann bis zu 60 Sekunden dauern'}</p>
             </div>
         </motion.div>
     )

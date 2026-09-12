@@ -15,6 +15,7 @@ export const DE_TO_EN = {
     '/blog/seo-checkliste-2026': '/en/blog/seo-checklist-2026',
     '/blog/seo-geo-automatisierung': '/en/blog/seo-geo-automation',
     '/blog/seo-test-haeufige-fehler': '/en/blog/common-seo-mistakes',
+    '/blog/ki-sichtbarkeit-erlangen': '/en/blog/ai-visibility',
     '/login': '/en/login',
     '/register': '/en/register',
     '/forgot-password': '/en/forgot-password',
@@ -29,11 +30,43 @@ export const DE_TO_EN = {
     '/seo/pricing': '/en/seo/pricing',
     '/geo/dashboard': '/en/geo/dashboard',
     '/geo/pricing': '/en/geo/pricing',
+    '/geo/check': '/en/geo/check',
+    '/vergleich': '/en/compare',
+    '/vergleich/otterly-alternative': '/en/compare/otterly-alternative',
+    '/vergleich/peec-alternative': '/en/compare/peec-alternative',
+    '/vergleich/rankscale-alternative': '/en/compare/rankscale-alternative',
+    '/vergleich/writesonic-alternative': '/en/compare/writesonic-alternative',
+    '/loesungen': '/en/solutions',
+    '/loesungen/guenstiges-ki-sichtbarkeit-tool': '/en/solutions/affordable-ai-visibility-tool',
+    '/loesungen/claude-ai-sichtbarkeit-tracken': '/en/solutions/claude-ai-visibility-tracking',
+    // '/loesungen/seo-geo-tool' has no EN counterpart yet — intentionally omitted so the
+    // switcher hides itself there instead of linking somewhere that 404s.
 }
 
 export const EN_TO_DE = Object.fromEntries(
     Object.entries(DE_TO_EN).map(([de, en]) => [en, de])
 )
+
+// Route prefixes that have a dynamic id/slug segment ("/geo/site_abc123") instead of a
+// fixed path — a static dictionary lookup can't cover these, so the id is carried over
+// as-is between locales (both sides use the same underlying resource id).
+const DYNAMIC_DE_PREFIXES = ['/geo/', '/seo/', '/tests/', '/support/']
+// Static (non-dynamic) sub-routes that live under those same prefixes and must NOT be
+// treated as "prefix + id" — they're already covered by DE_TO_EN above.
+const STATIC_EXCEPTIONS = new Set(['/geo/dashboard', '/geo/pricing', '/geo/check', '/seo/dashboard', '/seo/pricing', '/support/admin'])
+
+function dynamicCounterpart(pathname, currentLocale) {
+    const prefixes = currentLocale === 'de' ? DYNAMIC_DE_PREFIXES : DYNAMIC_DE_PREFIXES.map(p => '/en' + p)
+    for (const prefix of prefixes) {
+        if (!pathname.startsWith(prefix)) continue
+        const rest = pathname.slice(prefix.length)
+        if (!rest || rest.includes('/')) continue // only a single dynamic segment, not a deeper static route
+        const dePrefix = currentLocale === 'de' ? prefix : prefix.replace(/^\/en/, '')
+        if (STATIC_EXCEPTIONS.has(dePrefix + rest) || STATIC_EXCEPTIONS.has(prefix + rest)) continue
+        return currentLocale === 'de' ? '/en' + prefix + rest : prefix.replace(/^\/en/, '') + rest
+    }
+    return null
+}
 
 // Resolves a de-locale href to its en counterpart. Falls back to a naive
 // '/en' + href prefix for 1:1 paths that haven't been added to DE_TO_EN yet
@@ -48,7 +81,9 @@ export function localizeHref(locale, href) {
 // the other locale, or null if no counterpart exists yet (used to hide/disable
 // the language switcher on pages that haven't been localized).
 export function getCounterpart(pathname, currentLocale) {
-    if (currentLocale === 'de') return DE_TO_EN[pathname] ?? null
+    if (currentLocale === 'de') {
+        return DE_TO_EN[pathname] ?? dynamicCounterpart(pathname, 'de') ?? null
+    }
     if (pathname === '/en') return '/'
-    return EN_TO_DE[pathname] ?? null
+    return EN_TO_DE[pathname] ?? dynamicCounterpart(pathname, 'en') ?? null
 }

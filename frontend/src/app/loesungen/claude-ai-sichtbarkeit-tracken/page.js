@@ -142,12 +142,12 @@ export default function ClaudeAiSichtbarkeitPage() {
             <article className="max-w-3xl mx-auto px-5 sm:px-8 pt-32 pb-24">
 
                 {/* Breadcrumb */}
-                <div className="flex items-center gap-2 text-xs text-slate-600 mb-8">
-                    <Link href="/" className="hover:text-slate-400 transition-colors">Scanora</Link>
+                <div className="flex items-center gap-2 text-xs text-[var(--text-faint)] mb-8">
+                    <Link href="/" className="hover:text-[var(--text-muted)] transition-colors">Scanora</Link>
                     <span>/</span>
-                    <Link href="/loesungen" className="hover:text-slate-400 transition-colors">Lösungen</Link>
+                    <Link href="/loesungen" className="hover:text-[var(--text-muted)] transition-colors">Lösungen</Link>
                     <span>/</span>
-                    <span className="text-slate-500">Claude AI Sichtbarkeit tracken</span>
+                    <span className="text-[var(--text-faint)]">Claude AI Sichtbarkeit tracken</span>
                 </div>
 
                 {/* Header */}
@@ -156,20 +156,20 @@ export default function ClaudeAiSichtbarkeitPage() {
                         <span className="text-[11px] font-semibold px-2.5 py-1 rounded-full uppercase tracking-wider bg-[var(--accent-soft)] text-[var(--accent)]">
                             Lösung
                         </span>
-                        <span className="text-xs text-slate-600">29. August 2026</span>
-                        <span className="text-xs text-slate-600">· 7 min Lesezeit</span>
+                        <span className="text-xs text-[var(--text-faint)]">29. August 2026</span>
+                        <span className="text-xs text-[var(--text-faint)]">· 7 min Lesezeit</span>
                     </div>
-                    <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight tracking-tight mb-5">
+                    <h1 className="text-3xl sm:text-5xl font-bold text-[var(--text-white)] leading-tight tracking-tight mb-5">
                         Claude AI Sichtbarkeit tracken 2026: So siehst du, ob Claude dich empfiehlt
                     </h1>
-                    <p className="text-lg text-slate-400 leading-relaxed">
+                    <p className="text-lg text-[var(--text-muted)] leading-relaxed">
                         Claude hat sich als eigenständige Antwort-Quelle etabliert - auch weil Claude Code für viele Entwickler und Teams der erste Anlaufpunkt ist, um neue Tools zu bewerten. Wer nur ChatGPT trackt, sieht bestenfalls die halbe Wahrheit. Das Problem: Bei den meisten AI-Visibility-Tools ist Claude-Tracking entweder ein teures Enterprise-Add-on oder gar nicht buchbar.
                     </p>
-                    <p className="mt-4 text-slate-300 leading-relaxed">
-                        Scanora trackt Claude-Sichtbarkeit ab <strong className="text-white">4,99 €/Monat</strong> - inklusive, ohne Enterprise-Gespräch, ohne Add-on-Aufpreis. Hier die Marktlage im Überblick, wie das Tracking technisch funktioniert und was du konkret damit machst.
+                    <p className="mt-4 text-[var(--text-body)] leading-relaxed">
+                        Scanora trackt Claude-Sichtbarkeit ab <strong className="text-[var(--text-white)]">4,99 €/Monat</strong> - inklusive, ohne Enterprise-Gespräch, ohne Add-on-Aufpreis. Hier die Marktlage im Überblick, wie das Tracking technisch funktioniert und was du konkret damit machst.
                     </p>
-                    <div className="mt-5 flex items-center gap-2 text-xs text-slate-600">
-                        <Link href="/about" className="flex items-center gap-2 hover:text-slate-300 transition-colors">
+                    <div className="mt-5 flex items-center gap-2 text-xs text-[var(--text-faint)]">
+                        <Link href="/about" className="flex items-center gap-2 hover:text-[var(--text-body)] transition-colors">
                             <div className="w-6 h-6 rounded-full bg-[var(--accent)] flex items-center justify-center text-[var(--bg-base)] text-[10px] font-bold">F</div>
                             <span>Finn Paustian</span>
                         </Link>
@@ -180,10 +180,10 @@ export default function ClaudeAiSichtbarkeitPage() {
 
                 <div className="border-t border-[var(--border-subtle)] mb-10" />
 
-                <div className="space-y-10 text-slate-300 leading-relaxed">
+                <div className="space-y-10 text-[var(--text-body)] leading-relaxed">
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">Claude-Tracking ist am Markt oft teurer als die Basis-Plattformen</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Claude-Tracking ist am Markt oft teurer als die Basis-Plattformen</h2>
                         <p>
                             Ein Muster zieht sich durch mehrere bekannte AI-Visibility-Tools: ChatGPT, Perplexity und Google AI Overview sind meist im Grundpreis enthalten - Claude dagegen ist entweder ein separates, teures Add-on oder ausschließlich im individuell bepreisten Enterprise-Tarif verfügbar. Wer speziell wissen will, wie er bei Claude abschneidet, zahlt in der Praxis oft deutlich mehr als für die restlichen Plattformen zusammen.
                         </p>
@@ -191,37 +191,37 @@ export default function ClaudeAiSichtbarkeitPage() {
                             <table className="w-full text-sm min-w-[560px]">
                                 <thead>
                                     <tr className="border-b border-[var(--border-subtle)] bg-[var(--surface-06)]">
-                                        <th className="text-left px-5 py-3 text-slate-400 font-semibold">Tool</th>
-                                        <th className="text-left px-5 py-3 text-slate-400 font-semibold">Einstiegspreis</th>
+                                        <th className="text-left px-5 py-3 text-[var(--text-muted)] font-semibold">Tool</th>
+                                        <th className="text-left px-5 py-3 text-[var(--text-muted)] font-semibold">Einstiegspreis</th>
                                         <th className="text-left px-5 py-3 text-[var(--accent)] font-semibold">Claude im Einstiegspreis enthalten?</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {MARKET_ROWS.map(([tool, price, claude], i) => (
                                         <tr key={i} className="border-b border-[var(--border-subtle)] last:border-0">
-                                            <td className="px-5 py-3 text-white font-medium whitespace-nowrap">{tool}</td>
-                                            <td className="px-5 py-3 text-slate-300 whitespace-nowrap">{price}</td>
-                                            <td className="px-5 py-3 text-slate-300">{claude}</td>
+                                            <td className="px-5 py-3 text-[var(--text-white)] font-medium whitespace-nowrap">{tool}</td>
+                                            <td className="px-5 py-3 text-[var(--text-body)] whitespace-nowrap">{price}</td>
+                                            <td className="px-5 py-3 text-[var(--text-body)]">{claude}</td>
                                         </tr>
                                     ))}
                                 </tbody>
                             </table>
                         </div>
-                        <p className="text-xs text-slate-600 mt-3">
+                        <p className="text-xs text-[var(--text-faint)] mt-3">
                             Preise Stand August 2026, laut öffentlich einsehbaren Preisseiten der jeweiligen Anbieter. Prüfe die aktuellen Konditionen jeweils direkt beim Anbieter.
                         </p>
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">So funktioniert Claude-Sichtbarkeits-Tracking</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">So funktioniert Claude-Sichtbarkeits-Tracking</h2>
                         <p>Vier Schritte, automatisiert statt manuell:</p>
                         <div className="space-y-3 mt-5">
                             {TRACKING_STEPS.map((s) => (
                                 <div key={s.num} className="flex gap-4 bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl p-5">
                                     <span className="text-[var(--accent)] font-mono font-bold text-sm shrink-0">{s.num}</span>
                                     <div>
-                                        <h3 className="font-semibold text-white mb-1 text-sm">{s.title}</h3>
-                                        <p className="text-sm text-slate-400 leading-relaxed">{s.text}</p>
+                                        <h3 className="font-semibold text-[var(--text-white)] mb-1 text-sm">{s.title}</h3>
+                                        <p className="text-sm text-[var(--text-muted)] leading-relaxed">{s.text}</p>
                                     </div>
                                 </div>
                             ))}
@@ -229,7 +229,7 @@ export default function ClaudeAiSichtbarkeitPage() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">Was Scanora konkret liefert</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Was Scanora konkret liefert</h2>
                         <p>
                             Ab dem Einsteiger-Plan (4,99 €/Monat, 1 Website, 10 Keywords) prüft Scanora wöchentlich automatisch, ob Claude und Gemini deine Website erwähnen - inklusive Mention-Verlauf über Zeit. Der Pro-Plan (29,99 €/Monat) ergänzt ChatGPT, Perplexity und Google AI Overview im selben Dashboard, plus zwei Prompt-Varianten pro Keyword statt einer.
                         </p>
@@ -239,12 +239,12 @@ export default function ClaudeAiSichtbarkeitPage() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">Häufige Fragen</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Häufige Fragen</h2>
                         <div className="space-y-4">
                             {faqLd.mainEntity.map((faq, i) => (
                                 <div key={i} className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl p-5">
-                                    <h3 className="font-semibold text-white mb-2 text-sm">{faq.name}</h3>
-                                    <p className="text-sm text-slate-400 leading-relaxed">{faq.acceptedAnswer.text}</p>
+                                    <h3 className="font-semibold text-[var(--text-white)] mb-2 text-sm">{faq.name}</h3>
+                                    <p className="text-sm text-[var(--text-muted)] leading-relaxed">{faq.acceptedAnswer.text}</p>
                                 </div>
                             ))}
                         </div>
@@ -257,16 +257,16 @@ export default function ClaudeAiSichtbarkeitPage() {
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 justify-between">
                         <div>
                             <span className="text-xs font-semibold text-[var(--accent)] uppercase tracking-wider mb-1 block">Selbst ausprobieren</span>
-                            <h3 className="text-base sm:text-lg font-bold text-white mb-2">
+                            <h3 className="text-base sm:text-lg font-bold text-[var(--text-white)] mb-2">
                                 Prüfe kostenlos, ob Claude dich schon erwähnt
                             </h3>
-                            <p className="text-slate-400 text-sm leading-relaxed max-w-md">
+                            <p className="text-[var(--text-muted)] text-sm leading-relaxed max-w-md">
                                 Gib deine URL ein und erhalte in rund 60 Sekunden deinen ersten GEO-Score - ohne Anmeldung, ohne Kreditkarte.
                             </p>
                         </div>
                         <Link
                             href="/dashboard"
-                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-[var(--accent-border)] shrink-0"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-[var(--accent-border)] active:scale-[0.97] active:duration-75 shrink-0"
                         >
                             Jetzt kostenlos prüfen
                         </Link>
@@ -278,16 +278,16 @@ export default function ClaudeAiSichtbarkeitPage() {
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 justify-between">
                         <div>
                             <span className="text-xs font-semibold text-[var(--accent)] uppercase tracking-wider mb-1 block">Preise</span>
-                            <h3 className="text-base sm:text-lg font-bold text-white mb-2">
+                            <h3 className="text-base sm:text-lg font-bold text-[var(--text-white)] mb-2">
                                 GEO Automatisierung: alle Pläne im Detail
                             </h3>
-                            <p className="text-slate-400 text-sm leading-relaxed max-w-md">
+                            <p className="text-[var(--text-muted)] text-sm leading-relaxed max-w-md">
                                 Claude, ChatGPT, Perplexity und Google AI Overview - Websites, Keywords und Checks pro Plan im Vergleich.
                             </p>
                         </div>
                         <Link
                             href="/geo/pricing"
-                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--surface-08)] hover:bg-[var(--surface-10)] text-white text-sm font-semibold rounded-xl transition-all duration-200 shrink-0"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--surface-08)] hover:bg-[var(--surface-10)] text-[var(--text-white)] text-sm font-semibold rounded-xl transition-all duration-200 shrink-0"
                         >
                             Preise ansehen
                         </Link>
@@ -299,16 +299,16 @@ export default function ClaudeAiSichtbarkeitPage() {
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 justify-between">
                         <div>
                             <span className="text-xs font-semibold text-[var(--accent)] uppercase tracking-wider mb-1 block">Vergleich</span>
-                            <h3 className="text-base sm:text-lg font-bold text-white mb-2">
+                            <h3 className="text-base sm:text-lg font-bold text-[var(--text-white)] mb-2">
                                 Rankscale-Alternative: der ausführliche Vergleich
                             </h3>
-                            <p className="text-slate-400 text-sm leading-relaxed max-w-md">
+                            <p className="text-[var(--text-muted)] text-sm leading-relaxed max-w-md">
                                 Rankscale trackt Claude zwar inklusive, aber über ein Credit-System statt Fixpreis - der Unterschied im Detail.
                             </p>
                         </div>
                         <Link
                             href="/vergleich/rankscale-alternative"
-                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--surface-08)] hover:bg-[var(--surface-10)] text-white text-sm font-semibold rounded-xl transition-all duration-200 shrink-0"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--surface-08)] hover:bg-[var(--surface-10)] text-[var(--text-white)] text-sm font-semibold rounded-xl transition-all duration-200 shrink-0"
                         >
                             Vergleich lesen
                         </Link>
@@ -317,7 +317,7 @@ export default function ClaudeAiSichtbarkeitPage() {
 
                 {/* Back */}
                 <div className="mt-10 pt-8 border-t border-[var(--border-subtle)]">
-                    <Link href="/" className="text-sm text-slate-500 hover:text-slate-300 transition-colors">
+                    <Link href="/" className="text-sm text-[var(--text-faint)] hover:text-[var(--text-body)] transition-colors">
                         ← Zurück zur Startseite
                     </Link>
                 </div>

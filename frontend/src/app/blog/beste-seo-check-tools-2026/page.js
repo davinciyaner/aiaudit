@@ -109,7 +109,7 @@ const faqLd = {
 
 export default function AuditAiOverviewPage() {
     return (
-        <main className="bg-[#05080f] min-h-screen">
+        <main className="bg-[var(--bg-base)] min-h-screen">
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
@@ -118,12 +118,12 @@ export default function AuditAiOverviewPage() {
             <article className="max-w-3xl mx-auto px-5 sm:px-8 pt-32 pb-24">
 
                 {/* Breadcrumb */}
-                <div className="flex items-center gap-2 text-xs text-slate-600 mb-8">
-                    <Link href="/" className="hover:text-slate-400 transition-colors">Scanora</Link>
+                <div className="flex items-center gap-2 text-xs text-[var(--text-faint)] mb-8">
+                    <Link href="/" className="hover:text-[var(--text-muted)] transition-colors">Scanora</Link>
                     <span>/</span>
-                    <Link href="/blog" className="hover:text-slate-400 transition-colors">Blog</Link>
+                    <Link href="/blog" className="hover:text-[var(--text-muted)] transition-colors">Blog</Link>
                     <span>/</span>
-                    <span className="text-slate-500">Website SEO Check & Audit mit GEO-Analyse</span>
+                    <span className="text-[var(--text-faint)]">Website SEO Check & Audit mit GEO-Analyse</span>
                 </div>
 
                 {/* Header */}
@@ -132,19 +132,19 @@ export default function AuditAiOverviewPage() {
                         <span className="text-[11px] font-semibold px-2.5 py-1 rounded-full uppercase tracking-wider bg-amber-500/15 text-amber-400">
                             Tools
                         </span>
-                        <span className="text-xs text-slate-600">15. Juli 2026</span>
-                        <span className="text-xs text-slate-600">· Aktualisiert 6. August 2026</span>
-                        <span className="text-xs text-slate-600">· 8 min Lesezeit</span>
+                        <span className="text-xs text-[var(--text-faint)]">15. Juli 2026</span>
+                        <span className="text-xs text-[var(--text-faint)]">· Aktualisiert 6. August 2026</span>
+                        <span className="text-xs text-[var(--text-faint)]">· 8 min Lesezeit</span>
                     </div>
-                    <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight tracking-tight mb-5">
+                    <h1 className="text-3xl sm:text-5xl font-bold text-[var(--text-white)] leading-tight tracking-tight mb-5">
                         Website SEO Check & Audit mit Scanora (inkl. GEO-Analyse)
                     </h1>
-                    <p className="text-lg text-slate-400 leading-relaxed">
+                    <p className="text-lg text-[var(--text-muted)] leading-relaxed">
                         Ein Website SEO Check ist eine automatisierte Analyse deiner Website auf technische, inhaltliche und Performance-Probleme, die deine Google-Rankings beeinflussen. Die meisten SEO-Tools prüfen dabei nur, ob deine Website für Google okay aussieht - und ignorieren komplett, ob ChatGPT, Claude, Perplexity oder Google AI Overview dich überhaupt kennen. Scanora prüft beides: klassisches SEO, Performance und GEO (KI-Sichtbarkeit), in einem Report, in unter 60 Sekunden. Hier ist alles, was du als Nutzer bekommst.
                     </p>
-                    <div className="mt-5 flex items-center gap-2 text-xs text-slate-600">
-                        <Link href="/about" className="flex items-center gap-2 hover:text-slate-300 transition-colors">
-                            <div className="w-6 h-6 rounded-full bg-gradient-to-br from-violet-600 to-cyan-600 flex items-center justify-center text-white text-[10px] font-bold">F</div>
+                    <div className="mt-5 flex items-center gap-2 text-xs text-[var(--text-faint)]">
+                        <Link href="/about" className="flex items-center gap-2 hover:text-[var(--text-body)] transition-colors">
+                            <div className="w-6 h-6 rounded-full bg-gradient-to-br from-violet-600 to-cyan-600 flex items-center justify-center text-[var(--text-white)] text-[10px] font-bold">F</div>
                             <span>Finn Paustian</span>
                         </Link>
                         <span>·</span>
@@ -152,29 +152,29 @@ export default function AuditAiOverviewPage() {
                     </div>
                 </div>
 
-                <div className="border-t border-white/5 mb-10" />
+                <div className="border-t border-[var(--text-white)]/5 mb-10" />
 
-                <div className="space-y-10 text-slate-300 leading-relaxed">
+                <div className="space-y-10 text-[var(--text-body)] leading-relaxed">
 
-                    <nav aria-label="Inhaltsverzeichnis" className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
-                        <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">In diesem Artikel</p>
+                    <nav aria-label="Inhaltsverzeichnis" className="bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-2xl p-5 sm:p-6">
+                        <p className="text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider mb-3">In diesem Artikel</p>
                         <ol className="grid sm:grid-cols-2 gap-x-6 gap-y-1.5 text-sm">
-                            <li><a href="#was-ist-scanora" className="text-slate-400 hover:text-amber-300 transition-colors">Was ist Scanora?</a></li>
-                            <li><a href="#kostenloser-audit" className="text-slate-400 hover:text-amber-300 transition-colors">Der kostenlose Audit</a></li>
-                            <li><a href="#seo-analyse" className="text-slate-400 hover:text-amber-300 transition-colors">SEO-Analyse im Detail</a></li>
-                            <li><a href="#performance" className="text-slate-400 hover:text-amber-300 transition-colors">Performance-Check</a></li>
-                            <li><a href="#geo-check" className="text-slate-400 hover:text-amber-300 transition-colors">GEO-Check: KI-Sichtbarkeit</a></li>
-                            <li><a href="#ki-report" className="text-slate-400 hover:text-amber-300 transition-colors">Der KI-Report</a></li>
-                            <li><a href="#seo-automatisierung" className="text-slate-400 hover:text-amber-300 transition-colors">SEO-Automatisierung</a></li>
-                            <li><a href="#geo-automatisierung" className="text-slate-400 hover:text-amber-300 transition-colors">GEO-Automatisierung</a></li>
-                            <li><a href="#fuer-wen" className="text-slate-400 hover:text-amber-300 transition-colors">Für wen ist Scanora?</a></li>
-                            <li><a href="#preise" className="text-slate-400 hover:text-amber-300 transition-colors">Preise im Überblick</a></li>
-                            <li><a href="#faq" className="text-slate-400 hover:text-amber-300 transition-colors">Häufige Fragen</a></li>
+                            <li><a href="#was-ist-scanora" className="text-[var(--text-muted)] hover:text-amber-300 transition-colors">Was ist Scanora?</a></li>
+                            <li><a href="#kostenloser-audit" className="text-[var(--text-muted)] hover:text-amber-300 transition-colors">Der kostenlose Audit</a></li>
+                            <li><a href="#seo-analyse" className="text-[var(--text-muted)] hover:text-amber-300 transition-colors">SEO-Analyse im Detail</a></li>
+                            <li><a href="#performance" className="text-[var(--text-muted)] hover:text-amber-300 transition-colors">Performance-Check</a></li>
+                            <li><a href="#geo-check" className="text-[var(--text-muted)] hover:text-amber-300 transition-colors">GEO-Check: KI-Sichtbarkeit</a></li>
+                            <li><a href="#ki-report" className="text-[var(--text-muted)] hover:text-amber-300 transition-colors">Der KI-Report</a></li>
+                            <li><a href="#seo-automatisierung" className="text-[var(--text-muted)] hover:text-amber-300 transition-colors">SEO-Automatisierung</a></li>
+                            <li><a href="#geo-automatisierung" className="text-[var(--text-muted)] hover:text-amber-300 transition-colors">GEO-Automatisierung</a></li>
+                            <li><a href="#fuer-wen" className="text-[var(--text-muted)] hover:text-amber-300 transition-colors">Für wen ist Scanora?</a></li>
+                            <li><a href="#preise" className="text-[var(--text-muted)] hover:text-amber-300 transition-colors">Preise im Überblick</a></li>
+                            <li><a href="#faq" className="text-[var(--text-muted)] hover:text-amber-300 transition-colors">Häufige Fragen</a></li>
                         </ol>
                     </nav>
 
                     <section id="was-ist-scanora" className="scroll-mt-28">
-                        <h2 className="text-2xl font-bold text-white mb-4">Was ist Scanora?</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Was ist Scanora?</h2>
                         <p>
                             Scanora ist ein KI-gestütztes Website-Audit-Tool, das SEO, Performance und GEO (Generative Engine Optimization) in einem einzigen Scan zusammenführt. Statt für jeden Bereich ein eigenes Tool zu brauchen - einen SEO-Checker, ein Performance-Tool und (falls überhaupt vorhanden) ein separates GEO-Tool - bekommst du bei Scanora alle drei Analysen gleichzeitig, ausgewertet von Claude (Anthropic).
                         </p>
@@ -184,7 +184,7 @@ export default function AuditAiOverviewPage() {
                     </section>
 
                     <section id="kostenloser-audit" className="scroll-mt-28">
-                        <h2 className="text-2xl font-bold text-white mb-4">Der kostenlose Audit: Was du sofort bekommst</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Der kostenlose Audit: Was du sofort bekommst</h2>
                         <p className="mb-5">
                             Du gibst eine URL ein, wartest unter 60 Sekunden und bekommst einen vollständigen Website-Check - ganz ohne Registrierung für den ersten Blick, mit kostenlosem Account für den vollen Report.
                         </p>
@@ -194,9 +194,9 @@ export default function AuditAiOverviewPage() {
                                 alt="Scanora Score-Übersicht mit Overall-, SEO-, Performance- und GEO-Score aus einem echten Audit-Report"
                                 width={960}
                                 height={194}
-                                className="w-full h-auto rounded-2xl border border-white/[0.07]"
+                                className="w-full h-auto rounded-2xl border border-[var(--text-white)]/[0.07]"
                             />
-                            <figcaption className="text-xs text-slate-600 mt-2">
+                            <figcaption className="text-xs text-[var(--text-faint)] mt-2">
                                 Die Score-Übersicht eines echten Scanora-Reports: SEO, Performance und GEO in einer Ansicht.
                             </figcaption>
                         </figure>
@@ -208,13 +208,13 @@ export default function AuditAiOverviewPage() {
                                 ['GEO-Score', 'Ob KI-Modelle deine Website technisch überhaupt erkennen und zitieren können'],
                                 ['Audit-Verlauf', 'Frühere Checks bleiben gespeichert, damit du Fortschritt siehst'],
                             ].map(([title, desc], i) => (
-                                <div key={i} className="flex items-start gap-3 py-2.5 border-b border-white/[0.04] last:border-0">
+                                <div key={i} className="flex items-start gap-3 py-2.5 border-b border-[var(--text-white)]/[0.04] last:border-0">
                                     <div className="w-5 h-5 rounded-full bg-amber-500/15 border border-amber-500/30 flex items-center justify-center shrink-0 mt-0.5">
                                         <span className="text-[9px] font-bold text-amber-400">{i + 1}</span>
                                     </div>
                                     <div>
-                                        <span className="text-sm font-medium text-white">{title}</span>
-                                        <span className="text-sm text-slate-500"> - {desc}</span>
+                                        <span className="text-sm font-medium text-[var(--text-white)]">{title}</span>
+                                        <span className="text-sm text-[var(--text-faint)]"> - {desc}</span>
                                     </div>
                                 </div>
                             ))}
@@ -222,7 +222,7 @@ export default function AuditAiOverviewPage() {
                     </section>
 
                     <section id="seo-analyse" className="scroll-mt-28">
-                        <h2 className="text-2xl font-bold text-white mb-4">Website SEO Analyse im Detail</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Website SEO Analyse im Detail</h2>
                         <p className="mb-5">
                             Der SEO-Teil deckt die Faktoren ab, die Google zum Bewerten deiner Seite nutzt:
                         </p>
@@ -232,9 +232,9 @@ export default function AuditAiOverviewPage() {
                                 alt="Scanora SEO-Fehlerliste mit priorisierten Problemen und konkreten Fixes"
                                 width={960}
                                 height={420}
-                                className="w-full h-auto rounded-2xl border border-white/[0.07]"
+                                className="w-full h-auto rounded-2xl border border-[var(--text-white)]/[0.07]"
                             />
-                            <figcaption className="text-xs text-slate-600 mt-2">
+                            <figcaption className="text-xs text-[var(--text-faint)] mt-2">
                                 Gefundene SEO-Probleme, priorisiert und mit klarer Beschreibung statt nur einer Fehlerliste.
                             </figcaption>
                         </figure>
@@ -245,7 +245,7 @@ export default function AuditAiOverviewPage() {
                                 'Structured Data / JSON-LD', 'Robots Meta Tag', 'Interne Verlinkung',
                                 'Wortanzahl pro Seite', 'HTML lang-Attribut', 'HTTPS-Status',
                             ].map((item) => (
-                                <div key={item} className="flex items-center gap-2 text-slate-400">
+                                <div key={item} className="flex items-center gap-2 text-[var(--text-muted)]">
                                     <span className="text-emerald-400">✓</span> {item}
                                 </div>
                             ))}
@@ -253,7 +253,7 @@ export default function AuditAiOverviewPage() {
                     </section>
 
                     <section id="performance" className="scroll-mt-28">
-                        <h2 className="text-2xl font-bold text-white mb-4">Performance-Check</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Performance-Check</h2>
                         <p className="mb-4">
                             Ladezeit ist sowohl ein Google-Rankingfaktor als auch ein direkter Umsatzfaktor - Scanora misst die Kennzahlen, die wirklich zählen:
                         </p>
@@ -263,7 +263,7 @@ export default function AuditAiOverviewPage() {
                                 'DOM Load', 'Vollständige Ladezeit',
                                 'Seitengröße', 'Anzahl HTTP-Requests',
                             ].map((item) => (
-                                <div key={item} className="flex items-center gap-2 text-slate-400">
+                                <div key={item} className="flex items-center gap-2 text-[var(--text-muted)]">
                                     <span className="text-emerald-400">✓</span> {item}
                                 </div>
                             ))}
@@ -271,7 +271,7 @@ export default function AuditAiOverviewPage() {
                     </section>
 
                     <section id="geo-check" className="scroll-mt-28">
-                        <h2 className="text-2xl font-bold text-white mb-4">GEO-Check: Wirst du von ChatGPT & Co. gefunden?</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">GEO-Check: Wirst du von ChatGPT & Co. gefunden?</h2>
                         <p className="mb-5">
                             Das ist der Teil, den fast kein anderes Tool prüft. 19 technische Signale entscheiden, ob KI-Modelle deine Website als vertrauenswürdige Quelle erkennen:
                         </p>
@@ -281,9 +281,9 @@ export default function AuditAiOverviewPage() {
                                 alt="Scanora GEO-Report mit geprüften KI-Sichtbarkeits-Signalen wie llms.txt, Organization-Schema, KI-Crawler-Zugriff und sitemap.xml"
                                 width={960}
                                 height={411}
-                                className="w-full h-auto rounded-2xl border border-white/[0.07]"
+                                className="w-full h-auto rounded-2xl border border-[var(--text-white)]/[0.07]"
                             />
-                            <figcaption className="text-xs text-slate-600 mt-2">
+                            <figcaption className="text-xs text-[var(--text-faint)] mt-2">
                                 Ein echter GEO-Report: alle geprüften KI-Sichtbarkeitssignale auf einen Blick, inklusive gefundenem Problem.
                             </figcaption>
                         </figure>
@@ -295,7 +295,7 @@ export default function AuditAiOverviewPage() {
                                 'Klare Produktdefinition im Content', 'Konkrete Zahlen & Statistiken',
                                 'Externe Quellenverweise', 'Autor- & About-Informationen (E-E-A-T)',
                             ].map((item) => (
-                                <div key={item} className="flex items-center gap-2 text-slate-400">
+                                <div key={item} className="flex items-center gap-2 text-[var(--text-muted)]">
                                     <span className="text-emerald-400">✓</span> {item}
                                 </div>
                             ))}
@@ -306,7 +306,7 @@ export default function AuditAiOverviewPage() {
                     </section>
 
                     <section id="ki-report" className="scroll-mt-28">
-                        <h2 className="text-2xl font-bold text-white mb-4">Der KI-Report: Konkrete Fixes statt nur Zahlen</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Der KI-Report: Konkrete Fixes statt nur Zahlen</h2>
                         <p>
                             Ab dem Pro-Plan generiert Claude (Anthropic) einen vollständigen Bericht aus den Audit-Daten - keine generische Fehlerliste, sondern:
                         </p>
@@ -318,13 +318,13 @@ export default function AuditAiOverviewPage() {
                                 ['Desktop- & Mobile-Screenshots', 'Visueller Vergleich beider Ansichten'],
                                 ['PDF-Export', 'Zum Teilen oder Archivieren'],
                             ].map(([title, desc], i) => (
-                                <div key={i} className="flex items-start gap-3 py-2.5 border-b border-white/[0.04] last:border-0">
+                                <div key={i} className="flex items-start gap-3 py-2.5 border-b border-[var(--text-white)]/[0.04] last:border-0">
                                     <div className="w-5 h-5 rounded-full bg-violet-500/15 border border-violet-500/30 flex items-center justify-center shrink-0 mt-0.5">
                                         <span className="text-[9px] font-bold text-violet-400">{i + 1}</span>
                                     </div>
                                     <div>
-                                        <span className="text-sm font-medium text-white">{title}</span>
-                                        <span className="text-sm text-slate-500"> - {desc}</span>
+                                        <span className="text-sm font-medium text-[var(--text-white)]">{title}</span>
+                                        <span className="text-sm text-[var(--text-faint)]"> - {desc}</span>
                                     </div>
                                 </div>
                             ))}
@@ -332,7 +332,7 @@ export default function AuditAiOverviewPage() {
                     </section>
 
                     <section id="seo-automatisierung" className="scroll-mt-28">
-                        <h2 className="text-2xl font-bold text-white mb-4">SEO-Automatisierung: Laufendes Ranking-Tracking</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">SEO-Automatisierung: Laufendes Ranking-Tracking</h2>
                         <p className="mb-4">
                             Der einmalige Audit zeigt den Status jetzt. Die SEO-Automatisierung ist ein separates Abo für laufendes Monitoring:
                         </p>
@@ -343,7 +343,7 @@ export default function AuditAiOverviewPage() {
                                 'Content-Gap-Analyse (ab Pro)', 'Monatliche Backlink-Übersicht',
                                 'Automatische Keyword-Erkennung aus neuem Content',
                             ].map((item) => (
-                                <div key={item} className="flex items-center gap-2 text-slate-400">
+                                <div key={item} className="flex items-center gap-2 text-[var(--text-muted)]">
                                     <span className="text-emerald-400">✓</span> {item}
                                 </div>
                             ))}
@@ -351,7 +351,7 @@ export default function AuditAiOverviewPage() {
                     </section>
 
                     <section id="geo-automatisierung" className="scroll-mt-28">
-                        <h2 className="text-2xl font-bold text-white mb-4">GEO-Automatisierung: KI-Sichtbarkeit im Verlauf</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">GEO-Automatisierung: KI-Sichtbarkeit im Verlauf</h2>
                         <p className="mb-4">
                             Und das GEO-Pendant dazu - laufendes Tracking, ob KI-Modelle dich tatsächlich erwähnen, nicht nur ob die technischen Voraussetzungen stimmen:
                         </p>
@@ -363,7 +363,7 @@ export default function AuditAiOverviewPage() {
                                 'Zwei Frage-Varianten: Empfehlung & Vergleich (ab Pro)',
                                 'Verlauf über Zeit', 'Manuelle Checks auf Abruf',
                             ].map((item) => (
-                                <div key={item} className="flex items-center gap-2 text-slate-400">
+                                <div key={item} className="flex items-center gap-2 text-[var(--text-muted)]">
                                     <span className="text-emerald-400">✓</span> {item}
                                 </div>
                             ))}
@@ -371,21 +371,21 @@ export default function AuditAiOverviewPage() {
                     </section>
 
                     <section id="fuer-wen" className="scroll-mt-28">
-                        <h2 className="text-2xl font-bold text-white mb-4">Für wen ist Scanora gedacht?</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Für wen ist Scanora gedacht?</h2>
                         <p>
                             Webentwickler und Agenturen, die schnell den Status einer Website (eigen oder Kunde) prüfen wollen, ohne drei Tools zu jonglieren. SEO-Freelancer, die ihren Kunden auch KI-Sichtbarkeit als Thema mitgeben wollen, bevor es zum Standard wird. Und kleine bis mittelständische Unternehmen, die selbst verstehen wollen, warum sie bei Google - oder bei ChatGPT - nicht auftauchen, ohne dafür eine Agentur zu beauftragen.
                         </p>
                     </section>
 
                     <section id="preise" className="scroll-mt-28">
-                        <h2 className="text-2xl font-bold text-white mb-4">Preise im Überblick</h2>
-                        <div className="overflow-hidden rounded-2xl border border-white/[0.07] mb-4">
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Preise im Überblick</h2>
+                        <div className="overflow-hidden rounded-2xl border border-[var(--text-white)]/[0.07] mb-4">
                             <table className="w-full text-sm">
                                 <thead>
-                                    <tr className="border-b border-white/5 bg-white/[0.02]">
-                                        <th className="text-left px-4 py-3 text-slate-400 font-semibold">Plan</th>
-                                        <th className="text-left px-4 py-3 text-slate-400 font-semibold">Preis</th>
-                                        <th className="text-left px-4 py-3 text-slate-400 font-semibold">Enthalten</th>
+                                    <tr className="border-b border-[var(--text-white)]/5 bg-[var(--text-white)]/[0.02]">
+                                        <th className="text-left px-4 py-3 text-[var(--text-muted)] font-semibold">Plan</th>
+                                        <th className="text-left px-4 py-3 text-[var(--text-muted)] font-semibold">Preis</th>
+                                        <th className="text-left px-4 py-3 text-[var(--text-muted)] font-semibold">Enthalten</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -395,27 +395,27 @@ export default function AuditAiOverviewPage() {
                                         ['SEO-Automatisierung', 'ab €19/Monat', 'Wöchentliches Ranking-Tracking, 14 Tage gratis testen'],
                                         ['GEO-Automatisierung', 'ab €4,99/Monat', 'Wöchentliches KI-Mention-Tracking, 14 Tage gratis testen'],
                                     ].map(([plan, price, desc]) => (
-                                        <tr key={plan} className="border-b border-white/[0.04] last:border-0">
-                                            <td className="px-4 py-3 text-white font-medium whitespace-nowrap">{plan}</td>
+                                        <tr key={plan} className="border-b border-[var(--text-white)]/[0.04] last:border-0">
+                                            <td className="px-4 py-3 text-[var(--text-white)] font-medium whitespace-nowrap">{plan}</td>
                                             <td className="px-4 py-3 text-amber-400 font-medium whitespace-nowrap">{price}</td>
-                                            <td className="px-4 py-3 text-slate-400">{desc}</td>
+                                            <td className="px-4 py-3 text-[var(--text-muted)]">{desc}</td>
                                         </tr>
                                     ))}
                                 </tbody>
                             </table>
                         </div>
-                        <p className="text-sm text-slate-500">
+                        <p className="text-sm text-[var(--text-faint)]">
                             Alle Automatisierungs-Pläne jederzeit kündbar, kein versteckter Trial-Trick.
                         </p>
                     </section>
 
                     <section id="faq" className="scroll-mt-28">
-                        <h2 className="text-2xl font-bold text-white mb-4">Häufige Fragen</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Häufige Fragen</h2>
                         <div className="space-y-4">
                             {faqLd.mainEntity.map((faq, i) => (
-                                <div key={i} className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5">
-                                    <h3 className="font-semibold text-white mb-2 text-sm">{faq.name}</h3>
-                                    <p className="text-sm text-slate-400 leading-relaxed">{faq.acceptedAnswer.text}</p>
+                                <div key={i} className="bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-2xl p-5">
+                                    <h3 className="font-semibold text-[var(--text-white)] mb-2 text-sm">{faq.name}</h3>
+                                    <p className="text-sm text-[var(--text-muted)] leading-relaxed">{faq.acceptedAnswer.text}</p>
                                 </div>
                             ))}
                         </div>
@@ -424,37 +424,37 @@ export default function AuditAiOverviewPage() {
                 </div>
 
                 {/* CTA */}
-                <div className="mt-14 bg-gradient-to-br from-amber-950/30 to-[#05080f] border border-amber-500/20 rounded-2xl p-6 sm:p-8 text-center">
-                    <h2 className="text-xl sm:text-2xl font-bold text-white mb-3">
+                <div className="mt-14 bg-gradient-to-br from-amber-950/30 to-[var(--bg-base)] border border-amber-500/20 rounded-2xl p-6 sm:p-8 text-center">
+                    <h2 className="text-xl sm:text-2xl font-bold text-[var(--text-white)] mb-3">
                         SEO, Performance und GEO in einem Report
                     </h2>
-                    <p className="text-slate-400 text-sm mb-6 max-w-md mx-auto leading-relaxed">
+                    <p className="text-[var(--text-muted)] text-sm mb-6 max-w-md mx-auto leading-relaxed">
                         Prüfe deine Website in unter 60 Sekunden - inklusive llms.txt, KI-Crawler-Erlaubnis und Schema für KI-Zitate. Start ohne Registrierung, für den vollständigen Report mit allen Scores meldest du dich kostenlos an.
                     </p>
                     <Link
                         href="/dashboard"
-                        className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-amber-500 to-violet-600 hover:from-amber-400 hover:to-violet-500 text-white text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-amber-500/20"
+                        className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-amber-500 to-violet-600 hover:from-amber-400 hover:to-violet-500 text-[var(--text-white)] text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-amber-500/20"
                     >
                         Kostenlosen Audit starten
                     </Link>
-                    <div className="mt-3 text-xs text-slate-600">Ohne Registrierung starten · Voller Report kostenlos · 60 Sekunden</div>
+                    <div className="mt-3 text-xs text-[var(--text-faint)]">Ohne Registrierung starten · Voller Report kostenlos · 60 Sekunden</div>
                 </div>
 
                 {/* Cross-link to sibling posts */}
-                <div className="mt-5 bg-white/[0.02] border border-white/[0.06] rounded-2xl p-6 sm:p-8">
+                <div className="mt-5 bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-2xl p-6 sm:p-8">
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 justify-between">
                         <div>
                             <span className="text-xs font-semibold text-violet-400 uppercase tracking-wider mb-1 block">Weiterlesen</span>
-                            <h3 className="text-base sm:text-lg font-bold text-white mb-2">
+                            <h3 className="text-base sm:text-lg font-bold text-[var(--text-white)] mb-2">
                                 SEO-Checkliste 2026: In 15 Minuten alle Fehler selbst finden
                             </h3>
-                            <p className="text-slate-400 text-sm leading-relaxed max-w-md">
+                            <p className="text-[var(--text-muted)] text-sm leading-relaxed max-w-md">
                                 Willst du erstmal selbst prüfen? 6 Phasen, alle wichtigen Punkte in fester Reihenfolge.
                             </p>
                         </div>
                         <Link
                             href="/blog/seo-checkliste-2026"
-                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/[0.06] hover:bg-white/10 text-white text-sm font-semibold rounded-xl transition-all duration-200 shrink-0"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--text-white)]/[0.06] hover:bg-[var(--text-white)]/10 text-[var(--text-white)] text-sm font-semibold rounded-xl transition-all duration-200 shrink-0"
                         >
                             Checkliste öffnen
                         </Link>
@@ -462,8 +462,8 @@ export default function AuditAiOverviewPage() {
                 </div>
 
                 {/* Back */}
-                <div className="mt-10 pt-8 border-t border-white/5">
-                    <Link href="/blog" className="text-sm text-slate-500 hover:text-slate-300 transition-colors">
+                <div className="mt-10 pt-8 border-t border-[var(--text-white)]/5">
+                    <Link href="/blog" className="text-sm text-[var(--text-faint)] hover:text-[var(--text-body)] transition-colors">
                         ← Zurück zum Blog
                     </Link>
                 </div>

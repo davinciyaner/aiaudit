@@ -45,31 +45,31 @@ export default function SupportPageEn() {
     }
 
     return (
-        <div className="min-h-screen bg-[#080b14]">
-            <nav className="border-b border-white/5 bg-[#080b14]/90 backdrop-blur-xl">
+        <div className="min-h-screen bg-[var(--bg-base)]">
+            <nav className="border-b border-[var(--text-white)]/5 bg-[var(--bg-base)]/90 backdrop-blur-xl">
                 <div className="max-w-5xl mx-auto px-5 sm:px-8 h-16 flex items-center">
                     <Link href="/en" className="flex items-center gap-2">
                         <div className="w-8 h-8 rounded-lg bg-[var(--accent)] flex items-center justify-center">
-                            <svg className="w-4 h-4 text-white" viewBox="0 0 192 192" fill="none"><circle cx="96" cy="96" r="50" stroke="currentColor" strokeWidth="14" /><circle cx="110" cy="82" r="13" fill="currentColor" /></svg>
+                            <svg className="w-4 h-4 text-[var(--text-white)]" viewBox="0 0 192 192" fill="none"><circle cx="96" cy="96" r="50" stroke="currentColor" strokeWidth="14" /><circle cx="110" cy="82" r="13" fill="currentColor" /></svg>
                         </div>
-                        <span className="font-bold text-white">Scanora</span>
+                        <span className="font-bold text-[var(--text-white)]">Scanora</span>
                     </Link>
                 </div>
             </nav>
 
             <div className="max-w-lg mx-auto px-5 py-16">
                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-                    <h1 className="text-2xl font-bold text-white mb-1 text-center">Support Tickets</h1>
-                    <p className="text-slate-400 text-sm text-center mb-8">
+                    <h1 className="text-2xl font-bold text-[var(--text-white)] mb-1 text-center">Support Tickets</h1>
+                    <p className="text-[var(--text-muted)] text-sm text-center mb-8">
                         Find your ticket by email or ticket number.
                     </p>
 
                     {/* Tabs */}
-                    <div className="flex gap-1 bg-white/[0.03] border border-white/[0.06] rounded-xl p-1 mb-6">
+                    <div className="flex gap-1 bg-[var(--text-white)]/[0.03] border border-[var(--text-white)]/[0.06] rounded-xl p-1 mb-6">
                         <button
                             onClick={() => { setTab('email'); setTickets(null); setError('') }}
                             className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-sm font-medium transition-all ${
-                                tab === 'email' ? 'bg-white/10 text-white' : 'text-slate-500 hover:text-slate-300'
+                                tab === 'email' ? 'bg-[var(--text-white)]/10 text-[var(--text-white)]' : 'text-[var(--text-faint)] hover:text-[var(--text-body)]'
                             }`}
                         >
                             <Mail className="w-3.5 h-3.5" /> Search by email
@@ -77,7 +77,7 @@ export default function SupportPageEn() {
                         <button
                             onClick={() => { setTab('number'); setTickets(null); setError('') }}
                             className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-sm font-medium transition-all ${
-                                tab === 'number' ? 'bg-white/10 text-white' : 'text-slate-500 hover:text-slate-300'
+                                tab === 'number' ? 'bg-[var(--text-white)]/10 text-[var(--text-white)]' : 'text-[var(--text-faint)] hover:text-[var(--text-body)]'
                             }`}
                         >
                             <Hash className="w-3.5 h-3.5" /> Enter ticket number
@@ -94,14 +94,14 @@ export default function SupportPageEn() {
                                     onChange={e => setEmail(e.target.value)}
                                     placeholder="you@example.com"
                                     required
-                                    className="flex-1 bg-white/[0.03] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-slate-600 outline-none focus:border-violet-500/50 transition-colors"
+                                    className="flex-1 bg-[var(--text-white)]/[0.03] border border-[var(--text-white)]/10 rounded-xl px-4 py-2.5 text-sm text-[var(--text-white)] placeholder-[var(--text-faint)] outline-none focus:border-violet-500/50 transition-colors"
                                 />
                                 <button
                                     type="submit"
                                     disabled={loading}
-                                    className="flex items-center gap-2 px-5 py-2.5 bg-linear-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 disabled:opacity-50 text-white text-sm font-semibold rounded-xl transition-all"
+                                    className="flex items-center gap-2 px-5 py-2.5 bg-linear-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 disabled:opacity-50 text-[var(--text-white)] text-sm font-semibold rounded-xl transition-all"
                                 >
-                                    {loading ? <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : <Search className="w-4 h-4" />}
+                                    {loading ? <div className="w-4 h-4 border-2 border-[var(--text-white)]/30 border-t-white rounded-full animate-spin" /> : <Search className="w-4 h-4" />}
                                 </button>
                             </div>
                         </form>
@@ -115,11 +115,11 @@ export default function SupportPageEn() {
                                 value={ticketId}
                                 onChange={e => setTicketId(e.target.value)}
                                 placeholder="TK-XXXXXXXX"
-                                className="flex-1 bg-white/[0.03] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-slate-600 font-mono outline-none focus:border-violet-500/50 transition-colors uppercase"
+                                className="flex-1 bg-[var(--text-white)]/[0.03] border border-[var(--text-white)]/10 rounded-xl px-4 py-2.5 text-sm text-[var(--text-white)] placeholder-[var(--text-faint)] font-mono outline-none focus:border-violet-500/50 transition-colors uppercase"
                             />
                             <button
                                 type="submit"
-                                className="flex items-center gap-2 px-5 py-2.5 bg-linear-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white text-sm font-semibold rounded-xl transition-all"
+                                className="flex items-center gap-2 px-5 py-2.5 bg-linear-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-[var(--text-white)] text-sm font-semibold rounded-xl transition-all"
                             >
                                 <ArrowRight className="w-4 h-4" />
                             </button>
@@ -139,12 +139,12 @@ export default function SupportPageEn() {
                                 className="mt-6 space-y-3"
                             >
                                 {tickets.length === 0 ? (
-                                    <p className="text-center text-slate-500 text-sm py-8">
+                                    <p className="text-center text-[var(--text-faint)] text-sm py-8">
                                         No tickets found for this email address.
                                     </p>
                                 ) : (
                                     <>
-                                        <p className="text-xs text-slate-500 mb-3">{tickets.length} ticket{tickets.length !== 1 ? 's' : ''} found</p>
+                                        <p className="text-xs text-[var(--text-faint)] mb-3">{tickets.length} ticket{tickets.length !== 1 ? 's' : ''} found</p>
                                         {tickets.map(ticket => {
                                             const cfg = STATUS_CONFIG[ticket.status] || STATUS_CONFIG.open
                                             const Icon = cfg.icon
@@ -152,7 +152,7 @@ export default function SupportPageEn() {
                                                 <Link
                                                     key={ticket.ticketNumber}
                                                     href={`/en/support/${ticket.ticketNumber}`}
-                                                    className="flex items-center justify-between gap-4 bg-white/[0.02] hover:bg-white/[0.04] border border-white/[0.06] rounded-xl px-5 py-4 transition-all group"
+                                                    className="flex items-center justify-between gap-4 bg-[var(--text-white)]/[0.02] hover:bg-[var(--text-white)]/[0.04] border border-[var(--text-white)]/[0.06] rounded-xl px-5 py-4 transition-all group"
                                                 >
                                                     <div className="min-w-0">
                                                         <div className="flex items-center gap-2 mb-0.5">
@@ -162,12 +162,12 @@ export default function SupportPageEn() {
                                                                 {cfg.label}
                                                             </span>
                                                         </div>
-                                                        <p className="text-sm text-slate-300 truncate">{ticket.subject}</p>
-                                                        <p className="text-xs text-slate-600 mt-0.5">
+                                                        <p className="text-sm text-[var(--text-body)] truncate">{ticket.subject}</p>
+                                                        <p className="text-xs text-[var(--text-faint)] mt-0.5">
                                                             {new Date(ticket.createdAt).toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric' })}
                                                         </p>
                                                     </div>
-                                                    <ArrowRight className="w-4 h-4 text-slate-600 group-hover:text-slate-400 shrink-0 transition-colors" />
+                                                    <ArrowRight className="w-4 h-4 text-[var(--text-faint)] group-hover:text-[var(--text-muted)] shrink-0 transition-colors" />
                                                 </Link>
                                             )
                                         })}

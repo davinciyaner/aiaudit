@@ -128,21 +128,21 @@ const OTTERLY_FOR = [
 
 export default function OtterlyAlternativePage() {
     return (
-        <main className="bg-[#05080f] min-h-screen">
+        <main className="bg-[var(--bg-base)] min-h-screen">
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
-            <Navbar />
+            <Navbar locale="en" />
 
             <article className="max-w-3xl mx-auto px-5 sm:px-8 pt-32 pb-24">
 
                 {/* Breadcrumb */}
-                <div className="flex items-center gap-2 text-xs text-slate-600 mb-8">
-                    <Link href="/en" className="hover:text-slate-400 transition-colors">Scanora</Link>
+                <div className="flex items-center gap-2 text-xs text-[var(--text-faint)] mb-8">
+                    <Link href="/en" className="hover:text-[var(--text-muted)] transition-colors">Scanora</Link>
                     <span>/</span>
-                    <Link href="/en/compare" className="hover:text-slate-400 transition-colors">Compare</Link>
+                    <Link href="/en/compare" className="hover:text-[var(--text-muted)] transition-colors">Compare</Link>
                     <span>/</span>
-                    <span className="text-slate-500">Otterly.ai Alternative</span>
+                    <span className="text-[var(--text-faint)]">Otterly.ai Alternative</span>
                 </div>
 
                 {/* Header */}
@@ -151,21 +151,21 @@ export default function OtterlyAlternativePage() {
                         <span className="text-[11px] font-semibold px-2.5 py-1 rounded-full uppercase tracking-wider bg-violet-500/15 text-violet-400">
                             Comparison
                         </span>
-                        <span className="text-xs text-slate-600">August 27, 2026</span>
-                        <span className="text-xs text-slate-600">· 8 min read</span>
+                        <span className="text-xs text-[var(--text-faint)]">August 27, 2026</span>
+                        <span className="text-xs text-[var(--text-faint)]">· 8 min read</span>
                     </div>
-                    <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight tracking-tight mb-5">
+                    <h1 className="text-3xl sm:text-5xl font-bold text-[var(--text-white)] leading-tight tracking-tight mb-5">
                         Otterly.ai Alternative: An Honest Look at Scanora
                     </h1>
-                    <p className="text-lg text-slate-400 leading-relaxed">
+                    <p className="text-lg text-[var(--text-muted)] leading-relaxed">
                         People go looking for an Otterly.ai alternative for one of two reasons: 15 tracked prompts on the entry tier feels too tight, or the bill climbs fast once you add the AI platforms you actually need. This page compares both tools honestly — including where Otterly.ai wins.
                     </p>
-                    <p className="mt-4 text-slate-300 leading-relaxed">
-                        Short version: <strong className="text-white">Scanora</strong> tracks your AI visibility across ChatGPT, Claude, Gemini, Perplexity, and Google AI Overview from €29.99/month, and bundles in an SEO audit plus Google rank tracking. <strong className="text-white">Otterly.ai</strong> is a mature, dedicated AI-visibility tracker with far higher prompt volume on its top plans. Which one fits depends on whether you want an affordable combined tool or a specialized, high-volume GEO dashboard.
+                    <p className="mt-4 text-[var(--text-body)] leading-relaxed">
+                        Short version: <strong className="text-[var(--text-white)]">Scanora</strong> tracks your AI visibility across ChatGPT, Claude, Gemini, Perplexity, and Google AI Overview from €29.99/month, and bundles in an SEO audit plus Google rank tracking. <strong className="text-[var(--text-white)]">Otterly.ai</strong> is a mature, dedicated AI-visibility tracker with far higher prompt volume on its top plans. Which one fits depends on whether you want an affordable combined tool or a specialized, high-volume GEO dashboard.
                     </p>
-                    <div className="mt-5 flex items-center gap-2 text-xs text-slate-600">
-                        <Link href="/about" className="flex items-center gap-2 hover:text-slate-300 transition-colors">
-                            <div className="w-6 h-6 rounded-full bg-gradient-to-br from-violet-600 to-cyan-600 flex items-center justify-center text-white text-[10px] font-bold">F</div>
+                    <div className="mt-5 flex items-center gap-2 text-xs text-[var(--text-faint)]">
+                        <Link href="/about" className="flex items-center gap-2 hover:text-[var(--text-body)] transition-colors">
+                            <div className="w-6 h-6 rounded-full bg-gradient-to-br from-violet-600 to-cyan-600 flex items-center justify-center text-[var(--text-white)] text-[10px] font-bold">F</div>
                             <span>Finn Paustian</span>
                         </Link>
                         <span>·</span>
@@ -173,82 +173,82 @@ export default function OtterlyAlternativePage() {
                     </div>
                 </div>
 
-                <div className="border-t border-white/5 mb-10" />
+                <div className="border-t border-[var(--text-white)]/5 mb-10" />
 
-                <div className="space-y-10 text-slate-300 leading-relaxed">
+                <div className="space-y-10 text-[var(--text-body)] leading-relaxed">
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">At a glance</h2>
-                        <div className="overflow-x-auto rounded-2xl border border-white/[0.07]">
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">At a glance</h2>
+                        <div className="overflow-x-auto rounded-2xl border border-[var(--text-white)]/[0.07]">
                             <table className="w-full text-sm min-w-[560px]">
                                 <thead>
-                                    <tr className="border-b border-white/5 bg-white/[0.02]">
-                                        <th className="text-left px-5 py-3 text-slate-400 font-semibold">Aspect</th>
+                                    <tr className="border-b border-[var(--text-white)]/5 bg-[var(--text-white)]/[0.02]">
+                                        <th className="text-left px-5 py-3 text-[var(--text-muted)] font-semibold">Aspect</th>
                                         <th className="text-left px-5 py-3 text-violet-400 font-semibold">Scanora</th>
                                         <th className="text-left px-5 py-3 text-cyan-400 font-semibold">Otterly.ai</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {OVERVIEW_ROWS.map(([aspect, ai, ot], i) => (
-                                        <tr key={i} className="border-b border-white/[0.04] last:border-0">
-                                            <td className="px-5 py-3 text-white font-medium whitespace-nowrap">{aspect}</td>
-                                            <td className="px-5 py-3 text-slate-300">{ai}</td>
-                                            <td className="px-5 py-3 text-slate-300">{ot}</td>
+                                        <tr key={i} className="border-b border-[var(--text-white)]/[0.04] last:border-0">
+                                            <td className="px-5 py-3 text-[var(--text-white)] font-medium whitespace-nowrap">{aspect}</td>
+                                            <td className="px-5 py-3 text-[var(--text-body)]">{ai}</td>
+                                            <td className="px-5 py-3 text-[var(--text-body)]">{ot}</td>
                                         </tr>
                                     ))}
                                 </tbody>
                             </table>
                         </div>
-                        <p className="text-xs text-slate-600 mt-3">
+                        <p className="text-xs text-[var(--text-faint)] mt-3">
                             Pricing as of August 2026. Otterly bills in USD, Scanora in EUR incl. VAT. Otterly figures sourced from its{' '}
-                            <a href="https://otterly.ai/pricing" target="_blank" rel="noopener noreferrer" className="text-slate-500 hover:text-slate-300 underline underline-offset-2">
+                            <a href="https://otterly.ai/pricing" target="_blank" rel="noopener noreferrer" className="text-[var(--text-faint)] hover:text-[var(--text-body)] underline underline-offset-2">
                                 official pricing page
                             </a>. Always double-check current terms directly with the vendor.
                         </p>
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">Where Scanora wins</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Where Scanora wins</h2>
 
-                        <h3 className="text-lg font-semibold text-white mt-6 mb-2">1. Five major AI platforms for €29.99/month — no add-on math</h3>
+                        <h3 className="text-lg font-semibold text-[var(--text-white)] mt-6 mb-2">1. Five major AI platforms for €29.99/month — no add-on math</h3>
                         <p>
                             Otterly.ai's core plan does include four engines — but they're ChatGPT, Google AI Overview, Perplexity, and Microsoft Copilot. The platform that most teams outside the US actually want first, Claude, costs extra: it's a paid add-on running $29 to $439/month depending on the plan, and Google Gemini plus Google AI Mode each add another $9 to $149/month on top. Scanora tracks ChatGPT, Claude, Gemini, Perplexity, and Google AI Overview together starting at the GEO Pro tier for €29.99/month. No spreadsheet required, no per-platform surcharges.
                         </p>
 
-                        <h3 className="text-lg font-semibold text-white mt-6 mb-2">2. An actual free plan, not just a trial clock</h3>
+                        <h3 className="text-lg font-semibold text-[var(--text-white)] mt-6 mb-2">2. An actual free plan, not just a trial clock</h3>
                         <p>
                             Otterly.ai has no permanent free tier, only a time-limited trial. Scanora lets you run one full audit a month, including GEO visibility, for free indefinitely — a low-risk way to find out whether AI visibility even matters for your site before you commit to a subscription.
                         </p>
 
-                        <h3 className="text-lg font-semibold text-white mt-6 mb-2">3. AI visibility and SEO, one vendor</h3>
+                        <h3 className="text-lg font-semibold text-[var(--text-white)] mt-6 mb-2">3. AI visibility and SEO, one vendor</h3>
                         <p>
                             Otterly.ai is a dedicated AI-visibility tracker — it doesn't touch traditional SEO at all. Want both, and you're paying for two separate tools in practice. Scanora pairs GEO automation with a separate SEO automation plan covering weekly Google ranking updates, keyword ideas, competitor analysis, and a backlink overview — one provider, bookable independently.
                         </p>
 
-                        <h3 className="text-lg font-semibold text-white mt-6 mb-2">4. Audit-first: fixes, not just a scoreboard</h3>
+                        <h3 className="text-lg font-semibold text-[var(--text-white)] mt-6 mb-2">4. Audit-first: fixes, not just a scoreboard</h3>
                         <p>
                             Otterly.ai tells you <em>how often</em> and <em>where</em> you show up in AI answers. Scanora goes a step further with a prioritized action plan: it checks for llms.txt, Schema.org markup, FAQ schema, and whether AI crawlers (GPTBot, ClaudeBot, PerplexityBot) are even allowed in — then tells you exactly what to change to get cited.
                         </p>
 
-                        <h3 className="text-lg font-semibold text-white mt-6 mb-2">5. A lower euro entry point</h3>
+                        <h3 className="text-lg font-semibold text-[var(--text-white)] mt-6 mb-2">5. A lower euro entry point</h3>
                         <p>
                             Scanora starts at €4.99/month for Claude tracking and €29.99/month for all five platforms — well under Otterly's $29/month entry price, with no currency conversion guesswork for European customers. For freelancers and small sites, that's a much softer landing.
                         </p>
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">Where Otterly.ai wins</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Where Otterly.ai wins</h2>
                         <p>
                             A fair comparison has to say where the other tool is genuinely stronger — and Otterly.ai is, on a few fronts:
                         </p>
                         <p className="mt-4">
-                            <strong className="text-white">Higher prompt volume and agency structure.</strong> Otterly.ai scales up to 400 tracked prompts on its Premium plan, plus an agency partner program with dedicated client workspaces and up to 500 prompts. If you're tracking large prompt volumes across many client accounts, that's more headroom than Scanora's 100-keyword ceiling on the GEO Expert plan.
+                            <strong className="text-[var(--text-white)]">Higher prompt volume and agency structure.</strong> Otterly.ai scales up to 400 tracked prompts on its Premium plan, plus an agency partner program with dedicated client workspaces and up to 500 prompts. If you're tracking large prompt volumes across many client accounts, that's more headroom than Scanora's 100-keyword ceiling on the GEO Expert plan.
                         </p>
                         <p className="mt-4">
-                            <strong className="text-white">Depth and reach as a dedicated GEO tracker.</strong> Otterly.ai specializes in AI visibility and backs it up with features like multi-country tracking across 50+ markets, a Looker Studio connector, and API/MCP access on its higher tiers. For teams running deep, international GEO monitoring as its own discipline, that specialization is a real advantage.
+                            <strong className="text-[var(--text-white)]">Depth and reach as a dedicated GEO tracker.</strong> Otterly.ai specializes in AI visibility and backs it up with features like multi-country tracking across 50+ markets, a Looker Studio connector, and API/MCP access on its higher tiers. For teams running deep, international GEO monitoring as its own discipline, that specialization is a real advantage.
                         </p>
                         <p className="mt-4">
-                            <strong className="text-white">Market maturity.</strong> Otterly.ai has been around longer and shows up as one of the more established names across AI-visibility tool comparisons.
+                            <strong className="text-[var(--text-white)]">Market maturity.</strong> Otterly.ai has been around longer and shows up as one of the more established names across AI-visibility tool comparisons.
                         </p>
                         <p className="mt-4">
                             The short version: if you need pure, highly scalable, international GEO monitoring for an agency with many clients, Otterly.ai is worth a look. If you want AI visibility <em>and</em> SEO in one affordable tool, and you care more about concrete next steps than raw dashboards, Scanora fits better.
@@ -256,23 +256,23 @@ export default function OtterlyAlternativePage() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">Which one is right for you?</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Which one is right for you?</h2>
                         <div className="grid sm:grid-cols-2 gap-4">
                             <div className="bg-violet-500/[0.04] border border-violet-500/15 rounded-2xl p-5">
-                                <h3 className="font-semibold text-white mb-3 text-sm">Pick Scanora if …</h3>
+                                <h3 className="font-semibold text-[var(--text-white)] mb-3 text-sm">Pick Scanora if …</h3>
                                 <ul className="space-y-2">
                                     {AUDITAI_FOR.map((item, i) => (
-                                        <li key={i} className="text-sm text-slate-400 leading-relaxed flex gap-2">
+                                        <li key={i} className="text-sm text-[var(--text-muted)] leading-relaxed flex gap-2">
                                             <span className="text-violet-400 shrink-0">–</span>{item}
                                         </li>
                                     ))}
                                 </ul>
                             </div>
                             <div className="bg-cyan-500/[0.04] border border-cyan-500/15 rounded-2xl p-5">
-                                <h3 className="font-semibold text-white mb-3 text-sm">Pick Otterly.ai if …</h3>
+                                <h3 className="font-semibold text-[var(--text-white)] mb-3 text-sm">Pick Otterly.ai if …</h3>
                                 <ul className="space-y-2">
                                     {OTTERLY_FOR.map((item, i) => (
-                                        <li key={i} className="text-sm text-slate-400 leading-relaxed flex gap-2">
+                                        <li key={i} className="text-sm text-[var(--text-muted)] leading-relaxed flex gap-2">
                                             <span className="text-cyan-400 shrink-0">–</span>{item}
                                         </li>
                                     ))}
@@ -282,36 +282,36 @@ export default function OtterlyAlternativePage() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">Best Otterly.ai alternatives in 2026</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Best Otterly.ai alternatives in 2026</h2>
                         <p>
                             Otterly.ai isn't the only AI-visibility tracker worth evaluating. Here's how the most-searched alternatives compare:
                         </p>
                         <ul className="mt-5 space-y-3">
                             <li className="flex items-start gap-3">
                                 <span className="text-violet-400 shrink-0 mt-1">–</span>
-                                <span><strong className="text-white">Scanora</strong> — the option covered on this page. ChatGPT, Claude, Gemini, Perplexity, and Google AI Overview tracking from €29.99/month, plus a built-in SEO audit and a permanently free plan.</span>
+                                <span><strong className="text-[var(--text-white)]">Scanora</strong> — the option covered on this page. ChatGPT, Claude, Gemini, Perplexity, and Google AI Overview tracking from €29.99/month, plus a built-in SEO audit and a permanently free plan.</span>
                             </li>
                             <li className="flex items-start gap-3">
                                 <span className="text-violet-400 shrink-0 mt-1">–</span>
-                                <span><strong className="text-white">Peec.ai</strong> — another dedicated GEO tracker. See our <Link href="/en/compare/peec-alternative" className="text-cyan-400 hover:text-cyan-300 underline underline-offset-2">Peec.ai comparison</Link> for pricing and platform coverage.</span>
+                                <span><strong className="text-[var(--text-white)]">Peec.ai</strong> — another dedicated GEO tracker. See our <Link href="/en/compare/peec-alternative" className="text-cyan-400 hover:text-cyan-300 underline underline-offset-2">Peec.ai comparison</Link> for pricing and platform coverage.</span>
                             </li>
                             <li className="flex items-start gap-3">
                                 <span className="text-violet-400 shrink-0 mt-1">–</span>
-                                <span><strong className="text-white">Writesonic</strong> — an AI content/SEO suite that added GEO tracking as an add-on. See our <Link href="/en/compare/writesonic-alternative" className="text-cyan-400 hover:text-cyan-300 underline underline-offset-2">Writesonic comparison</Link> for details.</span>
+                                <span><strong className="text-[var(--text-white)]">Writesonic</strong> — an AI content/SEO suite that added GEO tracking as an add-on. See our <Link href="/en/compare/writesonic-alternative" className="text-cyan-400 hover:text-cyan-300 underline underline-offset-2">Writesonic comparison</Link> for details.</span>
                             </li>
                         </ul>
-                        <p className="mt-4 text-sm text-slate-500">
+                        <p className="mt-4 text-sm text-[var(--text-faint)]">
                             This category moves fast — always confirm current pricing and platform coverage directly with each vendor before deciding.
                         </p>
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">Frequently asked questions</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Frequently asked questions</h2>
                         <div className="space-y-4">
                             {faqLd.mainEntity.map((faq, i) => (
-                                <div key={i} className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5">
-                                    <h3 className="font-semibold text-white mb-2 text-sm">{faq.name}</h3>
-                                    <p className="text-sm text-slate-400 leading-relaxed">{faq.acceptedAnswer.text}</p>
+                                <div key={i} className="bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-2xl p-5">
+                                    <h3 className="font-semibold text-[var(--text-white)] mb-2 text-sm">{faq.name}</h3>
+                                    <p className="text-sm text-[var(--text-muted)] leading-relaxed">{faq.acceptedAnswer.text}</p>
                                 </div>
                             ))}
                         </div>
@@ -324,16 +324,16 @@ export default function OtterlyAlternativePage() {
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 justify-between">
                         <div>
                             <span className="text-xs font-semibold text-violet-400 uppercase tracking-wider mb-1 block">Try it yourself</span>
-                            <h3 className="text-base sm:text-lg font-bold text-white mb-2">
+                            <h3 className="text-base sm:text-lg font-bold text-[var(--text-white)] mb-2">
                                 The fastest way to decide is to just run it
                             </h3>
-                            <p className="text-slate-400 text-sm leading-relaxed max-w-md">
+                            <p className="text-[var(--text-muted)] text-sm leading-relaxed max-w-md">
                                 Enter your URL and see your AI-visibility and SEO score in about 60 seconds — no signup, no credit card.
                             </p>
                         </div>
                         <Link
                             href="/dashboard"
-                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-violet-600 hover:bg-violet-500 text-white text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-violet-500/20 shrink-0"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-violet-600 hover:bg-violet-500 text-[var(--text-white)] text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-violet-500/20 shrink-0"
                         >
                             Check for free now
                         </Link>
@@ -341,20 +341,20 @@ export default function OtterlyAlternativePage() {
                 </div>
 
                 {/* Cross-link: Solutions */}
-                <div className="mt-5 bg-white/[0.02] border border-white/[0.06] rounded-2xl p-6 sm:p-8">
+                <div className="mt-5 bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-2xl p-6 sm:p-8">
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 justify-between">
                         <div>
                             <span className="text-xs font-semibold text-emerald-400 uppercase tracking-wider mb-1 block">Related solution</span>
-                            <h3 className="text-base sm:text-lg font-bold text-white mb-2">
+                            <h3 className="text-base sm:text-lg font-bold text-[var(--text-white)] mb-2">
                                 Affordable AI Visibility Tool: all prices at a glance
                             </h3>
-                            <p className="text-slate-400 text-sm leading-relaxed max-w-md">
+                            <p className="text-[var(--text-muted)] text-sm leading-relaxed max-w-md">
                                 Who benefits from an affordable combined SEO + AI-visibility tool — and what's included in each plan.
                             </p>
                         </div>
                         <Link
                             href="/en/solutions/affordable-ai-visibility-tool"
-                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/[0.06] hover:bg-white/10 text-white text-sm font-semibold rounded-xl transition-all duration-200 shrink-0"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--text-white)]/[0.06] hover:bg-[var(--text-white)]/10 text-[var(--text-white)] text-sm font-semibold rounded-xl transition-all duration-200 shrink-0"
                         >
                             View page
                         </Link>
@@ -362,20 +362,20 @@ export default function OtterlyAlternativePage() {
                 </div>
 
                 {/* Cross-link */}
-                <div className="mt-5 bg-white/[0.02] border border-white/[0.06] rounded-2xl p-6 sm:p-8">
+                <div className="mt-5 bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-2xl p-6 sm:p-8">
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 justify-between">
                         <div>
                             <span className="text-xs font-semibold text-emerald-400 uppercase tracking-wider mb-1 block">Keep reading</span>
-                            <h3 className="text-base sm:text-lg font-bold text-white mb-2">
+                            <h3 className="text-base sm:text-lg font-bold text-[var(--text-white)] mb-2">
                                 SEO Rank Tracker & AI Visibility Monitor
                             </h3>
-                            <p className="text-slate-400 text-sm leading-relaxed max-w-md">
+                            <p className="text-[var(--text-muted)] text-sm leading-relaxed max-w-md">
                                 How SEO automation and GEO automation work at Scanora in detail — including pricing.
                             </p>
                         </div>
                         <Link
                             href="/en/blog/seo-geo-automation"
-                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/[0.06] hover:bg-white/10 text-white text-sm font-semibold rounded-xl transition-all duration-200 shrink-0"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--text-white)]/[0.06] hover:bg-[var(--text-white)]/10 text-[var(--text-white)] text-sm font-semibold rounded-xl transition-all duration-200 shrink-0"
                         >
                             Read the article
                         </Link>
@@ -383,15 +383,15 @@ export default function OtterlyAlternativePage() {
                 </div>
 
                 {/* Back */}
-                <div className="mt-10 pt-8 border-t border-white/5">
-                    <Link href="/en/blog" className="text-sm text-slate-500 hover:text-slate-300 transition-colors">
+                <div className="mt-10 pt-8 border-t border-[var(--text-white)]/5">
+                    <Link href="/en/blog" className="text-sm text-[var(--text-faint)] hover:text-[var(--text-body)] transition-colors">
                         ← Back to blog
                     </Link>
                 </div>
 
             </article>
 
-            <Footer />
+            <Footer locale="en" />
         </main>
     )
 }

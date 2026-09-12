@@ -22,13 +22,13 @@ function StatusBadge({ status }) {
 
 function StatCard({ icon: Icon, label, value, color }) {
     return (
-        <div className="bg-white/[0.03] border border-white/[0.07] rounded-2xl p-5 flex items-center gap-4">
+        <div className="bg-[var(--text-white)]/[0.03] border border-[var(--text-white)]/[0.07] rounded-2xl p-5 flex items-center gap-4">
             <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${color}`}>
                 <Icon className="w-5 h-5" strokeWidth={1.8} />
             </div>
             <div>
-                <div className="text-2xl font-bold text-white">{value}</div>
-                <div className="text-xs text-slate-500">{label}</div>
+                <div className="text-2xl font-bold text-[var(--text-white)]">{value}</div>
+                <div className="text-xs text-[var(--text-faint)]">{label}</div>
             </div>
         </div>
     )
@@ -41,7 +41,7 @@ function StepRow({ step }) {
     const fail = step.result === 'fail'
     const expandable = warn || fail
 
-    const borderColor = fail ? 'border-red-500/20' : warn ? 'border-amber-500/20' : 'border-white/[0.06]'
+    const borderColor = fail ? 'border-red-500/20' : warn ? 'border-amber-500/20' : 'border-[var(--text-white)]/[0.06]'
     const expandBg    = fail ? 'border-red-500/10'  : 'border-amber-500/10'
     const textColor   = fail ? 'text-red-400'        : 'text-amber-400'
     const bgColor     = fail ? 'bg-red-500/8'        : 'bg-amber-500/8'
@@ -50,9 +50,9 @@ function StepRow({ step }) {
         <div className={`rounded-xl border overflow-hidden ${borderColor}`}>
             <button
                 onClick={() => expandable && setOpen(o => !o)}
-                className={`w-full flex items-center gap-3 px-4 py-3 text-left ${expandable ? 'hover:bg-white/2 cursor-pointer' : ''}`}
+                className={`w-full flex items-center gap-3 px-4 py-3 text-left ${expandable ? 'hover:bg-[var(--text-white)]/2 cursor-pointer' : ''}`}
             >
-                <span className="text-slate-600 text-xs w-5 shrink-0 text-right">{step.step}</span>
+                <span className="text-[var(--text-faint)] text-xs w-5 shrink-0 text-right">{step.step}</span>
                 {pass && <CheckCircle    className="w-4 h-4 text-emerald-400 shrink-0" strokeWidth={1.8} />}
                 {warn && <AlertTriangle  className="w-4 h-4 text-amber-400 shrink-0"   strokeWidth={1.8} />}
                 {fail && <XCircle        className="w-4 h-4 text-red-400 shrink-0"     strokeWidth={1.8} />}
@@ -60,19 +60,19 @@ function StepRow({ step }) {
                     step.action === 'navigate' ? 'bg-violet-500/15 text-violet-400' :
                     step.action === 'click'    ? 'bg-cyan-500/15 text-cyan-400' :
                     step.action === 'input'    ? 'bg-blue-500/15 text-blue-400' :
-                                                'bg-slate-500/15 text-slate-400'
+                                                'bg-[var(--text-faint)]/15 text-[var(--text-muted)]'
                 }`}>{step.action}</span>
-                <span className="text-slate-400 text-sm truncate flex-1">
+                <span className="text-[var(--text-muted)] text-sm truncate flex-1">
                     {step.action === 'navigate' ? (step.value || step.url) : (step.selector || '')}
                 </span>
                 {step.attempts > 1 && (
-                    <span className="text-slate-600 text-xs shrink-0">{step.attempts}x</span>
+                    <span className="text-[var(--text-faint)] text-xs shrink-0">{step.attempts}x</span>
                 )}
-                <span className="text-slate-600 text-xs shrink-0">{step.duration}ms</span>
+                <span className="text-[var(--text-faint)] text-xs shrink-0">{step.duration}ms</span>
                 {expandable && (
                     open
-                        ? <ChevronUp   className="w-3.5 h-3.5 text-slate-500 shrink-0" />
-                        : <ChevronDown className="w-3.5 h-3.5 text-slate-500 shrink-0" />
+                        ? <ChevronUp   className="w-3.5 h-3.5 text-[var(--text-faint)] shrink-0" />
+                        : <ChevronDown className="w-3.5 h-3.5 text-[var(--text-faint)] shrink-0" />
                 )}
             </button>
 
@@ -83,7 +83,7 @@ function StepRow({ step }) {
                         <img
                             src={`data:image/png;base64,${step.screenshot}`}
                             alt="Screenshot on failure"
-                            className="rounded-xl border border-white/[0.06] w-full"
+                            className="rounded-xl border border-[var(--text-white)]/[0.06] w-full"
                         />
                     )}
                 </div>
@@ -123,14 +123,14 @@ export default function TestResultPageEn() {
     }, [id])
 
     return (
-        <div className="min-h-screen bg-[#080b14]">
-            <nav className="sticky top-0 z-50 bg-[#080b14]/90 backdrop-blur-xl border-b border-white/5">
+        <div className="min-h-screen bg-[var(--bg-base)]">
+            <nav className="sticky top-0 z-50 bg-[var(--bg-base)]/90 backdrop-blur-xl border-b border-[var(--text-white)]/5">
                 <div className="max-w-4xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between">
                     <Link href="/en" className="flex items-center gap-2">
                         <div className="w-8 h-8 rounded-lg bg-[var(--accent)] flex items-center justify-center">
-                            <svg className="w-4 h-4 text-white" viewBox="0 0 192 192" fill="none"><circle cx="96" cy="96" r="50" stroke="currentColor" strokeWidth="14" /><circle cx="110" cy="82" r="13" fill="currentColor" /></svg>
+                            <svg className="w-4 h-4 text-[var(--text-white)]" viewBox="0 0 192 192" fill="none"><circle cx="96" cy="96" r="50" stroke="currentColor" strokeWidth="14" /><circle cx="110" cy="82" r="13" fill="currentColor" /></svg>
                         </div>
-                        <span className="font-bold text-white">
+                        <span className="font-bold text-[var(--text-white)]">
                             Scanora
                         </span>
                     </Link>
@@ -144,7 +144,7 @@ export default function TestResultPageEn() {
                 {!data && !error && (
                     <div className="flex flex-col items-center justify-center py-32 gap-4">
                         <div className="w-8 h-8 border-2 border-violet-500/30 border-t-violet-500 rounded-full animate-spin" />
-                        <p className="text-slate-500 text-sm">Loading test…</p>
+                        <p className="text-[var(--text-faint)] text-sm">Loading test…</p>
                     </div>
                 )}
 
@@ -152,8 +152,8 @@ export default function TestResultPageEn() {
                 {error && (
                     <div className="bg-red-500/8 border border-red-500/20 rounded-2xl p-8 text-center">
                         <XCircle className="w-10 h-10 text-red-400 mx-auto mb-3" strokeWidth={1.5} />
-                        <p className="text-white font-semibold mb-1">Test not found</p>
-                        <p className="text-slate-500 text-sm">{error}</p>
+                        <p className="text-[var(--text-white)] font-semibold mb-1">Test not found</p>
+                        <p className="text-[var(--text-faint)] text-sm">{error}</p>
                     </div>
                 )}
 
@@ -163,8 +163,8 @@ export default function TestResultPageEn() {
 
                         {/* Header */}
                         <div>
-                            <h1 className="text-2xl font-bold text-white">{data.name}</h1>
-                            <p className="text-slate-500 text-sm mt-1">
+                            <h1 className="text-2xl font-bold text-[var(--text-white)]">{data.name}</h1>
+                            <p className="text-[var(--text-faint)] text-sm mt-1">
                                 {new Date(data.createdAt).toLocaleString('en-US')}
                             </p>
                         </div>
@@ -180,7 +180,7 @@ export default function TestResultPageEn() {
                         {/* Summary */}
                         {data.summary && (
                             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                                <StatCard icon={BarChart2}      label="Total"    value={data.summary.total}            color="bg-slate-500/15 text-slate-400" />
+                                <StatCard icon={BarChart2}      label="Total"    value={data.summary.total}            color="bg-[var(--text-faint)]/15 text-[var(--text-muted)]" />
                                 <StatCard icon={CheckCircle}    label="Passed"   value={data.summary.passed}           color="bg-emerald-500/15 text-emerald-400" />
                                 <StatCard icon={AlertTriangle}  label="Warnings" value={data.summary.warned ?? 0}      color="bg-amber-500/15 text-amber-400" />
                                 <StatCard icon={XCircle}        label="Failed"   value={data.summary.failed}           color="bg-red-500/15 text-red-400" />
@@ -190,8 +190,8 @@ export default function TestResultPageEn() {
 
                         {/* Steps */}
                         {data.steps?.length > 0 && (
-                            <div className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-4 space-y-2">
-                                <h2 className="text-sm font-semibold text-slate-400 mb-3">Steps</h2>
+                            <div className="bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-2xl p-4 space-y-2">
+                                <h2 className="text-sm font-semibold text-[var(--text-muted)] mb-3">Steps</h2>
                                 {data.steps.map((step, i) => (
                                     <StepRow key={i} step={step} />
                                 ))}

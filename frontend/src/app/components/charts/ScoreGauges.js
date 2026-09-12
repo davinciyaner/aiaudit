@@ -27,12 +27,12 @@ function Gauge({ label, icon: Icon, score, delay, reduceMotion }) {
                     />
                 </svg>
                 <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="text-lg font-bold text-white tabular-nums">{score}</span>
+                    <span className="text-lg font-bold text-[var(--text-white)] tabular-nums">{score}</span>
                 </div>
             </div>
             <div className="flex items-center gap-1.5 mt-3">
-                <Icon className="w-3.5 h-3.5 text-slate-500" strokeWidth={1.8} />
-                <span className="text-xs font-medium text-slate-300">{label}</span>
+                <Icon className="w-3.5 h-3.5 text-[var(--text-faint)]" strokeWidth={1.8} />
+                <span className="text-xs font-medium text-[var(--text-body)]">{label}</span>
             </div>
         </div>
     )
@@ -48,8 +48,8 @@ export default function ScoreGauges() {
             aria-label="Scanora Audit-Score: 95 von 100 Punkten bei GEO-Sichtbarkeit, 92 von 100 Punkten bei SEO"
         >
             <div className="flex items-center gap-2 mb-6">
-                <h3 className="text-sm font-semibold text-white">Audit-Scores</h3>
-                <span className="text-[10px] px-1.5 py-0.5 rounded-md bg-[var(--surface-08)] text-slate-500 font-medium">Beispiel</span>
+                <h3 className="text-sm font-semibold text-[var(--text-white)]">Audit-Scores</h3>
+                <span className="text-[10px] px-1.5 py-0.5 rounded-md bg-[var(--surface-08)] text-[var(--text-faint)] font-medium">Beispiel</span>
             </div>
 
             <div className="grid grid-cols-2 gap-2">
@@ -57,7 +57,7 @@ export default function ScoreGauges() {
                     <Gauge key={g.key} label={g.label} icon={g.icon} score={g.score} delay={i * 0.12} reduceMotion={reduceMotion} />
                 ))}
             </div>
-            <p className="text-xs text-slate-500 text-center mt-6 leading-relaxed">
+            <p className="text-xs text-[var(--text-faint)] text-center mt-6 leading-relaxed">
                 So sehen deine Scores aus, sobald die priorisierten Fixes umgesetzt sind.
             </p>
         </div>

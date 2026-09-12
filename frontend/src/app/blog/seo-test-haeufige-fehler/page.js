@@ -221,7 +221,7 @@ const ERRORS = [
 
 export default function SeoTestArtikelPage() {
     return (
-        <main className="bg-[#05080f] min-h-screen">
+        <main className="bg-[var(--bg-base)] min-h-screen">
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToLd) }} />
@@ -231,12 +231,12 @@ export default function SeoTestArtikelPage() {
             <article className="max-w-3xl mx-auto px-5 sm:px-8 pt-32 pb-24">
 
                 {/* Breadcrumb */}
-                <div className="flex items-center gap-2 text-xs text-slate-600 mb-8">
-                    <Link href="/" className="hover:text-slate-400 transition-colors">Scanora</Link>
+                <div className="flex items-center gap-2 text-xs text-[var(--text-faint)] mb-8">
+                    <Link href="/" className="hover:text-[var(--text-muted)] transition-colors">Scanora</Link>
                     <span>/</span>
-                    <Link href="/blog" className="hover:text-slate-400 transition-colors">Blog</Link>
+                    <Link href="/blog" className="hover:text-[var(--text-muted)] transition-colors">Blog</Link>
                     <span>/</span>
-                    <span className="text-slate-500">SEO-Audit: Die 10 häufigsten Fehler</span>
+                    <span className="text-[var(--text-faint)]">SEO-Audit: Die 10 häufigsten Fehler</span>
                 </div>
 
                 {/* Header */}
@@ -245,19 +245,19 @@ export default function SeoTestArtikelPage() {
                         <span className="text-[11px] font-semibold px-2.5 py-1 rounded-full uppercase tracking-wider bg-violet-500/15 text-violet-400">
                             SEO
                         </span>
-                        <span className="text-xs text-slate-600">10. Juni 2026</span>
-                        <span className="text-xs text-slate-600">· 9 min Lesezeit</span>
-                        <span className="text-xs text-slate-600">· Aktualisiert am 30. Juli 2026</span>
+                        <span className="text-xs text-[var(--text-faint)]">10. Juni 2026</span>
+                        <span className="text-xs text-[var(--text-faint)]">· 9 min Lesezeit</span>
+                        <span className="text-xs text-[var(--text-faint)]">· Aktualisiert am 30. Juli 2026</span>
                     </div>
-                    <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight tracking-tight mb-5">
+                    <h1 className="text-3xl sm:text-5xl font-bold text-[var(--text-white)] leading-tight tracking-tight mb-5">
                         SEO-Fehler finden: Die 10 häufigsten Probleme, die deinen Google-Rank kosten
                     </h1>
-                    <p className="text-lg text-slate-400 leading-relaxed">
+                    <p className="text-lg text-[var(--text-muted)] leading-relaxed">
                         Die meisten SEO-Fehler sind keine Geheimnisse - sie sind einfach unsichtbar. Kein Fehler in der Konsole, kein Alarm. Die Seite läuft, der Traffic stagniert. Hier erfährst du, wie du diese 10 häufigsten Probleme in deinem eigenen SEO-Audit findest, warum sie Rankings kosten und wie du sie in 60 Minuten behebst.
                     </p>
-                    <div className="mt-5 flex items-center gap-2 text-xs text-slate-600">
-                        <Link href="/about" className="flex items-center gap-2 hover:text-slate-300 transition-colors">
-                            <div className="w-6 h-6 rounded-full bg-gradient-to-br from-violet-600 to-cyan-600 flex items-center justify-center text-white text-[10px] font-bold">F</div>
+                    <div className="mt-5 flex items-center gap-2 text-xs text-[var(--text-faint)]">
+                        <Link href="/about" className="flex items-center gap-2 hover:text-[var(--text-body)] transition-colors">
+                            <div className="w-6 h-6 rounded-full bg-gradient-to-br from-violet-600 to-cyan-600 flex items-center justify-center text-[var(--text-white)] text-[10px] font-bold">F</div>
                             <span>Finn Paustian</span>
                         </Link>
                         <span>·</span>
@@ -265,12 +265,12 @@ export default function SeoTestArtikelPage() {
                     </div>
                 </div>
 
-                <div className="border-t border-white/5 mb-10" />
+                <div className="border-t border-[var(--text-white)]/5 mb-10" />
 
-                <div className="space-y-10 text-slate-300 leading-relaxed">
+                <div className="space-y-10 text-[var(--text-body)] leading-relaxed">
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">Was ist ein SEO-Audit und warum brauchst du ihn?</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Was ist ein SEO-Audit und warum brauchst du ihn?</h2>
                         <p>
                             Ein SEO-Audit ist eine systematische Analyse aller On-Page-Faktoren einer Website - also alles was du direkt kontrollieren kannst: Title-Tags, Meta-Descriptions, Überschriften, Ladezeit, Bilder, interne Links und technische Signale wie Canonical-Tags oder Structured Data.
                         </p>
@@ -283,7 +283,7 @@ export default function SeoTestArtikelPage() {
                         </p>
                         <div className="bg-violet-500/8 border border-violet-500/20 rounded-2xl p-5 mt-5">
                             <p className="text-sm text-violet-300 font-medium mb-1">Platz 1 bekommt im Schnitt 27,6 % aller Klicks</p>
-                            <p className="text-sm text-slate-400">
+                            <p className="text-sm text-[var(--text-muted)]">
                                 Wer auf Seite 2 landet, existiert für potenzielle Kunden praktisch nicht - und schon der Sprung von Platz 5 auf Platz 1 vervielfacht den Traffic derselben Seite. Ein einziger behobener SEO-Fehler kann diesen Unterschied ausmachen.{' '}
                                 <a href="https://backlinko.com/google-ctr-stats" target="_blank" rel="noopener noreferrer" className="text-violet-400 hover:text-violet-300 underline underline-offset-2">
                                     Quelle: Backlinko-Analyse von 4 Mio. Google-Suchergebnissen ↗
@@ -292,47 +292,47 @@ export default function SeoTestArtikelPage() {
                         </div>
                     </section>
 
-                    <nav aria-label="Inhaltsverzeichnis" className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
-                        <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">In diesem Artikel</p>
+                    <nav aria-label="Inhaltsverzeichnis" className="bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-2xl p-5 sm:p-6">
+                        <p className="text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider mb-3">In diesem Artikel</p>
                         <ol className="grid sm:grid-cols-2 gap-x-6 gap-y-1.5 text-sm">
                             {ERRORS.map((e) => (
                                 <li key={e.number}>
-                                    <a href={`#fehler-${e.number}`} className="text-slate-400 hover:text-violet-300 transition-colors">
-                                        <span className="font-mono text-slate-600 mr-1.5">{e.number}</span>{e.title}
+                                    <a href={`#fehler-${e.number}`} className="text-[var(--text-muted)] hover:text-violet-300 transition-colors">
+                                        <span className="font-mono text-[var(--text-faint)] mr-1.5">{e.number}</span>{e.title}
                                     </a>
                                 </li>
                             ))}
                             <li>
-                                <a href="#wie-durchfuehren" className="text-slate-400 hover:text-violet-300 transition-colors">Wie führe ich einen SEO-Audit durch?</a>
+                                <a href="#wie-durchfuehren" className="text-[var(--text-muted)] hover:text-violet-300 transition-colors">Wie führe ich einen SEO-Audit durch?</a>
                             </li>
                             <li>
-                                <a href="#faq" className="text-slate-400 hover:text-violet-300 transition-colors">Häufige Fragen</a>
+                                <a href="#faq" className="text-[var(--text-muted)] hover:text-violet-300 transition-colors">Häufige Fragen</a>
                             </li>
                         </ol>
                     </nav>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-6">Die 10 häufigsten SEO-Fehler</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-6">Die 10 häufigsten SEO-Fehler</h2>
                         <figure className="mb-6">
                             <Image
                                 src="/blog/auditai-seo-issues.png"
                                 alt="Scanora SEO-Report zeigt echte gefundene Fehler wie zu lange Title-Tags und zu lange Meta-Descriptions"
                                 width={926}
                                 height={168}
-                                className="w-full h-auto rounded-2xl border border-white/[0.07]"
+                                className="w-full h-auto rounded-2xl border border-[var(--text-white)]/[0.07]"
                             />
-                            <figcaption className="text-xs text-slate-600 mt-2">
+                            <figcaption className="text-xs text-[var(--text-faint)] mt-2">
                                 So markiert Scanora erkannte Fehler in einem echten Report — hier Title-Tag- und Meta-Description-Probleme aus einem Live-Audit.
                             </figcaption>
                         </figure>
                         <div className="space-y-5">
                             {ERRORS.slice(0, 6).map((e) => (
-                                <div key={e.number} id={`fehler-${e.number}`} className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5 sm:p-6 scroll-mt-28">
+                                <div key={e.number} id={`fehler-${e.number}`} className="bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-2xl p-5 sm:p-6 scroll-mt-28">
                                     <div className="flex items-start gap-4">
-                                        <span className="text-[11px] font-bold font-mono shrink-0 mt-0.5 text-slate-600">{e.number}</span>
+                                        <span className="text-[11px] font-bold font-mono shrink-0 mt-0.5 text-[var(--text-faint)]">{e.number}</span>
                                         <div className="flex-1">
                                             <div className="flex flex-wrap items-center gap-2 mb-2">
-                                                <h3 className="font-semibold text-white">{e.title}</h3>
+                                                <h3 className="font-semibold text-[var(--text-white)]">{e.title}</h3>
                                                 <span
                                                     className="text-[10px] font-semibold px-2 py-0.5 rounded-full"
                                                     style={{ background: e.severityColor + '18', color: e.severityColor }}
@@ -340,10 +340,10 @@ export default function SeoTestArtikelPage() {
                                                     {e.severity}
                                                 </span>
                                             </div>
-                                            <p className="text-xs text-slate-500 mb-3 italic">{e.impact}</p>
-                                            <p className="text-sm text-slate-400 leading-relaxed mb-3">{e.desc}</p>
+                                            <p className="text-xs text-[var(--text-faint)] mb-3 italic">{e.impact}</p>
+                                            <p className="text-sm text-[var(--text-muted)] leading-relaxed mb-3">{e.desc}</p>
                                             {e.stat && (
-                                                <p className="text-xs text-slate-500 bg-white/[0.03] rounded-lg px-3 py-2 mb-3 border-l-2 border-slate-700">
+                                                <p className="text-xs text-[var(--text-faint)] bg-[var(--text-white)]/[0.03] rounded-lg px-3 py-2 mb-3 border-l-2 border-[var(--border-subtle)]">
                                                     {e.stat}
                                                     {e.source && (
                                                         <>
@@ -360,9 +360,9 @@ export default function SeoTestArtikelPage() {
                                                     )}
                                                 </p>
                                             )}
-                                            <div className="bg-white/[0.03] border border-white/[0.05] rounded-xl p-3">
+                                            <div className="bg-[var(--text-white)]/[0.03] border border-[var(--text-white)]/[0.05] rounded-xl p-3">
                                                 <span className="text-[11px] font-semibold text-emerald-400 uppercase tracking-wider">Fix: </span>
-                                                <span className="text-xs text-slate-400 leading-relaxed">
+                                                <span className="text-xs text-[var(--text-muted)] leading-relaxed">
                                                     {e.fix}
                                                     {e.ctaLink && (
                                                         <>
@@ -386,21 +386,21 @@ export default function SeoTestArtikelPage() {
                                 alt="Scanora Check-Grid zeigt fehlgeschlagene Checks für Title-Tag (69 Zeichen) und Meta-Description (169 Zeichen) sowie bestandene Checks für H1-Tag, Alt-Texte, Canonical und Structured Data"
                                 width={910}
                                 height={103}
-                                className="w-full h-auto rounded-2xl border border-white/[0.07]"
+                                className="w-full h-auto rounded-2xl border border-[var(--text-white)]/[0.07]"
                             />
-                            <figcaption className="text-xs text-slate-600 mt-2">
+                            <figcaption className="text-xs text-[var(--text-faint)] mt-2">
                                 Derselbe Report, andere Website: Title-Tag (69 Zeichen, zu lang) und Meta-Description (169 Zeichen, zu lang) sind hier direkt als Fehler markiert - H1-Tag, Alt-Texte, Canonical und Structured Data waren in diesem Beispiel bereits sauber gesetzt.
                             </figcaption>
                         </figure>
 
                         <div className="space-y-5">
                             {ERRORS.slice(6).map((e) => (
-                                <div key={e.number} id={`fehler-${e.number}`} className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5 sm:p-6 scroll-mt-28">
+                                <div key={e.number} id={`fehler-${e.number}`} className="bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-2xl p-5 sm:p-6 scroll-mt-28">
                                     <div className="flex items-start gap-4">
-                                        <span className="text-[11px] font-bold font-mono shrink-0 mt-0.5 text-slate-600">{e.number}</span>
+                                        <span className="text-[11px] font-bold font-mono shrink-0 mt-0.5 text-[var(--text-faint)]">{e.number}</span>
                                         <div className="flex-1">
                                             <div className="flex flex-wrap items-center gap-2 mb-2">
-                                                <h3 className="font-semibold text-white">{e.title}</h3>
+                                                <h3 className="font-semibold text-[var(--text-white)]">{e.title}</h3>
                                                 <span
                                                     className="text-[10px] font-semibold px-2 py-0.5 rounded-full"
                                                     style={{ background: e.severityColor + '18', color: e.severityColor }}
@@ -408,10 +408,10 @@ export default function SeoTestArtikelPage() {
                                                     {e.severity}
                                                 </span>
                                             </div>
-                                            <p className="text-xs text-slate-500 mb-3 italic">{e.impact}</p>
-                                            <p className="text-sm text-slate-400 leading-relaxed mb-3">{e.desc}</p>
+                                            <p className="text-xs text-[var(--text-faint)] mb-3 italic">{e.impact}</p>
+                                            <p className="text-sm text-[var(--text-muted)] leading-relaxed mb-3">{e.desc}</p>
                                             {e.stat && (
-                                                <p className="text-xs text-slate-500 bg-white/[0.03] rounded-lg px-3 py-2 mb-3 border-l-2 border-slate-700">
+                                                <p className="text-xs text-[var(--text-faint)] bg-[var(--text-white)]/[0.03] rounded-lg px-3 py-2 mb-3 border-l-2 border-[var(--border-subtle)]">
                                                     {e.stat}
                                                     {e.source && (
                                                         <>
@@ -428,9 +428,9 @@ export default function SeoTestArtikelPage() {
                                                     )}
                                                 </p>
                                             )}
-                                            <div className="bg-white/[0.03] border border-white/[0.05] rounded-xl p-3">
+                                            <div className="bg-[var(--text-white)]/[0.03] border border-[var(--text-white)]/[0.05] rounded-xl p-3">
                                                 <span className="text-[11px] font-semibold text-emerald-400 uppercase tracking-wider">Fix: </span>
-                                                <span className="text-xs text-slate-400 leading-relaxed">
+                                                <span className="text-xs text-[var(--text-muted)] leading-relaxed">
                                                     {e.fix}
                                                     {e.ctaLink && (
                                                         <>
@@ -450,7 +450,7 @@ export default function SeoTestArtikelPage() {
                     </section>
 
                     <section id="wie-durchfuehren" className="scroll-mt-28">
-                        <h2 className="text-2xl font-bold text-white mb-4">Wie führe ich einen SEO-Audit durch?</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Wie führe ich einen SEO-Audit durch?</h2>
                         <p>
                             Du kannst SEO-Fehler manuell prüfen - Title-Tag im Browser-Tab lesen, Quelltext nach Meta-Tags durchsuchen, Ladezeit in Chrome DevTools messen. Das dauert pro Seite 15–30 Minuten, ist fehleranfällig und skaliert nicht auf mehrere Seiten oder regelmäßige Checks. Eine feste Prüfreihenfolge für den manuellen Weg findest du in der{' '}
                             <Link href="/blog/seo-checkliste-2026" className="text-violet-400 hover:text-violet-300 underline underline-offset-2">
@@ -466,7 +466,7 @@ export default function SeoTestArtikelPage() {
                     </section>
 
                     <section id="faq" className="scroll-mt-28">
-                        <h2 className="text-2xl font-bold text-white mb-4">Häufige Fragen zum SEO-Audit</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Häufige Fragen zum SEO-Audit</h2>
                         <div className="space-y-4">
                             {[
                                 {
@@ -486,9 +486,9 @@ export default function SeoTestArtikelPage() {
                                     a: 'Ja. Scanora bietet einen kostenlosen SEO-Audit mit 14 Checks - inklusive Title-Tag, Meta-Description, H1, Alt-Texte, Canonical, Open Graph, Structured Data und mehr. Der Free-Plan erlaubt 1 vollständigen Audit pro Monat ohne Kreditkarte.',
                                 },
                             ].map((faq, i) => (
-                                <div key={i} className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5">
-                                    <h3 className="font-semibold text-white mb-2 text-sm">{faq.q}</h3>
-                                    <p className="text-sm text-slate-400 leading-relaxed">{faq.a}</p>
+                                <div key={i} className="bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-2xl p-5">
+                                    <h3 className="font-semibold text-[var(--text-white)] mb-2 text-sm">{faq.q}</h3>
+                                    <p className="text-sm text-[var(--text-muted)] leading-relaxed">{faq.a}</p>
                                 </div>
                             ))}
                         </div>
@@ -497,11 +497,11 @@ export default function SeoTestArtikelPage() {
                 </div>
 
                 {/* CTA */}
-                <div className="mt-14 bg-gradient-to-br from-violet-950/40 to-[#05080f] border border-violet-500/20 rounded-2xl p-6 sm:p-8 text-center">
-                    <h2 className="text-xl sm:text-2xl font-bold text-white mb-3">
+                <div className="mt-14 bg-gradient-to-br from-violet-950/40 to-[var(--bg-base)] border border-violet-500/20 rounded-2xl p-6 sm:p-8 text-center">
+                    <h2 className="text-xl sm:text-2xl font-bold text-[var(--text-white)] mb-3">
                         Wie viele dieser Fehler hat deine Website?
                     </h2>
-                    <p className="text-slate-400 text-sm mb-6 max-w-md mx-auto leading-relaxed">
+                    <p className="text-[var(--text-muted)] text-sm mb-6 max-w-md mx-auto leading-relaxed">
                         Scanora prüft alle 14 SEO-Checks in unter 60 Sekunden - inklusive der 10 Fehler aus diesem Artikel. Start ohne Registrierung, für den vollständigen Report mit allen Scores meldest du dich kostenlos an.
                     </p>
                     <figure className="max-w-md mx-auto mb-6">
@@ -510,33 +510,33 @@ export default function SeoTestArtikelPage() {
                             alt="Scanora Score-Übersicht mit Overall-Score 90, SEO-Score 78, Performance-Score 100 und GEO-Score 96"
                             width={960}
                             height={194}
-                            className="w-full h-auto rounded-xl border border-white/[0.07]"
+                            className="w-full h-auto rounded-xl border border-[var(--text-white)]/[0.07]"
                         />
                     </figure>
                     <Link
                         href="/dashboard"
-                        className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-violet-500/20"
+                        className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-[var(--text-white)] text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-violet-500/20"
                     >
                         SEO-Audit jetzt starten
                     </Link>
-                    <div className="mt-3 text-xs text-slate-600">Ohne Registrierung starten · Voller Report kostenlos · 60 Sekunden</div>
+                    <div className="mt-3 text-xs text-[var(--text-faint)]">Ohne Registrierung starten · Voller Report kostenlos · 60 Sekunden</div>
                 </div>
 
                 {/* Cross-link to sibling post */}
-                <div className="mt-5 bg-white/[0.02] border border-white/[0.06] rounded-2xl p-6 sm:p-8">
+                <div className="mt-5 bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-2xl p-6 sm:p-8">
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 justify-between">
                         <div>
                             <span className="text-xs font-semibold text-violet-400 uppercase tracking-wider mb-1 block">Weiterlesen</span>
-                            <h3 className="text-base sm:text-lg font-bold text-white mb-2">
+                            <h3 className="text-base sm:text-lg font-bold text-[var(--text-white)] mb-2">
                                 Die SEO-Checkliste 2026 in 15 Minuten
                             </h3>
-                            <p className="text-slate-400 text-sm leading-relaxed max-w-md">
+                            <p className="text-[var(--text-muted)] text-sm leading-relaxed max-w-md">
                                 Diese 10 Fehler in eine feste Prüfreihenfolge gebracht: 6 Phasen, 24 Punkte, 15 Minuten - inklusive GEO-Signalen für KI-Sichtbarkeit.
                             </p>
                         </div>
                         <Link
                             href="/blog/seo-checkliste-2026"
-                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/[0.06] hover:bg-white/10 text-white text-sm font-semibold rounded-xl transition-all duration-200 shrink-0"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--text-white)]/[0.06] hover:bg-[var(--text-white)]/10 text-[var(--text-white)] text-sm font-semibold rounded-xl transition-all duration-200 shrink-0"
                         >
                             Checkliste öffnen
                         </Link>
@@ -548,15 +548,15 @@ export default function SeoTestArtikelPage() {
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 justify-between">
                         <div>
                             <span className="text-xs font-semibold text-emerald-400 uppercase tracking-wider mb-1 block">SEO Automatisierung</span>
-                            <h3 className="text-base sm:text-lg font-bold text-white mb-2">
+                            <h3 className="text-base sm:text-lg font-bold text-[var(--text-white)] mb-2">
                                 Nicht nur einmal prüfen — automatisch tracken
                             </h3>
-                            <p className="text-slate-400 text-sm leading-relaxed max-w-md">
+                            <p className="text-[var(--text-muted)] text-sm leading-relaxed max-w-md">
                                 SEO-Fehler entstehen laufend: neue Seiten ohne Meta-Tags, Bilder ohne Alt-Text nach Updates, versehentliches noindex. Mit SEO Automatisierung überwachst du deine Rankings und Keywords jede Woche automatisch.
                             </p>
                             <ul className="mt-3 flex flex-wrap gap-x-4 gap-y-1">
                                 {['Wöchentliche Google-Rankings', 'Keyword-Ideen', 'Konkurrenzanalyse', 'Backlink-Übersicht'].map(f => (
-                                    <li key={f} className="flex items-center gap-1.5 text-xs text-slate-500">
+                                    <li key={f} className="flex items-center gap-1.5 text-xs text-[var(--text-faint)]">
                                         <span className="w-1 h-1 rounded-full bg-emerald-400 shrink-0" />
                                         {f}
                                     </li>
@@ -565,7 +565,7 @@ export default function SeoTestArtikelPage() {
                         </div>
                         <Link
                             href="/seo/pricing"
-                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-emerald-500/20 shrink-0"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-[var(--text-white)] text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-emerald-500/20 shrink-0"
                         >
                             Jetzt tracken
                         </Link>
@@ -573,8 +573,8 @@ export default function SeoTestArtikelPage() {
                 </div>
 
                 {/* Back */}
-                <div className="mt-10 pt-8 border-t border-white/5">
-                    <Link href="/blog" className="text-sm text-slate-500 hover:text-slate-300 transition-colors">
+                <div className="mt-10 pt-8 border-t border-[var(--text-white)]/5">
+                    <Link href="/blog" className="text-sm text-[var(--text-faint)] hover:text-[var(--text-body)] transition-colors">
                         ← Zurück zum Blog
                     </Link>
                 </div>

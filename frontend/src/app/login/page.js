@@ -3,7 +3,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { Zap, Mail, Lock, ArrowRight, Search, Globe } from 'lucide-react'
-import toast, { Toaster } from 'react-hot-toast'
+import toast from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
 
 const FEATURES = [
@@ -44,7 +44,6 @@ export default function LoginPage() {
 
     return (
         <div className="min-h-screen bg-[var(--bg-base)] flex">
-            <Toaster position="top-right" toastOptions={{ style: { background: 'var(--bg-surface)', color: '#fff', border: '1px solid var(--border-subtle)', maxWidth: 'calc(100vw - 2rem)' } }} />
 
             {/* Left — Branding */}
             <div className="hidden lg:flex flex-col justify-between w-120 shrink-0 relative overflow-hidden border-r border-[var(--border-subtle)] p-12">
@@ -56,21 +55,21 @@ export default function LoginPage() {
 
                 <div className="relative z-10">
                     <Link href="/" className="flex items-center gap-2.5 group">
-                        <div className="w-9 h-9 rounded-xl bg-[var(--accent)] flex items-center justify-center shadow-lg shadow-[var(--accent-border)]">
+                        <div className="w-9 h-9 rounded-xl bg-[var(--accent)] flex items-center justify-center shadow-lg shadow-[var(--accent-border)] active:scale-[0.97] active:duration-75">
                             <svg className="w-4.5 h-4.5 text-[var(--bg-base)]" viewBox="0 0 192 192" fill="none"><circle cx="96" cy="96" r="50" stroke="currentColor" strokeWidth="14" /><circle cx="110" cy="82" r="13" fill="currentColor" /></svg>
                         </div>
-                        <span className="text-xl font-bold text-white tracking-tight">
+                        <span className="text-xl font-bold text-[var(--text-white)] tracking-tight">
               Scanora
             </span>
                     </Link>
                 </div>
 
                 <div className="relative z-10">
-                    <h2 className="text-4xl font-bold text-white leading-tight mb-4">
+                    <h2 className="text-4xl font-bold text-[var(--text-white)] leading-tight mb-4">
                         Willkommen<br />
                         zurück.
                     </h2>
-                    <p className="text-slate-400 text-sm leading-relaxed mb-8">
+                    <p className="text-[var(--text-muted)] text-sm leading-relaxed mb-8">
                         Deine Reports und Audits warten auf dich. Alle Analysen an einem Ort.
                     </p>
                     <div className="space-y-3">
@@ -80,19 +79,19 @@ export default function LoginPage() {
                                 <div className="w-7 h-7 rounded-lg bg-[var(--surface-08)] border border-[var(--border-subtle)] flex items-center justify-center shrink-0">
                                     <f.icon className="w-3.5 h-3.5 text-[var(--accent)]" strokeWidth={1.8} />
                                 </div>
-                                <span className="text-sm text-slate-400">{f.text}</span>
+                                <span className="text-sm text-[var(--text-muted)]">{f.text}</span>
                             </motion.div>
                         ))}
                     </div>
                 </div>
                 <div className="relative z-10">
                     <div className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl p-4">
-                        <div className="text-[10px] text-slate-600 uppercase tracking-wider mb-3">Letzter Audit</div>
+                        <div className="text-[10px] text-[var(--text-faint)] uppercase tracking-wider mb-3">Letzter Audit</div>
                         <div className="grid grid-cols-4 gap-2">
                             {[['SEO', 81, '#22c55e'], ['Perf.', 68, '#f59e0b'], ['GEO', 42, '#ef4444']].map(([l, s, c]) => (
                                 <div key={l} className="text-center">
                                     <div className="text-lg font-bold" style={{ color: c }}>{s}</div>
-                                    <div className="text-[9px] text-slate-600">{l}</div>
+                                    <div className="text-[9px] text-[var(--text-faint)]">{l}</div>
                                 </div>
                             ))}
                         </div>
@@ -111,42 +110,42 @@ export default function LoginPage() {
                     {/* Mobile Logo */}
                     <div className="flex justify-center mb-8 lg:hidden">
                         <Link href="/" className="flex items-center gap-2.5">
-                            <div className="w-9 h-9 rounded-xl bg-[var(--accent)] flex items-center justify-center shadow-lg shadow-[var(--accent-border)]">
+                            <div className="w-9 h-9 rounded-xl bg-[var(--accent)] flex items-center justify-center shadow-lg shadow-[var(--accent-border)] active:scale-[0.97] active:duration-75">
                                 <svg className="w-4 h-4 text-[var(--bg-base)]" viewBox="0 0 192 192" fill="none"><circle cx="96" cy="96" r="50" stroke="currentColor" strokeWidth="14" /><circle cx="110" cy="82" r="13" fill="currentColor" /></svg>
                             </div>
-                            <span className="text-xl font-bold text-white">Scanora</span>
+                            <span className="text-xl font-bold text-[var(--text-white)]">Scanora</span>
                         </Link>
                     </div>
 
                     <div className="mb-8">
-                        <h1 className="text-3xl font-bold text-white mb-2">Anmelden</h1>
-                        <p className="text-slate-400 text-sm">Zugang zu deinen Reports und Audits</p>
+                        <h1 className="text-3xl font-bold text-[var(--text-white)] mb-2">Anmelden</h1>
+                        <p className="text-[var(--text-muted)] text-sm">Zugang zu deinen Reports und Audits</p>
                     </div>
 
                     <form onSubmit={handleLogin} className="space-y-5">
                         <div>
-                            <label className="text-sm text-slate-300 mb-2 block font-medium">E-Mail</label>
+                            <label className="text-sm text-[var(--text-body)] mb-2 block font-medium">E-Mail</label>
                             <div className="relative">
-                                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+                                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-faint)]" />
                                 <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="du@beispiel.de" required
-                                       className="w-full bg-[var(--surface-06)] border border-[var(--border-subtle)] hover:border-[var(--border-strong)] focus:border-[var(--accent-border)] rounded-xl pl-11 pr-4 py-3.5 text-white placeholder:text-slate-600 outline-none transition-all text-sm" />
+                                       className="w-full bg-[var(--surface-06)] border border-[var(--border-subtle)] hover:border-[var(--border-strong)] focus:border-[var(--accent-border)] rounded-xl pl-11 pr-4 py-3.5 text-[var(--text-white)] placeholder:text-[var(--text-faint)] outline-none transition-all text-sm" />
                             </div>
                         </div>
 
                         <div>
                             <div className="flex items-center justify-between mb-2">
-                                <label className="text-sm text-slate-300 font-medium">Passwort</label>
-                                <Link href="/forgot-password" className="text-xs text-slate-500 hover:text-[var(--accent)] transition-colors">Vergessen?</Link>
+                                <label className="text-sm text-[var(--text-body)] font-medium">Passwort</label>
+                                <Link href="/forgot-password" className="text-xs text-[var(--text-faint)] hover:text-[var(--accent)] transition-colors">Vergessen?</Link>
                             </div>
                             <div className="relative">
-                                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+                                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-faint)]" />
                                 <input type="password" name="password" value={formData.password} onChange={handleChange} placeholder="••••••••" required
-                                       className="w-full bg-[var(--surface-06)] border border-[var(--border-subtle)] hover:border-[var(--border-strong)] focus:border-[var(--accent-border)] rounded-xl pl-11 pr-4 py-3.5 text-white placeholder:text-slate-600 outline-none transition-all text-sm" />
+                                       className="w-full bg-[var(--surface-06)] border border-[var(--border-subtle)] hover:border-[var(--border-strong)] focus:border-[var(--accent-border)] rounded-xl pl-11 pr-4 py-3.5 text-[var(--text-white)] placeholder:text-[var(--text-faint)] outline-none transition-all text-sm" />
                             </div>
                         </div>
 
                         <motion.button type="submit" disabled={loading} whileTap={{ scale: 0.98 }}
-                                       className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] font-semibold transition-all duration-200 shadow-lg shadow-[var(--accent-border)] disabled:opacity-50 disabled:cursor-not-allowed text-sm">
+                                       className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] font-semibold transition-all duration-200 shadow-lg shadow-[var(--accent-border)] active:scale-[0.97] active:duration-75 disabled:opacity-50 disabled:cursor-not-allowed text-sm">
                             {loading ? (
                                 <><div className="w-4 h-4 border-2 border-[var(--bg-base)]/30 border-t-[var(--bg-base)] rounded-full animate-spin" />Einloggen...</>
                             ) : (
@@ -155,9 +154,9 @@ export default function LoginPage() {
                         </motion.button>
                     </form>
 
-                    <div className="mt-6 text-center text-sm text-slate-500">
+                    <div className="mt-6 text-center text-sm text-[var(--text-faint)]">
                         Noch keinen Account?{' '}
-                        <Link href="/register" className="text-white hover:text-[var(--accent)] font-medium transition-colors">
+                        <Link href="/register" className="text-[var(--text-white)] hover:text-[var(--accent)] font-medium transition-colors">
                             Jetzt registrieren
                         </Link>
                     </div>

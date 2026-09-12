@@ -155,7 +155,7 @@ const CAUSES = [
 
 export default function CoreWebVitalsPageEn() {
     return (
-        <main className="bg-[#05080f] min-h-screen">
+        <main className="bg-[var(--bg-base)] min-h-screen">
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
@@ -164,12 +164,12 @@ export default function CoreWebVitalsPageEn() {
             <article className="max-w-3xl mx-auto px-5 sm:px-8 pt-32 pb-24">
 
                 {/* Breadcrumb */}
-                <div className="flex items-center gap-2 text-xs text-slate-600 mb-8">
-                    <Link href="/en" className="hover:text-slate-400 transition-colors">Scanora</Link>
+                <div className="flex items-center gap-2 text-xs text-[var(--text-faint)] mb-8">
+                    <Link href="/en" className="hover:text-[var(--text-muted)] transition-colors">Scanora</Link>
                     <span>/</span>
-                    <Link href="/en/blog" className="hover:text-slate-400 transition-colors">Blog</Link>
+                    <Link href="/en/blog" className="hover:text-[var(--text-muted)] transition-colors">Blog</Link>
                     <span>/</span>
-                    <span className="text-slate-500">Core Web Vitals Testing</span>
+                    <span className="text-[var(--text-faint)]">Core Web Vitals Testing</span>
                 </div>
 
                 {/* Header */}
@@ -178,19 +178,19 @@ export default function CoreWebVitalsPageEn() {
                         <span className="text-[11px] font-semibold px-2.5 py-1 rounded-full uppercase tracking-wider bg-amber-500/15 text-amber-400">
                             Performance
                         </span>
-                        <span className="text-xs text-slate-600">July 26, 2026</span>
-                        <span className="text-xs text-slate-600">· 8 min read</span>
-                        <span className="text-xs text-slate-600">· Updated Aug 1, 2026</span>
+                        <span className="text-xs text-[var(--text-faint)]">July 26, 2026</span>
+                        <span className="text-xs text-[var(--text-faint)]">· 8 min read</span>
+                        <span className="text-xs text-[var(--text-faint)]">· Updated Aug 1, 2026</span>
                     </div>
-                    <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight tracking-tight mb-5">
+                    <h1 className="text-3xl sm:text-5xl font-bold text-[var(--text-white)] leading-tight tracking-tight mb-5">
                         Core Web Vitals in 2026: What They Are and How to Test Them for Free
                     </h1>
-                    <p className="text-lg text-slate-400 leading-relaxed">
+                    <p className="text-lg text-[var(--text-muted)] leading-relaxed">
                         LCP, INP, CLS - three acronyms that have helped decide how well your website ranks on Google since 2021. Here&apos;s what they measure, what counts as &quot;good,&quot; and how to test them for free in under 2 minutes.
                     </p>
-                    <div className="mt-5 flex items-center gap-2 text-xs text-slate-600">
-                        <Link href="/en/about" className="flex items-center gap-2 hover:text-slate-300 transition-colors">
-                            <div className="w-6 h-6 rounded-full bg-gradient-to-br from-violet-600 to-cyan-600 flex items-center justify-center text-white text-[10px] font-bold">F</div>
+                    <div className="mt-5 flex items-center gap-2 text-xs text-[var(--text-faint)]">
+                        <Link href="/en/about" className="flex items-center gap-2 hover:text-[var(--text-body)] transition-colors">
+                            <div className="w-6 h-6 rounded-full bg-gradient-to-br from-violet-600 to-cyan-600 flex items-center justify-center text-[var(--text-white)] text-[10px] font-bold">F</div>
                             <span>Finn Paustian</span>
                         </Link>
                         <span>·</span>
@@ -198,12 +198,12 @@ export default function CoreWebVitalsPageEn() {
                     </div>
                 </div>
 
-                <div className="border-t border-white/5 mb-10" />
+                <div className="border-t border-[var(--text-white)]/5 mb-10" />
 
-                <div className="space-y-10 text-slate-300 leading-relaxed">
+                <div className="space-y-10 text-[var(--text-body)] leading-relaxed">
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">What are Core Web Vitals?</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">What are Core Web Vitals?</h2>
                         <p>
                             Core Web Vitals are three metrics Google uses as an{' '}
                             <a href="https://developers.google.com/search/docs/appearance/core-web-vitals" target="_blank" rel="noopener noreferrer" className="text-amber-400 hover:text-amber-300 underline underline-offset-2">
@@ -220,28 +220,28 @@ export default function CoreWebVitalsPageEn() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-2">The 3 Core Web Vitals in detail</h2>
-                        <p className="text-slate-400 mb-6">All three values need to be &quot;good&quot; at the 75th percentile for Google to rate the page as &quot;good&quot; overall.</p>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-2">The 3 Core Web Vitals in detail</h2>
+                        <p className="text-[var(--text-muted)] mb-6">All three values need to be &quot;good&quot; at the 75th percentile for Google to rate the page as &quot;good&quot; overall.</p>
                         <div className="space-y-4">
                             {VITALS.map((v) => (
-                                <div key={v.code} className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
+                                <div key={v.code} className="bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-2xl p-5 sm:p-6">
                                     <div className="flex items-center gap-3 mb-2">
                                         <span className="text-[11px] font-bold font-mono px-2 py-0.5 rounded" style={{ background: v.color + '18', color: v.color }}>{v.code}</span>
-                                        <h3 className="font-semibold text-white">{v.name}</h3>
+                                        <h3 className="font-semibold text-[var(--text-white)]">{v.name}</h3>
                                     </div>
-                                    <p className="text-sm text-slate-400 leading-relaxed mb-4">{v.measures}</p>
+                                    <p className="text-sm text-[var(--text-muted)] leading-relaxed mb-4">{v.measures}</p>
                                     <div className="grid grid-cols-3 gap-2 text-center">
                                         <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-lg py-2 px-1">
                                             <div className="text-[8px] sm:text-[10px] text-emerald-400 font-semibold uppercase tracking-normal sm:tracking-wider leading-tight break-words">Good</div>
-                                            <div className="text-sm text-white font-mono mt-0.5">{v.good}</div>
+                                            <div className="text-sm text-[var(--text-white)] font-mono mt-0.5">{v.good}</div>
                                         </div>
                                         <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg py-2 px-1">
                                             <div className="text-[8px] sm:text-[10px] text-amber-400 font-semibold uppercase tracking-normal sm:tracking-wider leading-tight break-words">Needs work</div>
-                                            <div className="text-sm text-white font-mono mt-0.5">{v.ok}</div>
+                                            <div className="text-sm text-[var(--text-white)] font-mono mt-0.5">{v.ok}</div>
                                         </div>
                                         <div className="bg-red-500/10 border border-red-500/20 rounded-lg py-2 px-1">
                                             <div className="text-[8px] sm:text-[10px] text-red-400 font-semibold uppercase tracking-normal sm:tracking-wider leading-tight break-words">Poor</div>
-                                            <div className="text-sm text-white font-mono mt-0.5">{v.poor}</div>
+                                            <div className="text-sm text-[var(--text-white)] font-mono mt-0.5">{v.poor}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -249,14 +249,14 @@ export default function CoreWebVitalsPageEn() {
                         </div>
                         <div className="bg-cyan-500/8 border border-cyan-500/20 rounded-2xl p-5 mt-5">
                             <p className="text-sm text-cyan-300 font-medium mb-1">Worth knowing if you&apos;re reading older articles</p>
-                            <p className="text-sm text-slate-400">
+                            <p className="text-sm text-[var(--text-muted)]">
                                 INP replaced FID (First Input Delay) as the official Core Web Vital in March 2024. Many older SEO guides still mention FID - that&apos;s outdated. Only check INP today.
                             </p>
                         </div>
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">How do you test your Core Web Vitals for free?</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">How do you test your Core Web Vitals for free?</h2>
                         <p>
                             The fastest way: <a href="https://pagespeed.web.dev" target="_blank" rel="noopener noreferrer" className="text-amber-400 hover:text-amber-300 underline underline-offset-2">PageSpeed Insights</a> from Google itself. Enter a URL, wait, done - you get both lab data (Lighthouse simulation) and real field data from the Chrome User Experience Report, provided the page gets enough traffic.
                         </p>
@@ -269,14 +269,14 @@ export default function CoreWebVitalsPageEn() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-6">The most common causes of poor scores</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-6">The most common causes of poor scores</h2>
                         <div className="space-y-5">
                             {CAUSES.map((c) => (
-                                <div key={c.vital} className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
-                                    <h3 className="font-semibold text-white mb-3">{c.title}</h3>
+                                <div key={c.vital} className="bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-2xl p-5 sm:p-6">
+                                    <h3 className="font-semibold text-[var(--text-white)] mb-3">{c.title}</h3>
                                     <ul className="space-y-2">
                                         {c.items.map((item) => (
-                                            <li key={item} className="flex items-start gap-2.5 text-sm text-slate-400">
+                                            <li key={item} className="flex items-start gap-2.5 text-sm text-[var(--text-muted)]">
                                                 <span className="w-1 h-1 rounded-full bg-amber-400 shrink-0 mt-2" />
                                                 {item}
                                             </li>
@@ -288,12 +288,12 @@ export default function CoreWebVitalsPageEn() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">Frequently asked questions about Core Web Vitals</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Frequently asked questions about Core Web Vitals</h2>
                         <div className="space-y-4">
                             {faqLd.mainEntity.map((faq, i) => (
-                                <div key={i} className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5">
-                                    <h3 className="font-semibold text-white mb-2 text-sm">{faq.name}</h3>
-                                    <p className="text-sm text-slate-400 leading-relaxed">{faq.acceptedAnswer.text}</p>
+                                <div key={i} className="bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-2xl p-5">
+                                    <h3 className="font-semibold text-[var(--text-white)] mb-2 text-sm">{faq.name}</h3>
+                                    <p className="text-sm text-[var(--text-muted)] leading-relaxed">{faq.acceptedAnswer.text}</p>
                                 </div>
                             ))}
                         </div>
@@ -302,37 +302,37 @@ export default function CoreWebVitalsPageEn() {
                 </div>
 
                 {/* CTA */}
-                <div className="mt-14 bg-gradient-to-br from-amber-950/30 to-[#05080f] border border-amber-500/20 rounded-2xl p-6 sm:p-8 text-center">
-                    <h2 className="text-xl sm:text-2xl font-bold text-white mb-3">
+                <div className="mt-14 bg-gradient-to-br from-amber-950/30 to-[var(--bg-base)] border border-amber-500/20 rounded-2xl p-6 sm:p-8 text-center">
+                    <h2 className="text-xl sm:text-2xl font-bold text-[var(--text-white)] mb-3">
                         Check Core Web Vitals across every subpage
                     </h2>
-                    <p className="text-slate-400 text-sm mb-6 max-w-md mx-auto leading-relaxed">
+                    <p className="text-[var(--text-muted)] text-sm mb-6 max-w-md mx-auto leading-relaxed">
                         Scanora measures LCP, TTFB, FCP, and load time across up to 25 subpages at once - alongside SEO and GEO signals in the same report. Start without registration, sign up free for the full report with all scores.
                     </p>
                     <Link
                         href="/dashboard"
-                        className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-amber-500 to-violet-600 hover:from-amber-400 hover:to-violet-500 text-white text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-amber-500/20"
+                        className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-amber-500 to-violet-600 hover:from-amber-400 hover:to-violet-500 text-[var(--text-white)] text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-amber-500/20"
                     >
                         Test performance now
                     </Link>
-                    <div className="mt-3 text-xs text-slate-600">No registration to start · Full report free · 60 seconds</div>
+                    <div className="mt-3 text-xs text-[var(--text-faint)]">No registration to start · Full report free · 60 seconds</div>
                 </div>
 
                 {/* Cross-link to sibling posts */}
-                <div className="mt-5 bg-white/[0.02] border border-white/[0.06] rounded-2xl p-6 sm:p-8">
+                <div className="mt-5 bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-2xl p-6 sm:p-8">
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 justify-between">
                         <div>
                             <span className="text-xs font-semibold text-violet-400 uppercase tracking-wider mb-1 block">Keep reading</span>
-                            <h3 className="text-base sm:text-lg font-bold text-white mb-2">
+                            <h3 className="text-base sm:text-lg font-bold text-[var(--text-white)] mb-2">
                                 The SEO Checklist 2026 in 15 Minutes
                             </h3>
-                            <p className="text-slate-400 text-sm leading-relaxed max-w-md">
+                            <p className="text-[var(--text-muted)] text-sm leading-relaxed max-w-md">
                                 Core Web Vitals is just one of 6 phases - the complete self-check sequence, including GEO signals.
                             </p>
                         </div>
                         <Link
                             href="/en/blog/seo-checklist-2026"
-                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/[0.06] hover:bg-white/10 text-white text-sm font-semibold rounded-xl transition-all duration-200 shrink-0"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--text-white)]/[0.06] hover:bg-[var(--text-white)]/10 text-[var(--text-white)] text-sm font-semibold rounded-xl transition-all duration-200 shrink-0"
                         >
                             Open checklist
                         </Link>
@@ -340,8 +340,8 @@ export default function CoreWebVitalsPageEn() {
                 </div>
 
                 {/* Back */}
-                <div className="mt-10 pt-8 border-t border-white/5">
-                    <Link href="/en/blog" className="text-sm text-slate-500 hover:text-slate-300 transition-colors">
+                <div className="mt-10 pt-8 border-t border-[var(--text-white)]/5">
+                    <Link href="/en/blog" className="text-sm text-[var(--text-faint)] hover:text-[var(--text-body)] transition-colors">
                         ← Back to blog
                     </Link>
                 </div>

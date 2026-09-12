@@ -188,7 +188,7 @@ const PHASES = [
 
 export default function SeoChecklistPageEn() {
     return (
-        <main className="bg-[#05080f] min-h-screen">
+        <main className="bg-[var(--bg-base)] min-h-screen">
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToLd) }} />
@@ -198,12 +198,12 @@ export default function SeoChecklistPageEn() {
             <article className="max-w-3xl mx-auto px-5 sm:px-8 pt-32 pb-24">
 
                 {/* Breadcrumb */}
-                <div className="flex items-center gap-2 text-xs text-slate-600 mb-8">
-                    <Link href="/en" className="hover:text-slate-400 transition-colors">Scanora</Link>
+                <div className="flex items-center gap-2 text-xs text-[var(--text-faint)] mb-8">
+                    <Link href="/en" className="hover:text-[var(--text-muted)] transition-colors">Scanora</Link>
                     <span>/</span>
-                    <Link href="/en/blog" className="hover:text-slate-400 transition-colors">Blog</Link>
+                    <Link href="/en/blog" className="hover:text-[var(--text-muted)] transition-colors">Blog</Link>
                     <span>/</span>
-                    <span className="text-slate-500">SEO Checklist 2026</span>
+                    <span className="text-[var(--text-faint)]">SEO Checklist 2026</span>
                 </div>
 
                 {/* Header */}
@@ -212,19 +212,19 @@ export default function SeoChecklistPageEn() {
                         <span className="text-[11px] font-semibold px-2.5 py-1 rounded-full uppercase tracking-wider bg-violet-500/15 text-violet-400">
                             SEO
                         </span>
-                        <span className="text-xs text-slate-600">Jul 15, 2026</span>
-                        <span className="text-xs text-slate-600">· 7 min read</span>
-                        <span className="text-xs text-slate-600">· Updated Aug 1, 2026</span>
+                        <span className="text-xs text-[var(--text-faint)]">Jul 15, 2026</span>
+                        <span className="text-xs text-[var(--text-faint)]">· 7 min read</span>
+                        <span className="text-xs text-[var(--text-faint)]">· Updated Aug 1, 2026</span>
                     </div>
-                    <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight tracking-tight mb-5">
+                    <h1 className="text-3xl sm:text-5xl font-bold text-[var(--text-white)] leading-tight tracking-tight mb-5">
                         SEO Checklist 2026: Find Every Mistake Yourself in 15 Minutes
                     </h1>
-                    <p className="text-lg text-slate-400 leading-relaxed">
+                    <p className="text-lg text-[var(--text-muted)] leading-relaxed">
                         No explanations, no fluff - just the order in which to check your own website yourself in 15 minutes. Six phases, 24 points, including the GEO signals classic checklists usually forget.
                     </p>
-                    <div className="mt-5 flex items-center gap-2 text-xs text-slate-600">
-                        <Link href="/about" className="flex items-center gap-2 hover:text-slate-300 transition-colors">
-                            <div className="w-6 h-6 rounded-full bg-gradient-to-br from-violet-600 to-cyan-600 flex items-center justify-center text-white text-[10px] font-bold">F</div>
+                    <div className="mt-5 flex items-center gap-2 text-xs text-[var(--text-faint)]">
+                        <Link href="/about" className="flex items-center gap-2 hover:text-[var(--text-body)] transition-colors">
+                            <div className="w-6 h-6 rounded-full bg-gradient-to-br from-violet-600 to-cyan-600 flex items-center justify-center text-[var(--text-white)] text-[10px] font-bold">F</div>
                             <span>Finn Paustian</span>
                         </Link>
                         <span>·</span>
@@ -232,12 +232,12 @@ export default function SeoChecklistPageEn() {
                     </div>
                 </div>
 
-                <div className="border-t border-white/5 mb-10" />
+                <div className="border-t border-[var(--text-white)]/5 mb-10" />
 
-                <div className="space-y-10 text-slate-300 leading-relaxed">
+                <div className="space-y-10 text-[var(--text-body)] leading-relaxed">
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">Why a checklist instead of an explainer?</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Why a checklist instead of an explainer?</h2>
                         <p>
                             In our article on the <Link href="/en/blog/common-seo-mistakes" className="text-violet-400 hover:text-violet-300 underline underline-offset-2">10 most common SEO mistakes</Link>, we explain why individual problems cost rankings. This checklist takes the opposite approach: no theory, just a fixed order - the same one we run through ourselves before every major deployment.
                         </p>
@@ -246,52 +246,52 @@ export default function SeoChecklistPageEn() {
                         </p>
                         <div className="bg-violet-500/8 border border-violet-500/20 rounded-2xl p-5 mt-5">
                             <p className="text-sm text-violet-300 font-medium mb-1">What you'll need</p>
-                            <p className="text-sm text-slate-400">
+                            <p className="text-sm text-[var(--text-muted)]">
                                 Access to Google Search Console, the page source (right-click → "View page source"), and pagespeed.web.dev. To cover all six phases without manually looking anything up: an automated SEO test.
                             </p>
                         </div>
                     </section>
 
-                    <nav aria-label="Table of contents" className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
-                        <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">In this article</p>
+                    <nav aria-label="Table of contents" className="bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-2xl p-5 sm:p-6">
+                        <p className="text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider mb-3">In this article</p>
                         <ol className="grid sm:grid-cols-2 gap-x-6 gap-y-1.5 text-sm">
                             {PHASES.map((phase) => (
                                 <li key={phase.number}>
-                                    <a href={`#phase-${phase.number}`} className="text-slate-400 hover:text-violet-300 transition-colors">
-                                        <span className="font-mono text-slate-600 mr-1.5">{phase.number}</span>{phase.title}
+                                    <a href={`#phase-${phase.number}`} className="text-[var(--text-muted)] hover:text-violet-300 transition-colors">
+                                        <span className="font-mono text-[var(--text-faint)] mr-1.5">{phase.number}</span>{phase.title}
                                     </a>
                                 </li>
                             ))}
                             <li>
-                                <a href="#what-next" className="text-slate-400 hover:text-violet-300 transition-colors">What to do when you find mistakes?</a>
+                                <a href="#what-next" className="text-[var(--text-muted)] hover:text-violet-300 transition-colors">What to do when you find mistakes?</a>
                             </li>
                             <li>
-                                <a href="#faq" className="text-slate-400 hover:text-violet-300 transition-colors">Frequently asked questions</a>
+                                <a href="#faq" className="text-[var(--text-muted)] hover:text-violet-300 transition-colors">Frequently asked questions</a>
                             </li>
                         </ol>
                     </nav>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-2">The checklist: 6 phases, 24 points</h2>
-                        <p className="text-slate-400 mb-6">Work through top to bottom - each phase builds on the previous one.</p>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-2">The checklist: 6 phases, 24 points</h2>
+                        <p className="text-[var(--text-muted)] mb-6">Work through top to bottom - each phase builds on the previous one.</p>
                         <figure className="mb-6">
                             <Image
                                 src="/blog/auditai-seo-checks.png"
                                 alt="Scanora check grid showing passed and failed points like title tag, meta description, H1 tag, and alt texts"
                                 width={910}
                                 height={103}
-                                className="w-full h-auto rounded-2xl border border-white/[0.07]"
+                                className="w-full h-auto rounded-2xl border border-[var(--text-white)]/[0.07]"
                             />
-                            <figcaption className="text-xs text-slate-600 mt-2">
+                            <figcaption className="text-xs text-[var(--text-faint)] mt-2">
                                 This is exactly the kind of check Scanora runs automatically — green for passed, red with a concrete reason for failed.
                             </figcaption>
                         </figure>
                         <div className="space-y-5">
                             {PHASES.map((phase) => (
-                                <div key={phase.number} id={`phase-${phase.number}`} className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5 sm:p-6 scroll-mt-28">
+                                <div key={phase.number} id={`phase-${phase.number}`} className="bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-2xl p-5 sm:p-6 scroll-mt-28">
                                     <div className="flex items-center gap-3 mb-4">
-                                        <span className="text-[11px] font-bold font-mono shrink-0 text-slate-600">{phase.number}</span>
-                                        <h3 className="font-semibold text-white flex-1">{phase.title}</h3>
+                                        <span className="text-[11px] font-bold font-mono shrink-0 text-[var(--text-faint)]">{phase.number}</span>
+                                        <h3 className="font-semibold text-[var(--text-white)] flex-1">{phase.title}</h3>
                                         <span
                                             className="text-[10px] font-semibold px-2 py-0.5 rounded-full shrink-0"
                                             style={{ background: phase.color + '18', color: phase.color }}
@@ -307,8 +307,8 @@ export default function SeoChecklistPageEn() {
                                                     style={{ borderColor: phase.color + '60' }}
                                                 />
                                                 <div>
-                                                    <span className="text-sm text-slate-200">{item.label}</span>
-                                                    <span className="block text-xs text-slate-500 mt-0.5">{item.hint}</span>
+                                                    <span className="text-sm text-[var(--text-body)]">{item.label}</span>
+                                                    <span className="block text-xs text-[var(--text-faint)] mt-0.5">{item.hint}</span>
                                                 </div>
                                             </div>
                                         ))}
@@ -318,7 +318,7 @@ export default function SeoChecklistPageEn() {
                                             href={phase.source.url}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="mt-4 inline-block text-xs text-slate-600 hover:text-slate-400 underline underline-offset-2 transition-colors"
+                                            className="mt-4 inline-block text-xs text-[var(--text-faint)] hover:text-[var(--text-muted)] underline underline-offset-2 transition-colors"
                                         >
                                             Source: {phase.source.label} ↗
                                         </a>
@@ -337,7 +337,7 @@ export default function SeoChecklistPageEn() {
                     </section>
 
                     <section id="what-next" className="scroll-mt-28">
-                        <h2 className="text-2xl font-bold text-white mb-4">What to do when you find mistakes?</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">What to do when you find mistakes?</h2>
                         <p>
                             Prioritize by phase, not by count. A missing title tag (phase 2) matters more than three missing alt texts (phase 4). Always fix phases 1 and 2 first - without clean indexing and metadata, everything else has limited impact.
                         </p>
@@ -347,12 +347,12 @@ export default function SeoChecklistPageEn() {
                     </section>
 
                     <section id="faq" className="scroll-mt-28">
-                        <h2 className="text-2xl font-bold text-white mb-4">Frequently asked questions about the SEO checklist</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Frequently asked questions about the SEO checklist</h2>
                         <div className="space-y-4">
                             {faqLd.mainEntity.map((faq, i) => (
-                                <div key={i} className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5">
-                                    <h3 className="font-semibold text-white mb-2 text-sm">{faq.name}</h3>
-                                    <p className="text-sm text-slate-400 leading-relaxed">{faq.acceptedAnswer.text}</p>
+                                <div key={i} className="bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-2xl p-5">
+                                    <h3 className="font-semibold text-[var(--text-white)] mb-2 text-sm">{faq.name}</h3>
+                                    <p className="text-sm text-[var(--text-muted)] leading-relaxed">{faq.acceptedAnswer.text}</p>
                                 </div>
                             ))}
                         </div>
@@ -361,37 +361,37 @@ export default function SeoChecklistPageEn() {
                 </div>
 
                 {/* CTA */}
-                <div className="mt-14 bg-gradient-to-br from-violet-950/40 to-[#05080f] border border-violet-500/20 rounded-2xl p-6 sm:p-8 text-center">
-                    <h2 className="text-xl sm:text-2xl font-bold text-white mb-3">
+                <div className="mt-14 bg-gradient-to-br from-violet-950/40 to-[var(--bg-base)] border border-violet-500/20 rounded-2xl p-6 sm:p-8 text-center">
+                    <h2 className="text-xl sm:text-2xl font-bold text-[var(--text-white)] mb-3">
                         Phases 1, 2, 3, 4 & 6 in 60 seconds instead of 13 minutes
                     </h2>
-                    <p className="text-slate-400 text-sm mb-6 max-w-md mx-auto leading-relaxed">
+                    <p className="text-[var(--text-muted)] text-sm mb-6 max-w-md mx-auto leading-relaxed">
                         Scanora automatically covers crawlability, metadata, Core Web Vitals, content structure, and GEO signals - across up to 25 subpages at once. Only phase 5 (security headers) still needs a manual check today. Start without registration, sign up free for the full report with all scores.
                     </p>
                     <Link
                         href="/dashboard"
-                        className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-violet-500/20"
+                        className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-[var(--text-white)] text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-violet-500/20"
                     >
                         Start your SEO test now
                     </Link>
-                    <div className="mt-3 text-xs text-slate-600">No registration to start · Full report free · 60 seconds</div>
+                    <div className="mt-3 text-xs text-[var(--text-faint)]">No registration to start · Full report free · 60 seconds</div>
                 </div>
 
                 {/* Cross-link to sibling post */}
-                <div className="mt-5 bg-white/[0.02] border border-white/[0.06] rounded-2xl p-6 sm:p-8">
+                <div className="mt-5 bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-2xl p-6 sm:p-8">
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 justify-between">
                         <div>
                             <span className="text-xs font-semibold text-violet-400 uppercase tracking-wider mb-1 block">Keep reading</span>
-                            <h3 className="text-base sm:text-lg font-bold text-white mb-2">
+                            <h3 className="text-base sm:text-lg font-bold text-[var(--text-white)] mb-2">
                                 The 10 most common SEO mistakes in detail
                             </h3>
-                            <p className="text-slate-400 text-sm leading-relaxed max-w-md">
+                            <p className="text-[var(--text-muted)] text-sm leading-relaxed max-w-md">
                                 Why exactly do missing meta descriptions or the wrong H1 cost rankings? With numbers, examples, and a concrete fix for every point.
                             </p>
                         </div>
                         <Link
                             href="/en/blog/common-seo-mistakes"
-                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/[0.06] hover:bg-white/10 text-white text-sm font-semibold rounded-xl transition-all duration-200 shrink-0"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--text-white)]/[0.06] hover:bg-[var(--text-white)]/10 text-[var(--text-white)] text-sm font-semibold rounded-xl transition-all duration-200 shrink-0"
                         >
                             Read article
                         </Link>
@@ -399,8 +399,8 @@ export default function SeoChecklistPageEn() {
                 </div>
 
                 {/* Back */}
-                <div className="mt-10 pt-8 border-t border-white/5">
-                    <Link href="/en/blog" className="text-sm text-slate-500 hover:text-slate-300 transition-colors">
+                <div className="mt-10 pt-8 border-t border-[var(--text-white)]/5">
+                    <Link href="/en/blog" className="text-sm text-[var(--text-faint)] hover:text-[var(--text-body)] transition-colors">
                         ← Back to blog
                     </Link>
                 </div>

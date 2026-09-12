@@ -129,7 +129,7 @@ const PEEC_FOR = [
 
 export default function PeecAlternativePage() {
     return (
-        <main className="bg-[#05080f] min-h-screen">
+        <main className="bg-[var(--bg-base)] min-h-screen">
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
@@ -138,12 +138,12 @@ export default function PeecAlternativePage() {
             <article className="max-w-3xl mx-auto px-5 sm:px-8 pt-32 pb-24">
 
                 {/* Breadcrumb */}
-                <div className="flex items-center gap-2 text-xs text-slate-600 mb-8">
-                    <Link href="/" className="hover:text-slate-400 transition-colors">Scanora</Link>
+                <div className="flex items-center gap-2 text-xs text-[var(--text-faint)] mb-8">
+                    <Link href="/" className="hover:text-[var(--text-muted)] transition-colors">Scanora</Link>
                     <span>/</span>
-                    <Link href="/vergleich" className="hover:text-slate-400 transition-colors">Vergleich</Link>
+                    <Link href="/vergleich" className="hover:text-[var(--text-muted)] transition-colors">Vergleich</Link>
                     <span>/</span>
-                    <span className="text-slate-500">Peec.ai Alternative</span>
+                    <span className="text-[var(--text-faint)]">Peec.ai Alternative</span>
                 </div>
 
                 {/* Header */}
@@ -152,21 +152,21 @@ export default function PeecAlternativePage() {
                         <span className="text-[11px] font-semibold px-2.5 py-1 rounded-full uppercase tracking-wider bg-violet-500/15 text-violet-400">
                             Vergleich
                         </span>
-                        <span className="text-xs text-slate-600">29. August 2026</span>
-                        <span className="text-xs text-slate-600">· 7 min Lesezeit</span>
+                        <span className="text-xs text-[var(--text-faint)]">29. August 2026</span>
+                        <span className="text-xs text-[var(--text-faint)]">· 7 min Lesezeit</span>
                     </div>
-                    <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight tracking-tight mb-5">
+                    <h1 className="text-3xl sm:text-5xl font-bold text-[var(--text-white)] leading-tight tracking-tight mb-5">
                         Peec.ai-Alternative: Scanora im ehrlichen Vergleich
                     </h1>
-                    <p className="text-lg text-slate-400 leading-relaxed">
+                    <p className="text-lg text-[var(--text-muted)] leading-relaxed">
                         Du suchst eine Alternative zu Peec.ai – meistens aus einem von zwei Gründen: Der Einstiegspreis von 85 €/Monat ist für dich als Einzelperson oder kleines Team schlicht zu hoch, oder du willst Claude tracken, ohne gleich in den individuell bepreisten Enterprise-Tarif zu wechseln. Diese Seite vergleicht beide Tools fair und faktenbasiert – inklusive der Punkte, in denen Peec.ai besser ist.
                     </p>
-                    <p className="mt-4 text-slate-300 leading-relaxed">
-                        Kurzfassung vorweg: <strong className="text-white">Scanora</strong> trackt deine KI-Sichtbarkeit bei ChatGPT, Claude, Gemini, Perplexity und Google AI Overview ab 29,99 €/Monat – und bringt SEO-Audit sowie Google-Rankings im selben Haus mit. <strong className="text-white">Peec.ai</strong> ist ein spezialisiertes, sehr analytisches AI-Visibility-Tool für Marken und Agenturen mit deutlich höherem Preisniveau und größerer Plattformauswahl. Welches Tool passt, hängt davon ab, ob du ein bezahlbares Kombi-Tool für den Einstieg willst oder ein tiefes, teureres Analytics-Dashboard für ein größeres Budget.
+                    <p className="mt-4 text-[var(--text-body)] leading-relaxed">
+                        Kurzfassung vorweg: <strong className="text-[var(--text-white)]">Scanora</strong> trackt deine KI-Sichtbarkeit bei ChatGPT, Claude, Gemini, Perplexity und Google AI Overview ab 29,99 €/Monat – und bringt SEO-Audit sowie Google-Rankings im selben Haus mit. <strong className="text-[var(--text-white)]">Peec.ai</strong> ist ein spezialisiertes, sehr analytisches AI-Visibility-Tool für Marken und Agenturen mit deutlich höherem Preisniveau und größerer Plattformauswahl. Welches Tool passt, hängt davon ab, ob du ein bezahlbares Kombi-Tool für den Einstieg willst oder ein tiefes, teureres Analytics-Dashboard für ein größeres Budget.
                     </p>
-                    <div className="mt-5 flex items-center gap-2 text-xs text-slate-600">
-                        <Link href="/about" className="flex items-center gap-2 hover:text-slate-300 transition-colors">
-                            <div className="w-6 h-6 rounded-full bg-gradient-to-br from-violet-600 to-cyan-600 flex items-center justify-center text-white text-[10px] font-bold">F</div>
+                    <div className="mt-5 flex items-center gap-2 text-xs text-[var(--text-faint)]">
+                        <Link href="/about" className="flex items-center gap-2 hover:text-[var(--text-body)] transition-colors">
+                            <div className="w-6 h-6 rounded-full bg-gradient-to-br from-violet-600 to-cyan-600 flex items-center justify-center text-[var(--text-white)] text-[10px] font-bold">F</div>
                             <span>Finn Paustian</span>
                         </Link>
                         <span>·</span>
@@ -174,82 +174,82 @@ export default function PeecAlternativePage() {
                     </div>
                 </div>
 
-                <div className="border-t border-white/5 mb-10" />
+                <div className="border-t border-[var(--text-white)]/5 mb-10" />
 
-                <div className="space-y-10 text-slate-300 leading-relaxed">
+                <div className="space-y-10 text-[var(--text-body)] leading-relaxed">
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">Der schnelle Überblick</h2>
-                        <div className="overflow-x-auto rounded-2xl border border-white/[0.07]">
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Der schnelle Überblick</h2>
+                        <div className="overflow-x-auto rounded-2xl border border-[var(--text-white)]/[0.07]">
                             <table className="w-full text-sm min-w-[560px]">
                                 <thead>
-                                    <tr className="border-b border-white/5 bg-white/[0.02]">
-                                        <th className="text-left px-5 py-3 text-slate-400 font-semibold">Aspekt</th>
+                                    <tr className="border-b border-[var(--text-white)]/5 bg-[var(--text-white)]/[0.02]">
+                                        <th className="text-left px-5 py-3 text-[var(--text-muted)] font-semibold">Aspekt</th>
                                         <th className="text-left px-5 py-3 text-violet-400 font-semibold">Scanora</th>
                                         <th className="text-left px-5 py-3 text-cyan-400 font-semibold">Peec.ai</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {OVERVIEW_ROWS.map(([aspect, ai, pc], i) => (
-                                        <tr key={i} className="border-b border-white/[0.04] last:border-0">
-                                            <td className="px-5 py-3 text-white font-medium whitespace-nowrap">{aspect}</td>
-                                            <td className="px-5 py-3 text-slate-300">{ai}</td>
-                                            <td className="px-5 py-3 text-slate-300">{pc}</td>
+                                        <tr key={i} className="border-b border-[var(--text-white)]/[0.04] last:border-0">
+                                            <td className="px-5 py-3 text-[var(--text-white)] font-medium whitespace-nowrap">{aspect}</td>
+                                            <td className="px-5 py-3 text-[var(--text-body)]">{ai}</td>
+                                            <td className="px-5 py-3 text-[var(--text-body)]">{pc}</td>
                                         </tr>
                                     ))}
                                 </tbody>
                             </table>
                         </div>
-                        <p className="text-xs text-slate-600 mt-3">
+                        <p className="text-xs text-[var(--text-faint)] mt-3">
                             Preise Stand August 2026, laut öffentlich einsehbarer Preisseite und Tarifübersicht des Anbieters. Peec.ai rechnet primär in Euro, Scanora ebenfalls in Euro inkl. MwSt. Prüfe die aktuellen Konditionen jeweils direkt beim Anbieter.
                         </p>
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">Wo Scanora die bessere Wahl ist</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Wo Scanora die bessere Wahl ist</h2>
 
-                        <h3 className="text-lg font-semibold text-white mt-6 mb-2">1. Claude von Anfang an – nicht erst im individuell bepreisten Enterprise-Paket</h3>
+                        <h3 className="text-lg font-semibold text-[var(--text-white)] mt-6 mb-2">1. Claude von Anfang an – nicht erst im individuell bepreisten Enterprise-Paket</h3>
                         <p>
                             Peec.ai bietet insgesamt sieben KI-Plattformen an, aber auf den Self-Serve-Tarifen (Starter, Pro, Advanced) wählst du davon nur drei aus – Claude gehört nach öffentlich einsehbaren Angaben nicht dazu. Verfügbar ist Claude dort ausschließlich im individuell bepreisten Enterprise-Tarif, für den ein Vertriebsgespräch nötig ist. Wer im deutschsprachigen Raum vor allem wissen will, wie er bei Claude abschneidet, kommt bei Peec.ai ohne Enterprise-Vertrag nicht ran. Bei Scanora ist Claude-Tracking schon im 4,99-€-Einstiegstarif enthalten.
                         </p>
 
-                        <h3 className="text-lg font-semibold text-white mt-6 mb-2">2. Ein echter kostenloser Plan statt eines 7-Tage-Timers</h3>
+                        <h3 className="text-lg font-semibold text-[var(--text-white)] mt-6 mb-2">2. Ein echter kostenloser Plan statt eines 7-Tage-Timers</h3>
                         <p>
                             Peec.ai bietet keinen dauerhaften Gratis-Tarif, sondern nur eine 7-tägige Testphase ohne Kreditkarte. Bei Scanora kannst du dauerhaft kostenlos ein Audit pro Monat inklusive GEO-Sichtbarkeit fahren – ideal, um zu prüfen, ob KI-Sichtbarkeit für dich überhaupt ein Thema ist, bevor du zahlst.
                         </p>
 
-                        <h3 className="text-lg font-semibold text-white mt-6 mb-2">3. Kein Wählen und Zubuchen: alle fünf Plattformen sind einfach dabei</h3>
+                        <h3 className="text-lg font-semibold text-[var(--text-white)] mt-6 mb-2">3. Kein Wählen und Zubuchen: alle fünf Plattformen sind einfach dabei</h3>
                         <p>
                             Auf jedem Self-Serve-Tarif von Peec.ai wählst du beim Onboarding nur drei von sieben Engines aus – jede weitere kostet je nach Tarif deutlich extra. Scanora trackt ChatGPT, Claude, Gemini, Perplexity und Google AI Overview zusammen ab dem GEO-Pro-Tarif für 29,99 €/Monat, ohne Auswahlzwang und ohne Aufpreis pro Plattform.
                         </p>
 
-                        <h3 className="text-lg font-semibold text-white mt-6 mb-2">4. KI-Sichtbarkeit und SEO unter einem Dach</h3>
+                        <h3 className="text-lg font-semibold text-[var(--text-white)] mt-6 mb-2">4. KI-Sichtbarkeit und SEO unter einem Dach</h3>
                         <p>
                             Peec.ai ist ein spezialisiertes AI-Visibility-Tool ohne klassisches SEO-Tracking wie Google-Rankings oder Backlink-Analyse. Scanora ergänzt die GEO-Automatisierung um eine separate SEO-Automatisierung mit wöchentlichen Google-Ranking-Updates, Keyword-Ideen, Konkurrenzanalyse und Backlink-Übersicht – aus einem Anbieter, wahlweise als separates Abo buchbar.
                         </p>
 
-                        <h3 className="text-lg font-semibold text-white mt-6 mb-2">5. Massiv niedrigerer Einstiegspreis</h3>
+                        <h3 className="text-lg font-semibold text-[var(--text-white)] mt-6 mb-2">5. Massiv niedrigerer Einstiegspreis</h3>
                         <p>
                             Peec.ai positioniert sich mit 85 €/Monat im Starter-Tarif klar im Markensegment für größere Teams und Agenturen. Scanora startet bei 4,99 €/Monat für Claude-Tracking und bei 29,99 €/Monat für alle fünf Plattformen – für Selbstständige, kleine Websites und alle, die erstmal unkompliziert reinschnuppern wollen, eine deutlich niedrigere Einstiegshürde.
                         </p>
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">Wo Peec.ai die bessere Wahl ist</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Wo Peec.ai die bessere Wahl ist</h2>
                         <p>
                             Fairness gehört zu einem echten Vergleich – und Peec.ai ist in einigen Punkten stärker:
                         </p>
                         <p className="mt-4">
-                            <strong className="text-white">Tiefere Analytics.</strong> Citation Intelligence, Response Position Analysis, Share of Voice und Content-Gap-Analyse gehen über reine Sichtbarkeits-Prozentzahlen hinaus und liefern differenziertere Einblicke, wie und wo eine Marke in KI-Antworten auftaucht.
+                            <strong className="text-[var(--text-white)]">Tiefere Analytics.</strong> Citation Intelligence, Response Position Analysis, Share of Voice und Content-Gap-Analyse gehen über reine Sichtbarkeits-Prozentzahlen hinaus und liefern differenziertere Einblicke, wie und wo eine Marke in KI-Antworten auftaucht.
                         </p>
                         <p className="mt-4">
-                            <strong className="text-white">Mehr Plattformabdeckung.</strong> Insgesamt stehen sieben Engines inklusive Grok zur Auswahl (je nach Tarif drei gleichzeitig), während sich Scanora auf die fünf etabliertesten Plattformen konzentriert.
+                            <strong className="text-[var(--text-white)]">Mehr Plattformabdeckung.</strong> Insgesamt stehen sieben Engines inklusive Grok zur Auswahl (je nach Tarif drei gleichzeitig), während sich Scanora auf die fünf etabliertesten Plattformen konzentriert.
                         </p>
                         <p className="mt-4">
-                            <strong className="text-white">AI Shopping Analytics.</strong> Seit Juni 2026 trackt Peec.ai zusätzlich, welche Produkte auf SKU-Ebene von KI-Assistenten empfohlen werden und zu welchem Preis – eine Nische, die Scanora aktuell nicht abdeckt.
+                            <strong className="text-[var(--text-white)]">AI Shopping Analytics.</strong> Seit Juni 2026 trackt Peec.ai zusätzlich, welche Produkte auf SKU-Ebene von KI-Assistenten empfohlen werden und zu welchem Preis – eine Nische, die Scanora aktuell nicht abdeckt.
                         </p>
                         <p className="mt-4">
-                            <strong className="text-white">Agentur- und Enterprise-Reife.</strong> Mehrere Projekte, Multi-Country-Tracking, eine Looker-Studio-Anbindung und API-Zugang in den höheren Tarifen richten sich klar an größere Teams mit entsprechendem Budget.
+                            <strong className="text-[var(--text-white)]">Agentur- und Enterprise-Reife.</strong> Mehrere Projekte, Multi-Country-Tracking, eine Looker-Studio-Anbindung und API-Zugang in den höheren Tarifen richten sich klar an größere Teams mit entsprechendem Budget.
                         </p>
                         <p className="mt-4">
                             Kurz gesagt: Wenn du ein größeres Marken- oder Agentur-Budget hast und maximale Analyse-Tiefe über viele Plattformen willst, ist Peec.ai eine ernstzunehmende Option. Willst du stattdessen mit kleinem Budget einsteigen, Claude von Tag eins an tracken und SEO gleich mit abdecken, ist Scanora die praktischere Wahl.
@@ -257,23 +257,23 @@ export default function PeecAlternativePage() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">Für wen eignet sich was?</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Für wen eignet sich was?</h2>
                         <div className="grid sm:grid-cols-2 gap-4">
                             <div className="bg-violet-500/[0.04] border border-violet-500/15 rounded-2xl p-5">
-                                <h3 className="font-semibold text-white mb-3 text-sm">Wähle Scanora, wenn du …</h3>
+                                <h3 className="font-semibold text-[var(--text-white)] mb-3 text-sm">Wähle Scanora, wenn du …</h3>
                                 <ul className="space-y-2">
                                     {AUDITAI_FOR.map((item, i) => (
-                                        <li key={i} className="text-sm text-slate-400 leading-relaxed flex gap-2">
+                                        <li key={i} className="text-sm text-[var(--text-muted)] leading-relaxed flex gap-2">
                                             <span className="text-violet-400 shrink-0">–</span>{item}
                                         </li>
                                     ))}
                                 </ul>
                             </div>
                             <div className="bg-cyan-500/[0.04] border border-cyan-500/15 rounded-2xl p-5">
-                                <h3 className="font-semibold text-white mb-3 text-sm">Wähle Peec.ai, wenn du …</h3>
+                                <h3 className="font-semibold text-[var(--text-white)] mb-3 text-sm">Wähle Peec.ai, wenn du …</h3>
                                 <ul className="space-y-2">
                                     {PEEC_FOR.map((item, i) => (
-                                        <li key={i} className="text-sm text-slate-400 leading-relaxed flex gap-2">
+                                        <li key={i} className="text-sm text-[var(--text-muted)] leading-relaxed flex gap-2">
                                             <span className="text-cyan-400 shrink-0">–</span>{item}
                                         </li>
                                     ))}
@@ -283,12 +283,12 @@ export default function PeecAlternativePage() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">Häufige Fragen</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Häufige Fragen</h2>
                         <div className="space-y-4">
                             {faqLd.mainEntity.map((faq, i) => (
-                                <div key={i} className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5">
-                                    <h3 className="font-semibold text-white mb-2 text-sm">{faq.name}</h3>
-                                    <p className="text-sm text-slate-400 leading-relaxed">{faq.acceptedAnswer.text}</p>
+                                <div key={i} className="bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-2xl p-5">
+                                    <h3 className="font-semibold text-[var(--text-white)] mb-2 text-sm">{faq.name}</h3>
+                                    <p className="text-sm text-[var(--text-muted)] leading-relaxed">{faq.acceptedAnswer.text}</p>
                                 </div>
                             ))}
                         </div>
@@ -301,16 +301,16 @@ export default function PeecAlternativePage() {
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 justify-between">
                         <div>
                             <span className="text-xs font-semibold text-violet-400 uppercase tracking-wider mb-1 block">Selbst ausprobieren</span>
-                            <h3 className="text-base sm:text-lg font-bold text-white mb-2">
+                            <h3 className="text-base sm:text-lg font-bold text-[var(--text-white)] mb-2">
                                 Der schnellste Weg zur Entscheidung ist ein direkter Test
                             </h3>
-                            <p className="text-slate-400 text-sm leading-relaxed max-w-md">
+                            <p className="text-[var(--text-muted)] text-sm leading-relaxed max-w-md">
                                 Gib deine URL ein und sieh in rund 60 Sekunden deinen KI-Sichtbarkeits- und SEO-Score – ohne Anmeldung, ohne Kreditkarte.
                             </p>
                         </div>
                         <Link
                             href="/dashboard"
-                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-violet-600 hover:bg-violet-500 text-white text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-violet-500/20 shrink-0"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-violet-600 hover:bg-violet-500 text-[var(--text-white)] text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-violet-500/20 shrink-0"
                         >
                             Jetzt kostenlos prüfen
                         </Link>
@@ -318,20 +318,20 @@ export default function PeecAlternativePage() {
                 </div>
 
                 {/* Cross-link: Lösungen */}
-                <div className="mt-5 bg-white/[0.02] border border-white/[0.06] rounded-2xl p-6 sm:p-8">
+                <div className="mt-5 bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-2xl p-6 sm:p-8">
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 justify-between">
                         <div>
                             <span className="text-xs font-semibold text-emerald-400 uppercase tracking-wider mb-1 block">Passende Lösung</span>
-                            <h3 className="text-base sm:text-lg font-bold text-white mb-2">
+                            <h3 className="text-base sm:text-lg font-bold text-[var(--text-white)] mb-2">
                                 Günstiges KI-Sichtbarkeit Tool: alle Preise im Überblick
                             </h3>
-                            <p className="text-slate-400 text-sm leading-relaxed max-w-md">
+                            <p className="text-[var(--text-muted)] text-sm leading-relaxed max-w-md">
                                 Für wen sich ein günstiges Kombi-Tool aus SEO und KI-Sichtbarkeit lohnt – und was in jedem Tarif enthalten ist.
                             </p>
                         </div>
                         <Link
                             href="/loesungen/guenstiges-ki-sichtbarkeit-tool"
-                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/[0.06] hover:bg-white/10 text-white text-sm font-semibold rounded-xl transition-all duration-200 shrink-0"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--text-white)]/[0.06] hover:bg-[var(--text-white)]/10 text-[var(--text-white)] text-sm font-semibold rounded-xl transition-all duration-200 shrink-0"
                         >
                             Seite ansehen
                         </Link>
@@ -339,20 +339,20 @@ export default function PeecAlternativePage() {
                 </div>
 
                 {/* Cross-link: SEO + GEO Tool */}
-                <div className="mt-5 bg-white/[0.02] border border-white/[0.06] rounded-2xl p-6 sm:p-8">
+                <div className="mt-5 bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-2xl p-6 sm:p-8">
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 justify-between">
                         <div>
                             <span className="text-xs font-semibold text-emerald-400 uppercase tracking-wider mb-1 block">Passende Lösung</span>
-                            <h3 className="text-base sm:text-lg font-bold text-white mb-2">
+                            <h3 className="text-base sm:text-lg font-bold text-[var(--text-white)] mb-2">
                                 SEO + GEO Tool: Google-Rankings &amp; KI-Sichtbarkeit in einem Dashboard
                             </h3>
-                            <p className="text-slate-400 text-sm leading-relaxed max-w-md">
+                            <p className="text-[var(--text-muted)] text-sm leading-relaxed max-w-md">
                                 Google-Rankings und KI-Sichtbarkeit für dieselben Keywords im selben Dashboard – inklusive der Überschneidung zwischen beiden.
                             </p>
                         </div>
                         <Link
                             href="/loesungen/seo-geo-tool"
-                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/[0.06] hover:bg-white/10 text-white text-sm font-semibold rounded-xl transition-all duration-200 shrink-0"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--text-white)]/[0.06] hover:bg-[var(--text-white)]/10 text-[var(--text-white)] text-sm font-semibold rounded-xl transition-all duration-200 shrink-0"
                         >
                             Seite ansehen
                         </Link>
@@ -360,20 +360,20 @@ export default function PeecAlternativePage() {
                 </div>
 
                 {/* Cross-link */}
-                <div className="mt-5 bg-white/[0.02] border border-white/[0.06] rounded-2xl p-6 sm:p-8">
+                <div className="mt-5 bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-2xl p-6 sm:p-8">
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 justify-between">
                         <div>
                             <span className="text-xs font-semibold text-emerald-400 uppercase tracking-wider mb-1 block">Weiterlesen</span>
-                            <h3 className="text-base sm:text-lg font-bold text-white mb-2">
+                            <h3 className="text-base sm:text-lg font-bold text-[var(--text-white)] mb-2">
                                 SEO Rank Tracker & KI-Sichtbarkeits-Monitor
                             </h3>
-                            <p className="text-slate-400 text-sm leading-relaxed max-w-md">
+                            <p className="text-[var(--text-muted)] text-sm leading-relaxed max-w-md">
                                 Wie SEO Automatisierung und GEO Automatisierung bei Scanora im Detail funktionieren – inklusive Preisen.
                             </p>
                         </div>
                         <Link
                             href="/blog/seo-geo-automatisierung"
-                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/[0.06] hover:bg-white/10 text-white text-sm font-semibold rounded-xl transition-all duration-200 shrink-0"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--text-white)]/[0.06] hover:bg-[var(--text-white)]/10 text-[var(--text-white)] text-sm font-semibold rounded-xl transition-all duration-200 shrink-0"
                         >
                             Artikel lesen
                         </Link>
@@ -381,8 +381,8 @@ export default function PeecAlternativePage() {
                 </div>
 
                 {/* Back */}
-                <div className="mt-10 pt-8 border-t border-white/5">
-                    <Link href="/blog" className="text-sm text-slate-500 hover:text-slate-300 transition-colors">
+                <div className="mt-10 pt-8 border-t border-[var(--text-white)]/5">
+                    <Link href="/blog" className="text-sm text-[var(--text-faint)] hover:text-[var(--text-body)] transition-colors">
                         ← Zurück zum Blog
                     </Link>
                 </div>

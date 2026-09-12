@@ -60,15 +60,15 @@ export default function LandingFeedback() {
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: 16, scale: 0.97 }}
                     transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                    className="fixed bottom-28 left-3 right-3 sm:bottom-6 sm:left-auto sm:right-6 sm:w-80 z-50 bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl shadow-2xl shadow-black/60"
+                    className="fixed bottom-28 left-3 right-3 sm:bottom-6 sm:left-auto sm:right-6 sm:w-80 z-50 bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl shadow-card-hover"
                 >
                     {/* Header */}
                     <div className="flex items-center justify-between px-4 sm:px-5 pt-4 pb-3 border-b border-[var(--border-subtle)]">
-                        <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-500">Quick feedback</span>
+                        <span className="text-[11px] font-semibold uppercase tracking-wider text-[var(--text-faint)]">Quick feedback</span>
                         {step !== 'done' && (
                             <button
                                 onClick={dismiss}
-                                className="p-2 -mr-1.5 text-slate-600 hover:text-slate-400 transition-colors"
+                                className="p-2 -mr-1.5 text-[var(--text-faint)] hover:text-[var(--text-muted)] transition-colors"
                                 aria-label="Close"
                             >
                                 <X className="w-4 h-4" />
@@ -84,7 +84,7 @@ export default function LandingFeedback() {
                                 <motion.div key="rating"
                                     initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
                                     transition={{ duration: 0.2 }}>
-                                    <p className="text-sm font-semibold text-white mt-4 mb-4">
+                                    <p className="text-sm font-semibold text-[var(--text-white)] mt-4 mb-4">
                                         How do you like this page?
                                     </p>
                                     <div className="flex items-center justify-between gap-1 mb-1">
@@ -107,12 +107,12 @@ export default function LandingFeedback() {
                                     </div>
                                     <div className="text-center h-5">
                                         {(hovered > 0 || rating > 0) && (
-                                            <span className="text-xs text-slate-500">{ratingLabel(hovered || rating)}</span>
+                                            <span className="text-xs text-[var(--text-faint)]">{ratingLabel(hovered || rating)}</span>
                                         )}
                                     </div>
                                     <button
                                         onClick={dismiss}
-                                        className="w-full mt-2 text-xs text-slate-700 hover:text-slate-500 transition-colors py-3 sm:py-1"
+                                        className="w-full mt-2 text-xs text-[var(--text-faint)] hover:text-[var(--text-faint)] transition-colors py-3 sm:py-1"
                                     >
                                         Skip
                                     </button>
@@ -131,11 +131,11 @@ export default function LandingFeedback() {
                                                 stroke={i <= rating ? '#f59e0b' : 'rgba(100,116,139,0.3)'}
                                                 strokeWidth={1.5} />
                                         ))}
-                                        <span className="text-xs text-slate-500 ml-1">{ratingLabel(rating)}</span>
+                                        <span className="text-xs text-[var(--text-faint)] ml-1">{ratingLabel(rating)}</span>
                                     </div>
                                     <div className="space-y-3">
                                         <div>
-                                            <label className="text-xs text-slate-400 mb-1.5 block leading-snug">
+                                            <label className="text-xs text-[var(--text-muted)] mb-1.5 block leading-snug">
                                                 What's stopping you from starting an audit?
                                             </label>
                                             <textarea
@@ -143,11 +143,11 @@ export default function LandingFeedback() {
                                                 onChange={e => setAuditBarrier(e.target.value)}
                                                 placeholder="e.g. Not sure if it's really free…"
                                                 rows={2}
-                                                className="w-full bg-[var(--surface-08)] border border-[var(--border-subtle)] rounded-xl px-3 py-2.5 text-base sm:text-xs leading-snug text-white placeholder-slate-600 outline-none focus:border-[var(--accent-border)] resize-none transition-all"
+                                                className="w-full bg-[var(--surface-08)] border border-[var(--border-subtle)] rounded-xl px-3 py-2.5 text-base sm:text-xs leading-snug text-[var(--text-white)] placeholder-[var(--text-faint)] outline-none focus:border-[var(--accent-border)] resize-none transition-all"
                                             />
                                         </div>
                                         <div>
-                                            <label className="text-xs text-slate-400 mb-1.5 block leading-snug">
+                                            <label className="text-xs text-[var(--text-muted)] mb-1.5 block leading-snug">
                                                 What's missing on this page?
                                             </label>
                                             <textarea
@@ -155,21 +155,21 @@ export default function LandingFeedback() {
                                                 onChange={e => setMissingFeature(e.target.value)}
                                                 placeholder="e.g. More examples, pricing transparency…"
                                                 rows={2}
-                                                className="w-full bg-[var(--surface-08)] border border-[var(--border-subtle)] rounded-xl px-3 py-2.5 text-base sm:text-xs leading-snug text-white placeholder-slate-600 outline-none focus:border-[var(--accent-border)] resize-none transition-all"
+                                                className="w-full bg-[var(--surface-08)] border border-[var(--border-subtle)] rounded-xl px-3 py-2.5 text-base sm:text-xs leading-snug text-[var(--text-white)] placeholder-[var(--text-faint)] outline-none focus:border-[var(--accent-border)] resize-none transition-all"
                                             />
                                         </div>
                                     </div>
                                     <div className="flex gap-2 mt-4">
                                         <button
                                             onClick={dismiss}
-                                            className="flex-1 py-3 sm:py-2.5 rounded-xl text-xs text-slate-500 hover:text-slate-300 border border-[var(--border-subtle)] hover:border-[var(--border-strong)] transition-all"
+                                            className="flex-1 py-3 sm:py-2.5 rounded-xl text-xs text-[var(--text-faint)] hover:text-[var(--text-body)] border border-[var(--border-subtle)] hover:border-[var(--border-strong)] transition-all"
                                         >
                                             Skip
                                         </button>
                                         <button
                                             onClick={handleSubmit}
                                             disabled={sending}
-                                            className="flex-1 py-3 sm:py-2.5 rounded-xl text-xs font-semibold text-[var(--bg-base)] bg-[var(--accent)] hover:opacity-90 disabled:opacity-50 transition-all shadow-lg shadow-[var(--accent-border)]"
+                                            className="flex-1 py-3 sm:py-2.5 rounded-xl text-xs font-semibold text-[var(--bg-base)] bg-[var(--accent)] hover:opacity-90 disabled:opacity-50 transition-all shadow-lg shadow-[var(--accent-border)] active:scale-[0.97] active:duration-75"
                                         >
                                             {sending ? 'Sending…' : 'Send'}
                                         </button>
@@ -185,8 +185,8 @@ export default function LandingFeedback() {
                                     className="flex flex-col items-center text-center py-5 gap-3">
                                     <CheckCircle className="w-9 h-9 text-emerald-400" strokeWidth={1.5} />
                                     <div>
-                                        <p className="text-sm font-semibold text-white">Thanks for your feedback!</p>
-                                        <p className="text-xs text-slate-500 mt-1">This really helps us improve the page.</p>
+                                        <p className="text-sm font-semibold text-[var(--text-white)]">Thanks for your feedback!</p>
+                                        <p className="text-xs text-[var(--text-faint)] mt-1">This really helps us improve the page.</p>
                                     </div>
                                 </motion.div>
                             )}

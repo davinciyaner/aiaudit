@@ -20,10 +20,10 @@ export default function PlatformBreakdown() {
             <div className="flex items-start justify-between gap-3 mb-5">
                 <div>
                     <div className="flex items-center gap-2">
-                        <h3 className="text-sm font-semibold text-white">Wo wirst du zitiert?</h3>
-                        <span className="text-[10px] px-1.5 py-0.5 rounded-md bg-[var(--surface-08)] text-slate-500 font-medium">Beispiel</span>
+                        <h3 className="text-sm font-semibold text-[var(--text-white)]">Wo wirst du zitiert?</h3>
+                        <span className="text-[10px] px-1.5 py-0.5 rounded-md bg-[var(--surface-08)] text-[var(--text-faint)] font-medium">Beispiel</span>
                     </div>
-                    <p className="text-xs text-slate-500 mt-0.5">Anteil deiner Erwähnungen pro KI-Plattform</p>
+                    <p className="text-xs text-[var(--text-faint)] mt-0.5">Anteil deiner Erwähnungen pro KI-Plattform</p>
                 </div>
             </div>
 
@@ -31,8 +31,8 @@ export default function PlatformBreakdown() {
                 {ROWS.map((r, i) => (
                     <div key={r.platform}>
                         <div className="flex items-center justify-between gap-3 mb-1.5">
-                            <span className="text-sm text-slate-300">{r.platform}</span>
-                            <span className="text-xs text-white font-semibold tabular-nums">{r.share}%</span>
+                            <span className="text-sm text-[var(--text-body)]">{r.platform}</span>
+                            <span className="text-xs text-[var(--text-white)] font-semibold tabular-nums">{r.share}%</span>
                         </div>
                         <div className="relative h-2.5 rounded-full bg-[var(--surface-08)] overflow-hidden">
                             <motion.div

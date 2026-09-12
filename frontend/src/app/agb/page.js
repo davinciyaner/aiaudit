@@ -10,8 +10,8 @@ export const metadata = {
 function Section({ title, children }) {
     return (
         <section className="mb-10">
-            <h2 className="text-white font-semibold text-base mb-3 pb-2 border-b border-white/5">{title}</h2>
-            <div className="text-slate-400 text-sm leading-relaxed space-y-3">{children}</div>
+            <h2 className="text-[var(--text-white)] font-semibold text-base mb-3 pb-2 border-b border-[var(--text-white)]/5">{title}</h2>
+            <div className="text-[var(--text-muted)] text-sm leading-relaxed space-y-3">{children}</div>
         </section>
     )
 }
@@ -19,8 +19,8 @@ function Section({ title, children }) {
 function Sub({ title, children }) {
     return (
         <div className="mt-5">
-            <h3 className="text-slate-200 font-medium mb-2">{title}</h3>
-            <div className="text-slate-400 text-sm leading-relaxed space-y-2">{children}</div>
+            <h3 className="text-[var(--text-body)] font-medium mb-2">{title}</h3>
+            <div className="text-[var(--text-muted)] text-sm leading-relaxed space-y-2">{children}</div>
         </div>
     )
 }
@@ -35,16 +35,16 @@ function Highlight({ children }) {
 
 export default function AgbPage() {
     return (
-        <div className="min-h-screen bg-[#05080f] text-slate-300">
+        <div className="min-h-screen bg-[var(--bg-base)] text-[var(--text-body)]">
             <div className="max-w-3xl mx-auto px-5 sm:px-8 py-20">
 
                 <div className="mb-12">
                     <Link href="/" className="inline-flex items-center gap-2 text-sm">
                         <svg className="w-4 h-4 text-violet-400" viewBox="0 0 192 192" fill="none"><circle cx="96" cy="96" r="50" stroke="currentColor" strokeWidth="14" /><circle cx="110" cy="82" r="13" fill="currentColor" /></svg>
-                        <span className="text-white font-bold">Scanora</span>
+                        <span className="text-[var(--text-white)] font-bold">Scanora</span>
                     </Link>
-                    <h1 className="text-3xl font-bold text-white mt-6 mb-2">Allgemeine Geschäftsbedingungen</h1>
-                    <p className="text-slate-500 text-sm">Stand: Juni 2026</p>
+                    <h1 className="text-3xl font-bold text-[var(--text-white)] mt-6 mb-2">Allgemeine Geschäftsbedingungen</h1>
+                    <p className="text-[var(--text-faint)] text-sm">Stand: Juni 2026</p>
                 </div>
 
                 <div className="space-y-2">
@@ -53,14 +53,14 @@ export default function AgbPage() {
                         <p>
                             Diese Allgemeinen Geschäftsbedingungen (AGB) gelten für alle Verträge zwischen
                         </p>
-                        <p className="bg-white/2 border border-white/5 rounded-xl p-4">
+                        <p className="bg-[var(--text-white)]/2 border border-[var(--text-white)]/5 rounded-xl p-4">
                             Finn Paustian<br />
                             Am Rund 6, 23566 Lübeck<br />
                             E-Mail: <a href="mailto:sitecheckai@gmail.com" className="text-violet-400 hover:text-violet-300">sitecheckai@gmail.com</a><br />
                             (nachfolgend „Anbieter")
                         </p>
                         <p>
-                            und natürlichen oder juristischen Personen, die die Dienste von Scanora unter <strong className="text-slate-300">scanora.ai</strong> nutzen (nachfolgend „Nutzer").
+                            und natürlichen oder juristischen Personen, die die Dienste von Scanora unter <strong className="text-[var(--text-body)]">scanora.ai</strong> nutzen (nachfolgend „Nutzer").
                         </p>
                         <p>
                             Abweichende Bedingungen des Nutzers werden nicht anerkannt, es sei denn, der Anbieter stimmt diesen ausdrücklich schriftlich zu.
@@ -205,7 +205,7 @@ export default function AgbPage() {
                             Das Widerrufsrecht erlischt vorzeitig, wenn der Anbieter mit der Ausführung des Vertrags begonnen hat und der Verbraucher ausdrücklich zugestimmt hat, dass der Anbieter vor Ablauf der Widerrufsfrist mit der Ausführung beginnt, und seine Kenntnis davon bestätigt hat, dass er durch seine Zustimmung mit Beginn der Ausführung sein Widerrufsrecht verliert (§ 356 Abs. 5 BGB).
                         </p>
                         <p>
-                            <strong className="text-slate-300">Sofortiger Beginn der Leistungserbringung:</strong> Mit Abschluss eines Abonnements beginnt Scanora unmittelbar mit der Bereitstellung des Dienstes (Freischaltung von Audits). Der Nutzer stimmt mit dem Abschluss des Abonnements ausdrücklich zu, dass die Leistungserbringung sofort beginnt, und bestätigt seine Kenntnis, dass er dadurch sein Widerrufsrecht verliert.
+                            <strong className="text-[var(--text-body)]">Sofortiger Beginn der Leistungserbringung:</strong> Mit Abschluss eines Abonnements beginnt Scanora unmittelbar mit der Bereitstellung des Dienstes (Freischaltung von Audits). Der Nutzer stimmt mit dem Abschluss des Abonnements ausdrücklich zu, dass die Leistungserbringung sofort beginnt, und bestätigt seine Kenntnis, dass er dadurch sein Widerrufsrecht verliert.
                         </p>
                         <p>
                             Das Recht zur ordentlichen Kündigung laufender Abonnements gemäß § 6 bleibt unberührt.
@@ -252,11 +252,11 @@ export default function AgbPage() {
                         </p>
                     </Section>
 
-                    <div className="border-t border-white/5 pt-8 flex gap-6 text-slate-600 text-xs">
-                        <Link href="/" className="hover:text-slate-400 transition-colors">Startseite</Link>
-                        <Link href="/datenschutz" className="hover:text-slate-400 transition-colors">Datenschutz</Link>
-                        <Link href="/avv" className="hover:text-slate-400 transition-colors">AVV</Link>
-                        <Link href="/impressum" className="hover:text-slate-400 transition-colors">Impressum</Link>
+                    <div className="border-t border-[var(--text-white)]/5 pt-8 flex gap-6 text-[var(--text-faint)] text-xs">
+                        <Link href="/" className="hover:text-[var(--text-muted)] transition-colors">Startseite</Link>
+                        <Link href="/datenschutz" className="hover:text-[var(--text-muted)] transition-colors">Datenschutz</Link>
+                        <Link href="/avv" className="hover:text-[var(--text-muted)] transition-colors">AVV</Link>
+                        <Link href="/impressum" className="hover:text-[var(--text-muted)] transition-colors">Impressum</Link>
                     </div>
                 </div>
             </div>

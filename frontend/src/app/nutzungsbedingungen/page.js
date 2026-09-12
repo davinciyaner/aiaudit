@@ -10,8 +10,8 @@ export const metadata = {
 function Section({ title, children }) {
     return (
         <section className="mb-10">
-            <h2 className="text-white font-semibold text-base mb-3 pb-2 border-b border-white/5">{title}</h2>
-            <div className="text-slate-400 text-sm leading-relaxed space-y-3">{children}</div>
+            <h2 className="text-[var(--text-white)] font-semibold text-base mb-3 pb-2 border-b border-[var(--text-white)]/5">{title}</h2>
+            <div className="text-[var(--text-muted)] text-sm leading-relaxed space-y-3">{children}</div>
         </section>
     )
 }
@@ -19,31 +19,31 @@ function Section({ title, children }) {
 function Sub({ title, children }) {
     return (
         <div className="mt-5">
-            <h3 className="text-slate-200 font-medium mb-2">{title}</h3>
-            <div className="text-slate-400 text-sm leading-relaxed space-y-2">{children}</div>
+            <h3 className="text-[var(--text-body)] font-medium mb-2">{title}</h3>
+            <div className="text-[var(--text-muted)] text-sm leading-relaxed space-y-2">{children}</div>
         </div>
     )
 }
 
 export default function NutzungsbedingungenPage() {
     return (
-        <div className="min-h-screen bg-[#05080f] text-slate-300">
+        <div className="min-h-screen bg-[var(--bg-base)] text-[var(--text-body)]">
             <div className="max-w-3xl mx-auto px-5 sm:px-8 py-20">
 
                 <div className="mb-12">
                     <Link href="/" className="inline-flex items-center gap-2 text-sm">
                         <svg className="w-4 h-4 text-violet-400" viewBox="0 0 192 192" fill="none"><circle cx="96" cy="96" r="50" stroke="currentColor" strokeWidth="14" /><circle cx="110" cy="82" r="13" fill="currentColor" /></svg>
-                        <span className="text-white font-bold">Scanora</span>
+                        <span className="text-[var(--text-white)] font-bold">Scanora</span>
                     </Link>
-                    <h1 className="text-3xl font-bold text-white mt-6 mb-2">Nutzungsbedingungen</h1>
-                    <p className="text-slate-500 text-sm">Stand: Juni 2026 · Anbieter: Finn Paustian, 23566 Lübeck</p>
+                    <h1 className="text-3xl font-bold text-[var(--text-white)] mt-6 mb-2">Nutzungsbedingungen</h1>
+                    <p className="text-[var(--text-faint)] text-sm">Stand: Juni 2026 · Anbieter: Finn Paustian, 23566 Lübeck</p>
                 </div>
 
                 <div className="space-y-2">
 
                     <Section title="1. Geltungsbereich">
                         <p>
-                            Diese Nutzungsbedingungen gelten für die Nutzung der Webanwendung <strong className="text-slate-300">Scanora</strong> unter <strong className="text-slate-300">scanora.ai</strong> sowie aller zugehörigen Dienste (Website-Audit, SEO Automatisierung). Mit der Registrierung oder der Nutzung des Dienstes erklärt der Nutzer sein Einverständnis mit diesen Bedingungen.
+                            Diese Nutzungsbedingungen gelten für die Nutzung der Webanwendung <strong className="text-[var(--text-body)]">Scanora</strong> unter <strong className="text-[var(--text-body)]">scanora.ai</strong> sowie aller zugehörigen Dienste (Website-Audit, SEO Automatisierung). Mit der Registrierung oder der Nutzung des Dienstes erklärt der Nutzer sein Einverständnis mit diesen Bedingungen.
                         </p>
                         <p>
                             Ergänzend gelten die <Link href="/agb" className="text-violet-400 hover:text-violet-300">Allgemeinen Geschäftsbedingungen (AGB)</Link> für kostenpflichtige Abonnements sowie die <Link href="/datenschutz" className="text-violet-400 hover:text-violet-300">Datenschutzerklärung</Link> und der <Link href="/avv" className="text-violet-400 hover:text-violet-300">Auftragsverarbeitungsvertrag (AVV)</Link> für die SEO Automatisierung.
@@ -139,7 +139,7 @@ export default function NutzungsbedingungenPage() {
 
                     <Section title="9. Änderungen der Nutzungsbedingungen">
                         <p>
-                            Der Anbieter behält sich vor, diese Nutzungsbedingungen jederzeit zu ändern. Registrierte Nutzer werden über wesentliche Änderungen per E-Mail informiert. Die jeweils aktuelle Fassung ist unter <strong className="text-slate-300">scanora.ai/nutzungsbedingungen</strong> abrufbar. Die fortgesetzte Nutzung des Dienstes nach Inkrafttreten der Änderungen gilt als Zustimmung.
+                            Der Anbieter behält sich vor, diese Nutzungsbedingungen jederzeit zu ändern. Registrierte Nutzer werden über wesentliche Änderungen per E-Mail informiert. Die jeweils aktuelle Fassung ist unter <strong className="text-[var(--text-body)]">scanora.ai/nutzungsbedingungen</strong> abrufbar. Die fortgesetzte Nutzung des Dienstes nach Inkrafttreten der Änderungen gilt als Zustimmung.
                         </p>
                     </Section>
 
@@ -152,12 +152,12 @@ export default function NutzungsbedingungenPage() {
                         </p>
                     </Section>
 
-                    <div className="border-t border-white/5 pt-8 flex flex-wrap gap-6 text-slate-600 text-xs">
-                        <Link href="/" className="hover:text-slate-400 transition-colors">Startseite</Link>
-                        <Link href="/agb" className="hover:text-slate-400 transition-colors">AGB</Link>
-                        <Link href="/datenschutz" className="hover:text-slate-400 transition-colors">Datenschutz</Link>
-                        <Link href="/avv" className="hover:text-slate-400 transition-colors">AVV</Link>
-                        <Link href="/impressum" className="hover:text-slate-400 transition-colors">Impressum</Link>
+                    <div className="border-t border-[var(--text-white)]/5 pt-8 flex flex-wrap gap-6 text-[var(--text-faint)] text-xs">
+                        <Link href="/" className="hover:text-[var(--text-muted)] transition-colors">Startseite</Link>
+                        <Link href="/agb" className="hover:text-[var(--text-muted)] transition-colors">AGB</Link>
+                        <Link href="/datenschutz" className="hover:text-[var(--text-muted)] transition-colors">Datenschutz</Link>
+                        <Link href="/avv" className="hover:text-[var(--text-muted)] transition-colors">AVV</Link>
+                        <Link href="/impressum" className="hover:text-[var(--text-muted)] transition-colors">Impressum</Link>
                     </div>
                 </div>
             </div>

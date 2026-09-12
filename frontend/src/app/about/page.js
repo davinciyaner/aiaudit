@@ -47,7 +47,7 @@ const FACTS = [
 
 export default function AboutPage() {
     return (
-        <main className="bg-[#05080f] min-h-screen">
+        <main className="bg-[var(--bg-base)] min-h-screen">
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
             <Navbar />
@@ -55,38 +55,38 @@ export default function AboutPage() {
             <article className="max-w-3xl mx-auto px-5 sm:px-8 pt-32 pb-24">
 
                 {/* Breadcrumb */}
-                <div className="flex items-center gap-2 text-xs text-slate-600 mb-8">
-                    <Link href="/" className="hover:text-slate-400 transition-colors">Scanora</Link>
+                <div className="flex items-center gap-2 text-xs text-[var(--text-faint)] mb-8">
+                    <Link href="/" className="hover:text-[var(--text-muted)] transition-colors">Scanora</Link>
                     <span>/</span>
-                    <span className="text-slate-500">Über Scanora</span>
+                    <span className="text-[var(--text-faint)]">Über Scanora</span>
                 </div>
 
                 {/* Header */}
                 <div className="flex items-center gap-4 mb-10">
                     <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-violet-600 to-cyan-600 flex items-center justify-center shrink-0">
-                        <ZapIcon className="w-7 h-7 text-white" strokeWidth={2.5} />
+                        <ZapIcon className="w-7 h-7 text-[var(--text-white)]" strokeWidth={2.5} />
                     </div>
                     <div>
-                        <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">Über Scanora</h1>
-                        <p className="text-slate-400 text-sm mt-1">AI Visibility & SEO Tracking, ein Report</p>
+                        <h1 className="text-2xl sm:text-3xl font-bold text-[var(--text-white)] tracking-tight">Über Scanora</h1>
+                        <p className="text-[var(--text-muted)] text-sm mt-1">AI Visibility & SEO Tracking, ein Report</p>
                     </div>
                 </div>
 
                 {/* Facts row */}
                 <div className="grid sm:grid-cols-3 gap-3 mb-12">
                     {FACTS.map(({ icon: Icon, label, color }) => (
-                        <div key={label} className="flex items-center gap-3 bg-white/[0.03] border border-white/[0.06] rounded-xl p-4">
+                        <div key={label} className="flex items-center gap-3 bg-[var(--text-white)]/[0.03] border border-[var(--text-white)]/[0.06] rounded-xl p-4">
                             <div className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0" style={{ background: `${color}1a` }}>
                                 <Icon className="w-4 h-4" style={{ color }} />
                             </div>
-                            <span className="text-sm text-slate-300">{label}</span>
+                            <span className="text-sm text-[var(--text-body)]">{label}</span>
                         </div>
                     ))}
                 </div>
 
                 {/* Bio */}
-                <div className="prose prose-invert prose-slate max-w-none text-slate-300 leading-relaxed space-y-5">
-                    <h2 className="text-xl font-bold text-white mb-3">Warum Scanora?</h2>
+                <div className="prose prose-invert prose-slate max-w-none text-[var(--text-body)] leading-relaxed space-y-5">
+                    <h2 className="text-xl font-bold text-[var(--text-white)] mb-3">Warum Scanora?</h2>
                     <p>
                         Google ist nicht mehr die einzige Suchmaschine. Immer mehr Menschen fragen ChatGPT, Claude oder
                         Perplexity nach Empfehlungen, statt zu googeln — und eine Website kann bei Google auf Platz 1 stehen
@@ -102,7 +102,7 @@ export default function AboutPage() {
                         damit ein Ranking-Abfall oder eine verlorene KI-Erwähnung auffällt, bevor sie Traffic kostet.
                     </p>
 
-                    <h2 className="text-xl font-bold text-white mb-3 mt-10">Kontakt</h2>
+                    <h2 className="text-xl font-bold text-[var(--text-white)] mb-3 mt-10">Kontakt</h2>
                     <p>
                         Fragen oder Feedback zu Scanora:{' '}
                         <a href="mailto:sitecheckai@gmail.com" className="text-violet-400 hover:text-violet-300 inline-flex items-center gap-1.5">
@@ -112,7 +112,7 @@ export default function AboutPage() {
                     </p>
                 </div>
 
-                <div className="mt-14 pt-8 border-t border-white/5">
+                <div className="mt-14 pt-8 border-t border-[var(--text-white)]/5">
                     <Link
                         href="/blog"
                         className="inline-flex items-center gap-2 text-sm text-violet-400 hover:text-violet-300 transition-colors font-medium"

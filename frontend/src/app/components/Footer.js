@@ -121,11 +121,11 @@ export default function Footer({ locale = 'de' }) {
                                         <circle cx="110" cy="82" r="13" fill="currentColor" />
                                     </svg>
                                 </div>
-                                <span className="font-bold text-white">
+                                <span className="font-bold text-[var(--text-white)]">
                                     Scanora
                                 </span>
                             </Link>
-                            <p className="text-xs text-slate-400 leading-relaxed max-w-[180px]">
+                            <p className="text-xs text-[var(--text-muted)] leading-relaxed max-w-[180px]">
                                 {t(locale, 'footer.tagline')}
                             </p>
                         </div>
@@ -133,7 +133,7 @@ export default function Footer({ locale = 'de' }) {
                         {/* Link columns */}
                         {COLUMNS.map((col) => (
                             <div key={col.heading}>
-                                <p className="text-[11px] font-semibold uppercase tracking-widest text-slate-500 mb-4">
+                                <p className="text-[11px] font-semibold uppercase tracking-widest text-[var(--text-faint)] mb-4">
                                     {col.heading}
                                 </p>
                                 <ul className="space-y-3">
@@ -141,7 +141,7 @@ export default function Footer({ locale = 'de' }) {
                                         <li key={link.label}>
                                             <Link
                                                 href={link.href}
-                                                className="text-xs text-slate-400 hover:text-slate-200 transition-colors"
+                                                className="text-xs text-[var(--text-muted)] hover:text-[var(--text-body)] transition-colors"
                                             >
                                                 {link.label}
                                             </Link>
@@ -154,10 +154,10 @@ export default function Footer({ locale = 'de' }) {
 
                     {/* Bottom: Divider + Copyright + Support */}
                     <div className="mt-12 pt-6 border-t border-[var(--border-subtle)] flex flex-col sm:flex-row items-center justify-between gap-3">
-                        <p className="text-xs text-slate-500">{t(locale, 'footer.copyright')}</p>
+                        <p className="text-xs text-[var(--text-faint)]">{t(locale, 'footer.copyright')}</p>
                         <button
                             onClick={() => setSupportOpen(true)}
-                            className="text-xs text-slate-400 hover:text-slate-200 transition-colors py-2 -my-2"
+                            className="text-xs text-[var(--text-muted)] hover:text-[var(--text-body)] transition-colors py-2 -my-2"
                         >
                             {t(locale, 'footer.support')}
                         </button>

@@ -4,7 +4,7 @@ import {motion} from 'framer-motion'
 import {Check, Zap, Crown, Building2, LogIn, Loader2, TrendingUp, Star, ArrowRight, Sparkles, Lock} from 'lucide-react'
 import Link from 'next/link'
 import {PayPalScriptProvider, PayPalButtons} from '@paypal/react-paypal-js'
-import toast, {Toaster} from 'react-hot-toast'
+import toast from 'react-hot-toast'
 import {useRouter} from 'next/navigation'
 import Navbar from '../../components/Navbar'
 
@@ -207,14 +207,14 @@ function PlanCard({plan, user, currentPlan, loading, onSuccess}) {
 
             <div className="mb-6">
                 <div className="flex items-center gap-2 mb-3">
-                    <span className="text-sm font-semibold text-slate-400 uppercase tracking-wider">{plan.name}</span>
+                    <span className="text-sm font-semibold text-[var(--text-muted)] uppercase tracking-wider">{plan.name}</span>
                 </div>
                 <div className="flex items-baseline gap-1 mb-1">
-                    <span className="text-5xl font-bold text-white">{plan.price}</span>
-                    <span className="text-slate-400 text-lg">€</span>
+                    <span className="text-5xl font-bold text-[var(--text-white)]">{plan.price}</span>
+                    <span className="text-[var(--text-muted)] text-lg">€</span>
                 </div>
-                <div className="text-sm text-slate-500 mb-3">{plan.period}</div>
-                <p className="text-sm text-slate-400">{plan.desc}</p>
+                <div className="text-sm text-[var(--text-faint)] mb-3">{plan.period}</div>
+                <p className="text-sm text-[var(--text-muted)]">{plan.desc}</p>
             </div>
 
             <div className="space-y-3 mb-8 flex-1">
@@ -222,10 +222,10 @@ function PlanCard({plan, user, currentPlan, loading, onSuccess}) {
                     <div key={f} className="flex items-center gap-3 text-sm">
                         <div
                             className={`w-4 h-4 rounded-full flex items-center justify-center shrink-0 ${plan.highlight ? 'bg-[var(--accent-soft-strong)]' : 'bg-[var(--surface-08)]'}`}>
-                            <Check className={`w-2.5 h-2.5 ${plan.highlight ? 'text-[var(--accent)]' : 'text-slate-400'}`}
+                            <Check className={`w-2.5 h-2.5 ${plan.highlight ? 'text-[var(--accent)]' : 'text-[var(--text-muted)]'}`}
                                    strokeWidth={3}/>
                         </div>
-                        <span className="text-slate-300">{f}</span>
+                        <span className="text-[var(--text-body)]">{f}</span>
                     </div>
                 ))}
             </div>
@@ -233,12 +233,12 @@ function PlanCard({plan, user, currentPlan, loading, onSuccess}) {
             <div>
                 {!isPaid ? (
                     <Link href={plan.href}
-                          className="block w-full py-3 text-center text-sm font-semibold rounded-xl border border-[var(--border-subtle)] text-slate-300 hover:text-white hover:border-[var(--border-strong)] hover:bg-[var(--surface-08)] transition-all duration-200">
+                          className="block w-full py-3 text-center text-sm font-semibold rounded-xl border border-[var(--border-subtle)] text-[var(--text-body)] hover:text-[var(--text-white)] hover:border-[var(--border-strong)] hover:bg-[var(--surface-08)] transition-all duration-200">
                         {plan.cta}
                     </Link>
                 ) : loading ? (
                     <div className="flex items-center justify-center w-full py-3 rounded-xl border border-[var(--border-subtle)]">
-                        <Loader2 className="w-4 h-4 text-slate-500 animate-spin"/>
+                        <Loader2 className="w-4 h-4 text-[var(--text-faint)] animate-spin"/>
                     </div>
                 ) : isCurrentPlan ? (
                     <div
@@ -249,8 +249,8 @@ function PlanCard({plan, user, currentPlan, loading, onSuccess}) {
                     <Link href={`/login?redirect=/en/pricing`}
                           className={`flex items-center justify-center gap-2 w-full py-3 text-center text-sm font-semibold rounded-xl transition-all duration-200 ${
                               plan.highlight
-                                  ? 'bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] shadow-lg shadow-[var(--accent-border)] hover:-translate-y-0.5'
-                                  : 'border border-[var(--border-subtle)] text-slate-300 hover:text-white hover:border-[var(--border-strong)] hover:bg-[var(--surface-08)]'
+                                  ? 'bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] shadow-lg shadow-[var(--accent-border)] active:scale-[0.97] active:duration-75 hover:-translate-y-0.5'
+                                  : 'border border-[var(--border-subtle)] text-[var(--text-body)] hover:text-[var(--text-white)] hover:border-[var(--border-strong)] hover:bg-[var(--surface-08)]'
                           }`}>
                         <LogIn className="w-4 h-4"/> Log in to subscribe
                     </Link>
@@ -354,14 +354,6 @@ export default function PricingPage() {
     return (
         <>
             <div className="min-h-screen bg-[var(--bg-base)]">
-                <Toaster position="top-right" toastOptions={{
-                    style: {
-                        background: 'var(--bg-surface)',
-                        color: '#fff',
-                        border: '1px solid var(--border-subtle)',
-                        maxWidth: 'calc(100vw - 2rem)',
-                    }
-                }}/>
                 <Navbar locale="en"/>
 
                 <div className="relative pt-32 pb-24 px-5 sm:px-8">
@@ -376,7 +368,7 @@ export default function PricingPage() {
                                 Start for free.<br/>
                                 Grow when you need to.
                             </h1>
-                            <p className="text-lg text-slate-400 max-w-xl mx-auto">
+                            <p className="text-lg text-[var(--text-muted)] max-w-xl mx-auto">
                                 No hidden fees. Monthly subscription. Cancel anytime.
                             </p>
                         </motion.div>
@@ -393,7 +385,7 @@ export default function PricingPage() {
                         ) : plansGrid}
 
                         <motion.p initial={{opacity: 0}} animate={{opacity: 1}} transition={{delay: 0.5}}
-                                  className="text-center text-sm text-slate-600 mt-10">
+                                  className="text-center text-sm text-[var(--text-faint)] mt-10">
                             Secure payment via PayPal - Cancel anytime - No minimum term
                         </motion.p>
 
@@ -409,10 +401,10 @@ export default function PricingPage() {
                             </div>
 
                             <div className="text-center mb-10">
-                                <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3">
+                                <h2 className="text-2xl sm:text-3xl font-bold text-[var(--text-white)] mb-3">
                                     Track Google rankings automatically
                                 </h2>
-                                <p className="text-slate-400 text-sm max-w-lg mx-auto mb-4">
+                                <p className="text-[var(--text-muted)] text-sm max-w-lg mx-auto mb-4">
                                     Weekly ranking updates, keyword ideas, competitor analysis and backlink profile - available independently of the audit plan.
                                 </p>
                                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-[var(--accent-border)] bg-[var(--accent-soft)] text-xs">
@@ -437,38 +429,38 @@ export default function PricingPage() {
                                         )}
                                         <div className="mb-5">
                                             <div className="flex items-center gap-2 mb-3">
-                                                <span className="text-sm font-semibold text-slate-400 uppercase tracking-wider">{plan.name}</span>
+                                                <span className="text-sm font-semibold text-[var(--text-muted)] uppercase tracking-wider">{plan.name}</span>
                                             </div>
                                             <div className="flex items-baseline gap-1 mb-1">
-                                                <span className="text-4xl sm:text-5xl font-bold text-white">{plan.price}</span>
-                                                <span className="text-slate-400 text-lg">€</span>
+                                                <span className="text-4xl sm:text-5xl font-bold text-[var(--text-white)]">{plan.price}</span>
+                                                <span className="text-[var(--text-muted)] text-lg">€</span>
                                             </div>
-                                            <div className="text-sm text-slate-500 mb-3">per month</div>
-                                            <p className="text-sm text-slate-400">{plan.desc}</p>
+                                            <div className="text-sm text-[var(--text-faint)] mb-3">per month</div>
+                                            <p className="text-sm text-[var(--text-muted)]">{plan.desc}</p>
                                         </div>
                                         <div className="space-y-3 mb-8 flex-1">
                                             {plan.features.map(f => (
                                                 <div key={f} className="flex items-center gap-3 text-sm">
                                                     <div className={`w-4 h-4 rounded-full flex items-center justify-center shrink-0 ${plan.highlight ? 'bg-[var(--accent-soft-strong)]' : 'bg-[var(--surface-08)]'}`}>
-                                                        <Check className={`w-2.5 h-2.5 ${plan.highlight ? 'text-[var(--accent)]' : 'text-slate-400'}`} strokeWidth={3}/>
+                                                        <Check className={`w-2.5 h-2.5 ${plan.highlight ? 'text-[var(--accent)]' : 'text-[var(--text-muted)]'}`} strokeWidth={3}/>
                                                     </div>
-                                                    <span className="text-slate-300">{f}</span>
+                                                    <span className="text-[var(--text-body)]">{f}</span>
                                                 </div>
                                             ))}
                                             {plan.locked?.map(f => (
                                                 <div key={f} className="flex items-center gap-3 text-sm opacity-40">
                                                     <div className="w-4 h-4 rounded-full flex items-center justify-center shrink-0 bg-[var(--surface-08)]">
-                                                        <Lock className="w-2.5 h-2.5 text-slate-500" strokeWidth={3}/>
+                                                        <Lock className="w-2.5 h-2.5 text-[var(--text-faint)]" strokeWidth={3}/>
                                                     </div>
-                                                    <span className="text-slate-500 line-through">{f}</span>
+                                                    <span className="text-[var(--text-faint)] line-through">{f}</span>
                                                 </div>
                                             ))}
                                         </div>
                                         <Link href="/seo/pricing"
                                             className={`flex items-center justify-center gap-2 w-full py-3.5 text-sm font-semibold rounded-xl transition-all duration-200 ${
                                                 plan.highlight
-                                                    ? 'bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] shadow-lg shadow-[var(--accent-border)]'
-                                                    : 'border border-[var(--border-subtle)] text-slate-300 hover:text-white hover:border-[var(--border-strong)] hover:bg-[var(--surface-08)]'
+                                                    ? 'bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] shadow-lg shadow-[var(--accent-border)] active:scale-[0.97] active:duration-75'
+                                                    : 'border border-[var(--border-subtle)] text-[var(--text-body)] hover:text-[var(--text-white)] hover:border-[var(--border-strong)] hover:bg-[var(--surface-08)]'
                                             }`}>
                                             Start {plan.name}
                                             <ArrowRight className="w-4 h-4"/>
@@ -477,7 +469,7 @@ export default function PricingPage() {
                                 ))}
                             </div>
 
-                            <p className="text-center text-sm text-slate-600 mt-8">
+                            <p className="text-center text-sm text-[var(--text-faint)] mt-8">
                                 14 days free - then billed automatically - cancel anytime
                             </p>
                         </motion.div>
@@ -494,10 +486,10 @@ export default function PricingPage() {
                             </div>
 
                             <div className="text-center mb-10">
-                                <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3">
+                                <h2 className="text-2xl sm:text-3xl font-bold text-[var(--text-white)] mb-3">
                                     Are you recommended by AI?
                                 </h2>
-                                <p className="text-slate-400 text-sm max-w-lg mx-auto mb-4">
+                                <p className="text-[var(--text-muted)] text-sm max-w-lg mx-auto mb-4">
                                     Automatically track whether Claude, ChatGPT, Gemini, Perplexity and Google AI Overview mention your domain for relevant queries - weekly and on demand.
                                 </p>
                                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-[var(--accent-border)] bg-[var(--accent-soft)] text-xs">
@@ -517,30 +509,30 @@ export default function PricingPage() {
                                         }`}>
                                         <div className="mb-5">
                                             <div className="flex items-center gap-2 mb-3">
-                                                <span className="text-sm font-semibold text-slate-400 uppercase tracking-wider">{plan.name}</span>
+                                                <span className="text-sm font-semibold text-[var(--text-muted)] uppercase tracking-wider">{plan.name}</span>
                                             </div>
                                             <div className="flex items-baseline gap-1 mb-1">
-                                                <span className="text-4xl sm:text-5xl font-bold text-white">{plan.price}</span>
-                                                <span className="text-slate-400 text-lg">€</span>
+                                                <span className="text-4xl sm:text-5xl font-bold text-[var(--text-white)]">{plan.price}</span>
+                                                <span className="text-[var(--text-muted)] text-lg">€</span>
                                             </div>
-                                            <div className="text-sm text-slate-500 mb-3">per month, VAT incl.</div>
-                                            <p className="text-sm text-slate-400">{plan.desc}</p>
+                                            <div className="text-sm text-[var(--text-faint)] mb-3">per month, VAT incl.</div>
+                                            <p className="text-sm text-[var(--text-muted)]">{plan.desc}</p>
                                         </div>
                                         <div className="space-y-3 mb-8 flex-1">
                                             {plan.features.map(f => (
                                                 <div key={f} className="flex items-center gap-3 text-sm">
                                                     <div className={`w-4 h-4 rounded-full flex items-center justify-center shrink-0 ${plan.highlight ? 'bg-[var(--accent-soft-strong)]' : 'bg-[var(--surface-08)]'}`}>
-                                                        <Check className={`w-2.5 h-2.5 ${plan.highlight ? 'text-[var(--accent)]' : 'text-slate-400'}`} strokeWidth={3}/>
+                                                        <Check className={`w-2.5 h-2.5 ${plan.highlight ? 'text-[var(--accent)]' : 'text-[var(--text-muted)]'}`} strokeWidth={3}/>
                                                     </div>
-                                                    <span className="text-slate-300">{f}</span>
+                                                    <span className="text-[var(--text-body)]">{f}</span>
                                                 </div>
                                             ))}
                                         </div>
                                         <Link href="/geo/pricing"
                                             className={`flex items-center justify-center gap-2 w-full py-3.5 text-sm font-semibold rounded-xl transition-all duration-200 ${
                                                 plan.highlight
-                                                    ? 'bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] shadow-lg shadow-[var(--accent-border)]'
-                                                    : 'border border-[var(--border-subtle)] text-slate-300 hover:text-white hover:border-[var(--border-strong)] hover:bg-[var(--surface-08)]'
+                                                    ? 'bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] shadow-lg shadow-[var(--accent-border)] active:scale-[0.97] active:duration-75'
+                                                    : 'border border-[var(--border-subtle)] text-[var(--text-body)] hover:text-[var(--text-white)] hover:border-[var(--border-strong)] hover:bg-[var(--surface-08)]'
                                             }`}>
                                             Start {plan.name}
                                             <ArrowRight className="w-4 h-4"/>
@@ -549,7 +541,7 @@ export default function PricingPage() {
                                 ))}
                             </div>
 
-                            <p className="text-center text-sm text-slate-600 mt-8">
+                            <p className="text-center text-sm text-[var(--text-faint)] mt-8">
                                 14 days free - then billed automatically - cancel anytime
                             </p>
                         </motion.div>

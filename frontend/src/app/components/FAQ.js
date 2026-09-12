@@ -19,10 +19,10 @@ function FAQItem({ faq, isOpen, onToggle, id }) {
                     aria-expanded={isOpen}
                     aria-controls={`${id}-panel`}
                     id={`${id}-trigger`}
-                    className="w-full flex items-center justify-between gap-4 px-5 py-4 text-left text-sm font-medium text-white leading-snug"
+                    className="w-full flex items-center justify-between gap-4 px-5 py-4 text-left text-sm font-medium text-[var(--text-white)] leading-snug"
                 >
                     {faq.q}
-                    <ChevronDown className={`w-4 h-4 text-slate-500 shrink-0 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
+                    <ChevronDown className={`w-4 h-4 text-[var(--text-faint)] shrink-0 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
                 </button>
             </h2>
             <AnimatePresence initial={false}>
@@ -37,7 +37,7 @@ function FAQItem({ faq, isOpen, onToggle, id }) {
                         transition={{ duration: 0.2 }}
                         className="overflow-hidden"
                     >
-                        <p className="px-5 pb-4 pt-3 text-sm text-slate-400 leading-relaxed border-t border-[var(--border-subtle)] mx-5">
+                        <p className="px-5 pb-4 pt-3 text-sm text-[var(--text-muted)] leading-relaxed border-t border-[var(--border-subtle)] mx-5">
                             {faq.a}
                         </p>
                     </motion.div>
@@ -62,7 +62,7 @@ export default function FAQ() {
                     <p className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">
                         Häufig gestellte Fragen
                     </p>
-                    <p className="text-slate-400 text-base">
+                    <p className="text-[var(--text-muted)] text-base">
                         Alles was du über Website-Audits, SEO-Tests und GEO wissen musst.
                     </p>
                 </motion.div>

@@ -4,16 +4,16 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Plus, Trash2, Globe, Loader2, ArrowRight, X, Sparkles } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
-import toast, { Toaster } from 'react-hot-toast'
+import toast from 'react-hot-toast'
 import Navbar from '../../components/Navbar'
 
 function MentionRateBadge({ rate, mentioned, checked }) {
-    if (rate == null) return <span className="text-xs text-slate-600">Noch kein Check</span>
-    const color = rate >= 70 ? 'text-[var(--accent)]' : rate >= 40 ? 'text-amber-400' : 'text-slate-400'
+    if (rate == null) return <span className="text-xs text-[var(--text-faint)]">Noch kein Check</span>
+    const color = rate >= 70 ? 'text-[var(--accent)]' : rate >= 40 ? 'text-amber-400' : 'text-[var(--text-muted)]'
     return (
         <div>
             <span className={`text-xl font-bold ${color}`}>{rate}%</span>
-            <span className="text-xs text-slate-600 ml-1.5">{mentioned}/{checked} Keywords</span>
+            <span className="text-xs text-[var(--text-faint)] ml-1.5">{mentioned}/{checked} Keywords</span>
         </div>
     )
 }
@@ -49,7 +49,7 @@ function SiteCard({ site, onDelete }) {
             <button
                 onClick={handleDelete}
                 disabled={deleting}
-                className="absolute top-4 right-4 w-7 h-7 flex items-center justify-center rounded-lg opacity-0 group-hover:opacity-100 bg-[var(--surface-06)] hover:bg-red-500/15 text-slate-500 hover:text-red-400 transition-all"
+                className="absolute top-4 right-4 w-7 h-7 flex items-center justify-center rounded-lg opacity-0 group-hover:opacity-100 bg-[var(--surface-06)] hover:bg-red-500/15 text-[var(--text-faint)] hover:text-red-400 transition-all"
             >
                 {deleting ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Trash2 className="w-3.5 h-3.5" />}
             </button>
@@ -59,23 +59,23 @@ function SiteCard({ site, onDelete }) {
                     <Globe className="w-4 h-4 text-[var(--accent)]" />
                 </div>
                 <div className="min-w-0">
-                    <div className="text-sm font-semibold text-white truncate">{site.displayName || site.domain}</div>
-                    <div className="text-xs text-slate-500 truncate">{site.domain}</div>
+                    <div className="text-sm font-semibold text-[var(--text-white)] truncate">{site.displayName || site.domain}</div>
+                    <div className="text-xs text-[var(--text-faint)] truncate">{site.domain}</div>
                 </div>
             </div>
 
             <div className="grid grid-cols-2 gap-3 mb-4">
                 <div className="bg-[var(--surface-06)] rounded-xl p-3">
-                    <div className="text-xs text-slate-500 mb-1">KI erwähnt</div>
+                    <div className="text-xs text-[var(--text-faint)] mb-1">KI erwähnt</div>
                     <MentionRateBadge rate={site.mentionRate} mentioned={site.mentionedCount} checked={site.checkedCount} />
                 </div>
                 <div className="bg-[var(--surface-06)] rounded-xl p-3">
-                    <div className="text-xs text-slate-500 mb-1">Keywords</div>
-                    <span className="text-xl font-bold text-white">{site.keywords?.length || 0}</span>
+                    <div className="text-xs text-[var(--text-faint)] mb-1">Keywords</div>
+                    <span className="text-xl font-bold text-[var(--text-white)]">{site.keywords?.length || 0}</span>
                 </div>
             </div>
 
-            <div className="text-[11px] text-slate-600 mb-4">
+            <div className="text-[11px] text-[var(--text-faint)] mb-4">
                 {site.lastChecked
                     ? `Zuletzt: ${new Date(site.lastChecked).toLocaleDateString('de-DE')}`
                     : 'Noch nicht geprüft'}
@@ -164,27 +164,27 @@ function AddSiteModal({ slotsLeft, onClose, onAdded, initialDomain = '', initial
                 className="w-full max-w-md bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl p-6"
             >
                 <div className="flex items-center justify-between mb-6">
-                    <h3 className="text-lg font-bold text-white">Website hinzufügen</h3>
-                    <button onClick={onClose} className="w-8 h-8 flex items-center justify-center rounded-lg bg-[var(--surface-06)] hover:bg-[var(--surface-10)] text-slate-400 hover:text-white transition-all">
+                    <h3 className="text-lg font-bold text-[var(--text-white)]">Website hinzufügen</h3>
+                    <button onClick={onClose} className="w-8 h-8 flex items-center justify-center rounded-lg bg-[var(--surface-06)] hover:bg-[var(--surface-10)] text-[var(--text-muted)] hover:text-[var(--text-white)] transition-all">
                         <X className="w-4 h-4" />
                     </button>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
-                        <label className="text-sm text-slate-300 font-medium block mb-1.5">Domain</label>
+                        <label className="text-sm text-[var(--text-body)] font-medium block mb-1.5">Domain</label>
                         <input
                             type="text"
                             value={domain}
                             onChange={e => setDomain(e.target.value)}
                             placeholder="example.com"
                             required
-                            className="w-full bg-[var(--surface-06)] border border-[var(--border-subtle)] focus:border-[var(--accent-border)] rounded-xl px-4 py-3 text-white placeholder:text-slate-600 outline-none transition-all text-sm"
+                            className="w-full bg-[var(--surface-06)] border border-[var(--border-subtle)] focus:border-[var(--accent-border)] rounded-xl px-4 py-3 text-[var(--text-white)] placeholder:text-[var(--text-faint)] outline-none transition-all text-sm"
                         />
                     </div>
 
                     <div>
-                        <label className="text-sm text-slate-300 font-medium block mb-1.5">AI-Plattformen tracken</label>
+                        <label className="text-sm text-[var(--text-body)] font-medium block mb-1.5">AI-Plattformen tracken</label>
                         <div className="space-y-2">
                             {PLATFORMS.map(p => {
                                 const active = selectedPlatforms.includes(p.id)
@@ -195,18 +195,18 @@ function AddSiteModal({ slotsLeft, onClose, onAdded, initialDomain = '', initial
                                         onClick={() => togglePlatform(p.id)}
                                         className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl border transition-all text-left ${
                                             active
-                                                ? 'bg-[var(--accent-soft)] border-[var(--accent-border)] text-white'
-                                                : 'bg-[var(--surface-06)] border-[var(--border-subtle)] text-slate-500 hover:border-[var(--border-strong)]'
+                                                ? 'bg-[var(--accent-soft)] border-[var(--accent-border)] text-[var(--text-white)]'
+                                                : 'bg-[var(--surface-06)] border-[var(--border-subtle)] text-[var(--text-faint)] hover:border-[var(--border-strong)]'
                                         }`}
                                     >
                                         <div className={`w-4 h-4 rounded border-2 flex items-center justify-center shrink-0 transition-all ${
                                             active ? 'bg-[var(--accent)] border-[var(--accent)]' : 'border-[var(--border-strong)]'
                                         }`}>
-                                            {active && <span className="text-white text-[10px] font-bold">✓</span>}
+                                            {active && <span className="text-[var(--text-white)] text-[10px] font-bold">✓</span>}
                                         </div>
                                         <div className="min-w-0">
                                             <div className="text-sm font-semibold">{p.label}</div>
-                                            <div className="text-xs text-slate-600">{p.sub}</div>
+                                            <div className="text-xs text-[var(--text-faint)]">{p.sub}</div>
                                         </div>
                                     </button>
                                 )
@@ -215,21 +215,21 @@ function AddSiteModal({ slotsLeft, onClose, onAdded, initialDomain = '', initial
                     </div>
 
                     <div>
-                        <label className="text-sm text-slate-300 font-medium block mb-1.5">
-                            Keywords <span className="text-slate-500">(eines pro Zeile, max. {slotsLeft} verbleibend)</span>
+                        <label className="text-sm text-[var(--text-body)] font-medium block mb-1.5">
+                            Keywords <span className="text-[var(--text-faint)]">(eines pro Zeile, max. {slotsLeft} verbleibend)</span>
                         </label>
                         <textarea
                             value={keywordsText}
                             onChange={e => setKeywordsText(e.target.value)}
                             placeholder={"seo tool\nwebsite audit\nkeyword tracking"}
                             rows={4}
-                            className="w-full bg-[var(--surface-06)] border border-[var(--border-subtle)] focus:border-[var(--accent-border)] rounded-xl px-4 py-3 text-white placeholder:text-slate-600 outline-none transition-all text-sm resize-none font-mono"
+                            className="w-full bg-[var(--surface-06)] border border-[var(--border-subtle)] focus:border-[var(--accent-border)] rounded-xl px-4 py-3 text-[var(--text-white)] placeholder:text-[var(--text-faint)] outline-none transition-all text-sm resize-none font-mono"
                         />
                         <div className="flex items-center justify-between mt-1">
-                            <p className="text-xs text-slate-600">{kwCount} Keywords eingegeben</p>
+                            <p className="text-xs text-[var(--text-faint)]">{kwCount} Keywords eingegeben</p>
                             {kwCount > 0 && (
-                                <p className="text-xs text-slate-500">
-                                    ~<span className="text-slate-300 font-medium">${estimatedCost}</span>/Monat API-Kosten
+                                <p className="text-xs text-[var(--text-faint)]">
+                                    ~<span className="text-[var(--text-body)] font-medium">${estimatedCost}</span>/Monat API-Kosten
                                 </p>
                             )}
                         </div>
@@ -333,15 +333,15 @@ function GeoDashboardPageInner() {
                     <Sparkles className="w-7 h-7 text-[var(--accent)]" />
                 </div>
                 <div>
-                    <h2 className="text-2xl font-bold text-white mb-2">GEO Automatisierung</h2>
-                    <p className="text-slate-500 text-sm max-w-sm">
+                    <h2 className="text-2xl font-bold text-[var(--text-white)] mb-2">GEO Automatisierung</h2>
+                    <p className="text-[var(--text-faint)] text-sm max-w-sm">
                         Tracke ob Claude, ChatGPT, Perplexity und Google AI Overview deine Domain empfehlen — wöchentlich automatisch.
                         Wähle einen Plan um zu starten.
                     </p>
                 </div>
                 <Link
                     href="/geo/pricing"
-                    className="flex items-center gap-2 px-6 py-3 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] font-semibold rounded-xl transition-all shadow-lg shadow-[var(--accent-border)]"
+                    className="flex items-center gap-2 px-6 py-3 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] font-semibold rounded-xl transition-all shadow-lg shadow-[var(--accent-border)] active:scale-[0.97] active:duration-75"
                 >
                     Pläne ansehen →
                 </Link>
@@ -351,9 +351,6 @@ function GeoDashboardPageInner() {
 
     return (
         <div className="min-h-screen bg-[var(--bg-base)]">
-            <Toaster position="top-right" toastOptions={{
-                style: { background: 'var(--bg-surface)', color: '#fff', border: '1px solid var(--border-subtle)' },
-            }} />
             <Navbar />
 
             <div className="max-w-7xl mx-auto px-5 sm:px-8 pt-28 pb-16">
@@ -361,14 +358,14 @@ function GeoDashboardPageInner() {
                 {/* Header */}
                 <div className="flex items-start justify-between gap-4 mb-8">
                     <div>
-                        <h1 className="text-2xl sm:text-3xl font-bold text-white">GEO Automatisierung</h1>
-                        <p className="text-slate-500 text-sm mt-1">Wirst du von KI zitiert?</p>
+                        <h1 className="text-2xl sm:text-3xl font-bold text-[var(--text-white)]">GEO Automatisierung</h1>
+                        <p className="text-[var(--text-faint)] text-sm mt-1">Wirst du von KI zitiert?</p>
                     </div>
 
                     {limits.usedSites < limits.maxSites && (
                         <button
                             onClick={() => setShowAdd(true)}
-                            className="flex items-center gap-2 px-4 py-2.5 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all shadow-lg shadow-[var(--accent-border)]"
+                            className="flex items-center gap-2 px-4 py-2.5 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all shadow-lg shadow-[var(--accent-border)] active:scale-[0.97] active:duration-75"
                         >
                             <Plus className="w-4 h-4" />
                             Website hinzufügen
@@ -384,8 +381,8 @@ function GeoDashboardPageInner() {
                     ].map(({ label, used, max }) => (
                         <div key={label} className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-xl p-4">
                             <div className="flex items-center justify-between mb-2">
-                                <span className="text-sm text-slate-400">{label}</span>
-                                <span className="text-sm font-semibold text-white">{used} / {max}</span>
+                                <span className="text-sm text-[var(--text-muted)]">{label}</span>
+                                <span className="text-sm font-semibold text-[var(--text-white)]">{used} / {max}</span>
                             </div>
                             <div className="h-1.5 bg-[var(--surface-08)] rounded-full overflow-hidden">
                                 <div
@@ -400,7 +397,7 @@ function GeoDashboardPageInner() {
                 {/* Info banner */}
                 <div className="bg-[var(--accent-soft)] border border-[var(--accent-border)] rounded-2xl p-4 mb-8 flex items-start gap-3">
                     <Sparkles className="w-4 h-4 text-[var(--accent)] shrink-0 mt-0.5" />
-                    <p className="text-xs text-slate-400 leading-relaxed">
+                    <p className="text-xs text-[var(--text-muted)] leading-relaxed">
                         GEO Tracking prüft, ob Claude, ChatGPT, Perplexity und Google AI Overview deine Domain bei relevanten Suchanfragen erwähnen.
                         Je mehr Keywords KI-Systeme mit deiner Seite assoziieren, desto besser ist deine GEO-Sichtbarkeit.
                         Checks laufen wöchentlich automatisch oder manuell auf Abruf.
@@ -413,8 +410,8 @@ function GeoDashboardPageInner() {
                         <div className="w-16 h-16 rounded-2xl bg-[var(--accent-soft)] border border-[var(--accent-border)] flex items-center justify-center mx-auto mb-4">
                             <Sparkles className="w-7 h-7 text-[var(--accent)]" />
                         </div>
-                        <h3 className="text-xl font-bold text-white mb-2">Noch keine Website hinzugefügt</h3>
-                        <p className="text-slate-500 text-sm mb-6">Füge deine Website mit Keywords hinzu und prüfe ob Claude AI dich erwähnt.</p>
+                        <h3 className="text-xl font-bold text-[var(--text-white)] mb-2">Noch keine Website hinzugefügt</h3>
+                        <p className="text-[var(--text-faint)] text-sm mb-6">Füge deine Website mit Keywords hinzu und prüfe ob Claude AI dich erwähnt.</p>
                         <button
                             onClick={() => setShowAdd(true)}
                             className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all"

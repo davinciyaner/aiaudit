@@ -23,7 +23,7 @@ export default function ScoreCard({ label, score, delay = 0, onClick, locale = '
             onClick={onClick}
             className={`bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl p-4 sm:p-6 text-center ${onClick ? 'cursor-pointer hover:border-[var(--accent-border)] hover:bg-[var(--surface-08)] transition-all' : ''}`}
         >
-            <div className="text-xs text-slate-500 uppercase tracking-widest mb-3">{label}</div>
+            <div className="text-xs text-[var(--text-faint)] uppercase tracking-widest mb-3">{label}</div>
             <div className="relative w-20 h-20 mx-auto mb-3">
                 <svg className="w-20 h-20 -rotate-90" viewBox="0 0 80 80">
                     <circle cx="40" cy="40" r={r} fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="6" />
@@ -37,7 +37,7 @@ export default function ScoreCard({ label, score, delay = 0, onClick, locale = '
                     />
                 </svg>
                 <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="text-xl font-bold text-white">{score}</span>
+                    <span className="text-xl font-bold text-[var(--text-white)]">{score}</span>
                 </div>
             </div>
             <div className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border"

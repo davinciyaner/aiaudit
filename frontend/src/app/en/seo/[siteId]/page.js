@@ -9,7 +9,7 @@ import {
 } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter, useParams } from 'next/navigation'
-import toast, { Toaster } from 'react-hot-toast'
+import toast from 'react-hot-toast'
 import Navbar from '../../../components/Navbar'
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
@@ -17,11 +17,11 @@ import Navbar from '../../../components/Navbar'
 // Tiers pair color with a shape/icon signal (not color alone) so top-3 vs. the rest stays
 // distinguishable for color-blind users — same tokens as the DE dashboard's globals.css.
 function PositionCell({ position }) {
-    if (position == null) return <span className="text-slate-600 text-sm">—</span>
+    if (position == null) return <span className="text-[var(--text-faint)] text-sm">—</span>
     const tier =
         position <= 10 ? { chip: 'bg-[var(--success-soft)] border-[var(--success-border)]', text: 'text-[var(--success)]', icon: position <= 3 ? Award : null } :
         position <= 30 ? { chip: 'bg-[var(--warning-soft)] border-[var(--warning-border)]',  text: 'text-[var(--warning)]', icon: null } :
-                         { chip: 'border-transparent',                                       text: 'text-slate-400',        icon: null }
+                         { chip: 'border-transparent',                                       text: 'text-[var(--text-muted)]',        icon: null }
     return (
         <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md border text-sm font-bold ${tier.chip} ${tier.text}`}>
             {tier.icon && <tier.icon className="w-3 h-3" strokeWidth={2.5} />}
@@ -31,21 +31,21 @@ function PositionCell({ position }) {
 }
 
 function ChangeCell({ change }) {
-    if (change == null) return <span className="text-slate-600 text-xs">—</span>
+    if (change == null) return <span className="text-[var(--text-faint)] text-xs">—</span>
     if (change > 0) return <span className="flex items-center gap-0.5 text-[var(--success)] text-xs font-semibold"><ChevronUp className="w-3 h-3" />+{change}</span>
     if (change < 0) return <span className="flex items-center gap-0.5 text-[var(--danger)] text-xs font-semibold"><ChevronDown className="w-3 h-3" />{change}</span>
-    return <span className="flex items-center gap-0.5 text-slate-500 text-xs"><Minus className="w-3 h-3" />0</span>
+    return <span className="flex items-center gap-0.5 text-[var(--text-faint)] text-xs"><Minus className="w-3 h-3" />0</span>
 }
 
 function VolumeBar({ value, max }) {
-    if (!value || !max) return <span className="text-slate-600 text-xs">—</span>
+    if (!value || !max) return <span className="text-[var(--text-faint)] text-xs">—</span>
     const pct = Math.min((value / max) * 100, 100)
     return (
         <div className="flex items-center gap-2">
             <div className="w-16 h-1.5 bg-[var(--surface-08)] rounded-full overflow-hidden">
                 <div className="h-full bg-[var(--accent)] rounded-full" style={{ width: `${pct}%` }} />
             </div>
-            <span className="text-xs text-slate-400">{value >= 1000 ? `${(value/1000).toFixed(1)}k` : value}</span>
+            <span className="text-xs text-[var(--text-muted)]">{value >= 1000 ? `${(value/1000).toFixed(1)}k` : value}</span>
         </div>
     )
 }
@@ -54,7 +54,7 @@ function LoadingTab() {
     return (
         <div className="flex flex-col items-center justify-center py-20 gap-3">
             <Loader2 className="w-6 h-6 text-[var(--accent)] animate-spin" />
-            <span className="text-sm text-slate-500">Loading data…</span>
+            <span className="text-sm text-[var(--text-faint)]">Loading data…</span>
         </div>
     )
 }
@@ -62,8 +62,8 @@ function LoadingTab() {
 function EmptyTab({ icon: Icon, text }) {
     return (
         <div className="flex flex-col items-center justify-center py-20 gap-3">
-            <Icon className="w-8 h-8 text-slate-700" />
-            <span className="text-sm text-slate-500">{text}</span>
+            <Icon className="w-8 h-8 text-[var(--text-faint)]" />
+            <span className="text-sm text-[var(--text-faint)]">{text}</span>
         </div>
     )
 }
@@ -93,7 +93,7 @@ function TableSkeleton({ rows = 6 }) {
 function SparklineChart({ history }) {
     const valid = history.filter(h => h.position != null)
     if (valid.length < 2) return (
-        <p className="text-xs text-slate-600 py-2">Not enough data yet for a history. At least 2 checks required.</p>
+        <p className="text-xs text-[var(--text-faint)] py-2">Not enough data yet for a history. At least 2 checks required.</p>
     )
 
     const W = 600, H = 100
@@ -212,7 +212,7 @@ const DIFFICULTY_COLORS = {
 
 function DifficultyBadge({ difficulty }) {
     const key = (difficulty || '').toLowerCase()
-    const cfg = DIFFICULTY_COLORS[key] || { text: 'text-slate-400', bg: '', label: difficulty || '—' }
+    const cfg = DIFFICULTY_COLORS[key] || { text: 'text-[var(--text-muted)]', bg: '', label: difficulty || '—' }
     return <span className={`text-xs font-semibold px-2 py-0.5 rounded-md border ${cfg.bg} ${cfg.text}`}>{cfg.label}</span>
 }
 
@@ -257,14 +257,14 @@ function InsightPanel({ insight, keyword, siteId, onRefreshed }) {
 
     const refreshBtn = (
         <button onClick={handleRefresh} disabled={refreshing}
-            className="flex items-center gap-1 text-xs text-slate-600 hover:text-[var(--accent)] transition-colors disabled:opacity-40">
+            className="flex items-center gap-1 text-xs text-[var(--text-faint)] hover:text-[var(--accent)] transition-colors disabled:opacity-40">
             <RefreshCw className={`w-3 h-3 ${refreshing ? 'animate-spin' : ''}`} />
             {refreshing ? 'Running…' : 'Regenerate'}
         </button>
     )
 
     if (isPending) return (
-        <div className="flex items-center gap-2 py-2 text-sm text-slate-600">
+        <div className="flex items-center gap-2 py-2 text-sm text-[var(--text-faint)]">
             <Loader2 className="w-3.5 h-3.5 animate-spin text-[var(--accent)]" />
             Content plan is being generated in the background…
         </div>
@@ -272,7 +272,7 @@ function InsightPanel({ insight, keyword, siteId, onRefreshed }) {
 
     if (isError) return (
         <div className="flex items-center gap-3 py-2">
-            <span className="text-sm text-slate-600">Generation failed.</span>
+            <span className="text-sm text-[var(--text-faint)]">Generation failed.</span>
             {refreshBtn}
         </div>
     )
@@ -285,7 +285,7 @@ function InsightPanel({ insight, keyword, siteId, onRefreshed }) {
             {content && (
                 <div>
                     <div className="flex items-center justify-between mb-3">
-                        <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
+                        <span className="text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider flex items-center gap-1.5">
                             <FileText className="w-3 h-3" />Content Plan
                         </span>
                         {refreshBtn}
@@ -294,35 +294,35 @@ function InsightPanel({ insight, keyword, siteId, onRefreshed }) {
                         {/* Title */}
                         <div className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-xl p-3">
                             <div className="flex items-center justify-between mb-1.5">
-                                <span className="text-[10px] font-semibold text-slate-600 uppercase tracking-wider">H1 Title</span>
-                                <button onClick={() => copy(content.title, 'title')} className="flex items-center gap-1 text-[10px] text-slate-600 hover:text-[var(--accent)] transition-colors">
+                                <span className="text-[10px] font-semibold text-[var(--text-faint)] uppercase tracking-wider">H1 Title</span>
+                                <button onClick={() => copy(content.title, 'title')} className="flex items-center gap-1 text-[10px] text-[var(--text-faint)] hover:text-[var(--accent)] transition-colors">
                                     {copied === 'title' ? <Check className="w-2.5 h-2.5" /> : <Copy className="w-2.5 h-2.5" />}
                                     {copied === 'title' ? 'Copied' : 'Copy'}
                                 </button>
                             </div>
-                            <p className="text-sm text-white font-medium leading-snug">{content.title}</p>
+                            <p className="text-sm text-[var(--text-white)] font-medium leading-snug">{content.title}</p>
                         </div>
 
                         {/* Meta */}
                         <div className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-xl p-3">
                             <div className="flex items-center justify-between mb-1.5">
-                                <span className="text-[10px] font-semibold text-slate-600 uppercase tracking-wider">Meta Description</span>
+                                <span className="text-[10px] font-semibold text-[var(--text-faint)] uppercase tracking-wider">Meta Description</span>
                                 <div className="flex items-center gap-2">
-                                    <span className="text-[10px] text-slate-700">{content.metaDescription?.length || 0}/155</span>
-                                    <button onClick={() => copy(content.metaDescription, 'meta')} className="flex items-center gap-1 text-[10px] text-slate-600 hover:text-[var(--accent)] transition-colors">
+                                    <span className="text-[10px] text-[var(--text-faint)]">{content.metaDescription?.length || 0}/155</span>
+                                    <button onClick={() => copy(content.metaDescription, 'meta')} className="flex items-center gap-1 text-[10px] text-[var(--text-faint)] hover:text-[var(--accent)] transition-colors">
                                         {copied === 'meta' ? <Check className="w-2.5 h-2.5" /> : <Copy className="w-2.5 h-2.5" />}
                                         {copied === 'meta' ? 'Copied' : 'Copy'}
                                     </button>
                                 </div>
                             </div>
-                            <p className="text-xs text-slate-400 leading-relaxed">{content.metaDescription}</p>
+                            <p className="text-xs text-[var(--text-muted)] leading-relaxed">{content.metaDescription}</p>
                         </div>
 
                         {/* Slug */}
                         <div className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-xl p-3">
                             <div className="flex items-center justify-between mb-1.5">
-                                <span className="text-[10px] font-semibold text-slate-600 uppercase tracking-wider">URL Slug</span>
-                                <button onClick={() => copy(content.slug, 'slug')} className="flex items-center gap-1 text-[10px] text-slate-600 hover:text-[var(--accent)] transition-colors">
+                                <span className="text-[10px] font-semibold text-[var(--text-faint)] uppercase tracking-wider">URL Slug</span>
+                                <button onClick={() => copy(content.slug, 'slug')} className="flex items-center gap-1 text-[10px] text-[var(--text-faint)] hover:text-[var(--accent)] transition-colors">
                                     {copied === 'slug' ? <Check className="w-2.5 h-2.5" /> : <Copy className="w-2.5 h-2.5" />}
                                     {copied === 'slug' ? 'Copied' : 'Copy'}
                                 </button>
@@ -334,13 +334,13 @@ function InsightPanel({ insight, keyword, siteId, onRefreshed }) {
                         {content.intro && (
                             <div className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-xl p-3">
                                 <div className="flex items-center justify-between mb-1.5">
-                                    <span className="text-[10px] font-semibold text-slate-600 uppercase tracking-wider">Intro</span>
-                                    <button onClick={() => copy(content.intro, 'intro')} className="flex items-center gap-1 text-[10px] text-slate-600 hover:text-[var(--accent)] transition-colors">
+                                    <span className="text-[10px] font-semibold text-[var(--text-faint)] uppercase tracking-wider">Intro</span>
+                                    <button onClick={() => copy(content.intro, 'intro')} className="flex items-center gap-1 text-[10px] text-[var(--text-faint)] hover:text-[var(--accent)] transition-colors">
                                         {copied === 'intro' ? <Check className="w-2.5 h-2.5" /> : <Copy className="w-2.5 h-2.5" />}
                                         {copied === 'intro' ? 'Copied' : 'Copy'}
                                     </button>
                                 </div>
-                                <p className="text-xs text-slate-400 leading-relaxed line-clamp-3">{content.intro}</p>
+                                <p className="text-xs text-[var(--text-muted)] leading-relaxed line-clamp-3">{content.intro}</p>
                             </div>
                         )}
                     </div>
@@ -349,9 +349,9 @@ function InsightPanel({ insight, keyword, siteId, onRefreshed }) {
                     {content.outline?.length > 0 && (
                         <div className="mt-2.5 bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-xl p-3">
                             <div className="flex items-center justify-between mb-2">
-                                <span className="text-[10px] font-semibold text-slate-600 uppercase tracking-wider">Article Outline</span>
+                                <span className="text-[10px] font-semibold text-[var(--text-faint)] uppercase tracking-wider">Article Outline</span>
                                 <button onClick={() => copy(content.outline.map((o, i) => `${i+1}. ${o.h2}\n   ${o.description}`).join('\n'), 'outline')}
-                                    className="flex items-center gap-1 text-[10px] text-slate-600 hover:text-[var(--accent)] transition-colors">
+                                    className="flex items-center gap-1 text-[10px] text-[var(--text-faint)] hover:text-[var(--accent)] transition-colors">
                                     {copied === 'outline' ? <Check className="w-2.5 h-2.5" /> : <Copy className="w-2.5 h-2.5" />}
                                     {copied === 'outline' ? 'Copied' : 'Copy'}
                                 </button>
@@ -361,8 +361,8 @@ function InsightPanel({ insight, keyword, siteId, onRefreshed }) {
                                     <div key={i} className="flex gap-2">
                                         <span className="text-[10px] font-bold text-[var(--accent)] shrink-0 mt-0.5">H2</span>
                                         <div>
-                                            <p className="text-xs font-semibold text-slate-200">{item.h2}</p>
-                                            <p className="text-[11px] text-slate-600">{item.description}</p>
+                                            <p className="text-xs font-semibold text-[var(--text-body)]">{item.h2}</p>
+                                            <p className="text-[11px] text-[var(--text-faint)]">{item.description}</p>
                                         </div>
                                     </div>
                                 ))}
@@ -373,12 +373,12 @@ function InsightPanel({ insight, keyword, siteId, onRefreshed }) {
                     {/* Key Points */}
                     {content.keyPoints?.length > 0 && (
                         <div className="mt-2.5 bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-xl p-3">
-                            <span className="text-[10px] font-semibold text-slate-600 uppercase tracking-wider block mb-2">Key Points</span>
+                            <span className="text-[10px] font-semibold text-[var(--text-faint)] uppercase tracking-wider block mb-2">Key Points</span>
                             <div className="grid sm:grid-cols-2 gap-1">
                                 {content.keyPoints.map((p, i) => (
                                     <div key={i} className="flex items-start gap-2">
                                         <Check className="w-3 h-3 text-[var(--accent)] shrink-0 mt-0.5" strokeWidth={3} />
-                                        <span className="text-xs text-slate-400">{p}</span>
+                                        <span className="text-xs text-[var(--text-muted)]">{p}</span>
                                     </div>
                                 ))}
                             </div>
@@ -390,7 +390,7 @@ function InsightPanel({ insight, keyword, siteId, onRefreshed }) {
             {/* Backlinks */}
             {backlinks && (
                 <div>
-                    <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider flex items-center gap-1.5 mb-3">
+                    <span className="text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider flex items-center gap-1.5 mb-3">
                         <Link2 className="w-3 h-3" />Backlink Strategy
                     </span>
 
@@ -400,10 +400,10 @@ function InsightPanel({ insight, keyword, siteId, onRefreshed }) {
                                 <div key={i} className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-xl px-3 py-2.5 flex gap-3 items-start">
                                     <div className="flex-1">
                                         <div className="flex items-center gap-2 mb-0.5">
-                                            <span className="text-xs font-semibold text-white">{s.type}</span>
+                                            <span className="text-xs font-semibold text-[var(--text-white)]">{s.type}</span>
                                             <DifficultyBadge difficulty={s.difficulty} />
                                         </div>
-                                        <p className="text-[11px] text-slate-500">{s.description}</p>
+                                        <p className="text-[11px] text-[var(--text-faint)]">{s.description}</p>
                                     </div>
                                 </div>
                             ))}
@@ -413,13 +413,13 @@ function InsightPanel({ insight, keyword, siteId, onRefreshed }) {
                     {backlinks.targetSites?.length > 0 && (
                         <div className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-xl overflow-hidden mb-2.5">
                             <div className="px-3 py-2 border-b border-[var(--border-subtle)]">
-                                <span className="text-[10px] font-semibold text-slate-600 uppercase tracking-wider">Target Websites</span>
+                                <span className="text-[10px] font-semibold text-[var(--text-faint)] uppercase tracking-wider">Target Websites</span>
                             </div>
                             {backlinks.targetSites.map((ts, i) => (
                                 <div key={i} className={`px-3 py-2.5 ${i < backlinks.targetSites.length - 1 ? 'border-b border-[var(--border-subtle)]' : ''}`}>
-                                    <span className="text-xs font-semibold text-slate-300">{ts.type}</span>
-                                    {ts.example && <span className="text-[11px] text-slate-600 ml-2">{ts.example}</span>}
-                                    <p className="text-[11px] text-slate-500 mt-0.5">{ts.why}</p>
+                                    <span className="text-xs font-semibold text-[var(--text-body)]">{ts.type}</span>
+                                    {ts.example && <span className="text-[11px] text-[var(--text-faint)] ml-2">{ts.example}</span>}
+                                    <p className="text-[11px] text-[var(--text-faint)] mt-0.5">{ts.why}</p>
                                 </div>
                             ))}
                         </div>
@@ -427,12 +427,12 @@ function InsightPanel({ insight, keyword, siteId, onRefreshed }) {
 
                     {backlinks.linkbaitIdeas?.length > 0 && (
                         <div className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-xl p-3">
-                            <span className="text-[10px] font-semibold text-slate-600 uppercase tracking-wider block mb-2">Linkbait Ideas</span>
+                            <span className="text-[10px] font-semibold text-[var(--text-faint)] uppercase tracking-wider block mb-2">Linkbait Ideas</span>
                             <div className="space-y-1.5">
                                 {backlinks.linkbaitIdeas.map((idea, i) => (
                                     <div key={i} className="flex items-start gap-2">
                                         <span className="text-[10px] font-bold text-[var(--accent)] shrink-0 w-4 mt-0.5">{i + 1}.</span>
-                                        <span className="text-xs text-slate-400">{idea}</span>
+                                        <span className="text-xs text-[var(--text-muted)]">{idea}</span>
                                     </div>
                                 ))}
                             </div>
@@ -487,8 +487,8 @@ function RankingHistoryChart({ siteId, refreshKey }) {
     return (
         <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl p-5 mb-6">
             <div className="flex items-center justify-between mb-4">
-                <h3 className="text-sm font-semibold text-white">Avg. Position History</h3>
-                <span className="text-xs text-slate-600">{n} check{n !== 1 ? 's' : ''} recorded</span>
+                <h3 className="text-sm font-semibold text-[var(--text-white)]">Avg. Position History</h3>
+                <span className="text-xs text-[var(--text-faint)]">{n} check{n !== 1 ? 's' : ''} recorded</span>
             </div>
 
             <div className="relative">
@@ -527,8 +527,8 @@ function RankingHistoryChart({ siteId, refreshKey }) {
                             top: `${(yAt(history[hover].avgPosition) / H) * 100}%`,
                             transform: 'translate(-50%, -130%)',
                         }}>
-                        <div className="text-slate-500">{formatDate(history[hover].date)}</div>
-                        <div className="text-white font-semibold">Avg. #{history[hover].avgPosition} &middot; {history[hover].keywordsRanked} keywords</div>
+                        <div className="text-[var(--text-faint)]">{formatDate(history[hover].date)}</div>
+                        <div className="text-[var(--text-white)] font-semibold">Avg. #{history[hover].avgPosition} &middot; {history[hover].keywordsRanked} keywords</div>
                     </div>
                 )}
             </div>
@@ -726,7 +726,7 @@ function RankingsTab({ siteId, site, onSiteUpdated, onStatsChange }) {
 
             {/* Toolbar */}
             <div className="flex items-center justify-between gap-3 mb-4 flex-wrap">
-                <div className="text-sm text-slate-500">
+                <div className="text-sm text-[var(--text-faint)]">
                     {site?.lastChecked
                         ? `Last checked: ${new Date(site.lastChecked).toLocaleString('en-US', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' })}`
                         : 'Not checked yet'}
@@ -740,12 +740,12 @@ function RankingsTab({ siteId, site, onSiteUpdated, onStatsChange }) {
                     )}
                     {rankings.length > 0 && (
                         <button onClick={exportCSV}
-                            className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl bg-[var(--surface-08)] hover:bg-[var(--surface-10)] text-slate-300 border border-[var(--border-subtle)] transition-all">
+                            className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl bg-[var(--surface-08)] hover:bg-[var(--surface-10)] text-[var(--text-body)] border border-[var(--border-subtle)] transition-all">
                             <Download className="w-3.5 h-3.5" />CSV
                         </button>
                     )}
                     <button onClick={() => setShowAdd(v => !v)}
-                        className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl bg-[var(--surface-08)] hover:bg-[var(--surface-10)] text-slate-300 border border-[var(--border-subtle)] transition-all">
+                        className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl bg-[var(--surface-08)] hover:bg-[var(--surface-10)] text-[var(--text-body)] border border-[var(--border-subtle)] transition-all">
                         <Plus className="w-3.5 h-3.5" />Keywords
                     </button>
                     <button onClick={handleCheck} disabled={checking}
@@ -764,12 +764,12 @@ function RankingsTab({ siteId, site, onSiteUpdated, onStatsChange }) {
                             className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${
                                 filter === f.id
                                     ? 'bg-[var(--accent-soft)] border border-[var(--accent-border)] text-[var(--accent)]'
-                                    : 'bg-[var(--surface-06)] border border-[var(--border-subtle)] text-slate-500 hover:text-slate-300 hover:bg-[var(--surface-10)]'
+                                    : 'bg-[var(--surface-06)] border border-[var(--border-subtle)] text-[var(--text-faint)] hover:text-[var(--text-body)] hover:bg-[var(--surface-10)]'
                             }`}>
                             {f.label}
                         </button>
                     ))}
-                    <span className="text-xs text-slate-600 ml-1">{filteredRankings.length} keywords</span>
+                    <span className="text-xs text-[var(--text-faint)] ml-1">{filteredRankings.length} keywords</span>
                 </div>
             )}
 
@@ -779,13 +779,13 @@ function RankingsTab({ siteId, site, onSiteUpdated, onStatsChange }) {
                     <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
                         className="bg-[var(--bg-surface)] border border-[var(--accent-border)] rounded-2xl p-5 mb-5">
                         <div className="flex items-center justify-between mb-3">
-                            <span className="text-sm font-semibold text-white">Add keywords</span>
-                            <button onClick={() => setShowAdd(false)} className="text-slate-500 hover:text-white transition-colors"><X className="w-4 h-4" /></button>
+                            <span className="text-sm font-semibold text-[var(--text-white)]">Add keywords</span>
+                            <button onClick={() => setShowAdd(false)} className="text-[var(--text-faint)] hover:text-[var(--text-white)] transition-colors"><X className="w-4 h-4" /></button>
                         </div>
                         <form onSubmit={handleAddKeywords} className="flex gap-3">
                             <textarea value={newKeywords} onChange={e => setNewKeywords(e.target.value)}
                                 placeholder={"keyword one\nkeyword two"} rows={3}
-                                className="flex-1 bg-[var(--surface-06)] border border-[var(--border-subtle)] focus:border-[var(--accent-border)] rounded-xl px-4 py-3 text-white placeholder:text-slate-600 outline-none text-sm resize-none font-mono" />
+                                className="flex-1 bg-[var(--surface-06)] border border-[var(--border-subtle)] focus:border-[var(--accent-border)] rounded-xl px-4 py-3 text-[var(--text-white)] placeholder:text-[var(--text-faint)] outline-none text-sm resize-none font-mono" />
                             <button type="submit" disabled={addingKws}
                                 className="self-end flex items-center gap-2 px-4 py-2 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all disabled:opacity-50">
                                 {addingKws ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Plus className="w-3.5 h-3.5" />}
@@ -814,12 +814,12 @@ function RankingsTab({ siteId, site, onSiteUpdated, onStatsChange }) {
                                             aria-label="Select all visible keywords"
                                             className="w-3.5 h-3.5 rounded border-[var(--border-strong)] accent-red-500 cursor-pointer" />
                                     </th>
-                                    <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Keyword</th>
-                                    <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Position</th>
-                                    <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Change</th>
-                                    <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider hidden sm:table-cell">CTR (est.)</th>
-                                    <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider hidden sm:table-cell">URL</th>
-                                    <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider hidden md:table-cell">Date</th>
+                                    <th className="px-5 py-3 text-left text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider">Keyword</th>
+                                    <th className="px-5 py-3 text-left text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider">Position</th>
+                                    <th className="px-5 py-3 text-left text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider">Change</th>
+                                    <th className="px-5 py-3 text-left text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider hidden sm:table-cell">CTR (est.)</th>
+                                    <th className="px-5 py-3 text-left text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider hidden sm:table-cell">URL</th>
+                                    <th className="px-5 py-3 text-left text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider hidden md:table-cell">Date</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -841,13 +841,13 @@ function RankingsTab({ siteId, site, onSiteUpdated, onStatsChange }) {
                                                 </td>
                                                 <td className="px-5 py-3.5">
                                                     <div className="flex items-center gap-2">
-                                                        <span className="text-sm text-slate-200">{keyword}</span>
+                                                        <span className="text-sm text-[var(--text-body)]">{keyword}</span>
                                                         {insightDone && <span className="w-1.5 h-1.5 rounded-full bg-emerald-500/70 shrink-0" title="Content plan available" />}
-                                                        {insightPending && <Loader2 className="w-2.5 h-2.5 text-slate-600 animate-spin shrink-0" />}
+                                                        {insightPending && <Loader2 className="w-2.5 h-2.5 text-[var(--text-faint)] animate-spin shrink-0" />}
                                                         <button type="button" onClick={e => { e.stopPropagation(); toggleExpand(keyword) }}
                                                             aria-expanded={isExpanded} aria-controls={`kw-detail-${keyword}`}
                                                             aria-label={isExpanded ? 'Collapse details' : 'Expand details'}
-                                                            className={`transition-colors ${isExpanded ? 'text-[var(--accent)]' : 'text-slate-600 hover:text-slate-300'}`}>
+                                                            className={`transition-colors ${isExpanded ? 'text-[var(--accent)]' : 'text-[var(--text-faint)] hover:text-[var(--text-body)]'}`}>
                                                             {isExpanded ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
                                                         </button>
                                                     </div>
@@ -856,21 +856,21 @@ function RankingsTab({ siteId, site, onSiteUpdated, onStatsChange }) {
                                                 <td className="px-5 py-3.5"><ChangeCell change={change} /></td>
                                                 <td className="px-5 py-3.5 hidden sm:table-cell">
                                                     {current?.position ? (
-                                                        <span className="text-xs font-semibold text-slate-300">~{getCTR(current.position)}%</span>
-                                                    ) : <span className="text-xs text-slate-700">—</span>}
+                                                        <span className="text-xs font-semibold text-[var(--text-body)]">~{getCTR(current.position)}%</span>
+                                                    ) : <span className="text-xs text-[var(--text-faint)]">—</span>}
                                                 </td>
                                                 <td className="px-5 py-3.5 hidden sm:table-cell">
                                                     {current?.url && /^https?:\/\//.test(current.url) ? (
                                                         <a href={current.url} target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()}
-                                                            className="text-xs text-slate-500 hover:text-[var(--accent)] transition-colors truncate max-w-[180px] block">
+                                                            className="text-xs text-[var(--text-faint)] hover:text-[var(--accent)] transition-colors truncate max-w-[180px] block">
                                                             {current.url.replace(/^https?:\/\//, '')}
                                                         </a>
-                                                    ) : <span className="text-xs text-slate-700">—</span>}
+                                                    ) : <span className="text-xs text-[var(--text-faint)]">—</span>}
                                                 </td>
                                                 <td className="px-5 py-3.5 hidden md:table-cell">
                                                     {current?.checkedAt
-                                                        ? <span className="text-xs text-slate-600">{new Date(current.checkedAt).toLocaleDateString('en-US')}</span>
-                                                        : <span className="text-xs text-slate-700">—</span>}
+                                                        ? <span className="text-xs text-[var(--text-faint)]">{new Date(current.checkedAt).toLocaleDateString('en-US')}</span>
+                                                        : <span className="text-xs text-[var(--text-faint)]">—</span>}
                                                 </td>
                                             </tr>
                                             {isExpanded && (
@@ -878,7 +878,7 @@ function RankingsTab({ siteId, site, onSiteUpdated, onStatsChange }) {
                                                     <td id={`kw-detail-${keyword}`} colSpan={7} className="px-5 py-5 bg-[var(--surface-06)]">
                                                         {hasHistory && (
                                                             <div className="mb-5">
-                                                                <p className="text-xs text-slate-500 mb-3 uppercase tracking-wider font-semibold">History — {keyword}</p>
+                                                                <p className="text-xs text-[var(--text-faint)] mb-3 uppercase tracking-wider font-semibold">History — {keyword}</p>
                                                                 <SparklineChart history={history} />
                                                             </div>
                                                         )}
@@ -965,7 +965,7 @@ function KeywordIdeasTab({ siteId }) {
     if (!loaded) return (
         <div className="flex flex-col items-center justify-center py-20 gap-4">
             <Lightbulb className="w-10 h-10 text-[var(--accent)]" />
-            <p className="text-slate-500 text-sm text-center">Load search volume for your keywords + 20 new keyword ideas</p>
+            <p className="text-[var(--text-faint)] text-sm text-center">Load search volume for your keywords + 20 new keyword ideas</p>
             <button onClick={fetch_} disabled={loading}
                 className="flex items-center gap-2 px-5 py-2.5 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all disabled:opacity-50">
                 {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Lightbulb className="w-4 h-4" />}
@@ -978,7 +978,7 @@ function KeywordIdeasTab({ siteId }) {
         <div className="space-y-6">
             {/* Difficulty filter */}
             <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-xs text-slate-500 font-medium">Competition:</span>
+                <span className="text-xs text-[var(--text-faint)] font-medium">Competition:</span>
                 {DIFF_FILTERS.map(f => (
                     <button key={f.id} onClick={() => setDiffFilter(f.id)}
                         className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all border ${
@@ -987,7 +987,7 @@ function KeywordIdeasTab({ siteId }) {
                                 : f.id === 'MEDIUM' ? 'bg-amber-500/15 border-amber-500/30 text-amber-400'
                                 : f.id === 'HIGH'   ? 'bg-red-500/15 border-red-500/30 text-red-400'
                                 : 'bg-[var(--accent-soft)] border-[var(--accent-border)] text-[var(--accent)]'
-                                : 'bg-[var(--surface-06)] border-[var(--border-subtle)] text-slate-500 hover:text-slate-300 hover:bg-[var(--surface-10)]'
+                                : 'bg-[var(--surface-06)] border-[var(--border-subtle)] text-[var(--text-faint)] hover:text-[var(--text-body)] hover:bg-[var(--surface-10)]'
                         }`}>
                         {f.label}
                     </button>
@@ -997,42 +997,42 @@ function KeywordIdeasTab({ siteId }) {
             {/* Existing keywords with volumes */}
             {data.volumes?.length > 0 && (
                 <div>
-                    <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-3">
+                    <h3 className="text-sm font-semibold text-[var(--text-muted)] uppercase tracking-wider mb-3">
                         Your Keywords — Search Volume
                         {diffFilter !== 'ALL' && filteredVolumes?.length !== data.volumes.length && (
-                            <span className="ml-2 text-slate-600 font-normal normal-case">{filteredVolumes?.length} of {data.volumes.length}</span>
+                            <span className="ml-2 text-[var(--text-faint)] font-normal normal-case">{filteredVolumes?.length} of {data.volumes.length}</span>
                         )}
                     </h3>
                     <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl overflow-hidden">
                         <table className="w-full">
                             <thead>
                                 <tr className="border-b border-[var(--border-subtle)]">
-                                    <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Keyword</th>
-                                    <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Volume/Month</th>
-                                    <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider hidden sm:table-cell">Competition</th>
-                                    <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider hidden sm:table-cell">CPC</th>
+                                    <th className="px-5 py-3 text-left text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider">Keyword</th>
+                                    <th className="px-5 py-3 text-left text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider">Volume/Month</th>
+                                    <th className="px-5 py-3 text-left text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider hidden sm:table-cell">Competition</th>
+                                    <th className="px-5 py-3 text-left text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider hidden sm:table-cell">CPC</th>
                                     <th className="px-5 py-3" />
                                 </tr>
                             </thead>
                             <tbody>
                                 {(filteredVolumes || []).length === 0 ? (
-                                    <tr><td colSpan={5} className="px-5 py-8 text-center text-sm text-slate-600">No keywords with this competition level.</td></tr>
+                                    <tr><td colSpan={5} className="px-5 py-8 text-center text-sm text-[var(--text-faint)]">No keywords with this competition level.</td></tr>
                                 ) : (filteredVolumes || []).map(item => (
                                     <tr key={item.keyword} className="border-b border-[var(--border-subtle)] last:border-0">
-                                        <td className="px-5 py-3"><span className="text-sm text-slate-200">{item.keyword}</span></td>
+                                        <td className="px-5 py-3"><span className="text-sm text-[var(--text-body)]">{item.keyword}</span></td>
                                         <td className="px-5 py-3"><VolumeBar value={item.searchVolume} max={maxVolume} /></td>
                                         <td className="px-5 py-3 hidden sm:table-cell">
                                             <DifficultyBadge difficulty={(item.competition || 'low').toLowerCase()} />
                                         </td>
                                         <td className="px-5 py-3 hidden sm:table-cell">
-                                            <span className="text-xs text-slate-500">{item.cpc ? `€${item.cpc.toFixed(2)}` : '—'}</span>
+                                            <span className="text-xs text-[var(--text-faint)]">{item.cpc ? `€${item.cpc.toFixed(2)}` : '—'}</span>
                                         </td>
                                         <td className="px-5 py-3">
                                             <button onClick={() => handleAddKeyword(item.keyword)} disabled={adding.has(item.keyword) || added.has(item.keyword)}
                                                 className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold transition-all ${
                                                     added.has(item.keyword)
                                                         ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 cursor-default'
-                                                        : 'bg-[var(--surface-08)] hover:bg-[var(--accent-soft)] text-slate-400 hover:text-[var(--accent)] border border-[var(--border-subtle)] hover:border-[var(--accent-border)]'
+                                                        : 'bg-[var(--surface-08)] hover:bg-[var(--accent-soft)] text-[var(--text-muted)] hover:text-[var(--accent)] border border-[var(--border-subtle)] hover:border-[var(--accent-border)]'
                                                 }`}>
                                                 {adding.has(item.keyword) ? <Loader2 className="w-3 h-3 animate-spin" /> : added.has(item.keyword) ? <Check className="w-3 h-3" /> : <Plus className="w-3 h-3" />}
                                                 {added.has(item.keyword) ? 'Tracked' : 'Track'}
@@ -1049,26 +1049,26 @@ function KeywordIdeasTab({ siteId }) {
             {/* Keyword ideas */}
             {data.ideas?.length > 0 && (
                 <div>
-                    <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-3">
+                    <h3 className="text-sm font-semibold text-[var(--text-muted)] uppercase tracking-wider mb-3">
                         New Keyword Ideas
                         {diffFilter !== 'ALL' && filteredIdeas?.length !== data.ideas.length && (
-                            <span className="ml-2 text-slate-600 font-normal normal-case">{filteredIdeas?.length} of {data.ideas.length}</span>
+                            <span className="ml-2 text-[var(--text-faint)] font-normal normal-case">{filteredIdeas?.length} of {data.ideas.length}</span>
                         )}
                     </h3>
                     <div className="bg-[var(--bg-surface)] border border-[var(--accent-border)] rounded-2xl overflow-hidden">
                         <table className="w-full">
                             <thead>
                                 <tr className="border-b border-[var(--border-subtle)]">
-                                    <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Keyword</th>
-                                    <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Volume/Month</th>
-                                    <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider hidden sm:table-cell">Competition</th>
-                                    <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider hidden sm:table-cell">CPC</th>
+                                    <th className="px-5 py-3 text-left text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider">Keyword</th>
+                                    <th className="px-5 py-3 text-left text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider">Volume/Month</th>
+                                    <th className="px-5 py-3 text-left text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider hidden sm:table-cell">Competition</th>
+                                    <th className="px-5 py-3 text-left text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider hidden sm:table-cell">CPC</th>
                                     <th className="px-5 py-3" />
                                 </tr>
                             </thead>
                             <tbody>
                                 {(filteredIdeas || []).length === 0 ? (
-                                    <tr><td colSpan={5} className="px-5 py-8 text-center text-sm text-slate-600">No ideas with this competition level.</td></tr>
+                                    <tr><td colSpan={5} className="px-5 py-8 text-center text-sm text-[var(--text-faint)]">No ideas with this competition level.</td></tr>
                                 ) : (filteredIdeas || []).map(item => (
                                     <tr key={item.keyword} className="border-b border-[var(--border-subtle)] last:border-0 hover:bg-[var(--accent-soft)] transition-colors">
                                         <td className="px-5 py-3">
@@ -1079,7 +1079,7 @@ function KeywordIdeasTab({ siteId }) {
                                             <DifficultyBadge difficulty={(item.competition || 'low').toLowerCase()} />
                                         </td>
                                         <td className="px-5 py-3 hidden sm:table-cell">
-                                            <span className="text-xs text-slate-500">{item.cpc ? `€${item.cpc.toFixed(2)}` : '—'}</span>
+                                            <span className="text-xs text-[var(--text-faint)]">{item.cpc ? `€${item.cpc.toFixed(2)}` : '—'}</span>
                                         </td>
                                         <td className="px-5 py-3">
                                             <button onClick={() => handleAddKeyword(item.keyword)} disabled={adding.has(item.keyword) || added.has(item.keyword)}
@@ -1100,7 +1100,7 @@ function KeywordIdeasTab({ siteId }) {
                 </div>
             )}
             <button onClick={fetch_} disabled={loading}
-                className="flex items-center gap-2 text-xs text-slate-600 hover:text-slate-400 transition-colors">
+                className="flex items-center gap-2 text-xs text-[var(--text-faint)] hover:text-[var(--text-muted)] transition-colors">
                 <RefreshCw className={`w-3 h-3 ${loading ? 'animate-spin' : ''}`} />
                 Reload
             </button>
@@ -1132,7 +1132,7 @@ function CompetitorsTab({ siteId }) {
     if (!loaded) return (
         <div className="flex flex-col items-center justify-center py-20 gap-4">
             <Users className="w-10 h-10 text-[var(--accent)]" />
-            <p className="text-slate-500 text-sm text-center">Find your domain's 10 biggest competitors<br/>based on shared keywords</p>
+            <p className="text-[var(--text-faint)] text-sm text-center">Find your domain's 10 biggest competitors<br/>based on shared keywords</p>
             <button onClick={fetch_} disabled={loading}
                 className="flex items-center gap-2 px-5 py-2.5 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all disabled:opacity-50">
                 {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Users className="w-4 h-4" />}
@@ -1150,28 +1150,28 @@ function CompetitorsTab({ siteId }) {
                     <table className="w-full">
                         <thead>
                             <tr className="border-b border-[var(--border-subtle)]">
-                                <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">#</th>
-                                <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Domain</th>
-                                <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Shared KW</th>
-                                <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider hidden sm:table-cell">Top 10</th>
-                                <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider hidden sm:table-cell">Top 3</th>
+                                <th className="px-5 py-3 text-left text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider">#</th>
+                                <th className="px-5 py-3 text-left text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider">Domain</th>
+                                <th className="px-5 py-3 text-left text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider">Shared KW</th>
+                                <th className="px-5 py-3 text-left text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider hidden sm:table-cell">Top 10</th>
+                                <th className="px-5 py-3 text-left text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider hidden sm:table-cell">Top 3</th>
                             </tr>
                         </thead>
                         <tbody>
                             {competitors.map((c, i) => (
                                 <tr key={c.domain} className="border-b border-[var(--border-subtle)] last:border-0 hover:bg-[var(--surface-08)] transition-colors">
                                     <td className="px-5 py-3.5">
-                                        <span className="text-sm text-slate-500">{i + 1}</span>
+                                        <span className="text-sm text-[var(--text-faint)]">{i + 1}</span>
                                     </td>
                                     <td className="px-5 py-3.5">
                                         <a href={`https://${c.domain}`} target="_blank" rel="noopener noreferrer"
-                                            className="flex items-center gap-1.5 text-sm text-slate-200 hover:text-[var(--accent)] transition-colors">
+                                            className="flex items-center gap-1.5 text-sm text-[var(--text-body)] hover:text-[var(--accent)] transition-colors">
                                             {c.domain}
-                                            <ExternalLink className="w-3 h-3 text-slate-600" />
+                                            <ExternalLink className="w-3 h-3 text-[var(--text-faint)]" />
                                         </a>
                                     </td>
                                     <td className="px-5 py-3.5">
-                                        <span className="text-sm font-bold text-white">{c.intersections ?? '—'}</span>
+                                        <span className="text-sm font-bold text-[var(--text-white)]">{c.intersections ?? '—'}</span>
                                     </td>
                                     <td className="px-5 py-3.5 hidden sm:table-cell">
                                         <span className="text-sm text-teal-400">{c.competitorMetrics?.organicPos1_10 ?? '—'}</span>
@@ -1186,7 +1186,7 @@ function CompetitorsTab({ siteId }) {
                 </div>
             </div>
             <button onClick={fetch_} disabled={loading}
-                className="mt-4 flex items-center gap-2 text-xs text-slate-600 hover:text-slate-400 transition-colors">
+                className="mt-4 flex items-center gap-2 text-xs text-[var(--text-faint)] hover:text-[var(--text-muted)] transition-colors">
                 <RefreshCw className={`w-3 h-3 ${loading ? 'animate-spin' : ''}`} />
                 Reload
             </button>
@@ -1223,11 +1223,11 @@ function BacklinksTab({ siteId }) {
     if (!summary) return <EmptyTab icon={Link2} text="No backlink data found." />
 
     const stats = [
-        { label: 'Total Backlinks',      value: summary.backlinks?.toLocaleString('en-US') ?? '—', color: 'text-white' },
+        { label: 'Total Backlinks',      value: summary.backlinks?.toLocaleString('en-US') ?? '—', color: 'text-[var(--text-white)]' },
         { label: 'Referring Domains',    value: summary.referringDomains?.toLocaleString('en-US') ?? '—', color: 'text-[var(--accent)]' },
         { label: 'Referring IPs',        value: summary.referringIPs?.toLocaleString('en-US') ?? '—', color: 'text-[var(--accent)]' },
         { label: 'Dofollow',             value: summary.dofollow?.toLocaleString('en-US') ?? '—', color: 'text-[var(--accent)]' },
-        { label: 'Nofollow',             value: summary.nofollow?.toLocaleString('en-US') ?? '—', color: 'text-slate-400' },
+        { label: 'Nofollow',             value: summary.nofollow?.toLocaleString('en-US') ?? '—', color: 'text-[var(--text-muted)]' },
         { label: 'Spam Score',           value: summary.spamScore != null ? `${summary.spamScore}%` : '—', risky: summary.spamScore > 30 },
     ]
 
@@ -1236,8 +1236,8 @@ function BacklinksTab({ siteId }) {
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-6">
                 {stats.map(s => (
                     <div key={s.label} className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-xl p-4">
-                        <div className="text-xs text-slate-500 mb-1.5">{s.label}</div>
-                        <div className={`flex items-center gap-1.5 text-xl font-bold ${s.risky ? 'text-[var(--danger)]' : (s.color || 'text-white')}`}>
+                        <div className="text-xs text-[var(--text-faint)] mb-1.5">{s.label}</div>
+                        <div className={`flex items-center gap-1.5 text-xl font-bold ${s.risky ? 'text-[var(--danger)]' : (s.color || 'text-[var(--text-white)]')}`}>
                             {s.risky && <AlertTriangle className="w-4 h-4 shrink-0" strokeWidth={2.5} />}
                             {s.value}
                         </div>
@@ -1246,18 +1246,18 @@ function BacklinksTab({ siteId }) {
             </div>
 
             {summary.firstSeen && (
-                <div className="text-xs text-slate-600">
+                <div className="text-xs text-[var(--text-faint)]">
                     First backlink since: {new Date(summary.firstSeen).toLocaleDateString('en-US')}
                 </div>
             )}
             {checkedAt && (
-                <div className="text-xs text-slate-600 mt-1">
+                <div className="text-xs text-[var(--text-faint)] mt-1">
                     Last checked: {new Date(checkedAt).toLocaleDateString('en-US')} {new Date(checkedAt).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}
                 </div>
             )}
 
             <button onClick={() => fetch_(true)} disabled={loading}
-                className="mt-4 flex items-center gap-2 text-xs text-slate-600 hover:text-slate-400 transition-colors">
+                className="mt-4 flex items-center gap-2 text-xs text-[var(--text-faint)] hover:text-[var(--text-muted)] transition-colors">
                 <RefreshCw className={`w-3 h-3 ${loading ? 'animate-spin' : ''}`} />
                 Reload
             </button>
@@ -1325,10 +1325,10 @@ function ContentGapTab({ siteId, plan }) {
                 <Lock className="w-6 h-6 text-[var(--accent)]" />
             </div>
             <div className="text-center">
-                <h3 className="text-lg font-bold text-white mb-2">Content Gap Analysis</h3>
-                <p className="text-sm text-slate-500 max-w-sm">
+                <h3 className="text-lg font-bold text-[var(--text-white)] mb-2">Content Gap Analysis</h3>
+                <p className="text-sm text-[var(--text-faint)] max-w-sm">
                     Find keywords your competitor ranks for — but you don't.<br />
-                    Available from <strong className="text-white">Pro (€79/month)</strong> · 100 analyses/month.
+                    Available from <strong className="text-[var(--text-white)]">Pro (€79/month)</strong> · 100 analyses/month.
                 </p>
             </div>
             <Link href="/en/seo/pricing"
@@ -1345,11 +1345,11 @@ function ContentGapTab({ siteId, plan }) {
             {/* Input + usage counter */}
             <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl p-5">
                 <div className="flex items-center justify-between mb-3">
-                    <p className="text-sm text-slate-400">
+                    <p className="text-sm text-[var(--text-muted)]">
                         Enter a competitor domain — we'll show you keywords your competitor ranks for that you're not tracking yet.
                     </p>
                     {result && (
-                        <span className="text-xs text-slate-600 whitespace-nowrap ml-4">
+                        <span className="text-xs text-[var(--text-faint)] whitespace-nowrap ml-4">
                             {result.used}/{result.limit} this month
                         </span>
                     )}
@@ -1359,7 +1359,7 @@ function ContentGapTab({ siteId, plan }) {
                         value={competitor}
                         onChange={e => setCompetitor(e.target.value)}
                         placeholder="competitor.com"
-                        className="flex-1 bg-[var(--surface-06)] border border-[var(--border-subtle)] focus:border-[var(--accent-border)] rounded-xl px-4 py-2.5 text-white placeholder:text-slate-600 outline-none text-sm"
+                        className="flex-1 bg-[var(--surface-06)] border border-[var(--border-subtle)] focus:border-[var(--accent-border)] rounded-xl px-4 py-2.5 text-[var(--text-white)] placeholder:text-[var(--text-faint)] outline-none text-sm"
                     />
                     <button type="submit" disabled={loading || !competitor.trim()}
                         className="flex items-center gap-2 px-4 py-2.5 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all disabled:opacity-50 whitespace-nowrap">
@@ -1376,8 +1376,8 @@ function ContentGapTab({ siteId, plan }) {
                         <Lock className="w-5 h-5 text-amber-400" />
                     </div>
                     <div className="text-center">
-                        <p className="text-sm font-semibold text-white mb-1">Monthly limit reached</p>
-                        <p className="text-xs text-slate-500">
+                        <p className="text-sm font-semibold text-[var(--text-white)] mb-1">Monthly limit reached</p>
+                        <p className="text-xs text-[var(--text-faint)]">
                             You've used {limitReached.limit} of {limitReached.limit} content gap analyses this month.<br />
                             {plan === 'pro'
                                 ? 'Upgrade to Expert for 300 analyses/month.'
@@ -1398,27 +1398,27 @@ function ContentGapTab({ siteId, plan }) {
                 <div>
                     {result.gap.length === 0 ? (
                         <div className="flex flex-col items-center justify-center py-16 gap-3">
-                            <GitCompare className="w-8 h-8 text-slate-700" />
-                            <span className="text-sm text-slate-500">No gap found — you're already tracking all top keywords of {result.competitor}.</span>
+                            <GitCompare className="w-8 h-8 text-[var(--text-faint)]" />
+                            <span className="text-sm text-[var(--text-faint)]">No gap found — you're already tracking all top keywords of {result.competitor}.</span>
                         </div>
                     ) : (
                         <>
                             <div className="flex items-center justify-between mb-3">
-                                <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wider">
+                                <h3 className="text-sm font-semibold text-[var(--text-muted)] uppercase tracking-wider">
                                     {result.gap.length} keywords — {result.competitor} ranks for these, you don't
                                 </h3>
-                                <span className="text-xs text-slate-600">Sorted by search volume</span>
+                                <span className="text-xs text-[var(--text-faint)]">Sorted by search volume</span>
                             </div>
                             <div className="bg-[var(--bg-surface)] border border-[var(--accent-border)] rounded-2xl overflow-hidden">
                                 <div className="overflow-x-auto">
                                     <table className="w-full">
                                         <thead>
                                             <tr className="border-b border-[var(--border-subtle)]">
-                                                <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Keyword</th>
-                                                <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Volume/Mo</th>
-                                                <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider hidden sm:table-cell">Competitor</th>
-                                                <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider hidden sm:table-cell">Competition</th>
-                                                <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider hidden md:table-cell">CPC</th>
+                                                <th className="px-5 py-3 text-left text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider">Keyword</th>
+                                                <th className="px-5 py-3 text-left text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider">Volume/Mo</th>
+                                                <th className="px-5 py-3 text-left text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider hidden sm:table-cell">Competitor</th>
+                                                <th className="px-5 py-3 text-left text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider hidden sm:table-cell">Competition</th>
+                                                <th className="px-5 py-3 text-left text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider hidden md:table-cell">CPC</th>
                                                 <th className="px-5 py-3" />
                                             </tr>
                                         </thead>
@@ -1428,7 +1428,7 @@ function ContentGapTab({ siteId, plan }) {
                                                 const isAdding = adding.has(item.keyword)
                                                 return (
                                                     <tr key={item.keyword} className="border-b border-[var(--border-subtle)] last:border-0 hover:bg-[var(--surface-08)] transition-colors">
-                                                        <td className="px-5 py-3.5"><span className="text-sm text-slate-200 font-medium">{item.keyword}</span></td>
+                                                        <td className="px-5 py-3.5"><span className="text-sm text-[var(--text-body)] font-medium">{item.keyword}</span></td>
                                                         <td className="px-5 py-3.5"><VolumeBar value={item.searchVolume} max={maxVolume} /></td>
                                                         <td className="px-5 py-3.5 hidden sm:table-cell"><PositionCell position={item.competitorPosition} /></td>
                                                         <td className="px-5 py-3.5 hidden sm:table-cell">
@@ -1437,7 +1437,7 @@ function ContentGapTab({ siteId, plan }) {
                                                             </span>
                                                         </td>
                                                         <td className="px-5 py-3.5 hidden md:table-cell">
-                                                            <span className="text-xs text-slate-500">{item.cpc ? `€${item.cpc.toFixed(2)}` : '—'}</span>
+                                                            <span className="text-xs text-[var(--text-faint)]">{item.cpc ? `€${item.cpc.toFixed(2)}` : '—'}</span>
                                                         </td>
                                                         <td className="px-5 py-3.5 text-right">
                                                             {isAdded ? (
@@ -1460,7 +1460,7 @@ function ContentGapTab({ siteId, plan }) {
                                 </div>
                             </div>
                             <button onClick={handleAnalyse} disabled={loading}
-                                className="mt-4 flex items-center gap-2 text-xs text-slate-600 hover:text-slate-400 transition-colors">
+                                className="mt-4 flex items-center gap-2 text-xs text-[var(--text-faint)] hover:text-[var(--text-muted)] transition-colors">
                                 <RefreshCw className={`w-3 h-3 ${loading ? 'animate-spin' : ''}`} />
                                 Reload
                             </button>
@@ -1516,8 +1516,8 @@ function SettingsTab({ siteId }) {
                         <Bell className="w-4 h-4 text-[var(--accent)]" />
                     </div>
                     <div>
-                        <h3 className="text-sm font-semibold text-white">Email Alerts</h3>
-                        <p className="text-xs text-slate-500 mt-0.5">Get notified when rankings change</p>
+                        <h3 className="text-sm font-semibold text-[var(--text-white)]">Email Alerts</h3>
+                        <p className="text-xs text-[var(--text-faint)] mt-0.5">Get notified when rankings change</p>
                     </div>
                 </div>
 
@@ -1526,19 +1526,19 @@ function SettingsTab({ siteId }) {
                         <div className="w-4 h-4 rounded-full bg-[var(--accent-soft)] border border-[var(--accent-border)] flex items-center justify-center shrink-0 mt-0.5">
                             <Check className="w-2.5 h-2.5 text-[var(--accent)]" strokeWidth={3} />
                         </div>
-                        <p className="text-xs text-slate-400">Automatic weekly check (Mondays)</p>
+                        <p className="text-xs text-[var(--text-muted)]">Automatic weekly check (Mondays)</p>
                     </div>
                     <div className="flex items-start gap-2.5">
                         <div className="w-4 h-4 rounded-full bg-[var(--accent-soft)] border border-[var(--accent-border)] flex items-center justify-center shrink-0 mt-0.5">
                             <Check className="w-2.5 h-2.5 text-[var(--accent)]" strokeWidth={3} />
                         </div>
-                        <p className="text-xs text-slate-400">Alert on significant drops <span className="text-slate-600">(Starter: ±10, Pro: ±5, Expert: ±3 positions)</span></p>
+                        <p className="text-xs text-[var(--text-muted)]">Alert on significant drops <span className="text-[var(--text-faint)]">(Starter: ±10, Pro: ±5, Expert: ±3 positions)</span></p>
                     </div>
                     <div className="flex items-start gap-2.5">
                         <div className="w-4 h-4 rounded-full bg-[var(--accent-soft)] border border-[var(--accent-border)] flex items-center justify-center shrink-0 mt-0.5">
                             <Check className="w-2.5 h-2.5 text-[var(--accent)]" strokeWidth={3} />
                         </div>
-                        <p className="text-xs text-slate-400">Alert on improvements — newly in Top 10 or +5 positions</p>
+                        <p className="text-xs text-[var(--text-muted)]">Alert on improvements — newly in Top 10 or +5 positions</p>
                     </div>
                 </div>
 
@@ -1552,17 +1552,17 @@ function SettingsTab({ siteId }) {
                     }`}
                 >
                     <div className="flex items-center gap-3">
-                        <Bell className={`w-4 h-4 ${alertsEnabled ? 'text-emerald-400' : 'text-slate-600'}`} />
-                        <span className={`text-sm font-medium ${alertsEnabled ? 'text-emerald-300' : 'text-slate-500'}`}>
+                        <Bell className={`w-4 h-4 ${alertsEnabled ? 'text-emerald-400' : 'text-[var(--text-faint)]'}`} />
+                        <span className={`text-sm font-medium ${alertsEnabled ? 'text-emerald-300' : 'text-[var(--text-faint)]'}`}>
                             Ranking alerts by email
                         </span>
                     </div>
                     <div className={`relative w-10 h-5 rounded-full transition-colors shrink-0 ${alertsEnabled ? 'bg-emerald-500' : 'bg-[var(--surface-10)]'}`}>
-                        <div className={`absolute top-0.5 w-4 h-4 rounded-full bg-white shadow transition-transform ${alertsEnabled ? 'translate-x-5' : 'translate-x-0.5'}`} />
+                        <div className={`absolute top-0.5 w-4 h-4 rounded-full bg-[var(--text-white)] shadow transition-transform ${alertsEnabled ? 'translate-x-5' : 'translate-x-0.5'}`} />
                     </div>
                 </button>
 
-                <p className="text-xs text-slate-600 mt-3">
+                <p className="text-xs text-[var(--text-faint)] mt-3">
                     {alertsEnabled
                         ? 'You\'ll receive emails as soon as a manual or weekly check detects relevant changes.'
                         : 'Alerts are disabled — you won\'t receive emails on ranking changes.'}
@@ -1611,11 +1611,11 @@ function OverviewStats({ site, overview }) {
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
             {stats.map(s => (
                 <div key={s.label} className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-xl p-4">
-                    <div className="flex items-center gap-1.5 text-xs text-slate-500 mb-1.5 whitespace-nowrap">
+                    <div className="flex items-center gap-1.5 text-xs text-[var(--text-faint)] mb-1.5 whitespace-nowrap">
                         <s.icon className="w-3.5 h-3.5 shrink-0" />
                         {s.label}
                     </div>
-                    <div className="text-2xl font-bold text-white tracking-tight">{s.value}</div>
+                    <div className="text-2xl font-bold text-[var(--text-white)] tracking-tight">{s.value}</div>
                 </div>
             ))}
         </div>
@@ -1664,16 +1664,13 @@ export default function SeoSitePageEn() {
 
     return (
         <div className="min-h-screen bg-[var(--bg-base)]">
-            <Toaster position="bottom-right" toastOptions={{
-                style: { background: 'var(--bg-surface)', color: '#fff', border: '1px solid var(--border-subtle)' },
-            }} />
             <Navbar locale="en" />
 
             <div className="max-w-6xl mx-auto px-5 sm:px-8 pt-28 pb-16">
 
                 {/* Back + Header */}
                 <div className="mb-8">
-                    <Link href="/en/seo/dashboard" className="inline-flex items-center gap-2 text-sm text-slate-500 hover:text-slate-300 transition-colors mb-4">
+                    <Link href="/en/seo/dashboard" className="inline-flex items-center gap-2 text-sm text-[var(--text-faint)] hover:text-[var(--text-body)] transition-colors mb-4">
                         <ArrowLeft className="w-4 h-4" />Back to dashboard
                     </Link>
                     <div className="flex items-center gap-3">
@@ -1681,8 +1678,8 @@ export default function SeoSitePageEn() {
                             <Globe className="w-5 h-5 text-[var(--accent)]" />
                         </div>
                         <div>
-                            <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">{site?.displayName || site?.domain}</h1>
-                            <div className="text-sm text-slate-500">{site?.domain}</div>
+                            <h1 className="text-2xl sm:text-3xl font-bold text-[var(--text-white)] tracking-tight">{site?.displayName || site?.domain}</h1>
+                            <div className="text-sm text-[var(--text-faint)]">{site?.domain}</div>
                         </div>
                     </div>
                 </div>
@@ -1699,7 +1696,7 @@ export default function SeoSitePageEn() {
                                 className={`text-left px-4 py-3 text-sm font-medium rounded-xl transition-all ${
                                     tab === t.id
                                         ? 'bg-[var(--accent-soft)] text-[var(--accent)]'
-                                        : 'text-slate-500 hover:text-slate-300 hover:bg-[var(--surface-08)]'
+                                        : 'text-[var(--text-faint)] hover:text-[var(--text-body)] hover:bg-[var(--surface-08)]'
                                 }`}>
                                 {t.label}
                             </button>

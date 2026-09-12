@@ -61,19 +61,19 @@ export default function SupportModal({ open, onClose, defaultName = '', defaultE
                         transition={{ duration: 0.2 }}
                         className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none"
                     >
-                        <div className="w-full max-w-lg bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl shadow-2xl shadow-black/60 pointer-events-auto">
+                        <div className="w-full max-w-lg bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl shadow-card-hover pointer-events-auto">
                             {/* Header */}
                             <div className="flex items-center justify-between px-4 sm:px-6 py-4 sm:py-5 border-b border-[var(--border-subtle)]">
                                 <div className="flex items-center gap-3">
                                     <div className="w-8 h-8 rounded-lg bg-[var(--accent-soft)] border border-[var(--accent-border)] flex items-center justify-center">
                                         <MessageSquare className="w-4 h-4 text-[var(--accent)]" />
                                     </div>
-                                    <span className="font-semibold text-white">{locale === 'en' ? 'Create support ticket' : 'Support-Ticket erstellen'}</span>
+                                    <span className="font-semibold text-[var(--text-white)]">{locale === 'en' ? 'Create support ticket' : 'Support-Ticket erstellen'}</span>
                                 </div>
                                 <button
                                     onClick={handleClose}
                                     aria-label={locale === 'en' ? 'Close' : 'Schließen'}
-                                    className="p-3 -mr-2 text-slate-500 hover:text-white transition-colors rounded-lg hover:bg-[var(--surface-06)]"
+                                    className="p-3 -mr-2 text-[var(--text-faint)] hover:text-[var(--text-white)] transition-colors rounded-lg hover:bg-[var(--surface-06)]"
                                 >
                                     <X className="w-5 h-5" />
                                 </button>
@@ -90,14 +90,14 @@ export default function SupportModal({ open, onClose, defaultName = '', defaultE
                                         </div>
                                         <Field label={locale === 'en' ? 'Subject' : 'Betreff'} value={form.subject} onChange={set('subject')} placeholder={locale === 'en' ? 'Brief description of the issue' : 'Kurze Beschreibung des Problems'} required />
                                         <div>
-                                            <label className="block text-xs font-medium text-slate-400 mb-1.5">{locale === 'en' ? 'Message' : 'Nachricht'}</label>
+                                            <label className="block text-xs font-medium text-[var(--text-muted)] mb-1.5">{locale === 'en' ? 'Message' : 'Nachricht'}</label>
                                             <textarea
                                                 value={form.message}
                                                 onChange={set('message')}
                                                 placeholder={locale === 'en' ? 'Describe your issue in as much detail as possible...' : 'Beschreibe dein Anliegen so detailliert wie möglich...'}
                                                 rows={5}
                                                 required
-                                                className="w-full bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-xl px-4 py-3 text-sm text-white placeholder-slate-600 outline-none focus:border-[var(--accent-border)] resize-none transition-colors"
+                                                className="w-full bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-xl px-4 py-3 text-sm text-[var(--text-white)] placeholder-[var(--text-faint)] outline-none focus:border-[var(--accent-border)] resize-none transition-colors"
                                             />
                                         </div>
                                         {error && (
@@ -128,14 +128,14 @@ export default function SupportModal({ open, onClose, defaultName = '', defaultE
 function Field({ label, type = 'text', value, onChange, placeholder, required }) {
     return (
         <div>
-            <label className="block text-xs font-medium text-slate-400 mb-1.5">{label}</label>
+            <label className="block text-xs font-medium text-[var(--text-muted)] mb-1.5">{label}</label>
             <input
                 type={type}
                 value={value}
                 onChange={onChange}
                 placeholder={placeholder}
                 required={required}
-                className="w-full bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-xl px-4 py-2.5 text-sm text-white placeholder-slate-600 outline-none focus:border-[var(--accent-border)] transition-colors"
+                className="w-full bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-xl px-4 py-2.5 text-sm text-[var(--text-white)] placeholder-[var(--text-faint)] outline-none focus:border-[var(--accent-border)] transition-colors"
             />
         </div>
     )
@@ -147,8 +147,8 @@ function SuccessView({ ticketNumber, onClose, locale = 'de' }) {
             <div className="w-14 h-14 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mx-auto mb-4">
                 <CheckCircle className="w-7 h-7 text-emerald-400" />
             </div>
-            <h3 className="text-lg font-bold text-white mb-2">{locale === 'en' ? 'Ticket created!' : 'Ticket erstellt!'}</h3>
-            <p className="text-slate-400 text-sm mb-4">
+            <h3 className="text-lg font-bold text-[var(--text-white)] mb-2">{locale === 'en' ? 'Ticket created!' : 'Ticket erstellt!'}</h3>
+            <p className="text-[var(--text-muted)] text-sm mb-4">
                 {locale === 'en' ? 'You\'ll receive a confirmation by email. Your ticket number:' : 'Du erhältst eine Bestätigung per E-Mail. Deine Ticketnummer:'}
             </p>
             <div className="inline-block bg-[var(--accent-soft)] border border-[var(--accent-border)] rounded-xl px-5 py-2 mb-6">
@@ -166,7 +166,7 @@ function SuccessView({ ticketNumber, onClose, locale = 'de' }) {
                 <Link
                     href={locale === 'en' ? '/en/support' : '/support'}
                     onClick={onClose}
-                    className="flex items-center justify-center gap-2 px-5 py-2.5 bg-[var(--surface-06)] hover:bg-[var(--surface-10)] border border-[var(--border-subtle)] text-slate-300 text-sm rounded-xl transition-all"
+                    className="flex items-center justify-center gap-2 px-5 py-2.5 bg-[var(--surface-06)] hover:bg-[var(--surface-10)] border border-[var(--border-subtle)] text-[var(--text-body)] text-sm rounded-xl transition-all"
                 >
                     {locale === 'en' ? 'All my tickets' : 'Alle meine Tickets'}
                 </Link>
