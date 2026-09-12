@@ -60,6 +60,7 @@ const MESSAGES = {
     INVALID_COMPETITOR_DOMAIN: { de: "Ungültige Konkurrenz-Domain", en: "Invalid competitor domain" },
     KEYWORD_NOT_IN_SITE: { de: "Keyword gehört nicht zu dieser Website", en: "Keyword does not belong to this website" },
     SEO_EMAIL_ALERTS_MUST_BE_BOOLEAN: { de: "seoEmailAlerts muss ein Boolean sein", en: "seoEmailAlerts must be a boolean" },
+    BACKLINKS_FETCH_FAILED: { de: "Backlink-Daten konnten gerade nicht abgerufen werden. Bitte gleich nochmal versuchen.", en: "Backlink data could not be fetched right now. Please try again shortly." },
 
     // Support/feedback
     ALL_FIELDS_REQUIRED: { de: "Alle Felder sind erforderlich.", en: "All fields are required." },

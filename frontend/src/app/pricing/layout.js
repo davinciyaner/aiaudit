@@ -6,6 +6,7 @@ export const metadata = {
         languages: {
             'de-DE': 'https://www.scanora.ai/pricing',
             'en-US': 'https://www.scanora.ai/en/pricing',
+            'x-default': 'https://www.scanora.ai/pricing',
         },
     },
     openGraph: {

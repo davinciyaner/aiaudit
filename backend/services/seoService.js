@@ -279,8 +279,21 @@ export async function getBacklinkSummary(domain) {
         include_subdomains: true,
     }])
 
-    const r = data.tasks?.[0]?.result?.[0]
-    if (!r) return null
+    // Ohne diesen Check sah ein DataForSEO-Fehler (Rate-Limit, transienter Fehler) genauso aus wie
+    // "Domain hat wirklich 0 Backlinks" — beides gab still null zurück, ohne jedes Log.
+    const task = data.tasks?.[0]
+    if (task?.status_code !== 20000) {
+        console.warn('[seoService] getBacklinkSummary Fehler:', task?.status_code, task?.status_message)
+        console.warn('[seoService] getBacklinkSummary Response:', JSON.stringify(data).slice(0, 600))
+        return null
+    }
+
+    const r = task.result?.[0]
+    if (!r) {
+        console.warn('[seoService] getBacklinkSummary: Task erfolgreich, aber result leer für', domain)
+        console.warn('[seoService] getBacklinkSummary Response:', JSON.stringify(data).slice(0, 600))
+        return null
+    }
 
     const nofollow = r.referring_pages_nofollow ?? 0
     return {
