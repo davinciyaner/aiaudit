@@ -27,4 +27,20 @@ export const FAQS_EN = [
         q: 'How can I improve my SEO score quickly?',
         a: 'The most common quick wins: optimize your title tag to 50–60 characters, add meta descriptions on every page, put your main keyword in the H1 tag, and add missing image alt text. After the audit, Scanora shows you exactly which of these are missing on your site — prioritized by impact.',
     },
+    {
+        q: "What's the difference between the one-time audit and GEO Automation?",
+        a: 'The one-time audit (part of the free Scanora website audit) shows your GEO score at a single point in time, based on technical signals like llms.txt and Schema.org. GEO Automation is a separate subscription starting at €4.99/month that automatically checks weekly whether Claude, ChatGPT, Gemini, Perplexity and Google AI Overview actually mention your website in their answers, showing the trend over time instead of a one-off measurement.',
+    },
+    {
+        q: "Which AI platforms does Scanora's GEO Automation track?",
+        a: 'Claude, ChatGPT, Gemini, Perplexity and Google AI Overview (5 platforms). The Starter plan of GEO Automation (€4.99/month) includes Claude and Gemini; the other three platforms are included from the Pro plan (€29.99/month).',
+    },
+    {
+        q: 'Does Scanora check multiple prompt phrasings per keyword?',
+        a: 'Yes, from the Pro plan of GEO Automation onward, each keyword is checked with two prompt variants — "recommendation" and "comparison" — since a domain gets mentioned at different rates depending on the type of user query. The Starter plan only uses the recommendation variant.',
+    },
+    {
+        q: 'How is Scanora different from Ahrefs or Semrush?',
+        a: 'Scanora combines classic SEO ranking tracking with AI visibility tracking (GEO) in one product at one price, while Ahrefs and Semrush are primarily built for SEO and only offer AI visibility as a separate, more expensive add-on module.',
+    },
 ]

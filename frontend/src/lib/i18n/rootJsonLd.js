@@ -16,7 +16,25 @@ export function getRootJsonLd(locale) {
                         width: 512,
                         height: 512,
                     },
-                    sameAs: ['https://x.com/scanoraai'],
+                    founder: { '@id': 'https://www.scanora.ai/#founder' },
+                    sameAs: [
+                        'https://x.com/scanoraai',
+                        'https://www.linkedin.com/company/scanora-ai',
+                        'https://github.com/scanora-ai',
+                    ],
+                },
+                {
+                    '@type': 'Person',
+                    '@id': 'https://www.scanora.ai/#founder',
+                    name: 'Finn Paustian',
+                    jobTitle: 'Founder',
+                    url: 'https://www.scanora.ai/about',
+                    image: 'https://www.scanora.ai/team/finn-paustian.jpg',
+                    sameAs: [
+                        'https://www.linkedin.com/in/finn-paustian',
+                        'https://x.com/scanoraai',
+                    ],
+                    worksFor: { '@id': 'https://www.scanora.ai/en/#organization' },
                 },
                 {
                     '@type': 'WebSite',
@@ -25,7 +43,7 @@ export function getRootJsonLd(locale) {
                     name: 'Scanora',
                     publisher: { '@id': 'https://www.scanora.ai/en/#organization' },
                     inLanguage: 'en-US',
-                    dateModified: '2026-09-09',
+                    dateModified: '2026-09-12',
                 },
                 {
                     '@type': 'SoftwareApplication',
@@ -34,7 +52,7 @@ export function getRootJsonLd(locale) {
                     applicationCategory: 'BusinessApplication',
                     operatingSystem: 'Web',
                     description: 'Full website audit powered by AI: SEO, performance, and GEO (AI search) visibility in under 60 seconds.',
-                    dateModified: '2026-09-09',
+                    dateModified: '2026-09-12',
                     offers: [
                         { '@type': 'Offer', name: 'Free', price: '0', priceCurrency: 'EUR', description: '1 audit per month' },
                         { '@type': 'Offer', name: 'Pro', price: '29', priceCurrency: 'EUR', description: '10 audits per month' },
@@ -75,7 +93,7 @@ export function getRootJsonLd(locale) {
                 name: 'Scanora',
                 publisher: { '@id': 'https://www.scanora.ai/#organization' },
                 inLanguage: 'de-DE',
-                dateModified: '2026-09-09',
+                dateModified: '2026-09-12',
             },
             {
                 '@type': 'SoftwareApplication',
@@ -84,7 +102,7 @@ export function getRootJsonLd(locale) {
                 applicationCategory: 'BusinessApplication',
                 operatingSystem: 'Web',
                 description: 'Vollständiger Website-Audit mit KI: SEO, Performance und GEO-Sichtbarkeit in unter 60 Sekunden.',
-                dateModified: '2026-09-09',
+                dateModified: '2026-09-12',
                 offers: [
                     { '@type': 'Offer', name: 'Free', price: '0', priceCurrency: 'EUR', description: '1 Audit pro Monat' },
                     { '@type': 'Offer', name: 'Pro', price: '29', priceCurrency: 'EUR', description: '10 Audits pro Monat' },
@@ -100,7 +118,7 @@ export function getRootJsonLd(locale) {
                 inLanguage: 'de-DE',
                 primaryImageOfPage: { '@id': 'https://www.scanora.ai/logo' },
                 datePublished: '2026-01-15',
-                dateModified: '2026-09-09',
+                dateModified: '2026-09-12',
                 about: [
                     { '@type': 'Thing', name: 'Generative Engine Optimization' },
                     { '@type': 'Thing', name: 'AI Visibility' },
@@ -128,7 +146,7 @@ export function getRootJsonLd(locale) {
                 author: { '@id': 'https://www.scanora.ai/#founder' },
                 publisher: { '@id': 'https://www.scanora.ai/#organization' },
                 datePublished: '2026-01-15',
-                dateModified: '2026-09-09',
+                dateModified: '2026-09-12',
                 mainEntityOfPage: { '@id': 'https://www.scanora.ai/#webpage' },
                 about: [
                     { '@type': 'Thing', name: 'Generative Engine Optimization' },
