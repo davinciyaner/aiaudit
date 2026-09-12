@@ -1,11 +1,12 @@
 import Link from 'next/link'
 import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
+import FaqAccordion from './FaqAccordion'
 
 export const metadata = {
-    title: 'llms.txt erklärt: Was es ist und wie du es richtig einrichtest',
-    description: 'llms.txt einfach erklärt: die robots.txt für KI-Modelle. Herkunft, Aufbau, Unterschied zu llms-full.txt und eine Schritt-für-Schritt-Anleitung zum Erstellen.',
-    keywords: 'llms.txt einrichten, llms.txt, llms.txt was ist das, llms.txt erstellen, llms-full.txt, ai crawler datei, llms.txt beispiel, llms.txt generator',
+    title: 'llms.txt erklärt: Beispiel, Vorlage & Schritt-für-Schritt-Anleitung',
+    description: 'llms.txt einfach erklärt: Definition, Unterschied zu robots.txt, ein echtes Beispiel zum Kopieren und eine Schritt-für-Schritt-Anleitung, um deine eigene llms.txt-Datei zu erstellen und zu implementieren.',
+    keywords: 'llms.txt, llms txt, llms.txt erstellen, llms.txt beispiel, llms.txt implementierung, llms.txt datei erstellen, llms.txt vorlage, llms.txt was ist das, llms-full.txt, ai crawler datei, llms.txt generator',
     alternates: {
         canonical: 'https://www.scanora.ai/blog/llms-txt-erklaert',
         languages: {
@@ -14,8 +15,8 @@ export const metadata = {
         },
     },
     openGraph: {
-        title: 'llms.txt erklärt: Was es ist und wie du es richtig einrichtest',
-        description: 'Die robots.txt für KI-Modelle: Herkunft, Aufbau und Schritt-für-Schritt-Anleitung.',
+        title: 'llms.txt erklärt: Beispiel, Vorlage & Schritt-für-Schritt-Anleitung',
+        description: 'llms.txt einfach erklärt: Definition, Unterschied zu robots.txt, ein echtes Beispiel und eine Schritt-für-Schritt-Anleitung zur Implementierung.',
         url: 'https://www.scanora.ai/blog/llms-txt-erklaert',
         type: 'article',
         locale: 'de_DE',
@@ -25,11 +26,11 @@ export const metadata = {
 const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
-    headline: 'llms.txt erklärt: Was es ist und wie du es richtig einrichtest',
-    description: 'llms.txt einfach erklärt: die robots.txt für KI-Modelle. Herkunft, Aufbau, Unterschied zu llms-full.txt und eine Schritt-für-Schritt-Anleitung.',
+    headline: 'llms.txt erklärt: Beispiel, Vorlage & Schritt-für-Schritt-Anleitung',
+    description: 'llms.txt einfach erklärt: Definition, Unterschied zu robots.txt, ein echtes Beispiel und eine Schritt-für-Schritt-Anleitung zum Erstellen und Implementieren.',
     image: 'https://www.scanora.ai/blog/llms-txt-erklaert/opengraph-image',
     datePublished: '2026-07-26T09:00:00+02:00',
-    dateModified: '2026-08-24T09:00:00+02:00',
+    dateModified: '2026-09-12T09:00:00+02:00',
     author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.scanora.ai/about' },
     publisher: {
         '@type': 'Organization',
@@ -60,23 +61,23 @@ const faqLd = {
             name: 'Was ist llms.txt?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'llms.txt ist eine Markdown-Textdatei im Root-Verzeichnis einer Website (ähnlich wie robots.txt), die KI-Modellen in strukturierter, kompakter Form erklärt, was eine Website ist, was sie anbietet und wo relevante Inhalte liegen. Sie wurde im September 2024 von Jeremy Howard (Answer.AI) als offener Standard vorgeschlagen.',
+                text: 'llms.txt ist eine öffentliche Markdown-Textdatei im Root-Verzeichnis einer Website (erreichbar unter deinedomain.de/llms.txt, ähnlich wie robots.txt), die KI-Modellen in strukturierter, kompakter Form erklärt, was eine Website ist, was sie anbietet und wo relevante Inhalte liegen. Sie wurde im September 2024 von Jeremy Howard (Answer.AI) als informeller, offener Standard vorgeschlagen - kein offizieller W3C-Standard.',
             },
         },
         {
             '@type': 'Question',
-            name: 'Ist llms.txt Pflicht für KI-Sichtbarkeit?',
+            name: 'Was gehört in eine llms.txt-Datei?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'Nein. Es ist kein offizieller Standard von Google, OpenAI oder Anthropic, und keiner der großen KI-Anbieter hat bestätigt, llms.txt tatsächlich zu nutzen. Google hat sogar explizit erklärt, dass die Datei für die Suche und AI Overviews nicht notwendig ist. Es bleibt ein freiwilliger, community-getriebener Vorschlag ohne belegte Wirkung auf KI-Zitate.',
+                text: 'Laut Spezifikation vier Bestandteile: ein H1 mit dem Projekt- oder Websitenamen, ein Blockquote mit einer kurzen, faktischen Beschreibung, beliebig viele H2-Abschnitte mit Markdown-Links zu den wichtigsten Unterseiten (z. B. Docs, Preise, API) und optional ein "Optional"-Abschnitt für weniger wichtige Links, die KI-Modelle bei Bedarf überspringen können.',
             },
         },
         {
             '@type': 'Question',
-            name: 'Nutzt Google llms.txt für die Suche oder AI Overviews?',
+            name: 'Was ist der Unterschied zwischen llms.txt und robots.txt?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'Nein. Google hat erklärt, dass llms.txt für die Google-Suche und AI Overviews überflüssig ist, weil Google Website-Inhalte bereits vollständig über die bestehende Indexierung crawlt und verarbeitet. Eine zusätzliche Zusammenfassungsdatei ändert daran nichts.',
+                text: 'robots.txt ist eine Verbotsliste: Sie sagt Crawlern, welche Bereiche einer Website sie NICHT besuchen dürfen, und ist ein etablierter, von Suchmaschinen respektierter Standard. llms.txt ist das Gegenteil - eine positive, kuratierte Übersicht, die KI-Modellen sagt, WAS eine Website ist und WO die wichtigsten Inhalte liegen. llms.txt ist zudem kein offiziell bestätigter Standard, robots.txt schon.',
             },
         },
         {
@@ -89,6 +90,30 @@ const faqLd = {
         },
         {
             '@type': 'Question',
+            name: 'Ist llms.txt Pflicht?',
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Nein. Es ist kein offizieller Standard von Google, OpenAI oder Anthropic, und keiner der großen KI-Anbieter hat bestätigt, llms.txt automatisch abzurufen. Google hat sogar explizit erklärt, dass die Datei für die Suche und AI Overviews nicht notwendig ist. Es bleibt ein freiwilliger, community-getriebener Vorschlag ohne belegte, garantierte Wirkung auf KI-Zitate - aber ohne Nachteile, wenn sie korrekt eingerichtet ist.',
+            },
+        },
+        {
+            '@type': 'Question',
+            name: 'Prüft Google llms.txt für die Google-Suche oder nur KI-Systeme wie AI Overview?',
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Weder noch mit garantierter Wirkung: Google hat erklärt, dass llms.txt für die reguläre Google-Suche und für AI Overviews nicht notwendig ist, weil Google Seiteninhalte bereits vollständig über die bestehende Indexierung crawlt. Die Datei richtet sich stattdessen an externe KI-Systeme und Tools, die gezielt danach suchen (z. B. RAG-Systeme oder KI-Coding-Agents) - nicht an den Google-Suchindex selbst.',
+            },
+        },
+        {
+            '@type': 'Question',
+            name: 'Nutzen ChatGPT, Claude oder Perplexity llms.txt?',
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Keiner dieser Anbieter hat offiziell bestätigt, gezielt /llms.txt abzurufen, und Logfile-Analysen mehrerer SEO-Tools fanden bisher keine belastbaren Hinweise auf einen systematischen Abruf durch ChatGPT-, Claude- oder Perplexity-Crawler. Möglich ist die Nutzung dennoch, etwa wenn ein Nutzer eine URL direkt in ein Chat-Fenster einfügt oder ein KI-Coding-Agent das Root-Verzeichnis einer Website durchsucht.',
+            },
+        },
+        {
+            '@type': 'Question',
             name: 'Wo muss llms.txt liegen und wie finde ich es?',
             acceptedAnswer: {
                 '@type': 'Answer',
@@ -97,10 +122,10 @@ const faqLd = {
         },
         {
             '@type': 'Question',
-            name: 'Wie richte ich llms.txt ein?',
+            name: 'Wie erstelle ich eine llms.txt-Datei Schritt für Schritt?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'Eine Markdown-Datei mit H1-Projektname, einem Blockquote mit Kurzbeschreibung und H2-Abschnitten mit Links zu den wichtigsten Unterseiten (z. B. Docs, Preise, API) erstellen, dann unter deinedomain.de/llms.txt öffentlich und ohne Login bereitstellen. Dauert in der Regel unter 10 Minuten.',
+                text: 'Eine Markdown-Datei mit H1-Projektname, einem Blockquote mit Kurzbeschreibung und H2-Abschnitten mit Links zu den wichtigsten Unterseiten (z. B. Docs, Preise, API) erstellen, als llms.txt speichern und im Root-Verzeichnis unter deinedomain.de/llms.txt öffentlich sowie ohne Login bereitstellen. Die vollständige Implementierung dauert in der Regel unter 10 Minuten.',
             },
         },
     ],
@@ -116,15 +141,17 @@ const STRUCTURE = [
 const howToLd = {
     '@context': 'https://schema.org',
     '@type': 'HowTo',
-    name: 'Eine llms.txt erstellen',
-    description: 'Die Struktur einer llms.txt-Datei Schritt für Schritt aufgebaut, laut llmstxt.org-Spezifikation.',
+    name: 'llms.txt erstellen und implementieren',
+    description: 'Schritt-für-Schritt-Anleitung, um eine llms.txt-Datei zu erstellen und auf der eigenen Website zu implementieren, laut llmstxt.org-Spezifikation.',
     totalTime: 'PT10M',
     step: [
-        { '@type': 'HowToStep', name: 'Projektname als H1', text: 'Ein H1 mit dem Namen deiner Website oder deines Produkts - Pflichtfeld laut Spezifikation.' },
-        { '@type': 'HowToStep', name: 'Kurzbeschreibung als Blockquote', text: 'Ein Blockquote-Absatz: was die Website ist, in ein bis zwei Sätzen, ohne Marketing-Floskeln.' },
-        { '@type': 'HowToStep', name: 'Abschnitte mit Links', text: 'Frei wählbare H2-Überschriften (z. B. "Docs", "Preise", "API") mit Markdown-Links zu den wichtigsten Unterseiten.' },
-        { '@type': 'HowToStep', name: 'Optional-Abschnitt', text: 'Ein Abschnitt für weniger wichtige Links, die KI-Modelle bei Bedarf überspringen können.' },
-        { '@type': 'HowToStep', name: 'Unter /llms.txt veröffentlichen', text: 'Datei öffentlich und ohne Login im Root-Verzeichnis der Domain bereitstellen, im validen Markdown-Format.' },
+        { '@type': 'HowToStep', name: 'Projektname als H1 festlegen', text: 'Ein H1 mit dem Namen deiner Website oder deines Produkts - Pflichtfeld laut Spezifikation.' },
+        { '@type': 'HowToStep', name: 'Kurzbeschreibung als Blockquote schreiben', text: 'Ein Blockquote-Absatz: was die Website ist, in ein bis zwei Sätzen, ohne Marketing-Floskeln.' },
+        { '@type': 'HowToStep', name: 'Abschnitte mit Links strukturieren', text: 'Frei wählbare H2-Überschriften (z. B. "Docs", "Preise", "API") mit Markdown-Links zu den wichtigsten Unterseiten.' },
+        { '@type': 'HowToStep', name: 'Optional-Abschnitt ergänzen', text: 'Ein Abschnitt für weniger wichtige Links, die KI-Modelle bei Bedarf überspringen können.' },
+        { '@type': 'HowToStep', name: 'Datei als llms.txt speichern', text: 'Die fertige Markdown-Datei exakt als "llms.txt" (Kleinschreibung, ohne zusätzliche Endung) speichern.' },
+        { '@type': 'HowToStep', name: 'Unter /llms.txt implementieren', text: 'Datei öffentlich und ohne Login im Root-Verzeichnis der Domain bereitstellen, sodass sie unter deinedomain.de/llms.txt abrufbar ist.' },
+        { '@type': 'HowToStep', name: 'Erreichbarkeit prüfen', text: 'Die URL direkt im Browser öffnen und kontrollieren, dass reiner Markdown-Text ausgeliefert wird - kein HTML, kein Login, kein 404.' },
     ],
 }
 
@@ -162,14 +189,14 @@ export default function LlmsTxtPage() {
                             GEO
                         </span>
                         <span className="text-xs text-[var(--text-faint)]">26. Juli 2026</span>
-                        <span className="text-xs text-[var(--text-faint)]">· 7 min Lesezeit</span>
-                        <span className="text-xs text-[var(--text-faint)]">· Aktualisiert am 24. August 2026</span>
+                        <span className="text-xs text-[var(--text-faint)]">· 8 min Lesezeit</span>
+                        <span className="text-xs text-[var(--text-faint)]">· Aktualisiert am 12. September 2026</span>
                     </div>
                     <h1 className="text-3xl sm:text-5xl font-bold text-[var(--text-white)] leading-tight tracking-tight mb-5">
-                        llms.txt erklärt: Was es ist und wie du es richtig einrichtest
+                        llms.txt erklärt: Beispiel, Vorlage & Schritt-für-Schritt-Anleitung
                     </h1>
                     <p className="text-lg text-[var(--text-muted)] leading-relaxed">
-                        Eine einzige Textdatei im Root-Verzeichnis kann darüber entscheiden, ob KI-Modelle deine Website überhaupt verstehen. Hier erfährst du, woher llms.txt kommt, wie es aufgebaut ist und wie du in 10 Minuten deine eigene erstellst.
+                        <strong className="text-[var(--text-white)] font-semibold">llms.txt</strong> ist eine öffentliche Markdown-Datei unter <code className="text-sm bg-[var(--text-white)]/[0.06] px-1.5 py-0.5 rounded">deinedomain.de/llms.txt</code>, die KI-Modellen wie ChatGPT, Claude oder Perplexity in wenigen Sätzen erklärt, was eine Website ist und wo ihre wichtigsten Inhalte liegen. Anders als robots.txt, die Crawlern nur sagt, was sie <em>nicht</em> besuchen dürfen, liefert llms.txt eine positive, kuratierte Übersicht - lesbar für Sprachmodelle statt für klassische Suchmaschinen-Crawler. Genutzt wird der 2024 vorgeschlagene, informelle Standard vor allem von SaaS-Produkten, Doku-Seiten und KI-Coding-Agents, die schnell den Kontext einer Website erfassen müssen. Weiter unten: ein echtes Beispiel und die Schritt-für-Schritt-Anleitung zum Erstellen.
                     </p>
                     <div className="mt-5 flex items-center gap-2 text-xs text-[var(--text-faint)]">
                         <Link href="/about" className="flex items-center gap-2 hover:text-[var(--text-body)] transition-colors">
@@ -186,16 +213,16 @@ export default function LlmsTxtPage() {
                 <div className="space-y-10 text-[var(--text-body)] leading-relaxed">
 
                     <section>
-                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Was ist llms.txt?</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Woher kommt llms.txt und welches Problem löst es?</h2>
                         <p>
-                            llms.txt ist eine Markdown-Datei im Root-Verzeichnis einer Website - erreichbar unter <code className="text-xs bg-[var(--text-white)]/[0.06] px-1.5 py-0.5 rounded">deinedomain.de/llms.txt</code>, ähnlich wie robots.txt oder sitemap.xml. Der Unterschied: robots.txt sagt Crawlern, was sie NICHT besuchen dürfen. llms.txt sagt KI-Modellen, WAS deine Website ist und WO die wichtigsten Inhalte liegen - eine strukturierte Kurzfassung statt einer HTML-Seite voller Navigation, Werbung und JavaScript.
-                        </p>
-                        <p className="mt-4">
-                            Vorgeschlagen wurde der Standard im{' '}
+                            llms.txt ist ähnlich aufgebaut wie <code className="text-xs bg-[var(--text-white)]/[0.06] px-1.5 py-0.5 rounded">robots.txt</code> oder <code className="text-xs bg-[var(--text-white)]/[0.06] px-1.5 py-0.5 rounded">sitemap.xml</code> - eine schlichte Textdatei im Root-Verzeichnis, kein zusätzliches Framework, keine Konfiguration. Vorgeschlagen wurde der Standard im{' '}
                             <a href="https://www.answer.ai/posts/2024-09-03-llmstxt.html" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline underline-offset-2">
                                 September 2024 von Jeremy Howard und dem Team von Answer.AI
                             </a>{' '}
-                            - als Reaktion auf ein konkretes Problem: Kontextfenster von KI-Modellen sind zu klein für komplette Websites, und normale HTML-Seiten sind für Sprachmodelle unnötig schwer zu verarbeiten.
+                            - als Reaktion auf ein konkretes Problem: Kontextfenster von KI-Modellen sind begrenzt und normale HTML-Seiten voller Navigation, Werbung und JavaScript sind für Sprachmodelle unnötig schwer zu verarbeiten. llms.txt liefert stattdessen reinen, strukturierten Markdown-Text.
+                        </p>
+                        <p className="mt-4">
+                            Genutzt wird die Datei heute vor allem von drei Gruppen: SaaS- und Dev-Tool-Anbietern, die ihre Doku KI-lesbar machen wollen, RAG-Systemen, die gezielt nach einer kompakten Website-Übersicht suchen, und KI-Coding-Agents (z. B. in Cursor oder Claude Code), die schnell verstehen müssen, worum es auf einer Website geht. Wichtig für die Einordnung: Es handelt sich um einen informellen, community-getriebenen Standard - kein offizieller W3C-Standard und keine von Google, OpenAI oder Anthropic offiziell bestätigte Spezifikation.
                         </p>
                     </section>
 
@@ -216,7 +243,10 @@ export default function LlmsTxtPage() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-6">Wie ist eine llms.txt aufgebaut?</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-2">Was gehört in eine llms.txt-Datei? Der Aufbau</h2>
+                        <p className="text-sm text-[var(--text-muted)] mb-6">
+                            Die Spezifikation kennt vier Bausteine - in genau dieser Reihenfolge:
+                        </p>
                         <div className="space-y-3">
                             {STRUCTURE.map((s) => (
                                 <div key={s.part} className="flex items-start gap-4 bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-xl p-4">
@@ -225,22 +255,50 @@ export default function LlmsTxtPage() {
                                 </div>
                             ))}
                         </div>
-                        <pre className="mt-5 text-xs bg-[var(--text-white)]/[0.04] border border-[var(--text-white)]/[0.06] rounded-xl p-4 text-[var(--text-muted)] font-mono overflow-x-auto">
+                        <p className="text-sm text-[var(--text-muted)] mt-6 mb-2">
+                            Ein vollständiges llms.txt-Beispiel nach dieser Struktur:
+                        </p>
+                        <pre className="text-xs bg-[var(--text-white)]/[0.04] border border-[var(--text-white)]/[0.06] rounded-xl p-4 text-[var(--text-muted)] font-mono overflow-x-auto">
 {`# MeinProdukt
 > MeinProdukt ist ein Tool für X, das Y in unter 60 Sekunden löst.
 
 ## Docs
 - [Erste Schritte](https://beispiel.de/docs/start): Schnelleinstieg
 - [API-Referenz](https://beispiel.de/docs/api): Vollständige API-Doku
+- [Konfiguration](https://beispiel.de/docs/config): Alle Einstellungen im Detail
 
 ## Preise
-- [Preise & Pläne](https://beispiel.de/pricing): Alle Tarife im Überblick`}
+- [Preise & Pläne](https://beispiel.de/pricing): Alle Tarife im Überblick
+
+## Optional
+- [Blog](https://beispiel.de/blog): Produkt-Updates und Artikel
+- [Changelog](https://beispiel.de/changelog): Versionsverlauf`}
                         </pre>
                         <p className="text-xs text-[var(--text-faint)] mt-3">
                             Vollständige Spezifikation:{' '}
                             <a href="https://llmstxt.org" target="_blank" rel="noopener noreferrer" className="text-[var(--text-faint)] hover:text-[var(--text-muted)] underline underline-offset-2">
                                 llmstxt.org ↗
                             </a>
+                        </p>
+                    </section>
+
+                    <section>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-2">llms.txt erstellen: Schritt-für-Schritt-Anleitung</h2>
+                        <p className="text-sm text-[var(--text-muted)] mb-6">
+                            So erstellst und implementierst du deine eigene llms.txt-Datei - vom leeren Editor bis zur live erreichbaren Datei unter <code className="text-xs bg-[var(--text-white)]/[0.06] px-1.5 py-0.5 rounded">/llms.txt</code>:
+                        </p>
+                        <ol className="space-y-3">
+                            {howToLd.step.map((step, i) => (
+                                <li key={step.name} className="flex items-start gap-4 bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-xl p-4">
+                                    <span className="shrink-0 w-6 h-6 rounded-full bg-cyan-500/15 text-cyan-400 text-xs font-bold flex items-center justify-center mt-0.5">{i + 1}</span>
+                                    <span className="text-sm text-[var(--text-muted)]">
+                                        <span className="text-[var(--text-white)] font-semibold">{step.name}.</span> {step.text}
+                                    </span>
+                                </li>
+                            ))}
+                        </ol>
+                        <p className="text-sm text-[var(--text-muted)] mt-5">
+                            Für die meisten Websites reicht dafür ein einfacher Texteditor und Zugriff auf das Root-Verzeichnis des Servers oder Hosting-Panels - ein CMS-Plugin oder Build-Skript ist nicht zwingend nötig, kann die Implementierung bei häufigen Änderungen aber automatisieren.
                         </p>
                     </section>
 
@@ -265,14 +323,7 @@ export default function LlmsTxtPage() {
 
                     <section>
                         <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Häufige Fragen zu llms.txt</h2>
-                        <div className="space-y-4">
-                            {faqLd.mainEntity.map((faq, i) => (
-                                <div key={i} className="bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-2xl p-5">
-                                    <h3 className="font-semibold text-[var(--text-white)] mb-2 text-sm">{faq.name}</h3>
-                                    <p className="text-sm text-[var(--text-muted)] leading-relaxed">{faq.acceptedAnswer.text}</p>
-                                </div>
-                            ))}
-                        </div>
+                        <FaqAccordion faqs={faqLd.mainEntity} />
                     </section>
 
                 </div>

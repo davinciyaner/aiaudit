@@ -17,19 +17,19 @@ const HOW_IT_WORKS = [
 const FAQS = [
     {
         q: 'Wie kann ich prüfen, ob meine Website von ChatGPT oder Claude zitiert wird?',
-        a: 'Mit dem kostenlosen KI-Sichtbarkeits-Check von Scanora: Domain und Keyword eingeben, eine Plattform (ChatGPT, Claude, Perplexity oder Google AI Overview) auswählen und in wenigen Sekunden siehst du, ob und wie deine Website dort erwähnt wird - ganz ohne Registrierung.',
+        a: 'Mit dem kostenlosen GEO Check von Scanora: Domain und Keyword eingeben, eine Plattform (ChatGPT, Claude, Perplexity oder Google AI Overview) auswählen und in wenigen Sekunden siehst du, ob und wie deine Website dort erwähnt wird - ganz ohne Registrierung.',
     },
     {
-        q: 'Ist der KI-Sichtbarkeits-Check wirklich kostenlos?',
-        a: 'Ja, jeder Account bzw. jede IP-Adresse kann den Check einmal komplett kostenlos nutzen. Für wiederkehrende Prüfungen und alle vier Plattformen gleichzeitig gibt es GEO Automatisierung ab 4,99 €/Monat.',
+        q: 'Ist der GEO Check wirklich kostenlos?',
+        a: 'Ja, jeder Account bzw. jede IP-Adresse kann den GEO Check einmal komplett kostenlos nutzen. Für wiederkehrende Prüfungen und mehrere Plattformen gleichzeitig gibt es GEO Automatisierung ab 4,99 €/Monat.',
     },
     {
         q: 'Welche KI-Modelle werden geprüft?',
         a: 'ChatGPT, Claude, Perplexity und Google AI Overview - die vier meistgenutzten KI-Systeme, die Nutzer heute für Produktempfehlungen befragen.',
     },
     {
-        q: 'Was ist der Unterschied zwischen dem Einzel-Check und GEO Automatisierung?',
-        a: 'Der Einzel-Check zeigt einmalig, ob eine Plattform deine Website nennt. GEO Automatisierung prüft wöchentlich automatisch alle vier Plattformen, trackt den Verlauf über Zeit und meldet Änderungen per E-Mail.',
+        q: 'Was ist der Unterschied zwischen GEO Check und GEO Automatisierung?',
+        a: 'Der GEO Check ist eine einmalige Prüfung: Er zeigt zu einem Zeitpunkt, ob eine Plattform deine Website nennt. GEO Automatisierung ist die laufende Version davon - sie prüft wöchentlich automatisch bis zu fünf KI-Systeme (Claude, ChatGPT, Gemini, Perplexity und Google AI Overview), berechnet deine Mention-Rate über Zeit und meldet Änderungen per E-Mail, statt dass du manuell neu prüfen musst.',
     },
 ]
 
@@ -227,10 +227,10 @@ function GeoCheckPageInner() {
             <main className="max-w-2xl mx-auto px-5 sm:px-8 pt-28 sm:pt-32 pb-24">
                 <div className="text-center mb-8">
                     <h1 className="text-3xl sm:text-4xl font-bold text-[var(--text-white)] leading-tight tracking-tight mb-4">
-                        {platformLocked && platform ? `Wirst du von ${PLATFORM_META[platform].label} zitiert?` : 'Wirst du von ChatGPT & Co. zitiert?'}
+                        {platformLocked && platform ? `GEO Check: Wirst du von ${PLATFORM_META[platform].label} zitiert?` : 'GEO Check: Wirst du von ChatGPT & Co. zitiert?'}
                     </h1>
                     <p className="text-[var(--text-muted)] leading-relaxed max-w-lg mx-auto">
-                        Der KI-Sichtbarkeits-Check von Scanora ist ein kostenloses Tool für Websitebetreiber, das prüft, ob ChatGPT, Claude, Perplexity oder Google AI Overview eine Domain als Quelle nennen.
+                        Ein GEO Check ist eine einmalige oder wiederkehrende Prüfung, ob eine Website von KI-Systemen wie ChatGPT, Claude, Gemini, Perplexity oder der Google AI Overview als Quelle zitiert wird. Der GEO Check von Scanora ist ein kostenloses Tool für Websitebetreiber: Domain und Keyword eingeben, eine Plattform (ChatGPT, Claude, Perplexity oder Google AI Overview) wählen und in Sekunden sehen, ob die eigene Domain genannt wird - ganz ohne Registrierung.
                     </p>
                 </div>
 

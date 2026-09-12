@@ -3,9 +3,9 @@ import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
 
 export const metadata = {
-    title: 'Core Web Vitals 2026: Verstehen und kostenlos testen',
-    description: 'Core Web Vitals einfach erklärt: LCP, INP und CLS mit den offiziellen Google-Schwellenwerten. Plus: wie du sie in unter 2 Minuten kostenlos testest.',
-    keywords: 'core web vitals, core web vitals testen, core web vitals kostenlos, core web vitals prüfen kostenlos, lcp inp cls, ladezeit test kostenlos, pagespeed insights',
+    title: 'Core Web Vitals testen kostenlos: LCP, INP & CLS prüfen (2026)',
+    description: 'Core Web Vitals kostenlos testen: LCP, INP und CLS einzeln prüfen - mit Googles PageSpeed Insights oder als mehrseitige Alternative ohne manuellen Einzelcheck.',
+    keywords: 'core web vitals testen kostenlos, core web vitals tool ohne google, lcp testen, inp testen, cls testen, lcp inp cls testen, core web vitals, core web vitals testen, core web vitals kostenlos, core web vitals prüfen kostenlos, ladezeit test kostenlos, pagespeed insights',
     alternates: {
         canonical: 'https://www.scanora.ai/blog/core-web-vitals-testen',
         languages: {
@@ -14,8 +14,8 @@ export const metadata = {
         },
     },
     openGraph: {
-        title: 'Core Web Vitals 2026: Verstehen und kostenlos testen',
-        description: 'LCP, INP und CLS erklärt - mit den offiziellen Schwellenwerten und kostenlosen Test-Tools.',
+        title: 'Core Web Vitals testen kostenlos: LCP, INP & CLS prüfen (2026)',
+        description: 'LCP, INP und CLS erklärt und einzeln getestet - mit den offiziellen Schwellenwerten und kostenlosen Test-Tools.',
         url: 'https://www.scanora.ai/blog/core-web-vitals-testen',
         type: 'article',
         locale: 'de_DE',
@@ -25,11 +25,11 @@ export const metadata = {
 const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
-    headline: 'Core Web Vitals 2026: Verstehen und kostenlos testen',
-    description: 'Core Web Vitals einfach erklärt: LCP, INP und CLS mit den offiziellen Google-Schwellenwerten. Plus: wie du sie kostenlos testest.',
+    headline: 'Core Web Vitals testen kostenlos: LCP, INP & CLS prüfen (2026)',
+    description: 'Core Web Vitals kostenlos testen: LCP, INP und CLS einzeln prüfen - mit Googles PageSpeed Insights oder als mehrseitige Alternative.',
     image: 'https://www.scanora.ai/blog/core-web-vitals-testen/opengraph-image',
     datePublished: '2026-07-26T09:00:00+02:00',
-    dateModified: '2026-07-30T09:00:00+02:00',
+    dateModified: '2026-09-12T09:00:00+02:00',
     author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.scanora.ai/about' },
     publisher: {
         '@type': 'Organization',
@@ -68,7 +68,15 @@ const faqLd = {
             name: 'Wie teste ich meine Core Web Vitals kostenlos?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'Am schnellsten mit Googles eigenem PageSpeed Insights (pagespeed.web.dev) - URL eingeben, Ergebnis in Sekunden. Für mehrere Seiten gleichzeitig eignet sich ein automatisierter SEO-Test wie Scanora besser, da PageSpeed Insights nur eine URL pro Durchlauf prüft.',
+                text: 'Am schnellsten mit Googles eigenem PageSpeed Insights (pagespeed.web.dev) - URL eingeben, Ergebnis in Sekunden für LCP, INP und CLS. Für mehrere Seiten gleichzeitig oder als Ergänzung im Gesamt-Audit misst Scanora TTFB und FCP über bis zu 25 Unterseiten hinweg - ersetzt aber keine dedizierte LCP/INP/CLS-Analyse.',
+            },
+        },
+        {
+            '@type': 'Question',
+            name: 'Gibt es ein Core Web Vitals Tool ohne Google?',
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Nicht ganz ohne Google-Bezug: LCP, INP und CLS sind von Google definierte Metriken, deren offizielle Werte auf Chrome-Messdaten (Lighthouse-Labordaten oder Chrome User Experience Report) basieren. Tools wie GTmetrix oder WebPageTest zeigen im Kern dieselben Lighthouse-Werte in einer anderen Oberfläche. Scanora misst mit einem eigenen Playwright-Browser TTFB und FCP als Teil eines umfassenderen SEO-, Performance- und GEO-Audits - eine echte Alternative ganz ohne Google-Technologie gibt es für die offiziellen CWV-Werte aktuell nicht.',
             },
         },
         {
@@ -180,13 +188,16 @@ export default function CoreWebVitalsPage() {
                         </span>
                         <span className="text-xs text-[var(--text-faint)]">26. Juli 2026</span>
                         <span className="text-xs text-[var(--text-faint)]">· 8 min Lesezeit</span>
-                        <span className="text-xs text-[var(--text-faint)]">· Aktualisiert am 30. Juli 2026</span>
+                        <span className="text-xs text-[var(--text-faint)]">· Aktualisiert am 12. September 2026</span>
                     </div>
                     <h1 className="text-3xl sm:text-5xl font-bold text-[var(--text-white)] leading-tight tracking-tight mb-5">
-                        Core Web Vitals 2026: Verstehen und kostenlos testen
+                        Core Web Vitals testen kostenlos: LCP, INP und CLS prüfen (2026)
                     </h1>
                     <p className="text-lg text-[var(--text-muted)] leading-relaxed">
-                        LCP, INP, CLS - drei Abkürzungen, die seit 2021 mitentscheiden, wie gut deine Website bei Google rankt. Hier erfährst du, was sie messen, welche Werte "gut" sind und wie du sie in unter 2 Minuten kostenlos testest.
+                        Am schnellsten testest du Core Web Vitals kostenlos mit Googles PageSpeed Insights (pagespeed.web.dev): URL eingeben, in Sekunden Werte für LCP, INP und CLS erhalten - als Labordaten und, bei genug Traffic, als echte Nutzer-Felddaten. Für mehrere Seiten gleichzeitig oder als Ergänzung im Gesamt-Audit misst ein Tool wie Scanora zusätzlich TTFB und FCP.
+                    </p>
+                    <p className="text-lg text-[var(--text-muted)] leading-relaxed mt-4">
+                        LCP, INP, CLS - drei Abkürzungen, die seit 2021 mitentscheiden, wie gut deine Website bei Google rankt. Hier erfährst du, was sie messen, welche Werte "gut" sind und wie du LCP, INP und CLS einzeln testest.
                     </p>
                     <div className="mt-5 flex items-center gap-2 text-xs text-[var(--text-faint)]">
                         <Link href="/about" className="flex items-center gap-2 hover:text-[var(--text-body)] transition-colors">
@@ -256,7 +267,7 @@ export default function CoreWebVitalsPage() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Wie testest du deine Core Web Vitals kostenlos?</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Core Web Vitals testen kostenlos: die 3 offiziellen Wege</h2>
                         <p>
                             Der schnellste Weg: <a href="https://pagespeed.web.dev" target="_blank" rel="noopener noreferrer" className="text-amber-400 hover:text-amber-300 underline underline-offset-2">PageSpeed Insights</a> von Google selbst. URL eingeben, warten, fertig - du bekommst sowohl Labordaten (Lighthouse-Simulation) als auch echte Felddaten aus dem Chrome User Experience Report, sofern die Seite genug Traffic hat.
                         </p>
@@ -265,6 +276,30 @@ export default function CoreWebVitalsPage() {
                         </p>
                         <p className="mt-4">
                             Der Haken an allen dreien: Sie prüfen jeweils nur eine URL pro Durchlauf. Willst du mehrere Unterseiten gleichzeitig sehen - Produktseiten, Blogartikel, Landingpages - brauchst du entweder viel manuelle Zeit oder ein automatisiertes Tool, das mehrseitig crawlt.
+                        </p>
+
+                        <h3 className="text-lg font-semibold text-[var(--text-white)] mt-8 mb-3">LCP, INP und CLS einzeln testen</h3>
+                        <ul className="space-y-2">
+                            <li className="flex items-start gap-2.5 text-sm text-[var(--text-muted)]">
+                                <span className="w-1 h-1 rounded-full bg-amber-400 shrink-0 mt-2" />
+                                <span><strong className="text-[var(--text-white)]">LCP testen:</strong> im "Performance"-Tab der Chrome DevTools aufzeichnen oder direkt den LCP-Wert in PageSpeed Insights ablesen - dort auch farblich als "größtes Element" markiert.</span>
+                            </li>
+                            <li className="flex items-start gap-2.5 text-sm text-[var(--text-muted)]">
+                                <span className="w-1 h-1 rounded-full bg-amber-400 shrink-0 mt-2" />
+                                <span><strong className="text-[var(--text-white)]">INP testen:</strong> erfordert echte Interaktion, deshalb liefert PageSpeed Insights nur Felddaten aus dem Chrome User Experience Report zuverlässig - für Labor-Schätzwerte hilft die "Interactions"-Aufzeichnung in den Chrome DevTools.</span>
+                            </li>
+                            <li className="flex items-start gap-2.5 text-sm text-[var(--text-muted)]">
+                                <span className="w-1 h-1 rounded-full bg-amber-400 shrink-0 mt-2" />
+                                <span><strong className="text-[var(--text-white)]">CLS testen:</strong> im "Experience"-Bereich von PageSpeed Insights oder über die "Layout Shift Regions"-Einstellung in den Chrome DevTools sichtbar machen, welche Elemente sich verschieben.</span>
+                            </li>
+                        </ul>
+
+                        <h3 className="text-lg font-semibold text-[var(--text-white)] mt-8 mb-3">Core Web Vitals Tool ohne Google - geht das?</h3>
+                        <p>
+                            Nicht vollständig: LCP, INP und CLS sind von Google definierte Metriken, deren offizielle Werte technisch auf Chrome-Messdaten beruhen (Lighthouse-Labordaten oder Chrome User Experience Report). Tools wie GTmetrix oder WebPageTest zeigen im Kern dieselben Lighthouse-Werte in einer anderen Oberfläche - sie sind keine unabhängige Messung.
+                        </p>
+                        <p className="mt-4">
+                            Scanora geht einen anderen Weg: Ein eigener Playwright-Browser misst TTFB (Server-Antwortzeit) und FCP (erster sichtbarer Inhalt) direkt und kombiniert das mit SEO- und GEO-Checks in einem Report über bis zu 25 Unterseiten gleichzeitig. Das ist ehrlich gesagt kein Ersatz für eine dedizierte LCP/INP/CLS-Tiefenanalyse - aber eine schnelle, mehrseitige Ergänzung, wenn TTFB/FCP als Teil eines Gesamt-Audits reichen.
                         </p>
                     </section>
 
@@ -304,10 +339,10 @@ export default function CoreWebVitalsPage() {
                 {/* CTA */}
                 <div className="mt-14 bg-gradient-to-br from-amber-950/30 to-[var(--bg-base)] border border-amber-500/20 rounded-2xl p-6 sm:p-8 text-center">
                     <h2 className="text-xl sm:text-2xl font-bold text-[var(--text-white)] mb-3">
-                        Core Web Vitals auf allen Unterseiten prüfen
+                        TTFB und FCP auf allen Unterseiten prüfen
                     </h2>
                     <p className="text-[var(--text-muted)] text-sm mb-6 max-w-md mx-auto leading-relaxed">
-                        Scanora misst LCP, TTFB, FCP und Ladezeit auf bis zu 25 Unterseiten gleichzeitig - zusammen mit SEO- und GEO-Signalen im selben Report. Start ohne Registrierung, für den vollständigen Report mit allen Scores meldest du dich kostenlos an.
+                        Scanora misst TTFB und FCP auf bis zu 25 Unterseiten gleichzeitig - zusammen mit SEO- und GEO-Signalen im selben Report. Für die vollständige LCP/INP/CLS-Analyse einzelner Seiten bleibt PageSpeed Insights die richtige Wahl. Start ohne Registrierung, für den vollständigen Report mit allen Scores meldest du dich kostenlos an.
                     </p>
                     <Link
                         href="/dashboard"
