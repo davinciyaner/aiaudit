@@ -1,3 +1,10 @@
+// Echte Marken-Farben aus globals.css (--bg-base, --accent, --text-white, --text-muted),
+// von OKLCH nach Hex konvertiert — next/og (Satori) unterstuetzt kein oklch().
+const BG_BASE = '#030712'
+const ACCENT = '#19a5e8'
+const TEXT_WHITE = '#f3f5f9'
+const TEXT_MUTED = '#8b939f'
+
 export function blogOgImage(title, tag) {
     return (
         <div
@@ -7,56 +14,46 @@ export function blogOgImage(title, tag) {
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'space-between',
-                background: '#05080f',
+                background: BG_BASE,
                 padding: '64px 80px',
                 fontFamily: 'system-ui, -apple-system, sans-serif',
                 position: 'relative',
                 overflow: 'hidden',
             }}
         >
-            {/* Glow top-center */}
+            {/* Einzelner Accent-Glow oben mittig — wie im echten Hero, kein Zwei-Farben-Verlauf */}
             <div
                 style={{
                     position: 'absolute',
-                    top: -120,
+                    top: -160,
                     left: '50%',
-                    width: 700,
+                    width: 900,
                     height: 500,
                     borderRadius: '50%',
-                    background: 'radial-gradient(ellipse, rgba(124,58,237,0.25) 0%, transparent 65%)',
+                    background: 'radial-gradient(ellipse, rgba(25,165,232,0.18) 0%, transparent 70%)',
                     transform: 'translateX(-50%)',
                 }}
             />
-            {/* Glow bottom-right */}
-            <div
-                style={{
-                    position: 'absolute',
-                    bottom: -80,
-                    right: -80,
-                    width: 400,
-                    height: 400,
-                    borderRadius: '50%',
-                    background: 'radial-gradient(ellipse, rgba(6,182,212,0.15) 0%, transparent 65%)',
-                }}
-            />
 
-            {/* Logo */}
+            {/* Logo — identisch zum echten Navbar-Icon (Kreis + versetzter Punkt) auf Accent-Flaeche */}
             <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
                 <div
                     style={{
                         width: 48,
                         height: 48,
                         borderRadius: 14,
-                        background: 'linear-gradient(135deg, #7c3aed 0%, #06b6d4 100%)',
+                        background: ACCENT,
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        fontSize: 24,
                     }}
                 >
-                    ⚡
+                    <svg width="24" height="24" viewBox="0 0 192 192" fill="none">
+                        <circle cx="96" cy="96" r="50" stroke={BG_BASE} strokeWidth="14" />
+                        <circle cx="110" cy="82" r="13" fill={BG_BASE} />
+                    </svg>
                 </div>
-                <span style={{ fontSize: 30, fontWeight: 700, color: 'white', letterSpacing: '-0.5px' }}>
+                <span style={{ fontSize: 30, fontWeight: 700, color: TEXT_WHITE, letterSpacing: '-0.5px' }}>
                     Scanora
                 </span>
             </div>
@@ -69,7 +66,7 @@ export function blogOgImage(title, tag) {
                     alignItems: 'center',
                     fontSize: 50,
                     fontWeight: 800,
-                    color: 'white',
+                    color: TEXT_WHITE,
                     lineHeight: 1.15,
                     letterSpacing: '-1px',
                     maxWidth: 1040,
@@ -85,9 +82,9 @@ export function blogOgImage(title, tag) {
                         style={{
                             padding: '10px 22px',
                             borderRadius: 24,
-                            background: 'rgba(124,58,237,0.12)',
-                            border: '1px solid rgba(124,58,237,0.3)',
-                            color: '#c4b5fd',
+                            background: 'rgba(25,165,232,0.12)',
+                            border: '1px solid rgba(25,165,232,0.3)',
+                            color: ACCENT,
                             fontSize: 20,
                             fontWeight: 600,
                         }}
@@ -95,7 +92,7 @@ export function blogOgImage(title, tag) {
                         {tag}
                     </div>
                 )}
-                <div style={{ fontSize: 20, color: '#64748b', fontWeight: 400 }}>
+                <div style={{ fontSize: 20, color: TEXT_MUTED, fontWeight: 400 }}>
                     scanora.ai/blog
                 </div>
             </div>

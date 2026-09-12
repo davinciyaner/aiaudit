@@ -5,7 +5,7 @@ import FaqAccordion from './FaqAccordion'
 
 export const metadata = {
     title: 'llms.txt erklärt: Beispiel, Vorlage & Schritt-für-Schritt-Anleitung',
-    description: 'llms.txt einfach erklärt: Definition, Unterschied zu robots.txt, ein echtes Beispiel zum Kopieren und eine Schritt-für-Schritt-Anleitung, um deine eigene llms.txt-Datei zu erstellen und zu implementieren.',
+    description: 'llms.txt einfach erklärt: Definition, Unterschied zu robots.txt, ein echtes Beispiel zum Kopieren und eine Schritt-für-Schritt-Anleitung zum Erstellen.',
     keywords: 'llms.txt, llms txt, llms.txt erstellen, llms.txt beispiel, llms.txt implementierung, llms.txt datei erstellen, llms.txt vorlage, llms.txt was ist das, llms-full.txt, ai crawler datei, llms.txt generator',
     alternates: {
         canonical: 'https://www.scanora.ai/blog/llms-txt-erklaert',
@@ -20,6 +20,7 @@ export const metadata = {
         url: 'https://www.scanora.ai/blog/llms-txt-erklaert',
         type: 'article',
         locale: 'de_DE',
+        images: ['https://www.scanora.ai/blog/llms-txt-erklaert/opengraph-image'],
     },
 }
 

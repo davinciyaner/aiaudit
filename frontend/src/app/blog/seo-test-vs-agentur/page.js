@@ -19,6 +19,7 @@ export const metadata = {
         url: 'https://www.scanora.ai/blog/seo-test-vs-agentur',
         type: 'article',
         locale: 'de_DE',
+        images: ['https://www.scanora.ai/blog/seo-test-vs-agentur/opengraph-image'],
     },
 }
 
