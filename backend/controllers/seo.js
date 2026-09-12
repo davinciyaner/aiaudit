@@ -197,6 +197,7 @@ export async function analyzeSEO(url, html) {
         structuredData: structuredData > 0,
         brokenSchemaImages,
         hasTestimonials,
+        noindex: !!robots && robots.includes('noindex'),
         issues,
         suggestions,
     }

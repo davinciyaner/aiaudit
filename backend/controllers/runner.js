@@ -154,23 +154,31 @@ function aggregateSEO(seoResults) {
     if (seoResults.length === 0) return null
     if (seoResults.length === 1) return seoResults[0]
 
-    const avgScore = Math.round(seoResults.reduce((s, r) => s + r.score, 0) / seoResults.length)
+    // Seiten mit noindex (Login, Register, Dashboard, Rechtstexte, ...) werden von Google nie
+    // in der Suche gezeigt — Title-/Description-Laenge, Wortanzahl etc. auf diesen Seiten zu
+    // bewerten waere irrefuehrend und wuerde den Score einer eigentlich gut optimierten Seite
+    // grundlos druecken. Sie fliessen deshalb nicht in Score-Durchschnitt oder Issue-Liste ein.
+    const indexableResults = seoResults.filter(r => !r.noindex)
+    const scored = indexableResults.length > 0 ? indexableResults : seoResults
+
+    const avgScore = Math.round(scored.reduce((s, r) => s + r.score, 0) / scored.length)
 
     // Einzigartige Issues und Suggestions sammeln
     const issueSet = new Set()
     const suggestionSet = new Set()
-    seoResults.forEach(r => {
+    scored.forEach(r => {
         r.issues.forEach(i => issueSet.add(i))
         r.suggestions.forEach(s => suggestionSet.add(s))
     })
 
     return {
-        ...seoResults[0],
+        ...(scored[0]),
         score: avgScore,
         issues: Array.from(issueSet),
         suggestions: Array.from(suggestionSet),
-        pagesAnalyzed: seoResults.length,
-        perPage: seoResults.map(r => ({ url: r._url, score: r.score }))
+        pagesAnalyzed: scored.length,
+        excludedNoindexPages: seoResults.length - scored.length,
+        perPage: scored.map(r => ({ url: r._url, score: r.score }))
     }
 }
 
