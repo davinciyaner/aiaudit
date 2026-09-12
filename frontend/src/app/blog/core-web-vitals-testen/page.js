@@ -19,6 +19,7 @@ export const metadata = {
         url: 'https://www.scanora.ai/blog/core-web-vitals-testen',
         type: 'article',
         locale: 'de_DE',
+        images: ['https://www.scanora.ai/blog/core-web-vitals-testen/opengraph-image'],
     },
 }
 

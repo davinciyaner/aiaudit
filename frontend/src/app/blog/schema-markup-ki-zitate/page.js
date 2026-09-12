@@ -4,7 +4,7 @@ import Footer from '../../components/Footer'
 
 export const metadata = {
     title: 'Schema Markup KI-Zitate 2026: So wirst du für ChatGPT & Co. zitierfähig',
-    description: 'Schema Markup für KI-Zitate (JSON-LD) einfach erklärt: Definition, Prioritäten-Reihenfolge, fertiger Code zum Kopieren, kostenlose Generatoren & Test-Tools sowie der häufigste Fehler, der Rich Results kostet.',
+    description: 'Schema Markup für KI-Zitate (JSON-LD) einfach erklärt: Definition, Prioritäten-Reihenfolge, fertiger Code zum Kopieren, kostenlose Generatoren & Test-Tools.',
     keywords: 'schema markup ki, schema markup, schema markup generator, structured data prüfen kostenlos, json-ld generator, json-ld beispiel, faq schema, organization schema, rich results test',
     alternates: {
         canonical: 'https://www.scanora.ai/blog/schema-markup-ki-zitate',
@@ -19,6 +19,7 @@ export const metadata = {
         url: 'https://www.scanora.ai/blog/schema-markup-ki-zitate',
         type: 'article',
         locale: 'de_DE',
+        images: ['https://www.scanora.ai/blog/schema-markup-ki-zitate/opengraph-image'],
     },
 }
 

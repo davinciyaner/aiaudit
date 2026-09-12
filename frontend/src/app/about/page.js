@@ -5,7 +5,7 @@ import Footer from '../components/Footer'
 
 export const metadata = {
     title: 'Über Scanora – Warum es dieses Tool gibt',
-    description: 'Scanora trackt automatisiert, ob deine Website bei ChatGPT, Claude, Perplexity und Google AI Overview zitiert wird — und wie sie bei Google rankt. Ein Report statt zehn Einzeltools.',
+    description: 'Scanora trackt automatisiert, ob deine Website bei ChatGPT, Claude, Perplexity und Google AI Overview zitiert wird — und wie sie bei Google rankt.',
     alternates: { canonical: 'https://www.scanora.ai/about' },
     openGraph: {
         title: 'Über Scanora',
@@ -13,6 +13,7 @@ export const metadata = {
         url: 'https://www.scanora.ai/about',
         type: 'website',
         locale: 'de_DE',
+        images: ['https://www.scanora.ai/opengraph-image'],
     },
 }
 
