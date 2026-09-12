@@ -4,8 +4,8 @@ import Footer from '../../components/Footer'
 
 export const metadata = {
     title: 'Schema Markup KI-Zitate 2026: So wirst du für ChatGPT & Co. zitierfähig',
-    description: 'Schema Markup (JSON-LD) einfach erklärt: Prioritäten-Reihenfolge, fertiger Code zum Kopieren, kostenlose Generatoren & Test-Tools sowie der häufigste Fehler, der Rich Results kostet.',
-    keywords: 'schema markup, schema markup generator, structured data prüfen kostenlos, schema markup ki, json-ld generator, json-ld beispiel, faq schema, organization schema, rich results test',
+    description: 'Schema Markup für KI-Zitate (JSON-LD) einfach erklärt: Definition, Prioritäten-Reihenfolge, fertiger Code zum Kopieren, kostenlose Generatoren & Test-Tools sowie der häufigste Fehler, der Rich Results kostet.',
+    keywords: 'schema markup ki, schema markup, schema markup generator, structured data prüfen kostenlos, json-ld generator, json-ld beispiel, faq schema, organization schema, rich results test',
     alternates: {
         canonical: 'https://www.scanora.ai/blog/schema-markup-ki-zitate',
         languages: {
@@ -15,7 +15,7 @@ export const metadata = {
     },
     openGraph: {
         title: 'Schema Markup KI-Zitate 2026: So wirst du für ChatGPT & Co. zitierfähig',
-        description: 'Prioritäten-Reihenfolge, fertiger JSON-LD-Code zum Kopieren, kostenlose Generatoren & Test-Tools sowie der häufigste Fehler, der Rich Results kostet.',
+        description: 'Schema Markup für KI-Zitate: Definition, Prioritäten-Reihenfolge, fertiger JSON-LD-Code zum Kopieren, kostenlose Generatoren & Test-Tools sowie der häufigste Fehler, der Rich Results kostet.',
         url: 'https://www.scanora.ai/blog/schema-markup-ki-zitate',
         type: 'article',
         locale: 'de_DE',
@@ -26,10 +26,10 @@ const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: 'Schema Markup KI-Zitate 2026: So wirst du für ChatGPT & Co. zitierfähig',
-    description: 'Schema Markup (JSON-LD) einfach erklärt: Prioritäten-Reihenfolge, fertiger Code zum Kopieren, kostenlose Generatoren & Test-Tools sowie der häufigste Fehler, der Rich Results kostet.',
+    description: 'Schema Markup für KI-Zitate (JSON-LD) einfach erklärt: Definition, Prioritäten-Reihenfolge, fertiger Code zum Kopieren, kostenlose Generatoren & Test-Tools sowie der häufigste Fehler, der Rich Results kostet.',
     image: 'https://www.scanora.ai/blog/schema-markup-ki-zitate/opengraph-image',
     datePublished: '2026-07-26T09:00:00+02:00',
-    dateModified: '2026-08-29T09:00:00+02:00',
+    dateModified: '2026-09-12T09:00:00+02:00',
     author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.scanora.ai/about' },
     publisher: {
         '@type': 'Organization',
@@ -55,6 +55,14 @@ const faqLd = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
     mainEntity: [
+        {
+            '@type': 'Question',
+            name: 'Was ist Schema Markup für KI-Zitate?',
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Schema Markup für KI-Zitate ist strukturierte Daten im JSON-LD-Format im <head>-Bereich einer Seite. Es macht Fakten wie Autor, Datum, Preis oder Frage-Antwort-Paare maschinenlesbar, damit KI-Systeme wie ChatGPT, Perplexity und Google AI Overviews den Inhalt korrekt verstehen und als Quelle zitieren - statt Fakten aus mehrdeutigem Fließtext zu erraten.',
+            },
+        },
         {
             '@type': 'Question',
             name: 'Was ist Schema Markup?',
@@ -154,13 +162,13 @@ export default function SchemaMarkupPage() {
                         </span>
                         <span className="text-xs text-[var(--text-faint)]">26. Juli 2026</span>
                         <span className="text-xs text-[var(--text-faint)]">· 8 min Lesezeit</span>
-                        <span className="text-xs text-[var(--text-faint)]">· Aktualisiert am 29. August 2026</span>
+                        <span className="text-xs text-[var(--text-faint)]">· Aktualisiert am 12. September 2026</span>
                     </div>
                     <h1 className="text-3xl sm:text-5xl font-bold text-[var(--text-white)] leading-tight tracking-tight mb-5">
                         Schema Markup KI-Zitate 2026: So wirst du für ChatGPT & Co. zitierfähig
                     </h1>
                     <p className="text-lg text-[var(--text-muted)] leading-relaxed">
-                        Schema Markup ist unsichtbar für Besucher - aber genau die Sprache, die Google und KI-Modelle nutzen, um Inhalte präzise zu verstehen und zu zitieren. Die wichtigsten Typen in der richtigen Reihenfolge, fertiger JSON-LD-Code zum Kopieren, kostenlose Generatoren und Test-Tools, und der Fehler, der am häufigsten alles wirkungslos macht.
+                        <strong className="text-[var(--text-white)] font-semibold">Schema Markup für KI-Zitate</strong> ist strukturierte Daten im JSON-LD-Format, die KI-Systemen wie ChatGPT, Perplexity und Google AI Overviews helfen, den Inhalt einer Seite korrekt zu verstehen und als Quelle zu zitieren - unsichtbar für Besucher, aber genau die Sprache, in der Google und KI-Modelle miteinander kommunizieren. Die wichtigsten Typen in der richtigen Reihenfolge, fertiger JSON-LD-Code zum Kopieren, kostenlose Generatoren und Test-Tools, und der Fehler, der am häufigsten alles wirkungslos macht.
                     </p>
                     <div className="mt-5 flex items-center gap-2 text-xs text-[var(--text-faint)]">
                         <Link href="/about" className="flex items-center gap-2 hover:text-[var(--text-body)] transition-colors">
@@ -177,13 +185,13 @@ export default function SchemaMarkupPage() {
                 <div className="space-y-10 text-[var(--text-body)] leading-relaxed">
 
                     <section>
-                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Was ist Schema Markup und warum zählt es für GEO?</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Was ist Schema Markup für KI-Zitate?</h2>
                         <p>
-                            Schema Markup ist strukturierte Daten im{' '}
+                            <strong className="text-[var(--text-white)]">Schema Markup für KI-Zitate</strong> ist strukturierte Daten im{' '}
                             <a href="https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline underline-offset-2">
                                 JSON-LD-Format
                             </a>
-                            , die eine standardisierte Sprache (schema.org) nutzt, um Inhalte maschinenlesbar zu beschreiben - meist unsichtbar im <code className="text-xs bg-[var(--text-white)]/[0.06] px-1.5 py-0.5 rounded">&lt;head&gt;</code>-Bereich eingebettet. Statt dass eine KI aus Fließtext erraten muss, wer der Autor eines Artikels ist oder was ein Produkt kostet, steht es explizit und eindeutig im Markup.
+                            , die eine standardisierte Sprache (schema.org) nutzt, um Inhalte maschinenlesbar zu beschreiben - meist unsichtbar im <code className="text-xs bg-[var(--text-white)]/[0.06] px-1.5 py-0.5 rounded">&lt;head&gt;</code>-Bereich eingebettet. Sie hilft KI-Systemen wie ChatGPT, Perplexity und Google AI Overviews, den Inhalt einer Seite korrekt zu verstehen und als Quelle zu zitieren - statt dass eine KI aus Fließtext erraten muss, wer der Autor eines Artikels ist oder was ein Produkt kostet.
                         </p>
                         <p className="mt-4">
                             Für klassisches SEO ermöglicht Schema Markup Rich Results - Sternebewertungen, FAQ-Boxen, Preisangaben direkt in den Suchergebnissen. Für{' '}
@@ -249,6 +257,22 @@ export default function SchemaMarkupPage() {
       "text": "Deine Antwort, wortgleich zum sichtbaren Text"
     }
   }]
+}`}
+                        </pre>
+                        <p className="mt-5">Für Blogartikel zusätzlich Article-Schema - genau der Typ, den dieser Artikel selbst im &lt;head&gt; trägt:</p>
+                        <pre className="mt-4 text-xs bg-[var(--text-white)]/[0.04] border border-[var(--text-white)]/[0.06] rounded-xl p-4 text-[var(--text-muted)] font-mono overflow-x-auto">
+{`{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Titel deines Artikels",
+  "datePublished": "2026-01-15T09:00:00+02:00",
+  "dateModified": "2026-09-12T09:00:00+02:00",
+  "author": { "@type": "Person", "name": "Autorenname" },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Deine Firma",
+    "logo": { "@type": "ImageObject", "url": "https://deine-domain.de/logo.png" }
+  }
 }`}
                         </pre>
                         <p className="text-xs text-[var(--text-faint)] mt-3">

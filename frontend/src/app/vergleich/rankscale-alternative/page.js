@@ -29,7 +29,7 @@ const jsonLd = {
     description: 'Scanora trackt KI-Sichtbarkeit bei ChatGPT, Claude, Gemini, Perplexity & Google AI Overview ab 29,99 €/Monat mit festen Preisen statt Credit-System. Der faktenbasierte Vergleich zu Rankscale.',
     image: 'https://www.scanora.ai/vergleich/rankscale-alternative/opengraph-image',
     datePublished: '2026-08-29T09:00:00+02:00',
-    dateModified: '2026-09-03T12:00:00+02:00',
+    dateModified: '2026-09-12T09:00:00+02:00',
     author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.scanora.ai/about' },
     publisher: {
         '@type': 'Organization',
@@ -221,10 +221,10 @@ export default function RankscaleAlternativePage() {
                         Rankscale-Alternative: Scanora im ehrlichen Vergleich
                     </h1>
                     <p className="text-lg text-[var(--text-muted)] leading-relaxed">
-                        Du suchst eine Alternative zu Rankscale - meistens aus einem von zwei Gründen: Das Credit-System macht die reale monatliche Rechnung schwer vorhersehbar, oder du brauchst gar nicht 17 KI-Plattformen, sondern willst die fünf wichtigsten zuverlässig und günstig abgedeckt haben. Diese Seite vergleicht beide Tools fair und faktenbasiert - inklusive der Punkte, in denen Rankscale besser ist.
+                        Kurzfassung vorweg: <strong className="text-[var(--text-white)]">Scanora</strong> trackt deine KI-Sichtbarkeit bei ChatGPT, Claude, Gemini, Perplexity und Google AI Overview ab 29,99 €/Monat mit festen, planbaren Limits - und bringt SEO-Audit sowie Google-Rankings im selben Haus mit. <strong className="text-[var(--text-white)]">Rankscale</strong> ist ein GEO-natives Tool mit außergewöhnlich breiter Plattformabdeckung und einem Credit-basierten Abrechnungsmodell. Welches Tool passt, hängt davon ab, ob du planbare Kosten oder maximale Plattformbreite priorisierst.
                     </p>
                     <p className="mt-4 text-[var(--text-body)] leading-relaxed">
-                        Kurzfassung vorweg: <strong className="text-[var(--text-white)]">Scanora</strong> trackt deine KI-Sichtbarkeit bei ChatGPT, Claude, Gemini, Perplexity und Google AI Overview ab 29,99 €/Monat mit festen, planbaren Limits - und bringt SEO-Audit sowie Google-Rankings im selben Haus mit. <strong className="text-[var(--text-white)]">Rankscale</strong> ist ein GEO-natives Tool mit außergewöhnlich breiter Plattformabdeckung und einem Credit-basierten Abrechnungsmodell. Welches Tool passt, hängt davon ab, ob du planbare Kosten oder maximale Plattformbreite priorisierst.
+                        Du suchst eine Alternative zu Rankscale - meistens aus einem von zwei Gründen: Das Credit-System macht die reale monatliche Rechnung schwer vorhersehbar, oder du brauchst gar nicht 17 KI-Plattformen, sondern willst die fünf wichtigsten zuverlässig und günstig abgedeckt haben. Diese Seite vergleicht beide Tools fair und faktenbasiert - inklusive der Punkte, in denen Rankscale besser ist.
                     </p>
                     <div className="mt-5 flex items-center gap-2 text-xs text-[var(--text-faint)]">
                         <Link href="/about" className="flex items-center gap-2 hover:text-[var(--text-body)] transition-colors">

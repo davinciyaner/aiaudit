@@ -4,9 +4,9 @@ import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
 
 export const metadata = {
-    title: 'SEO-Fehler finden: Die 10 häufigsten Probleme, die deinen Google-Rank kosten',
-    description: 'SEO-Fehler finden und sofort beheben: Diese 10 Probleme machen die meisten Websites - und keiner merkt es. Mit kostenlosem SEO-Audit-Tool checken.',
-    keywords: 'seo fehler finden, seo audit, seo test, seo fehler, seo check kostenlos, seo analyse, website seo prüfen, meta description fehlt, h1 tag, core web vitals',
+    title: 'SEO-Fehler finden 2026: Die 10 häufigsten Probleme + kostenloses Tool',
+    description: 'SEO-Fehler automatisch finden statt manuell suchen: Diese 10 Probleme kosten 2026 die meisten Websites Rankings. Mit kostenlosem SEO-Fehler-Tool in 60 Sekunden checken.',
+    keywords: 'seo fehler automatisch finden, seo fehler tool kostenlos, seo fehler 2026, seo fehler finden, seo audit, seo test, seo fehler, seo check kostenlos, seo analyse, website seo prüfen, meta description fehlt, h1 tag, core web vitals',
     alternates: {
         canonical: 'https://www.scanora.ai/blog/seo-test-haeufige-fehler',
         languages: {
@@ -15,8 +15,8 @@ export const metadata = {
         },
     },
     openGraph: {
-        title: 'SEO-Fehler finden: Die 10 häufigsten Probleme, die deinen Google-Rank kosten',
-        description: 'Diese 10 SEO-Fehler machen die meisten Websites. Mit kostenlosem SEO-Audit sofort finden und beheben.',
+        title: 'SEO-Fehler finden 2026: Die 10 häufigsten Probleme + kostenloses Tool',
+        description: 'Die 10 häufigsten SEO-Fehler 2026 - automatisch statt manuell finden. Mit kostenlosem SEO-Audit sofort prüfen und beheben.',
         url: 'https://www.scanora.ai/blog/seo-test-haeufige-fehler',
         type: 'article',
         locale: 'de_DE',
@@ -26,11 +26,11 @@ export const metadata = {
 const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
-    headline: 'SEO-Fehler finden: Die 10 häufigsten Probleme, die deinen Google-Rank kosten',
-    description: 'SEO-Fehler finden und sofort beheben: Diese 10 Probleme machen die meisten Websites - und keiner merkt es.',
+    headline: 'SEO-Fehler finden 2026: Die 10 häufigsten Probleme + kostenloses Tool',
+    description: 'SEO-Fehler automatisch finden statt manuell suchen: Diese 10 Probleme kosten 2026 die meisten Websites Rankings.',
     image: 'https://www.scanora.ai/blog/seo-test-haeufige-fehler/opengraph-image',
     datePublished: '2026-06-10T09:00:00+02:00',
-    dateModified: '2026-07-30T09:00:00+02:00',
+    dateModified: '2026-09-12T09:00:00+02:00',
     author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.scanora.ai/about' },
     publisher: {
         '@type': 'Organization',
@@ -86,6 +86,14 @@ const faqLd = {
             acceptedAnswer: {
                 '@type': 'Answer',
                 text: 'Ja. Scanora bietet einen kostenlosen SEO-Audit mit 14 Checks - inklusive Title-Tag, Meta-Description, H1, Alt-Texte, Canonical, Open Graph, Structured Data und mehr. Der Free-Plan erlaubt 1 vollständigen Audit pro Monat ohne Kreditkarte.',
+            },
+        },
+        {
+            '@type': 'Question',
+            name: 'Wie finde ich SEO-Fehler automatisch statt manuell zu suchen?',
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Ein automatisiertes SEO-Fehler-Tool wie Scanora crawlt bis zu 25 Unterseiten gleichzeitig und prüft 14 SEO-Checks in unter 60 Sekunden. Statt jede Seite einzeln manuell zu kontrollieren, bekommst du einen SEO-Score sowie eine nach Schweregrad (kritisch, hoch, mittel) priorisierte Liste konkreter Fixes - so weißt du sofort, welcher Fehler zuerst behoben werden sollte.',
             },
         },
     ],
@@ -247,13 +255,16 @@ export default function SeoTestArtikelPage() {
                         </span>
                         <span className="text-xs text-[var(--text-faint)]">10. Juni 2026</span>
                         <span className="text-xs text-[var(--text-faint)]">· 9 min Lesezeit</span>
-                        <span className="text-xs text-[var(--text-faint)]">· Aktualisiert am 30. Juli 2026</span>
+                        <span className="text-xs text-[var(--text-faint)]">· Aktualisiert am 12. September 2026</span>
                     </div>
                     <h1 className="text-3xl sm:text-5xl font-bold text-[var(--text-white)] leading-tight tracking-tight mb-5">
-                        SEO-Fehler finden: Die 10 häufigsten Probleme, die deinen Google-Rank kosten
+                        SEO-Fehler finden 2026: Die 10 häufigsten Probleme, die deinen Google-Rank kosten
                     </h1>
                     <p className="text-lg text-[var(--text-muted)] leading-relaxed">
-                        Die meisten SEO-Fehler sind keine Geheimnisse - sie sind einfach unsichtbar. Kein Fehler in der Konsole, kein Alarm. Die Seite läuft, der Traffic stagniert. Hier erfährst du, wie du diese 10 häufigsten Probleme in deinem eigenen SEO-Audit findest, warum sie Rankings kosten und wie du sie in 60 Minuten behebst.
+                        Die häufigsten SEO-Fehler sind: fehlende Meta-Description, fehlender H1-Tag, Ladezeit über 3 Sekunden, fehlende Bild-Alt-Texte, falscher Canonical-Tag, zu langer oder doppelter Title-Tag, fehlende Open-Graph-Tags, zu wenig Content, fehlendes Structured Data und versehentliches "noindex". Jeder einzelne Fehler kann Rankings kosten - meistens unbemerkt, denn die Seite läuft ja scheinbar normal weiter.
+                    </p>
+                    <p className="text-lg text-[var(--text-muted)] leading-relaxed mt-4">
+                        Hier erfährst du, wie du diese 10 häufigsten Probleme in deinem eigenen SEO-Audit findest, warum sie Rankings kosten und wie du sie in 60 Minuten behebst - inklusive Wegen, SEO-Fehler automatisch statt manuell zu finden.
                     </p>
                     <div className="mt-5 flex items-center gap-2 text-xs text-[var(--text-faint)]">
                         <Link href="/about" className="flex items-center gap-2 hover:text-[var(--text-body)] transition-colors">
@@ -312,7 +323,7 @@ export default function SeoTestArtikelPage() {
                     </nav>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-6">Die 10 häufigsten SEO-Fehler</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-6">Die 10 häufigsten SEO-Fehler 2026</h2>
                         <figure className="mb-6">
                             <Image
                                 src="/blog/auditai-seo-issues.png"
@@ -463,6 +474,11 @@ export default function SeoTestArtikelPage() {
                         <p className="mt-4">
                             Scanora prüft alle 14 SEO-Checks aus diesem Artikel in unter 60 Sekunden - inklusive H1, Meta-Descriptions, Alt-Texte, Canonical, Open Graph, Structured Data und Core Web Vitals.
                         </p>
+
+                        <h3 className="text-lg font-semibold text-[var(--text-white)] mt-8 mb-3">SEO-Fehler automatisch finden statt manuell suchen</h3>
+                        <p>
+                            Statt jeden der 10 Fehler oben Seite für Seite manuell durchzugehen, übernimmt ein SEO-Fehler-Tool die Prüfung: Scanora crawlt bis zu 25 Unterseiten, bewertet sie mit einem SEO-Score und listet gefundene Probleme nach Schweregrad (kritisch, hoch, mittel) priorisiert auf - inklusive konkretem Fix-Vorschlag pro Fehler. Das ist der Kernunterschied zu einer manuellen Prüfung: Du siehst nicht nur, dass etwas fehlt, sondern in welcher Reihenfolge du es beheben solltest.
+                        </p>
                     </section>
 
                     <section id="faq" className="scroll-mt-28">
@@ -484,6 +500,10 @@ export default function SeoTestArtikelPage() {
                                 {
                                     q: 'Kann ich einen SEO-Audit kostenlos durchführen?',
                                     a: 'Ja. Scanora bietet einen kostenlosen SEO-Audit mit 14 Checks - inklusive Title-Tag, Meta-Description, H1, Alt-Texte, Canonical, Open Graph, Structured Data und mehr. Der Free-Plan erlaubt 1 vollständigen Audit pro Monat ohne Kreditkarte.',
+                                },
+                                {
+                                    q: 'Wie finde ich SEO-Fehler automatisch statt manuell zu suchen?',
+                                    a: 'Ein automatisiertes SEO-Fehler-Tool wie Scanora crawlt bis zu 25 Unterseiten gleichzeitig und prüft 14 SEO-Checks in unter 60 Sekunden. Statt jede Seite einzeln manuell zu kontrollieren, bekommst du einen SEO-Score sowie eine nach Schweregrad priorisierte Liste konkreter Fixes.',
                                 },
                             ].map((faq, i) => (
                                 <div key={i} className="bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-2xl p-5">

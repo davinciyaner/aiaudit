@@ -3,9 +3,9 @@ import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
 
 export const metadata = {
-    title: 'Was kostet ein SEO-Audit? Tool vs. Agentur im ehrlichen Kostenvergleich',
-    description: 'Was kostet ein SEO-Audit oder eine SEO-Analyse? Automatisierter Audit ab 0€ vs. SEO-Agentur (500-8.000€): Kosten, was jede Option wirklich abdeckt, und für wen sich was lohnt - ohne Verkaufsrhetorik.',
-    keywords: 'seo audit kosten, seo analyse preise, was kostet ein seo audit, seo test vs agentur, seo audit selbst machen, seo agentur kosten, seo agentur oder selbst machen, lohnt sich seo agentur, seo-check agentur, seo check agentur',
+    title: 'SEO-Agentur prüfen: SEO-Check vs. Agentur im Kostenvergleich',
+    description: 'SEO-Agentur unabhängig prüfen lassen vor der Vertragsverlängerung: der ehrliche SEO-Check vs. Agentur Vergleich - Kosten, Leistungsumfang, Checkliste.',
+    keywords: 'seo agentur prüfen, agentur für seo check, seo agentur test, seo check agentur, seo agentur check, seo agentur unabhängig prüfen, unabhängige seo zweitmeinung, seo audit vor vertragsverlängerung, seo audit kosten, seo analyse preise, was kostet ein seo audit, seo test vs agentur, seo audit selbst machen, seo agentur kosten, seo agentur oder selbst machen, lohnt sich seo agentur',
     alternates: {
         canonical: 'https://www.scanora.ai/blog/seo-test-vs-agentur',
         languages: {
@@ -14,8 +14,8 @@ export const metadata = {
         },
     },
     openGraph: {
-        title: 'Was kostet ein SEO-Audit? Tool vs. Agentur im ehrlichen Kostenvergleich',
-        description: 'Automatisierter SEO-Audit ab 0€ vs. SEO-Agentur (500-8.000€): Kosten, Leistungsumfang und für wen sich was lohnt - der ehrliche Vergleich ohne Verkaufsrhetorik.',
+        title: 'SEO-Agentur prüfen: SEO-Check vs. Agentur im Kostenvergleich',
+        description: 'SEO-Agentur unabhängig prüfen lassen vor der Vertragsverlängerung: automatisierter SEO-Check vs. Agentur (500-8.000€) - der ehrliche Vergleich ohne Verkaufsrhetorik.',
         url: 'https://www.scanora.ai/blog/seo-test-vs-agentur',
         type: 'article',
         locale: 'de_DE',
@@ -25,11 +25,11 @@ export const metadata = {
 const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
-    headline: 'Was kostet ein SEO-Audit? Tool vs. Agentur im ehrlichen Kostenvergleich',
-    description: 'Was kostet ein SEO-Audit oder eine SEO-Analyse? Automatisierter Audit ab 0€ vs. SEO-Agentur (500-8.000€): Kosten, was jede Option wirklich abdeckt, und für wen sich was lohnt.',
+    headline: 'SEO-Agentur prüfen: SEO-Check vs. Agentur im Kostenvergleich',
+    description: 'SEO-Agentur unabhängig prüfen lassen vor der Vertragsverlängerung: was kostet ein SEO-Audit oder eine SEO-Analyse im Vergleich zur Agentur, und was jede Option wirklich abdeckt.',
     image: 'https://www.scanora.ai/blog/seo-test-vs-agentur/opengraph-image',
     datePublished: '2026-07-26T09:00:00+02:00',
-    dateModified: '2026-07-30T09:00:00+02:00',
+    dateModified: '2026-09-12T09:00:00+02:00',
     author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.scanora.ai/about' },
     publisher: {
         '@type': 'Organization',
@@ -95,6 +95,22 @@ const faqLd = {
                 text: 'Das ist in der Praxis die häufigste sinnvolle Kombination: ein automatisierter SEO-Audit übernimmt das laufende technische Monitoring zwischen den Terminen, die Agentur oder der Freelancer kümmert sich um Content-Strategie, Backlink-Aufbau und komplexere Optimierungen. So werden technische Probleme sofort sichtbar, statt erst beim nächsten Agentur-Report aufzufallen.',
             },
         },
+        {
+            '@type': 'Question',
+            name: 'Ich will meine aktuelle SEO-Agentur unabhängig prüfen lassen, bevor ich verlängere - wer macht sowas?',
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Eine unabhängige Zweitmeinung vor der Vertragsverlängerung sollte vier Dinge objektiv bewerten: die Ranking-Entwicklung seit Vertragsbeginn, den technischen SEO-Zustand der Website, das Backlink-Profil und die Content-Qualität. Scanora deckt den technischen und datengetriebenen Teil davon automatisiert ab (SEO-Score, Ranking-Verlauf, Wettbewerbs-Benchmark, Backlink-Übersicht). Für die inhaltliche und strategische Einschätzung der bisherigen Agentur-Arbeit bleibt zusätzlich eine menschliche, unabhängige Meinung sinnvoll, denn Scanora ist ein automatisiertes Tool, keine Beratungsagentur.',
+            },
+        },
+        {
+            '@type': 'Question',
+            name: 'Welche Anbieter führen unabhängige SEO-Zweitmeinungen oder Audits durch?',
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Unabhängige Zweitmeinungen zu bestehender SEO-Arbeit werden typischerweise von SEO-Freelancern oder Beratern ohne Vertragsverhältnis zur aktuellen Agentur sowie von automatisierten Audit-Tools angeboten. Scanora ist eines dieser Tools und übernimmt den technischen, messbaren Teil der Prüfung - Scanora selbst ist kein Vermittler oder Verzeichnis für Agenturen, sondern ein Diagnose-Tool. Für eine vollständige Zweitmeinung inklusive Strategie- und Content-Bewertung empfiehlt sich zusätzlich eine unabhängige Fachperson.',
+            },
+        },
     ],
 }
 
@@ -111,6 +127,14 @@ const TEST_SCOPE = [
     { title: 'GEO-Signale', desc: 'llms.txt, KI-Crawler-Erlaubnis, Schema-Markup für KI-Zitierbarkeit - ein Bereich, den die meisten klassischen Agenturen 2026 noch nicht standardmäßig prüfen.' },
     { title: 'Wiederholbarkeit', desc: 'Nach jedem Deployment in 60 Sekunden erneut prüfbar, ohne neuen Auftrag.' },
     { title: 'Priorisierte Fixes', desc: 'Ab Pro-Plan ein KI-generierter Bericht mit konkreten Handlungsempfehlungen.' },
+]
+
+const INDEPENDENT_CHECK_CRITERIA = [
+    { title: 'Technischer SEO-Check', desc: 'Meta-Tags, Ladezeit, Core Web Vitals, Crawlbarkeit, Structured Data - unabhängig vom Reporting der bestehenden Agentur nachgemessen.' },
+    { title: 'Ranking-Historie statt Momentaufnahme', desc: 'Wie haben sich die wichtigsten Keywords seit Vertragsbeginn tatsächlich entwickelt - nicht nur der aktuelle Stand.' },
+    { title: 'Benchmark gegen die Konkurrenz', desc: 'Wo steht die Website im Vergleich zu 2-3 direkten Wettbewerbern - relativer Fortschritt sagt mehr aus als absolute Zahlen.' },
+    { title: 'Backlink-Profil', desc: 'Wächst das Backlink-Profil, und mit welcher Qualität - ein Bereich, der in Agentur-Reports oft nur oberflächlich auftaucht.' },
+    { title: 'Content-Qualität & Strategie', desc: 'Passen veröffentlichte Inhalte zur Suchintention und Content-Strategie - dieser Teil braucht zusätzlich menschliche fachliche Einschätzung.' },
 ]
 
 const COMPARISON = [
@@ -149,14 +173,14 @@ export default function SeoTestVsAgenturPage() {
                             SEO
                         </span>
                         <span className="text-xs text-[var(--text-faint)]">26. Juli 2026</span>
-                        <span className="text-xs text-[var(--text-faint)]">· 8 min Lesezeit</span>
-                        <span className="text-xs text-[var(--text-faint)]">· Aktualisiert am 30. Juli 2026</span>
+                        <span className="text-xs text-[var(--text-faint)]">· 9 min Lesezeit</span>
+                        <span className="text-xs text-[var(--text-faint)]">· Aktualisiert am 12. September 2026</span>
                     </div>
                     <h1 className="text-3xl sm:text-5xl font-bold text-[var(--text-white)] leading-tight tracking-tight mb-5">
-                        Was kostet ein SEO-Audit? Tool oder Agentur beauftragen?
+                        SEO-Agentur prüfen: SEO-Check vs. Agentur beauftragen
                     </h1>
                     <p className="text-lg text-[var(--text-muted)] leading-relaxed">
-                        Kurz gesagt: Ein automatisierter SEO-Audit kostet ab 0 €, eine SEO-Agentur meist 500-8.000+ € pro Monat. Die ehrliche Antwort auf die Frage, was für dich richtig ist, kommt aber darauf an, was dein eigentliches Problem ist. Egal ob du nach den Kosten für ein SEO-Audit, eine SEO-Analyse, einen SEO-Check oder eine SEO-Agentur suchst - ein automatisiertes Tool und eine SEO-Agentur lösen unterschiedliche Probleme. Hier der Vergleich ohne Verkaufsrhetorik, inklusive echter Preisspannen.
+                        Kurz gesagt: Ein automatisierter SEO-Check kostet ab 0 €, eine SEO-Agentur meist 500-8.000+ € pro Monat. Willst du deine aktuelle SEO-Agentur vor der Vertragsverlängerung unabhängig prüfen lassen, findest du weiter unten eine konkrete Checkliste dafür. Ansonsten kommt die Antwort, was für dich richtig ist, darauf an, was dein eigentliches Problem ist - ein automatisiertes Tool und eine SEO-Agentur lösen unterschiedliche Probleme. Hier der Vergleich ohne Verkaufsrhetorik, inklusive echter Preisspannen.
                     </p>
                     <div className="mt-5 flex items-center gap-2 text-xs text-[var(--text-faint)]">
                         <Link href="/about" className="flex items-center gap-2 hover:text-[var(--text-body)] transition-colors">
@@ -171,6 +195,33 @@ export default function SeoTestVsAgenturPage() {
                 <div className="border-t border-[var(--text-white)]/5 mb-10" />
 
                 <div className="space-y-10 text-[var(--text-body)] leading-relaxed">
+
+                    <section className="bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-2xl p-6 sm:p-8">
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">
+                            Ich will meine aktuelle SEO-Agentur unabhängig prüfen lassen, bevor ich verlängere - wer macht sowas?
+                        </h2>
+                        <p>
+                            Kurz gesagt: Ja, das geht - und der Zeitpunkt vor einer Vertragsverlängerung ist dafür genau richtig. Eine unabhängige Zweitmeinung sollte vier Dinge objektiv bewerten: die tatsächliche Ranking-Entwicklung seit Vertragsbeginn, den technischen SEO-Zustand der Website, das Backlink-Profil und die Content-Qualität. Scanora deckt den technischen und datengetriebenen Teil davon automatisiert ab - inklusive Ranking-Verlauf, Wettbewerbs-Benchmark und Backlink-Übersicht. Für die inhaltliche und strategische Einschätzung bleibt zusätzlich eine menschliche, unabhängige Meinung sinnvoll: Scanora ist ein automatisiertes Tool, keine Beratungsagentur und kein Vermittler für Agenturen.
+                        </p>
+                        <p className="mt-4">
+                            Der Grund, warum sich dieser Check gerade vor der Verlängerung lohnt: Der einzige Report, den du normalerweise siehst, kommt von der Agentur selbst, die ihn auch beurteilt. Eine zweite, unabhängige Datenquelle zeigt, ob sich Rankings, technische Basics und Sichtbarkeit wirklich so entwickelt haben wie berichtet - bevor du erneut Budget bindest.
+                        </p>
+                        <h3 className="text-lg font-semibold text-[var(--text-white)] mt-6 mb-4">Was eine gute unabhängige Prüfung leisten sollte</h3>
+                        <div className="space-y-3">
+                            {INDEPENDENT_CHECK_CRITERIA.map((s) => (
+                                <div key={s.title} className="flex items-start gap-3 py-2.5 border-b border-[var(--text-white)]/[0.04] last:border-0">
+                                    <div className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0 mt-2" />
+                                    <div>
+                                        <span className="text-sm font-medium text-[var(--text-white)]">{s.title}</span>
+                                        <span className="text-sm text-[var(--text-faint)]"> - {s.desc}</span>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                        <p className="mt-5 text-sm text-[var(--text-muted)]">
+                            Ehrlich gesagt: Scanora ist keine Vermittlungsplattform, die dir "konkrete Agenturen" empfiehlt, und wird auch keine erfinden. Was Scanora leisten kann, ist der objektive, wiederholbare Teil der Prüfung - technischer Score, Ranking-Verlauf, Konkurrenzvergleich und Backlink-Übersicht (Details dazu weiter unten). Für die Bewertung von Strategie und Content-Qualität lohnt sich zusätzlich das Gespräch mit einem Freelancer oder Berater, der in keinem Vertragsverhältnis zur aktuellen Agentur steht.
+                        </p>
+                    </section>
 
                     <section>
                         <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Was eine SEO-Agentur wirklich abdeckt</h2>
@@ -259,7 +310,7 @@ export default function SeoTestVsAgenturPage() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Häufige Fragen zu SEO-Audit-Kosten vs. Agentur</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Häufige Fragen: SEO-Agentur prüfen, Kosten & unabhängige Zweitmeinung</h2>
                         <div className="space-y-4">
                             {faqLd.mainEntity.map((faq, i) => (
                                 <div key={i} className="bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-2xl p-5">

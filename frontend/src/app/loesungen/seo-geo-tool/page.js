@@ -3,15 +3,15 @@ import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
 
 export const metadata = {
-    title: 'SEO + GEO Tool: Google-Rankings & KI-Sichtbarkeit',
-    description: 'Google-Rankings und KI-Sichtbarkeit bei ChatGPT, Claude, Gemini & Perplexity in einem Dashboard - inklusive der Überschneidung zwischen beiden.',
-    keywords: 'seo geo tool, seo geo, geoseo, seo und geo, geo audit, generative engine optimization, generative optimization engine, geo tool, ki sichtbarkeit, ai visibility, geo automatisierung, seo automatisierung',
+    title: 'SEO-GEO-Tool: Google-Rankings & KI-Sichtbarkeit | Scanora',
+    description: 'Scanora ist ein SEO-GEO-Tool: ein GEO-Tool für KI-Sichtbarkeit bei ChatGPT, Claude, Gemini & Perplexity plus SEO-Rankings - in einem Dashboard, inklusive der Überschneidung zwischen beiden.',
+    keywords: 'seo geo tool, seo-geo-tool, geo tool, geo-tool, seo geo, geoseo, seo und geo, geo audit, generative engine optimization, generative optimization engine, ki sichtbarkeit, ai visibility, geo automatisierung, seo automatisierung',
     alternates: {
         canonical: 'https://www.scanora.ai/loesungen/seo-geo-tool',
     },
     openGraph: {
-        title: 'SEO + GEO Tool: Google-Rankings & KI-Sichtbarkeit',
-        description: 'Google-Rankings und KI-Sichtbarkeit bei ChatGPT, Claude, Gemini & Perplexity in einem Dashboard - inklusive der Überschneidung zwischen beiden.',
+        title: 'SEO-GEO-Tool: Google-Rankings & KI-Sichtbarkeit',
+        description: 'Scanora ist ein SEO-GEO-Tool: ein GEO-Tool für KI-Sichtbarkeit bei ChatGPT, Claude, Gemini & Perplexity plus SEO-Rankings - in einem Dashboard, inklusive der Überschneidung zwischen beiden.',
         url: 'https://www.scanora.ai/loesungen/seo-geo-tool',
         siteName: 'Scanora',
         type: 'website',
@@ -19,8 +19,8 @@ export const metadata = {
     },
     twitter: {
         card: 'summary_large_image',
-        title: 'SEO + GEO Tool: Google-Rankings & KI-Sichtbarkeit',
-        description: 'Google-Rankings und KI-Sichtbarkeit bei ChatGPT, Claude, Gemini & Perplexity in einem Dashboard.',
+        title: 'SEO-GEO-Tool: Google-Rankings & KI-Sichtbarkeit',
+        description: 'Scanora ist ein SEO-GEO-Tool und GEO-Tool: Google-Rankings und KI-Sichtbarkeit bei ChatGPT, Claude, Gemini & Perplexity in einem Dashboard.',
     },
 }
 
@@ -34,7 +34,7 @@ const softwareLd = {
     applicationCategory: 'BusinessApplication',
     applicationSubCategory: 'SEO & Generative Engine Optimization',
     operatingSystem: 'Web',
-    description: 'SEO + GEO Tool: trackt Google-Rankings und KI-Sichtbarkeit bei ChatGPT, Claude, Gemini, Perplexity und Google AI Overview in einem Dashboard.',
+    description: 'SEO-GEO-Tool: trackt Google-Rankings und KI-Sichtbarkeit bei ChatGPT, Claude, Gemini, Perplexity und Google AI Overview in einem Dashboard.',
 }
 
 const breadcrumbLd = {
@@ -43,7 +43,7 @@ const breadcrumbLd = {
     itemListElement: [
         { '@type': 'ListItem', position: 1, name: 'Scanora', item: 'https://www.scanora.ai' },
         { '@type': 'ListItem', position: 2, name: 'Lösungen', item: 'https://www.scanora.ai/loesungen' },
-        { '@type': 'ListItem', position: 3, name: 'SEO + GEO Tool', item: 'https://www.scanora.ai/loesungen/seo-geo-tool' },
+        { '@type': 'ListItem', position: 3, name: 'SEO-GEO-Tool', item: 'https://www.scanora.ai/loesungen/seo-geo-tool' },
     ],
 }
 
@@ -93,10 +93,18 @@ const faqLd = {
         },
         {
             '@type': 'Question',
-            name: 'Was kostet das SEO + GEO Tool?',
+            name: 'Was kostet ein SEO-GEO-Tool?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'SEO-Automatisierung und GEO-Automatisierung sind einzeln oder kombiniert buchbar, ab wenigen Euro im Monat. Ein kostenloser Einzel-Check von SEO und KI-Sichtbarkeit ist ohne Registrierung möglich.',
+                text: 'SEO-Automatisierung und GEO-Automatisierung sind bei Scanora einzeln oder kombiniert buchbar, ab wenigen Euro im Monat. Ein kostenloser Einzel-Check von SEO und KI-Sichtbarkeit ist ohne Registrierung möglich.',
+            },
+        },
+        {
+            '@type': 'Question',
+            name: 'Was kostet ein GEO-Tool bei Scanora?',
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Die GEO-Automatisierung (laufendes KI-Sichtbarkeits-Tracking) startet bei 4,99 €/Monat für Claude- und Gemini-Tracking mit wöchentlichem Auto-Check. Ab dem Pro-Plan sind alle fünf Plattformen (ChatGPT, Claude, Gemini, Perplexity, Google AI Overview) enthalten. Ein einmaliger GEO-Check ist als Teil des Website-Audits kostenlos.',
             },
         },
     ],
@@ -151,17 +159,17 @@ export default function SeoGeoToolPage() {
                 <span>/</span>
                 <Link href="/loesungen" className="hover:text-[var(--text-muted)] transition-colors">Lösungen</Link>
                 <span>/</span>
-                <span className="text-[var(--text-faint)]">SEO + GEO Tool</span>
+                <span className="text-[var(--text-faint)]">SEO-GEO-Tool</span>
             </div>
 
             {/* HERO */}
             <section className="max-w-4xl mx-auto px-5 sm:px-8 pt-8 sm:pt-10 pb-16 text-center">
                 <h1 className="text-3xl sm:text-5xl font-bold text-[var(--text-white)] leading-[1.15] tracking-tight mb-6">
-                    Scanora ist ein <span className="text-[var(--accent)]">SEO + GEO Tool</span>,<br className="hidden sm:block" />
-                    das deine Google-Rankings und deine KI-Sichtbarkeit in einem Dashboard zeigt.
+                    Scanora ist ein <span className="text-[var(--accent)]">SEO-GEO-Tool</span>:<br className="hidden sm:block" />
+                    dein GEO-Tool für KI-Sichtbarkeit plus SEO-Rankings in einem Dashboard.
                 </h1>
                 <p className="text-base sm:text-lg text-[var(--text-muted)] max-w-2xl mx-auto leading-relaxed mb-8">
-                    Scanora ist ein Tool für SEO-Automatisierung und GEO-Automatisierung: Es verfolgt automatisch, ob du bei Google rankst - und ob dich ChatGPT, Claude, Gemini und Perplexity ihren Nutzern empfehlen. Eine Plattform statt zwei separate Tools, ein gemeinsamer Blick auf beide Sichtbarkeits-Kanäle statt zweier getrennter Anmeldungen und Rechnungen.
+                    Ein <strong className="text-[var(--text-white)] font-semibold">GEO-Tool</strong> (Generative Engine Optimization Tool) misst, wie oft ChatGPT, Claude, Gemini, Perplexity oder Google AI Overview eine Website in ihren Antworten erwähnen oder zitieren - die KI-Suche-Entsprechung eines klassischen SEO-Tools für Google-Rankings. Ein <strong className="text-[var(--text-white)] font-semibold">SEO-GEO-Tool</strong> kombiniert beide Disziplinen in einer Plattform statt in zwei getrennten Abos. Scanora ist genau das: Es verfolgt automatisch, ob du bei Google rankst - und ob dich ChatGPT, Claude, Gemini und Perplexity ihren Nutzern empfehlen, in einem Konto statt zweier getrennter Anmeldungen und Rechnungen.
                 </p>
                 <div className="flex flex-wrap items-center justify-center gap-3 mb-3">
                     <Link href="/dashboard"
@@ -304,7 +312,7 @@ export default function SeoGeoToolPage() {
 
             {/* FEATURES */}
             <section className="max-w-4xl mx-auto px-5 sm:px-8 py-16 border-t border-[var(--border-subtle)]">
-                <h2 className="text-2xl sm:text-3xl font-bold text-[var(--text-white)] text-center mb-4">Alles, was in einem SEO + GEO Tool dazugehört</h2>
+                <h2 className="text-2xl sm:text-3xl font-bold text-[var(--text-white)] text-center mb-4">Alles, was in einem SEO-GEO-Tool dazugehört</h2>
                 <p className="text-[var(--text-muted)] text-center max-w-xl mx-auto mb-10 leading-relaxed">
                     Keine Zusatz-Tools, kein Hin- und Herwechseln zwischen zwei Dashboards.
                 </p>
@@ -324,7 +332,7 @@ export default function SeoGeoToolPage() {
 
             {/* FUER WEN */}
             <section className="max-w-4xl mx-auto px-5 sm:px-8 py-16 border-t border-[var(--border-subtle)]">
-                <h2 className="text-2xl sm:text-3xl font-bold text-[var(--text-white)] text-center mb-10">Für wen ist das SEO + GEO Tool gedacht?</h2>
+                <h2 className="text-2xl sm:text-3xl font-bold text-[var(--text-white)] text-center mb-10">Für wen ist das SEO-GEO-Tool gedacht?</h2>
                 <div className="grid sm:grid-cols-2 gap-4">
                     <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl p-6">
                         <h3 className="font-bold text-[var(--text-white)] text-sm mb-3">Agenturen &amp; Freelancer</h3>

@@ -4,8 +4,8 @@ import Footer from '../../../components/Footer'
 
 export const metadata = {
     title: { absolute: 'Schema Markup for AI Citations 2026: How to Get Cited by ChatGPT & Co.' },
-    description: 'Schema markup (JSON-LD) explained simply: priority order, ready-to-copy code, free generators & testing tools, and the most common mistake that kills rich results.',
-    keywords: 'schema markup, schema markup generator, structured data testing free, schema markup ai, json-ld generator, json-ld example, faq schema, organization schema, rich results test',
+    description: 'Schema markup for AI search citations (JSON-LD) explained simply: definition, priority order, ready-to-copy code, free generators & testing tools, and the most common mistake that kills rich results.',
+    keywords: 'schema markup ai search citations, ai search citations, schema markup, schema markup generator, structured data testing free, json-ld generator, json-ld example, faq schema, organization schema, rich results test',
     alternates: {
         canonical: 'https://www.scanora.ai/en/blog/schema-markup-ai-citations',
         languages: {
@@ -15,7 +15,7 @@ export const metadata = {
     },
     openGraph: {
         title: 'Schema Markup for AI Citations 2026: How to Get Cited by ChatGPT & Co.',
-        description: 'Priority order, ready-to-copy JSON-LD code, free generators & testing tools, and the most common mistake that kills rich results.',
+        description: 'Schema markup for AI search citations: definition, priority order, ready-to-copy JSON-LD code, free generators & testing tools, and the most common mistake that kills rich results.',
         url: 'https://www.scanora.ai/en/blog/schema-markup-ai-citations',
         type: 'article',
         locale: 'en_US',
@@ -26,10 +26,10 @@ const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: 'Schema Markup for AI Citations 2026: How to Get Cited by ChatGPT & Co.',
-    description: 'Schema markup (JSON-LD) explained simply: priority order, ready-to-copy code, free generators & testing tools, and the most common mistake that kills rich results.',
+    description: 'Schema markup for AI search citations (JSON-LD) explained simply: definition, priority order, ready-to-copy code, free generators & testing tools, and the most common mistake that kills rich results.',
     image: 'https://www.scanora.ai/en/blog/schema-markup-ai-citations/opengraph-image',
     datePublished: '2026-07-26T09:00:00+02:00',
-    dateModified: '2026-08-29T09:00:00+02:00',
+    dateModified: '2026-09-12T09:00:00+02:00',
     author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.scanora.ai/about' },
     publisher: {
         '@type': 'Organization',
@@ -55,6 +55,14 @@ const faqLd = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
     mainEntity: [
+        {
+            '@type': 'Question',
+            name: 'What is schema markup for AI search citations?',
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: "Schema markup for AI search citations is structured data in JSON-LD format placed in a page's <head>. It makes facts like author, date, price, or question-and-answer pairs machine-readable so AI systems like ChatGPT, Perplexity, and Google AI Overviews can understand the content correctly and cite it as a source - instead of guessing facts from ambiguous body text.",
+            },
+        },
         {
             '@type': 'Question',
             name: 'What is schema markup?',
@@ -154,13 +162,13 @@ export default function SchemaMarkupPageEn() {
                         </span>
                         <span className="text-xs text-[var(--text-faint)]">Jul 26, 2026</span>
                         <span className="text-xs text-[var(--text-faint)]">· 8 min read</span>
-                        <span className="text-xs text-[var(--text-faint)]">· Updated Aug 29, 2026</span>
+                        <span className="text-xs text-[var(--text-faint)]">· Updated Sep 12, 2026</span>
                     </div>
                     <h1 className="text-3xl sm:text-5xl font-bold text-[var(--text-white)] leading-tight tracking-tight mb-5">
                         Schema Markup for AI Citations 2026: How to Get Cited by ChatGPT & Co.
                     </h1>
                     <p className="text-lg text-[var(--text-muted)] leading-relaxed">
-                        Schema markup is invisible to visitors - but it's exactly the language Google and AI models use to understand and cite content precisely. The key types in the right order, ready-to-copy JSON-LD code, free generators and testing tools, and the mistake that most often makes all of it worthless.
+                        <strong className="text-[var(--text-white)] font-semibold">Schema markup for AI search citations</strong> is structured data in JSON-LD format that helps AI systems like ChatGPT, Perplexity, and Google AI Overviews understand a page's content correctly and cite it as a source - invisible to visitors, but exactly the language Google and AI models use to communicate. The key types in the right order, ready-to-copy JSON-LD code, free generators and testing tools, and the mistake that most often makes all of it worthless.
                     </p>
                     <div className="mt-5 flex items-center gap-2 text-xs text-[var(--text-faint)]">
                         <Link href="/about" className="flex items-center gap-2 hover:text-[var(--text-body)] transition-colors">
@@ -177,13 +185,13 @@ export default function SchemaMarkupPageEn() {
                 <div className="space-y-10 text-[var(--text-body)] leading-relaxed">
 
                     <section>
-                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">What is schema markup, and why does it matter for GEO?</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">What is schema markup for AI search citations?</h2>
                         <p>
-                            Schema markup is structured data in{' '}
+                            <strong className="text-[var(--text-white)]">Schema markup for AI search citations</strong> is structured data in{' '}
                             <a href="https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline underline-offset-2">
                                 JSON-LD format
                             </a>
-                            , a standardized vocabulary (schema.org) used to describe content in a machine-readable way - usually embedded invisibly in the <code className="text-xs bg-[var(--text-white)]/[0.06] px-1.5 py-0.5 rounded">&lt;head&gt;</code> section. Instead of an AI having to guess who wrote an article or what a product costs from body text, it's stated explicitly and unambiguously in the markup.
+                            , a standardized vocabulary (schema.org) used to describe content in a machine-readable way - usually embedded invisibly in the <code className="text-xs bg-[var(--text-white)]/[0.06] px-1.5 py-0.5 rounded">&lt;head&gt;</code> section. It helps AI systems like ChatGPT, Perplexity, and Google AI Overviews understand a page's content correctly and cite it as a source, instead of an AI having to guess who wrote an article or what a product costs from body text.
                         </p>
                         <p className="mt-4">
                             For classic SEO, schema markup enables rich results - star ratings, FAQ boxes, pricing shown directly in search results. For{' '}
@@ -249,6 +257,22 @@ export default function SchemaMarkupPageEn() {
       "text": "Your answer, word-for-word matching the visible text"
     }
   }]
+}`}
+                        </pre>
+                        <p className="mt-5">For blog posts, add Article schema too - the exact type this article itself carries in its &lt;head&gt;:</p>
+                        <pre className="mt-4 text-xs bg-[var(--text-white)]/[0.04] border border-[var(--text-white)]/[0.06] rounded-xl p-4 text-[var(--text-muted)] font-mono overflow-x-auto">
+{`{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Your article's title",
+  "datePublished": "2026-01-15T09:00:00+02:00",
+  "dateModified": "2026-09-12T09:00:00+02:00",
+  "author": { "@type": "Person", "name": "Author name" },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Your Company",
+    "logo": { "@type": "ImageObject", "url": "https://your-domain.com/logo.png" }
+  }
 }`}
                         </pre>
                         <p className="text-xs text-[var(--text-faint)] mt-3">

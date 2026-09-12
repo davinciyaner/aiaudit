@@ -4,9 +4,9 @@ import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
 
 export const metadata = {
-    title: 'Manuelles SEO-Tracking vs. automatisiert: Was lohnt sich wirklich?',
-    description: 'Manuelles SEO- und GEO-Tracking vs. Automatisierung im Vergleich: Zeitaufwand, Kosten und warum KI-Sichtbarkeit manuell kaum zuverlässig messbar ist.',
-    keywords: 'seo tracking manuell, seo monitoring automatisch, seo automatisierung lohnt sich, ranking tracking manuell vs automatisch, ki sichtbarkeit tracken, geo tracking manuell',
+    title: 'SEO Tracking manuell vs. automatisiert: Was lohnt sich wirklich?',
+    description: 'SEO Tracking manuell vs. automatisiert im Vergleich: Zeitaufwand, Kosten und warum KI-Sichtbarkeit (GEO) manuell kaum zuverlässig messbar ist.',
+    keywords: 'seo tracking, seo tracking manuell, seo monitoring automatisch, seo automatisierung lohnt sich, ranking tracking manuell vs automatisch, ki sichtbarkeit tracken, geo tracking manuell',
     alternates: {
         canonical: 'https://www.scanora.ai/blog/seo-tracking-manuell-vs-automatisiert',
         languages: {
@@ -15,8 +15,8 @@ export const metadata = {
         },
     },
     openGraph: {
-        title: 'Manuelles SEO-Tracking vs. automatisiert: Was lohnt sich wirklich?',
-        description: 'Zeitaufwand, Kosten und der blinde Fleck beim manuellen Tracking: KI-Sichtbarkeit.',
+        title: 'SEO Tracking manuell vs. automatisiert: Was lohnt sich wirklich?',
+        description: 'SEO Tracking im Vergleich: Zeitaufwand, Kosten und der blinde Fleck beim manuellen Tracking: KI-Sichtbarkeit.',
         url: 'https://www.scanora.ai/blog/seo-tracking-manuell-vs-automatisiert',
         type: 'article',
         locale: 'de_DE',
@@ -26,11 +26,11 @@ export const metadata = {
 const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
-    headline: 'Manuelles SEO-Tracking vs. automatisiert: Was lohnt sich wirklich?',
-    description: 'Manuelles SEO- und GEO-Tracking vs. Automatisierung im Vergleich: Zeitaufwand, Kosten und warum KI-Sichtbarkeit manuell kaum zuverlässig messbar ist.',
+    headline: 'SEO Tracking manuell vs. automatisiert: Was lohnt sich wirklich?',
+    description: 'SEO Tracking manuell vs. automatisiert im Vergleich: Zeitaufwand, Kosten und warum KI-Sichtbarkeit (GEO) manuell kaum zuverlässig messbar ist.',
     image: 'https://www.scanora.ai/blog/seo-tracking-manuell-vs-automatisiert/opengraph-image',
     datePublished: '2026-07-15T09:00:00+02:00',
-    dateModified: '2026-07-30T09:00:00+02:00',
+    dateModified: '2026-09-12T09:00:00+02:00',
     author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.scanora.ai/about' },
     publisher: {
         '@type': 'Organization',
@@ -130,13 +130,13 @@ export default function SeoTrackingVergleichPage() {
                         </span>
                         <span className="text-xs text-[var(--text-faint)]">15. Juli 2026</span>
                         <span className="text-xs text-[var(--text-faint)]">· 9 min Lesezeit</span>
-                        <span className="text-xs text-[var(--text-faint)]">· Aktualisiert am 30. Juli 2026</span>
+                        <span className="text-xs text-[var(--text-faint)]">· Aktualisiert am 12. September 2026</span>
                     </div>
                     <h1 className="text-3xl sm:text-5xl font-bold text-[var(--text-white)] leading-tight tracking-tight mb-5">
-                        Manuelles SEO-Tracking vs. automatisiert: Was lohnt sich wirklich?
+                        SEO Tracking manuell vs. automatisiert: Was lohnt sich wirklich?
                     </h1>
                     <p className="text-lg text-[var(--text-muted)] leading-relaxed">
-                        Die Frage ist selten "SEO oder nicht" - sondern wie oft du wirklich nachsiehst. Ein ehrlicher Vergleich zwischen manuellem Tracking und Automatisierung, inklusive dem Punkt, an dem manuelles Tracking strukturell an seine Grenzen stößt: KI-Sichtbarkeit.
+                        Bei SEO Tracking ist die Frage selten "ob" - sondern wie oft du wirklich nachsiehst. Ein ehrlicher Vergleich zwischen manuellem SEO Tracking und Automatisierung, inklusive dem Punkt, an dem manuelles Tracking strukturell an seine Grenzen stößt: KI-Sichtbarkeit.
                     </p>
                     <div className="mt-5 flex items-center gap-2 text-xs text-[var(--text-faint)]">
                         <Link href="/about" className="flex items-center gap-2 hover:text-[var(--text-body)] transition-colors">
@@ -153,9 +153,9 @@ export default function SeoTrackingVergleichPage() {
                 <div className="space-y-10 text-[var(--text-body)] leading-relaxed">
 
                     <section>
-                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Was manuelles Tracking konkret bedeutet</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Was manuelles SEO Tracking konkret bedeutet</h2>
                         <p>
-                            Manuelles SEO-Tracking heißt: einmal pro Woche (realistisch eher unregelmäßiger) in die{' '}
+                            SEO Tracking manuell heißt: einmal pro Woche (realistisch eher unregelmäßiger) in die{' '}
                             <a href="https://search.google.com/search-console/about" target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:text-emerald-300 underline underline-offset-2">Google Search Console</a>{' '}
                             gehen, Positionen für die wichtigsten Keywords prüfen, kurz schauen wer auf den vorderen Plätzen mitkonkurriert, und vielleicht noch neue Keyword-Ideen recherchieren. Für eine Website mit einer überschaubaren Keyword-Liste ist das machbar - realistisch 60 bis 90 Minuten pro Woche, je nachdem wie gründlich (die feste Reihenfolge dafür steht in unserer{' '}
                             <Link href="/blog/seo-checkliste-2026" className="text-emerald-400 hover:text-emerald-300 underline underline-offset-2">

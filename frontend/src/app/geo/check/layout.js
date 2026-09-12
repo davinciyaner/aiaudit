@@ -1,7 +1,7 @@
 export const metadata = {
-    title: 'Gratis GEO Check: Wirst du von ChatGPT zitiert?',
-    description: 'Kostenloser GEO Check: Prüfe einmalig, ob deine Website von ChatGPT, Claude, Perplexity oder Google AI Overview zitiert wird. Keine Registrierung nötig.',
-    keywords: 'geo check kostenlos, chatgpt sichtbarkeit check, claude zitiert werden, ai visibility check, google ai overview check, ki sichtbarkeit test',
+    title: 'GEO Check kostenlos: Wirst du von ChatGPT zitiert?',
+    description: 'GEO Check kostenlos: Prüfe einmalig, ob deine Website von ChatGPT, Claude, Perplexity oder Google AI Overview zitiert wird. Für laufendes Tracking gibt es GEO Automatisierung. Keine Registrierung nötig.',
+    keywords: 'geo check, geo check kostenlos, chatgpt sichtbarkeit check, claude zitiert werden, ai visibility check, google ai overview check, ki sichtbarkeit test, geo automatisierung, geoautomation',
     alternates: {
         canonical: 'https://www.scanora.ai/geo/check',
         languages: {
@@ -10,7 +10,7 @@ export const metadata = {
         },
     },
     openGraph: {
-        title: 'Gratis GEO Check | Scanora',
+        title: 'GEO Check | Scanora',
         description: 'Prüfe einmalig kostenlos, ob deine Website von ChatGPT, Claude, Perplexity oder Google AI Overview zitiert wird.',
         url: 'https://www.scanora.ai/geo/check',
         type: 'website',
@@ -35,7 +35,7 @@ const faqJsonLd = {
             name: 'Ist der GEO Check wirklich kostenlos?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'Ja, jeder Account bzw. jede IP-Adresse kann den Check einmal komplett kostenlos nutzen. Für wiederkehrende Prüfungen und alle vier Plattformen gleichzeitig gibt es GEO Automatisierung ab 4,99 €/Monat.',
+                text: 'Ja, jeder Account bzw. jede IP-Adresse kann den GEO Check einmal komplett kostenlos nutzen. Für wiederkehrende Prüfungen und mehrere Plattformen gleichzeitig gibt es GEO Automatisierung ab 4,99 €/Monat.',
             },
         },
         {
@@ -48,10 +48,10 @@ const faqJsonLd = {
         },
         {
             '@type': 'Question',
-            name: 'Was ist der Unterschied zwischen dem Einzel-Check und GEO Automatisierung?',
+            name: 'Was ist der Unterschied zwischen GEO Check und GEO Automatisierung?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'Der Einzel-Check zeigt einmalig, ob eine Plattform deine Website nennt. GEO Automatisierung prüft wöchentlich automatisch alle vier Plattformen, trackt den Verlauf über Zeit und meldet Änderungen per E-Mail.',
+                text: 'Der GEO Check ist eine einmalige Prüfung: Er zeigt zu einem Zeitpunkt, ob eine Plattform deine Website nennt. GEO Automatisierung ist die laufende Version davon - sie prüft wöchentlich automatisch bis zu fünf KI-Systeme (Claude, ChatGPT, Gemini, Perplexity und Google AI Overview), berechnet deine Mention-Rate über Zeit und meldet Änderungen per E-Mail, statt dass du manuell neu prüfen musst.',
             },
         },
     ],

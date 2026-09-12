@@ -3,9 +3,9 @@ import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
 
 export const metadata = {
-    title: 'Claude AI Sichtbarkeit tracken 2026: So siehst du, ob Claude dich empfiehlt',
-    description: 'Claude AI Sichtbarkeit tracken ab 4,99 €/Monat - während Claude-Tracking bei den meisten AI-Visibility-Tools nur als teures Enterprise-Add-on verfügbar ist. So funktioniert es und was du dafür bezahlst.',
-    keywords: 'claude ai sichtbarkeit, claude sichtbarkeit tracken, claude visibility tracking, claude ai tracking tool, claude ki sichtbarkeit, generative engine optimization claude',
+    title: 'Sichtbarkeit in Claude tracken 2026: Claude AI Sichtbarkeit prüfen',
+    description: 'Sichtbarkeit in Claude tracken ab 4,99 €/Monat: wöchentliches automatisches Tracking, Mention-Rate über Zeit und Zitate mit Quellenkontext - inklusive Perplexity-Sichtbarkeit im selben Dashboard.',
+    keywords: 'sichtbarkeit in claude, claude ai sichtbarkeit, claude sichtbarkeit tracken, claude visibility tracking, claude ai visibility, perplexity sichtbarkeit, claude ki sichtbarkeit, generative engine optimization claude',
     alternates: {
         canonical: 'https://www.scanora.ai/loesungen/claude-ai-sichtbarkeit-tracken',
         languages: {
@@ -14,8 +14,8 @@ export const metadata = {
         },
     },
     openGraph: {
-        title: 'Claude AI Sichtbarkeit tracken 2026: So siehst du, ob Claude dich empfiehlt',
-        description: 'Claude-Tracking ist bei den meisten AI-Visibility-Tools ein teures Enterprise-Add-on oder gar nicht verfügbar. Scanora trackt es ab 4,99 €/Monat inklusive.',
+        title: 'Sichtbarkeit in Claude tracken 2026: Claude AI Sichtbarkeit prüfen',
+        description: 'Sichtbarkeit in Claude tracken ab 4,99 €/Monat inklusive Perplexity-Sichtbarkeit - während Claude-Tracking bei den meisten AI-Visibility-Tools nur als teures Enterprise-Add-on verfügbar ist.',
         url: 'https://www.scanora.ai/loesungen/claude-ai-sichtbarkeit-tracken',
         type: 'article',
         locale: 'de_DE',
@@ -25,11 +25,11 @@ export const metadata = {
 const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
-    headline: 'Claude AI Sichtbarkeit tracken 2026: So siehst du, ob Claude dich empfiehlt',
-    description: 'Claude-Tracking ist bei den meisten AI-Visibility-Tools ein teures Enterprise-Add-on oder gar nicht verfügbar. Scanora trackt es ab 4,99 €/Monat inklusive.',
+    headline: 'Sichtbarkeit in Claude tracken 2026: Claude AI Sichtbarkeit prüfen',
+    description: 'Sichtbarkeit in Claude tracken ab 4,99 €/Monat inklusive Perplexity-Sichtbarkeit - während Claude-Tracking bei den meisten AI-Visibility-Tools nur als teures Enterprise-Add-on verfügbar ist.',
     image: 'https://www.scanora.ai/loesungen/claude-ai-sichtbarkeit-tracken/opengraph-image',
     datePublished: '2026-08-29T09:00:00+02:00',
-    dateModified: '2026-08-29T09:00:00+02:00',
+    dateModified: '2026-09-12T09:00:00+02:00',
     author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.scanora.ai/about' },
     publisher: {
         '@type': 'Organization',
@@ -52,7 +52,7 @@ const breadcrumbLd = {
     itemListElement: [
         { '@type': 'ListItem', position: 1, name: 'Scanora', item: 'https://www.scanora.ai' },
         { '@type': 'ListItem', position: 2, name: 'Lösungen', item: 'https://www.scanora.ai/loesungen' },
-        { '@type': 'ListItem', position: 3, name: 'Claude AI Sichtbarkeit tracken', item: 'https://www.scanora.ai/loesungen/claude-ai-sichtbarkeit-tracken' },
+        { '@type': 'ListItem', position: 3, name: 'Sichtbarkeit in Claude tracken', item: 'https://www.scanora.ai/loesungen/claude-ai-sichtbarkeit-tracken' },
     ],
 }
 
@@ -62,10 +62,10 @@ const faqLd = {
     mainEntity: [
         {
             '@type': 'Question',
-            name: 'Was bedeutet "Claude AI Sichtbarkeit tracken"?',
+            name: 'Was bedeutet "Sichtbarkeit in Claude"?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'Es bedeutet, regelmäßig zu prüfen, ob und wie Anthropics Claude deine Website oder Marke erwähnt, wenn Nutzer zu relevanten Themen aus deiner Branche fragen. Anders als bei einer einmaligen Stichprobe zeigt automatisiertes Tracking den Verlauf über Zeit - inklusive Sentiment und welche Konkurrenten Claude stattdessen zitiert.',
+                text: 'Sichtbarkeit in Claude beschreibt, ob und wie oft Anthropics Claude deine Website oder Marke erwähnt, wenn Nutzer zu relevanten Themen aus deiner Branche fragen. Gemessen wird das über die Mention-Rate (Anteil der Prüfungen mit Erwähnung) und über Zitate mit Quellenkontext, die zeigen, in welchem Zusammenhang und mit welchem Sentiment du genannt wirst. Anders als eine einmalige Stichprobe zeigt automatisiertes, wöchentliches Tracking den Verlauf über Zeit - inklusive welcher Konkurrenten Claude stattdessen zitiert.',
             },
         },
         {
@@ -94,6 +94,14 @@ const faqLd = {
         },
         {
             '@type': 'Question',
+            name: 'Trackt Scanora auch Perplexity-Sichtbarkeit?',
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Ja. Perplexity ist neben Claude, ChatGPT und Google AI Overview eine der vier Plattformen, die Scanora im Pro-Plan (29,99 €/Monat) wöchentlich automatisch prüft - im selben Dashboard und mit denselben zwei Prompt-Varianten pro Keyword wie bei Claude. So siehst du direkt, ob dich Perplexity bei einer Anfrage nennt, obwohl Claude dich (noch) nicht erwähnt, oder umgekehrt.',
+            },
+        },
+        {
+            '@type': 'Question',
             name: 'Kann ich Claude-Sichtbarkeit kostenlos testen?',
             acceptedAnswer: {
                 '@type': 'Answer',
@@ -106,8 +114,8 @@ const faqLd = {
 const howToLd = {
     '@context': 'https://schema.org',
     '@type': 'HowTo',
-    name: 'Claude AI Sichtbarkeit tracken',
-    description: 'So richtest du automatisiertes Tracking ein, ob Claude deine Website bei relevanten Anfragen erwähnt.',
+    name: 'Sichtbarkeit in Claude tracken',
+    description: 'So richtest du automatisiertes Tracking ein, ob Claude (und optional Perplexity) deine Website bei relevanten Anfragen erwähnt.',
     step: [
         { '@type': 'HowToStep', position: 1, name: 'Keywords festlegen', text: 'Themen und Suchanfragen definieren, zu denen Claude deine Marke erwähnen könnte.' },
         { '@type': 'HowToStep', position: 2, name: 'Prompt-Varianten prüfen', text: 'Jedes Keyword sowohl empfehlungsorientiert als auch vergleichend abfragen, da Claude je nach Formulierung unterschiedlich antwortet.' },
@@ -147,7 +155,7 @@ export default function ClaudeAiSichtbarkeitPage() {
                     <span>/</span>
                     <Link href="/loesungen" className="hover:text-[var(--text-muted)] transition-colors">Lösungen</Link>
                     <span>/</span>
-                    <span className="text-[var(--text-faint)]">Claude AI Sichtbarkeit tracken</span>
+                    <span className="text-[var(--text-faint)]">Sichtbarkeit in Claude tracken</span>
                 </div>
 
                 {/* Header */}
@@ -160,13 +168,13 @@ export default function ClaudeAiSichtbarkeitPage() {
                         <span className="text-xs text-[var(--text-faint)]">· 7 min Lesezeit</span>
                     </div>
                     <h1 className="text-3xl sm:text-5xl font-bold text-[var(--text-white)] leading-tight tracking-tight mb-5">
-                        Claude AI Sichtbarkeit tracken 2026: So siehst du, ob Claude dich empfiehlt
+                        Sichtbarkeit in Claude tracken 2026: So siehst du, ob Claude dich empfiehlt
                     </h1>
                     <p className="text-lg text-[var(--text-muted)] leading-relaxed">
-                        Claude hat sich als eigenständige Antwort-Quelle etabliert - auch weil Claude Code für viele Entwickler und Teams der erste Anlaufpunkt ist, um neue Tools zu bewerten. Wer nur ChatGPT trackt, sieht bestenfalls die halbe Wahrheit. Das Problem: Bei den meisten AI-Visibility-Tools ist Claude-Tracking entweder ein teures Enterprise-Add-on oder gar nicht buchbar.
+                        <strong className="text-[var(--text-white)]">Sichtbarkeit in Claude</strong> bedeutet: Wie oft und in welchem Kontext nennt Anthropics Claude deine Marke, wenn Nutzer zu Themen aus deiner Branche fragen? Gemessen wird das über die Mention-Rate über Zeit und über Zitate mit Quellenkontext, statt einer einmaligen Stichprobe. Scanora trackt das automatisch einmal pro Woche - ab 4,99 €/Monat, inklusive Gemini im Einsteiger-Plan; der Pro-Plan ergänzt ChatGPT, Perplexity und Google AI Overview im selben Dashboard.
                     </p>
                     <p className="mt-4 text-[var(--text-body)] leading-relaxed">
-                        Scanora trackt Claude-Sichtbarkeit ab <strong className="text-[var(--text-white)]">4,99 €/Monat</strong> - inklusive, ohne Enterprise-Gespräch, ohne Add-on-Aufpreis. Hier die Marktlage im Überblick, wie das Tracking technisch funktioniert und was du konkret damit machst.
+                        Claude hat sich als eigenständige Antwort-Quelle etabliert - auch weil Claude Code für viele Entwickler und Teams der erste Anlaufpunkt ist, um neue Tools zu bewerten. Wer nur ChatGPT trackt, sieht bestenfalls die halbe Wahrheit. Das Problem: Bei den meisten AI-Visibility-Tools ist Claude-Tracking entweder ein teures Enterprise-Add-on oder gar nicht buchbar. Hier die Marktlage im Überblick, wie das Tracking technisch funktioniert und was du konkret damit machst.
                     </p>
                     <div className="mt-5 flex items-center gap-2 text-xs text-[var(--text-faint)]">
                         <Link href="/about" className="flex items-center gap-2 hover:text-[var(--text-body)] transition-colors">

@@ -29,7 +29,7 @@ const jsonLd = {
     description: 'Scanora tracks AI visibility across ChatGPT, Claude, Gemini, Perplexity & Google AI Overview from €29.99/month - while GEO tracking on Writesonic only starts on its $249 tier. A fact-checked comparison with Writesonic.',
     image: 'https://www.scanora.ai/en/compare/writesonic-alternative/opengraph-image',
     datePublished: '2026-08-29T09:00:00+02:00',
-    dateModified: '2026-08-29T09:00:00+02:00',
+    dateModified: '2026-09-12T09:00:00+02:00',
     author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.scanora.ai/about' },
     publisher: {
         '@type': 'Organization',
@@ -66,6 +66,14 @@ const faqLd = {
             acceptedAnswer: {
                 '@type': 'Answer',
                 text: "If you mainly want AI-visibility tracking and SEO, yes - and considerably cheaper. If you also want to produce AI-generated articles at scale, Writesonic offers a broader content tool that happens to include GEO tracking.",
+            },
+        },
+        {
+            '@type': 'Question',
+            name: 'What are some Writesonic alternatives for tracking AI visibility?',
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: "If you specifically want a tool built for tracking AI visibility rather than generating content, Scanora is the straightforward alternative: it covers ChatGPT, Claude, Gemini, Perplexity, and Google AI Overview from €29.99/month and was built from the ground up for GEO tracking - unlike Writesonic, where that functionality is only included starting on the $249/month tier per current pricing. For pure AI-visibility monitoring without a content-generation layer, that's usually the more practical choice.",
             },
         },
         {
@@ -159,10 +167,10 @@ export default function WritesonicAlternativePage() {
                         Writesonic Alternative: An Honest Look at Scanora
                     </h1>
                     <p className="text-lg text-[var(--text-muted)] leading-relaxed">
-                        People go looking for a Writesonic alternative for one of two reasons: they don't want an AI article generator at all, just reliable GEO tracking, and discover that GEO only starts on Writesonic's $249 tier. Or the credit system with an expiration date doesn't match how they actually use the tool. This page compares both tools honestly — including where Writesonic wins.
+                        Short version: <strong className="text-[var(--text-white)]">Scanora</strong> tracks your AI visibility across ChatGPT, Claude, Gemini, Perplexity, and Google AI Overview from €29.99/month, built from the ground up as a GEO/SEO tool. <strong className="text-[var(--text-white)]">Writesonic</strong> is primarily an AI content generator with an AI-visibility suite added on top — broader platform coverage, but only at the higher price tiers. Which one fits depends on whether you want pure, affordable GEO tracking or already need content production at scale.
                     </p>
                     <p className="mt-4 text-[var(--text-body)] leading-relaxed">
-                        Short version: <strong className="text-[var(--text-white)]">Scanora</strong> tracks your AI visibility across ChatGPT, Claude, Gemini, Perplexity, and Google AI Overview from €29.99/month, built from the ground up as a GEO/SEO tool. <strong className="text-[var(--text-white)]">Writesonic</strong> is primarily an AI content generator with an AI-visibility suite added on top — broader platform coverage, but only at the higher price tiers. Which one fits depends on whether you want pure, affordable GEO tracking or already need content production at scale.
+                        People go looking for a Writesonic alternative for one of two reasons: they don't want an AI article generator at all, just reliable GEO tracking, and discover that GEO only starts on Writesonic's $249 tier. Or the credit system with an expiration date doesn't match how they actually use the tool. This page compares both tools honestly — including where Writesonic wins.
                     </p>
                     <div className="mt-5 flex items-center gap-2 text-xs text-[var(--text-faint)]">
                         <Link href="/about" className="flex items-center gap-2 hover:text-[var(--text-body)] transition-colors">
