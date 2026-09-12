@@ -189,7 +189,7 @@ const SIGNALS = [
 
 export default function GeoArtikelPage() {
     return (
-        <main className="bg-[#05080f] min-h-screen">
+        <main className="bg-[var(--bg-base)] min-h-screen">
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToLd) }} />
@@ -199,12 +199,12 @@ export default function GeoArtikelPage() {
             <article className="max-w-3xl mx-auto px-5 sm:px-8 pt-32 pb-24">
 
                 {/* Breadcrumb */}
-                <div className="flex items-center gap-2 text-xs text-slate-600 mb-8">
-                    <Link href="/" className="hover:text-slate-400 transition-colors">Scanora</Link>
+                <div className="flex items-center gap-2 text-xs text-[var(--text-faint)] mb-8">
+                    <Link href="/" className="hover:text-[var(--text-muted)] transition-colors">Scanora</Link>
                     <span>/</span>
-                    <Link href="/blog" className="hover:text-slate-400 transition-colors">Blog</Link>
+                    <Link href="/blog" className="hover:text-[var(--text-muted)] transition-colors">Blog</Link>
                     <span>/</span>
-                    <span className="text-slate-500">Was ist GEO?</span>
+                    <span className="text-[var(--text-faint)]">Was ist GEO?</span>
                 </div>
 
                 {/* Header */}
@@ -213,19 +213,19 @@ export default function GeoArtikelPage() {
                         <span className="text-[11px] font-semibold px-2.5 py-1 rounded-full uppercase tracking-wider bg-cyan-500/15 text-cyan-400">
                             GEO
                         </span>
-                        <span className="text-xs text-slate-600">10. Juni 2026</span>
-                        <span className="text-xs text-slate-600">· 8 min Lesezeit</span>
-                        <span className="text-xs text-slate-600">· Aktualisiert am 24. August 2026</span>
+                        <span className="text-xs text-[var(--text-faint)]">10. Juni 2026</span>
+                        <span className="text-xs text-[var(--text-faint)]">· 8 min Lesezeit</span>
+                        <span className="text-xs text-[var(--text-faint)]">· Aktualisiert am 24. August 2026</span>
                     </div>
-                    <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight tracking-tight mb-5">
+                    <h1 className="text-3xl sm:text-5xl font-bold text-[var(--text-white)] leading-tight tracking-tight mb-5">
                         Was ist GEO? Generative Engine Optimization einfach erklärt
                     </h1>
-                    <p className="text-lg text-slate-400 leading-relaxed">
+                    <p className="text-lg text-[var(--text-muted)] leading-relaxed">
                         Klassisches SEO optimiert für Google. Doch 2026 entscheiden KI-Modelle wie ChatGPT, Claude, Perplexity und Google AI Overview täglich welche Websites sie ihren Nutzern empfehlen - nach komplett anderen Regeln. Hier erfährst du wie GEO funktioniert und wie du deinen Score in 60 Minuten deutlich verbesserst.
                     </p>
-                    <div className="mt-5 flex items-center gap-2 text-xs text-slate-600">
-                        <Link href="/about" className="flex items-center gap-2 hover:text-slate-300 transition-colors">
-                            <div className="w-6 h-6 rounded-full bg-gradient-to-br from-violet-600 to-cyan-600 flex items-center justify-center text-white text-[10px] font-bold">F</div>
+                    <div className="mt-5 flex items-center gap-2 text-xs text-[var(--text-faint)]">
+                        <Link href="/about" className="flex items-center gap-2 hover:text-[var(--text-body)] transition-colors">
+                            <div className="w-6 h-6 rounded-full bg-gradient-to-br from-violet-600 to-cyan-600 flex items-center justify-center text-[var(--text-white)] text-[10px] font-bold">F</div>
                             <span>Finn Paustian</span>
                         </Link>
                         <span>·</span>
@@ -234,43 +234,43 @@ export default function GeoArtikelPage() {
                 </div>
 
                 {/* Divider */}
-                <div className="border-t border-white/5 mb-10" />
+                <div className="border-t border-[var(--text-white)]/5 mb-10" />
 
                 {/* Content */}
-                <div className="prose prose-invert prose-slate max-w-none space-y-10 text-slate-300 leading-relaxed">
+                <div className="prose prose-invert prose-slate max-w-none space-y-10 text-[var(--text-body)] leading-relaxed">
 
-                    <nav aria-label="Inhaltsverzeichnis" className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
-                        <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">In diesem Artikel</p>
+                    <nav aria-label="Inhaltsverzeichnis" className="bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-2xl p-5 sm:p-6">
+                        <p className="text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider mb-3">In diesem Artikel</p>
                         <ol className="grid sm:grid-cols-2 gap-x-6 gap-y-1.5 text-sm">
-                            <li><a href="#was-ist-geo" className="text-slate-400 hover:text-cyan-300 transition-colors">Was ist GEO-Optimierung (Generative Engine Optimization)?</a></li>
-                            <li><a href="#warum-geo" className="text-slate-400 hover:text-cyan-300 transition-colors">Warum ist GEO 2026 entscheidend?</a></li>
-                            <li><a href="#geo-vs-seo" className="text-slate-400 hover:text-cyan-300 transition-colors">GEO vs. SEO im Vergleich</a></li>
+                            <li><a href="#was-ist-geo" className="text-[var(--text-muted)] hover:text-cyan-300 transition-colors">Was ist GEO-Optimierung (Generative Engine Optimization)?</a></li>
+                            <li><a href="#warum-geo" className="text-[var(--text-muted)] hover:text-cyan-300 transition-colors">Warum ist GEO 2026 entscheidend?</a></li>
+                            <li><a href="#geo-vs-seo" className="text-[var(--text-muted)] hover:text-cyan-300 transition-colors">GEO vs. SEO im Vergleich</a></li>
                             {SIGNALS.map((s) => (
                                 <li key={s.number}>
-                                    <a href={`#signal-${s.number}`} className="text-slate-400 hover:text-cyan-300 transition-colors">
-                                        <span className="font-mono text-slate-600 mr-1.5">{s.number}</span>{s.title}
+                                    <a href={`#signal-${s.number}`} className="text-[var(--text-muted)] hover:text-cyan-300 transition-colors">
+                                        <span className="font-mono text-[var(--text-faint)] mr-1.5">{s.number}</span>{s.title}
                                     </a>
                                 </li>
                             ))}
-                            <li><a href="#ki-modelle" className="text-slate-400 hover:text-cyan-300 transition-colors">Welche KI-Modelle profitieren von GEO?</a></li>
-                            <li><a href="#quick-wins" className="text-slate-400 hover:text-cyan-300 transition-colors">10 GEO-Quick-Wins</a></li>
-                            <li><a href="#geo-strategie" className="text-slate-400 hover:text-cyan-300 transition-colors">GEO-Strategie 2026 aufbauen</a></li>
-                            <li><a href="#faq" className="text-slate-400 hover:text-cyan-300 transition-colors">Häufige Fragen</a></li>
+                            <li><a href="#ki-modelle" className="text-[var(--text-muted)] hover:text-cyan-300 transition-colors">Welche KI-Modelle profitieren von GEO?</a></li>
+                            <li><a href="#quick-wins" className="text-[var(--text-muted)] hover:text-cyan-300 transition-colors">10 GEO-Quick-Wins</a></li>
+                            <li><a href="#geo-strategie" className="text-[var(--text-muted)] hover:text-cyan-300 transition-colors">GEO-Strategie 2026 aufbauen</a></li>
+                            <li><a href="#faq" className="text-[var(--text-muted)] hover:text-cyan-300 transition-colors">Häufige Fragen</a></li>
                         </ol>
                     </nav>
 
                     <section id="was-ist-geo" className="scroll-mt-28">
-                        <h2 className="text-2xl font-bold text-white mb-4">Was ist GEO-Optimierung (Generative Engine Optimization)?</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Was ist GEO-Optimierung (Generative Engine Optimization)?</h2>
                         <p>
-                            GEO steht für <strong className="text-white">Generative Engine Optimization</strong> (manchmal auch als KI-Suchmaschinenoptimierung oder ChatGPT SEO bezeichnet) - die Optimierung deiner Website für KI-Modelle wie ChatGPT, Claude, Perplexity, Gemini oder YouChat. Der Begriff wurde 2023 in der <a href="https://arxiv.org/abs/2311.09735" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline underline-offset-2">GEO-Forschungsarbeit von Princeton, Georgia Tech und dem Allen Institute for AI</a> geprägt. Während SEO darauf abzielt in Googles Suchergebnissen weit oben zu erscheinen, sorgt GEO dafür, dass KI-Modelle deine Website als vertrauenswürdige Quelle erkennen und in ihren Antworten zitieren.
+                            GEO steht für <strong className="text-[var(--text-white)]">Generative Engine Optimization</strong> (manchmal auch als KI-Suchmaschinenoptimierung oder ChatGPT SEO bezeichnet) - die Optimierung deiner Website für KI-Modelle wie ChatGPT, Claude, Perplexity, Gemini oder YouChat. Der Begriff wurde 2023 in der <a href="https://arxiv.org/abs/2311.09735" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline underline-offset-2">GEO-Forschungsarbeit von Princeton, Georgia Tech und dem Allen Institute for AI</a> geprägt. Während SEO darauf abzielt in Googles Suchergebnissen weit oben zu erscheinen, sorgt GEO dafür, dass KI-Modelle deine Website als vertrauenswürdige Quelle erkennen und in ihren Antworten zitieren.
                         </p>
                         <p className="mt-4">
-                            Der Unterschied ist fundamental: Google rankt nach Keywords, Backlinks und technischen Signalen. KI-Modelle hingegen suchen nach <strong className="text-white">strukturierten, zitierbaren Inhalten</strong>, klaren Entitätsdefinitionen und Vertrauenssignalen. Eine Website die bei Google auf Seite 1 rankt, kann für KI-Modelle trotzdem unsichtbar sein - und umgekehrt.
+                            Der Unterschied ist fundamental: Google rankt nach Keywords, Backlinks und technischen Signalen. KI-Modelle hingegen suchen nach <strong className="text-[var(--text-white)]">strukturierten, zitierbaren Inhalten</strong>, klaren Entitätsdefinitionen und Vertrauenssignalen. Eine Website die bei Google auf Seite 1 rankt, kann für KI-Modelle trotzdem unsichtbar sein - und umgekehrt.
                         </p>
                     </section>
 
                     <section id="warum-geo" className="scroll-mt-28">
-                        <h2 className="text-2xl font-bold text-white mb-4">Warum ist GEO 2026 entscheidend?</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Warum ist GEO 2026 entscheidend?</h2>
                         <p>
                             ChatGPT hat laut <a href="https://techcrunch.com/2026/02/27/chatgpt-reaches-900m-weekly-active-users" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline underline-offset-2">OpenAI-Angaben über 900 Millionen wöchentliche Nutzer</a> (Stand Februar 2026). Perplexity liefert als Antwortmaschine direkt zitierte Quellen statt einer Linkliste und wächst weiter rapide. Claude wird zunehmend in Business-Workflows eingesetzt. Immer mehr Menschen fragen nicht mehr Google - sie fragen eine KI.
                         </p>
@@ -279,20 +279,20 @@ export default function GeoArtikelPage() {
                         </p>
                         <div className="bg-cyan-500/8 border border-cyan-500/20 rounded-2xl p-5 mt-5">
                             <p className="text-sm text-cyan-300 font-medium mb-1">Wichtige Einschätzung</p>
-                            <p className="text-sm text-slate-400">
+                            <p className="text-sm text-[var(--text-muted)]">
                                 GEO ersetzt SEO nicht - es ergänzt es. Wer heute nur für Google optimiert, lässt einen wachsenden Kanal ungenutzt. Die Websites die jetzt anfangen GEO-Signale aufzubauen, werden 2027 einen klaren Vorsprung haben.
                             </p>
                         </div>
                     </section>
 
                     <section id="geo-vs-seo" className="scroll-mt-28">
-                        <h2 className="text-2xl font-bold text-white mb-4">GEO vs. SEO: Was ist der Unterschied?</h2>
-                        <div className="overflow-hidden rounded-2xl border border-white/[0.07]">
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">GEO vs. SEO: Was ist der Unterschied?</h2>
+                        <div className="overflow-hidden rounded-2xl border border-[var(--text-white)]/[0.07]">
                             <table className="w-full text-sm">
                                 <thead>
-                                    <tr className="border-b border-white/5 bg-white/[0.02]">
-                                        <th className="text-left px-5 py-3 text-slate-400 font-semibold">Aspekt</th>
-                                        <th className="text-left px-5 py-3 text-slate-400 font-semibold">SEO (Google)</th>
+                                    <tr className="border-b border-[var(--text-white)]/5 bg-[var(--text-white)]/[0.02]">
+                                        <th className="text-left px-5 py-3 text-[var(--text-muted)] font-semibold">Aspekt</th>
+                                        <th className="text-left px-5 py-3 text-[var(--text-muted)] font-semibold">SEO (Google)</th>
                                         <th className="text-left px-5 py-3 text-cyan-400 font-semibold">GEO (KI-Modelle)</th>
                                     </tr>
                                 </thead>
@@ -304,10 +304,10 @@ export default function GeoArtikelPage() {
                                         ['Content', 'Keyword-Dichte, E-E-A-T', 'Zitierbare Fakten, klare Definitionen'],
                                         ['Messung', 'Rankings, Impressions, CTR', 'GEO-Score, Crawler-Erlaubnis, Erwähnungen'],
                                     ].map(([aspect, seo, geo], i) => (
-                                        <tr key={i} className="border-b border-white/[0.04] last:border-0">
-                                            <td className="px-5 py-3 text-white font-medium">{aspect}</td>
-                                            <td className="px-5 py-3 text-slate-400">{seo}</td>
-                                            <td className="px-5 py-3 text-slate-300">{geo}</td>
+                                        <tr key={i} className="border-b border-[var(--text-white)]/[0.04] last:border-0">
+                                            <td className="px-5 py-3 text-[var(--text-white)] font-medium">{aspect}</td>
+                                            <td className="px-5 py-3 text-[var(--text-muted)]">{seo}</td>
+                                            <td className="px-5 py-3 text-[var(--text-body)]">{geo}</td>
                                         </tr>
                                     ))}
                                 </tbody>
@@ -316,30 +316,30 @@ export default function GeoArtikelPage() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-2">Was sind die 6 wichtigsten GEO-Signale?</h2>
-                        <p className="text-slate-400 mb-6">Scanora prüft insgesamt 19 GEO-Signale. Das sind die sechs mit dem größten Einfluss:</p>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-2">Was sind die 6 wichtigsten GEO-Signale?</h2>
+                        <p className="text-[var(--text-muted)] mb-6">Scanora prüft insgesamt 19 GEO-Signale. Das sind die sechs mit dem größten Einfluss:</p>
                         <figure className="mb-6">
                             <Image
                                 src="/blog/scanora-geo-report.png"
                                 alt="Scanora GEO-Report zeigt geprüfte KI-Sichtbarkeits-Signale wie llms.txt, Organization-Schema, KI-Crawler-Erlaubnis und sitemap.xml"
                                 width={960}
                                 height={411}
-                                className="w-full h-auto rounded-2xl border border-white/[0.07]"
+                                className="w-full h-auto rounded-2xl border border-[var(--text-white)]/[0.07]"
                             />
-                            <figcaption className="text-xs text-slate-600 mt-2">
+                            <figcaption className="text-xs text-[var(--text-faint)] mt-2">
                                 Ein echter GEO-Score-Report aus Scanora — alle 12 KI-Sichtbarkeits-Signale auf einen Blick, inklusive gefundenem Fehler.
                             </figcaption>
                         </figure>
                         <div className="space-y-4">
                             {SIGNALS.map((s) => (
-                                <div key={s.number} id={`signal-${s.number}`} className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5 scroll-mt-28">
+                                <div key={s.number} id={`signal-${s.number}`} className="bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-2xl p-5 scroll-mt-28">
                                     <div className="flex items-start gap-4">
                                         <span className="text-[11px] font-bold font-mono shrink-0 mt-0.5" style={{ color: s.color }}>{s.number}</span>
                                         <div className="flex-1">
-                                            <h3 className="font-semibold text-white mb-2">{s.title}</h3>
-                                            <p className="text-sm text-slate-400 leading-relaxed">{s.desc}</p>
+                                            <h3 className="font-semibold text-[var(--text-white)] mb-2">{s.title}</h3>
+                                            <p className="text-sm text-[var(--text-muted)] leading-relaxed">{s.desc}</p>
                                             {s.example && (
-                                                <pre className="mt-3 text-xs bg-white/[0.04] border border-white/[0.06] rounded-xl p-3 text-slate-400 font-mono overflow-x-auto">
+                                                <pre className="mt-3 text-xs bg-[var(--text-white)]/[0.04] border border-[var(--text-white)]/[0.06] rounded-xl p-3 text-[var(--text-muted)] font-mono overflow-x-auto">
                                                     {s.example}
                                                 </pre>
                                             )}
@@ -369,23 +369,23 @@ export default function GeoArtikelPage() {
                     </section>
 
                     <section id="ki-modelle" className="scroll-mt-28">
-                        <h2 className="text-2xl font-bold text-white mb-4">Welche KI-Modelle profitieren von GEO?</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Welche KI-Modelle profitieren von GEO?</h2>
                         <p>
                             Nicht alle KI-Modelle funktionieren gleich. Es gibt zwei grundlegende Typen:
                         </p>
                         <p className="mt-4">
-                            <strong className="text-white">RAG-basierte Systeme</strong> (Retrieval Augmented Generation) wie Perplexity oder Bing Copilot crawlen das Web in Echtzeit und zitieren Quellen direkt. Hier wirken GEO-Signale am schnellsten - innerhalb von Tagen bis Wochen.
+                            <strong className="text-[var(--text-white)]">RAG-basierte Systeme</strong> (Retrieval Augmented Generation) wie Perplexity oder Bing Copilot crawlen das Web in Echtzeit und zitieren Quellen direkt. Hier wirken GEO-Signale am schnellsten - innerhalb von Tagen bis Wochen.
                         </p>
                         <p className="mt-4">
-                            <strong className="text-white">Modelle mit Trainings-Cutoff</strong> wie ChatGPT (ohne Browsing) oder Claude (ohne Websuche) kennen nur Inhalte aus ihrem Trainingsdatensatz. Hier dauert es länger - aber je mehr deine Website im öffentlichen Web diskutiert wird (GitHub, Reddit, HackerNews, Produktseiten), desto höher die Chance in zukünftige Trainingsläufe aufgenommen zu werden.
+                            <strong className="text-[var(--text-white)]">Modelle mit Trainings-Cutoff</strong> wie ChatGPT (ohne Browsing) oder Claude (ohne Websuche) kennen nur Inhalte aus ihrem Trainingsdatensatz. Hier dauert es länger - aber je mehr deine Website im öffentlichen Web diskutiert wird (GitHub, Reddit, HackerNews, Produktseiten), desto höher die Chance in zukünftige Trainingsläufe aufgenommen zu werden.
                         </p>
                         <p className="mt-4">
-                            <strong className="text-white">Hybrid-Systeme</strong> wie ChatGPT mit aktivierter Websuche oder Claude mit Webzugang kombinieren beide Ansätze. Für diese ist eine gute technische GEO-Grundlage (Schema.org, saubere Canonicals, zitierbare Fakten) besonders wichtig.
+                            <strong className="text-[var(--text-white)]">Hybrid-Systeme</strong> wie ChatGPT mit aktivierter Websuche oder Claude mit Webzugang kombinieren beide Ansätze. Für diese ist eine gute technische GEO-Grundlage (Schema.org, saubere Canonicals, zitierbare Fakten) besonders wichtig.
                         </p>
                     </section>
 
                     <section id="quick-wins" className="scroll-mt-28">
-                        <h2 className="text-2xl font-bold text-white mb-4">Welche 10 GEO-Quick-Wins solltest du zuerst umsetzen?</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Welche 10 GEO-Quick-Wins solltest du zuerst umsetzen?</h2>
                         <div className="space-y-2">
                             {[
                                 ['llms.txt erstellen', '/llms.txt mit klarer Produktbeschreibung anlegen'],
@@ -399,13 +399,13 @@ export default function GeoArtikelPage() {
                                 ['About/Founder-Seite', 'Wer steckt dahinter - E-E-A-T Signal für KI'],
                                 ['Externe Quellenverweise', 'Links zu autoritären Quellen (Google, OWASP, Schema.org)'],
                             ].map(([title, desc], i) => (
-                                <div key={i} className="flex items-start gap-3 py-2.5 border-b border-white/[0.04] last:border-0">
+                                <div key={i} className="flex items-start gap-3 py-2.5 border-b border-[var(--text-white)]/[0.04] last:border-0">
                                     <div className="w-5 h-5 rounded-full bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center shrink-0 mt-0.5">
                                         <span className="text-[9px] font-bold text-cyan-400">{i + 1}</span>
                                     </div>
                                     <div>
-                                        <span className="text-sm font-medium text-white">{title}</span>
-                                        <span className="text-sm text-slate-500"> - {desc}</span>
+                                        <span className="text-sm font-medium text-[var(--text-white)]">{title}</span>
+                                        <span className="text-sm text-[var(--text-faint)]"> - {desc}</span>
                                     </div>
                                 </div>
                             ))}
@@ -413,26 +413,26 @@ export default function GeoArtikelPage() {
                     </section>
 
                     <section id="geo-strategie" className="scroll-mt-28">
-                        <h2 className="text-2xl font-bold text-white mb-4">GEO-Strategie 2026 aufbauen: Schritt-für-Schritt</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">GEO-Strategie 2026 aufbauen: Schritt-für-Schritt</h2>
                         <p>
                             Die 10 Quick-Wins oben sind einzelne Hebel - eine GEO-Strategie 2026 bringt sie in eine sinnvolle Reihenfolge, in drei Phasen:
                         </p>
                         <div className="space-y-5 mt-5">
                             <div>
-                                <h3 className="text-lg font-semibold text-white mb-2">Phase 1: Technisches Fundament (Woche 1)</h3>
-                                <p className="text-sm text-slate-400">
+                                <h3 className="text-lg font-semibold text-[var(--text-white)] mb-2">Phase 1: Technisches Fundament (Woche 1)</h3>
+                                <p className="text-sm text-[var(--text-muted)]">
                                     robots.txt für KI-Crawler öffnen, Organization- und FAQ-Schema einbauen, Sitemap aktuell halten. Reine Konfigurationsänderungen, die KI-Crawler innerhalb weniger Tage aufnehmen.
                                 </p>
                             </div>
                             <div>
-                                <h3 className="text-lg font-semibold text-white mb-2">Phase 2: Zitierbarer Content (Woche 2-4)</h3>
-                                <p className="text-sm text-slate-400">
+                                <h3 className="text-lg font-semibold text-[var(--text-white)] mb-2">Phase 2: Zitierbarer Content (Woche 2-4)</h3>
+                                <p className="text-sm text-[var(--text-muted)]">
                                     Klare Produktdefinition, konkrete Zahlen/Statistiken und eine About-Seite mit echten E-E-A-T-Signalen ergänzen. Das entscheidet, ob KI-Modelle deine Seite überhaupt als zitierfähig einstufen.
                                 </p>
                             </div>
                             <div>
-                                <h3 className="text-lg font-semibold text-white mb-2">Phase 3: Monitoring & Nachschärfen (laufend)</h3>
-                                <p className="text-sm text-slate-400">
+                                <h3 className="text-lg font-semibold text-[var(--text-white)] mb-2">Phase 3: Monitoring & Nachschärfen (laufend)</h3>
+                                <p className="text-sm text-[var(--text-muted)]">
                                     GEO wirkt nicht sofort und nicht einmalig - regelmäßig prüfen, ob ChatGPT, Claude, Perplexity und Google AI Overview deine Website erwähnen, und bei Lücken gezielt nachbessern statt zu raten.
                                 </p>
                             </div>
@@ -446,7 +446,7 @@ export default function GeoArtikelPage() {
                     </section>
 
                     <section id="faq" className="scroll-mt-28">
-                        <h2 className="text-2xl font-bold text-white mb-4">Häufige Fragen zu GEO</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Häufige Fragen zu GEO</h2>
                         <div className="space-y-4">
                             {[
                                 {
@@ -474,9 +474,9 @@ export default function GeoArtikelPage() {
                                     a: 'RAG-basierte Systeme wie Perplexity reagieren innerhalb von Tagen bis Wochen auf technische GEO-Signale. Modelle mit festem Trainingsdaten-Cutoff wie GPT-4 können Monate bis zum nächsten Training-Update benötigen. Technische Quick-Wins wie Schema Markup und KI-Crawler-Erlaubnis wirken am schnellsten - llms.txt ausgenommen, da bislang kein großer Anbieter dessen Nutzung bestätigt hat.',
                                 },
                             ].map((faq, i) => (
-                                <div key={i} className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5">
-                                    <h3 className="font-semibold text-white mb-2 text-sm">{faq.q}</h3>
-                                    <p className="text-sm text-slate-400 leading-relaxed">{faq.a}</p>
+                                <div key={i} className="bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-2xl p-5">
+                                    <h3 className="font-semibold text-[var(--text-white)] mb-2 text-sm">{faq.q}</h3>
+                                    <p className="text-sm text-[var(--text-muted)] leading-relaxed">{faq.a}</p>
                                 </div>
                             ))}
                         </div>
@@ -485,25 +485,25 @@ export default function GeoArtikelPage() {
                 </div>
 
                 {/* CTA */}
-                <div className="mt-14 bg-gradient-to-br from-cyan-950/40 to-[#05080f] border border-cyan-500/20 rounded-2xl p-6 sm:p-8 text-center">
-                    <h2 className="text-xl sm:text-2xl font-bold text-white mb-3">
+                <div className="mt-14 bg-gradient-to-br from-cyan-950/40 to-[var(--bg-base)] border border-cyan-500/20 rounded-2xl p-6 sm:p-8 text-center">
+                    <h2 className="text-xl sm:text-2xl font-bold text-[var(--text-white)] mb-3">
                         Wie gut ist dein GEO-Score?
                     </h2>
-                    <p className="text-slate-400 text-sm mb-6 max-w-md mx-auto leading-relaxed">
+                    <p className="text-[var(--text-muted)] text-sm mb-6 max-w-md mx-auto leading-relaxed">
                         Scanora prüft alle 19 GEO-Signale in unter 60 Sekunden - inklusive llms.txt, Schema.org, KI-Crawler-Erlaubnis und Content-Qualität. Start ohne Registrierung, für den vollständigen Report mit allen Scores meldest du dich kostenlos an.
                     </p>
                     <Link
                         href="/dashboard"
-                        className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-cyan-600 to-violet-600 hover:from-cyan-500 hover:to-violet-500 text-white text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-cyan-500/20"
+                        className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-cyan-600 to-violet-600 hover:from-cyan-500 hover:to-violet-500 text-[var(--text-white)] text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-cyan-500/20"
                     >
                         GEO-Score jetzt prüfen
                     </Link>
-                    <div className="mt-3 text-xs text-slate-600">Ohne Registrierung starten · Voller Report kostenlos · 60 Sekunden</div>
+                    <div className="mt-3 text-xs text-[var(--text-faint)]">Ohne Registrierung starten · Voller Report kostenlos · 60 Sekunden</div>
                 </div>
 
                 {/* Back to blog */}
-                <div className="mt-10 pt-8 border-t border-white/5">
-                    <Link href="/blog" className="text-sm text-slate-500 hover:text-slate-300 transition-colors">
+                <div className="mt-10 pt-8 border-t border-[var(--text-white)]/5">
+                    <Link href="/blog" className="text-sm text-[var(--text-faint)] hover:text-[var(--text-body)] transition-colors">
                         ← Zurück zum Blog
                     </Link>
                 </div>

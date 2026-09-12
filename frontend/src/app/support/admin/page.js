@@ -54,28 +54,28 @@ export default function SupportAdminPage() {
     }
 
     return (
-        <div className="min-h-screen bg-[#080b14]">
-            <nav className="border-b border-white/5 bg-[#080b14]/90 backdrop-blur-xl">
+        <div className="min-h-screen bg-[var(--bg-base)]">
+            <nav className="border-b border-[var(--text-white)]/5 bg-[var(--bg-base)]/90 backdrop-blur-xl">
                 <div className="max-w-5xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between">
                     <div className="flex items-center gap-3">
                         <Link href="/" className="flex items-center gap-2">
                             <div className="w-8 h-8 rounded-lg bg-[var(--accent)] flex items-center justify-center">
-                                <svg className="w-4 h-4 text-white" viewBox="0 0 192 192" fill="none"><circle cx="96" cy="96" r="50" stroke="currentColor" strokeWidth="14" /><circle cx="110" cy="82" r="13" fill="currentColor" /></svg>
+                                <svg className="w-4 h-4 text-[var(--text-white)]" viewBox="0 0 192 192" fill="none"><circle cx="96" cy="96" r="50" stroke="currentColor" strokeWidth="14" /><circle cx="110" cy="82" r="13" fill="currentColor" /></svg>
                             </div>
-                            <span className="font-bold text-white">Scanora</span>
+                            <span className="font-bold text-[var(--text-white)]">Scanora</span>
                         </Link>
-                        <span className="text-xs text-slate-600">/ Support Admin</span>
+                        <span className="text-xs text-[var(--text-faint)]">/ Support Admin</span>
                     </div>
                     <div className="flex items-center gap-3">
                         <button
                             onClick={fetchTickets}
-                            className="flex items-center gap-2 text-xs text-slate-400 hover:text-white transition-colors"
+                            className="flex items-center gap-2 text-xs text-[var(--text-muted)] hover:text-[var(--text-white)] transition-colors"
                         >
                             <RefreshCw className="w-3.5 h-3.5" /> Aktualisieren
                         </button>
                         <button
                             onClick={handleLogout}
-                            className="flex items-center gap-2 text-xs text-slate-500 hover:text-red-400 transition-colors"
+                            className="flex items-center gap-2 text-xs text-[var(--text-faint)] hover:text-red-400 transition-colors"
                         >
                             <LogOut className="w-3.5 h-3.5" /> Logout
                         </button>
@@ -85,21 +85,21 @@ export default function SupportAdminPage() {
 
             <div className="max-w-5xl mx-auto px-5 sm:px-8 py-10">
                 <div className="flex items-center justify-between mb-6">
-                    <h1 className="text-xl font-bold text-white">Support-Tickets</h1>
-                    <span className="text-xs text-slate-500">{tickets.length} Ticket{tickets.length !== 1 ? 's' : ''}</span>
+                    <h1 className="text-xl font-bold text-[var(--text-white)]">Support-Tickets</h1>
+                    <span className="text-xs text-[var(--text-faint)]">{tickets.length} Ticket{tickets.length !== 1 ? 's' : ''}</span>
                 </div>
 
                 {error && <p className="text-red-400 text-sm mb-4">{error}</p>}
 
                 {loading && (
-                    <div className="flex items-center gap-3 text-slate-400 text-sm">
-                        <div className="w-4 h-4 border-2 border-slate-600 border-t-violet-500 rounded-full animate-spin" />
+                    <div className="flex items-center gap-3 text-[var(--text-muted)] text-sm">
+                        <div className="w-4 h-4 border-2 border-[var(--border-strong)] border-t-violet-500 rounded-full animate-spin" />
                         Lade Tickets...
                     </div>
                 )}
 
                 {!loading && tickets.length === 0 && !error && (
-                    <p className="text-slate-500 text-sm">Keine Tickets vorhanden.</p>
+                    <p className="text-[var(--text-faint)] text-sm">Keine Tickets vorhanden.</p>
                 )}
 
                 <div className="space-y-3">
@@ -110,7 +110,7 @@ export default function SupportAdminPage() {
                                 key={ticket.ticketNumber}
                                 initial={{ opacity: 0, y: 8 }}
                                 animate={{ opacity: 1, y: 0 }}
-                                className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5"
+                                className="bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-2xl p-5"
                             >
                                 <div className="flex items-start justify-between gap-4 flex-wrap">
                                     <div className="flex-1 min-w-0">
@@ -120,8 +120,8 @@ export default function SupportAdminPage() {
                                                 {cfg.label}
                                             </span>
                                         </div>
-                                        <p className="text-sm font-semibold text-white truncate">{ticket.subject}</p>
-                                        <p className="text-xs text-slate-500 mt-0.5">
+                                        <p className="text-sm font-semibold text-[var(--text-white)] truncate">{ticket.subject}</p>
+                                        <p className="text-xs text-[var(--text-faint)] mt-0.5">
                                             {ticket.name} · {ticket.email} ·{' '}
                                             {new Date(ticket.createdAt).toLocaleDateString('de-DE', {
                                                 day: '2-digit', month: 'short', year: 'numeric'

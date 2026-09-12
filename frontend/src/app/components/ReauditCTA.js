@@ -31,13 +31,13 @@ export default function ReauditCTA({ locale = 'de' }) {
                     <span className="text-xs font-semibold text-[var(--accent)] uppercase tracking-wider mb-2 block">
                         {locale === 'en' ? 'More with Pro' : 'Mehr mit Pro'}
                     </span>
-                    <h3 className="text-base font-bold text-white mb-3">
+                    <h3 className="text-base font-bold text-[var(--text-white)] mb-3">
                         {locale === 'en' ? 'Unlock AI report & PDF with Pro' : 'KI-Bericht & PDF mit Pro freischalten'}
                     </h3>
                     <div className="flex flex-wrap gap-x-5 gap-y-2">
                         {PRO_FEATURES.map(({ icon: Icon, label }) => (
-                            <div key={label} className="flex items-center gap-1.5 text-xs text-slate-500">
-                                <Icon className="w-3.5 h-3.5 text-slate-600" />
+                            <div key={label} className="flex items-center gap-1.5 text-xs text-[var(--text-faint)]">
+                                <Icon className="w-3.5 h-3.5 text-[var(--text-faint)]" />
                                 {label}
                             </div>
                         ))}
@@ -45,7 +45,7 @@ export default function ReauditCTA({ locale = 'de' }) {
                 </div>
                 <Link
                     href={locale === 'en' ? '/en/pricing' : '/pricing'}
-                    className="flex items-center gap-2 px-5 py-2.5 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all shadow-lg shadow-[var(--accent-border)] shrink-0"
+                    className="flex items-center gap-2 px-5 py-2.5 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all shadow-lg shadow-[var(--accent-border)] active:scale-[0.97] active:duration-75 shrink-0"
                 >
                     {locale === 'en' ? 'Upgrade to Pro' : 'Zu Pro upgraden'}
                     <ArrowRight className="w-3.5 h-3.5" />

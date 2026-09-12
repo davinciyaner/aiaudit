@@ -3,7 +3,7 @@ import { useState, useEffect, Suspense } from 'react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { Lock, ArrowRight, CheckCircle, XCircle } from 'lucide-react'
-import toast, { Toaster } from 'react-hot-toast'
+import toast from 'react-hot-toast'
 import { useRouter, useSearchParams } from 'next/navigation'
 
 function ResetPasswordForm() {
@@ -53,10 +53,10 @@ function ResetPasswordForm() {
 
             <div className="flex justify-center mb-8">
                 <Link href="/" className="flex items-center gap-2.5">
-                    <div className="w-9 h-9 rounded-xl bg-[var(--accent)] flex items-center justify-center shadow-lg shadow-[var(--accent-border)]">
+                    <div className="w-9 h-9 rounded-xl bg-[var(--accent)] flex items-center justify-center shadow-lg shadow-[var(--accent-border)] active:scale-[0.97] active:duration-75">
                         <svg className="w-4 h-4 text-[var(--bg-base)]" viewBox="0 0 192 192" fill="none"><circle cx="96" cy="96" r="50" stroke="currentColor" strokeWidth="14" /><circle cx="110" cy="82" r="13" fill="currentColor" /></svg>
                     </div>
-                    <span className="text-xl font-bold text-white">Scanora</span>
+                    <span className="text-xl font-bold text-[var(--text-white)]">Scanora</span>
                 </Link>
             </div>
 
@@ -67,21 +67,21 @@ function ResetPasswordForm() {
                             <CheckCircle className="w-7 h-7 text-emerald-400" strokeWidth={1.5} />
                         </div>
                     </div>
-                    <h1 className="text-2xl font-bold text-white mb-3">Passwort geändert</h1>
-                    <p className="text-slate-400 text-sm">Du wirst automatisch zum Login weitergeleitet...</p>
+                    <h1 className="text-2xl font-bold text-[var(--text-white)] mb-3">Passwort geändert</h1>
+                    <p className="text-[var(--text-muted)] text-sm">Du wirst automatisch zum Login weitergeleitet...</p>
                 </div>
             ) : (
                 <>
                     <div className="mb-8">
-                        <h1 className="text-3xl font-bold text-white mb-2">Neues Passwort</h1>
-                        <p className="text-slate-400 text-sm">Wähle ein sicheres Passwort für deinen Account.</p>
+                        <h1 className="text-3xl font-bold text-[var(--text-white)] mb-2">Neues Passwort</h1>
+                        <p className="text-[var(--text-muted)] text-sm">Wähle ein sicheres Passwort für deinen Account.</p>
                     </div>
 
                     <form onSubmit={handleSubmit} className="space-y-5">
                         <div>
-                            <label className="text-sm text-slate-300 mb-2 block font-medium">Neues Passwort</label>
+                            <label className="text-sm text-[var(--text-body)] mb-2 block font-medium">Neues Passwort</label>
                             <div className="relative">
-                                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+                                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-faint)]" />
                                 <input
                                     type="password"
                                     value={password}
@@ -89,7 +89,7 @@ function ResetPasswordForm() {
                                     placeholder="Mindestens 6 Zeichen"
                                     required
                                     minLength={6}
-                                    className="w-full bg-[var(--surface-06)] border border-[var(--border-subtle)] hover:border-[var(--border-strong)] focus:border-[var(--accent-border)] rounded-xl pl-11 pr-4 py-3.5 text-white placeholder:text-slate-600 outline-none transition-all text-sm"
+                                    className="w-full bg-[var(--surface-06)] border border-[var(--border-subtle)] hover:border-[var(--border-strong)] focus:border-[var(--accent-border)] rounded-xl pl-11 pr-4 py-3.5 text-[var(--text-white)] placeholder:text-[var(--text-faint)] outline-none transition-all text-sm"
                                 />
                             </div>
                             {password.length > 0 && (
@@ -106,16 +106,16 @@ function ResetPasswordForm() {
                         </div>
 
                         <div>
-                            <label className="text-sm text-slate-300 mb-2 block font-medium">Passwort bestätigen</label>
+                            <label className="text-sm text-[var(--text-body)] mb-2 block font-medium">Passwort bestätigen</label>
                             <div className="relative">
-                                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+                                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-faint)]" />
                                 <input
                                     type="password"
                                     value={confirm}
                                     onChange={(e) => setConfirm(e.target.value)}
                                     placeholder="Passwort wiederholen"
                                     required
-                                    className="w-full bg-[var(--surface-06)] border border-[var(--border-subtle)] hover:border-[var(--border-strong)] focus:border-[var(--accent-border)] rounded-xl pl-11 pr-4 py-3.5 text-white placeholder:text-slate-600 outline-none transition-all text-sm"
+                                    className="w-full bg-[var(--surface-06)] border border-[var(--border-subtle)] hover:border-[var(--border-strong)] focus:border-[var(--accent-border)] rounded-xl pl-11 pr-4 py-3.5 text-[var(--text-white)] placeholder:text-[var(--text-faint)] outline-none transition-all text-sm"
                                 />
                                 {confirm.length > 0 && (
                                     <div className="absolute right-4 top-1/2 -translate-y-1/2">
@@ -129,7 +129,7 @@ function ResetPasswordForm() {
                         </div>
 
                         <motion.button type="submit" disabled={loading} whileTap={{ scale: 0.98 }}
-                            className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] font-semibold transition-all duration-200 shadow-lg shadow-[var(--accent-border)] disabled:opacity-50 disabled:cursor-not-allowed text-sm">
+                            className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] font-semibold transition-all duration-200 shadow-lg shadow-[var(--accent-border)] active:scale-[0.97] active:duration-75 disabled:opacity-50 disabled:cursor-not-allowed text-sm">
                             {loading ? (
                                 <><div className="w-4 h-4 border-2 border-[var(--bg-base)]/30 border-t-[var(--bg-base)] rounded-full animate-spin" />Wird gespeichert...</>
                             ) : (
@@ -146,7 +146,6 @@ function ResetPasswordForm() {
 export default function ResetPasswordPage() {
     return (
         <div className="min-h-screen bg-[var(--bg-base)] flex items-center justify-center px-5 py-12">
-            <Toaster position="top-right" toastOptions={{ style: { background: 'var(--bg-surface)', color: '#fff', border: '1px solid var(--border-subtle)', maxWidth: 'calc(100vw - 2rem)' } }} />
             <div className="absolute inset-0">
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-125 h-100 rounded-full blur-3xl pointer-events-none"
                     style={{ background: 'radial-gradient(ellipse, var(--accent-glow), transparent 70%)' }} />

@@ -8,7 +8,7 @@ import {
 } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter, useParams } from 'next/navigation'
-import toast, { Toaster } from 'react-hot-toast'
+import toast from 'react-hot-toast'
 import Navbar from '../../components/Navbar'
 
 const PLATFORM_META = {
@@ -87,10 +87,10 @@ function keywordRateStats(history) {
 }
 
 function MentionBadge({ mentioned }) {
-    if (mentioned == null) return <span className="text-xs text-slate-600">—</span>
+    if (mentioned == null) return <span className="text-xs text-[var(--text-faint)]">—</span>
     return mentioned
         ? <span className="inline-flex items-center gap-1 text-xs font-semibold text-[var(--accent)] bg-[var(--accent-soft)] border border-[var(--accent-border)] px-2 py-0.5 rounded-md"><Check className="w-3 h-3" />Ja</span>
-        : <span className="inline-flex items-center gap-1 text-xs font-semibold text-slate-500 bg-[var(--surface-08)] border border-[var(--border-subtle)] px-2 py-0.5 rounded-md"><X className="w-3 h-3 opacity-50" />Nein</span>
+        : <span className="inline-flex items-center gap-1 text-xs font-semibold text-[var(--text-faint)] bg-[var(--surface-08)] border border-[var(--border-subtle)] px-2 py-0.5 rounded-md"><X className="w-3 h-3 opacity-50" />Nein</span>
 }
 
 function MentionDot({ mentioned }) {
@@ -105,7 +105,7 @@ function MentionDot({ mentioned }) {
 function SentimentBadge({ sentiment }) {
     const meta = {
         positive: { label: 'Positiv', color: 'text-emerald-400', bg: 'bg-emerald-500/10', border: 'border-emerald-500/20' },
-        neutral:  { label: 'Neutral', color: 'text-slate-400',   bg: 'bg-[var(--surface-08)]',         border: 'border-[var(--border-subtle)]'    },
+        neutral:  { label: 'Neutral', color: 'text-[var(--text-muted)]',   bg: 'bg-[var(--surface-08)]',         border: 'border-[var(--border-subtle)]'    },
         negative: { label: 'Negativ', color: 'text-red-400',     bg: 'bg-red-500/10',      border: 'border-red-500/20'  },
     }[sentiment]
     if (!meta) return null
@@ -118,7 +118,7 @@ function SentimentBadge({ sentiment }) {
 
 function KeywordRateBadge({ rate, delta }) {
     if (rate == null) return null
-    const color = rate >= 70 ? 'text-[var(--accent)]' : rate >= 40 ? 'text-[var(--warning)]' : 'text-slate-500'
+    const color = rate >= 70 ? 'text-[var(--accent)]' : rate >= 40 ? 'text-[var(--warning)]' : 'text-[var(--text-faint)]'
     return (
         <span className={`inline-flex items-center gap-0.5 text-xs font-semibold ${color}`}
             title="Mention-Rate über die komplette Check-Historie dieses Keywords">
@@ -132,12 +132,12 @@ function KeywordRateBadge({ rate, delta }) {
 function PositionBadge({ position, citationsCount, trend }) {
     if (position == null) return null
     return (
-        <span className="inline-flex items-center gap-1 text-[10px] font-semibold px-1.5 py-0.5 rounded ml-1.5 text-slate-300 bg-[var(--surface-08)] border border-[var(--border-subtle)]"
+        <span className="inline-flex items-center gap-1 text-[10px] font-semibold px-1.5 py-0.5 rounded ml-1.5 text-[var(--text-body)] bg-[var(--surface-08)] border border-[var(--border-subtle)]"
             title="Position innerhalb der zitierten Quellen dieser Antwort">
             Platz {position}{citationsCount ? `/${citationsCount}` : ''}
             {trend > 0 && <ArrowUp className="w-2.5 h-2.5 text-[var(--success)]" strokeWidth={3} />}
             {trend < 0 && <ArrowDown className="w-2.5 h-2.5 text-[var(--danger)]" strokeWidth={3} />}
-            {trend === 0 && <Minus className="w-2.5 h-2.5 text-slate-500" strokeWidth={3} />}
+            {trend === 0 && <Minus className="w-2.5 h-2.5 text-[var(--text-faint)]" strokeWidth={3} />}
         </span>
     )
 }
@@ -146,7 +146,7 @@ const CORRELATION_VERDICT_META = {
     both:     { label: 'Beides sichtbar', color: 'text-emerald-400', bg: 'bg-emerald-500/10', border: 'border-emerald-500/20' },
     seo_only: { label: 'Nur Google',      color: 'text-amber-400',   bg: 'bg-amber-500/10',   border: 'border-amber-500/20'  },
     geo_only: { label: 'Nur KI',          color: 'text-blue-400',    bg: 'bg-blue-500/10',    border: 'border-blue-500/20'   },
-    neither:  { label: 'Beides fehlt',    color: 'text-slate-500',   bg: 'bg-[var(--surface-08)]',        border: 'border-[var(--border-subtle)]'      },
+    neither:  { label: 'Beides fehlt',    color: 'text-[var(--text-faint)]',   bg: 'bg-[var(--surface-08)]',        border: 'border-[var(--border-subtle)]'      },
 }
 
 // Muss mit SEO_VISIBLE_THRESHOLD in backend/controllers/geo_tracking.js übereinstimmen — eine
@@ -172,7 +172,7 @@ function CorrelationPanel({ siteId, onGoToSuggestions }) {
     if (loading) return (
         <div className="flex flex-col items-center justify-center py-20 gap-3">
             <Loader2 className="w-6 h-6 text-[var(--accent)] animate-spin" />
-            <span className="text-sm text-slate-500">Daten werden geladen…</span>
+            <span className="text-sm text-[var(--text-faint)]">Daten werden geladen…</span>
         </div>
     )
     if (!data) return null
@@ -181,11 +181,11 @@ function CorrelationPanel({ siteId, onGoToSuggestions }) {
         return (
             <div className="flex flex-col items-center text-center gap-3 bg-[var(--bg-surface)] border border-dashed border-[var(--border-subtle)] rounded-2xl p-8">
                 <div className="w-10 h-10 rounded-xl bg-[var(--surface-08)] flex items-center justify-center">
-                    <GitCompare className="w-4.5 h-4.5 text-slate-500" />
+                    <GitCompare className="w-4.5 h-4.5 text-[var(--text-faint)]" />
                 </div>
                 <div>
-                    <h3 className="text-sm font-semibold text-white mb-1.5">SEO-Ranking + KI-Erwähnung vergleichen</h3>
-                    <p className="text-xs text-slate-500 leading-relaxed max-w-sm">
+                    <h3 className="text-sm font-semibold text-[var(--text-white)] mb-1.5">SEO-Ranking + KI-Erwähnung vergleichen</h3>
+                    <p className="text-xs text-[var(--text-faint)] leading-relaxed max-w-sm">
                         Für diese Domain läuft noch keine SEO-Automatisierung. Sobald beide Produkte dieselbe Domain tracken, zeigt Scanora hier direkt,
                         ob eine Seite bei Google rankt, aber nie von KI-Modellen genannt wird — oder umgekehrt.
                     </p>
@@ -201,11 +201,11 @@ function CorrelationPanel({ siteId, onGoToSuggestions }) {
         return (
             <div className="flex flex-col items-center text-center gap-3 bg-[var(--bg-surface)] border border-dashed border-[var(--border-subtle)] rounded-2xl p-8">
                 <div className="w-10 h-10 rounded-xl bg-[var(--surface-08)] flex items-center justify-center">
-                    <GitCompare className="w-4.5 h-4.5 text-slate-500" />
+                    <GitCompare className="w-4.5 h-4.5 text-[var(--text-faint)]" />
                 </div>
                 <div>
-                    <h3 className="text-sm font-semibold text-white mb-1.5">SEO-Ranking + KI-Erwähnung vergleichen</h3>
-                    <p className="text-xs text-slate-500 leading-relaxed max-w-sm">
+                    <h3 className="text-sm font-semibold text-[var(--text-white)] mb-1.5">SEO-Ranking + KI-Erwähnung vergleichen</h3>
+                    <p className="text-xs text-[var(--text-faint)] leading-relaxed max-w-sm">
                         Keine gemeinsamen Keywords zwischen SEO- und GEO-Tracking ({data.seoOnlyKeywords.length} nur SEO, {data.geoOnlyKeywords.length} nur GEO).
                         Füge dieselben Keywords in beiden Produkten hinzu, um Google-Ranking und KI-Erwähnung nebeneinander zu sehen.
                     </p>
@@ -233,25 +233,25 @@ function CorrelationPanel({ siteId, onGoToSuggestions }) {
     return (
         <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl p-5 mb-6">
             <div className="flex items-center justify-between mb-4">
-                <h3 className="text-sm font-semibold text-white">SEO-Ranking + KI-Erwähnung</h3>
-                <span className="text-xs text-slate-600">{data.matched.length} gemeinsame Keywords</span>
+                <h3 className="text-sm font-semibold text-[var(--text-white)]">SEO-Ranking + KI-Erwähnung</h3>
+                <span className="text-xs text-[var(--text-faint)]">{data.matched.length} gemeinsame Keywords</span>
             </div>
 
             <div className="flex items-center gap-5 mb-5 pb-5 border-b border-[var(--border-subtle)] flex-wrap">
                 <div className="flex items-baseline gap-2">
-                    <span className="text-xs text-slate-500">Keywords</span>
-                    <span className="text-lg font-bold text-white">{data.matched.length}/{totalKeywords}</span>
+                    <span className="text-xs text-[var(--text-faint)]">Keywords</span>
+                    <span className="text-lg font-bold text-[var(--text-white)]">{data.matched.length}/{totalKeywords}</span>
                 </div>
                 <div className="w-px h-7 bg-[var(--surface-10)]" />
                 <div className="flex items-baseline gap-2">
-                    <span className="text-xs text-slate-500">Ø Platzierung</span>
-                    <span className="text-lg font-bold text-white">{data.avgPosition ?? '—'}</span>
+                    <span className="text-xs text-[var(--text-faint)]">Ø Platzierung</span>
+                    <span className="text-lg font-bold text-[var(--text-white)]">{data.avgPosition ?? '—'}</span>
                     {positionTrendDelta != null && <TrendArrow delta={positionTrendDelta} />}
                 </div>
                 <div className="w-px h-7 bg-[var(--surface-10)]" />
                 <div className="flex items-baseline gap-2">
-                    <span className="text-xs text-slate-500">Google (Top {SEO_VISIBLE_THRESHOLD})</span>
-                    <span className="text-lg font-bold text-white">{visibleCount}/{data.matched.length}</span>
+                    <span className="text-xs text-[var(--text-faint)]">Google (Top {SEO_VISIBLE_THRESHOLD})</span>
+                    <span className="text-lg font-bold text-[var(--text-white)]">{visibleCount}/{data.matched.length}</span>
                 </div>
             </div>
 
@@ -259,10 +259,10 @@ function CorrelationPanel({ siteId, onGoToSuggestions }) {
                 <table className="w-full text-sm">
                     <thead>
                         <tr className="border-b border-[var(--border-subtle)]">
-                            <th className="text-left text-xs text-slate-500 font-semibold uppercase tracking-wider pb-2">Keyword</th>
-                            <th className="text-left text-xs text-slate-500 font-semibold uppercase tracking-wider pb-2">Google</th>
-                            <th className="text-left text-xs text-slate-500 font-semibold uppercase tracking-wider pb-2">KI-Erwähnung</th>
-                            <th className="text-left text-xs text-slate-500 font-semibold uppercase tracking-wider pb-2">Status</th>
+                            <th className="text-left text-xs text-[var(--text-faint)] font-semibold uppercase tracking-wider pb-2">Keyword</th>
+                            <th className="text-left text-xs text-[var(--text-faint)] font-semibold uppercase tracking-wider pb-2">Google</th>
+                            <th className="text-left text-xs text-[var(--text-faint)] font-semibold uppercase tracking-wider pb-2">KI-Erwähnung</th>
+                            <th className="text-left text-xs text-[var(--text-faint)] font-semibold uppercase tracking-wider pb-2">Status</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -271,19 +271,19 @@ function CorrelationPanel({ siteId, onGoToSuggestions }) {
                             const seoVisible = m.seoPosition != null && m.seoPosition <= SEO_VISIBLE_THRESHOLD
                             return (
                                 <tr key={m.keyword} className="border-b border-[var(--border-subtle)] last:border-0">
-                                    <td className="py-2.5 pr-3 text-slate-200">{m.keyword}</td>
+                                    <td className="py-2.5 pr-3 text-[var(--text-body)]">{m.keyword}</td>
                                     <td className="py-2.5 pr-3">
                                         {m.seoPosition == null ? (
-                                            <span className="text-slate-600">—</span>
+                                            <span className="text-[var(--text-faint)]">—</span>
                                         ) : seoVisible ? (
                                             <span className="text-[var(--success)] font-semibold">#{m.seoPosition}</span>
                                         ) : (
-                                            <span className="text-slate-600" title={`Position ${m.seoPosition} — außerhalb der ersten 20 Ergebnisse, praktisch nicht auffindbar`}>
+                                            <span className="text-[var(--text-faint)]" title={`Position ${m.seoPosition} — außerhalb der ersten 20 Ergebnisse, praktisch nicht auffindbar`}>
                                                 #{m.seoPosition} <span className="text-[10px]">(nicht sichtbar)</span>
                                             </span>
                                         )}
                                     </td>
-                                    <td className="py-2.5 pr-3 text-slate-400">{m.geoChecked ? (m.geoMentioned ? 'Ja' : 'Nein') : '—'}</td>
+                                    <td className="py-2.5 pr-3 text-[var(--text-muted)]">{m.geoChecked ? (m.geoMentioned ? 'Ja' : 'Nein') : '—'}</td>
                                     <td className="py-2.5">
                                         <span className={`inline-flex text-xs font-semibold px-2 py-0.5 rounded-md border ${v.color} ${v.bg} ${v.border}`}>{v.label}</span>
                                     </td>
@@ -354,15 +354,15 @@ function KeywordSuggestionsPanel({ siteId, onAdded }) {
     if (loading) return (
         <div className="flex flex-col items-center justify-center py-20 gap-3">
             <Loader2 className="w-6 h-6 text-[var(--accent)] animate-spin" />
-            <span className="text-sm text-slate-500">Daten werden geladen…</span>
+            <span className="text-sm text-[var(--text-faint)]">Daten werden geladen…</span>
         </div>
     )
     if (!suggestions?.length) return (
         <div className="flex flex-col items-center justify-center text-center gap-3 bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl py-16 px-6">
             <div className="w-10 h-10 rounded-xl bg-[var(--surface-08)] flex items-center justify-center">
-                <Lightbulb className="w-4.5 h-4.5 text-slate-500" />
+                <Lightbulb className="w-4.5 h-4.5 text-[var(--text-faint)]" />
             </div>
-            <p className="text-sm text-slate-500 max-w-sm">
+            <p className="text-sm text-[var(--text-faint)] max-w-sm">
                 Keine passenden SEO-Keywords gefunden. Sobald bei SEO-Automatisierung Keywords für diese Domain getrackt werden, schlagen wir dir hier vor, welche sich auch für GEO eignen.
             </p>
             <Link href="/seo/pricing" className="text-xs font-semibold text-[var(--accent)] hover:opacity-80">
@@ -374,10 +374,10 @@ function KeywordSuggestionsPanel({ siteId, onAdded }) {
     return (
         <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl p-5 mb-6">
             <div className="flex items-center justify-between mb-1.5">
-                <h3 className="text-sm font-semibold text-white">SEO-Keywords für GEO vorschlagen</h3>
-                <span className="text-xs text-slate-600">{suggestions.length} Vorschläge</span>
+                <h3 className="text-sm font-semibold text-[var(--text-white)]">SEO-Keywords für GEO vorschlagen</h3>
+                <span className="text-xs text-[var(--text-faint)]">{suggestions.length} Vorschläge</span>
             </div>
-            <p className="text-xs text-slate-500 leading-relaxed mb-4">
+            <p className="text-xs text-[var(--text-faint)] leading-relaxed mb-4">
                 Diese Keywords werden bereits bei SEO-Automatisierung getrackt und eignen sich als KI-Empfehlungsfrage. Wähle aus, welche zusätzlich bei GEO getrackt werden sollen.
             </p>
 
@@ -388,11 +388,11 @@ function KeywordSuggestionsPanel({ siteId, onAdded }) {
                         <button key={s.keyword} type="button" onClick={() => toggle(s.keyword)}
                             className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-lg border text-left transition-all ${
                                 checked
-                                    ? 'bg-[var(--accent-soft)] border-[var(--accent-border)] text-white'
-                                    : 'bg-[var(--surface-06)] border-[var(--border-subtle)] text-slate-500 hover:border-[var(--border-strong)]'
+                                    ? 'bg-[var(--accent-soft)] border-[var(--accent-border)] text-[var(--text-white)]'
+                                    : 'bg-[var(--surface-06)] border-[var(--border-subtle)] text-[var(--text-faint)] hover:border-[var(--border-strong)]'
                             }`}>
                             <div className={`w-3.5 h-3.5 rounded border shrink-0 flex items-center justify-center ${checked ? 'bg-[var(--accent)] border-[var(--accent)]' : 'border-[var(--border-strong)]'}`}>
-                                {checked && <Check className="w-2.5 h-2.5 text-white" strokeWidth={3.5} />}
+                                {checked && <Check className="w-2.5 h-2.5 text-[var(--text-white)]" strokeWidth={3.5} />}
                             </div>
                             <span className="text-sm flex-1">{s.keyword}</span>
                             {s.aiSearchVolume != null && (
@@ -412,7 +412,7 @@ function KeywordSuggestionsPanel({ siteId, onAdded }) {
                     Ausgewählte hinzufügen ({selected.size})
                 </button>
                 <button onClick={() => addKeywords(suggestions.map(s => s.keyword))} disabled={adding}
-                    className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl bg-[var(--surface-08)] hover:bg-[var(--surface-10)] text-slate-300 border border-[var(--border-subtle)] transition-all disabled:opacity-50">
+                    className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl bg-[var(--surface-08)] hover:bg-[var(--surface-10)] text-[var(--text-body)] border border-[var(--border-subtle)] transition-all disabled:opacity-50">
                     Alle {suggestions.length} übernehmen
                 </button>
             </div>
@@ -474,9 +474,9 @@ function CompetitorBarChart({ competitors }) {
             <div className="flex items-center gap-3 mb-2">
                 <div className="w-32 sm:w-44 shrink-0" />
                 <div className="relative flex-1 h-3">
-                    <span className="absolute left-0 text-[9px] text-slate-600">0%</span>
-                    <span className="absolute left-1/2 -translate-x-1/2 text-[9px] text-slate-600">50%</span>
-                    <span className="absolute right-0 text-[9px] text-slate-600">100%</span>
+                    <span className="absolute left-0 text-[9px] text-[var(--text-faint)]">0%</span>
+                    <span className="absolute left-1/2 -translate-x-1/2 text-[9px] text-[var(--text-faint)]">50%</span>
+                    <span className="absolute right-0 text-[9px] text-[var(--text-faint)]">100%</span>
                 </div>
                 <span className="w-11 shrink-0" />
                 <span className="w-16 shrink-0" />
@@ -489,7 +489,7 @@ function CompetitorBarChart({ competitors }) {
                             title={c.keywords?.length ? `Genannt für: ${c.keywords.join(', ')}` : undefined}>
                             <CompetitorLogo domain={c.domain} size={20} />
                             <a href={`https://${c.domain}`} target="_blank" rel="noopener noreferrer"
-                                className="text-xs text-slate-300 hover:text-[var(--accent)] truncate">{c.domain}</a>
+                                className="text-xs text-[var(--text-body)] hover:text-[var(--accent)] truncate">{c.domain}</a>
                         </div>
                         <div className="relative flex-1 h-2.5">
                             {[25, 50, 75, 100].map(v => (
@@ -499,7 +499,7 @@ function CompetitorBarChart({ competitors }) {
                                 style={{ width: `${Math.max((c.share / maxShare) * 100, 3)}%` }} />
                         </div>
                         <span className="text-xs font-semibold text-[var(--accent)] w-11 text-right shrink-0">{c.share}%</span>
-                        <span className="text-[11px] text-slate-500 w-16 text-right shrink-0" title="Durchschnittliche Position bei Erwähnung">
+                        <span className="text-[11px] text-[var(--text-faint)] w-16 text-right shrink-0" title="Durchschnittliche Position bei Erwähnung">
                             {c.avgPosition != null ? `Ø Platz ${c.avgPosition}` : ''}
                         </span>
                         <PlatformPresenceDots present={c.platforms} />
@@ -530,15 +530,15 @@ function CompetitorsPanel({ siteId, onGoToOverview }) {
     if (loading) return (
         <div className="flex flex-col items-center justify-center py-20 gap-3">
             <Loader2 className="w-6 h-6 text-[var(--accent)] animate-spin" />
-            <span className="text-sm text-slate-500">Daten werden geladen…</span>
+            <span className="text-sm text-[var(--text-faint)]">Daten werden geladen…</span>
         </div>
     )
     if (!data?.competitors?.length) return (
         <div className="flex flex-col items-center justify-center text-center gap-3 bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl py-16 px-6">
             <div className="w-10 h-10 rounded-xl bg-[var(--surface-08)] flex items-center justify-center">
-                <Users className="w-4.5 h-4.5 text-slate-500" />
+                <Users className="w-4.5 h-4.5 text-[var(--text-faint)]" />
             </div>
-            <p className="text-sm text-slate-500 max-w-sm">
+            <p className="text-sm text-[var(--text-faint)] max-w-sm">
                 Noch keine Wettbewerber gefunden — dafür müssen erst KI-Antworten zu deinen Keywords ausgewertet worden sein.
             </p>
             {onGoToOverview && (
@@ -554,22 +554,22 @@ function CompetitorsPanel({ siteId, onGoToOverview }) {
     return (
         <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl p-5 mb-6">
             <div className="flex items-center justify-between mb-1">
-                <h3 className="text-sm font-semibold text-white">Wer wird sonst noch genannt (Share of Voice)</h3>
+                <h3 className="text-sm font-semibold text-[var(--text-white)]">Wer wird sonst noch genannt (Share of Voice)</h3>
                 <div className="flex items-center gap-3">
                     <div className="flex bg-[var(--surface-08)] rounded-lg p-0.5">
                         <button onClick={() => setView('list')}
-                            className={`px-2.5 py-1 text-[11px] font-medium rounded-md transition-all ${view === 'list' ? 'bg-[var(--surface-10)] text-white' : 'text-slate-500 hover:text-slate-300'}`}>
+                            className={`px-2.5 py-1 text-[11px] font-medium rounded-md transition-all ${view === 'list' ? 'bg-[var(--surface-10)] text-[var(--text-white)]' : 'text-[var(--text-faint)] hover:text-[var(--text-body)]'}`}>
                             Liste
                         </button>
                         <button onClick={() => setView('chart')}
-                            className={`px-2.5 py-1 text-[11px] font-medium rounded-md transition-all ${view === 'chart' ? 'bg-[var(--surface-10)] text-white' : 'text-slate-500 hover:text-slate-300'}`}>
+                            className={`px-2.5 py-1 text-[11px] font-medium rounded-md transition-all ${view === 'chart' ? 'bg-[var(--surface-10)] text-[var(--text-white)]' : 'text-[var(--text-faint)] hover:text-[var(--text-body)]'}`}>
                             Diagramm
                         </button>
                     </div>
-                    <span className="text-xs text-slate-600 hidden sm:inline">{data.totalCitations} Zitate insgesamt</span>
+                    <span className="text-xs text-[var(--text-faint)] hidden sm:inline">{data.totalCitations} Zitate insgesamt</span>
                 </div>
             </div>
-            <p className="text-[11px] text-slate-500 mb-4">
+            <p className="text-[11px] text-[var(--text-faint)] mb-4">
                 Domains, die KI-Modelle neben dir zitieren — sortiert nach Anteil. Die Punkte zeigen, auf welcher Plattform genau, „Für: ...” zeigt zu welchem Keyword.
             </p>
 
@@ -579,19 +579,19 @@ function CompetitorsPanel({ siteId, onGoToOverview }) {
                 <div className="space-y-2.5">
                     {visible.map((c, i) => (
                         <div key={c.domain} className="flex items-center gap-3">
-                            <span className="text-xs text-slate-600 w-5 text-right shrink-0">{i + 1}.</span>
+                            <span className="text-xs text-[var(--text-faint)] w-5 text-right shrink-0">{i + 1}.</span>
                             <CompetitorLogo domain={c.domain} size={22} />
                             <div className="flex-1 min-w-0">
                                 <a href={`https://${c.domain}`} target="_blank" rel="noopener noreferrer"
-                                    className="text-sm text-slate-200 hover:text-[var(--accent)] truncate block">{c.domain}</a>
+                                    className="text-sm text-[var(--text-body)] hover:text-[var(--accent)] truncate block">{c.domain}</a>
                                 {c.keywords?.length > 0 && (
-                                    <div className="text-[11px] text-slate-600 truncate">
+                                    <div className="text-[11px] text-[var(--text-faint)] truncate">
                                         Für: {c.keywords.map(k => `„${k}"`).join(', ')}
                                     </div>
                                 )}
                             </div>
                             {c.avgPosition != null && (
-                                <span className="text-[11px] text-slate-500 shrink-0 hidden md:block w-20 text-right" title="Durchschnittliche Position bei Erwähnung">
+                                <span className="text-[11px] text-[var(--text-faint)] shrink-0 hidden md:block w-20 text-right" title="Durchschnittliche Position bei Erwähnung">
                                     Ø Platz {c.avgPosition}
                                 </span>
                             )}
@@ -620,9 +620,9 @@ function UpsellCard({ label }) {
     return (
         <div className="bg-[var(--bg-surface)] border border-dashed border-[var(--border-subtle)] rounded-2xl p-8 flex flex-col items-center text-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-[var(--surface-08)] flex items-center justify-center">
-                <Lock className="w-4.5 h-4.5 text-slate-500" />
+                <Lock className="w-4.5 h-4.5 text-[var(--text-faint)]" />
             </div>
-            <p className="text-sm text-slate-400 max-w-sm">{label}</p>
+            <p className="text-sm text-[var(--text-muted)] max-w-sm">{label}</p>
             <Link href="/geo/pricing" className="text-xs font-semibold text-[var(--accent)] hover:opacity-80">
                 Plan ansehen
             </Link>
@@ -662,24 +662,24 @@ function MarketAnalyticsPanel({ siteId, plan }) {
     if (loading) return (
         <div className="flex flex-col items-center justify-center py-20 gap-3">
             <Loader2 className="w-6 h-6 text-[var(--accent)] animate-spin" />
-            <span className="text-sm text-slate-500">Daten werden geladen…</span>
+            <span className="text-sm text-[var(--text-faint)]">Daten werden geladen…</span>
         </div>
     )
     if (error) return (
         <div className="flex flex-col items-center justify-center py-20 gap-3">
-            <span className="text-sm text-slate-500">Marktdaten konnten nicht geladen werden.</span>
+            <span className="text-sm text-[var(--text-faint)]">Marktdaten konnten nicht geladen werden.</span>
             <button onClick={load}
-                className="mt-1 flex items-center gap-2 px-3.5 py-2 text-xs font-semibold rounded-xl bg-[var(--surface-08)] hover:bg-[var(--surface-10)] text-slate-300 border border-[var(--border-subtle)] transition-all">
+                className="mt-1 flex items-center gap-2 px-3.5 py-2 text-xs font-semibold rounded-xl bg-[var(--surface-08)] hover:bg-[var(--surface-10)] text-[var(--text-body)] border border-[var(--border-subtle)] transition-all">
                 <RefreshCw className="w-3.5 h-3.5" />Neu laden
             </button>
         </div>
     )
     if (!data?.domains?.length) return (
         <div className="flex flex-col items-center justify-center py-20 gap-3">
-            <Sparkles className="w-8 h-8 text-slate-700" />
-            <span className="text-sm text-slate-500">Noch keine Marktdaten verfügbar.</span>
+            <Sparkles className="w-8 h-8 text-[var(--text-faint)]" />
+            <span className="text-sm text-[var(--text-faint)]">Noch keine Marktdaten verfügbar.</span>
             <button onClick={load}
-                className="mt-1 flex items-center gap-2 px-3.5 py-2 text-xs font-semibold rounded-xl bg-[var(--surface-08)] hover:bg-[var(--surface-10)] text-slate-300 border border-[var(--border-subtle)] transition-all">
+                className="mt-1 flex items-center gap-2 px-3.5 py-2 text-xs font-semibold rounded-xl bg-[var(--surface-08)] hover:bg-[var(--surface-10)] text-[var(--text-body)] border border-[var(--border-subtle)] transition-all">
                 <RefreshCw className="w-3.5 h-3.5" />Neu laden
             </button>
         </div>
@@ -688,20 +688,20 @@ function MarketAnalyticsPanel({ siteId, plan }) {
     return (
         <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl p-5 mb-6">
             <div className="flex items-center justify-between mb-1">
-                <h3 className="text-sm font-semibold text-white">Themen-Sichtbarkeit: Top-Domains zu deinen Keywords</h3>
-                {data.cached && <span className="text-[10px] text-slate-600">Wöchentlich aktualisiert</span>}
+                <h3 className="text-sm font-semibold text-[var(--text-white)]">Themen-Sichtbarkeit: Top-Domains zu deinen Keywords</h3>
+                {data.cached && <span className="text-[10px] text-[var(--text-faint)]">Wöchentlich aktualisiert</span>}
             </div>
-            <p className="text-[11px] text-slate-500 mb-4">
+            <p className="text-[11px] text-[var(--text-faint)] mb-4">
                 Domains, die in KI-Antworten zu deinen Keywords am häufigsten zitiert werden — über alle Kontexte hinweg (Erklärungen, Vergleiche, Tutorials), nicht nur Tool-Empfehlungen. Für konkrete Konkurrenz-Tools schau dir den „Wettbewerber"-Tab an, der gezielt Empfehlungs-Antworten auswertet.
             </p>
             <div className="space-y-2.5">
                 {data.domains.map((d, i) => (
                     <div key={d.domain} className="flex items-center gap-3">
-                        <span className="text-xs text-slate-600 w-5 text-right shrink-0">{d.rank ?? i + 1}.</span>
+                        <span className="text-xs text-[var(--text-faint)] w-5 text-right shrink-0">{d.rank ?? i + 1}.</span>
                         <CompetitorLogo domain={d.domain} size={22} />
                         <a href={`https://${d.domain}`} target="_blank" rel="noopener noreferrer"
-                            className="flex-1 min-w-0 text-sm text-slate-200 hover:text-[var(--accent)] truncate">{d.domain}</a>
-                        {d.count != null && <span className="text-xs text-slate-500 shrink-0">{d.count} Erwähnungen</span>}
+                            className="flex-1 min-w-0 text-sm text-[var(--text-body)] hover:text-[var(--accent)] truncate">{d.domain}</a>
+                        {d.count != null && <span className="text-xs text-[var(--text-faint)] shrink-0">{d.count} Erwähnungen</span>}
                     </div>
                 ))}
             </div>
@@ -746,10 +746,10 @@ function CitationAnalysis({ url }) {
         ]
         return (
             <div className="mt-1.5 p-2.5 bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-lg">
-                <div className="text-xs font-semibold text-white mb-1.5">GEO-Score: {analysis.score}/100</div>
-                <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-[11px] text-slate-400">
+                <div className="text-xs font-semibold text-[var(--text-white)] mb-1.5">GEO-Score: {analysis.score}/100</div>
+                <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-[11px] text-[var(--text-muted)]">
                     {rows.map(([label, ok], i) => (
-                        <span key={i} className={ok === true && i === 0 ? '' : ok ? 'text-emerald-400' : 'text-slate-500'}>
+                        <span key={i} className={ok === true && i === 0 ? '' : ok ? 'text-emerald-400' : 'text-[var(--text-faint)]'}>
                             {i === 0 ? label : `${ok ? '✓' : '✗'} ${label}`}
                         </span>
                     ))}
@@ -775,7 +775,7 @@ function CitationList({ citations }) {
     const shown = showAll ? citations : citations.slice(0, 4)
     return (
         <div className="mt-1.5">
-            <p className="text-[10px] text-slate-600 mb-1">Diese Quellen wurden stattdessen zitiert — anklicken für Details:</p>
+            <p className="text-[10px] text-[var(--text-faint)] mb-1">Diese Quellen wurden stattdessen zitiert — anklicken für Details:</p>
             <div className="flex flex-wrap items-center gap-1.5">
                 {shown.map((cit, idx) => (
                     <CitationChip key={idx} citation={cit} />
@@ -796,7 +796,7 @@ function CitationChip({ citation: cit }) {
     return (
         <div className="relative">
             <button type="button" onClick={() => cit.url && setOpen(v => !v)}
-                className="text-[11px] text-slate-400 hover:text-slate-200 bg-[var(--surface-06)] hover:bg-[var(--surface-10)] border border-[var(--border-subtle)] px-2 py-0.5 rounded-md transition-colors">
+                className="text-[11px] text-[var(--text-muted)] hover:text-[var(--text-body)] bg-[var(--surface-06)] hover:bg-[var(--surface-10)] border border-[var(--border-subtle)] px-2 py-0.5 rounded-md transition-colors">
                 {cit.domain}
             </button>
             {open && cit.url && (
@@ -836,36 +836,36 @@ function KeywordTrendPanel({ siteId, keyword, language }) {
 
     useEffect(() => { load() }, [load])
 
-    if (loading) return <div className="flex items-center gap-2 text-xs text-slate-500 py-2"><Loader2 className="w-3.5 h-3.5 animate-spin" />Daten werden geladen…</div>
+    if (loading) return <div className="flex items-center gap-2 text-xs text-[var(--text-faint)] py-2"><Loader2 className="w-3.5 h-3.5 animate-spin" />Daten werden geladen…</div>
     if (error) return (
-        <button onClick={load} className="flex items-center gap-1.5 text-xs text-slate-600 hover:text-slate-400 py-2 transition-colors">
+        <button onClick={load} className="flex items-center gap-1.5 text-xs text-[var(--text-faint)] hover:text-[var(--text-muted)] py-2 transition-colors">
             <RefreshCw className="w-3 h-3" />Daten konnten nicht geladen werden — erneut versuchen
         </button>
     )
-    if (!data?.length) return <p className="text-xs text-slate-600 py-2">Noch keine Daten für dieses Keyword (verfügbar ab August 2025).</p>
+    if (!data?.length) return <p className="text-xs text-[var(--text-faint)] py-2">Noch keine Daten für dieses Keyword (verfügbar ab August 2025).</p>
 
     const platformLabel = { google: 'Google AI Overview', chat_gpt: 'ChatGPT' }
     const maxCount = Math.max(...data.map(d => d.mentionsCount || 0), 1)
 
     return (
         <div className="py-1">
-            <p className="text-[10px] text-slate-600 mb-1.5 leading-relaxed">
+            <p className="text-[10px] text-[var(--text-faint)] mb-1.5 leading-relaxed">
                 Gesamtes Erwähnungsvolumen des Themas &bdquo;{keyword}&ldquo; in KI-Antworten pro Monat (DataForSEO-Datensatz) — zeigt, wie oft das Thema insgesamt aufkommt, nicht speziell, wie oft deine Domain dabei zitiert wird.
             </p>
             {language !== 'en' && (
-                <p className="text-[10px] text-slate-600 mb-2 leading-relaxed">
+                <p className="text-[10px] text-[var(--text-faint)] mb-2 leading-relaxed">
                     ChatGPT-Historie nur für englischsprachige Websites verfügbar — hier siehst du nur Google AI Overview.
                 </p>
             )}
             <div className="space-y-1.5">
             {data.map((d, i) => (
                 <div key={`${d.month}-${d.platform}-${i}`} className="flex items-center gap-3">
-                    <span className="text-[11px] text-slate-500 w-16 shrink-0">{d.month}</span>
-                    <span className="text-[11px] text-slate-500 w-32 shrink-0">{platformLabel[d.platform] || d.platform}</span>
+                    <span className="text-[11px] text-[var(--text-faint)] w-16 shrink-0">{d.month}</span>
+                    <span className="text-[11px] text-[var(--text-faint)] w-32 shrink-0">{platformLabel[d.platform] || d.platform}</span>
                     <div className="relative flex-1 h-1.5 bg-[var(--surface-08)] rounded-full overflow-hidden">
                         <div className="h-full bg-[var(--accent)] rounded-full" style={{ width: `${Math.max((d.mentionsCount / maxCount) * 100, d.mentionsCount ? 3 : 0)}%` }} />
                     </div>
-                    <span className="text-[11px] font-semibold text-slate-300 w-8 text-right shrink-0">{d.mentionsCount ?? 0}</span>
+                    <span className="text-[11px] font-semibold text-[var(--text-body)] w-8 text-right shrink-0">{d.mentionsCount ?? 0}</span>
                 </div>
             ))}
             </div>
@@ -890,7 +890,7 @@ function KeywordTrendToggle({ siteId, keyword, language }) {
 function TrendArrow({ delta }) {
     if (delta > 0) return <span className="inline-flex items-center gap-0.5 text-[var(--success)]"><ArrowUp className="w-3.5 h-3.5" strokeWidth={2.5} />{delta}</span>
     if (delta < 0) return <span className="inline-flex items-center gap-0.5 text-[var(--danger)]"><ArrowDown className="w-3.5 h-3.5" strokeWidth={2.5} />{Math.abs(delta)}</span>
-    return <span className="inline-flex items-center gap-0.5 text-slate-500"><Minus className="w-3.5 h-3.5" /></span>
+    return <span className="inline-flex items-center gap-0.5 text-[var(--text-faint)]"><Minus className="w-3.5 h-3.5" /></span>
 }
 
 function MentionHistoryChart({ siteId, mentionedCount, mentionRate, checkedCount }) {
@@ -942,26 +942,26 @@ function MentionHistoryChart({ siteId, mentionedCount, mentionRate, checkedCount
         <div className="mb-8 pb-6 border-b border-[var(--border-subtle)]">
             <div className="flex items-center gap-5 mb-5 flex-wrap">
                 <div className="flex items-baseline gap-2">
-                    <span className="text-xs text-slate-500">Visibility</span>
-                    <span className="text-lg font-bold text-white">{mentionedCount ?? '—'}/{checkedCount ?? '—'}</span>
+                    <span className="text-xs text-[var(--text-faint)]">Visibility</span>
+                    <span className="text-lg font-bold text-[var(--text-white)]">{mentionedCount ?? '—'}/{checkedCount ?? '—'}</span>
                     {visibilityDelta != null && <TrendArrow delta={visibilityDelta} />}
                 </div>
                 <div className="w-px h-7 bg-[var(--surface-10)]" />
                 <div className="flex items-baseline gap-2">
-                    <span className="text-xs text-slate-500">Position</span>
-                    <span className="text-lg font-bold text-white">{position ?? '—'}/{positionTotal ?? '—'}</span>
+                    <span className="text-xs text-[var(--text-faint)]">Position</span>
+                    <span className="text-lg font-bold text-[var(--text-white)]">{position ?? '—'}/{positionTotal ?? '—'}</span>
                 </div>
             </div>
 
             {mentionedCount === 0 && checkedCount > 0 && (
-                <p className="text-xs text-slate-500 leading-relaxed mb-5 -mt-2">
+                <p className="text-xs text-[var(--text-faint)] leading-relaxed mb-5 -mt-2">
                     Noch keine Erwähnungen — bei jungen Domains normal. KI-Modelle lernen neue Websites erst nach und nach kennen, das kann Wochen bis Monate dauern.
                 </p>
             )}
 
             <div className="flex items-center justify-between mb-4">
-                <h3 className="text-sm font-semibold text-white">Mention-Rate Verlauf</h3>
-                {n > 0 && <span className="text-xs text-slate-600">{n} Check{n !== 1 ? 's' : ''} aufgezeichnet</span>}
+                <h3 className="text-sm font-semibold text-[var(--text-white)]">Mention-Rate Verlauf</h3>
+                {n > 0 && <span className="text-xs text-[var(--text-faint)]">{n} Check{n !== 1 ? 's' : ''} aufgezeichnet</span>}
             </div>
 
             {loading ? (
@@ -969,7 +969,7 @@ function MentionHistoryChart({ siteId, mentionedCount, mentionRate, checkedCount
                     <Loader2 className="w-5 h-5 text-[var(--accent)] animate-spin" />
                 </div>
             ) : n < 2 ? (
-                <div className="h-20 flex items-center justify-center text-center text-sm text-slate-600 px-4">
+                <div className="h-20 flex items-center justify-center text-center text-sm text-[var(--text-faint)] px-4">
                     Noch nicht genug Daten für einen Verlauf. Mindestens 2 Checks benötigt.
                 </div>
             ) : (
@@ -1009,8 +1009,8 @@ function MentionHistoryChart({ siteId, mentionedCount, mentionRate, checkedCount
                                 top: `${(yAt(history[hover].rate) / H) * 100}%`,
                                 transform: 'translate(-50%, -130%)',
                             }}>
-                            <div className="text-slate-500">{formatDate(history[hover].date)}</div>
-                            <div className="text-white font-semibold">{history[hover].rate}% &middot; {history[hover].mentioned}/{history[hover].checked}</div>
+                            <div className="text-[var(--text-faint)]">{formatDate(history[hover].date)}</div>
+                            <div className="text-[var(--text-white)] font-semibold">{history[hover].rate}% &middot; {history[hover].mentioned}/{history[hover].checked}</div>
                         </div>
                     )}
                 </div>
@@ -1356,7 +1356,7 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated, onStatsChange }) {
                         )
                     })}
                     <button onClick={openPlatformEdit}
-                        className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold text-slate-500 hover:text-slate-300 bg-[var(--surface-06)] hover:bg-[var(--surface-10)] border border-[var(--border-subtle)] transition-all">
+                        className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold text-[var(--text-faint)] hover:text-[var(--text-body)] bg-[var(--surface-06)] hover:bg-[var(--surface-10)] border border-[var(--border-subtle)] transition-all">
                         <Settings2 className="w-3 h-3" />Bearbeiten
                     </button>
                 </div>
@@ -1368,11 +1368,11 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated, onStatsChange }) {
                         </button>
                     )}
                     <button onClick={() => setShowAdd(v => !v)}
-                        className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl bg-[var(--surface-08)] hover:bg-[var(--surface-10)] text-slate-300 border border-[var(--border-subtle)] transition-all">
+                        className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl bg-[var(--surface-08)] hover:bg-[var(--surface-10)] text-[var(--text-body)] border border-[var(--border-subtle)] transition-all">
                         <Plus className="w-3.5 h-3.5" />Keywords
                     </button>
                     <button onClick={() => setShowAddPrompt(v => !v)}
-                        className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl bg-[var(--surface-08)] hover:bg-[var(--surface-10)] text-slate-300 border border-[var(--border-subtle)] transition-all">
+                        className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl bg-[var(--surface-08)] hover:bg-[var(--surface-10)] text-[var(--text-body)] border border-[var(--border-subtle)] transition-all">
                         <Plus className="w-3.5 h-3.5" />Eigener Prompt
                     </button>
                     <button onClick={handleCheck} disabled={checking}
@@ -1385,7 +1385,7 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated, onStatsChange }) {
             {/* Zuletzt geprüft + Kontingent stehen jetzt prominent in der Überblick-Leiste oben —
                 hier nur noch die Prompt-Varianten-Konfiguration, die dort keinen Platz hat. */}
             {baseIntents.length > 1 && (
-                <div className="text-xs text-slate-600 mb-5">
+                <div className="text-xs text-[var(--text-faint)] mb-5">
                     {baseIntents.length} Prompt-Varianten pro Keyword ({baseIntents.map(i => INTENT_META[i]?.label || i).join(', ')})
                 </div>
             )}
@@ -1396,8 +1396,8 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated, onStatsChange }) {
                     <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
                         className="bg-[var(--bg-surface)] border border-[var(--accent-border)] rounded-2xl p-5 mb-5">
                         <div className="flex items-center justify-between mb-3">
-                            <span className="text-sm font-semibold text-white">AI-Plattformen tracken</span>
-                            <button onClick={() => setShowPlatformEdit(false)} className="text-slate-500 hover:text-white transition-colors"><X className="w-4 h-4" /></button>
+                            <span className="text-sm font-semibold text-[var(--text-white)]">AI-Plattformen tracken</span>
+                            <button onClick={() => setShowPlatformEdit(false)} className="text-[var(--text-faint)] hover:text-[var(--text-white)] transition-colors"><X className="w-4 h-4" /></button>
                         </div>
                         <div className="space-y-2 mb-4">
                             {ALL_PLATFORMS.map(id => {
@@ -1409,19 +1409,19 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated, onStatsChange }) {
                                         onClick={() => togglePlatformEdit(id)}
                                         className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl border transition-all text-left ${
                                             locked
-                                                ? 'bg-[var(--surface-06)] border-[var(--border-subtle)] text-slate-600 cursor-not-allowed'
+                                                ? 'bg-[var(--surface-06)] border-[var(--border-subtle)] text-[var(--text-faint)] cursor-not-allowed'
                                                 : active
-                                                    ? 'bg-[var(--accent-soft)] border-[var(--accent-border)] text-white'
-                                                    : 'bg-[var(--surface-06)] border-[var(--border-subtle)] text-slate-500 hover:border-[var(--border-strong)]'
+                                                    ? 'bg-[var(--accent-soft)] border-[var(--accent-border)] text-[var(--text-white)]'
+                                                    : 'bg-[var(--surface-06)] border-[var(--border-subtle)] text-[var(--text-faint)] hover:border-[var(--border-strong)]'
                                         }`}>
                                         <div className={`w-4 h-4 rounded border-2 flex items-center justify-center shrink-0 transition-all ${
                                             active && !locked ? 'bg-[var(--accent)] border-[var(--accent)]' : 'border-[var(--border-strong)]'
                                         }`}>
-                                            {active && !locked && <span className="text-white text-[10px] font-bold">✓</span>}
+                                            {active && !locked && <span className="text-[var(--text-white)] text-[10px] font-bold">✓</span>}
                                         </div>
                                         <span className="text-sm font-semibold flex-1">{m.label}</span>
                                         {locked && (
-                                            <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
+                                            <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-[var(--text-faint)] uppercase tracking-wider">
                                                 <Lock className="w-3 h-3" />Pro/Expert
                                             </span>
                                         )}
@@ -1441,8 +1441,8 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated, onStatsChange }) {
             {/* Zusammenfassung — damit man das Gesamtbild nicht erst aus der ganzen Tabelle
                 zusammensuchen muss, wenn die meisten Zeilen ohnehin "Nein" zeigen. */}
             {results.length > 0 && (
-                <p className="text-sm text-slate-400 mb-4">
-                    <span className="text-white font-semibold">{data?.mentionedCount ?? 0} von {data?.checkedCount ?? results.length}</span> Keywords wurden bereits mindestens einmal erwähnt.
+                <p className="text-sm text-[var(--text-muted)] mb-4">
+                    <span className="text-[var(--text-white)] font-semibold">{data?.mentionedCount ?? 0} von {data?.checkedCount ?? results.length}</span> Keywords wurden bereits mindestens einmal erwähnt.
                 </p>
             )}
 
@@ -1454,12 +1454,12 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated, onStatsChange }) {
                             className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${
                                 filter === f.id
                                     ? 'bg-[var(--accent-soft)] border border-[var(--accent-border)] text-[var(--accent)]'
-                                    : 'bg-[var(--surface-06)] border border-[var(--border-subtle)] text-slate-500 hover:text-slate-300 hover:bg-[var(--surface-10)]'
+                                    : 'bg-[var(--surface-06)] border border-[var(--border-subtle)] text-[var(--text-faint)] hover:text-[var(--text-body)] hover:bg-[var(--surface-10)]'
                             }`}>
                             {f.label}
                         </button>
                     ))}
-                    <span className="text-xs text-slate-600 ml-1">{filtered.length} Keywords</span>
+                    <span className="text-xs text-[var(--text-faint)] ml-1">{filtered.length} Keywords</span>
                 </div>
             )}
 
@@ -1469,13 +1469,13 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated, onStatsChange }) {
                     <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
                         className="bg-[var(--bg-surface)] border border-[var(--accent-border)] rounded-2xl p-5 mb-5">
                         <div className="flex items-center justify-between mb-3">
-                            <span className="text-sm font-semibold text-white">Keywords hinzufügen</span>
-                            <button onClick={() => setShowAdd(false)} className="text-slate-500 hover:text-white transition-colors"><X className="w-4 h-4" /></button>
+                            <span className="text-sm font-semibold text-[var(--text-white)]">Keywords hinzufügen</span>
+                            <button onClick={() => setShowAdd(false)} className="text-[var(--text-faint)] hover:text-[var(--text-white)] transition-colors"><X className="w-4 h-4" /></button>
                         </div>
                         <form onSubmit={handleAddKeywords} className="flex gap-3">
                             <textarea value={newKws} onChange={e => setNewKws(e.target.value)}
                                 placeholder={"seo tool\nwebsite audit"} rows={3}
-                                className="flex-1 bg-[var(--surface-06)] border border-[var(--border-subtle)] focus:border-[var(--accent-border)] rounded-xl px-4 py-3 text-white placeholder:text-slate-600 outline-none text-sm resize-none font-mono" />
+                                className="flex-1 bg-[var(--surface-06)] border border-[var(--border-subtle)] focus:border-[var(--accent-border)] rounded-xl px-4 py-3 text-[var(--text-white)] placeholder:text-[var(--text-faint)] outline-none text-sm resize-none font-mono" />
                             <button type="submit" disabled={addingKws}
                                 className="self-end flex items-center gap-2 px-4 py-2 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all disabled:opacity-50">
                                 {addingKws ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Plus className="w-3.5 h-3.5" />}
@@ -1492,14 +1492,14 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated, onStatsChange }) {
                     <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
                         className="bg-[var(--bg-surface)] border border-[var(--accent-border)] rounded-2xl p-5 mb-5">
                         <div className="flex items-center justify-between mb-3">
-                            <span className="text-sm font-semibold text-white">Eigenen Prompt hinzufügen</span>
-                            <button onClick={() => setShowAddPrompt(false)} className="text-slate-500 hover:text-white transition-colors"><X className="w-4 h-4" /></button>
+                            <span className="text-sm font-semibold text-[var(--text-white)]">Eigenen Prompt hinzufügen</span>
+                            <button onClick={() => setShowAddPrompt(false)} className="text-[var(--text-faint)] hover:text-[var(--text-white)] transition-colors"><X className="w-4 h-4" /></button>
                         </div>
-                        <p className="text-xs text-slate-500 mb-3">Wird unverändert an die KI gesendet, statt in ein Keyword-Template eingesetzt zu werden.</p>
+                        <p className="text-xs text-[var(--text-faint)] mb-3">Wird unverändert an die KI gesendet, statt in ein Keyword-Template eingesetzt zu werden.</p>
                         <form onSubmit={handleAddCustomPrompt} className="flex gap-3">
                             <textarea value={newCustomPrompt} onChange={e => setNewCustomPrompt(e.target.value)}
                                 placeholder="z.B. Ich brauche eine Agentur für ein neues Webdesign in Lübeck" rows={3} maxLength={300}
-                                className="flex-1 bg-[var(--surface-06)] border border-[var(--border-subtle)] focus:border-[var(--accent-border)] rounded-xl px-4 py-3 text-white placeholder:text-slate-600 outline-none text-sm resize-none" />
+                                className="flex-1 bg-[var(--surface-06)] border border-[var(--border-subtle)] focus:border-[var(--accent-border)] rounded-xl px-4 py-3 text-[var(--text-white)] placeholder:text-[var(--text-faint)] outline-none text-sm resize-none" />
                             <button type="submit" disabled={addingPrompt}
                                 className="self-end flex items-center gap-2 px-4 py-2 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all disabled:opacity-50">
                                 {addingPrompt ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Plus className="w-3.5 h-3.5" />}
@@ -1515,8 +1515,8 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated, onStatsChange }) {
                 <ResultsTableSkeleton columns={platforms.length} />
             ) : results.length === 0 ? (
                 <div className="flex flex-col items-center justify-center py-20 gap-3">
-                    <Sparkles className="w-8 h-8 text-slate-700" />
-                    <span className="text-sm text-slate-500 text-center max-w-sm">Noch keine Keywords getrackt. Füge dein erstes Keyword hinzu, um zu sehen, ob KI-Modelle dich dabei nennen.</span>
+                    <Sparkles className="w-8 h-8 text-[var(--text-faint)]" />
+                    <span className="text-sm text-[var(--text-faint)] text-center max-w-sm">Noch keine Keywords getrackt. Füge dein erstes Keyword hinzu, um zu sehen, ob KI-Modelle dich dabei nennen.</span>
                     <button onClick={() => setShowAdd(true)}
                         className="mt-1 flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold rounded-xl bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] transition-all">
                         <Plus className="w-3.5 h-3.5" />Erstes Keyword hinzufügen
@@ -1524,10 +1524,10 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated, onStatsChange }) {
                 </div>
             ) : filtered.length === 0 ? (
                 <div className="flex flex-col items-center justify-center py-16 gap-3">
-                    <Sparkles className="w-8 h-8 text-slate-700" />
-                    <span className="text-sm text-slate-500">Kein Keyword passt zu „{RESULT_FILTERS.find(f => f.id === filter)?.label}".</span>
+                    <Sparkles className="w-8 h-8 text-[var(--text-faint)]" />
+                    <span className="text-sm text-[var(--text-faint)]">Kein Keyword passt zu „{RESULT_FILTERS.find(f => f.id === filter)?.label}".</span>
                     <button onClick={() => setFilter('alle')}
-                        className="mt-1 flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold rounded-xl bg-[var(--surface-08)] hover:bg-[var(--surface-10)] text-slate-300 border border-[var(--border-subtle)] transition-all">
+                        className="mt-1 flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold rounded-xl bg-[var(--surface-08)] hover:bg-[var(--surface-10)] text-[var(--text-body)] border border-[var(--border-subtle)] transition-all">
                         Alle Keywords zeigen
                     </button>
                 </div>
@@ -1544,14 +1544,14 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated, onStatsChange }) {
                                             aria-label="Alle sichtbaren Einträge auswählen"
                                             className="w-3.5 h-3.5 rounded border-[var(--border-strong)] accent-red-500 cursor-pointer" />
                                     </th>
-                                    <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Keyword</th>
+                                    <th className="px-5 py-3 text-left text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider">Keyword</th>
                                     {platforms.map(p => (
-                                        <th key={p} className={`px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider ${PLATFORM_META[p]?.color || 'text-slate-500'}`}>
+                                        <th key={p} className={`px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider ${PLATFORM_META[p]?.color || 'text-[var(--text-faint)]'}`}>
                                             {PLATFORM_META[p]?.label || p}
                                         </th>
                                     ))}
-                                    <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider hidden sm:table-cell">Verlauf</th>
-                                    <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider hidden md:table-cell">Datum</th>
+                                    <th className="px-5 py-3 text-left text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider hidden sm:table-cell">Verlauf</th>
+                                    <th className="px-5 py-3 text-left text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider hidden md:table-cell">Datum</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -1582,13 +1582,13 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated, onStatsChange }) {
                                                         {isCustomPrompt && (
                                                             <span className="shrink-0 text-[9px] font-semibold uppercase tracking-wider text-violet-400 bg-violet-500/10 border border-violet-500/25 rounded px-1.5 py-0.5">Prompt</span>
                                                         )}
-                                                        <span className="text-sm text-slate-200">{keyword}</span>
+                                                        <span className="text-sm text-[var(--text-body)]">{keyword}</span>
                                                         <KeywordRateBadge rate={keywordRate} delta={keywordDelta} />
                                                         {hasDetail && (
                                                             <button type="button" onClick={() => setExpanded(prev => prev === keyword ? null : keyword)}
                                                                 aria-expanded={isExpanded} aria-controls={`geo-detail-${keyword}`}
                                                                 aria-label={isExpanded ? 'Details einklappen' : 'Details ausklappen'}
-                                                                className={`transition-colors ${isExpanded ? 'text-[var(--accent)]' : 'text-slate-600 hover:text-slate-300'}`}>
+                                                                className={`transition-colors ${isExpanded ? 'text-[var(--accent)]' : 'text-[var(--text-faint)] hover:text-[var(--text-body)]'}`}>
                                                                 {isExpanded ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
                                                             </button>
                                                         )}
@@ -1604,8 +1604,8 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated, onStatsChange }) {
                                                 </td>
                                                 <td className="px-5 py-3.5 hidden md:table-cell">
                                                     {latestDate
-                                                        ? <span className="text-xs text-slate-600">{new Date(latestDate).toLocaleDateString('de-DE')}</span>
-                                                        : <span className="text-xs text-slate-700">—</span>}
+                                                        ? <span className="text-xs text-[var(--text-faint)]">{new Date(latestDate).toLocaleDateString('de-DE')}</span>
+                                                        : <span className="text-xs text-[var(--text-faint)]">—</span>}
                                                 </td>
                                             </tr>
                                             {isExpanded && (
@@ -1623,7 +1623,7 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated, onStatsChange }) {
                                                                                 return (
                                                                                     <div key={i} className="flex items-start gap-3">
                                                                                         {intents.length > 1 && (
-                                                                                            <span className="text-[10px] uppercase tracking-wider text-slate-500 font-semibold mt-1 w-20 shrink-0">
+                                                                                            <span className="text-[10px] uppercase tracking-wider text-[var(--text-faint)] font-semibold mt-1 w-20 shrink-0">
                                                                                                 {INTENT_META[i]?.label || i}
                                                                                             </span>
                                                                                         )}
@@ -1633,7 +1633,7 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated, onStatsChange }) {
                                                                                             <PositionBadge position={c.ownPosition} citationsCount={c.ownPositionTotal ?? c.citations?.length}
                                                                                                 trend={positionTrendFor(history, p, i)} />
                                                                                             {c.context && (
-                                                                                                <p className="text-sm text-slate-300 italic leading-relaxed mt-1">&ldquo;{c.context}&rdquo;</p>
+                                                                                                <p className="text-sm text-[var(--text-body)] italic leading-relaxed mt-1">&ldquo;{c.context}&rdquo;</p>
                                                                                             )}
                                                                                             <CitationList citations={c.citations} />
                                                                                         </div>
@@ -1689,11 +1689,11 @@ function GeoOverviewStats({ site, overview }) {
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
             {stats.map(s => (
                 <div key={s.label} className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-xl p-4">
-                    <div className="flex items-center gap-1.5 text-xs text-slate-500 mb-1.5 whitespace-nowrap">
+                    <div className="flex items-center gap-1.5 text-xs text-[var(--text-faint)] mb-1.5 whitespace-nowrap">
                         <s.icon className="w-3.5 h-3.5 shrink-0" />
                         {s.label}
                     </div>
-                    <div className="text-2xl font-bold text-white tracking-tight">{s.value}</div>
+                    <div className="text-2xl font-bold text-[var(--text-white)] tracking-tight">{s.value}</div>
                 </div>
             ))}
         </div>
@@ -1749,16 +1749,13 @@ export default function GeoSitePage() {
 
     return (
         <div className="min-h-screen bg-[var(--bg-base)]">
-            <Toaster position="bottom-right" toastOptions={{
-                style: { background: 'var(--bg-surface)', color: '#fff', border: '1px solid var(--border-subtle)' },
-            }} />
             <Navbar />
 
             <div className="max-w-[1600px] mx-auto px-5 sm:px-8 pt-28 pb-16">
 
                 {/* Back + Header */}
                 <div className="mb-8">
-                    <Link href="/geo/dashboard" className="inline-flex items-center gap-2 text-sm text-slate-500 hover:text-slate-300 transition-colors mb-4">
+                    <Link href="/geo/dashboard" className="inline-flex items-center gap-2 text-sm text-[var(--text-faint)] hover:text-[var(--text-body)] transition-colors mb-4">
                         <ArrowLeft className="w-4 h-4" />Zurück zum Dashboard
                     </Link>
                     <div className="flex items-center gap-3">
@@ -1766,8 +1763,8 @@ export default function GeoSitePage() {
                             <Globe className="w-5 h-5 text-[var(--accent)]" />
                         </div>
                         <div>
-                            <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">{site?.displayName || site?.domain}</h1>
-                            <div className="text-sm text-slate-500">{site?.domain}</div>
+                            <h1 className="text-2xl sm:text-3xl font-bold text-[var(--text-white)] tracking-tight">{site?.displayName || site?.domain}</h1>
+                            <div className="text-sm text-[var(--text-faint)]">{site?.domain}</div>
                         </div>
                     </div>
                 </div>
@@ -1782,7 +1779,7 @@ export default function GeoSitePage() {
                             className={`px-3 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all shrink-0 ${
                                 activeView === item.id
                                     ? 'bg-[var(--accent-soft)] border border-[var(--accent-border)] text-[var(--accent)]'
-                                    : 'bg-[var(--surface-06)] border border-[var(--border-subtle)] text-slate-500 hover:text-slate-300'
+                                    : 'bg-[var(--surface-06)] border border-[var(--border-subtle)] text-[var(--text-faint)] hover:text-[var(--text-body)]'
                             }`}>
                             {item.label}
                         </button>
@@ -1799,7 +1796,7 @@ export default function GeoSitePage() {
                                     className={`text-left px-4 py-3 rounded-xl text-sm font-medium transition-all ${
                                         active
                                             ? 'bg-[var(--accent-soft)] text-[var(--accent)]'
-                                            : 'text-slate-500 hover:text-slate-300 hover:bg-[var(--surface-08)]'
+                                            : 'text-[var(--text-faint)] hover:text-[var(--text-body)] hover:bg-[var(--surface-08)]'
                                     }`}>
                                     {item.label}
                                 </button>
@@ -1811,8 +1808,8 @@ export default function GeoSitePage() {
                     <div className="flex-1 min-w-0">
                         {activeView !== 'overview' && (
                             <div className="mb-5">
-                                <h2 className="text-lg font-bold text-white mb-1">{activeItem.label}</h2>
-                                <p className="text-sm text-slate-500">{activeItem.description}</p>
+                                <h2 className="text-lg font-bold text-[var(--text-white)] mb-1">{activeItem.label}</h2>
+                                <p className="text-sm text-[var(--text-faint)]">{activeItem.description}</p>
                             </div>
                         )}
                         {activeView === 'overview'    && <ResultsTab siteId={siteId} site={site} plan={plan} onSiteUpdated={fetchSite} onStatsChange={setOverview} />}

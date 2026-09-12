@@ -14,11 +14,11 @@ export default function FinalCTA() {
                 <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
                     Google knows you - Does AI?
                 </h2>
-                <p className="text-slate-400 text-base sm:text-lg mb-8 leading-relaxed">
+                <p className="text-[var(--text-muted)] text-base sm:text-lg mb-8 leading-relaxed">
                     One audit, 60 seconds, no sign-up required.
                 </p>
                 <Link href="/en/dashboard"
-                    className="inline-flex items-center gap-2 px-6 py-3.5 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-[var(--accent-border)]">
+                    className="inline-flex items-center gap-2 px-6 py-3.5 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-[var(--accent-border)] active:scale-[0.97] active:duration-75">
                     <Search className="w-4 h-4" />Check for free now<ArrowRight className="w-3.5 h-3.5" />
                 </Link>
             </motion.div>

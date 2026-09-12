@@ -10,6 +10,7 @@ import Link from 'next/link'
 import { useRouter, usePathname } from 'next/navigation'
 import { t } from '@/lib/i18n/dictionaries'
 import { getCounterpart } from '@/lib/i18n/routeMap'
+import ThemeToggle from './ThemeToggle'
 
 const NAV_ITEMS_DE = [
     {
@@ -70,6 +71,8 @@ const NAV_ITEMS_EN = [
 
 function NavDropdown({ item, isOpen, onOpen, onClose }) {
     const closeTimer = useRef(null)
+    const triggerRef = useRef(null)
+    const panelRef = useRef(null)
 
     const handleMouseEnter = () => {
         clearTimeout(closeTimer.current)
@@ -79,15 +82,42 @@ function NavDropdown({ item, isOpen, onOpen, onClose }) {
         closeTimer.current = setTimeout(onClose, 120)
     }
 
+    // Dropdown Design: full keyboard control — Arrow Down opens and enters the menu,
+    // Arrow Up/Down cycles items, Escape closes and returns focus to the trigger.
+    const handleTriggerKeyDown = (e) => {
+        if (e.key === 'ArrowDown') {
+            e.preventDefault()
+            onOpen()
+            requestAnimationFrame(() => panelRef.current?.querySelector('a')?.focus())
+        }
+    }
+    const handlePanelKeyDown = (e) => {
+        const items = Array.from(panelRef.current?.querySelectorAll('a') ?? [])
+        const i = items.indexOf(document.activeElement)
+        if (e.key === 'ArrowDown') {
+            e.preventDefault()
+            ;(items[i + 1] ?? items[0])?.focus()
+        } else if (e.key === 'ArrowUp') {
+            e.preventDefault()
+            ;(items[i - 1] ?? items[items.length - 1])?.focus()
+        } else if (e.key === 'Escape') {
+            e.preventDefault()
+            onClose()
+            triggerRef.current?.focus()
+        }
+    }
+
     return (
         <div className="relative" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
             <button
+                ref={triggerRef}
                 onClick={() => (isOpen ? onClose() : onOpen())}
+                onKeyDown={handleTriggerKeyDown}
                 aria-haspopup="true"
                 aria-expanded={isOpen}
                 aria-controls={`navdrop-${item.key}`}
-                className={`flex items-center gap-1 px-4 py-2 text-sm rounded-lg transition-all ${
-                isOpen ? 'text-white bg-[var(--surface-06)]' : 'text-white hover:bg-[var(--surface-06)]'
+                className={`flex items-center gap-1 px-4 py-2.5 min-h-[44px] text-sm rounded-lg transition-all ${
+                isOpen ? 'text-[var(--text-white)] bg-[var(--surface-06)]' : 'text-[var(--text-white)] hover:bg-[var(--surface-06)]'
             }`}>
                 {item.label}
                 <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
@@ -96,21 +126,23 @@ function NavDropdown({ item, isOpen, onOpen, onClose }) {
             <AnimatePresence>
                 {isOpen && (
                     <motion.div
+                        ref={panelRef}
                         id={`navdrop-${item.key}`}
                         role="menu"
+                        onKeyDown={handlePanelKeyDown}
                         initial={{ opacity: 0, y: 8, scale: 0.97 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 8, scale: 0.97 }}
                         transition={{ duration: 0.15 }}
-                        className="absolute top-full left-0 mt-2 w-64 bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-xl shadow-2xl shadow-black/50 overflow-hidden"
+                        className="absolute top-full left-0 mt-2 w-64 bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-xl shadow-card-hover overflow-hidden"
                     >
                         <div className="p-1.5 space-y-0.5">
                             {item.items.map(sub => {
                                 const a = !!sub.accent
                                 const hoverBg   = a ? 'hover:bg-[var(--accent-soft)]' : 'hover:bg-[var(--surface-06)]'
                                 const iconBg    = a ? 'bg-[var(--accent-soft)]' : 'bg-[var(--surface-06)] group-hover:bg-[var(--surface-08)]'
-                                const iconColor = a ? 'text-[var(--accent)]' : 'text-slate-400'
-                                const textColor = a ? 'text-[var(--accent)]' : 'text-slate-200 group-hover:text-white'
+                                const iconColor = a ? 'text-[var(--accent)]' : 'text-[var(--text-muted)]'
+                                const textColor = a ? 'text-[var(--accent)]' : 'text-[var(--text-body)] group-hover:text-[var(--text-white)]'
                                 return (
                                 <Link key={sub.href} href={sub.href} onClick={onClose}
                                     className={`flex items-start gap-3 px-3 py-2.5 rounded-lg transition-all group ${hoverBg}`}
@@ -122,7 +154,7 @@ function NavDropdown({ item, isOpen, onOpen, onClose }) {
                                         <div className={`text-sm font-medium ${textColor} transition-colors`}>
                                             {sub.label}
                                         </div>
-                                        <div className="text-xs text-slate-500 mt-0.5">{sub.desc}</div>
+                                        <div className="text-xs text-[var(--text-faint)] mt-0.5">{sub.desc}</div>
                                     </div>
                                 </Link>
                                 )
@@ -140,10 +172,10 @@ function MobileAccordion({ item, isOpen, onToggle, onClose }) {
         <div>
             <button
                 onClick={onToggle}
-                className="w-full flex items-center justify-between px-4 py-3 text-sm text-white rounded-lg hover:bg-[var(--surface-06)] transition-all"
+                className="w-full flex items-center justify-between px-4 py-3 text-sm text-[var(--text-white)] rounded-lg hover:bg-[var(--surface-06)] transition-all"
             >
                 {item.label}
-                <ChevronDown className={`w-4 h-4 text-slate-500 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
+                <ChevronDown className={`w-4 h-4 text-[var(--text-faint)] transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
             </button>
             <AnimatePresence>
                 {isOpen && (
@@ -158,7 +190,7 @@ function MobileAccordion({ item, isOpen, onToggle, onClose }) {
                             {item.items.map(sub => {
                                 const cls = sub.accent
                                     ? 'text-[var(--accent)] hover:bg-[var(--accent-soft)]'
-                                    : 'text-slate-400 hover:text-white hover:bg-[var(--surface-06)]'
+                                    : 'text-[var(--text-muted)] hover:text-[var(--text-white)] hover:bg-[var(--surface-06)]'
                                 return (
                                 <Link key={sub.href} href={sub.href} onClick={onClose}
                                     className={`flex items-center gap-2.5 px-4 py-2.5 text-sm rounded-lg transition-all ${cls}`}
@@ -239,13 +271,13 @@ export default function Navbar({ locale = 'de' }) {
 
                     {/* Logo */}
                     <Link href={locale === 'en' ? '/en' : '/'} className="flex items-center gap-2.5 group">
-                        <div className="w-8 h-8 rounded-lg bg-[var(--accent)] flex items-center justify-center shadow-lg shadow-[var(--accent-border)] transition-shadow">
+                        <div className="w-8 h-8 rounded-lg bg-[var(--accent)] flex items-center justify-center shadow-lg shadow-[var(--accent-border)] active:scale-[0.97] active:duration-75 transition-shadow">
                             <svg className="w-4 h-4 text-[var(--bg-base)]" viewBox="0 0 192 192" fill="none">
                                 <circle cx="96" cy="96" r="50" stroke="currentColor" strokeWidth="14" />
                                 <circle cx="110" cy="82" r="13" fill="currentColor" />
                             </svg>
                         </div>
-                        <span className="font-bold text-white text-lg tracking-tight">
+                        <span className="font-bold text-[var(--text-white)] text-lg tracking-tight">
                             Scanora
                         </span>
                     </Link>
@@ -263,7 +295,7 @@ export default function Navbar({ locale = 'de' }) {
                                 />
                             ) : (
                                 <Link key={item.key} href={item.href}
-                                    className="px-4 py-2 text-sm text-white rounded-lg hover:bg-[var(--surface-06)] transition-all">
+                                    className="px-4 py-2 text-sm text-[var(--text-white)] rounded-lg hover:bg-[var(--surface-06)] transition-all">
                                     {item.label}
                                 </Link>
                             )
@@ -281,10 +313,10 @@ export default function Navbar({ locale = 'de' }) {
                                     <div className="w-7 h-7 rounded-lg bg-[var(--accent)] flex items-center justify-center text-[var(--bg-base)] text-xs font-bold shrink-0">
                                         {initials}
                                     </div>
-                                    <span className="text-sm text-slate-300 font-medium group-hover:text-white transition-colors">
+                                    <span className="text-sm text-[var(--text-body)] font-medium group-hover:text-[var(--text-white)] transition-colors">
                                         {user.name}
                                     </span>
-                                    <ChevronDown className={`w-3.5 h-3.5 text-slate-500 transition-transform duration-200 ${userDropdownOpen ? 'rotate-180' : ''}`} />
+                                    <ChevronDown className={`w-3.5 h-3.5 text-[var(--text-faint)] transition-transform duration-200 ${userDropdownOpen ? 'rotate-180' : ''}`} />
                                 </button>
 
                                 <AnimatePresence>
@@ -294,43 +326,43 @@ export default function Navbar({ locale = 'de' }) {
                                             animate={{ opacity: 1, y: 0, scale: 1 }}
                                             exit={{ opacity: 0, y: 6, scale: 0.97 }}
                                             transition={{ duration: 0.15 }}
-                                            className="absolute right-0 top-full mt-2 w-52 bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-xl shadow-2xl shadow-black/40 overflow-hidden"
+                                            className="absolute right-0 top-full mt-2 w-52 bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-xl shadow-card-hover overflow-hidden"
                                         >
                                             <div className="px-3 py-2.5 border-b border-[var(--border-subtle)]">
-                                                <div className="text-xs text-slate-500 truncate">{user.email}</div>
+                                                <div className="text-xs text-[var(--text-faint)] truncate">{user.email}</div>
                                             </div>
                             <div className="p-1.5 space-y-0.5">
                                                 <Link href={locale === 'en' ? '/en/dashboard' : '/dashboard'} onClick={() => setUserDropdownOpen(false)}
-                                                    className="flex items-center gap-2.5 px-3 py-2 text-sm text-slate-300 hover:text-white hover:bg-[var(--surface-06)] rounded-lg transition-all">
-                                                    <LayoutDashboard className="w-3.5 h-3.5 text-slate-500" /> {t(locale, 'nav.dashboard')}
+                                                    className="flex items-center gap-2.5 px-3 py-2 text-sm text-[var(--text-body)] hover:text-[var(--text-white)] hover:bg-[var(--surface-06)] rounded-lg transition-all">
+                                                    <LayoutDashboard className="w-3.5 h-3.5 text-[var(--text-faint)]" /> {t(locale, 'nav.dashboard')}
                                                 </Link>
                                                 <Link href={locale === 'en' ? '/en/profile' : '/profile'} onClick={() => setUserDropdownOpen(false)}
-                                                    className="flex items-center gap-2.5 px-3 py-2 text-sm text-slate-300 hover:text-white hover:bg-[var(--surface-06)] rounded-lg transition-all">
-                                                    <User className="w-3.5 h-3.5 text-slate-500" /> {t(locale, 'nav.profile')}
+                                                    className="flex items-center gap-2.5 px-3 py-2 text-sm text-[var(--text-body)] hover:text-[var(--text-white)] hover:bg-[var(--surface-06)] rounded-lg transition-all">
+                                                    <User className="w-3.5 h-3.5 text-[var(--text-faint)]" /> {t(locale, 'nav.profile')}
                                                 </Link>
                                                 <div className="my-1 border-t border-[var(--border-subtle)]" />
-                                                <p className="px-3 pt-1 pb-0.5 text-[10px] text-slate-400 font-semibold uppercase tracking-wider">{t(locale, 'nav.seoAutomatisierung')}</p>
+                                                <p className="px-3 pt-1 pb-0.5 text-[10px] text-[var(--text-muted)] font-semibold uppercase tracking-wider">{t(locale, 'nav.seoAutomatisierung')}</p>
                                                 <Link href={locale === 'en' ? '/en/seo/dashboard' : '/seo/dashboard'} onClick={() => setUserDropdownOpen(false)}
-                                                    className="flex items-center gap-2.5 px-3 py-2 text-sm text-slate-300 hover:text-white hover:bg-[var(--surface-06)] rounded-lg transition-all">
+                                                    className="flex items-center gap-2.5 px-3 py-2 text-sm text-[var(--text-body)] hover:text-[var(--text-white)] hover:bg-[var(--surface-06)] rounded-lg transition-all">
                                                     <TrendingUp className="w-3.5 h-3.5 text-[var(--accent)]" /> {t(locale, 'nav.rankings')}
                                                 </Link>
                                                 <Link href={locale === 'en' ? '/en/seo/pricing' : '/seo/pricing'} onClick={() => setUserDropdownOpen(false)}
-                                                    className="flex items-center gap-2.5 px-3 py-2 text-sm text-slate-300 hover:text-white hover:bg-[var(--surface-06)] rounded-lg transition-all">
-                                                    <CreditCard className="w-3.5 h-3.5 text-slate-500" /> {t(locale, 'nav.trackingPreise')}
+                                                    className="flex items-center gap-2.5 px-3 py-2 text-sm text-[var(--text-body)] hover:text-[var(--text-white)] hover:bg-[var(--surface-06)] rounded-lg transition-all">
+                                                    <CreditCard className="w-3.5 h-3.5 text-[var(--text-faint)]" /> {t(locale, 'nav.trackingPreise')}
                                                 </Link>
                                                 <div className="my-1 border-t border-[var(--border-subtle)]" />
-                                                <p className="px-3 pt-1 pb-0.5 text-[10px] text-slate-400 font-semibold uppercase tracking-wider">{t(locale, 'nav.geoAutomatisierung')}</p>
+                                                <p className="px-3 pt-1 pb-0.5 text-[10px] text-[var(--text-muted)] font-semibold uppercase tracking-wider">{t(locale, 'nav.geoAutomatisierung')}</p>
                                                 <Link href={locale === 'en' ? '/en/geo/dashboard' : '/geo/dashboard'} onClick={() => setUserDropdownOpen(false)}
-                                                    className="flex items-center gap-2.5 px-3 py-2 text-sm text-slate-300 hover:text-white hover:bg-[var(--surface-06)] rounded-lg transition-all">
+                                                    className="flex items-center gap-2.5 px-3 py-2 text-sm text-[var(--text-body)] hover:text-[var(--text-white)] hover:bg-[var(--surface-06)] rounded-lg transition-all">
                                                     <Globe className="w-3.5 h-3.5 text-[var(--accent)]" /> {t(locale, 'nav.kiTracking')}
                                                 </Link>
                                                 <Link href={locale === 'en' ? '/en/geo/pricing' : '/geo/pricing'} onClick={() => setUserDropdownOpen(false)}
-                                                    className="flex items-center gap-2.5 px-3 py-2 text-sm text-slate-300 hover:text-white hover:bg-[var(--surface-06)] rounded-lg transition-all">
-                                                    <CreditCard className="w-3.5 h-3.5 text-slate-500" /> {t(locale, 'nav.geoPreise')}
+                                                    className="flex items-center gap-2.5 px-3 py-2 text-sm text-[var(--text-body)] hover:text-[var(--text-white)] hover:bg-[var(--surface-06)] rounded-lg transition-all">
+                                                    <CreditCard className="w-3.5 h-3.5 text-[var(--text-faint)]" /> {t(locale, 'nav.geoPreise')}
                                                 </Link>
                                                 <div className="my-1 border-t border-[var(--border-subtle)]" />
                                                 <button onClick={handleLogout}
-                                                    className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-slate-400 hover:text-red-400 hover:bg-red-500/5 rounded-lg transition-all">
+                                                    className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-[var(--text-muted)] hover:text-red-400 hover:bg-red-500/5 rounded-lg transition-all">
                                                     <LogOut className="w-3.5 h-3.5" /> {t(locale, 'nav.logout')}
                                                 </button>
                                             </div>
@@ -339,25 +371,26 @@ export default function Navbar({ locale = 'de' }) {
                                 </AnimatePresence>
                             </div>
                         ) : (
-                            <Link href={locale === 'en' ? '/en/login' : '/login'} className="text-sm text-slate-400 hover:text-white transition-colors">
+                            <Link href={locale === 'en' ? '/en/login' : '/login'} className="text-sm text-[var(--text-muted)] hover:text-[var(--text-white)] transition-colors">
                                 {t(locale, 'nav.login')}
                             </Link>
                         )}
                         <Link href={locale === 'en' ? '/en/dashboard' : '/dashboard'}
-                            className="flex items-center gap-2 px-5 py-2.5 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-[var(--accent-border)] hover:-translate-y-px">
+                            className="flex items-center gap-2 px-5 py-2.5 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-[var(--accent-border)] active:scale-[0.97] active:duration-75 hover:-translate-y-px">
                             {t(locale, 'nav.cta')} <ArrowRight className="w-3.5 h-3.5" />
                         </Link>
                         {counterpart && (
                             <Link href={counterpart}
-                                className="px-2.5 py-1.5 text-xs font-semibold text-slate-500 hover:text-white border border-[var(--border-strong)] rounded-lg transition-colors">
+                                className="px-2.5 py-1.5 text-xs font-semibold text-[var(--text-faint)] hover:text-[var(--text-white)] border border-[var(--border-strong)] rounded-lg transition-colors">
                                 {locale === 'en' ? 'DE' : 'EN'}
                             </Link>
                         )}
+                        <ThemeToggle locale={locale} />
                     </div>
 
                     {/* Mobile Toggle */}
                     <button
-                        className="md:hidden p-3 -mr-1 text-slate-400 hover:text-white"
+                        className="md:hidden p-3 -mr-1 text-[var(--text-muted)] hover:text-[var(--text-white)]"
                         onClick={() => setMobileOpen(!mobileOpen)}
                         aria-label={mobileOpen ? (locale === 'en' ? 'Close menu' : 'Menü schließen') : (locale === 'en' ? 'Open menu' : 'Menü öffnen')}
                         aria-expanded={mobileOpen}
@@ -389,7 +422,7 @@ export default function Navbar({ locale = 'de' }) {
                                 />
                             ) : (
                                 <Link key={item.key} href={item.href} onClick={() => setMobileOpen(false)}
-                                    className="block px-4 py-3 text-sm text-slate-300 hover:text-white rounded-lg hover:bg-[var(--surface-06)] transition-all">
+                                    className="block px-4 py-3 text-sm text-[var(--text-body)] hover:text-[var(--text-white)] rounded-lg hover:bg-[var(--surface-06)] transition-all">
                                     {item.label}
                                 </Link>
                             )
@@ -400,29 +433,29 @@ export default function Navbar({ locale = 'de' }) {
                         {user ? (
                             <>
                                 <Link href={locale === 'en' ? '/en/dashboard' : '/dashboard'} onClick={() => setMobileOpen(false)}
-                                    className="flex items-center gap-2 px-4 py-3 text-sm text-slate-300 hover:text-white rounded-lg hover:bg-[var(--surface-06)] transition-all">
-                                    <LayoutDashboard className="w-4 h-4 text-slate-500" /> {t(locale, 'nav.dashboard')}
+                                    className="flex items-center gap-2 px-4 py-3 text-sm text-[var(--text-body)] hover:text-[var(--text-white)] rounded-lg hover:bg-[var(--surface-06)] transition-all">
+                                    <LayoutDashboard className="w-4 h-4 text-[var(--text-faint)]" /> {t(locale, 'nav.dashboard')}
                                 </Link>
                                 <Link href={locale === 'en' ? '/en/profile' : '/profile'} onClick={() => setMobileOpen(false)}
-                                    className="flex items-center gap-2 px-4 py-3 text-sm text-slate-300 hover:text-white rounded-lg hover:bg-[var(--surface-06)] transition-all">
-                                    <User className="w-4 h-4 text-slate-500" /> {t(locale, 'nav.profile')}
+                                    className="flex items-center gap-2 px-4 py-3 text-sm text-[var(--text-body)] hover:text-[var(--text-white)] rounded-lg hover:bg-[var(--surface-06)] transition-all">
+                                    <User className="w-4 h-4 text-[var(--text-faint)]" /> {t(locale, 'nav.profile')}
                                 </Link>
                                 <Link href={locale === 'en' ? '/en/seo/dashboard' : '/seo/dashboard'} onClick={() => setMobileOpen(false)}
-                                    className="flex items-center gap-2 px-4 py-3 text-sm text-slate-300 hover:text-white rounded-lg hover:bg-[var(--surface-06)] transition-all">
+                                    className="flex items-center gap-2 px-4 py-3 text-sm text-[var(--text-body)] hover:text-[var(--text-white)] rounded-lg hover:bg-[var(--surface-06)] transition-all">
                                     <TrendingUp className="w-4 h-4 text-[var(--accent)]" /> {t(locale, 'nav.seoAutomatisierung')}
                                 </Link>
                                 <Link href={locale === 'en' ? '/en/geo/dashboard' : '/geo/dashboard'} onClick={() => setMobileOpen(false)}
-                                    className="flex items-center gap-2 px-4 py-3 text-sm text-slate-300 hover:text-white rounded-lg hover:bg-[var(--surface-06)] transition-all">
+                                    className="flex items-center gap-2 px-4 py-3 text-sm text-[var(--text-body)] hover:text-[var(--text-white)] rounded-lg hover:bg-[var(--surface-06)] transition-all">
                                     <Globe className="w-4 h-4 text-[var(--accent)]" /> {t(locale, 'nav.geoAutomatisierung')}
                                 </Link>
                                 <button onClick={handleLogout}
-                                    className="w-full flex items-center gap-2 px-4 py-3 text-sm text-slate-400 hover:text-red-400 rounded-lg hover:bg-red-500/5 transition-all">
+                                    className="w-full flex items-center gap-2 px-4 py-3 text-sm text-[var(--text-muted)] hover:text-red-400 rounded-lg hover:bg-red-500/5 transition-all">
                                     <LogOut className="w-4 h-4" /> {t(locale, 'nav.logout')}
                                 </button>
                             </>
                         ) : (
                             <Link href={locale === 'en' ? '/en/login' : '/login'} onClick={() => setMobileOpen(false)}
-                                className="block px-4 py-3 text-sm text-slate-300 hover:text-white rounded-lg hover:bg-[var(--surface-06)] transition-all">
+                                className="block px-4 py-3 text-sm text-[var(--text-body)] hover:text-[var(--text-white)] rounded-lg hover:bg-[var(--surface-06)] transition-all">
                                 {t(locale, 'nav.login')}
                             </Link>
                         )}
@@ -434,10 +467,14 @@ export default function Navbar({ locale = 'de' }) {
 
                         {counterpart && (
                             <Link href={counterpart} onClick={() => setMobileOpen(false)}
-                                className="block px-4 py-3 text-center text-xs font-semibold text-slate-500 hover:text-white border border-[var(--border-strong)] rounded-lg transition-colors">
+                                className="block px-4 py-3 text-center text-xs font-semibold text-[var(--text-faint)] hover:text-[var(--text-white)] border border-[var(--border-strong)] rounded-lg transition-colors">
                                 {locale === 'en' ? 'Deutsch' : 'English'}
                             </Link>
                         )}
+
+                        <div className="flex justify-center pt-2">
+                            <ThemeToggle locale={locale} />
+                        </div>
                     </motion.div>
                 )}
             </AnimatePresence>

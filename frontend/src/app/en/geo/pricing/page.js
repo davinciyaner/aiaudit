@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import { Check, Sparkles, Zap, Star, Building2, LogIn, Loader2, Lock } from 'lucide-react'
 import Link from 'next/link'
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js'
-import toast, { Toaster } from 'react-hot-toast'
+import toast from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
 import Navbar from '../../../components/Navbar'
 
@@ -145,33 +145,33 @@ function PlanCard({ plan, user, currentPlan, loading, onSuccess }) {
             <div className="mb-6">
                 <div className="flex items-center gap-2 mb-3">
                     <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${plan.highlight ? 'bg-[var(--accent-soft-strong)]' : 'bg-[var(--surface-08)]'}`}>
-                        <plan.icon className={`w-4 h-4 ${plan.highlight ? 'text-[var(--accent)]' : 'text-slate-400'}`} strokeWidth={1.8} />
+                        <plan.icon className={`w-4 h-4 ${plan.highlight ? 'text-[var(--accent)]' : 'text-[var(--text-muted)]'}`} strokeWidth={1.8} />
                     </div>
-                    <span className="text-sm font-semibold text-slate-400 uppercase tracking-wider">{plan.name}</span>
+                    <span className="text-sm font-semibold text-[var(--text-muted)] uppercase tracking-wider">{plan.name}</span>
                 </div>
                 <div className="flex items-baseline gap-1 mb-1">
-                    <span className="text-5xl font-bold text-white">{plan.price}</span>
-                    <span className="text-slate-400 text-lg">€</span>
+                    <span className="text-5xl font-bold text-[var(--text-white)]">{plan.price}</span>
+                    <span className="text-[var(--text-muted)] text-lg">€</span>
                 </div>
-                <div className="text-sm text-slate-500 mb-3">{plan.period}, VAT incl.</div>
-                <p className="text-sm text-slate-400">{plan.desc}</p>
+                <div className="text-sm text-[var(--text-faint)] mb-3">{plan.period}, VAT incl.</div>
+                <p className="text-sm text-[var(--text-muted)]">{plan.desc}</p>
             </div>
 
             <div className="space-y-3 mb-8 flex-1">
                 {plan.features.map(f => (
                     <div key={f} className="flex items-center gap-3 text-sm">
                         <div className={`w-4 h-4 rounded-full flex items-center justify-center shrink-0 ${plan.highlight ? 'bg-[var(--accent-soft-strong)]' : 'bg-[var(--surface-08)]'}`}>
-                            <Check className={`w-2.5 h-2.5 ${plan.highlight ? 'text-[var(--accent)]' : 'text-slate-400'}`} strokeWidth={3} />
+                            <Check className={`w-2.5 h-2.5 ${plan.highlight ? 'text-[var(--accent)]' : 'text-[var(--text-muted)]'}`} strokeWidth={3} />
                         </div>
-                        <span className="text-slate-300">{f}</span>
+                        <span className="text-[var(--text-body)]">{f}</span>
                     </div>
                 ))}
                 {plan.locked?.map(f => (
                     <div key={f} className="flex items-center gap-3 text-sm opacity-40">
                         <div className="w-4 h-4 rounded-full flex items-center justify-center shrink-0 bg-[var(--surface-08)]">
-                            <Lock className="w-2.5 h-2.5 text-slate-500" strokeWidth={3} />
+                            <Lock className="w-2.5 h-2.5 text-[var(--text-faint)]" strokeWidth={3} />
                         </div>
-                        <span className="text-slate-500 line-through">{f}</span>
+                        <span className="text-[var(--text-faint)] line-through">{f}</span>
                     </div>
                 ))}
             </div>
@@ -179,7 +179,7 @@ function PlanCard({ plan, user, currentPlan, loading, onSuccess }) {
             <div>
                 {loading ? (
                     <div className="flex items-center justify-center w-full py-3 rounded-xl border border-[var(--border-subtle)]">
-                        <Loader2 className="w-4 h-4 text-slate-500 animate-spin" />
+                        <Loader2 className="w-4 h-4 text-[var(--text-faint)] animate-spin" />
                     </div>
                 ) : currentPlan === plan.id ? (
                     <div className="block w-full py-3 text-center text-sm font-semibold rounded-xl border border-[var(--accent-border)] text-[var(--accent)] bg-[var(--accent-soft)]">
@@ -190,8 +190,8 @@ function PlanCard({ plan, user, currentPlan, loading, onSuccess }) {
                         href="/en/login?redirect=/en/geo/pricing"
                         className={`flex items-center justify-center gap-2 w-full py-3 text-center text-sm font-semibold rounded-xl transition-all duration-200 ${
                             plan.highlight
-                                ? 'bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] shadow-lg shadow-[var(--accent-border)] hover:-translate-y-0.5'
-                                : 'border border-[var(--border-subtle)] text-slate-300 hover:text-white hover:border-[var(--border-strong)] hover:bg-[var(--surface-06)]'
+                                ? 'bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] shadow-lg shadow-[var(--accent-border)] active:scale-[0.97] active:duration-75 hover:-translate-y-0.5'
+                                : 'border border-[var(--border-subtle)] text-[var(--text-body)] hover:text-[var(--text-white)] hover:border-[var(--border-strong)] hover:bg-[var(--surface-06)]'
                         }`}
                     >
                         <LogIn className="w-4 h-4" /> Log in to subscribe
@@ -295,9 +295,6 @@ export default function GeoPricingPageEn() {
     return (
         <>
             <div className="min-h-screen bg-[var(--bg-base)]">
-                <Toaster position="top-right" toastOptions={{
-                    style: { background: 'var(--bg-surface)', color: '#fff', border: '1px solid var(--border-subtle)' },
-                }} />
                 <Navbar locale="en" />
 
                 <div className="relative pt-32 pb-24 px-5 sm:px-8">
@@ -316,26 +313,26 @@ export default function GeoPricingPageEn() {
                                 Are you<br />
                                 recommended by AI?
                             </h1>
-                            <p className="text-lg text-slate-400 max-w-xl mx-auto mb-6">
+                            <p className="text-lg text-[var(--text-muted)] max-w-xl mx-auto mb-6">
                                 Track whether Claude, ChatGPT, Gemini, Perplexity, and Google AI Overview mention your domain — automatically, every week.
                             </p>
                             <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-[var(--accent-border)] bg-[var(--accent-soft)] text-sm">
                                 <span className="text-[var(--accent)] font-semibold">Try free for 14 days</span>
-                                <span className="text-slate-600">·</span>
-                                <span className="text-slate-400">renews automatically after · cancel anytime</span>
+                                <span className="text-[var(--text-faint)]">·</span>
+                                <span className="text-[var(--text-muted)]">renews automatically after · cancel anytime</span>
                             </div>
 
                             {geoCheckContext?.domain && (
                                 <div className="mt-6 inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[var(--surface-06)] border border-[var(--border-subtle)] text-sm max-w-xl mx-auto">
-                                    <span className="text-slate-400">
-                                        Your check: <b className="text-white">{geoCheckContext.domain}</b> is{' '}
-                                        {geoCheckContext.mentioned ? 'cited' : 'not cited yet'} by <b className="text-white">{geoCheckContext.label}</b> — Pro tracks all 4 platforms automatically.
+                                    <span className="text-[var(--text-muted)]">
+                                        Your check: <b className="text-[var(--text-white)]">{geoCheckContext.domain}</b> is{' '}
+                                        {geoCheckContext.mentioned ? 'cited' : 'not cited yet'} by <b className="text-[var(--text-white)]">{geoCheckContext.label}</b> — Pro tracks all 4 platforms automatically.
                                     </span>
                                 </div>
                             )}
                         </motion.div>
 
-                        <h2 className="text-xl sm:text-2xl font-bold text-white text-center mb-8">
+                        <h2 className="text-xl sm:text-2xl font-bold text-[var(--text-white)] text-center mb-8">
                             GEO Automation Pricing Overview
                         </h2>
 
@@ -351,20 +348,20 @@ export default function GeoPricingPageEn() {
                         ) : plansGrid}
 
                         <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}
-                            className="text-center text-sm text-slate-600 mt-10">
+                            className="text-center text-sm text-[var(--text-faint)] mt-10">
                             14 days free trial · billed automatically after the trial · cancel anytime · payment via PayPal
                         </motion.p>
 
                         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
                             className="mt-20 max-w-2xl mx-auto">
-                            <h2 className="text-xl sm:text-2xl font-bold text-white text-center mb-8">
+                            <h2 className="text-xl sm:text-2xl font-bold text-[var(--text-white)] text-center mb-8">
                                 Frequently Asked Questions About GEO Automation Pricing
                             </h2>
                             <div className="space-y-4">
                                 {FAQS.map((faq, i) => (
                                     <div key={i} className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl p-5">
-                                        <h3 className="font-semibold text-white mb-2 text-sm">{faq.q}</h3>
-                                        <p className="text-sm text-slate-400 leading-relaxed">{faq.a}</p>
+                                        <h3 className="font-semibold text-[var(--text-white)] mb-2 text-sm">{faq.q}</h3>
+                                        <p className="text-sm text-[var(--text-muted)] leading-relaxed">{faq.a}</p>
                                     </div>
                                 ))}
                             </div>

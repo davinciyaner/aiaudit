@@ -127,13 +127,13 @@ const ARTICLES = [
 
 export default function BlogPageEn() {
     return (
-        <main className="bg-[#05080f] min-h-screen">
+        <main className="bg-[var(--bg-base)] min-h-screen">
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
             <Navbar locale="en" />
             <div className="max-w-4xl mx-auto px-5 sm:px-8 pt-32 pb-24">
                 <div className="mb-12">
-                    <h1 className="text-3xl sm:text-5xl font-bold text-white tracking-tight mb-4">Blog</h1>
-                    <p className="text-slate-400 text-lg">SEO, GEO, and performance — explained practically.</p>
+                    <h1 className="text-3xl sm:text-5xl font-bold text-[var(--text-white)] tracking-tight mb-4">Blog</h1>
+                    <p className="text-[var(--text-muted)] text-lg">SEO, GEO, and performance — explained practically.</p>
                 </div>
 
                 <div className="space-y-4">
@@ -141,7 +141,7 @@ export default function BlogPageEn() {
                         <Link
                             key={article.slug}
                             href={`/en/blog/${article.slug}`}
-                            className="group block bg-white/[0.02] hover:bg-white/[0.04] border border-white/[0.06] hover:border-white/10 rounded-2xl p-6 sm:p-8 transition-all duration-200"
+                            className="group block bg-[var(--text-white)]/[0.02] hover:bg-[var(--text-white)]/[0.04] border border-[var(--text-white)]/[0.06] hover:border-[var(--text-white)]/10 rounded-2xl p-6 sm:p-8 transition-all duration-200"
                         >
                             <div className="flex items-center gap-3 mb-3">
                                 <span
@@ -150,13 +150,13 @@ export default function BlogPageEn() {
                                 >
                                     {article.category}
                                 </span>
-                                <span className="text-xs text-slate-600">{article.date}</span>
-                                <span className="text-xs text-slate-600">· {article.readTime} read</span>
+                                <span className="text-xs text-[var(--text-faint)]">{article.date}</span>
+                                <span className="text-xs text-[var(--text-faint)]">· {article.readTime} read</span>
                             </div>
-                            <h2 className="text-lg sm:text-xl font-bold text-white mb-2 group-hover:text-violet-300 transition-colors leading-snug">
+                            <h2 className="text-lg sm:text-xl font-bold text-[var(--text-white)] mb-2 group-hover:text-violet-300 transition-colors leading-snug">
                                 {article.title}
                             </h2>
-                            <p className="text-sm text-slate-400 leading-relaxed">{article.description}</p>
+                            <p className="text-sm text-[var(--text-muted)] leading-relaxed">{article.description}</p>
                             <div className="mt-4 text-xs text-violet-400 font-medium group-hover:text-violet-300 transition-colors">
                                 Read article →
                             </div>

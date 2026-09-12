@@ -47,10 +47,10 @@ export default function VisibilityTrendChart() {
             <div className="flex items-start justify-between gap-3 mb-1">
                 <div>
                     <div className="flex items-center gap-2">
-                        <h3 className="text-sm font-semibold text-white">AI Visibility Score</h3>
-                        <span className="text-[10px] px-1.5 py-0.5 rounded-md bg-[var(--surface-08)] text-slate-500 font-medium">Example</span>
+                        <h3 className="text-sm font-semibold text-[var(--text-white)]">AI Visibility Score</h3>
+                        <span className="text-[10px] px-1.5 py-0.5 rounded-md bg-[var(--surface-08)] text-[var(--text-faint)] font-medium">Example</span>
                     </div>
-                    <p className="text-xs text-slate-500 mt-0.5">Mentions on ChatGPT, Claude, Perplexity &amp; Google AI Overview — 8 weeks of tracking</p>
+                    <p className="text-xs text-[var(--text-faint)] mt-0.5">Mentions on ChatGPT, Claude, Perplexity &amp; Google AI Overview — 8 weeks of tracking</p>
                 </div>
                 <div className="flex items-center gap-1 px-2 py-1 rounded-lg bg-[var(--accent-soft)] border border-[var(--accent-border)] text-[var(--accent)] text-xs font-semibold shrink-0">
                     <TrendingUp className="w-3 h-3" /> +{delta} points

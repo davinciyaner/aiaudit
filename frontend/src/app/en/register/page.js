@@ -3,7 +3,7 @@ import {useState, useEffect} from 'react'
 import Link from 'next/link'
 import {motion} from 'framer-motion'
 import {Zap, Mail, Lock, User, ArrowRight, Check, Search, Globe} from 'lucide-react'
-import toast, {Toaster} from 'react-hot-toast'
+import toast from 'react-hot-toast'
 import {useRouter} from 'next/navigation'
 
 const BENEFITS = [
@@ -69,14 +69,6 @@ export default function RegisterPageEn() {
 
     return (
         <div className="min-h-screen bg-[var(--bg-base)] flex">
-            <Toaster position="top-right" toastOptions={{
-                style: {
-                    background: 'var(--bg-surface)',
-                    color: '#fff',
-                    border: '1px solid var(--border-subtle)',
-                    maxWidth: 'calc(100vw - 2rem)',
-                }
-            }}/>
 
             {/* Left — Form */}
             <div className="flex-1 flex items-center justify-center px-5 py-12 order-2 lg:order-1">
@@ -92,15 +84,15 @@ export default function RegisterPageEn() {
                     <div className="flex justify-center mb-8 lg:hidden">
                         <Link href="/en" className="flex items-center gap-2.5">
                             <div
-                                className="w-9 h-9 rounded-xl bg-[var(--accent)] flex items-center justify-center shadow-lg shadow-[var(--accent-border)]">
+                                className="w-9 h-9 rounded-xl bg-[var(--accent)] flex items-center justify-center shadow-lg shadow-[var(--accent-border)] active:scale-[0.97] active:duration-75">
                                 <svg className="w-4 h-4 text-[var(--bg-base)]" viewBox="0 0 192 192" fill="none"><circle cx="96" cy="96" r="50" stroke="currentColor" strokeWidth="14" /><circle cx="110" cy="82" r="13" fill="currentColor" /></svg>
                             </div>
-                            <span className="text-xl font-bold text-white">Scanora</span>
+                            <span className="text-xl font-bold text-[var(--text-white)]">Scanora</span>
                         </Link>
                     </div>
 
                     <div className="mb-8">
-                        <h1 className="text-3xl font-bold text-white mb-2">Create account</h1>
+                        <h1 className="text-3xl font-bold text-[var(--text-white)] mb-2">Create account</h1>
                         {geoCheckContext ? (
                             <div className="flex items-center gap-2 mt-3 px-3 py-2 bg-[var(--accent-soft)] border border-[var(--accent-border)] rounded-xl">
                                 <p className="text-xs text-[var(--accent)]">
@@ -118,32 +110,32 @@ export default function RegisterPageEn() {
 
                     <form onSubmit={handleSubmit} className="space-y-4">
                         <div>
-                            <label className="text-sm text-slate-300 mb-2 block font-medium">Username</label>
+                            <label className="text-sm text-[var(--text-body)] mb-2 block font-medium">Username</label>
                             <div className="relative">
-                                <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500"/>
+                                <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-faint)]"/>
                                 <input type="text" name="name" value={formData.name} onChange={handleChange}
                                        placeholder="Username" required
-                                       className="w-full bg-[var(--surface-06)] border border-[var(--border-subtle)] hover:border-[var(--border-strong)] focus:border-[var(--accent-border)] rounded-xl pl-11 pr-4 py-3.5 text-white placeholder:text-slate-600 outline-none transition-all text-sm"/>
+                                       className="w-full bg-[var(--surface-06)] border border-[var(--border-subtle)] hover:border-[var(--border-strong)] focus:border-[var(--accent-border)] rounded-xl pl-11 pr-4 py-3.5 text-[var(--text-white)] placeholder:text-[var(--text-faint)] outline-none transition-all text-sm"/>
                             </div>
                         </div>
 
                         <div>
-                            <label className="text-sm text-slate-300 mb-2 block font-medium">Email</label>
+                            <label className="text-sm text-[var(--text-body)] mb-2 block font-medium">Email</label>
                             <div className="relative">
-                                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500"/>
+                                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-faint)]"/>
                                 <input type="email" name="email" value={formData.email} onChange={handleChange}
                                        placeholder="you@example.com" required
-                                       className="w-full bg-[var(--surface-06)] border border-[var(--border-subtle)] hover:border-[var(--border-strong)] focus:border-[var(--accent-border)] rounded-xl pl-11 pr-4 py-3.5 text-white placeholder:text-slate-600 outline-none transition-all text-sm"/>
+                                       className="w-full bg-[var(--surface-06)] border border-[var(--border-subtle)] hover:border-[var(--border-strong)] focus:border-[var(--accent-border)] rounded-xl pl-11 pr-4 py-3.5 text-[var(--text-white)] placeholder:text-[var(--text-faint)] outline-none transition-all text-sm"/>
                             </div>
                         </div>
 
                         <div>
-                            <label className="text-sm text-slate-300 mb-2 block font-medium">Password</label>
+                            <label className="text-sm text-[var(--text-body)] mb-2 block font-medium">Password</label>
                             <div className="relative">
-                                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500"/>
+                                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-faint)]"/>
                                 <input type="password" name="password" value={formData.password} onChange={handleChange}
                                        placeholder="At least 6 characters" required minLength={6}
-                                       className="w-full bg-[var(--surface-06)] border border-[var(--border-subtle)] hover:border-[var(--border-strong)] focus:border-[var(--accent-border)] rounded-xl pl-11 pr-4 py-3.5 text-white placeholder:text-slate-600 outline-none transition-all text-sm"/>
+                                       className="w-full bg-[var(--surface-06)] border border-[var(--border-subtle)] hover:border-[var(--border-strong)] focus:border-[var(--accent-border)] rounded-xl pl-11 pr-4 py-3.5 text-[var(--text-white)] placeholder:text-[var(--text-faint)] outline-none transition-all text-sm"/>
                             </div>
                             {/* Password strength */}
                             {formData.password.length > 0 && (
@@ -167,16 +159,16 @@ export default function RegisterPageEn() {
                                 }`}
                             >
                                 {consent && (
-                                    <svg className="w-2.5 h-2.5 text-white" fill="none" viewBox="0 0 10 8" stroke="currentColor" strokeWidth={2.5}>
+                                    <svg className="w-2.5 h-2.5 text-[var(--text-white)]" fill="none" viewBox="0 0 10 8" stroke="currentColor" strokeWidth={2.5}>
                                         <path d="M1 4l3 3 5-6" strokeLinecap="round" strokeLinejoin="round"/>
                                     </svg>
                                 )}
                             </div>
-                            <span className="text-xs text-slate-400 leading-relaxed">
+                            <span className="text-xs text-[var(--text-muted)] leading-relaxed">
                                 I have read the{' '}
-                                <Link href="/nutzungsbedingungen" target="_blank" className="text-slate-300 hover:text-[var(--accent)] underline underline-offset-2">Terms of Service</Link>{' '}
+                                <Link href="/nutzungsbedingungen" target="_blank" className="text-[var(--text-body)] hover:text-[var(--accent)] underline underline-offset-2">Terms of Service</Link>{' '}
                                 and the{' '}
-                                <Link href="/datenschutz" target="_blank" className="text-slate-300 hover:text-[var(--accent)] underline underline-offset-2">Privacy Policy</Link>{' '}
+                                <Link href="/datenschutz" target="_blank" className="text-[var(--text-body)] hover:text-[var(--accent)] underline underline-offset-2">Privacy Policy</Link>{' '}
                                 and agree to them.
                             </span>
                         </label>
@@ -189,18 +181,18 @@ export default function RegisterPageEn() {
                                 }`}
                             >
                                 {marketingConsent && (
-                                    <svg className="w-2.5 h-2.5 text-white" fill="none" viewBox="0 0 10 8" stroke="currentColor" strokeWidth={2.5}>
+                                    <svg className="w-2.5 h-2.5 text-[var(--text-white)]" fill="none" viewBox="0 0 10 8" stroke="currentColor" strokeWidth={2.5}>
                                         <path d="M1 4l3 3 5-6" strokeLinecap="round" strokeLinejoin="round"/>
                                     </svg>
                                 )}
                             </div>
-                            <span className="text-xs text-slate-400 leading-relaxed">
+                            <span className="text-xs text-[var(--text-muted)] leading-relaxed">
                                 I'd like to receive emails about new features and offers.
                             </span>
                         </label>
 
                         <motion.button type="submit" disabled={loading || !consent} whileTap={{scale: 0.98}}
-                                       className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] font-semibold transition-all duration-200 shadow-lg shadow-[var(--accent-border)] disabled:opacity-50 disabled:cursor-not-allowed text-sm mt-2">
+                                       className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] font-semibold transition-all duration-200 shadow-lg shadow-[var(--accent-border)] active:scale-[0.97] active:duration-75 disabled:opacity-50 disabled:cursor-not-allowed text-sm mt-2">
                             {loading ? (
                                 <>
                                     <div
@@ -214,13 +206,13 @@ export default function RegisterPageEn() {
 
                     <div className="my-6 flex items-center gap-4">
                         <div className="flex-1 h-px bg-[var(--border-subtle)]"/>
-                        <span className="text-xs text-slate-600 uppercase tracking-wider">or</span>
+                        <span className="text-xs text-[var(--text-faint)] uppercase tracking-wider">or</span>
                         <div className="flex-1 h-px bg-[var(--border-subtle)]"/>
                     </div>
 
-                    <div className="text-center text-sm text-slate-500">
+                    <div className="text-center text-sm text-[var(--text-faint)]">
                         Already have an account?{' '}
-                        <Link href="/en/login" className="text-white hover:text-[var(--accent)] font-medium transition-colors">
+                        <Link href="/en/login" className="text-[var(--text-white)] hover:text-[var(--accent)] font-medium transition-colors">
                             Log in
                         </Link>
                     </div>
@@ -244,21 +236,21 @@ export default function RegisterPageEn() {
                 <div className="relative z-10">
                     <Link href="/en" className="flex items-center gap-2.5">
                         <div
-                            className="w-9 h-9 rounded-xl bg-[var(--accent)] flex items-center justify-center shadow-lg shadow-[var(--accent-border)]">
+                            className="w-9 h-9 rounded-xl bg-[var(--accent)] flex items-center justify-center shadow-lg shadow-[var(--accent-border)] active:scale-[0.97] active:duration-75">
                             <svg className="w-4 h-4 text-[var(--bg-base)]" viewBox="0 0 192 192" fill="none"><circle cx="96" cy="96" r="50" stroke="currentColor" strokeWidth="14" /><circle cx="110" cy="82" r="13" fill="currentColor" /></svg>
                         </div>
-                        <span className="text-xl font-bold text-white tracking-tight">
+                        <span className="text-xl font-bold text-[var(--text-white)] tracking-tight">
               Scanora
             </span>
                     </Link>
                 </div>
 
                 <div className="relative z-10">
-                    <h2 className="text-4xl font-bold text-white leading-tight mb-4">
+                    <h2 className="text-4xl font-bold text-[var(--text-white)] leading-tight mb-4">
                         Sign up once.<br/>
                         Stay on top of it always.
                     </h2>
-                    <p className="text-slate-400 text-sm leading-relaxed mb-8">
+                    <p className="text-[var(--text-muted)] text-sm leading-relaxed mb-8">
                         Save your audit results, re-check the same domain, and track your progress — all in one place.
                     </p>
 
@@ -272,7 +264,7 @@ export default function RegisterPageEn() {
                                     className="w-5 h-5 rounded-full bg-[var(--accent-soft-strong)] border border-[var(--accent-border)] flex items-center justify-center shrink-0">
                                     <Check className="w-3 h-3 text-[var(--accent)]" strokeWidth={3}/>
                                 </div>
-                                <span className="text-sm text-slate-400">{b.text}</span>
+                                <span className="text-sm text-[var(--text-muted)]">{b.text}</span>
                             </motion.div>
                         ))}
                     </div>
@@ -286,8 +278,8 @@ export default function RegisterPageEn() {
                                     <f.icon className="w-3.5 h-3.5 text-[var(--accent)]" strokeWidth={1.8}/>
                                 </div>
                                 <div>
-                                    <div className="text-xs font-semibold text-white">{f.value}</div>
-                                    <div className="text-[10px] text-slate-600">{f.label}</div>
+                                    <div className="text-xs font-semibold text-[var(--text-white)]">{f.value}</div>
+                                    <div className="text-[10px] text-[var(--text-faint)]">{f.label}</div>
                                 </div>
                             </div>
                         ))}

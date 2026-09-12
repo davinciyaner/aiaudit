@@ -79,13 +79,13 @@ export default function AIVisibilityExplainer() {
                     <h2 className="text-3xl sm:text-5xl font-bold tracking-tight mb-5 leading-tight">
                         Google ist nicht mehr die einzige Suchmaschine.
                     </h2>
-                    <p className="text-slate-400 text-base sm:text-lg leading-relaxed">
+                    <p className="text-[var(--text-muted)] text-base sm:text-lg leading-relaxed">
                         Klassisches SEO optimiert für Google-Rankings: Keywords, Backlinks, technische Signale. KI-Modelle wie
                         ChatGPT, Claude, Perplexity und Google AI Overview suchen nach etwas anderem — strukturierten,
                         zitierbaren Inhalten und klaren Vertrauenssignalen. Eine Seite kann bei Google auf Platz 1 stehen
                         und für KI-Modelle trotzdem unsichtbar sein.
                     </p>
-                    <p className="text-slate-500 text-sm sm:text-base leading-relaxed mt-4">
+                    <p className="text-[var(--text-faint)] text-sm sm:text-base leading-relaxed mt-4">
                         Scanora ist ein KI-gestütztes Audit-Tool, das in unter 60 Sekunden misst, wie sichtbar eine Website bei
                         ChatGPT, Claude, Perplexity und Google AI Overview ist — und wie sie in den klassischen Google-Rankings
                         abschneidet. Der Report liefert einen AI-Visibility-Score (0–100), einen SEO-Score und
@@ -98,12 +98,12 @@ export default function AIVisibilityExplainer() {
                     {STATS.map((s, i) => (
                         <motion.div key={s.value}
                             initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
-                            className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl p-6 sm:p-8">
-                            <div className="text-4xl sm:text-5xl font-black text-white mb-2">{s.value}</div>
-                            <div className="text-sm font-semibold text-white mb-2 leading-snug">{s.label}</div>
-                            <div className="text-xs text-slate-500 leading-relaxed">{s.sub}</div>
+                            className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl p-6 sm:p-8 shadow-card hover-lift hover:shadow-card-hover hover:-translate-y-2 transition-all duration-200">
+                            <div className="text-4xl sm:text-5xl font-black text-[var(--text-white)] mb-2">{s.value}</div>
+                            <div className="text-sm font-semibold text-[var(--text-white)] mb-2 leading-snug">{s.label}</div>
+                            <div className="text-xs text-[var(--text-faint)] leading-relaxed">{s.sub}</div>
                             <a href={s.source.url} target="_blank" rel="noopener noreferrer"
-                                className="block text-[10px] text-slate-400 hover:text-slate-300 underline underline-offset-2 mt-3 transition-colors">
+                                className="block text-[10px] text-[var(--text-muted)] hover:text-[var(--text-body)] underline underline-offset-2 mt-3 transition-colors">
                                 Quelle: {s.source.label} ↗
                             </a>
                         </motion.div>
@@ -119,7 +119,7 @@ export default function AIVisibilityExplainer() {
 
                     <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}
                         className="lg:col-span-3">
-                        <h3 className="text-xl font-bold text-white mb-5">Was Scanora misst</h3>
+                        <h3 className="text-xl font-bold text-[var(--text-white)] mb-5">Was Scanora misst</h3>
                         <div className="space-y-4">
                             {CONCEPTS.map(c => (
                                 <div key={c.title} className="flex gap-4">
@@ -127,8 +127,8 @@ export default function AIVisibilityExplainer() {
                                         <c.icon className="w-4 h-4 text-[var(--accent)]" strokeWidth={1.8} />
                                     </div>
                                     <div>
-                                        <div className="text-sm font-semibold text-white mb-1">{c.title}</div>
-                                        <div className="text-sm text-slate-400 leading-relaxed">{c.desc}</div>
+                                        <div className="text-sm font-semibold text-[var(--text-white)] mb-1">{c.title}</div>
+                                        <div className="text-sm text-[var(--text-muted)] leading-relaxed">{c.desc}</div>
                                     </div>
                                 </div>
                             ))}
@@ -141,20 +141,20 @@ export default function AIVisibilityExplainer() {
                     <h3 className="text-2xl sm:text-3xl font-bold text-center mb-3 tracking-tight">
                         19 Signale, die Scanora prüft
                     </h3>
-                    <p className="text-slate-400 text-center text-sm mb-8 sm:mb-10 max-w-lg mx-auto leading-relaxed">
+                    <p className="text-[var(--text-muted)] text-center text-sm mb-8 sm:mb-10 max-w-lg mx-auto leading-relaxed">
                         Alles, was darüber entscheidet, ob KI-Modelle deine Website als Quelle erkennen und zitieren.
                     </p>
                     <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
                         {CHECK_GROUPS.map(g => (
-                            <div key={g.title} className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl p-5">
+                            <div key={g.title} className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl p-5 hover-lift hover:shadow-card hover:-translate-y-1 transition-all duration-200">
                                 <div className="w-9 h-9 rounded-xl flex items-center justify-center mb-4 bg-[var(--accent-soft)] border border-[var(--accent-border)]">
                                     <g.icon className="w-4 h-4 text-[var(--accent)]" strokeWidth={1.8} />
                                 </div>
-                                <div className="text-sm font-semibold text-white mb-3">{g.title}</div>
+                                <div className="text-sm font-semibold text-[var(--text-white)] mb-3">{g.title}</div>
                                 <ul className="space-y-1.5">
                                     {g.checks.map(c => (
-                                        <li key={c} className="text-xs text-slate-500 leading-relaxed flex items-start gap-1.5">
-                                            <span className="w-1 h-1 rounded-full bg-slate-500 mt-1.5 shrink-0" />
+                                        <li key={c} className="text-xs text-[var(--text-faint)] leading-relaxed flex items-start gap-1.5">
+                                            <span className="w-1 h-1 rounded-full bg-[var(--text-faint)] mt-1.5 shrink-0" />
                                             {c}
                                         </li>
                                     ))}
@@ -166,7 +166,7 @@ export default function AIVisibilityExplainer() {
 
                 <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center">
                     <Link href="/dashboard"
-                        className="inline-flex items-center gap-2 px-6 py-3.5 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-[var(--accent-border)]">
+                        className="inline-flex items-center gap-2 px-6 py-3.5 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-[var(--accent-border)] active:scale-[0.97] active:duration-75">
                         KI-Sichtbarkeit jetzt prüfen <ArrowRight className="w-3.5 h-3.5" />
                     </Link>
                 </motion.div>

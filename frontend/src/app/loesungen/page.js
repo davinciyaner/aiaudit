@@ -52,18 +52,18 @@ export default function LoesungenHubPage() {
             <div className="max-w-4xl mx-auto px-5 sm:px-8 pt-32 pb-24">
 
                 {/* Breadcrumb */}
-                <div className="flex items-center gap-2 text-xs text-slate-600 mb-8">
-                    <Link href="/" className="hover:text-slate-400 transition-colors">Scanora</Link>
+                <div className="flex items-center gap-2 text-xs text-[var(--text-faint)] mb-8">
+                    <Link href="/" className="hover:text-[var(--text-muted)] transition-colors">Scanora</Link>
                     <span>/</span>
-                    <span className="text-slate-500">Lösungen</span>
+                    <span className="text-[var(--text-faint)]">Lösungen</span>
                 </div>
 
                 <div className="mb-12">
-                    <h1 className="text-3xl sm:text-5xl font-bold text-white tracking-tight mb-4">Lösungen</h1>
-                    <p className="text-slate-400 text-lg max-w-2xl leading-relaxed">
+                    <h1 className="text-3xl sm:text-5xl font-bold text-[var(--text-white)] tracking-tight mb-4">Lösungen</h1>
+                    <p className="text-[var(--text-muted)] text-lg max-w-2xl leading-relaxed">
                         Scanora-Lösungen für konkrete Situationen und Budgets – abseits des direkten Tool-zu-Tool-Vergleichs.
                         Suchst du stattdessen einen Vergleich zu einem bestimmten Anbieter, findest du den auf der{' '}
-                        <Link href="/vergleich" className="text-slate-300 hover:text-[var(--accent)] underline underline-offset-2">Vergleichsseite</Link>.
+                        <Link href="/vergleich" className="text-[var(--text-body)] hover:text-[var(--accent)] underline underline-offset-2">Vergleichsseite</Link>.
                     </p>
                 </div>
 
@@ -79,10 +79,10 @@ export default function LoesungenHubPage() {
                                     {solution.tag}
                                 </span>
                             </div>
-                            <h2 className="text-lg sm:text-xl font-bold text-white mb-2 group-hover:text-[var(--accent)] transition-colors leading-snug">
+                            <h2 className="text-lg sm:text-xl font-bold text-[var(--text-white)] mb-2 group-hover:text-[var(--accent)] transition-colors leading-snug">
                                 {solution.title}
                             </h2>
-                            <p className="text-sm text-slate-400 leading-relaxed">{solution.description}</p>
+                            <p className="text-sm text-[var(--text-muted)] leading-relaxed">{solution.description}</p>
                             <div className="mt-4 text-xs text-[var(--accent)] font-medium">
                                 Seite ansehen →
                             </div>

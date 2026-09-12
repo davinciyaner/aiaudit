@@ -133,7 +133,7 @@ const GEO_FEATURES = [
 
 export default function SeoGeoAutomationPageEn() {
     return (
-        <main className="bg-[#05080f] min-h-screen">
+        <main className="bg-[var(--bg-base)] min-h-screen">
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
@@ -142,12 +142,12 @@ export default function SeoGeoAutomationPageEn() {
             <article className="max-w-3xl mx-auto px-5 sm:px-8 pt-32 pb-24">
 
                 {/* Breadcrumb */}
-                <div className="flex items-center gap-2 text-xs text-slate-600 mb-8">
-                    <Link href="/en" className="hover:text-slate-400 transition-colors">Scanora</Link>
+                <div className="flex items-center gap-2 text-xs text-[var(--text-faint)] mb-8">
+                    <Link href="/en" className="hover:text-[var(--text-muted)] transition-colors">Scanora</Link>
                     <span>/</span>
-                    <Link href="/en/blog" className="hover:text-slate-400 transition-colors">Blog</Link>
+                    <Link href="/en/blog" className="hover:text-[var(--text-muted)] transition-colors">Blog</Link>
                     <span>/</span>
-                    <span className="text-slate-500">SEO Rank Tracker & AI Visibility Monitor</span>
+                    <span className="text-[var(--text-faint)]">SEO Rank Tracker & AI Visibility Monitor</span>
                 </div>
 
                 {/* Header */}
@@ -159,19 +159,19 @@ export default function SeoGeoAutomationPageEn() {
                         <span className="text-[11px] font-semibold px-2.5 py-1 rounded-full uppercase tracking-wider bg-violet-500/15 text-violet-400">
                             GEO
                         </span>
-                        <span className="text-xs text-slate-600">Jul 5, 2026</span>
-                        <span className="text-xs text-slate-600">· 10 min read</span>
-                        <span className="text-xs text-slate-600">· Updated Aug 1, 2026</span>
+                        <span className="text-xs text-[var(--text-faint)]">Jul 5, 2026</span>
+                        <span className="text-xs text-[var(--text-faint)]">· 10 min read</span>
+                        <span className="text-xs text-[var(--text-faint)]">· Updated Aug 1, 2026</span>
                     </div>
-                    <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight tracking-tight mb-5">
+                    <h1 className="text-3xl sm:text-5xl font-bold text-[var(--text-white)] leading-tight tracking-tight mb-5">
                         SEO Rank Tracker & AI Visibility Monitor
                     </h1>
-                    <p className="text-lg text-slate-400 leading-relaxed">
+                    <p className="text-lg text-[var(--text-muted)] leading-relaxed">
                         A one-time audit shows you where things stand today. But Google rankings and AI visibility change every week - whether you touch anything or not. An automated rank tracker and keyword tracker (SEO automation) plus an AI visibility monitor (GEO automation) take over the ongoing tracking, so you catch declines before they cost you revenue.
                     </p>
-                    <div className="mt-5 flex items-center gap-2 text-xs text-slate-600">
-                        <Link href="/about" className="flex items-center gap-2 hover:text-slate-300 transition-colors">
-                            <div className="w-6 h-6 rounded-full bg-gradient-to-br from-violet-600 to-cyan-600 flex items-center justify-center text-white text-[10px] font-bold">F</div>
+                    <div className="mt-5 flex items-center gap-2 text-xs text-[var(--text-faint)]">
+                        <Link href="/about" className="flex items-center gap-2 hover:text-[var(--text-body)] transition-colors">
+                            <div className="w-6 h-6 rounded-full bg-gradient-to-br from-violet-600 to-cyan-600 flex items-center justify-center text-[var(--text-white)] text-[10px] font-bold">F</div>
                             <span>Finn Paustian</span>
                         </Link>
                         <span>·</span>
@@ -179,17 +179,17 @@ export default function SeoGeoAutomationPageEn() {
                     </div>
                 </div>
 
-                <div className="border-t border-white/5 mb-10" />
+                <div className="border-t border-[var(--text-white)]/5 mb-10" />
 
-                <div className="space-y-10 text-slate-300 leading-relaxed">
+                <div className="space-y-10 text-[var(--text-body)] leading-relaxed">
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">Why isn't manual checking enough anymore in 2026?</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Why isn't manual checking enough anymore in 2026?</h2>
                         <p>
                             A website audit is a snapshot. It shows you problems and opportunities at the exact moment you run it. The catch: Google keeps updating its algorithm, competitors keep publishing new content, and AI models like <a href="https://chatgpt.com" target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:text-emerald-300 underline underline-offset-2">ChatGPT</a> and <a href="https://claude.ai" target="_blank" rel="noopener noreferrer" className="text-violet-400 hover:text-violet-300 underline underline-offset-2">Claude</a> keep changing which sources they cite. A state that looks great today can quietly get worse over the next four weeks.
                         </p>
                         <p className="mt-4">
-                            Manually checking <a href="https://search.google.com/search-console/about" target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:text-emerald-300 underline underline-offset-2">Google Search Console</a> or running dozens of prompts through ChatGPT, Claude, Perplexity, and Google AI Overview takes time, and in practice it rarely happens on a regular schedule. That's exactly where <strong className="text-white">SEO automation</strong> and <strong className="text-white">GEO automation</strong> come in: ongoing tracking instead of a one-time check. For a one-time starting point, the manual{' '}
+                            Manually checking <a href="https://search.google.com/search-console/about" target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:text-emerald-300 underline underline-offset-2">Google Search Console</a> or running dozens of prompts through ChatGPT, Claude, Perplexity, and Google AI Overview takes time, and in practice it rarely happens on a regular schedule. That's exactly where <strong className="text-[var(--text-white)]">SEO automation</strong> and <strong className="text-[var(--text-white)]">GEO automation</strong> come in: ongoing tracking instead of a one-time check. For a one-time starting point, the manual{' '}
                             <Link href="/en/blog/seo-checklist-2026" className="text-emerald-400 hover:text-emerald-300 underline underline-offset-2">
                                 SEO Checklist 2026
                             </Link>{' '}
@@ -198,22 +198,22 @@ export default function SeoGeoAutomationPageEn() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">How does an automated SEO rank tracker work?</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">How does an automated SEO rank tracker work?</h2>
                         <p>
                             SEO automation is a rank tracker and keyword tracker in one: it tracks your Google positions for selected keywords every week - automatically, without you having to check yourself. Instead of a one-time SEO score, you get a trend line: which keywords are climbing, which are dropping, and where new opportunities are opening up.
                         </p>
                         <div className="grid sm:grid-cols-2 gap-4 mt-6">
                             {SEO_FEATURES.map(f => (
                                 <div key={f.title} className="bg-emerald-500/[0.04] border border-emerald-500/15 rounded-2xl p-5">
-                                    <h3 className="font-semibold text-white mb-1.5 text-sm">{f.title}</h3>
-                                    <p className="text-sm text-slate-400 leading-relaxed">{f.desc}</p>
+                                    <h3 className="font-semibold text-[var(--text-white)] mb-1.5 text-sm">{f.title}</h3>
+                                    <p className="text-sm text-[var(--text-muted)] leading-relaxed">{f.desc}</p>
                                 </div>
                             ))}
                         </div>
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">How does GEO automation work for AI visibility?</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">How does GEO automation work for AI visibility?</h2>
                         <p>
                             GEO automation applies the same principle to measuring AI visibility - how often AI models cite a website as a source (the term <a href="https://arxiv.org/abs/2311.09735" target="_blank" rel="noopener noreferrer" className="text-violet-400 hover:text-violet-300 underline underline-offset-2">Generative Engine Optimization</a> comes from a 2023 research paper by Princeton, Georgia Tech, and the Allen Institute for AI). Instead of checking once whether ChatGPT or Claude know your website, the same test runs automatically every week - with the same prompts, so results stay comparable over time.
                         </p>
@@ -223,29 +223,29 @@ export default function SeoGeoAutomationPageEn() {
                                 alt="Scanora GEO report showing checked AI visibility signals like llms.txt, Organization schema, AI crawler access, and external source links"
                                 width={960}
                                 height={411}
-                                className="w-full h-auto rounded-2xl border border-white/[0.07]"
+                                className="w-full h-auto rounded-2xl border border-[var(--text-white)]/[0.07]"
                             />
-                            <figcaption className="text-xs text-slate-600 mt-2">
+                            <figcaption className="text-xs text-[var(--text-faint)] mt-2">
                                 This is what a one-time GEO signal check looks like, the same check GEO automation builds on. The difference: with GEO automation, this exact check runs automatically every week instead of just once.
                             </figcaption>
                         </figure>
                         <div className="grid sm:grid-cols-2 gap-4 mt-6">
                             {GEO_FEATURES.map(f => (
                                 <div key={f.title} className="bg-violet-500/[0.04] border border-violet-500/15 rounded-2xl p-5">
-                                    <h3 className="font-semibold text-white mb-1.5 text-sm">{f.title}</h3>
-                                    <p className="text-sm text-slate-400 leading-relaxed">{f.desc}</p>
+                                    <h3 className="font-semibold text-[var(--text-white)] mb-1.5 text-sm">{f.title}</h3>
+                                    <p className="text-sm text-[var(--text-muted)] leading-relaxed">{f.desc}</p>
                                 </div>
                             ))}
                         </div>
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">What's the difference between SEO automation and GEO automation?</h2>
-                        <div className="overflow-hidden rounded-2xl border border-white/[0.07]">
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">What's the difference between SEO automation and GEO automation?</h2>
+                        <div className="overflow-hidden rounded-2xl border border-[var(--text-white)]/[0.07]">
                             <table className="w-full text-sm">
                                 <thead>
-                                    <tr className="border-b border-white/5 bg-white/[0.02]">
-                                        <th className="text-left px-5 py-3 text-slate-400 font-semibold">Aspect</th>
+                                    <tr className="border-b border-[var(--text-white)]/5 bg-[var(--text-white)]/[0.02]">
+                                        <th className="text-left px-5 py-3 text-[var(--text-muted)] font-semibold">Aspect</th>
                                         <th className="text-left px-5 py-3 text-emerald-400 font-semibold">SEO automation</th>
                                         <th className="text-left px-5 py-3 text-violet-400 font-semibold">GEO automation</th>
                                     </tr>
@@ -258,10 +258,10 @@ export default function SeoGeoAutomationPageEn() {
                                         ['Starting price', 'from €19/month', 'from €4.99/month'],
                                         ['Trial', '14 days free', '14 days free'],
                                     ].map(([aspect, seo, geo], i) => (
-                                        <tr key={i} className="border-b border-white/[0.04] last:border-0">
-                                            <td className="px-5 py-3 text-white font-medium">{aspect}</td>
-                                            <td className="px-5 py-3 text-slate-300">{seo}</td>
-                                            <td className="px-5 py-3 text-slate-300">{geo}</td>
+                                        <tr key={i} className="border-b border-[var(--text-white)]/[0.04] last:border-0">
+                                            <td className="px-5 py-3 text-[var(--text-white)] font-medium">{aspect}</td>
+                                            <td className="px-5 py-3 text-[var(--text-body)]">{seo}</td>
+                                            <td className="px-5 py-3 text-[var(--text-body)]">{geo}</td>
                                         </tr>
                                     ))}
                                 </tbody>
@@ -270,27 +270,27 @@ export default function SeoGeoAutomationPageEn() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">Do you need both?</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Do you need both?</h2>
                         <p>
                             SEO automation and GEO automation answer different questions. SEO automation shows whether people find you on Google. GEO automation shows whether you get recommended when someone asks ChatGPT or Claude instead of Google. Put differently: SEO automation is a classic SEO tool for Google rankings, GEO automation is an AI tracker for AI visibility. The two channels grow independently of each other - a good Google ranking says nothing about whether an AI model knows your website, and vice versa. For what GEO technically requires, see the full breakdown in our article on{' '}
                             <Link href="/en/blog/what-is-geo" className="text-violet-400 hover:text-violet-300 underline underline-offset-2">
                                 GEO in 2026
                             </Link>.
                         </p>
-                        <div className="bg-white/[0.03] border border-white/[0.07] rounded-2xl p-5 mt-5">
-                            <p className="text-sm text-slate-300">
+                        <div className="bg-[var(--text-white)]/[0.03] border border-[var(--text-white)]/[0.07] rounded-2xl p-5 mt-5">
+                            <p className="text-sm text-[var(--text-body)]">
                                 For most websites, the pragmatic starting point is: begin with SEO automation, since Google still delivers the largest share of traffic - and add GEO automation once your own audience increasingly turns to AI tools instead of classic search.
                             </p>
                         </div>
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">Frequently asked questions about SEO and GEO automation</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Frequently asked questions about SEO and GEO automation</h2>
                         <div className="space-y-4">
                             {faqLd.mainEntity.map((faq, i) => (
-                                <div key={i} className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5">
-                                    <h3 className="font-semibold text-white mb-2 text-sm">{faq.name}</h3>
-                                    <p className="text-sm text-slate-400 leading-relaxed">{faq.acceptedAnswer.text}</p>
+                                <div key={i} className="bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-2xl p-5">
+                                    <h3 className="font-semibold text-[var(--text-white)] mb-2 text-sm">{faq.name}</h3>
+                                    <p className="text-sm text-[var(--text-muted)] leading-relaxed">{faq.acceptedAnswer.text}</p>
                                 </div>
                             ))}
                         </div>
@@ -299,20 +299,20 @@ export default function SeoGeoAutomationPageEn() {
                 </div>
 
                 {/* Cross-link to sibling post */}
-                <div className="mb-5 bg-white/[0.02] border border-white/[0.06] rounded-2xl p-6 sm:p-8">
+                <div className="mb-5 bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-2xl p-6 sm:p-8">
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 justify-between">
                         <div>
                             <span className="text-xs font-semibold text-emerald-400 uppercase tracking-wider mb-1 block">Keep reading</span>
-                            <h3 className="text-base sm:text-lg font-bold text-white mb-2">
+                            <h3 className="text-base sm:text-lg font-bold text-[var(--text-white)] mb-2">
                                 Manual vs. automated: is switching worth it?
                             </h3>
-                            <p className="text-slate-400 text-sm leading-relaxed max-w-md">
+                            <p className="text-[var(--text-muted)] text-sm leading-relaxed max-w-md">
                                 Time spent, cost, and why AI visibility is barely measurable manually - the honest comparison.
                             </p>
                         </div>
                         <Link
                             href="/en/blog/seo-tracking-manual-vs-automated"
-                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/[0.06] hover:bg-white/10 text-white text-sm font-semibold rounded-xl transition-all duration-200 shrink-0"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--text-white)]/[0.06] hover:bg-[var(--text-white)]/10 text-[var(--text-white)] text-sm font-semibold rounded-xl transition-all duration-200 shrink-0"
                         >
                             Read the comparison
                         </Link>
@@ -320,20 +320,20 @@ export default function SeoGeoAutomationPageEn() {
                 </div>
 
                 {/* Cross-link to AI visibility deep dive */}
-                <div className="mb-5 bg-white/[0.02] border border-white/[0.06] rounded-2xl p-6 sm:p-8">
+                <div className="mb-5 bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-2xl p-6 sm:p-8">
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 justify-between">
                         <div>
                             <span className="text-xs font-semibold text-violet-400 uppercase tracking-wider mb-1 block">Keep reading</span>
-                            <h3 className="text-base sm:text-lg font-bold text-white mb-2">
+                            <h3 className="text-base sm:text-lg font-bold text-[var(--text-white)] mb-2">
                                 AI Visibility: how to actually get cited
                             </h3>
-                            <p className="text-slate-400 text-sm leading-relaxed max-w-md">
+                            <p className="text-[var(--text-muted)] text-sm leading-relaxed max-w-md">
                                 Technical GEO signals are only half the story - content strategy and per-platform differences in detail.
                             </p>
                         </div>
                         <Link
                             href="/en/blog/ai-visibility"
-                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/[0.06] hover:bg-white/10 text-white text-sm font-semibold rounded-xl transition-all duration-200 shrink-0"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--text-white)]/[0.06] hover:bg-[var(--text-white)]/10 text-[var(--text-white)] text-sm font-semibold rounded-xl transition-all duration-200 shrink-0"
                         >
                             Read article
                         </Link>
@@ -345,16 +345,16 @@ export default function SeoGeoAutomationPageEn() {
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 justify-between">
                         <div>
                             <span className="text-xs font-semibold text-emerald-400 uppercase tracking-wider mb-1 block">SEO automation</span>
-                            <h3 className="text-base sm:text-lg font-bold text-white mb-2">
+                            <h3 className="text-base sm:text-lg font-bold text-[var(--text-white)] mb-2">
                                 Track Google rankings automatically every week
                             </h3>
-                            <p className="text-slate-400 text-sm leading-relaxed max-w-md">
+                            <p className="text-[var(--text-muted)] text-sm leading-relaxed max-w-md">
                                 From €19/month, 3 websites, 50 keywords, 14 days free trial.
                             </p>
                         </div>
                         <Link
                             href="/en/seo/pricing"
-                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-emerald-500/20 shrink-0"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-[var(--text-white)] text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-emerald-500/20 shrink-0"
                         >
                             Automate SEO now
                         </Link>
@@ -366,16 +366,16 @@ export default function SeoGeoAutomationPageEn() {
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 justify-between">
                         <div>
                             <span className="text-xs font-semibold text-violet-400 uppercase tracking-wider mb-1 block">GEO automation</span>
-                            <h3 className="text-base sm:text-lg font-bold text-white mb-2">
+                            <h3 className="text-base sm:text-lg font-bold text-[var(--text-white)] mb-2">
                                 Track AI visibility on ChatGPT, Claude, Perplexity & Google AI Overview
                             </h3>
-                            <p className="text-slate-400 text-sm leading-relaxed max-w-md">
+                            <p className="text-[var(--text-muted)] text-sm leading-relaxed max-w-md">
                                 From €4.99/month, weekly auto-check, 14 days free trial.
                             </p>
                         </div>
                         <Link
                             href="/en/geo/pricing"
-                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-violet-600 hover:bg-violet-500 text-white text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-violet-500/20 shrink-0"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-violet-600 hover:bg-violet-500 text-[var(--text-white)] text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-violet-500/20 shrink-0"
                         >
                             Automate GEO now
                         </Link>
@@ -383,8 +383,8 @@ export default function SeoGeoAutomationPageEn() {
                 </div>
 
                 {/* Back */}
-                <div className="mt-10 pt-8 border-t border-white/5">
-                    <Link href="/en/blog" className="text-sm text-slate-500 hover:text-slate-300 transition-colors">
+                <div className="mt-10 pt-8 border-t border-[var(--text-white)]/5">
+                    <Link href="/en/blog" className="text-sm text-[var(--text-faint)] hover:text-[var(--text-body)] transition-colors">
                         ← Back to blog
                     </Link>
                 </div>

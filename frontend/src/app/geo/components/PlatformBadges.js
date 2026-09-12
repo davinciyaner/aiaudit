@@ -13,7 +13,7 @@ export function PlatformIcon({ platform, size = 'md', locked = false }) {
     const meta = PLATFORM_META[platform]
     const dims = { sm: 'w-7 h-7 text-[10px]', md: 'w-9 h-9 text-xs', lg: 'w-12 h-12 text-sm' }[size]
     return (
-        <div className={`relative shrink-0 ${dims} rounded-full flex items-center justify-center font-bold text-white`}
+        <div className={`relative shrink-0 ${dims} rounded-full flex items-center justify-center font-bold text-[var(--text-white)]`}
             style={{ background: locked ? '#334155' : meta.solid }}
         >
             {locked ? <Lock className="w-1/2 h-1/2 opacity-70" /> : meta.mono}
@@ -22,17 +22,17 @@ export function PlatformIcon({ platform, size = 'md', locked = false }) {
 }
 
 export function MentionBadge({ mentioned, labels = { yes: 'Ja', no: 'Nein' } }) {
-    if (mentioned == null) return <span className="text-xs text-slate-600">-</span>
+    if (mentioned == null) return <span className="text-xs text-[var(--text-faint)]">-</span>
     return mentioned
         ? <span className="inline-flex items-center gap-1 text-xs font-semibold text-[var(--accent)] bg-[var(--accent-soft)] border border-[var(--accent-border)] px-2 py-0.5 rounded-md"><Check className="w-3 h-3" />{labels.yes}</span>
-        : <span className="inline-flex items-center gap-1 text-xs font-semibold text-slate-500 bg-[var(--surface-08)] border border-[var(--border-subtle)] px-2 py-0.5 rounded-md"><X className="w-3 h-3 opacity-50" />{labels.no}</span>
+        : <span className="inline-flex items-center gap-1 text-xs font-semibold text-[var(--text-faint)] bg-[var(--surface-08)] border border-[var(--border-subtle)] px-2 py-0.5 rounded-md"><X className="w-3 h-3 opacity-50" />{labels.no}</span>
 }
 
 export function SentimentBadge({ sentiment, labels = { positive: 'Positiv', neutral: 'Neutral', negative: 'Negativ' } }) {
     if (!sentiment) return null
     const meta = {
         positive: { label: labels.positive, color: 'text-emerald-400', bg: 'bg-emerald-500/10', border: 'border-emerald-500/20' },
-        neutral:  { label: labels.neutral,  color: 'text-slate-400',   bg: 'bg-[var(--surface-08)]', border: 'border-[var(--border-subtle)]' },
+        neutral:  { label: labels.neutral,  color: 'text-[var(--text-muted)]',   bg: 'bg-[var(--surface-08)]', border: 'border-[var(--border-subtle)]' },
         negative: { label: labels.negative, color: 'text-red-400',    bg: 'bg-red-500/10',   border: 'border-red-500/20' },
     }[sentiment]
     if (!meta) return null

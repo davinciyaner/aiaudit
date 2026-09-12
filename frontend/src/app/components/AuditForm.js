@@ -133,13 +133,13 @@ export default function AuditForm({ onAuditStart, onAuditComplete, defaultUrl = 
     return (
         <div className="w-full">
             <form onSubmit={handleSubmit} className="w-full">
-                <div className={`relative flex items-center gap-3 p-2 bg-[var(--surface-06)] border rounded-2xl transition-all duration-200 shadow-xl shadow-black/20 ${
+                <div className={`relative flex items-center gap-3 p-2 bg-[var(--surface-06)] border rounded-2xl transition-all duration-200 shadow-card ${
                     domainError && trimmed
                         ? 'border-red-500/40 focus-within:border-red-500/60 focus-within:ring-2 focus-within:ring-red-400/30'
                         : 'border-[var(--border-subtle)] focus-within:border-[var(--accent-border)] focus-within:ring-2 focus-within:ring-[var(--accent-soft-strong)] focus-within:bg-[var(--surface-08)]'
                 }`}>
                     <div className="flex items-center gap-2 flex-1 px-3 min-w-0">
-                        <Globe className="w-4 h-4 text-slate-500 shrink-0" />
+                        <Globe className="w-4 h-4 text-[var(--text-faint)] shrink-0" />
                         <label htmlFor="audit-form-url" className="sr-only">{locale === 'en' ? 'Website URL' : 'Website-URL'}</label>
                         <input
                             ref={inputRef}
@@ -149,7 +149,7 @@ export default function AuditForm({ onAuditStart, onAuditComplete, defaultUrl = 
                             onChange={e => setUrl(e.target.value)}
                             onKeyDown={handleKeyDown}
                             placeholder="yourwebsite.com"
-                            className="flex-1 min-w-0 bg-transparent text-white placeholder-slate-600 text-sm outline-none py-2"
+                            className="flex-1 min-w-0 bg-transparent text-[var(--text-white)] placeholder-[var(--text-faint)] text-sm outline-none py-2"
                             disabled={loading}
                             autoComplete="off"
                             autoCapitalize="off"
@@ -160,7 +160,7 @@ export default function AuditForm({ onAuditStart, onAuditComplete, defaultUrl = 
                             aria-invalid={!!(domainError && trimmed)}
                         />
                         {trimmed && !url.startsWith('http') && !domainError && (
-                            <span className="text-xs text-slate-500 shrink-0 hidden sm:block">
+                            <span className="text-xs text-[var(--text-faint)] shrink-0 hidden sm:block">
                                 → {normalized}
                             </span>
                         )}
@@ -186,7 +186,7 @@ export default function AuditForm({ onAuditStart, onAuditComplete, defaultUrl = 
                                 type="button"
                                 onClick={handleClear}
                                 aria-label={locale === 'en' ? 'Clear' : 'Leeren'}
-                                className="shrink-0 p-1 rounded-lg text-slate-500 hover:text-white hover:bg-[var(--surface-10)] transition-colors"
+                                className="shrink-0 p-1 rounded-lg text-[var(--text-faint)] hover:text-[var(--text-white)] hover:bg-[var(--surface-10)] transition-colors"
                             >
                                 <X className="w-3.5 h-3.5" />
                             </button>
@@ -196,7 +196,7 @@ export default function AuditForm({ onAuditStart, onAuditComplete, defaultUrl = 
                         type="submit"
                         disabled={loading || (!!trimmed && !!domainError)}
                         whileTap={{ scale: 0.97 }}
-                        className="flex items-center gap-2 px-6 py-3 bg-[var(--accent)] hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-[var(--accent-border)] shrink-0"
+                        className="flex items-center gap-2 px-6 py-3 bg-[var(--accent)] hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-[var(--accent-border)] active:scale-[0.97] active:duration-75 shrink-0"
                     >
                         {loading ? (
                             <><div className="w-4 h-4 border-2 border-[var(--bg-base)]/30 border-t-[var(--bg-base)] rounded-full animate-spin" />{locale === 'en' ? 'Analyzing...' : 'Analysiert...'}</>
@@ -222,7 +222,7 @@ export default function AuditForm({ onAuditStart, onAuditComplete, defaultUrl = 
 
             {!trimmed && !loading && recentDomains.length > 0 && (
                 <div className="flex flex-wrap items-center gap-2 mt-3">
-                    <span className="text-xs text-slate-600 flex items-center gap-1 shrink-0">
+                    <span className="text-xs text-[var(--text-faint)] flex items-center gap-1 shrink-0">
                         <Clock className="w-3 h-3" />{locale === 'en' ? 'Recent:' : 'Zuletzt:'}
                     </span>
                     {recentDomains.map(d => (
@@ -230,7 +230,7 @@ export default function AuditForm({ onAuditStart, onAuditComplete, defaultUrl = 
                             key={d}
                             type="button"
                             onClick={() => { setUrl(d); inputRef.current?.focus() }}
-                            className="px-2.5 py-1 text-xs text-slate-400 bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-full hover:text-white hover:border-[var(--border-strong)] hover:bg-[var(--surface-08)] transition-all"
+                            className="px-2.5 py-1 text-xs text-[var(--text-muted)] bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-full hover:text-[var(--text-white)] hover:border-[var(--border-strong)] hover:bg-[var(--surface-08)] transition-all"
                         >
                             {d}
                         </button>

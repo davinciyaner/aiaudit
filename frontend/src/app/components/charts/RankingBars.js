@@ -23,10 +23,10 @@ export default function RankingBars() {
             <div className="flex items-start justify-between gap-3 mb-5">
                 <div>
                     <div className="flex items-center gap-2">
-                        <h3 className="text-sm font-semibold text-white">Ranking-Verbesserung</h3>
-                        <span className="text-[10px] px-1.5 py-0.5 rounded-md bg-[var(--surface-08)] text-slate-500 font-medium">Beispiel</span>
+                        <h3 className="text-sm font-semibold text-[var(--text-white)]">Ranking-Verbesserung</h3>
+                        <span className="text-[10px] px-1.5 py-0.5 rounded-md bg-[var(--surface-08)] text-[var(--text-faint)] font-medium">Beispiel</span>
                     </div>
-                    <p className="text-xs text-slate-500 mt-0.5">Google-Position vor und nach umgesetzten Scanora-Fixes</p>
+                    <p className="text-xs text-[var(--text-faint)] mt-0.5">Google-Position vor und nach umgesetzten Scanora-Fixes</p>
                 </div>
             </div>
 
@@ -34,9 +34,9 @@ export default function RankingBars() {
                 {ROWS.map((r, i) => (
                     <div key={r.keyword}>
                         <div className="flex items-center justify-between gap-3 mb-1.5">
-                            <span className="text-sm text-slate-300 truncate">{r.keyword}</span>
+                            <span className="text-sm text-[var(--text-body)] truncate">{r.keyword}</span>
                             <div className="flex items-center gap-2 shrink-0">
-                                <span className="text-xs text-slate-500 tabular-nums">Platz {r.before} → Platz {r.after}</span>
+                                <span className="text-xs text-[var(--text-faint)] tabular-nums">Platz {r.before} → Platz {r.after}</span>
                                 <span className="flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-[var(--accent-soft)] border border-[var(--accent-border)] text-[var(--accent)] text-[11px] font-semibold tabular-nums">
                                     <ArrowUp className="w-2.5 h-2.5" />{r.delta}
                                 </span>

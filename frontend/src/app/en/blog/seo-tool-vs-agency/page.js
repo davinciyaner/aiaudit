@@ -117,7 +117,7 @@ const COMPARISON = [
 
 export default function SeoToolVsAgencyPageEn() {
     return (
-        <main className="bg-[#05080f] min-h-screen">
+        <main className="bg-[var(--bg-base)] min-h-screen">
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
@@ -126,12 +126,12 @@ export default function SeoToolVsAgencyPageEn() {
             <article className="max-w-3xl mx-auto px-5 sm:px-8 pt-32 pb-24">
 
                 {/* Breadcrumb */}
-                <div className="flex items-center gap-2 text-xs text-slate-600 mb-8">
-                    <Link href="/en" className="hover:text-slate-400 transition-colors">Scanora</Link>
+                <div className="flex items-center gap-2 text-xs text-[var(--text-faint)] mb-8">
+                    <Link href="/en" className="hover:text-[var(--text-muted)] transition-colors">Scanora</Link>
                     <span>/</span>
-                    <Link href="/en/blog" className="hover:text-slate-400 transition-colors">Blog</Link>
+                    <Link href="/en/blog" className="hover:text-[var(--text-muted)] transition-colors">Blog</Link>
                     <span>/</span>
-                    <span className="text-slate-500">SEO Tool vs. Agency</span>
+                    <span className="text-[var(--text-faint)]">SEO Tool vs. Agency</span>
                 </div>
 
                 {/* Header */}
@@ -140,19 +140,19 @@ export default function SeoToolVsAgencyPageEn() {
                         <span className="text-[11px] font-semibold px-2.5 py-1 rounded-full uppercase tracking-wider bg-violet-500/15 text-violet-400">
                             SEO
                         </span>
-                        <span className="text-xs text-slate-600">July 26, 2026</span>
-                        <span className="text-xs text-slate-600">· 8 min read</span>
-                        <span className="text-xs text-slate-600">· Updated Aug 1, 2026</span>
+                        <span className="text-xs text-[var(--text-faint)]">July 26, 2026</span>
+                        <span className="text-xs text-[var(--text-faint)]">· 8 min read</span>
+                        <span className="text-xs text-[var(--text-faint)]">· Updated Aug 1, 2026</span>
                     </div>
-                    <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight tracking-tight mb-5">
+                    <h1 className="text-3xl sm:text-5xl font-bold text-[var(--text-white)] leading-tight tracking-tight mb-5">
                         SEO Tool vs. SEO Agency: The Honest Cost Comparison
                     </h1>
-                    <p className="text-lg text-slate-400 leading-relaxed">
+                    <p className="text-lg text-[var(--text-muted)] leading-relaxed">
                         The honest answer: it depends on what your actual problem is. An automated SEO test and an SEO agency solve different problems - here&apos;s the comparison without the sales pitch, including real price ranges.
                     </p>
-                    <div className="mt-5 flex items-center gap-2 text-xs text-slate-600">
-                        <Link href="/en/about" className="flex items-center gap-2 hover:text-slate-300 transition-colors">
-                            <div className="w-6 h-6 rounded-full bg-gradient-to-br from-violet-600 to-cyan-600 flex items-center justify-center text-white text-[10px] font-bold">F</div>
+                    <div className="mt-5 flex items-center gap-2 text-xs text-[var(--text-faint)]">
+                        <Link href="/en/about" className="flex items-center gap-2 hover:text-[var(--text-body)] transition-colors">
+                            <div className="w-6 h-6 rounded-full bg-gradient-to-br from-violet-600 to-cyan-600 flex items-center justify-center text-[var(--text-white)] text-[10px] font-bold">F</div>
                             <span>Finn Paustian</span>
                         </Link>
                         <span>·</span>
@@ -160,22 +160,22 @@ export default function SeoToolVsAgencyPageEn() {
                     </div>
                 </div>
 
-                <div className="border-t border-white/5 mb-10" />
+                <div className="border-t border-[var(--text-white)]/5 mb-10" />
 
-                <div className="space-y-10 text-slate-300 leading-relaxed">
+                <div className="space-y-10 text-[var(--text-body)] leading-relaxed">
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">What an SEO agency actually covers</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">What an SEO agency actually covers</h2>
                         <p>
                             A good SEO agency does a lot more than just find errors. Its real value sits mostly in work that nothing can automate (yet):
                         </p>
                         <div className="space-y-3 mt-5">
                             {AGENCY_SCOPE.map((s) => (
-                                <div key={s.title} className="flex items-start gap-3 py-2.5 border-b border-white/[0.04] last:border-0">
+                                <div key={s.title} className="flex items-start gap-3 py-2.5 border-b border-[var(--text-white)]/[0.04] last:border-0">
                                     <div className="w-1.5 h-1.5 rounded-full bg-violet-400 shrink-0 mt-2" />
                                     <div>
-                                        <span className="text-sm font-medium text-white">{s.title}</span>
-                                        <span className="text-sm text-slate-500"> - {s.desc}</span>
+                                        <span className="text-sm font-medium text-[var(--text-white)]">{s.title}</span>
+                                        <span className="text-sm text-[var(--text-faint)]"> - {s.desc}</span>
                                     </div>
                                 </div>
                             ))}
@@ -183,7 +183,7 @@ export default function SeoToolVsAgencyPageEn() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">What an automated SEO tool covers - and what it doesn&apos;t</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">What an automated SEO tool covers - and what it doesn&apos;t</h2>
                         <p>
                             A tool like Scanora is a diagnostic instrument, not an agency replacement. It finds technical problems automatically and repeatedly - but it doesn&apos;t write content and doesn&apos;t build backlinks. For exactly which mistakes that means, with numbers and fix instructions, see our article on the{' '}
                             <Link href="/en/blog/common-seo-mistakes" className="text-amber-400 hover:text-amber-300 underline underline-offset-2">
@@ -192,11 +192,11 @@ export default function SeoToolVsAgencyPageEn() {
                         </p>
                         <div className="space-y-3 mt-5">
                             {TEST_SCOPE.map((s) => (
-                                <div key={s.title} className="flex items-start gap-3 py-2.5 border-b border-white/[0.04] last:border-0">
+                                <div key={s.title} className="flex items-start gap-3 py-2.5 border-b border-[var(--text-white)]/[0.04] last:border-0">
                                     <div className="w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0 mt-2" />
                                     <div>
-                                        <span className="text-sm font-medium text-white">{s.title}</span>
-                                        <span className="text-sm text-slate-500"> - {s.desc}</span>
+                                        <span className="text-sm font-medium text-[var(--text-white)]">{s.title}</span>
+                                        <span className="text-sm text-[var(--text-faint)]"> - {s.desc}</span>
                                     </div>
                                 </div>
                             ))}
@@ -204,30 +204,30 @@ export default function SeoToolVsAgencyPageEn() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-6">The cost comparison at a glance</h2>
-                        <div className="overflow-x-auto rounded-2xl border border-white/[0.07]">
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-6">The cost comparison at a glance</h2>
+                        <div className="overflow-x-auto rounded-2xl border border-[var(--text-white)]/[0.07]">
                             <table className="w-full text-sm min-w-[600px]">
                                 <thead>
-                                    <tr className="border-b border-white/5 bg-white/[0.02]">
-                                        <th className="text-left px-5 py-3 text-slate-400 font-semibold">Criterion</th>
+                                    <tr className="border-b border-[var(--text-white)]/5 bg-[var(--text-white)]/[0.02]">
+                                        <th className="text-left px-5 py-3 text-[var(--text-muted)] font-semibold">Criterion</th>
                                         <th className="text-left px-5 py-3 text-amber-400 font-semibold">Automated SEO test</th>
                                         <th className="text-left px-5 py-3 text-violet-400 font-semibold">SEO agency</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {COMPARISON.map(([aspect, tool, agency], i) => (
-                                        <tr key={i} className="border-b border-white/[0.04] last:border-0">
-                                            <td className="px-5 py-3 text-white font-medium">{aspect}</td>
-                                            <td className="px-5 py-3 text-slate-300">{tool}</td>
-                                            <td className="px-5 py-3 text-slate-300">{agency}</td>
+                                        <tr key={i} className="border-b border-[var(--text-white)]/[0.04] last:border-0">
+                                            <td className="px-5 py-3 text-[var(--text-white)] font-medium">{aspect}</td>
+                                            <td className="px-5 py-3 text-[var(--text-body)]">{tool}</td>
+                                            <td className="px-5 py-3 text-[var(--text-body)]">{agency}</td>
                                         </tr>
                                     ))}
                                 </tbody>
                             </table>
                         </div>
-                        <p className="text-xs text-slate-600 mt-3">
+                        <p className="text-xs text-[var(--text-faint)] mt-3">
                             Agency price ranges are based on several current German market overviews for 2026, e.g.{' '}
-                            <a href="https://www.seoagentur.de/magazin/was-kostet-seo/" target="_blank" rel="noopener noreferrer" className="text-slate-500 hover:text-slate-400 underline underline-offset-2">
+                            <a href="https://www.seoagentur.de/magazin/was-kostet-seo/" target="_blank" rel="noopener noreferrer" className="text-[var(--text-faint)] hover:text-[var(--text-muted)] underline underline-offset-2">
                                 seoagentur.de: What Does SEO Cost in 2026? ↗
                             </a>{' '}
                             - your actual costs depend heavily on industry, competition, and scope of work, and US or UK agency rates follow similar patterns but vary by market.
@@ -235,7 +235,7 @@ export default function SeoToolVsAgencyPageEn() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">When does each option make sense?</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">When does each option make sense?</h2>
                         <p>
                             If your main problem is technical - slow load times, missing meta descriptions, broken canonicals, weak AI visibility - an automated SEO test is almost always the faster, cheaper first move. That&apos;s especially true for freelancers, small businesses, and anyone who wants to know where they actually stand before committing a larger budget.
                         </p>
@@ -244,19 +244,19 @@ export default function SeoToolVsAgencyPageEn() {
                         </p>
                         <div className="bg-violet-500/8 border border-violet-500/20 rounded-2xl p-5 mt-5">
                             <p className="text-sm text-violet-300 font-medium mb-1">The most pragmatic combination</p>
-                            <p className="text-sm text-slate-400">
+                            <p className="text-sm text-[var(--text-muted)]">
                                 Many websites do best with both: automated monitoring for ongoing technical control between engagements, plus an agency or freelancer for strategy and execution. That way technical problems get caught immediately, instead of surfacing only at the next quarterly report.
                             </p>
                         </div>
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">Frequently asked questions about SEO tools vs. agencies</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Frequently asked questions about SEO tools vs. agencies</h2>
                         <div className="space-y-4">
                             {faqLd.mainEntity.map((faq, i) => (
-                                <div key={i} className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5">
-                                    <h3 className="font-semibold text-white mb-2 text-sm">{faq.name}</h3>
-                                    <p className="text-sm text-slate-400 leading-relaxed">{faq.acceptedAnswer.text}</p>
+                                <div key={i} className="bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-2xl p-5">
+                                    <h3 className="font-semibold text-[var(--text-white)] mb-2 text-sm">{faq.name}</h3>
+                                    <p className="text-sm text-[var(--text-muted)] leading-relaxed">{faq.acceptedAnswer.text}</p>
                                 </div>
                             ))}
                         </div>
@@ -265,37 +265,37 @@ export default function SeoToolVsAgencyPageEn() {
                 </div>
 
                 {/* CTA */}
-                <div className="mt-14 bg-gradient-to-br from-violet-950/40 to-[#05080f] border border-violet-500/20 rounded-2xl p-6 sm:p-8 text-center">
-                    <h2 className="text-xl sm:text-2xl font-bold text-white mb-3">
+                <div className="mt-14 bg-gradient-to-br from-violet-950/40 to-[var(--bg-base)] border border-violet-500/20 rounded-2xl p-6 sm:p-8 text-center">
+                    <h2 className="text-xl sm:text-2xl font-bold text-[var(--text-white)] mb-3">
                         Check first, then decide
                     </h2>
-                    <p className="text-slate-400 text-sm mb-6 max-w-md mx-auto leading-relaxed">
+                    <p className="text-[var(--text-muted)] text-sm mb-6 max-w-md mx-auto leading-relaxed">
                         Before you hire an agency, a free check is worth it: maybe it&apos;s just a handful of technical errors you can find yourself in 60 seconds. Start without registration, sign up free for the full report with all scores.
                     </p>
                     <Link
                         href="/dashboard"
-                        className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-violet-500/20"
+                        className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-[var(--text-white)] text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-violet-500/20"
                     >
                         Start free SEO test
                     </Link>
-                    <div className="mt-3 text-xs text-slate-600">No registration to start · Full report free · 60 seconds</div>
+                    <div className="mt-3 text-xs text-[var(--text-faint)]">No registration to start · Full report free · 60 seconds</div>
                 </div>
 
                 {/* Cross-link to sibling post */}
-                <div className="mt-5 bg-white/[0.02] border border-white/[0.06] rounded-2xl p-6 sm:p-8">
+                <div className="mt-5 bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-2xl p-6 sm:p-8">
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 justify-between">
                         <div>
                             <span className="text-xs font-semibold text-violet-400 uppercase tracking-wider mb-1 block">Keep reading</span>
-                            <h3 className="text-base sm:text-lg font-bold text-white mb-2">
+                            <h3 className="text-base sm:text-lg font-bold text-[var(--text-white)] mb-2">
                                 Scanora: The SEO Tool With GEO Analysis
                             </h3>
-                            <p className="text-slate-400 text-sm leading-relaxed max-w-md">
+                            <p className="text-[var(--text-muted)] text-sm leading-relaxed max-w-md">
                                 Want to test things yourself first? All the features at a glance, including the free audit.
                             </p>
                         </div>
                         <Link
                             href="/en/blog/best-seo-tools-2026"
-                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/[0.06] hover:bg-white/10 text-white text-sm font-semibold rounded-xl transition-all duration-200 shrink-0"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--text-white)]/[0.06] hover:bg-[var(--text-white)]/10 text-[var(--text-white)] text-sm font-semibold rounded-xl transition-all duration-200 shrink-0"
                         >
                             Learn more
                         </Link>
@@ -303,8 +303,8 @@ export default function SeoToolVsAgencyPageEn() {
                 </div>
 
                 {/* Back */}
-                <div className="mt-10 pt-8 border-t border-white/5">
-                    <Link href="/en/blog" className="text-sm text-slate-500 hover:text-slate-300 transition-colors">
+                <div className="mt-10 pt-8 border-t border-[var(--text-white)]/5">
+                    <Link href="/en/blog" className="text-sm text-[var(--text-faint)] hover:text-[var(--text-body)] transition-colors">
                         ← Back to blog
                     </Link>
                 </div>

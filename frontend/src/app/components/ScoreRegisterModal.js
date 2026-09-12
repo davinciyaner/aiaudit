@@ -58,7 +58,7 @@ export default function ScoreRegisterModal({ open, onClose, auditUrl = '', mode 
                                 <button
                                     onClick={onClose}
                                     aria-label={locale === 'en' ? 'Close' : 'Schließen'}
-                                    className="absolute top-4 right-4 w-11 h-11 flex items-center justify-center rounded-lg bg-[var(--surface-06)] hover:bg-[var(--surface-10)] text-slate-400 hover:text-white transition-all"
+                                    className="absolute top-4 right-4 w-11 h-11 flex items-center justify-center rounded-lg bg-[var(--surface-06)] hover:bg-[var(--surface-10)] text-[var(--text-muted)] hover:text-[var(--text-white)] transition-all"
                                 >
                                     <X className="w-4 h-4" />
                                 </button>
@@ -67,10 +67,10 @@ export default function ScoreRegisterModal({ open, onClose, auditUrl = '', mode 
                                     <Lock className="w-6 h-6 text-[var(--accent)]" />
                                 </div>
 
-                                <h3 className="text-xl font-bold text-white mb-2">
+                                <h3 className="text-xl font-bold text-[var(--text-white)] mb-2">
                                     {locale === 'en' ? 'Start free - in 30 seconds' : 'Gratis starten - in 30 Sekunden'}
                                 </h3>
-                                <p className="text-slate-400 text-sm mb-5 leading-relaxed">
+                                <p className="text-[var(--text-muted)] text-sm mb-5 leading-relaxed">
                                     {locale === 'en'
                                         ? 'With a free account you see every score, issue, and optimization for your website.'
                                         : 'Mit einem kostenlosen Account siehst du alle Scores, Probleme und Optimierungen deiner Website.'}
@@ -88,8 +88,8 @@ export default function ScoreRegisterModal({ open, onClose, auditUrl = '', mode 
                                                     <Icon className="w-3.5 h-3.5 text-[var(--accent)]" />
                                                 </div>
                                                 <div className="min-w-0">
-                                                    <div className="text-xs font-medium text-slate-200 leading-tight">{label}</div>
-                                                    <div className="text-[11px] text-slate-500 leading-tight mt-0.5">{desc}</div>
+                                                    <div className="text-xs font-medium text-[var(--text-body)] leading-tight">{label}</div>
+                                                    <div className="text-[11px] text-[var(--text-faint)] leading-tight mt-0.5">{desc}</div>
                                                 </div>
                                             </div>
                                         ))}
@@ -99,7 +99,7 @@ export default function ScoreRegisterModal({ open, onClose, auditUrl = '', mode 
 
                                 <button
                                     onClick={handleRegister}
-                                    className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] font-semibold rounded-xl transition-all shadow-lg shadow-[var(--accent-border)] mb-3"
+                                    className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] font-semibold rounded-xl transition-all shadow-lg shadow-[var(--accent-border)] active:scale-[0.97] active:duration-75 mb-3"
                                 >
                                     <UserPlus className="w-4 h-4" />
                                     {locale === 'en' ? 'Create free account' : 'Kostenlosen Account erstellen'}
@@ -108,7 +108,7 @@ export default function ScoreRegisterModal({ open, onClose, auditUrl = '', mode 
                                 <Link
                                     href="/login"
                                     onClick={onClose}
-                                    className="block text-xs text-slate-600 hover:text-slate-400 transition-colors"
+                                    className="block text-xs text-[var(--text-faint)] hover:text-[var(--text-muted)] transition-colors"
                                 >
                                     {locale === 'en' ? 'Already registered? Log in →' : 'Bereits registriert? Einloggen →'}
                                 </Link>

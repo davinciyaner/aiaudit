@@ -142,12 +142,12 @@ export default function GuenstigesGeoToolPage() {
             <article className="max-w-3xl mx-auto px-5 sm:px-8 pt-32 pb-24">
 
                 {/* Breadcrumb */}
-                <div className="flex items-center gap-2 text-xs text-slate-600 mb-8">
-                    <Link href="/" className="hover:text-slate-400 transition-colors">Scanora</Link>
+                <div className="flex items-center gap-2 text-xs text-[var(--text-faint)] mb-8">
+                    <Link href="/" className="hover:text-[var(--text-muted)] transition-colors">Scanora</Link>
                     <span>/</span>
-                    <Link href="/loesungen" className="hover:text-slate-400 transition-colors">Lösungen</Link>
+                    <Link href="/loesungen" className="hover:text-[var(--text-muted)] transition-colors">Lösungen</Link>
                     <span>/</span>
-                    <span className="text-slate-500">Günstiges KI-Sichtbarkeit Tool</span>
+                    <span className="text-[var(--text-faint)]">Günstiges KI-Sichtbarkeit Tool</span>
                 </div>
 
                 {/* Header */}
@@ -156,17 +156,17 @@ export default function GuenstigesGeoToolPage() {
                         <span className="text-[11px] font-semibold px-2.5 py-1 rounded-full uppercase tracking-wider bg-[var(--accent-soft)] text-[var(--accent)]">
                             Lösung
                         </span>
-                        <span className="text-xs text-slate-600">28. August 2026</span>
-                        <span className="text-xs text-slate-600">· 6 min Lesezeit</span>
+                        <span className="text-xs text-[var(--text-faint)]">28. August 2026</span>
+                        <span className="text-xs text-[var(--text-faint)]">· 6 min Lesezeit</span>
                     </div>
-                    <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight tracking-tight mb-5">
+                    <h1 className="text-3xl sm:text-5xl font-bold text-[var(--text-white)] leading-tight tracking-tight mb-5">
                         Günstiges KI-Sichtbarkeit Tool: SEO und AI Visibility in einem Abo
                     </h1>
-                    <p className="text-lg text-slate-400 leading-relaxed">
+                    <p className="text-lg text-[var(--text-muted)] leading-relaxed">
                         Die meisten Tools für KI-Sichtbarkeit sind reine Prompt-Monitoring-Dashboards – ohne SEO, oft ab 25–30 $/Monat, und jede zusätzliche KI-Plattform kostet extra. Wer beides braucht, zahlt am Ende für zwei Abos. Scanora verbindet GEO-Automatisierung (KI-Sichtbarkeit bei ChatGPT, Claude, Perplexity und Google AI Overview) und SEO-Automatisierung in einem Konto – mit einem Einstieg ab 4,99 €/Monat und einem dauerhaft kostenlosen Plan.
                     </p>
-                    <div className="mt-5 flex items-center gap-2 text-xs text-slate-600">
-                        <Link href="/about" className="flex items-center gap-2 hover:text-slate-300 transition-colors">
+                    <div className="mt-5 flex items-center gap-2 text-xs text-[var(--text-faint)]">
+                        <Link href="/about" className="flex items-center gap-2 hover:text-[var(--text-body)] transition-colors">
                             <div className="w-6 h-6 rounded-full bg-[var(--accent)] flex items-center justify-center text-[var(--bg-base)] text-[10px] font-bold">F</div>
                             <span>Finn Paustian</span>
                         </Link>
@@ -177,10 +177,10 @@ export default function GuenstigesGeoToolPage() {
 
                 <div className="border-t border-[var(--border-subtle)] mb-10" />
 
-                <div className="space-y-10 text-slate-300 leading-relaxed">
+                <div className="space-y-10 text-[var(--text-body)] leading-relaxed">
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">Warum ein Tool für beides sinnvoller ist</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Warum ein Tool für beides sinnvoller ist</h2>
                         <p>
                             Klassisches SEO optimiert dafür, dass Google dich in der Linkliste zeigt. GEO (Generative Engine Optimization) optimiert dafür, dass ChatGPT, Claude, Perplexity oder Google AI Overview dich in einer generierten Antwort <em>zitieren</em>. Beides hängt zusammen – strukturierte Daten, klare Produktdefinitionen und technisch saubere Seiten helfen in beiden Disziplinen – wird aber meistens von komplett getrennten Tools gemessen: ein SEO-Rank-Tracker hier, ein AI-Visibility-Dashboard dort. Zwei Abos, zwei Logins, zwei Rechnungen.
                         </p>
@@ -190,51 +190,51 @@ export default function GuenstigesGeoToolPage() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">Alle Preise auf einen Blick</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Alle Preise auf einen Blick</h2>
                         <div className="overflow-x-auto rounded-2xl border border-[var(--border-subtle)]">
                             <table className="w-full text-sm min-w-[560px]">
                                 <thead>
                                     <tr className="border-b border-[var(--border-subtle)] bg-[var(--surface-06)]">
-                                        <th className="text-left px-5 py-3 text-slate-400 font-semibold">Plan</th>
-                                        <th className="text-left px-5 py-3 text-slate-400 font-semibold">Enthalten</th>
+                                        <th className="text-left px-5 py-3 text-[var(--text-muted)] font-semibold">Plan</th>
+                                        <th className="text-left px-5 py-3 text-[var(--text-muted)] font-semibold">Enthalten</th>
                                         <th className="text-left px-5 py-3 text-[var(--accent)] font-semibold">Preis</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {PRICING_ROWS.map(([plan, included, price], i) => (
                                         <tr key={i} className="border-b border-[var(--border-subtle)] last:border-0">
-                                            <td className="px-5 py-3 text-white font-medium whitespace-nowrap">{plan}</td>
-                                            <td className="px-5 py-3 text-slate-300">{included}</td>
-                                            <td className="px-5 py-3 text-white font-semibold whitespace-nowrap">{price}</td>
+                                            <td className="px-5 py-3 text-[var(--text-white)] font-medium whitespace-nowrap">{plan}</td>
+                                            <td className="px-5 py-3 text-[var(--text-body)]">{included}</td>
+                                            <td className="px-5 py-3 text-[var(--text-white)] font-semibold whitespace-nowrap">{price}</td>
                                         </tr>
                                     ))}
                                 </tbody>
                             </table>
                         </div>
-                        <p className="text-xs text-slate-600 mt-3">
+                        <p className="text-xs text-[var(--text-faint)] mt-3">
                             Preise Stand August 2026, inkl. MwSt. Alle Automatisierungs-Pläne (SEO + GEO) haben 14 Tage kostenlose Testphase, monatlich kündbar. Details auf den{' '}
-                            <Link href="/pricing" className="text-slate-500 hover:text-slate-300 underline underline-offset-2">Preisseiten</Link>.
+                            <Link href="/pricing" className="text-[var(--text-faint)] hover:text-[var(--text-body)] underline underline-offset-2">Preisseiten</Link>.
                         </p>
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">Was ist enthalten</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Was ist enthalten</h2>
                         <div className="grid sm:grid-cols-2 gap-4">
                             <div className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl p-5">
-                                <h3 className="font-semibold text-white mb-3 text-sm">GEO-Automatisierung (KI-Sichtbarkeit)</h3>
+                                <h3 className="font-semibold text-[var(--text-white)] mb-3 text-sm">GEO-Automatisierung (KI-Sichtbarkeit)</h3>
                                 <ul className="space-y-2">
                                     {INCLUDED_GEO.map((item, i) => (
-                                        <li key={i} className="text-sm text-slate-400 leading-relaxed flex gap-2">
+                                        <li key={i} className="text-sm text-[var(--text-muted)] leading-relaxed flex gap-2">
                                             <span className="text-[var(--accent)] shrink-0">–</span>{item}
                                         </li>
                                     ))}
                                 </ul>
                             </div>
                             <div className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl p-5">
-                                <h3 className="font-semibold text-white mb-3 text-sm">SEO-Automatisierung</h3>
+                                <h3 className="font-semibold text-[var(--text-white)] mb-3 text-sm">SEO-Automatisierung</h3>
                                 <ul className="space-y-2">
                                     {INCLUDED_SEO.map((item, i) => (
-                                        <li key={i} className="text-sm text-slate-400 leading-relaxed flex gap-2">
+                                        <li key={i} className="text-sm text-[var(--text-muted)] leading-relaxed flex gap-2">
                                             <span className="text-[var(--accent)] shrink-0">–</span>{item}
                                         </li>
                                     ))}
@@ -244,29 +244,29 @@ export default function GuenstigesGeoToolPage() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">Für wen sich das lohnt</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Für wen sich das lohnt</h2>
                         <p className="mb-4">Ein günstiges Kombi-Tool ist die richtige Wahl, wenn …</p>
                         <ul className="space-y-2">
                             {FOR_WHOM.map((item, i) => (
-                                <li key={i} className="text-sm text-slate-400 leading-relaxed flex gap-2">
+                                <li key={i} className="text-sm text-[var(--text-muted)] leading-relaxed flex gap-2">
                                     <span className="text-[var(--accent)] shrink-0">–</span>{item}
                                 </li>
                             ))}
                         </ul>
-                        <p className="mt-4 text-sm text-slate-500">
+                        <p className="mt-4 text-sm text-[var(--text-faint)]">
                             Für sehr großvolumiges Agentur-Monitoring über viele Kunden-Workspaces hinweg kann ein spezialisiertes, teureres Tool wie{' '}
-                            <Link href="/vergleich/otterly-alternative" className="text-slate-400 hover:text-[var(--accent)] underline underline-offset-2">Otterly.ai</Link>{' '}
+                            <Link href="/vergleich/otterly-alternative" className="text-[var(--text-muted)] hover:text-[var(--accent)] underline underline-offset-2">Otterly.ai</Link>{' '}
                             mehr Kapazität bieten – für die meisten Einzelseiten, Freelancer und kleinen Teams reicht der günstigere Kombi-Ansatz von Scanora.
                         </p>
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">Häufige Fragen</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Häufige Fragen</h2>
                         <div className="space-y-4">
                             {faqLd.mainEntity.map((faq, i) => (
                                 <div key={i} className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl p-5">
-                                    <h3 className="font-semibold text-white mb-2 text-sm">{faq.name}</h3>
-                                    <p className="text-sm text-slate-400 leading-relaxed">{faq.acceptedAnswer.text}</p>
+                                    <h3 className="font-semibold text-[var(--text-white)] mb-2 text-sm">{faq.name}</h3>
+                                    <p className="text-sm text-[var(--text-muted)] leading-relaxed">{faq.acceptedAnswer.text}</p>
                                 </div>
                             ))}
                         </div>
@@ -279,16 +279,16 @@ export default function GuenstigesGeoToolPage() {
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 justify-between">
                         <div>
                             <span className="text-xs font-semibold text-[var(--accent)] uppercase tracking-wider mb-1 block">Selbst ausprobieren</span>
-                            <h3 className="text-base sm:text-lg font-bold text-white mb-2">
+                            <h3 className="text-base sm:text-lg font-bold text-[var(--text-white)] mb-2">
                                 Teste kostenlos, wie sichtbar du bei Google und in KI-Antworten bist
                             </h3>
-                            <p className="text-slate-400 text-sm leading-relaxed max-w-md">
+                            <p className="text-[var(--text-muted)] text-sm leading-relaxed max-w-md">
                                 Gib deine URL ein und erhalte in rund 60 Sekunden deinen SEO- und KI-Sichtbarkeits-Score – ohne Anmeldung, ohne Kreditkarte.
                             </p>
                         </div>
                         <Link
                             href="/dashboard"
-                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-[var(--accent-border)] shrink-0"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-[var(--accent-border)] active:scale-[0.97] active:duration-75 shrink-0"
                         >
                             Jetzt kostenlos prüfen
                         </Link>
@@ -300,16 +300,16 @@ export default function GuenstigesGeoToolPage() {
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 justify-between">
                         <div>
                             <span className="text-xs font-semibold text-[var(--accent)] uppercase tracking-wider mb-1 block">Vergleich</span>
-                            <h3 className="text-base sm:text-lg font-bold text-white mb-2">
+                            <h3 className="text-base sm:text-lg font-bold text-[var(--text-white)] mb-2">
                                 Otterly.ai-Alternative: der ausführliche Vergleich
                             </h3>
-                            <p className="text-slate-400 text-sm leading-relaxed max-w-md">
+                            <p className="text-[var(--text-muted)] text-sm leading-relaxed max-w-md">
                                 Wie Scanora im Detail gegen den bekanntesten reinen AI-Visibility-Tracker abschneidet – inklusive Preisen und Grenzen.
                             </p>
                         </div>
                         <Link
                             href="/vergleich/otterly-alternative"
-                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--surface-08)] hover:bg-[var(--surface-10)] text-white text-sm font-semibold rounded-xl transition-all duration-200 shrink-0"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--surface-08)] hover:bg-[var(--surface-10)] text-[var(--text-white)] text-sm font-semibold rounded-xl transition-all duration-200 shrink-0"
                         >
                             Vergleich lesen
                         </Link>
@@ -321,16 +321,16 @@ export default function GuenstigesGeoToolPage() {
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 justify-between">
                         <div>
                             <span className="text-xs font-semibold text-[var(--accent)] uppercase tracking-wider mb-1 block">Weiterlesen</span>
-                            <h3 className="text-base sm:text-lg font-bold text-white mb-2">
+                            <h3 className="text-base sm:text-lg font-bold text-[var(--text-white)] mb-2">
                                 SEO Rank Tracker & KI-Sichtbarkeits-Monitor
                             </h3>
-                            <p className="text-slate-400 text-sm leading-relaxed max-w-md">
+                            <p className="text-[var(--text-muted)] text-sm leading-relaxed max-w-md">
                                 Wie SEO Automatisierung und GEO Automatisierung bei Scanora im Detail funktionieren – inklusive Preisen.
                             </p>
                         </div>
                         <Link
                             href="/blog/seo-geo-automatisierung"
-                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--surface-08)] hover:bg-[var(--surface-10)] text-white text-sm font-semibold rounded-xl transition-all duration-200 shrink-0"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--surface-08)] hover:bg-[var(--surface-10)] text-[var(--text-white)] text-sm font-semibold rounded-xl transition-all duration-200 shrink-0"
                         >
                             Artikel lesen
                         </Link>
@@ -339,7 +339,7 @@ export default function GuenstigesGeoToolPage() {
 
                 {/* Back */}
                 <div className="mt-10 pt-8 border-t border-[var(--border-subtle)]">
-                    <Link href="/" className="text-sm text-slate-500 hover:text-slate-300 transition-colors">
+                    <Link href="/" className="text-sm text-[var(--text-faint)] hover:text-[var(--text-body)] transition-colors">
                         ← Zurück zur Startseite
                     </Link>
                 </div>

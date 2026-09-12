@@ -137,7 +137,7 @@ const MISTAKES = [
 
 export default function LlmsTxtPage() {
     return (
-        <main className="bg-[#05080f] min-h-screen">
+        <main className="bg-[var(--bg-base)] min-h-screen">
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToLd) }} />
@@ -147,12 +147,12 @@ export default function LlmsTxtPage() {
             <article className="max-w-3xl mx-auto px-5 sm:px-8 pt-32 pb-24">
 
                 {/* Breadcrumb */}
-                <div className="flex items-center gap-2 text-xs text-slate-600 mb-8">
-                    <Link href="/" className="hover:text-slate-400 transition-colors">Scanora</Link>
+                <div className="flex items-center gap-2 text-xs text-[var(--text-faint)] mb-8">
+                    <Link href="/" className="hover:text-[var(--text-muted)] transition-colors">Scanora</Link>
                     <span>/</span>
-                    <Link href="/blog" className="hover:text-slate-400 transition-colors">Blog</Link>
+                    <Link href="/blog" className="hover:text-[var(--text-muted)] transition-colors">Blog</Link>
                     <span>/</span>
-                    <span className="text-slate-500">llms.txt erklärt</span>
+                    <span className="text-[var(--text-faint)]">llms.txt erklärt</span>
                 </div>
 
                 {/* Header */}
@@ -161,19 +161,19 @@ export default function LlmsTxtPage() {
                         <span className="text-[11px] font-semibold px-2.5 py-1 rounded-full uppercase tracking-wider bg-cyan-500/15 text-cyan-400">
                             GEO
                         </span>
-                        <span className="text-xs text-slate-600">26. Juli 2026</span>
-                        <span className="text-xs text-slate-600">· 7 min Lesezeit</span>
-                        <span className="text-xs text-slate-600">· Aktualisiert am 24. August 2026</span>
+                        <span className="text-xs text-[var(--text-faint)]">26. Juli 2026</span>
+                        <span className="text-xs text-[var(--text-faint)]">· 7 min Lesezeit</span>
+                        <span className="text-xs text-[var(--text-faint)]">· Aktualisiert am 24. August 2026</span>
                     </div>
-                    <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight tracking-tight mb-5">
+                    <h1 className="text-3xl sm:text-5xl font-bold text-[var(--text-white)] leading-tight tracking-tight mb-5">
                         llms.txt erklärt: Was es ist und wie du es richtig einrichtest
                     </h1>
-                    <p className="text-lg text-slate-400 leading-relaxed">
+                    <p className="text-lg text-[var(--text-muted)] leading-relaxed">
                         Eine einzige Textdatei im Root-Verzeichnis kann darüber entscheiden, ob KI-Modelle deine Website überhaupt verstehen. Hier erfährst du, woher llms.txt kommt, wie es aufgebaut ist und wie du in 10 Minuten deine eigene erstellst.
                     </p>
-                    <div className="mt-5 flex items-center gap-2 text-xs text-slate-600">
-                        <Link href="/about" className="flex items-center gap-2 hover:text-slate-300 transition-colors">
-                            <div className="w-6 h-6 rounded-full bg-gradient-to-br from-violet-600 to-cyan-600 flex items-center justify-center text-white text-[10px] font-bold">F</div>
+                    <div className="mt-5 flex items-center gap-2 text-xs text-[var(--text-faint)]">
+                        <Link href="/about" className="flex items-center gap-2 hover:text-[var(--text-body)] transition-colors">
+                            <div className="w-6 h-6 rounded-full bg-gradient-to-br from-violet-600 to-cyan-600 flex items-center justify-center text-[var(--text-white)] text-[10px] font-bold">F</div>
                             <span>Finn Paustian</span>
                         </Link>
                         <span>·</span>
@@ -181,14 +181,14 @@ export default function LlmsTxtPage() {
                     </div>
                 </div>
 
-                <div className="border-t border-white/5 mb-10" />
+                <div className="border-t border-[var(--text-white)]/5 mb-10" />
 
-                <div className="space-y-10 text-slate-300 leading-relaxed">
+                <div className="space-y-10 text-[var(--text-body)] leading-relaxed">
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">Was ist llms.txt?</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Was ist llms.txt?</h2>
                         <p>
-                            llms.txt ist eine Markdown-Datei im Root-Verzeichnis einer Website - erreichbar unter <code className="text-xs bg-white/[0.06] px-1.5 py-0.5 rounded">deinedomain.de/llms.txt</code>, ähnlich wie robots.txt oder sitemap.xml. Der Unterschied: robots.txt sagt Crawlern, was sie NICHT besuchen dürfen. llms.txt sagt KI-Modellen, WAS deine Website ist und WO die wichtigsten Inhalte liegen - eine strukturierte Kurzfassung statt einer HTML-Seite voller Navigation, Werbung und JavaScript.
+                            llms.txt ist eine Markdown-Datei im Root-Verzeichnis einer Website - erreichbar unter <code className="text-xs bg-[var(--text-white)]/[0.06] px-1.5 py-0.5 rounded">deinedomain.de/llms.txt</code>, ähnlich wie robots.txt oder sitemap.xml. Der Unterschied: robots.txt sagt Crawlern, was sie NICHT besuchen dürfen. llms.txt sagt KI-Modellen, WAS deine Website ist und WO die wichtigsten Inhalte liegen - eine strukturierte Kurzfassung statt einer HTML-Seite voller Navigation, Werbung und JavaScript.
                         </p>
                         <p className="mt-4">
                             Vorgeschlagen wurde der Standard im{' '}
@@ -200,7 +200,7 @@ export default function LlmsTxtPage() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">Nutzt Google llms.txt wirklich? Der aktuelle Stand</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Nutzt Google llms.txt wirklich? Der aktuelle Stand</h2>
                         <p>
                             Kein großer KI-Anbieter hat bislang offiziell bestätigt, llms.txt tatsächlich einzulesen. Google hat sich am deutlichsten geäußert: Die Datei ist für die Google-Suche und AI Overviews nicht notwendig, weil Google Seiteninhalte bereits vollständig über die reguläre Indexierung crawlt und verarbeitet - eine separate Zusammenfassungsdatei bringt dafür keinen zusätzlichen Nutzen. Auch für ChatGPT, Claude oder Perplexity gibt es keine offizielle Bestätigung eines gezielten /llms.txt-Abrufs, und Logfile-Analysen mehrerer SEO-Tools fanden bisher keine Hinweise darauf, dass die bekannten KI-Crawler die Datei tatsächlich abrufen.
                         </p>
@@ -216,16 +216,16 @@ export default function LlmsTxtPage() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-6">Wie ist eine llms.txt aufgebaut?</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-6">Wie ist eine llms.txt aufgebaut?</h2>
                         <div className="space-y-3">
                             {STRUCTURE.map((s) => (
-                                <div key={s.part} className="flex items-start gap-4 bg-white/[0.02] border border-white/[0.06] rounded-xl p-4">
+                                <div key={s.part} className="flex items-start gap-4 bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-xl p-4">
                                     <code className="text-xs text-cyan-400 font-mono shrink-0 mt-0.5 whitespace-nowrap">{s.part}</code>
-                                    <span className="text-sm text-slate-400">{s.desc}</span>
+                                    <span className="text-sm text-[var(--text-muted)]">{s.desc}</span>
                                 </div>
                             ))}
                         </div>
-                        <pre className="mt-5 text-xs bg-white/[0.04] border border-white/[0.06] rounded-xl p-4 text-slate-400 font-mono overflow-x-auto">
+                        <pre className="mt-5 text-xs bg-[var(--text-white)]/[0.04] border border-[var(--text-white)]/[0.06] rounded-xl p-4 text-[var(--text-muted)] font-mono overflow-x-auto">
 {`# MeinProdukt
 > MeinProdukt ist ein Tool für X, das Y in unter 60 Sekunden löst.
 
@@ -236,40 +236,40 @@ export default function LlmsTxtPage() {
 ## Preise
 - [Preise & Pläne](https://beispiel.de/pricing): Alle Tarife im Überblick`}
                         </pre>
-                        <p className="text-xs text-slate-600 mt-3">
+                        <p className="text-xs text-[var(--text-faint)] mt-3">
                             Vollständige Spezifikation:{' '}
-                            <a href="https://llmstxt.org" target="_blank" rel="noopener noreferrer" className="text-slate-500 hover:text-slate-400 underline underline-offset-2">
+                            <a href="https://llmstxt.org" target="_blank" rel="noopener noreferrer" className="text-[var(--text-faint)] hover:text-[var(--text-muted)] underline underline-offset-2">
                                 llmstxt.org ↗
                             </a>
                         </p>
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">llms.txt vs. llms-full.txt: Was ist der Unterschied?</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">llms.txt vs. llms-full.txt: Was ist der Unterschied?</h2>
                         <p>
-                            llms.txt bleibt bewusst kurz - eine Orientierung mit Links. llms-full.txt (optional, unter <code className="text-xs bg-white/[0.06] px-1.5 py-0.5 rounded">/llms-full.txt</code>) enthält dieselben Themen ausführlicher: Preise im Detail, häufige Fragen, technische Spezifikationen. Für KI-Modelle, die mehr Kontext auf einmal laden können, liefert die ausführliche Version direktere, zitierfähige Antworten - ohne dass Nutzer erst mehrere verlinkte Unterseiten abklappern müssen.
+                            llms.txt bleibt bewusst kurz - eine Orientierung mit Links. llms-full.txt (optional, unter <code className="text-xs bg-[var(--text-white)]/[0.06] px-1.5 py-0.5 rounded">/llms-full.txt</code>) enthält dieselben Themen ausführlicher: Preise im Detail, häufige Fragen, technische Spezifikationen. Für KI-Modelle, die mehr Kontext auf einmal laden können, liefert die ausführliche Version direktere, zitierfähige Antworten - ohne dass Nutzer erst mehrere verlinkte Unterseiten abklappern müssen.
                         </p>
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-6">Häufige Fehler beim Einrichten</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-6">Häufige Fehler beim Einrichten</h2>
                         <div className="space-y-3">
                             {MISTAKES.map((m) => (
-                                <div key={m.title} className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5">
-                                    <h3 className="font-semibold text-white mb-1.5 text-sm">{m.title}</h3>
-                                    <p className="text-sm text-slate-400 leading-relaxed">{m.desc}</p>
+                                <div key={m.title} className="bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-2xl p-5">
+                                    <h3 className="font-semibold text-[var(--text-white)] mb-1.5 text-sm">{m.title}</h3>
+                                    <p className="text-sm text-[var(--text-muted)] leading-relaxed">{m.desc}</p>
                                 </div>
                             ))}
                         </div>
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">Häufige Fragen zu llms.txt</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Häufige Fragen zu llms.txt</h2>
                         <div className="space-y-4">
                             {faqLd.mainEntity.map((faq, i) => (
-                                <div key={i} className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5">
-                                    <h3 className="font-semibold text-white mb-2 text-sm">{faq.name}</h3>
-                                    <p className="text-sm text-slate-400 leading-relaxed">{faq.acceptedAnswer.text}</p>
+                                <div key={i} className="bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-2xl p-5">
+                                    <h3 className="font-semibold text-[var(--text-white)] mb-2 text-sm">{faq.name}</h3>
+                                    <p className="text-sm text-[var(--text-muted)] leading-relaxed">{faq.acceptedAnswer.text}</p>
                                 </div>
                             ))}
                         </div>
@@ -278,37 +278,37 @@ export default function LlmsTxtPage() {
                 </div>
 
                 {/* CTA */}
-                <div className="mt-14 bg-gradient-to-br from-cyan-950/40 to-[#05080f] border border-cyan-500/20 rounded-2xl p-6 sm:p-8 text-center">
-                    <h2 className="text-xl sm:text-2xl font-bold text-white mb-3">
+                <div className="mt-14 bg-gradient-to-br from-cyan-950/40 to-[var(--bg-base)] border border-cyan-500/20 rounded-2xl p-6 sm:p-8 text-center">
+                    <h2 className="text-xl sm:text-2xl font-bold text-[var(--text-white)] mb-3">
                         Hast du bereits eine llms.txt?
                     </h2>
-                    <p className="text-slate-400 text-sm mb-6 max-w-md mx-auto leading-relaxed">
+                    <p className="text-[var(--text-muted)] text-sm mb-6 max-w-md mx-auto leading-relaxed">
                         Scanora prüft automatisch, ob llms.txt und llms-full.txt vorhanden und korrekt formatiert sind - als Teil von 19 GEO-Signalen in unter 60 Sekunden. Start ohne Registrierung, für den vollständigen Report mit allen Scores meldest du dich kostenlos an.
                     </p>
                     <Link
                         href="/dashboard"
-                        className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-cyan-600 to-violet-600 hover:from-cyan-500 hover:to-violet-500 text-white text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-cyan-500/20"
+                        className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-cyan-600 to-violet-600 hover:from-cyan-500 hover:to-violet-500 text-[var(--text-white)] text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-cyan-500/20"
                     >
                         GEO-Score jetzt prüfen
                     </Link>
-                    <div className="mt-3 text-xs text-slate-600">Ohne Registrierung starten · Voller Report kostenlos · 60 Sekunden</div>
+                    <div className="mt-3 text-xs text-[var(--text-faint)]">Ohne Registrierung starten · Voller Report kostenlos · 60 Sekunden</div>
                 </div>
 
                 {/* Cross-link to sibling posts */}
-                <div className="mt-5 bg-white/[0.02] border border-white/[0.06] rounded-2xl p-6 sm:p-8">
+                <div className="mt-5 bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-2xl p-6 sm:p-8">
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 justify-between">
                         <div>
                             <span className="text-xs font-semibold text-cyan-400 uppercase tracking-wider mb-1 block">Weiterlesen</span>
-                            <h3 className="text-base sm:text-lg font-bold text-white mb-2">
+                            <h3 className="text-base sm:text-lg font-bold text-[var(--text-white)] mb-2">
                                 GEO-Optimierung 2026: So wirst du von ChatGPT und Claude empfohlen
                             </h3>
-                            <p className="text-slate-400 text-sm leading-relaxed max-w-md">
+                            <p className="text-[var(--text-muted)] text-sm leading-relaxed max-w-md">
                                 llms.txt ist eines von 19 GEO-Signalen - die vollständige Übersicht, was sonst noch zählt.
                             </p>
                         </div>
                         <Link
                             href="/blog/geo-optimierung-2026"
-                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/[0.06] hover:bg-white/10 text-white text-sm font-semibold rounded-xl transition-all duration-200 shrink-0"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--text-white)]/[0.06] hover:bg-[var(--text-white)]/10 text-[var(--text-white)] text-sm font-semibold rounded-xl transition-all duration-200 shrink-0"
                         >
                             Artikel lesen
                         </Link>
@@ -316,8 +316,8 @@ export default function LlmsTxtPage() {
                 </div>
 
                 {/* Back */}
-                <div className="mt-10 pt-8 border-t border-white/5">
-                    <Link href="/blog" className="text-sm text-slate-500 hover:text-slate-300 transition-colors">
+                <div className="mt-10 pt-8 border-t border-[var(--text-white)]/5">
+                    <Link href="/blog" className="text-sm text-[var(--text-faint)] hover:text-[var(--text-body)] transition-colors">
                         ← Zurück zum Blog
                     </Link>
                 </div>

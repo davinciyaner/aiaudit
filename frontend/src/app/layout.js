@@ -4,6 +4,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 import { MotionConfig } from 'framer-motion'
 import Script from 'next/script'
 import CookieBanner from './components/CookieBanner'
+import AppToaster from './components/AppToaster'
 import { getRootJsonLd } from '../lib/i18n/rootJsonLd'
 
 export const metadata = {
@@ -60,11 +61,20 @@ export default function RootLayout({ children }) {
             type="application/ld+json"
             dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+        {/* Blocking (not next/script) so it runs before first paint — avoids a flash of the
+            wrong theme. Defaults to dark (matches the server-rendered class) when nothing is
+            stored yet or localStorage is unavailable (e.g. private browsing). */}
+        <script
+            dangerouslySetInnerHTML={{
+                __html: `try{if(localStorage.getItem('scanora-theme')==='light')document.documentElement.classList.add('light')}catch(e){}`,
+            }}
+        />
         </head>
-        <body className="bg-[#080b14] text-white antialiased">
+        <body className="bg-[var(--bg-base)] text-[var(--text-white)] antialiased">
         <MotionConfig reducedMotion="user">
             {children}
         </MotionConfig>
+        <AppToaster />
         <Script
             src="https://www.googletagmanager.com/gtag/js?id=AW-691789119"
             strategy="lazyOnload"

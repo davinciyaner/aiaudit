@@ -16,7 +16,7 @@ export default function ResultsSection() {
                     <h2 className="text-3xl sm:text-5xl font-bold tracking-tight mb-4">
                         Deine AI Visibility,<br className="hidden sm:block" /> messbar statt geraten.
                     </h2>
-                    <p className="text-slate-400 max-w-2xl mx-auto text-base sm:text-lg leading-relaxed">
+                    <p className="text-[var(--text-muted)] max-w-2xl mx-auto text-base sm:text-lg leading-relaxed">
                         Scanora trackt deine AI Visibility bei ChatGPT, Claude, Perplexity und Google AI Overview genauso
                         präzise wie deine Google-Rankings — mit klaren Trends statt Bauchgefühl.
                     </p>
@@ -37,7 +37,7 @@ export default function ResultsSection() {
                     <RankingBars />
                 </motion.div>
 
-                <p className="text-center text-xs text-slate-400 mt-6">
+                <p className="text-center text-xs text-[var(--text-muted)] mt-6">
                     Beispieldaten zur Veranschaulichung des Scanora-Trackings — kein Ergebnisversprechen für eine bestimmte Website.
                 </p>
             </div>

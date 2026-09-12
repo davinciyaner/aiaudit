@@ -63,22 +63,22 @@ export default function TicketStatusPage() {
     const currentIndex = ticket ? getStatusIndex(ticket.status) : 0
 
     return (
-        <div className="min-h-screen bg-[#080b14] flex flex-col">
-            <nav className="border-b border-white/5 bg-[#080b14]/90 backdrop-blur-xl">
+        <div className="min-h-screen bg-[var(--bg-base)] flex flex-col">
+            <nav className="border-b border-[var(--text-white)]/5 bg-[var(--bg-base)]/90 backdrop-blur-xl">
                 <div className="max-w-5xl mx-auto px-5 sm:px-8 h-16 flex items-center">
                     <Link href="/" className="flex items-center gap-2">
                         <div className="w-8 h-8 rounded-lg bg-[var(--accent)] flex items-center justify-center">
-                            <svg className="w-4 h-4 text-white" viewBox="0 0 192 192" fill="none"><circle cx="96" cy="96" r="50" stroke="currentColor" strokeWidth="14" /><circle cx="110" cy="82" r="13" fill="currentColor" /></svg>
+                            <svg className="w-4 h-4 text-[var(--text-white)]" viewBox="0 0 192 192" fill="none"><circle cx="96" cy="96" r="50" stroke="currentColor" strokeWidth="14" /><circle cx="110" cy="82" r="13" fill="currentColor" /></svg>
                         </div>
-                        <span className="font-bold text-white">Scanora</span>
+                        <span className="font-bold text-[var(--text-white)]">Scanora</span>
                     </Link>
                 </div>
             </nav>
 
             <div className="flex-1 flex items-center justify-center px-5 py-16">
                 {loading && (
-                    <div className="flex items-center gap-3 text-slate-400">
-                        <div className="w-5 h-5 border-2 border-slate-600 border-t-violet-500 rounded-full animate-spin" />
+                    <div className="flex items-center gap-3 text-[var(--text-muted)]">
+                        <div className="w-5 h-5 border-2 border-[var(--border-strong)] border-t-violet-500 rounded-full animate-spin" />
                         Ticket wird geladen...
                     </div>
                 )}
@@ -88,8 +88,8 @@ export default function TicketStatusPage() {
                         <div className="w-16 h-16 rounded-2xl bg-red-500/10 border border-red-500/20 flex items-center justify-center mx-auto mb-4">
                             <XCircle className="w-7 h-7 text-red-400" />
                         </div>
-                        <h1 className="text-xl font-bold text-white mb-2">Ticket nicht gefunden</h1>
-                        <p className="text-slate-400 text-sm mb-6">Die Ticketnummer <span className="font-mono text-slate-300">{ticketId}</span> existiert nicht.</p>
+                        <h1 className="text-xl font-bold text-[var(--text-white)] mb-2">Ticket nicht gefunden</h1>
+                        <p className="text-[var(--text-muted)] text-sm mb-6">Die Ticketnummer <span className="font-mono text-[var(--text-body)]">{ticketId}</span> existiert nicht.</p>
                         <Link href="/" className="text-violet-400 hover:text-violet-300 text-sm transition-colors">← Zurück zur Startseite</Link>
                     </div>
                 )}
@@ -102,9 +102,9 @@ export default function TicketStatusPage() {
                     >
                         {/* Header */}
                         <div className="text-center">
-                            <p className="text-xs text-slate-500 uppercase tracking-wider font-semibold mb-1">Support-Ticket</p>
-                            <h1 className="text-2xl font-bold text-white mb-1 font-mono">{ticket.ticketNumber}</h1>
-                            <p className="text-slate-400 text-sm">{ticket.subject}</p>
+                            <p className="text-xs text-[var(--text-faint)] uppercase tracking-wider font-semibold mb-1">Support-Ticket</p>
+                            <h1 className="text-2xl font-bold text-[var(--text-white)] mb-1 font-mono">{ticket.ticketNumber}</h1>
+                            <p className="text-[var(--text-muted)] text-sm">{ticket.subject}</p>
                         </div>
 
                         {/* Aktueller Status */}
@@ -113,12 +113,12 @@ export default function TicketStatusPage() {
                                 <div className={`w-2.5 h-2.5 rounded-full ${currentStatus.dot} animate-pulse`} />
                                 <span className={`font-semibold ${currentStatus.color}`}>{currentStatus.label}</span>
                             </div>
-                            <p className="text-slate-400 text-sm mt-2 ml-5">{currentStatus.description}</p>
+                            <p className="text-[var(--text-muted)] text-sm mt-2 ml-5">{currentStatus.description}</p>
                         </div>
 
                         {/* Fortschritts-Stepper */}
-                        <div className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-6">
-                            <p className="text-xs text-slate-500 uppercase tracking-wider font-semibold mb-5">Verlauf</p>
+                        <div className="bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-2xl p-6">
+                            <p className="text-xs text-[var(--text-faint)] uppercase tracking-wider font-semibold mb-5">Verlauf</p>
                             <div className="space-y-0">
                                 {STATUSES.map((s, i) => {
                                     const done = i <= currentIndex
@@ -132,16 +132,16 @@ export default function TicketStatusPage() {
                                                         ? `${s.bg} ${s.border}`
                                                         : done
                                                             ? 'bg-emerald-500/10 border-emerald-500/30'
-                                                            : 'bg-white/[0.03] border-white/10'
+                                                            : 'bg-[var(--text-white)]/[0.03] border-[var(--text-white)]/10'
                                                 }`}>
-                                                    <Icon className={`w-3.5 h-3.5 ${active ? s.color : done ? 'text-emerald-400' : 'text-slate-600'}`} />
+                                                    <Icon className={`w-3.5 h-3.5 ${active ? s.color : done ? 'text-emerald-400' : 'text-[var(--text-faint)]'}`} />
                                                 </div>
                                                 {i < STATUSES.length - 1 && (
-                                                    <div className={`w-0.5 h-8 mt-1 ${done && i < currentIndex ? 'bg-emerald-500/30' : 'bg-white/[0.06]'}`} />
+                                                    <div className={`w-0.5 h-8 mt-1 ${done && i < currentIndex ? 'bg-emerald-500/30' : 'bg-[var(--text-white)]/[0.06]'}`} />
                                                 )}
                                             </div>
                                             <div className={`pb-8 ${i === STATUSES.length - 1 ? 'pb-0' : ''}`}>
-                                                <p className={`text-sm font-medium mt-1 ${active ? s.color : done ? 'text-slate-300' : 'text-slate-600'}`}>
+                                                <p className={`text-sm font-medium mt-1 ${active ? s.color : done ? 'text-[var(--text-body)]' : 'text-[var(--text-faint)]'}`}>
                                                     {s.label}
                                                 </p>
                                             </div>
@@ -153,23 +153,23 @@ export default function TicketStatusPage() {
 
                         {/* Meta */}
                         <div className="grid grid-cols-2 gap-3">
-                            <div className="bg-white/[0.02] border border-white/[0.06] rounded-xl px-4 py-3">
-                                <p className="text-xs text-slate-500 mb-1">Erstellt am</p>
-                                <p className="text-sm text-slate-300">
+                            <div className="bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-xl px-4 py-3">
+                                <p className="text-xs text-[var(--text-faint)] mb-1">Erstellt am</p>
+                                <p className="text-sm text-[var(--text-body)]">
                                     {new Date(ticket.createdAt).toLocaleDateString('de-DE', { day: '2-digit', month: 'short', year: 'numeric' })}
                                 </p>
                             </div>
-                            <div className="bg-white/[0.02] border border-white/[0.06] rounded-xl px-4 py-3">
-                                <p className="text-xs text-slate-500 mb-1">Zuletzt aktualisiert</p>
-                                <p className="text-sm text-slate-300">
+                            <div className="bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-xl px-4 py-3">
+                                <p className="text-xs text-[var(--text-faint)] mb-1">Zuletzt aktualisiert</p>
+                                <p className="text-sm text-[var(--text-body)]">
                                     {new Date(ticket.updatedAt).toLocaleDateString('de-DE', { day: '2-digit', month: 'short', year: 'numeric' })}
                                 </p>
                             </div>
                         </div>
 
-                        <p className="text-center text-xs text-slate-600">
+                        <p className="text-center text-xs text-[var(--text-faint)]">
                             Diese Seite aktualisiert sich nicht automatisch —{' '}
-                            <button onClick={() => window.location.reload()} className="text-slate-500 hover:text-slate-400 underline underline-offset-2">
+                            <button onClick={() => window.location.reload()} className="text-[var(--text-faint)] hover:text-[var(--text-muted)] underline underline-offset-2">
                                 neu laden
                             </button>
                             {' '}um den aktuellen Status zu sehen.

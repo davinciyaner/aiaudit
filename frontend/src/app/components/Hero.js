@@ -1,10 +1,9 @@
 'use client'
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { ArrowRight, Globe, TrendingUp, Search } from 'lucide-react'
+import { ArrowRight, Globe, TrendingUp, Search, CheckCircle2, AlertCircle } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import toast from 'react-hot-toast'
 import { PLATFORM_META, ALL_PLATFORMS, PlatformIcon } from '../geo/components/PlatformBadges'
 
 function normalizeUrl(input) {
@@ -17,28 +16,56 @@ function normalizeUrl(input) {
 function HeroAuditInput() {
     const router = useRouter()
     const [url, setUrl] = useState('')
+    const [touched, setTouched] = useState(false)
+    const [submitting, setSubmitting] = useState(false)
     const normalized = normalizeUrl(url)
+    const isEmpty = !url.trim()
+    const showError = touched && isEmpty
+    const showSuccess = touched && !isEmpty
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        if (!url.trim()) return toast.error('Bitte eine URL eingeben')
+        if (submitting) return
+        if (isEmpty) {
+            setTouched(true)
+            return
+        }
+        setSubmitting(true)
         sessionStorage.setItem('pendingAuditUrl', normalized)
         router.push('/dashboard')
     }
 
+    const barStateClass = showError
+        ? 'border-[var(--danger)] focus-within:border-[var(--danger)] focus-within:ring-[var(--danger-soft)]'
+        : showSuccess
+            ? 'border-[var(--success-border)] focus-within:border-[var(--success)] focus-within:ring-[var(--success-soft)]'
+            : 'border-[var(--border-subtle)] focus-within:border-[var(--accent-border)] focus-within:ring-[var(--accent-soft-strong)] focus-within:bg-[var(--surface-08)]'
+
     return (
-        <form onSubmit={handleSubmit} className="w-full">
-            <div className="relative flex items-center gap-3 p-2 bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl focus-within:border-[var(--accent-border)] focus-within:ring-2 focus-within:ring-[var(--accent-soft-strong)] focus-within:bg-[var(--surface-08)] transition-all duration-200 shadow-xl shadow-black/20">
+        <form onSubmit={handleSubmit} className="w-full" noValidate>
+            <label htmlFor="hero-audit-url" className="block text-xs font-semibold text-[var(--text-faint)] text-center mb-2">
+                Website-URL
+            </label>
+            <div className={`relative flex items-center gap-3 p-2 bg-[var(--surface-06)] border rounded-2xl focus-within:ring-2 transition-all duration-200 shadow-card ${barStateClass}`}>
                 <div className="flex items-center gap-3 flex-1 px-3">
-                    <Globe className="w-4 h-4 text-slate-500 shrink-0" />
-                    <label htmlFor="hero-audit-url" className="sr-only">Website-URL</label>
+                    {showError ? (
+                        <AlertCircle className="w-4 h-4 text-[var(--danger)] shrink-0" />
+                    ) : showSuccess ? (
+                        <CheckCircle2 className="w-4 h-4 text-[var(--success)] shrink-0" />
+                    ) : (
+                        <Globe className="w-4 h-4 text-[var(--text-faint)] shrink-0" />
+                    )}
                     <input
                         id="hero-audit-url"
                         type="text"
                         value={url}
                         onChange={e => setUrl(e.target.value)}
+                        onBlur={() => setTouched(true)}
+                        disabled={submitting}
                         placeholder="deinewebsite.de"
-                        className="flex-1 bg-transparent text-white placeholder-slate-600 text-sm outline-none py-2"
+                        aria-invalid={showError}
+                        aria-describedby="hero-audit-url-hint"
+                        className="flex-1 bg-transparent text-[var(--text-white)] placeholder-[var(--text-faint)] text-sm outline-none py-2 disabled:opacity-60"
                         autoComplete="off"
                         autoCapitalize="off"
                         autoCorrect="off"
@@ -46,16 +73,23 @@ function HeroAuditInput() {
                         spellCheck={false}
                     />
                     {url.trim() && !url.startsWith('http') && (
-                        <span className="text-xs text-slate-500 shrink-0 hidden sm:block">→ {normalized}</span>
+                        <span className="text-xs text-[var(--text-faint)] shrink-0 hidden sm:block">→ {normalized}</span>
                     )}
                 </div>
-                <button type="submit"
-                    className="flex items-center gap-2 px-6 py-3 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-[var(--accent-border)] shrink-0">
-                    <Search className="w-4 h-4" />Jetzt prüfen<ArrowRight className="w-3.5 h-3.5" />
+                <button type="submit" disabled={submitting} aria-busy={submitting}
+                    className="flex items-center gap-2 px-6 py-3 bg-[var(--accent)] hover:opacity-90 disabled:opacity-80 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-[var(--accent-border)] active:scale-[0.97] active:duration-75 shrink-0">
+                    {submitting
+                        ? <span className="w-4 h-4 rounded-full border-2 border-[var(--bg-base)]/30 border-t-[var(--bg-base)] animate-spin" aria-hidden="true" />
+                        : <Search className="w-4 h-4" />}
+                    {submitting ? 'Wird geprüft…' : 'Jetzt prüfen'}
+                    {!submitting && <ArrowRight className="w-3.5 h-3.5" />}
                 </button>
             </div>
-            <p className="text-xs text-slate-400 text-center mt-3">
-                Start ohne Anmeldung · Für den vollen Report kostenlos registrieren · Ergebnis in ~60 Sekunden
+            <p id="hero-audit-url-hint" role={showError ? 'alert' : undefined}
+                className={`text-xs text-center mt-3 ${showError ? 'text-[var(--danger)]' : 'text-[var(--text-muted)]'}`}>
+                {showError
+                    ? 'Bitte eine URL eingeben'
+                    : 'Start ohne Anmeldung · Für den vollen Report kostenlos registrieren · Ergebnis in ~60 Sekunden'}
             </p>
         </form>
     )
@@ -91,7 +125,7 @@ export default function Hero() {
                     </motion.h2>
 
                     <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-                        className="text-base sm:text-lg text-slate-400 mb-8 max-w-2xl leading-relaxed">
+                        className="text-base sm:text-lg text-[var(--text-muted)] mb-8 max-w-2xl leading-relaxed">
                         Für Marketing-Teams und Agenturen: Scanora prüft, ob ChatGPT, Claude, Gemini, Perplexity und
                         Google AI Overview deine Seite kennen — und wie du bei Google rankst. Ein Audit, konkrete
                         Fixes statt generischen Tipps.
@@ -105,7 +139,7 @@ export default function Hero() {
                     <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.18 }}
                         className="w-full max-w-2xl mb-10 p-5 rounded-2xl bg-[var(--surface-06)] border border-[var(--border-subtle)] text-left">
                         <span className="text-xs font-semibold text-[var(--accent)] uppercase tracking-wide">Kurz erklärt</span>
-                        <p className="mt-2 text-sm text-slate-300 leading-relaxed">
+                        <p className="mt-2 text-sm text-[var(--text-body)] leading-relaxed">
                             Scanora ist ein KI-gestütztes Website-Audit-Tool aus Deutschland, das in unter 60
                             Sekunden prüft, ob eine Website von ChatGPT, Claude, Perplexity, Gemini und Google AI Overview als Quelle
                             zitiert wird (GEO / AI Visibility) und wie sie in klassischen Google-Rankings abschneidet (SEO).
@@ -119,23 +153,23 @@ export default function Hero() {
                         <Link href="/geo/dashboard"
                             onClick={e => goToAutomation(e, '/geo/dashboard', '/geo/pricing')}
                             className="group inline-flex items-center gap-1.5 pl-3 pr-2.5 py-2.5 rounded-full bg-[var(--surface-08)] border border-[var(--border-subtle)] hover:border-[var(--accent-border)] hover:bg-[var(--surface-10)] transition-all duration-200">
-                            <Globe className="w-3 h-3 text-slate-400 group-hover:text-[var(--accent)] transition-colors" />
-                            <span className="text-xs font-medium text-slate-300 group-hover:text-white transition-colors">GEO Automatisierung starten</span>
-                            <ArrowRight className="w-3 h-3 text-slate-500 group-hover:translate-x-0.5 group-hover:text-[var(--accent)] transition-all" />
+                            <Globe className="w-3 h-3 text-[var(--text-muted)] group-hover:text-[var(--accent)] transition-colors" />
+                            <span className="text-xs font-medium text-[var(--text-body)] group-hover:text-[var(--text-white)] transition-colors">GEO Automatisierung starten</span>
+                            <ArrowRight className="w-3 h-3 text-[var(--text-faint)] group-hover:translate-x-0.5 group-hover:text-[var(--accent)] transition-all" />
                         </Link>
                         <Link href="/seo/dashboard"
                             onClick={e => goToAutomation(e, '/seo/dashboard', '/seo/pricing')}
                             className="group inline-flex items-center gap-1.5 pl-3 pr-2.5 py-2.5 rounded-full bg-[var(--surface-08)] border border-[var(--border-subtle)] hover:border-[var(--accent-border)] hover:bg-[var(--surface-10)] transition-all duration-200">
-                            <TrendingUp className="w-3 h-3 text-slate-400 group-hover:text-[var(--accent)] transition-colors" />
-                            <span className="text-xs font-medium text-slate-300 group-hover:text-white transition-colors">Rankings automatisch tracken</span>
-                            <ArrowRight className="w-3 h-3 text-slate-500 group-hover:translate-x-0.5 group-hover:text-[var(--accent)] transition-all" />
+                            <TrendingUp className="w-3 h-3 text-[var(--text-muted)] group-hover:text-[var(--accent)] transition-colors" />
+                            <span className="text-xs font-medium text-[var(--text-body)] group-hover:text-[var(--text-white)] transition-colors">Rankings automatisch tracken</span>
+                            <ArrowRight className="w-3 h-3 text-[var(--text-faint)] group-hover:translate-x-0.5 group-hover:text-[var(--accent)] transition-all" />
                         </Link>
                     </div>
 
                     <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
                         className="w-full max-w-3xl mt-14 pt-10 border-t border-[var(--border-subtle)]">
-                        <h2 className="text-base sm:text-lg font-bold text-white mb-1.5 text-center">GEO Check pro KI-Tool starten</h2>
-                        <p className="text-sm text-slate-400 mb-5 max-w-lg mx-auto text-center">
+                        <h2 className="text-base sm:text-lg font-bold text-[var(--text-white)] mb-1.5 text-center">GEO Check pro KI-Tool starten</h2>
+                        <p className="text-sm text-[var(--text-muted)] mb-5 max-w-lg mx-auto text-center">
                             Wähle ChatGPT, Claude, Perplexity oder Google AI Overview — Ergebnis in wenigen Sekunden, ganz ohne Anmeldung.
                         </p>
                         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
@@ -144,10 +178,10 @@ export default function Hero() {
                                 return (
                                     <Link key={p} href={`/geo/check?platform=${p}`}
                                         title={`${meta.label} Sichtbarkeit prüfen`}
-                                        className={`flex flex-col items-center text-center gap-2 py-4 px-2 rounded-2xl border transition-all duration-200 hover:-translate-y-0.5 ${meta.bg} ${meta.border} hover:border-opacity-60`}>
+                                        className={`flex flex-col items-center text-center gap-2 py-4 px-2 rounded-2xl border transition-all duration-200 hover-lift hover:-translate-y-2 ${meta.bg} ${meta.border} hover:border-opacity-60`}>
                                         <PlatformIcon platform={p} size="md" />
-                                        <span className="text-sm font-semibold text-white leading-tight">{meta.label}</span>
-                                        <span className="text-[11px] text-slate-400">Sichtbarkeit prüfen</span>
+                                        <span className="text-sm font-semibold text-[var(--text-white)] leading-tight">{meta.label}</span>
+                                        <span className="text-[11px] text-[var(--text-muted)]">Sichtbarkeit prüfen</span>
                                     </Link>
                                 )
                             })}

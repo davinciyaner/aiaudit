@@ -190,7 +190,7 @@ const RANKSCALE_FOR = [
 
 export default function RankscaleAlternativePage() {
     return (
-        <main className="bg-[#05080f] min-h-screen">
+        <main className="bg-[var(--bg-base)] min-h-screen">
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
@@ -200,12 +200,12 @@ export default function RankscaleAlternativePage() {
             <article className="max-w-3xl mx-auto px-5 sm:px-8 pt-32 pb-24">
 
                 {/* Breadcrumb */}
-                <div className="flex items-center gap-2 text-xs text-slate-600 mb-8">
-                    <Link href="/en" className="hover:text-slate-400 transition-colors">Scanora</Link>
+                <div className="flex items-center gap-2 text-xs text-[var(--text-faint)] mb-8">
+                    <Link href="/en" className="hover:text-[var(--text-muted)] transition-colors">Scanora</Link>
                     <span>/</span>
-                    <Link href="/en/compare" className="hover:text-slate-400 transition-colors">Compare</Link>
+                    <Link href="/en/compare" className="hover:text-[var(--text-muted)] transition-colors">Compare</Link>
                     <span>/</span>
-                    <span className="text-slate-500">Rankscale Alternative</span>
+                    <span className="text-[var(--text-faint)]">Rankscale Alternative</span>
                 </div>
 
                 {/* Header */}
@@ -214,21 +214,21 @@ export default function RankscaleAlternativePage() {
                         <span className="text-[11px] font-semibold px-2.5 py-1 rounded-full uppercase tracking-wider bg-violet-500/15 text-violet-400">
                             Comparison
                         </span>
-                        <span className="text-xs text-slate-600">August 29, 2026</span>
-                        <span className="text-xs text-slate-600">· 7 min read</span>
+                        <span className="text-xs text-[var(--text-faint)]">August 29, 2026</span>
+                        <span className="text-xs text-[var(--text-faint)]">· 7 min read</span>
                     </div>
-                    <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight tracking-tight mb-5">
+                    <h1 className="text-3xl sm:text-5xl font-bold text-[var(--text-white)] leading-tight tracking-tight mb-5">
                         Rankscale Alternative: An Honest Look at Scanora
                     </h1>
-                    <p className="text-lg text-slate-400 leading-relaxed">
+                    <p className="text-lg text-[var(--text-muted)] leading-relaxed">
                         People go looking for a Rankscale alternative for one of two reasons: the credit system makes the real monthly bill hard to predict, or you don't actually need 17 AI platforms — you need the five that matter most, covered reliably and affordably. This page compares both tools honestly — including where Rankscale wins.
                     </p>
-                    <p className="mt-4 text-slate-300 leading-relaxed">
-                        Short version: <strong className="text-white">Scanora</strong> tracks your AI visibility across ChatGPT, Claude, Gemini, Perplexity, and Google AI Overview from €29.99/month with fixed, predictable limits, and bundles in an SEO audit plus Google rank tracking. <strong className="text-white">Rankscale</strong> is a GEO-native tool with unusually broad platform coverage and a credit-based billing model. Which one fits depends on whether you prioritize predictable costs or maximum platform breadth.
+                    <p className="mt-4 text-[var(--text-body)] leading-relaxed">
+                        Short version: <strong className="text-[var(--text-white)]">Scanora</strong> tracks your AI visibility across ChatGPT, Claude, Gemini, Perplexity, and Google AI Overview from €29.99/month with fixed, predictable limits, and bundles in an SEO audit plus Google rank tracking. <strong className="text-[var(--text-white)]">Rankscale</strong> is a GEO-native tool with unusually broad platform coverage and a credit-based billing model. Which one fits depends on whether you prioritize predictable costs or maximum platform breadth.
                     </p>
-                    <div className="mt-5 flex items-center gap-2 text-xs text-slate-600">
-                        <Link href="/about" className="flex items-center gap-2 hover:text-slate-300 transition-colors">
-                            <div className="w-6 h-6 rounded-full bg-gradient-to-br from-violet-600 to-cyan-600 flex items-center justify-center text-white text-[10px] font-bold">F</div>
+                    <div className="mt-5 flex items-center gap-2 text-xs text-[var(--text-faint)]">
+                        <Link href="/about" className="flex items-center gap-2 hover:text-[var(--text-body)] transition-colors">
+                            <div className="w-6 h-6 rounded-full bg-gradient-to-br from-violet-600 to-cyan-600 flex items-center justify-center text-[var(--text-white)] text-[10px] font-bold">F</div>
                             <span>Finn Paustian</span>
                         </Link>
                         <span>·</span>
@@ -236,79 +236,79 @@ export default function RankscaleAlternativePage() {
                     </div>
                 </div>
 
-                <div className="border-t border-white/5 mb-10" />
+                <div className="border-t border-[var(--text-white)]/5 mb-10" />
 
-                <div className="space-y-10 text-slate-300 leading-relaxed">
+                <div className="space-y-10 text-[var(--text-body)] leading-relaxed">
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">At a glance</h2>
-                        <div className="overflow-x-auto rounded-2xl border border-white/[0.07]">
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">At a glance</h2>
+                        <div className="overflow-x-auto rounded-2xl border border-[var(--text-white)]/[0.07]">
                             <table className="w-full text-sm min-w-[560px]">
                                 <thead>
-                                    <tr className="border-b border-white/5 bg-white/[0.02]">
-                                        <th className="text-left px-5 py-3 text-slate-400 font-semibold">Aspect</th>
+                                    <tr className="border-b border-[var(--text-white)]/5 bg-[var(--text-white)]/[0.02]">
+                                        <th className="text-left px-5 py-3 text-[var(--text-muted)] font-semibold">Aspect</th>
                                         <th className="text-left px-5 py-3 text-violet-400 font-semibold">Scanora</th>
                                         <th className="text-left px-5 py-3 text-cyan-400 font-semibold">Rankscale</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {OVERVIEW_ROWS.map(([aspect, ai, rs], i) => (
-                                        <tr key={i} className="border-b border-white/[0.04] last:border-0">
-                                            <td className="px-5 py-3 text-white font-medium whitespace-nowrap">{aspect}</td>
-                                            <td className="px-5 py-3 text-slate-300">{ai}</td>
-                                            <td className="px-5 py-3 text-slate-300">{rs}</td>
+                                        <tr key={i} className="border-b border-[var(--text-white)]/[0.04] last:border-0">
+                                            <td className="px-5 py-3 text-[var(--text-white)] font-medium whitespace-nowrap">{aspect}</td>
+                                            <td className="px-5 py-3 text-[var(--text-body)]">{ai}</td>
+                                            <td className="px-5 py-3 text-[var(--text-body)]">{rs}</td>
                                         </tr>
                                     ))}
                                 </tbody>
                             </table>
                         </div>
-                        <p className="text-xs text-slate-600 mt-3">
+                        <p className="text-xs text-[var(--text-faint)] mt-3">
                             Pricing as of August 2026, based on the vendor's publicly listed pricing and plan pages. Rankscale bills primarily in USD, Scanora in EUR incl. VAT. Always double-check current terms directly with the vendor.
                         </p>
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">Where Scanora wins</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Where Scanora wins</h2>
 
-                        <h3 className="text-lg font-semibold text-white mt-6 mb-2">1. Fixed pricing instead of a credit system with variable consumption</h3>
+                        <h3 className="text-lg font-semibold text-[var(--text-white)] mt-6 mb-2">1. Fixed pricing instead of a credit system with variable consumption</h3>
                         <p>
                             Rankscale bills checks, audits, and queries against a monthly credit allowance — how much you actually burn through depends on how heavily you use it. Reviews call this out as a real risk: the effective monthly cost can exceed the listed plan price once usage ramps up. Scanora instead uses fixed website and keyword limits per plan — the bill at the end of the month is exactly what's on the pricing page.
                         </p>
 
-                        <h3 className="text-lg font-semibold text-white mt-6 mb-2">2. An actual free plan, not just a 7-day clock</h3>
+                        <h3 className="text-lg font-semibold text-[var(--text-white)] mt-6 mb-2">2. An actual free plan, not just a 7-day clock</h3>
                         <p>
                             Rankscale has no permanent free tier, only a 7-day "Try Pro" trial. Scanora lets you run one full audit a month, including GEO visibility, for free indefinitely — a low-risk way to find out whether AI visibility even matters for your site before you commit to a subscription.
                         </p>
 
-                        <h3 className="text-lg font-semibold text-white mt-6 mb-2">3. More accessible for small teams and solo operators</h3>
+                        <h3 className="text-lg font-semibold text-[var(--text-white)] mt-6 mb-2">3. More accessible for small teams and solo operators</h3>
                         <p>
                             Reviews of Rankscale note that an earlier, cheaper entry tier has since been removed — a real hurdle for small teams or anyone wanting to test before committing to a larger partnership. Scanora starts at €4.99/month for Claude tracking, keeping it accessible for individuals and small sites too.
                         </p>
 
-                        <h3 className="text-lg font-semibold text-white mt-6 mb-2">4. AI visibility and SEO, one vendor</h3>
+                        <h3 className="text-lg font-semibold text-[var(--text-white)] mt-6 mb-2">4. AI visibility and SEO, one vendor</h3>
                         <p>
                             Rankscale focuses on AI-visibility tracking and GEO site audits — it doesn't cover traditional SEO rank tracking. Scanora pairs GEO automation with a separate SEO automation plan covering weekly Google ranking updates, keyword ideas, competitor analysis, and a backlink overview — one provider, bookable independently.
                         </p>
 
-                        <h3 className="text-lg font-semibold text-white mt-6 mb-2">5. Fixes, not just analytics depth</h3>
+                        <h3 className="text-lg font-semibold text-[var(--text-white)] mt-6 mb-2">5. Fixes, not just analytics depth</h3>
                         <p>
                             Rankscale delivers an impressive number of analysis dimensions — but you still have to figure out what to do with them yourself. Scanora goes a step further with a prioritized action plan: it checks for llms.txt, Schema.org markup, FAQ schema, and whether AI crawlers are even allowed in, then tells you exactly what to change to get cited.
                         </p>
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">Where Rankscale wins</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Where Rankscale wins</h2>
                         <p>
                             A fair comparison has to say where the other tool is genuinely stronger — and Rankscale is, on a few fronts:
                         </p>
                         <p className="mt-4">
-                            <strong className="text-white">Exceptional platform breadth.</strong> Rankscale tracks 17+ AI engines — beyond ChatGPT, Claude, Gemini, Perplexity, and Google AI Overview, it also covers Grok, DeepSeek, and Mistral. For brands that want to know how they perform on these niche models too, that's meaningfully broader coverage than Scanora's five established platforms.
+                            <strong className="text-[var(--text-white)]">Exceptional platform breadth.</strong> Rankscale tracks 17+ AI engines — beyond ChatGPT, Claude, Gemini, Perplexity, and Google AI Overview, it also covers Grok, DeepSeek, and Mistral. For brands that want to know how they perform on these niche models too, that's meaningfully broader coverage than Scanora's five established platforms.
                         </p>
                         <p className="mt-4">
-                            <strong className="text-white">International regional tracking.</strong> Over 240 countries and regions can be broken out individually — relevant for brands operating across multiple local markets.
+                            <strong className="text-[var(--text-white)]">International regional tracking.</strong> Over 240 countries and regions can be broken out individually — relevant for brands operating across multiple local markets.
                         </p>
                         <p className="mt-4">
-                            <strong className="text-white">Deeper analytics.</strong> Query fan-out tracking, sentiment analysis, source analysis, and custom dashboards go beyond raw visibility percentages, offering more nuanced insight for teams that want to do their own deep analysis.
+                            <strong className="text-[var(--text-white)]">Deeper analytics.</strong> Query fan-out tracking, sentiment analysis, source analysis, and custom dashboards go beyond raw visibility percentages, offering more nuanced insight for teams that want to do their own deep analysis.
                         </p>
                         <p className="mt-4">
                             The short version: if you need maximum platform breadth and analytical depth and can plan around a variable credit budget, Rankscale is worth a look. If you'd rather have predictable costs, a genuine free entry point, and SEO covered in the same tool, Scanora is the more practical fit.
@@ -316,23 +316,23 @@ export default function RankscaleAlternativePage() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">Which one is right for you?</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Which one is right for you?</h2>
                         <div className="grid sm:grid-cols-2 gap-4">
                             <div className="bg-violet-500/[0.04] border border-violet-500/15 rounded-2xl p-5">
-                                <h3 className="font-semibold text-white mb-3 text-sm">Pick Scanora if …</h3>
+                                <h3 className="font-semibold text-[var(--text-white)] mb-3 text-sm">Pick Scanora if …</h3>
                                 <ul className="space-y-2">
                                     {AUDITAI_FOR.map((item, i) => (
-                                        <li key={i} className="text-sm text-slate-400 leading-relaxed flex gap-2">
+                                        <li key={i} className="text-sm text-[var(--text-muted)] leading-relaxed flex gap-2">
                                             <span className="text-violet-400 shrink-0">–</span>{item}
                                         </li>
                                     ))}
                                 </ul>
                             </div>
                             <div className="bg-cyan-500/[0.04] border border-cyan-500/15 rounded-2xl p-5">
-                                <h3 className="font-semibold text-white mb-3 text-sm">Pick Rankscale if …</h3>
+                                <h3 className="font-semibold text-[var(--text-white)] mb-3 text-sm">Pick Rankscale if …</h3>
                                 <ul className="space-y-2">
                                     {RANKSCALE_FOR.map((item, i) => (
-                                        <li key={i} className="text-sm text-slate-400 leading-relaxed flex gap-2">
+                                        <li key={i} className="text-sm text-[var(--text-muted)] leading-relaxed flex gap-2">
                                             <span className="text-cyan-400 shrink-0">–</span>{item}
                                         </li>
                                     ))}
@@ -342,12 +342,12 @@ export default function RankscaleAlternativePage() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">Frequently asked questions</h2>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Frequently asked questions</h2>
                         <div className="space-y-4">
                             {faqLd.mainEntity.map((faq, i) => (
-                                <div key={i} className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5">
-                                    <h3 className="font-semibold text-white mb-2 text-sm">{faq.name}</h3>
-                                    <p className="text-sm text-slate-400 leading-relaxed">{faq.acceptedAnswer.text}</p>
+                                <div key={i} className="bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-2xl p-5">
+                                    <h3 className="font-semibold text-[var(--text-white)] mb-2 text-sm">{faq.name}</h3>
+                                    <p className="text-sm text-[var(--text-muted)] leading-relaxed">{faq.acceptedAnswer.text}</p>
                                 </div>
                             ))}
                         </div>
@@ -360,16 +360,16 @@ export default function RankscaleAlternativePage() {
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 justify-between">
                         <div>
                             <span className="text-xs font-semibold text-violet-400 uppercase tracking-wider mb-1 block">Try it yourself</span>
-                            <h3 className="text-base sm:text-lg font-bold text-white mb-2">
+                            <h3 className="text-base sm:text-lg font-bold text-[var(--text-white)] mb-2">
                                 The fastest way to decide is to just run it
                             </h3>
-                            <p className="text-slate-400 text-sm leading-relaxed max-w-md">
+                            <p className="text-[var(--text-muted)] text-sm leading-relaxed max-w-md">
                                 Enter your URL and see your AI-visibility and SEO score in about 60 seconds — no signup, no credit card.
                             </p>
                         </div>
                         <Link
                             href="/dashboard"
-                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-violet-600 hover:bg-violet-500 text-white text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-violet-500/20 shrink-0"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-violet-600 hover:bg-violet-500 text-[var(--text-white)] text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-violet-500/20 shrink-0"
                         >
                             Check for free now
                         </Link>
@@ -377,20 +377,20 @@ export default function RankscaleAlternativePage() {
                 </div>
 
                 {/* Cross-link: Claude visibility */}
-                <div className="mt-5 bg-white/[0.02] border border-white/[0.06] rounded-2xl p-6 sm:p-8">
+                <div className="mt-5 bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-2xl p-6 sm:p-8">
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 justify-between">
                         <div>
                             <span className="text-xs font-semibold text-emerald-400 uppercase tracking-wider mb-1 block">Related solution</span>
-                            <h3 className="text-base sm:text-lg font-bold text-white mb-2">
+                            <h3 className="text-base sm:text-lg font-bold text-[var(--text-white)] mb-2">
                                 Claude AI visibility tracking: the complete guide
                             </h3>
-                            <p className="text-slate-400 text-sm leading-relaxed max-w-md">
+                            <p className="text-[var(--text-muted)] text-sm leading-relaxed max-w-md">
                                 Why Claude tracking is expensive or unavailable on most tools — and how to set it up affordably anyway.
                             </p>
                         </div>
                         <Link
                             href="/en/solutions/claude-ai-visibility-tracking"
-                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/[0.06] hover:bg-white/10 text-white text-sm font-semibold rounded-xl transition-all duration-200 shrink-0"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--text-white)]/[0.06] hover:bg-[var(--text-white)]/10 text-[var(--text-white)] text-sm font-semibold rounded-xl transition-all duration-200 shrink-0"
                         >
                             View page
                         </Link>
@@ -398,20 +398,20 @@ export default function RankscaleAlternativePage() {
                 </div>
 
                 {/* Cross-link */}
-                <div className="mt-5 bg-white/[0.02] border border-white/[0.06] rounded-2xl p-6 sm:p-8">
+                <div className="mt-5 bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-2xl p-6 sm:p-8">
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 justify-between">
                         <div>
                             <span className="text-xs font-semibold text-emerald-400 uppercase tracking-wider mb-1 block">Keep reading</span>
-                            <h3 className="text-base sm:text-lg font-bold text-white mb-2">
+                            <h3 className="text-base sm:text-lg font-bold text-[var(--text-white)] mb-2">
                                 SEO Rank Tracker & AI Visibility Monitor
                             </h3>
-                            <p className="text-slate-400 text-sm leading-relaxed max-w-md">
+                            <p className="text-[var(--text-muted)] text-sm leading-relaxed max-w-md">
                                 How SEO automation and GEO automation work at Scanora in detail — including pricing.
                             </p>
                         </div>
                         <Link
                             href="/en/blog/seo-geo-automation"
-                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/[0.06] hover:bg-white/10 text-white text-sm font-semibold rounded-xl transition-all duration-200 shrink-0"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--text-white)]/[0.06] hover:bg-[var(--text-white)]/10 text-[var(--text-white)] text-sm font-semibold rounded-xl transition-all duration-200 shrink-0"
                         >
                             Read the article
                         </Link>
@@ -419,8 +419,8 @@ export default function RankscaleAlternativePage() {
                 </div>
 
                 {/* Back */}
-                <div className="mt-10 pt-8 border-t border-white/5">
-                    <Link href="/en/blog" className="text-sm text-slate-500 hover:text-slate-300 transition-colors">
+                <div className="mt-10 pt-8 border-t border-[var(--text-white)]/5">
+                    <Link href="/en/blog" className="text-sm text-[var(--text-faint)] hover:text-[var(--text-body)] transition-colors">
                         ← Back to blog
                     </Link>
                 </div>
