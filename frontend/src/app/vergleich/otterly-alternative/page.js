@@ -4,7 +4,7 @@ import Footer from '../../components/Footer'
 
 export const metadata = {
     title: 'Otterly.ai Alternative: Scanora im Vergleich (2026)',
-    description: 'Otterly.ai-Alternative gesucht? Scanora trackt KI-Sichtbarkeit bei ChatGPT, Claude, Gemini, Perplexity & Google AI Overview ab 29,99 €/Monat – plus SEO-Audit im selben Tool. Echter Free-Plan.',
+    description: 'Otterly.ai-Alternative gesucht? Scanora trackt KI-Sichtbarkeit bei ChatGPT, Claude, Gemini, Perplexity & Google AI Overview ab 29,99 €/Monat inkl. SEO-Audit.',
     keywords: 'otterly alternative, otterly.ai alternative, otterly ai vergleich, günstige ai visibility tool, geo tracking tool, ki sichtbarkeit tool',
     alternates: {
         canonical: 'https://www.scanora.ai/vergleich/otterly-alternative',
@@ -15,10 +15,11 @@ export const metadata = {
     },
     openGraph: {
         title: 'Otterly.ai Alternative: Scanora im Vergleich (2026)',
-        description: 'Scanora trackt KI-Sichtbarkeit bei ChatGPT, Claude, Gemini, Perplexity & Google AI Overview ab 29,99 €/Monat – plus SEO-Audit im selben Tool. Der ehrliche Vergleich zu Otterly.ai.',
+        description: 'Scanora trackt KI-Sichtbarkeit bei ChatGPT, Claude, Gemini, Perplexity & Google AI Overview ab 29,99 €/Monat. Der ehrliche Vergleich zu Otterly.ai.',
         url: 'https://www.scanora.ai/vergleich/otterly-alternative',
         type: 'article',
         locale: 'de_DE',
+        images: ['https://www.scanora.ai/vergleich/otterly-alternative/opengraph-image'],
     },
 }
 

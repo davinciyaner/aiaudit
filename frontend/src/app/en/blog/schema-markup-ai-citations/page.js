@@ -4,7 +4,7 @@ import Footer from '../../../components/Footer'
 
 export const metadata = {
     title: { absolute: 'Schema Markup for AI Citations 2026: How to Get Cited by ChatGPT & Co.' },
-    description: 'Schema markup for AI search citations (JSON-LD) explained simply: definition, priority order, ready-to-copy code, free generators & testing tools, and the most common mistake that kills rich results.',
+    description: 'Schema markup for AI search citations (JSON-LD) explained: priority order, ready-to-copy code, free generators, and the mistake that kills rich results.',
     keywords: 'schema markup ai search citations, ai search citations, schema markup, schema markup generator, structured data testing free, json-ld generator, json-ld example, faq schema, organization schema, rich results test',
     alternates: {
         canonical: 'https://www.scanora.ai/en/blog/schema-markup-ai-citations',
@@ -15,10 +15,11 @@ export const metadata = {
     },
     openGraph: {
         title: 'Schema Markup for AI Citations 2026: How to Get Cited by ChatGPT & Co.',
-        description: 'Schema markup for AI search citations: definition, priority order, ready-to-copy JSON-LD code, free generators & testing tools, and the most common mistake that kills rich results.',
+        description: 'Schema markup for AI search citations: priority order, ready-to-copy JSON-LD code, free generators & testing tools, and the mistake that kills rich results.',
         url: 'https://www.scanora.ai/en/blog/schema-markup-ai-citations',
         type: 'article',
         locale: 'en_US',
+        images: ['https://www.scanora.ai/en/blog/schema-markup-ai-citations/opengraph-image'],
     },
 }
 

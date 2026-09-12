@@ -4,7 +4,7 @@ import Footer from '../../../components/Footer'
 
 export const metadata = {
     title: 'Affordable AI Visibility Tool from €4.99 | Scanora',
-    description: 'Looking for an affordable AI visibility tool that also covers SEO? Scanora combines GEO tracking (ChatGPT, Claude, Perplexity) and SEO rankings from €4.99/month — with a real free plan.',
+    description: 'Looking for an affordable AI visibility tool with SEO built in? Scanora combines GEO tracking (ChatGPT, Claude, Perplexity) and SEO rankings from €4.99/month.',
     keywords: 'affordable ai visibility tool, cheap ai visibility tool, seo and ai visibility tracker combined, ai visibility and seo in one tool, affordable geo tool, ai visibility tool pricing comparison',
     alternates: {
         canonical: 'https://www.scanora.ai/en/solutions/affordable-ai-visibility-tool',
@@ -19,6 +19,7 @@ export const metadata = {
         url: 'https://www.scanora.ai/en/solutions/affordable-ai-visibility-tool',
         type: 'article',
         locale: 'en_US',
+        images: ['https://www.scanora.ai/en/solutions/affordable-ai-visibility-tool/opengraph-image'],
     },
 }
 

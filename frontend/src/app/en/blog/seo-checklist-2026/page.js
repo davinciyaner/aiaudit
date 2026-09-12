@@ -5,7 +5,7 @@ import Footer from '../../../components/Footer'
 
 export const metadata = {
     title: { absolute: 'SEO Checklist 2026: Find Every Mistake Yourself in 15 Minutes' },
-    description: 'The complete SEO checklist for 2026, in a fixed order: 6 phases, 15 minutes, every important SEO and GEO signal. Check it yourself or run it automatically with Scanora.',
+    description: 'The complete SEO checklist for 2026: 6 phases, 15 minutes, every key SEO and GEO signal. Check it yourself or automate it with Scanora.',
     keywords: 'seo checklist 2026, seo checklist, seo mistakes checklist, find seo mistakes, technical seo checklist, free seo test',
     alternates: {
         canonical: 'https://www.scanora.ai/en/blog/seo-checklist-2026',
@@ -20,6 +20,7 @@ export const metadata = {
         url: 'https://www.scanora.ai/en/blog/seo-checklist-2026',
         type: 'article',
         locale: 'en_US',
+        images: ['https://www.scanora.ai/en/blog/seo-checklist-2026/opengraph-image'],
     },
 }
 

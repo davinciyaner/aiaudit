@@ -4,7 +4,7 @@ import Footer from '../../../components/Footer'
 
 export const metadata = {
     title: 'Rankscale Alternative: How Scanora Compares (2026)',
-    description: 'Looking for a Rankscale alternative? Scanora tracks AI visibility across ChatGPT, Claude, Gemini, Perplexity & Google AI Overview from €29.99/month with fixed pricing instead of a credit system — plus a built-in SEO audit.',
+    description: 'Rankscale alternative? Scanora tracks AI visibility across ChatGPT, Claude, Gemini, Perplexity & Google AI Overview from €29.99/month, no credit system.',
     keywords: 'rankscale alternative, rankscale ai competitor, cheap ai visibility tool, geo tracking tool without credits, ai visibility software',
     alternates: {
         canonical: 'https://www.scanora.ai/en/compare/rankscale-alternative',
@@ -15,10 +15,11 @@ export const metadata = {
     },
     openGraph: {
         title: 'Rankscale Alternative: How Scanora Compares (2026)',
-        description: 'Scanora tracks AI visibility across ChatGPT, Claude, Gemini, Perplexity & Google AI Overview from €29.99/month with fixed pricing instead of a credit system. A fact-checked look at Rankscale.',
+        description: 'Scanora tracks AI visibility across ChatGPT, Claude, Gemini, Perplexity & Google AI Overview from €29.99/month, no credit system. Fact-checked Rankscale look.',
         url: 'https://www.scanora.ai/en/compare/rankscale-alternative',
         type: 'article',
         locale: 'en_US',
+        images: ['https://www.scanora.ai/en/compare/rankscale-alternative/opengraph-image'],
     },
 }
 

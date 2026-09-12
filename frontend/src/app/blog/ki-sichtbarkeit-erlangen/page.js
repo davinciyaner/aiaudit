@@ -4,7 +4,7 @@ import Footer from '../../components/Footer'
 
 export const metadata = {
     title: 'KI-Sichtbarkeit erlangen: So wirst du von ChatGPT, Claude & Perplexity zitiert',
-    description: 'KI-Sichtbarkeit ist mehr als llms.txt und Schema Markup. Wie du wirklich von ChatGPT, Claude, Perplexity und Google AI Overview zitiert wirst - inklusive Monitoring mit Scanora.',
+    description: 'KI-Sichtbarkeit ist mehr als llms.txt und Schema Markup. Wie du wirklich von ChatGPT, Claude, Perplexity und Google AI Overview zitiert wirst.',
     keywords: 'ki sichtbarkeit, ki sichtbarkeit erlangen, ai visibility, ki sichtbarkeit verbessern, von chatgpt zitiert werden, von claude empfohlen werden, ki sichtbarkeit messen, generative engine optimization',
     alternates: {
         canonical: 'https://www.scanora.ai/blog/ki-sichtbarkeit-erlangen',
@@ -19,6 +19,7 @@ export const metadata = {
         url: 'https://www.scanora.ai/blog/ki-sichtbarkeit-erlangen',
         type: 'article',
         locale: 'de_DE',
+        images: ['https://www.scanora.ai/blog/ki-sichtbarkeit-erlangen/opengraph-image'],
     },
 }
 

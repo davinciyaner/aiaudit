@@ -13,7 +13,7 @@ export const metadata = {
         default: 'SEO Automatisierung & KI-Sichtbarkeit | Scanora',
         template: '%s | Scanora',
     },
-    description: 'Kostenloser SEO-Test in unter 60 Sekunden: SEO-Automatisierung, KI-Sichtbarkeit, Title-Tags, Meta-Descriptions und Core Web Vitals prüfen. KI-Report mit konkreten Fixes ab Pro.',
+    description: 'Kostenloser SEO-Test in unter 60 Sekunden: SEO-Automatisierung, KI-Sichtbarkeit und Core Web Vitals prüfen. KI-Report mit konkreten Fixes ab Pro.',
     keywords: 'seo automatisierung, ki sichtbarkeit, seo test, seo test kostenlos, seo check, kostenloser seo check, website seo check, seo analyse kostenlos, website audit, core web vitals test, performance test, GEO, llms.txt, website checker kostenlos',
     authors: [{ name: 'Scanora' }],
     creator: 'Scanora',
@@ -30,6 +30,7 @@ export const metadata = {
         siteName: 'Scanora',
         title: 'Scanora – KI-gestützter Website Audit',
         description: 'SEO, Performance & KI-Sichtbarkeit — ein vollständiger Audit in unter 60 Sekunden.',
+        images: ['https://www.scanora.ai/opengraph-image'],
     },
     twitter: {
         card: 'summary_large_image',

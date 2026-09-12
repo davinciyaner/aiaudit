@@ -4,7 +4,7 @@ import Footer from '../../../components/Footer'
 
 export const metadata = {
     title: 'AI Visibility: How to Get Cited by ChatGPT, Claude & Perplexity',
-    description: 'AI visibility is more than llms.txt and schema markup. How to actually get cited by ChatGPT, Claude, Perplexity and Google AI Overview - including monitoring with Scanora.',
+    description: 'AI visibility is more than llms.txt and schema markup. How to get cited by ChatGPT, Claude, Perplexity and Google AI Overview, plus monitoring.',
     keywords: 'ai visibility, ai visibility tool, get cited by chatgpt, get cited by claude, ai visibility tracker, generative engine optimization, llm visibility, ai search optimization',
     alternates: {
         canonical: 'https://www.scanora.ai/en/blog/ai-visibility',
@@ -19,6 +19,7 @@ export const metadata = {
         url: 'https://www.scanora.ai/en/blog/ai-visibility',
         type: 'article',
         locale: 'en_US',
+        images: ['https://www.scanora.ai/en/blog/ai-visibility/opengraph-image'],
     },
 }
 

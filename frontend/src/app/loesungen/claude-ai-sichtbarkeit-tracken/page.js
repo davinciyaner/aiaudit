@@ -4,7 +4,7 @@ import Footer from '../../components/Footer'
 
 export const metadata = {
     title: 'Sichtbarkeit in Claude tracken 2026: Claude AI Sichtbarkeit prüfen',
-    description: 'Sichtbarkeit in Claude tracken ab 4,99 €/Monat: wöchentliches automatisches Tracking, Mention-Rate über Zeit und Zitate mit Quellenkontext - inklusive Perplexity-Sichtbarkeit im selben Dashboard.',
+    description: 'Sichtbarkeit in Claude tracken ab 4,99 €/Monat: wöchentliches Tracking, Mention-Rate über Zeit und Zitate mit Quellenkontext.',
     keywords: 'sichtbarkeit in claude, claude ai sichtbarkeit, claude sichtbarkeit tracken, claude visibility tracking, claude ai visibility, perplexity sichtbarkeit, claude ki sichtbarkeit, generative engine optimization claude',
     alternates: {
         canonical: 'https://www.scanora.ai/loesungen/claude-ai-sichtbarkeit-tracken',
@@ -15,10 +15,11 @@ export const metadata = {
     },
     openGraph: {
         title: 'Sichtbarkeit in Claude tracken 2026: Claude AI Sichtbarkeit prüfen',
-        description: 'Sichtbarkeit in Claude tracken ab 4,99 €/Monat inklusive Perplexity-Sichtbarkeit - während Claude-Tracking bei den meisten AI-Visibility-Tools nur als teures Enterprise-Add-on verfügbar ist.',
+        description: 'Sichtbarkeit in Claude tracken ab 4,99 €/Monat – während die meisten anderen Tools Claude nur als teures Enterprise-Add-on anbieten.',
         url: 'https://www.scanora.ai/loesungen/claude-ai-sichtbarkeit-tracken',
         type: 'article',
         locale: 'de_DE',
+        images: ['https://www.scanora.ai/loesungen/claude-ai-sichtbarkeit-tracken/opengraph-image'],
     },
 }
 

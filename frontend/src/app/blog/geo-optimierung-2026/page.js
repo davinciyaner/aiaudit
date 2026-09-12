@@ -5,7 +5,7 @@ import Footer from '../../components/Footer'
 
 export const metadata = {
     title: 'Was ist GEO? Generative Engine Optimization einfach erklärt (+ Checkliste 2026)',
-    description: 'GEO (Generative Engine Optimization) bezeichnet die Optimierung von Content für KI-Antworten wie ChatGPT, Claude und Google AI Overview. Definition, Unterschied zu SEO, 19-Punkte-Checkliste und wie du eine GEO-Strategie 2026 Schritt für Schritt aufbaust.',
+    description: 'GEO (Generative Engine Optimization) ist die Optimierung von Content für KI-Antworten wie ChatGPT und Claude - Definition, Unterschied zu SEO und Checkliste.',
     keywords: 'was ist geo, GEO Optimierung, Generative Engine Optimization, ChatGPT SEO, KI Suchmaschinenoptimierung, ChatGPT Sichtbarkeit, Claude Sichtbarkeit, llms.txt, KI Sichtbarkeit, GEO SEO Unterschied, geo strategie 2026, geo strategie aufbauen',
     alternates: {
         canonical: 'https://www.scanora.ai/blog/geo-optimierung-2026',
@@ -16,10 +16,11 @@ export const metadata = {
     },
     openGraph: {
         title: 'Was ist GEO? Generative Engine Optimization einfach erklärt (+ Checkliste 2026)',
-        description: 'GEO (Generative Engine Optimization) erklärt: Definition, Unterschied zu SEO, konkrete Checkliste mit 19 Signalen und eine GEO-Strategie 2026 zum Aufbauen in drei Phasen.',
+        description: 'GEO (Generative Engine Optimization) erklärt: Definition, Unterschied zu SEO und eine 19-Punkte-Checkliste für deine GEO-Strategie 2026.',
         url: 'https://www.scanora.ai/blog/geo-optimierung-2026',
         type: 'article',
         locale: 'de_DE',
+        images: ['https://www.scanora.ai/blog/geo-optimierung-2026/opengraph-image'],
     },
 }
 

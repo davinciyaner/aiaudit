@@ -4,18 +4,19 @@ import Footer from '../../components/Footer'
 
 export const metadata = {
     title: 'SEO-GEO-Tool: Google-Rankings & KI-Sichtbarkeit | Scanora',
-    description: 'Scanora ist ein SEO-GEO-Tool: ein GEO-Tool für KI-Sichtbarkeit bei ChatGPT, Claude, Gemini & Perplexity plus SEO-Rankings - in einem Dashboard, inklusive der Überschneidung zwischen beiden.',
+    description: 'Scanora ist ein SEO-GEO-Tool: KI-Sichtbarkeit bei ChatGPT, Claude, Gemini & Perplexity plus SEO-Rankings in einem Dashboard.',
     keywords: 'seo geo tool, seo-geo-tool, geo tool, geo-tool, seo geo, geoseo, seo und geo, geo audit, generative engine optimization, generative optimization engine, ki sichtbarkeit, ai visibility, geo automatisierung, seo automatisierung',
     alternates: {
         canonical: 'https://www.scanora.ai/loesungen/seo-geo-tool',
     },
     openGraph: {
         title: 'SEO-GEO-Tool: Google-Rankings & KI-Sichtbarkeit',
-        description: 'Scanora ist ein SEO-GEO-Tool: ein GEO-Tool für KI-Sichtbarkeit bei ChatGPT, Claude, Gemini & Perplexity plus SEO-Rankings - in einem Dashboard, inklusive der Überschneidung zwischen beiden.',
+        description: 'Scanora ist ein SEO-GEO-Tool: KI-Sichtbarkeit bei ChatGPT, Claude, Gemini & Perplexity plus SEO-Rankings in einem Dashboard.',
         url: 'https://www.scanora.ai/loesungen/seo-geo-tool',
         siteName: 'Scanora',
         type: 'website',
         locale: 'de_DE',
+        images: ['https://www.scanora.ai/loesungen/seo-geo-tool/opengraph-image'],
     },
     twitter: {
         card: 'summary_large_image',

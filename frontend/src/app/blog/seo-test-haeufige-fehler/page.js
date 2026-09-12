@@ -5,7 +5,7 @@ import Footer from '../../components/Footer'
 
 export const metadata = {
     title: 'SEO-Fehler finden 2026: Die 10 häufigsten Probleme + kostenloses Tool',
-    description: 'SEO-Fehler automatisch finden statt manuell suchen: Diese 10 Probleme kosten 2026 die meisten Websites Rankings. Mit kostenlosem SEO-Fehler-Tool in 60 Sekunden checken.',
+    description: 'SEO-Fehler automatisch finden statt manuell suchen: Diese 10 Probleme kosten 2026 die meisten Websites Rankings. Jetzt kostenlos checken.',
     keywords: 'seo fehler automatisch finden, seo fehler tool kostenlos, seo fehler 2026, seo fehler finden, seo audit, seo test, seo fehler, seo check kostenlos, seo analyse, website seo prüfen, meta description fehlt, h1 tag, core web vitals',
     alternates: {
         canonical: 'https://www.scanora.ai/blog/seo-test-haeufige-fehler',
@@ -20,6 +20,7 @@ export const metadata = {
         url: 'https://www.scanora.ai/blog/seo-test-haeufige-fehler',
         type: 'article',
         locale: 'de_DE',
+        images: ['https://www.scanora.ai/blog/seo-test-haeufige-fehler/opengraph-image'],
     },
 }
 

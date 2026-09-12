@@ -5,7 +5,7 @@ import Footer from '../../../components/Footer'
 
 export const metadata = {
     title: { absolute: 'SEO Rank Tracker & AI Visibility Monitor: Automate SEO and GEO Tracking' },
-    description: 'An automated SEO rank tracker and keyword tracker, plus AI visibility monitoring for ChatGPT, Claude, Perplexity & Google AI Overview - updated automatically every week instead of checking manually. With pricing and a comparison.',
+    description: 'An automated SEO rank tracker and keyword tracker, plus AI visibility monitoring for ChatGPT, Claude, Perplexity & Google AI Overview - updated weekly.',
     keywords: 'rank tracker, keyword tracker, seo tracker, seo tracking tools, automatic seo optimization, auto seo, seo automation, seo automation tool, rank tracking tool, keyword tracking tools, keyword monitoring tools, ai visibility, geo automation, backlink automation',
     alternates: {
         canonical: 'https://www.scanora.ai/en/blog/seo-geo-automation',
@@ -16,10 +16,11 @@ export const metadata = {
     },
     openGraph: {
         title: 'SEO Rank Tracker & AI Visibility Monitor: Automate SEO and GEO Tracking',
-        description: 'An automated rank tracker and keyword tracker, plus AI visibility monitoring for ChatGPT, Claude, Perplexity & Google AI Overview - updated every week instead of checking manually.',
+        description: 'An automated rank tracker and keyword tracker for AI visibility on ChatGPT, Claude, Perplexity & Google AI Overview - updated weekly, not checked manually.',
         url: 'https://www.scanora.ai/en/blog/seo-geo-automation',
         type: 'article',
         locale: 'en_US',
+        images: ['https://www.scanora.ai/en/blog/seo-geo-automation/opengraph-image'],
     },
 }
 

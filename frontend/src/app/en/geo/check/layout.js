@@ -1,6 +1,6 @@
 export const metadata = {
     title: 'GEO Check: Are You Cited by ChatGPT?',
-    description: 'Free GEO Check: see whether your website is cited by ChatGPT, Claude, Perplexity, or Google AI Overview. For ongoing tracking, see GEO Automation. No registration required.',
+    description: 'Free GEO Check: see whether your website is cited by ChatGPT, Claude, Perplexity, or Google AI Overview. No registration required.',
     keywords: 'geo check, free geo check, chatgpt visibility check, claude citation check, ai visibility test, ai visibility check, google ai overview check, geo automation',
     alternates: {
         canonical: 'https://www.scanora.ai/en/geo/check',
@@ -15,6 +15,7 @@ export const metadata = {
         url: 'https://www.scanora.ai/en/geo/check',
         type: 'website',
         locale: 'en_US',
+        images: ['https://www.scanora.ai/opengraph-image'],
     },
 }
 

@@ -30,6 +30,7 @@ export const metadata = {
         siteName: 'Scanora',
         type: 'website',
         locale: 'en_US',
+        images: ['https://www.scanora.ai/opengraph-image'],
     },
     twitter: {
         card: 'summary_large_image',

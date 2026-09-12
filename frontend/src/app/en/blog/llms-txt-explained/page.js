@@ -19,6 +19,7 @@ export const metadata = {
         url: 'https://www.scanora.ai/en/blog/llms-txt-explained',
         type: 'article',
         locale: 'en_US',
+        images: ['https://www.scanora.ai/en/blog/llms-txt-explained/opengraph-image'],
     },
 }
 

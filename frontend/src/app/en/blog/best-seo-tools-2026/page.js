@@ -20,6 +20,7 @@ export const metadata = {
         url: 'https://www.scanora.ai/en/blog/best-seo-tools-2026',
         type: 'article',
         locale: 'en_US',
+        images: ['https://www.scanora.ai/en/blog/best-seo-tools-2026/opengraph-image'],
     },
 }
 
