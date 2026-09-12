@@ -1,6 +1,6 @@
 export const metadata = {
-    title: 'Preise & Pläne',
-    description: 'Scanora kostenlos testen oder auf Pro/Agency upgraden. Free: 1 Audit/Monat. Pro: €29/Monat mit 10 Audits. Agency: €99/Monat, unbegrenzte Audits. Jederzeit kündbar.',
+    title: 'SEO- & AI-Visibility-Check Preise – ab kostenlos',
+    description: 'Scanora kostenlos testen oder auf Pro/Agency upgraden: Free 1 Audit/Monat, Pro €29 mit 10 Audits, Agency €99 unbegrenzt. Jederzeit kündbar.',
     alternates: {
         canonical: 'https://www.scanora.ai/pricing',
         languages: {
@@ -10,8 +10,8 @@ export const metadata = {
         },
     },
     openGraph: {
-        title: 'Preise & Pläne | Scanora',
-        description: 'Kostenlos starten oder upgraden — SEO, Performance & GEO-Audits für Freelancer und Agenturen.',
+        title: 'SEO- & AI-Visibility-Check Preise – ab kostenlos | Scanora',
+        description: 'Scanora kostenlos testen oder auf Pro/Agency upgraden: Free 1 Audit/Monat, Pro €29 mit 10 Audits, Agency €99 unbegrenzt. Jederzeit kündbar.',
         url: 'https://www.scanora.ai/pricing',
     },
 }
