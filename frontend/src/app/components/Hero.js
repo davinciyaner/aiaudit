@@ -150,8 +150,8 @@ export default function Hero() {
                     <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
                         className="order-3 text-base sm:text-lg text-[var(--text-muted)] mb-8 max-w-2xl leading-relaxed">
                         Für Marketing-Teams und Agenturen: Scanora prüft, ob ChatGPT, Claude, Gemini, Perplexity und
-                        Google AI Overview deine Seite kennen — und wie du bei Google rankst. Ein Audit, konkrete
-                        Fixes statt generischen Tipps.
+                        Google AI Overview deine Seite kennen — und wie du bei Google rankst. Kostenloser Score
+                        sofort, konkrete KI-Fixes ab Pro.
                     </motion.p>
 
                     <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}

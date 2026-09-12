@@ -9,7 +9,7 @@ export const FAQS_EN = [
     },
     {
         q: 'What exactly does Scanora check?',
-        a: 'Scanora analyzes your website across three areas: GEO/AI Visibility (llms.txt, Schema.org, FAQ schema), SEO (title, meta, headings, links) and performance (TTFB, FCP, load time). Claude AI then generates a full report with concrete fixes.',
+        a: 'Scanora analyzes your website across three areas: GEO/AI Visibility (llms.txt, Schema.org, FAQ schema), SEO (title, meta, headings, links) and performance (TTFB, FCP, load time). From the Pro plan, Claude AI also generates a full report with concrete fixes.',
     },
     {
         q: "What's the difference between a website check and an SEO test?",
