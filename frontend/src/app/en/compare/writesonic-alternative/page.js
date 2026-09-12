@@ -4,7 +4,7 @@ import Footer from '../../../components/Footer'
 
 export const metadata = {
     title: 'Writesonic Alternative: How Scanora Compares (2026)',
-    description: 'Looking for a Writesonic alternative? Scanora tracks AI visibility across ChatGPT, Claude, Gemini, Perplexity & Google AI Overview from €29.99/month - while GEO tracking on Writesonic only starts on its $249 tier.',
+    description: 'Writesonic alternative? Scanora tracks AI visibility across ChatGPT, Claude, Gemini, Perplexity & Google AI Overview from €29.99/month, no $249 tier needed.',
     keywords: 'writesonic alternative, writesonic geo comparison, cheap ai visibility tool, geo tracking tool without credits, ai visibility software',
     alternates: {
         canonical: 'https://www.scanora.ai/en/compare/writesonic-alternative',
@@ -15,10 +15,11 @@ export const metadata = {
     },
     openGraph: {
         title: 'Writesonic Alternative: How Scanora Compares (2026)',
-        description: 'Scanora tracks AI visibility across ChatGPT, Claude, Gemini, Perplexity & Google AI Overview from €29.99/month - while GEO tracking on Writesonic only starts on its $249 tier. A fact-checked comparison.',
+        description: 'Scanora tracks AI visibility from €29.99/month across ChatGPT, Claude, Gemini, Perplexity & Google AI Overview, no $249 tier needed. A fact-checked comparison.',
         url: 'https://www.scanora.ai/en/compare/writesonic-alternative',
         type: 'article',
         locale: 'en_US',
+        images: ['https://www.scanora.ai/en/compare/writesonic-alternative/opengraph-image'],
     },
 }
 

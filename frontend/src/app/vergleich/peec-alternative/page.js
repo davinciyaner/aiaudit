@@ -4,7 +4,7 @@ import Footer from '../../components/Footer'
 
 export const metadata = {
     title: 'Peec.ai Alternative & Alternativen 2026: Scanora im Vergleich',
-    description: 'Peec.ai Alternative oder Alternativen gesucht? Scanora trackt KI-Sichtbarkeit bei ChatGPT, Claude, Gemini, Perplexity & Google AI Overview ab 29,99 €/Monat – plus SEO-Audit im selben Tool. Claude schon im Einstiegstarif inklusive.',
+    description: 'Peec.ai Alternative gesucht? Scanora trackt KI-Sichtbarkeit bei ChatGPT, Claude, Gemini & Perplexity ab 29,99 €/Monat – Claude schon im Einstiegstarif.',
     keywords: 'peec alternative, peec.ai alternative, peec ai alternativen, peec ai competitors, peec ai vergleich, günstige ai visibility tool, geo tracking tool, ki sichtbarkeit tool',
     alternates: {
         canonical: 'https://www.scanora.ai/vergleich/peec-alternative',
@@ -15,10 +15,11 @@ export const metadata = {
     },
     openGraph: {
         title: 'Peec.ai Alternative & Alternativen 2026: Scanora im Vergleich',
-        description: 'Scanora trackt KI-Sichtbarkeit bei ChatGPT, Claude, Gemini, Perplexity & Google AI Overview ab 29,99 €/Monat – plus SEO-Audit im selben Tool. Der ehrliche Vergleich zu Peec.ai.',
+        description: 'Scanora trackt KI-Sichtbarkeit bei ChatGPT, Claude, Gemini & Perplexity ab 29,99 €/Monat inkl. SEO-Audit. Der ehrliche Vergleich zu Peec.ai.',
         url: 'https://www.scanora.ai/vergleich/peec-alternative',
         type: 'article',
         locale: 'de_DE',
+        images: ['https://www.scanora.ai/vergleich/peec-alternative/opengraph-image'],
     },
 }
 

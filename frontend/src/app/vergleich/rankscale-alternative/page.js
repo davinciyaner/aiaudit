@@ -4,7 +4,7 @@ import Footer from '../../components/Footer'
 
 export const metadata = {
     title: 'Rankscale Alternative: Scanora im Vergleich (2026)',
-    description: 'Rankscale-Alternative gesucht? Scanora trackt KI-Sichtbarkeit bei ChatGPT, Claude, Gemini, Perplexity & Google AI Overview ab 29,99 €/Monat mit festen Preisen statt Credit-System – plus SEO-Audit im selben Tool.',
+    description: 'Rankscale-Alternative gesucht? Scanora trackt KI-Sichtbarkeit bei ChatGPT, Claude, Gemini & Perplexity ab 29,99 €/Monat – feste Preise statt Credits.',
     keywords: 'rankscale alternative, rankscale ai vergleich, günstige ai visibility tool, geo tracking tool ohne credits, ki sichtbarkeit tool',
     alternates: {
         canonical: 'https://www.scanora.ai/vergleich/rankscale-alternative',
@@ -15,10 +15,11 @@ export const metadata = {
     },
     openGraph: {
         title: 'Rankscale Alternative: Scanora im Vergleich (2026)',
-        description: 'Scanora trackt KI-Sichtbarkeit bei ChatGPT, Claude, Gemini, Perplexity & Google AI Overview ab 29,99 €/Monat mit festen Preisen statt Credit-System. Der ehrliche Vergleich zu Rankscale.',
+        description: 'Scanora trackt KI-Sichtbarkeit bei ChatGPT, Claude, Gemini & Perplexity ab 29,99 €/Monat mit festen Preisen. Der Vergleich zu Rankscale.',
         url: 'https://www.scanora.ai/vergleich/rankscale-alternative',
         type: 'article',
         locale: 'de_DE',
+        images: ['https://www.scanora.ai/vergleich/rankscale-alternative/opengraph-image'],
     },
 }
 

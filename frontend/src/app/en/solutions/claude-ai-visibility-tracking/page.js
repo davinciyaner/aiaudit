@@ -4,7 +4,7 @@ import Footer from '../../../components/Footer'
 
 export const metadata = {
     title: { absolute: 'Claude AI Visibility Tracking 2026: See Whether Claude Recommends You' },
-    description: "Track Claude AI visibility from €4.99/month - while Claude tracking on most AI-visibility tools is only available as an expensive Enterprise add-on. How it works and what it actually costs.",
+    description: "Track Claude AI visibility from €4.99/month — most AI-visibility tools only offer Claude tracking as an expensive Enterprise add-on.",
     keywords: 'claude ai visibility, claude visibility tracking, claude ai tracking tool, track claude mentions, generative engine optimization claude',
     alternates: {
         canonical: 'https://www.scanora.ai/en/solutions/claude-ai-visibility-tracking',
@@ -19,6 +19,7 @@ export const metadata = {
         url: 'https://www.scanora.ai/en/solutions/claude-ai-visibility-tracking',
         type: 'article',
         locale: 'en_US',
+        images: ['https://www.scanora.ai/en/solutions/claude-ai-visibility-tracking/opengraph-image'],
     },
 }
 

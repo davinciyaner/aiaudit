@@ -5,7 +5,7 @@ import Footer from '../../../components/Footer'
 
 export const metadata = {
     title: { absolute: 'What is GEO? Generative Engine Optimization Explained (+ 2026 Checklist)' },
-    description: 'GEO (Generative Engine Optimization) explained: how to optimize your website so ChatGPT, Claude, Perplexity, and Google AI Overview cite it as a source. Concrete 19-signal checklist.',
+    description: 'GEO (Generative Engine Optimization) explained: optimize your site so ChatGPT, Claude, Perplexity, and Google AI Overview cite it. 19-signal checklist included.',
     keywords: 'what is geo, GEO optimization, Generative Engine Optimization, ChatGPT SEO, AI search optimization, AI visibility, llms.txt, GEO vs SEO',
     alternates: {
         canonical: 'https://www.scanora.ai/en/blog/what-is-geo',
@@ -20,6 +20,7 @@ export const metadata = {
         url: 'https://www.scanora.ai/en/blog/what-is-geo',
         type: 'article',
         locale: 'en_US',
+        images: ['https://www.scanora.ai/en/blog/what-is-geo/opengraph-image'],
     },
 }
 

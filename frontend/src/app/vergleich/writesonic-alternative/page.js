@@ -4,7 +4,7 @@ import Footer from '../../components/Footer'
 
 export const metadata = {
     title: 'Writesonic Alternative: Scanora im Vergleich (2026)',
-    description: 'Writesonic-Alternative gesucht? Scanora trackt KI-Sichtbarkeit bei ChatGPT, Claude, Gemini, Perplexity & Google AI Overview ab 29,99 €/Monat - während GEO-Tracking bei Writesonic erst im 249-$-Tarif startet.',
+    description: 'Writesonic-Alternative gesucht? Scanora trackt KI-Sichtbarkeit bei ChatGPT, Claude, Gemini, Perplexity & Google AI Overview ab 29,99 €/Monat.',
     keywords: 'writesonic alternative, writesonic geo vergleich, günstige ai visibility tool, geo tracking tool ohne credits, ki sichtbarkeit tool',
     alternates: {
         canonical: 'https://www.scanora.ai/vergleich/writesonic-alternative',
@@ -15,10 +15,11 @@ export const metadata = {
     },
     openGraph: {
         title: 'Writesonic Alternative: Scanora im Vergleich (2026)',
-        description: 'Scanora trackt KI-Sichtbarkeit bei ChatGPT, Claude, Gemini, Perplexity & Google AI Overview ab 29,99 €/Monat - während GEO-Tracking bei Writesonic erst im 249-$-Tarif startet. Der ehrliche Vergleich.',
+        description: 'Scanora trackt KI-Sichtbarkeit bei ChatGPT, Claude, Gemini & Perplexity ab 29,99 €/Monat – GEO-Tracking bei Writesonic erst ab 249 $. Der Vergleich.',
         url: 'https://www.scanora.ai/vergleich/writesonic-alternative',
         type: 'article',
         locale: 'de_DE',
+        images: ['https://www.scanora.ai/vergleich/writesonic-alternative/opengraph-image'],
     },
 }
 

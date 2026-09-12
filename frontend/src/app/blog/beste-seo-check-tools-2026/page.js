@@ -5,7 +5,7 @@ import Footer from '../../components/Footer'
 
 export const metadata = {
     title: 'Website SEO Check & Audit: Scanora mit GEO-Analyse (2026)',
-    description: 'Website SEO Check und Website Audit mit Scanora: SEO, Performance und GEO (KI-Sichtbarkeit für ChatGPT, Claude & Perplexity) in einem Report. Alle Features, Preise und was du als Nutzer bekommst.',
+    description: 'Website SEO Check mit Scanora: SEO, Performance und GEO (KI-Sichtbarkeit für ChatGPT, Claude & Perplexity) in einem Report. Alle Features und Preise.',
     keywords: 'website seo check, website audit, website seo analyse, seo check, seo audit, seo tool, kostenloser seo test, seo software, seo automatisierung, geo tool, geo check, geo automatisierung, ki sichtbarkeit, generative engine optimization, chatgpt seo, core web vitals test, keyword tracking, google ranking tool, backlink check, llms.txt, schema markup',
     alternates: {
         canonical: 'https://www.scanora.ai/blog/beste-seo-check-tools-2026',
@@ -20,6 +20,7 @@ export const metadata = {
         url: 'https://www.scanora.ai/blog/beste-seo-check-tools-2026',
         type: 'article',
         locale: 'de_DE',
+        images: ['https://www.scanora.ai/blog/beste-seo-check-tools-2026/opengraph-image'],
     },
 }
 

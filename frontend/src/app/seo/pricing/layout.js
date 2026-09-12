@@ -9,6 +9,7 @@ export const metadata = {
         url: 'https://www.scanora.ai/seo/pricing',
         type: 'website',
         locale: 'de_DE',
+        images: ['https://www.scanora.ai/opengraph-image'],
     },
 }
 

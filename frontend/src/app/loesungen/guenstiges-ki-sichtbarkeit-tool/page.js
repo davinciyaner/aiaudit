@@ -4,7 +4,7 @@ import Footer from '../../components/Footer'
 
 export const metadata = {
     title: 'Günstiges KI-Sichtbarkeit-Tool & AI-Sichtbarkeit-Tool ab 4,99 € | Scanora',
-    description: 'Günstiges KI-Sichtbarkeit-Tool gesucht? Scanora ist ein AI-Sichtbarkeit-Tool und KI-Sichtbarkeit-Tracker, der GEO-Tracking (ChatGPT, Claude, Perplexity) und SEO-Rankings ab 4,99 €/Monat kombiniert – mit Gratis-Plan.',
+    description: 'Günstiges KI-Sichtbarkeit-Tool gesucht? Scanora kombiniert GEO-Tracking (ChatGPT, Claude, Perplexity) und SEO-Rankings ab 4,99 €/Monat.',
     keywords: 'günstiges ki sichtbarkeit tool, ki sichtbarkeit tool günstig, ki sichtbarkeit tracker, ai sichtbarkeit tool, ai visibility und seo in einem tool, seo und ki sichtbarkeit kombiniert, günstiges geo tool, ai visibility tool preisvergleich',
     alternates: {
         canonical: 'https://www.scanora.ai/loesungen/guenstiges-ki-sichtbarkeit-tool',
@@ -15,10 +15,11 @@ export const metadata = {
     },
     openGraph: {
         title: 'Günstiges KI-Sichtbarkeit-Tool: SEO und AI-Sichtbarkeit-Tool in einem Abo',
-        description: 'Scanora ist ein günstiges KI-Sichtbarkeit-Tool und KI-Sichtbarkeit-Tracker: GEO-Tracking (ChatGPT, Claude, Perplexity, Google AI Overview) und SEO-Rankings ab 4,99 €/Monat – mit echtem Gratis-Plan.',
+        description: 'Scanora: günstiges KI-Sichtbarkeit-Tool mit GEO-Tracking (ChatGPT, Claude, Perplexity) und SEO-Rankings ab 4,99 €/Monat – mit Gratis-Plan.',
         url: 'https://www.scanora.ai/loesungen/guenstiges-ki-sichtbarkeit-tool',
         type: 'article',
         locale: 'de_DE',
+        images: ['https://www.scanora.ai/loesungen/guenstiges-ki-sichtbarkeit-tool/opengraph-image'],
     },
 }
 

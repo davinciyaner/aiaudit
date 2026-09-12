@@ -5,7 +5,7 @@ import Footer from '../../components/Footer'
 
 export const metadata = {
     title: 'SEO-Checkliste 2026: In 15 Minuten alle Fehler selbst finden',
-    description: 'Die komplette SEO-Checkliste 2026 in fester Reihenfolge: 6 Phasen, 15 Minuten, alle wichtigen SEO- und GEO-Signale. Selbst prüfen oder automatisch mit Scanora checken.',
+    description: 'Die komplette SEO-Checkliste 2026: 6 Phasen, 15 Minuten, alle wichtigen SEO- und GEO-Signale. Selbst prüfen oder automatisch mit Scanora checken.',
     keywords: 'seo checkliste 2026, seo checkliste, seo fehler checkliste, seo fehler finden, technische seo checkliste, seo test kostenlos',
     alternates: {
         canonical: 'https://www.scanora.ai/blog/seo-checkliste-2026',
@@ -20,6 +20,7 @@ export const metadata = {
         url: 'https://www.scanora.ai/blog/seo-checkliste-2026',
         type: 'article',
         locale: 'de_DE',
+        images: ['https://www.scanora.ai/blog/seo-checkliste-2026/opengraph-image'],
     },
 }
 

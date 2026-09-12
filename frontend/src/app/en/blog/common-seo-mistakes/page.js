@@ -20,6 +20,7 @@ export const metadata = {
         url: 'https://www.scanora.ai/en/blog/common-seo-mistakes',
         type: 'article',
         locale: 'en_US',
+        images: ['https://www.scanora.ai/en/blog/common-seo-mistakes/opengraph-image'],
     },
 }
 

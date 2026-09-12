@@ -5,7 +5,7 @@ import Footer from '../../components/Footer'
 
 export const metadata = {
     title: { absolute: 'About Scanora – Why This Tool Exists' },
-    description: 'Scanora automatically tracks whether your website gets cited by ChatGPT, Claude, Perplexity, and Google AI Overview — and how it ranks on Google. One report instead of ten separate tools.',
+    description: 'Scanora automatically tracks whether your website gets cited by ChatGPT, Claude, Perplexity, and Google AI Overview - and how it ranks on Google.',
     alternates: {
         canonical: 'https://www.scanora.ai/en/about',
         languages: {
@@ -19,6 +19,7 @@ export const metadata = {
         url: 'https://www.scanora.ai/en/about',
         type: 'website',
         locale: 'en_US',
+        images: ['https://www.scanora.ai/opengraph-image'],
     },
 }
 

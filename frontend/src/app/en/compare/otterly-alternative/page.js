@@ -4,7 +4,7 @@ import Footer from '../../../components/Footer'
 
 export const metadata = {
     title: 'Otterly.ai Alternative: How Scanora Compares (2026)',
-    description: 'Looking for an Otterly.ai alternative? Scanora tracks AI visibility across ChatGPT, Claude, Gemini, Perplexity & Google AI Overview from €29.99/month — plus a built-in SEO audit and a real free plan.',
+    description: 'Otterly.ai alternative? Scanora tracks AI visibility across ChatGPT, Claude, Gemini, Perplexity & Google AI Overview from €29.99/month, plus SEO audit.',
     keywords: 'otterly alternative, otterly.ai alternative, otterly ai competitor, best otterly ai alternatives, otterly ai alternatives, cheap ai visibility tool, geo tracking tool, ai visibility software',
     alternates: {
         canonical: 'https://www.scanora.ai/en/compare/otterly-alternative',
@@ -15,10 +15,11 @@ export const metadata = {
     },
     openGraph: {
         title: 'Otterly.ai Alternative: How Scanora Compares (2026)',
-        description: 'Scanora tracks AI visibility across ChatGPT, Claude, Gemini, Perplexity & Google AI Overview from €29.99/month — plus a built-in SEO audit. A fact-checked look at Otterly.ai.',
+        description: 'Scanora tracks AI visibility across ChatGPT, Claude, Gemini, Perplexity & Google AI Overview from €29.99/month, plus SEO audit. Fact-checked look at Otterly.ai.',
         url: 'https://www.scanora.ai/en/compare/otterly-alternative',
         type: 'article',
         locale: 'en_US',
+        images: ['https://www.scanora.ai/en/compare/otterly-alternative/opengraph-image'],
     },
 }
 

@@ -1,6 +1,6 @@
 export const metadata = {
     title: 'GEO Automatisierung Preise – KI-Sichtbarkeit bei ChatGPT, Claude, Gemini, Perplexity & Google AI Overview tracken',
-    description: 'GEO Automatisierung ab 4,99€/Monat: Wöchentlich automatisch prüfen, ob ChatGPT, Claude, Gemini, Perplexity und Google AI Overview deine Website erwähnen. Themen-Sichtbarkeits-Analyse, Historien-Trends, Mention-Verlauf & Keyword-Tracking. 14 Tage kostenlos testen.',
+    description: 'GEO Automatisierung ab 4,99€/Monat: Wöchentlich prüfen, ob ChatGPT, Claude, Gemini, Perplexity und Google AI Overview deine Website erwähnen. 14 Tage testen.',
     keywords: 'geo audit preis, geo audit kosten, geo audit, geo automatisierung preise, ki sichtbarkeit tracken, chatgpt sichtbarkeit tool, claude sichtbarkeit tool, gemini sichtbarkeit tool, perplexity sichtbarkeit tool, google ai overview tracken, generative engine optimization tool, geo tracking kosten',
     alternates: {
         canonical: 'https://www.scanora.ai/geo/pricing',
@@ -15,6 +15,7 @@ export const metadata = {
         url: 'https://www.scanora.ai/geo/pricing',
         type: 'website',
         locale: 'de_DE',
+        images: ['https://www.scanora.ai/opengraph-image'],
     },
 }
 

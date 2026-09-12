@@ -20,6 +20,7 @@ export const metadata = {
         url: 'https://www.scanora.ai/en/blog/seo-tracking-manual-vs-automated',
         type: 'article',
         locale: 'en_US',
+        images: ['https://www.scanora.ai/en/blog/seo-tracking-manual-vs-automated/opengraph-image'],
     },
 }
 

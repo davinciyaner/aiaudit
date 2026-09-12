@@ -5,7 +5,7 @@ import Footer from '../../components/Footer'
 
 export const metadata = {
     title: 'SEO Rank Tracker & KI-Sichtbarkeits-Monitor: SEO- und GEO-Tracking automatisieren',
-    description: 'Ein automatisierter SEO Rank Tracker und Keyword Tracker, plus KI-Sichtbarkeits-Monitoring für ChatGPT, Claude, Perplexity & Google AI Overview - wöchentlich automatisch statt manuell geprüft. Mit Preisen und Vergleich.',
+    description: 'Automatisierter SEO Rank Tracker plus KI-Sichtbarkeits-Monitoring für ChatGPT, Claude & Perplexity - wöchentlich automatisch statt manuell geprüft.',
     keywords: 'seo tool, rank tracker, keyword tracker, seo monitoring, google ranking tool, keyword monitoring, seo tracking tool, seo automatisierung, geo automatisierung, ki sichtbarkeit, automatisiertes seo tracking, seo monitoring tool',
     alternates: {
         canonical: 'https://www.scanora.ai/blog/seo-geo-automatisierung',
@@ -16,10 +16,11 @@ export const metadata = {
     },
     openGraph: {
         title: 'SEO Rank Tracker & KI-Sichtbarkeits-Monitor: SEO- und GEO-Tracking automatisieren',
-        description: 'Ein automatisierter Rank Tracker und Keyword Tracker, plus KI-Sichtbarkeits-Monitoring für ChatGPT, Claude, Perplexity & Google AI Overview - wöchentlich automatisch statt manuell geprüft.',
+        description: 'Automatisierter SEO Rank Tracker plus KI-Sichtbarkeits-Monitoring für ChatGPT, Claude & Perplexity - wöchentlich automatisch statt manuell geprüft.',
         url: 'https://www.scanora.ai/blog/seo-geo-automatisierung',
         type: 'article',
         locale: 'de_DE',
+        images: ['https://www.scanora.ai/blog/seo-geo-automatisierung/opengraph-image'],
     },
 }
 
