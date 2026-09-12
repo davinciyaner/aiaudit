@@ -17,7 +17,7 @@ export const metadata = {
     keywords: 'ai visibility, ai visibility tracker, ai visibility score, geo check, ki sichtbarkeit, ki sichtbarkeit messen, geo automatisierung, seo automatisierung, mention rate tracking, share of voice ki, chatgpt sichtbarkeit tracken, ki erwähnungen tracken, seo test, seo test kostenlos, seo check, website seo check, kostenloser seo check, seo analyse kostenlos, website audit kostenlos, SEO analyse tool, GEO optimierung, website checker, lighthouse alternative 2026',
     openGraph: {
         title: 'AI Visibility & SEO prüfen | Scanora',
-        description: 'AI Visibility & SEO — ein vollständiger Website-Audit mit konkreten Fixes. Kostenlos starten.',
+        description: 'AI Visibility & SEO — kostenloser Website-Score in 60 Sekunden, konkrete KI-Fixes ab Pro.',
         url: 'https://www.scanora.ai',
         siteName: 'Scanora',
         type: 'website',

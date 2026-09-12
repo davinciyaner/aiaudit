@@ -25,7 +25,7 @@ export const metadata = {
     },
     openGraph: {
         title: 'AI Visibility & SEO Check | Scanora',
-        description: 'AI Visibility & SEO — a full website audit with concrete fixes. Start for free.',
+        description: 'AI Visibility & SEO — free website score in 60 seconds, concrete AI fixes from Pro.',
         url: 'https://www.scanora.ai/en',
         siteName: 'Scanora',
         type: 'website',
