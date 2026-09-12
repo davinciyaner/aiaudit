@@ -13,6 +13,7 @@ export const metadata = {
         title: 'SEO- & AI-Visibility-Check Preise – ab kostenlos | Scanora',
         description: 'Scanora kostenlos testen oder auf Pro/Agency upgraden: Free 1 Audit/Monat, Pro €29 mit 10 Audits, Agency €99 unbegrenzt. Jederzeit kündbar.',
         url: 'https://www.scanora.ai/pricing',
+        images: ['https://www.scanora.ai/opengraph-image'],
     },
 }
 

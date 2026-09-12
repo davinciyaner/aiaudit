@@ -77,15 +77,59 @@ function isLikelyValidDomain(normalizedUrl) {
 const POLL_INTERVAL_MS = 800
 const MAX_CUSTOM_PROMPT_LENGTH = 300
 
+// Statischer Content (H1, Definition, "So funktioniert's", FAQ) hängt an keinerlei
+// searchParams-abhängigem State und steht deshalb außerhalb des Suspense-Boundary — er ist damit
+// immer Teil des Server-HTML, auch bevor das Client-JS hydriert. Nur das eigentliche Formular
+// braucht `useSearchParams()` (fürs Vorausfüllen der Plattform per Deep-Link) und bleibt deshalb
+// in Suspense gekapselt; vorher hatte `fallback={null}` zur Folge, dass Crawler ohne
+// JS-Ausführung (curl, viele Bots) auf der gesamten Seite null Wörter Text zu sehen bekamen.
 export default function GeoCheckPage() {
     return (
-        <Suspense fallback={null}>
-            <GeoCheckPageInner />
-        </Suspense>
+        <div className="min-h-screen bg-[var(--bg-base)]">
+            <Navbar />
+
+            <main className="max-w-2xl mx-auto px-5 sm:px-8 pt-28 sm:pt-32 pb-24">
+                <div className="text-center mb-8">
+                    <h1 className="text-3xl sm:text-4xl font-bold text-[var(--text-white)] leading-tight tracking-tight mb-4">
+                        GEO Check: Wirst du von ChatGPT &amp; Co. zitiert?
+                    </h1>
+                    <p className="text-[var(--text-muted)] leading-relaxed max-w-lg mx-auto">
+                        Ein GEO Check ist eine einmalige oder wiederkehrende Prüfung, ob eine Website von KI-Systemen wie ChatGPT, Claude, Gemini, Perplexity oder der Google AI Overview als Quelle zitiert wird. Der GEO Check von Scanora ist ein kostenloses Tool für Websitebetreiber: Domain und Keyword eingeben, eine Plattform (ChatGPT, Claude, Perplexity oder Google AI Overview) wählen und in Sekunden sehen, ob die eigene Domain genannt wird - ganz ohne Registrierung.
+                    </p>
+                </div>
+
+                <div className="grid grid-cols-3 gap-2 mb-6">
+                    {HOW_IT_WORKS.map((step, i) => (
+                        <div key={i} className="flex flex-col items-center text-center gap-2 py-4 px-2 rounded-xl bg-[var(--surface-06)] border border-[var(--border-subtle)]">
+                            <div className="w-8 h-8 rounded-full bg-violet-500/15 border border-violet-500/25 flex items-center justify-center">
+                                <step.icon className="w-4 h-4 text-violet-400" />
+                            </div>
+                            <span className="text-[11px] sm:text-xs text-[var(--text-white)] leading-tight">{step.label}</span>
+                        </div>
+                    ))}
+                </div>
+
+                <Suspense fallback={<div className="h-[420px] rounded-2xl bg-[var(--surface-06)] border border-[var(--border-subtle)] animate-pulse" />}>
+                    <GeoCheckForm />
+                </Suspense>
+
+                <section className="mt-16">
+                    <h2 className="text-lg font-bold text-[var(--text-white)] mb-5 text-center">Häufige Fragen</h2>
+                    <div className="space-y-3">
+                        {FAQS.map((faq, i) => (
+                            <div key={i} className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl p-5">
+                                <h3 className="font-semibold text-[var(--text-white)] mb-2 text-sm">{faq.q}</h3>
+                                <p className="text-sm text-[var(--text-muted)] leading-relaxed">{faq.a}</p>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+            </main>
+        </div>
     )
 }
 
-function GeoCheckPageInner() {
+function GeoCheckForm() {
     const searchParams = useSearchParams()
     const platformParam = searchParams.get('platform')
     const initialPlatform = ALL_PLATFORMS.includes(platformParam) ? platformParam : null
@@ -221,32 +265,14 @@ function GeoCheckPageInner() {
     ] : []
 
     return (
-        <div className="min-h-screen bg-[var(--bg-base)]">
-            <Navbar />
-
-            <main className="max-w-2xl mx-auto px-5 sm:px-8 pt-28 sm:pt-32 pb-24">
-                <div className="text-center mb-8">
-                    <h1 className="text-3xl sm:text-4xl font-bold text-[var(--text-white)] leading-tight tracking-tight mb-4">
-                        {platformLocked && platform ? `GEO Check: Wirst du von ${PLATFORM_META[platform].label} zitiert?` : 'GEO Check: Wirst du von ChatGPT & Co. zitiert?'}
-                    </h1>
-                    <p className="text-[var(--text-muted)] leading-relaxed max-w-lg mx-auto">
-                        Ein GEO Check ist eine einmalige oder wiederkehrende Prüfung, ob eine Website von KI-Systemen wie ChatGPT, Claude, Gemini, Perplexity oder der Google AI Overview als Quelle zitiert wird. Der GEO Check von Scanora ist ein kostenloses Tool für Websitebetreiber: Domain und Keyword eingeben, eine Plattform (ChatGPT, Claude, Perplexity oder Google AI Overview) wählen und in Sekunden sehen, ob die eigene Domain genannt wird - ganz ohne Registrierung.
-                    </p>
-                </div>
-
-                <div className="grid grid-cols-3 gap-2 mb-6">
-                    {HOW_IT_WORKS.map((step, i) => (
-                        <div key={i} className="flex flex-col items-center text-center gap-2 py-4 px-2 rounded-xl bg-[var(--surface-06)] border border-[var(--border-subtle)]">
-                            <div className="w-8 h-8 rounded-full bg-violet-500/15 border border-violet-500/25 flex items-center justify-center">
-                                <step.icon className="w-4 h-4 text-violet-400" />
-                            </div>
-                            <span className="text-[11px] sm:text-xs text-[var(--text-white)] leading-tight">{step.label}</span>
-                        </div>
-                    ))}
-                </div>
-
-                <AnimatePresence mode="wait">
-                    {phase === 'form' && (
+        <>
+            {platformLocked && platform && (
+                <p className="text-center text-xs text-[var(--text-faint)] -mt-4 mb-4">
+                    Ausgewählt: {PLATFORM_META[platform].label}
+                </p>
+            )}
+            <AnimatePresence mode="wait">
+                {phase === 'form' && (
                         <motion.form key="form" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
                             onSubmit={handleSubmit}
                             className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl p-5 sm:p-8 space-y-5"
@@ -549,20 +575,7 @@ function GeoCheckPageInner() {
                             </Link>
                         </motion.div>
                     )}
-                </AnimatePresence>
-
-                <section className="mt-16">
-                    <h2 className="text-lg font-bold text-[var(--text-white)] mb-5 text-center">Häufige Fragen</h2>
-                    <div className="space-y-3">
-                        {FAQS.map((faq, i) => (
-                            <div key={i} className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl p-5">
-                                <h3 className="font-semibold text-[var(--text-white)] mb-2 text-sm">{faq.q}</h3>
-                                <p className="text-sm text-[var(--text-muted)] leading-relaxed">{faq.a}</p>
-                            </div>
-                        ))}
-                    </div>
-                </section>
-            </main>
-        </div>
+            </AnimatePresence>
+        </>
     )
 }

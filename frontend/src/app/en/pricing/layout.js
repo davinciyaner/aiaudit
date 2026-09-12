@@ -14,6 +14,7 @@ export const metadata = {
         description: 'Try Scanora for free or upgrade to Pro/Agency. Free: 1 audit/month. Pro: €29/month with 10 audits. Agency: €99/month, unlimited audits. Cancel anytime.',
         url: 'https://www.scanora.ai/en/pricing',
         locale: 'en_US',
+        images: ['https://www.scanora.ai/opengraph-image'],
     },
 }
 
