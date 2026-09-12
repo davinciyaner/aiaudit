@@ -12,7 +12,7 @@ import FAQ from './components/FAQ'
 import { FAQS } from './components/faqData'
 
 export const metadata = {
-    title: 'SEO-Check & AI Visibility Test kostenlos – Scanora (60s)',
+    title: 'AI Visibility & SEO-Check kostenlos – Scanora (60s)',
     description: 'Kostenloser SEO- & AI-Visibility-Check in 60 Sekunden: Siehst du bei ChatGPT, Claude, Gemini, Perplexity & Google AI Overview auf? Jetzt gratis testen!',
     keywords: 'ai visibility, ai visibility tracker, ai visibility score, geo check, ki sichtbarkeit, ki sichtbarkeit messen, geo automatisierung, seo automatisierung, mention rate tracking, share of voice ki, chatgpt sichtbarkeit tracken, ki erwähnungen tracken, seo test, seo test kostenlos, seo check, website seo check, kostenloser seo check, seo analyse kostenlos, website audit kostenlos, SEO analyse tool, GEO optimierung, website checker, lighthouse alternative 2026',
     openGraph: {

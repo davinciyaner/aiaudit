@@ -1376,8 +1376,12 @@ function BacklinksTab({ siteId, plan }) {
             const d = await res.json()
             if (!res.ok) throw new Error(d.error)
             setSummary(d.summary); setCheckedAt(d.checkedAt); setLoaded(true)
-            if (force) toast.success('Aktuelle Backlink-Daten geladen')
-        } catch (err) { toast.error(err.message || 'Fehler') }
+            if (d.staleError) toast.error('Aktualisierung fehlgeschlagen — zeige letzten bekannten Stand.')
+            else if (force) toast.success('Aktuelle Backlink-Daten geladen')
+        } catch (err) {
+            toast.error(err.message || 'Fehler')
+            setLoaded(true) // sonst hängt die Ansicht im Ladespinner fest, wenn schon der erste Check fehlschlägt
+        }
         finally { setLoading(false) }
     }
 
@@ -1429,16 +1433,17 @@ function BacklinksTab({ siteId, plan }) {
 
     if (!loaded) return <LoadingTab />
 
-    if (!summary) return <EmptyTab icon={Link2} text="Keine Backlink-Daten gefunden." onRetry={() => fetch_(true)} retrying={loading} />
-
-    const stats = [
+    // Summary ist ein separates, aggregiertes DataForSEO-Metrik-Set, das bei kleinen/neuen Domains
+    // oft noch leer ist, obwohl die rohen Listen (Referring Domains, Link-Gap) darunter schon
+    // Treffer haben. Ein leeres Summary darf die Sektionen darunter deshalb nicht verstecken.
+    const stats = summary ? [
         { label: 'Backlinks gesamt', value: summary.backlinks?.toLocaleString('de-DE') ?? '—' },
         { label: 'Referring Domains', value: summary.referringDomains?.toLocaleString('de-DE') ?? '—' },
         { label: 'Referring IPs', value: summary.referringIPs?.toLocaleString('de-DE') ?? '—' },
         { label: 'Dofollow', value: summary.dofollow?.toLocaleString('de-DE') ?? '—' },
         { label: 'Nofollow', value: summary.nofollow?.toLocaleString('de-DE') ?? '—' },
         { label: 'Spam Score', value: summary.spamScore != null ? `${summary.spamScore}%` : '—', risky: summary.spamScore > 30 },
-    ]
+    ] : []
 
     // Domains, die auf mehrere Konkurrenten gleichzeitig verlinken, zuerst — höchster Linkbuilding-Wert
     const sortedGap = gap?.gap?.length
@@ -1479,21 +1484,28 @@ function BacklinksTab({ siteId, plan }) {
 
     return (
         <div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-6">
-                {stats.map(s => (
-                    <div key={s.label} className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-xl p-4">
-                        <div className="text-xs text-[var(--text-faint)] mb-1.5">{s.label}</div>
-                        <div className={`flex items-center gap-1.5 text-xl font-bold ${s.risky ? 'text-[var(--danger)]' : 'text-[var(--text-white)]'}`}>
-                            {s.risky && <AlertTriangle className="w-4 h-4 shrink-0" strokeWidth={2.5} />}
-                            {s.value}
-                        </div>
+            {summary ? (
+                <>
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-6">
+                        {stats.map(s => (
+                            <div key={s.label} className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-xl p-4">
+                                <div className="text-xs text-[var(--text-faint)] mb-1.5">{s.label}</div>
+                                <div className={`flex items-center gap-1.5 text-xl font-bold ${s.risky ? 'text-[var(--danger)]' : 'text-[var(--text-white)]'}`}>
+                                    {s.risky && <AlertTriangle className="w-4 h-4 shrink-0" strokeWidth={2.5} />}
+                                    {s.value}
+                                </div>
+                            </div>
+                        ))}
                     </div>
-                ))}
-            </div>
-
-            {summary.firstSeen && (
-                <div className="text-xs text-[var(--text-faint)]">
-                    Erster Backlink seit: {new Date(summary.firstSeen).toLocaleDateString('de-DE')}
+                    {summary.firstSeen && (
+                        <div className="text-xs text-[var(--text-faint)]">
+                            Erster Backlink seit: {new Date(summary.firstSeen).toLocaleDateString('de-DE')}
+                        </div>
+                    )}
+                </>
+            ) : (
+                <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl py-10 mb-6">
+                    <EmptyTab icon={Link2} text="Noch keine Backlink-Zusammenfassung verfügbar — bei neuen/kleinen Domains dauert das bei DataForSEO oft länger. Die Rohdaten unten können trotzdem schon Treffer zeigen." onRetry={() => fetch_(true)} retrying={loading} />
                 </div>
             )}
             {checkedAt && (
@@ -1502,11 +1514,13 @@ function BacklinksTab({ siteId, plan }) {
                 </div>
             )}
 
-            <button onClick={() => fetch_(true)} disabled={loading}
-                className="mt-4 flex items-center gap-2 text-xs text-[var(--text-faint)] hover:text-[var(--text-muted)] transition-colors">
-                <RefreshCw className={`w-3 h-3 ${loading ? 'animate-spin' : ''}`} />
-                Neu laden
-            </button>
+            {summary && (
+                <button onClick={() => fetch_(true)} disabled={loading}
+                    className="mt-4 flex items-center gap-2 text-xs text-[var(--text-faint)] hover:text-[var(--text-muted)] transition-colors">
+                    <RefreshCw className={`w-3 h-3 ${loading ? 'animate-spin' : ''}`} />
+                    Neu laden
+                </button>
+            )}
 
             {/* Referring Domains: wer verlinkt auf mich */}
             <div className="mt-10 pt-8 border-t border-[var(--border-subtle)]">

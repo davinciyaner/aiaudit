@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { ChevronDown } from 'lucide-react'
 import { FAQS } from './faqData'
 
@@ -12,7 +12,7 @@ function FAQItem({ faq, isOpen, onToggle, id }) {
             viewport={{ once: true }}
             className="border border-[var(--border-subtle)] rounded-2xl overflow-hidden bg-[var(--surface-06)]"
         >
-            <h2 className="m-0">
+            <h3 className="m-0">
                 <button
                     type="button"
                     onClick={onToggle}
@@ -24,25 +24,23 @@ function FAQItem({ faq, isOpen, onToggle, id }) {
                     {faq.q}
                     <ChevronDown className={`w-4 h-4 text-[var(--text-faint)] shrink-0 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
                 </button>
-            </h2>
-            <AnimatePresence initial={false}>
-                {isOpen && (
-                    <motion.div
-                        id={`${id}-panel`}
-                        role="region"
-                        aria-labelledby={`${id}-trigger`}
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: 'auto', opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.2 }}
-                        className="overflow-hidden"
-                    >
-                        <p className="px-5 pb-4 pt-3 text-sm text-[var(--text-muted)] leading-relaxed border-t border-[var(--border-subtle)] mx-5">
-                            {faq.a}
-                        </p>
-                    </motion.div>
-                )}
-            </AnimatePresence>
+            </h3>
+            {/* Always rendered in the DOM (grid-rows 0fr/1fr trick) instead of conditionally
+                unmounting the answer — so crawlers/LLMs see all answer text in the server HTML,
+                not just the currently open one. Visually still collapses to zero height. */}
+            <div
+                id={`${id}-panel`}
+                role="region"
+                aria-labelledby={`${id}-trigger`}
+                aria-hidden={!isOpen}
+                className={`grid overflow-hidden transition-[grid-template-rows] duration-200 ease-in-out ${isOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}
+            >
+                <div className="min-h-0 overflow-hidden">
+                    <p className="px-5 pb-4 pt-3 text-sm text-[var(--text-muted)] leading-relaxed border-t border-[var(--border-subtle)] mx-5">
+                        {faq.a}
+                    </p>
+                </div>
+            </div>
         </motion.div>
     )
 }
@@ -59,9 +57,9 @@ export default function FAQ() {
                     viewport={{ once: true }}
                     className="text-center mb-10 sm:mb-14"
                 >
-                    <p className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">
+                    <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">
                         Häufig gestellte Fragen
-                    </p>
+                    </h2>
                     <p className="text-[var(--text-muted)] text-base">
                         Alles was du über Website-Audits, SEO-Tests und GEO wissen musst.
                     </p>

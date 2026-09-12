@@ -549,6 +549,16 @@ export async function getBacklinksForSite(req, res) {
         }
 
         const summary = await getBacklinkSummary(site.domain)
+        // Ein fehlgeschlagener DataForSEO-Call (Rate-Limit, transienter Fehler) darf die zuletzt
+        // guten Daten nicht überschreiben — sonst verschwinden echte Backlinks für bis zu 28 Tage
+        // aus dem Dashboard, nur weil ein einzelner Request leer zurückkam.
+        if (!summary) {
+            if (cache?.data) {
+                return res.json({ summary: cache.data, checkedAt: cache.checkedAt, cached: true, staleError: true })
+            }
+            return res.status(502).json({ error: t('BACKLINKS_FETCH_FAILED', req.language) })
+        }
+
         const checkedAt = new Date()
         await SeoTrackedSite.updateOne({ _id: site._id }, { backlinksCache: { data: summary, checkedAt } })
         res.json({ summary, checkedAt, cached: false })

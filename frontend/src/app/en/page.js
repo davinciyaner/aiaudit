@@ -13,7 +13,7 @@ import { FAQS_EN } from '../components/en/faqDataEn'
 
 export const metadata = {
     title: { absolute: 'AI Visibility & SEO Check – Audit in 60s | Scanora' },
-    description: 'Free website audit for AI Visibility & SEO in 60 seconds: check visibility in ChatGPT, Claude, Perplexity & Google AI Overview, plus title tags and Google rankings.',
+    description: 'Free AI Visibility & SEO audit in 60 seconds: check if ChatGPT, Claude, Perplexity & Google AI Overview cite you. Free scan.',
     keywords: 'ai visibility, ai visibility tracker, ai visibility score, geo, geo optimization, seo automation, mention rate tracking, share of voice ai, track chatgpt visibility, track ai mentions, seo test, free seo test, seo check, free website seo check, free seo analysis, free website audit, seo analysis tool, website checker, lighthouse alternative 2026',
     alternates: {
         canonical: 'https://www.scanora.ai/en',
