@@ -18,10 +18,17 @@ import landingFeedbackRouter from "./routes/landing_feedback_router.js";
 import seoTrackingRouter from "./routes/seo_tracking_router.js";
 import geoRouter from "./routes/geo_router.js";
 import geoOneoffRouter from "./routes/geo_oneoff_router.js";
+import leadsRouter from "./routes/leads_router.js";
 import { startSeoTrackingJob, runWeeklySeoChecks } from "./jobs/seoTrackingJob.js";
 import { startGeoTrackingJob } from "./jobs/geoTrackingJob.js";
+import { startLeadsRetentionJob } from "./jobs/leadsRetentionJob.js";
 
 const app = express();
+
+// Muss VOR der globalen CORS-Restriktion unten stehen: das Leads-Tracking-Snippet läuft auf der
+// Website eines Scanora-Kunden (fremde Domain), nicht auf scanora.ai — die globale Origin-Prüfung
+// würde jeden Request von dort sonst schon vor dem eigenen (permissiven) CORS in leads_router.js abweisen.
+app.use("/api/leads", leadsRouter);
 
 // CORS — nur eigene Domain erlauben
 const allowedOrigin = process.env.ALLOWED_ORIGIN || "http://localhost:3000";
@@ -83,4 +90,5 @@ app.listen(PORT, () => {
     console.log(`Server läuft auf Port ${PORT}`);
     startSeoTrackingJob()
     startGeoTrackingJob()
+    startLeadsRetentionJob()
 });

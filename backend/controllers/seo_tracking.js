@@ -20,6 +20,23 @@ async function getSeoPlan(userId) {
     return sub ? sub.plan : null
 }
 
+// Analog zu getLimits() in geo_tracking.js — ein Account mit unlimited:true auf seinem
+// ProductSubscription-Dokument bekommt alle Zahlen-Limits als Infinity (JSON.stringify macht
+// daraus automatisch null, das Frontend zeigt dann "—"/"unbegrenzt" statt "X/Infinity").
+// historyWeeks ist eine Ausnahme: der Wert geht direkt in ein Mongoose .limit(), das kein
+// Infinity akzeptiert — dafür der bereits bestehende "praktisch unbegrenzt"-Wert von Expert (999).
+async function getLimits(userId, plan) {
+    const base = PLAN_LIMITS[plan]
+    if (!base) return base
+    const sub = await ProductSubscription.findOne({ userId, product: 'seo', status: 'ACTIVE' }, 'unlimited').lean()
+    if (!sub?.unlimited) return base
+    return Object.fromEntries(Object.entries(base).map(([k, v]) => {
+        if (k === 'historyWeeks') return [k, 999]
+        if (typeof v === 'number') return [k, Infinity]
+        return [k, v]
+    }))
+}
+
 async function countTotalKeywords(userId) {
     const sites = await SeoTrackedSite.find({ userId, isActive: true }, 'keywords').lean()
     return sites.reduce((sum, s) => sum + (s.keywords?.length || 0), 0)
@@ -30,8 +47,13 @@ async function countTotalKeywords(userId) {
 // Fortschrittsbalken + ETA zeigen kann, statt nur einen Spinner ohne jede Zeitangabe.
 const checkProgressMap = new Map()
 
-// GET /api/seo/sites/:id/check-progress
-export function getCheckProgress(req, res) {
+// GET /api/seo/sites/:id/check-progress — fehlte bisher der Ownership-Check: jeder eingeloggte
+// Nutzer konnte mit einer beliebigen fremden siteId Keyword-Anzahl und Check-Fortschritt einer
+// fremden Site auslesen, ueber die in-memory checkProgressMap ganz ohne DB-Bezug.
+export async function getCheckProgress(req, res) {
+    const site = await SeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId }, '_id').lean()
+    if (!site) return res.status(404).json({ error: t('SITE_NOT_FOUND', req.language) })
+
     const progress = checkProgressMap.get(req.params.id)
     if (!progress) return res.json({ active: false })
     res.json({ active: true, done: progress.done, total: progress.total, startedAt: progress.startedAt })
@@ -95,7 +117,7 @@ export async function getSites(req, res) {
         }))
 
         const totalKeywords = sites.reduce((s, site) => s + (site.keywords?.length || 0), 0)
-        const limits = PLAN_LIMITS[plan]
+        const limits = await getLimits(req.userId, plan)
 
         res.json({
             sites: enriched,
@@ -130,7 +152,7 @@ export async function addSite(req, res) {
         const plan = await getSeoPlan(req.userId)
         if (!plan) return res.status(403).json({ error: t('NO_ACTIVE_SEO_SUB', req.language) })
 
-        const limits = PLAN_LIMITS[plan]
+        const limits = await getLimits(req.userId, plan)
 
         const siteCount = await SeoTrackedSite.countDocuments({ userId: req.userId, isActive: true })
         if (siteCount >= limits.maxSites) {
@@ -207,7 +229,7 @@ export async function addKeywords(req, res) {
         const site = await SeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId })
         if (!site) return res.status(404).json({ error: t('SITE_NOT_FOUND', req.language) })
 
-        const limits = PLAN_LIMITS[plan]
+        const limits = await getLimits(req.userId, plan)
         const totalKeywords = await countTotalKeywords(req.userId)
         const slotsLeft = limits.maxKeywords - totalKeywords
 
@@ -264,7 +286,7 @@ export async function removeKeywords(req, res) {
 export async function getRankings(req, res) {
     try {
         const plan = await getSeoPlan(req.userId)
-        const historyLimit = PLAN_LIMITS[plan]?.historyWeeks ?? 8
+        const historyLimit = (await getLimits(req.userId, plan))?.historyWeeks ?? 8
 
         const site = await SeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId }).lean()
         if (!site) return res.status(404).json({ error: t('SITE_NOT_FOUND', req.language) })
@@ -285,7 +307,7 @@ export async function getRankings(req, res) {
         const month = new Date().toISOString().slice(0, 7)
         const usage = await SeoUsage.findOne({ userId: req.userId, feature: 'manual_check', month }).lean()
         const manualChecksUsed = usage?.count ?? 0
-        const manualChecksLimit = PLAN_LIMITS[plan]?.manualChecksPerMonth ?? null
+        const manualChecksLimit = (await getLimits(req.userId, plan))?.manualChecksPerMonth ?? null
 
         res.json({ site, rankings, manualChecksUsed, manualChecksLimit })
     } catch (err) {
@@ -303,7 +325,7 @@ export async function triggerCheck(req, res) {
         const plan = await getSeoPlan(req.userId)
         if (!plan) return res.status(403).json({ error: t('NO_ACTIVE_SEO_SUB', req.language) })
 
-        const manualLimit = PLAN_LIMITS[plan].manualChecksPerMonth
+        const manualLimit = (await getLimits(req.userId, plan)).manualChecksPerMonth
         const month = new Date().toISOString().slice(0, 7)
         const usage = await SeoUsage.findOne({ userId: req.userId, feature: 'manual_check', month }).lean()
         const used = usage?.count ?? 0
@@ -379,7 +401,7 @@ export async function getKeywordIdeasForSite(req, res) {
         if (!site) return res.status(404).json({ error: t('SITE_NOT_FOUND', req.language) })
         if (!site.keywords.length) return res.status(400).json({ error: t('NO_KEYWORDS_STORED', req.language) })
 
-        const monthlyLimit = PLAN_LIMITS[plan]?.keywordIdeasPerMonth ?? 6
+        const monthlyLimit = (await getLimits(req.userId, plan))?.keywordIdeasPerMonth ?? 6
         const month = new Date().toISOString().slice(0, 7)
         const usage = await SeoUsage.findOne({ userId: req.userId, feature: 'keyword_ideas', month }).lean()
         const used = usage?.count ?? 0
@@ -447,7 +469,7 @@ export async function getContentGapForSite(req, res) {
         const site = await SeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId }).lean()
         if (!site) return res.status(404).json({ error: t('SITE_NOT_FOUND', req.language) })
 
-        const monthlyLimit = PLAN_LIMITS[plan]?.contentGapPerMonth ?? 0
+        const monthlyLimit = (await getLimits(req.userId, plan))?.contentGapPerMonth ?? 0
         const month = new Date().toISOString().slice(0, 7)
         const existing = await SeoUsage.findOne({ userId: req.userId, feature: 'content_gap', month }).lean()
         const used = existing?.count ?? 0
@@ -498,7 +520,7 @@ export async function getRankedKeywordsForSite(req, res) {
         const site = await SeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId }).lean()
         if (!site) return res.status(404).json({ error: t('SITE_NOT_FOUND', req.language) })
 
-        const monthlyLimit = PLAN_LIMITS[plan]?.rankedKeywordsPerMonth ?? 0
+        const monthlyLimit = (await getLimits(req.userId, plan))?.rankedKeywordsPerMonth ?? 0
         const month = new Date().toISOString().slice(0, 7)
         const existing = await SeoUsage.findOne({ userId: req.userId, feature: 'ranked_keywords', month }).lean()
         const used = existing?.count ?? 0
@@ -636,7 +658,7 @@ export async function getBacklinkGapForSite(req, res) {
             return res.json({ competitors: cache.competitorDomains, manual: !!cache.manual, gap: cache.data, checkedAt: cache.checkedAt, cached: true })
         }
 
-        const monthlyLimit = PLAN_LIMITS[plan]?.backlinkGapPerMonth ?? 0
+        const monthlyLimit = (await getLimits(req.userId, plan))?.backlinkGapPerMonth ?? 0
         const month = new Date().toISOString().slice(0, 7)
         const existing = await SeoUsage.findOne({ userId: req.userId, feature: 'backlink_gap', month }).lean()
         const used = existing?.count ?? 0

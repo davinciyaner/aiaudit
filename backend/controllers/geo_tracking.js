@@ -8,6 +8,7 @@ import {
     checkSiteMentions, PROMPT_INTENTS, classifyGeoSuitableKeywords, getAiKeywordVolume,
     getTopMentionedDomains, getKeywordMentionHistory,
 } from '../services/geoService.js'
+import { getBacklinkSummary } from '../services/seoService.js'
 import { analyzeGEO } from './geo.js'
 import { assertPublicHttpsUrl, fetchSafely } from '../utils/safeFetch.js'
 import { t } from '../utils/i18n/errors.js'
@@ -19,9 +20,9 @@ const VALID_PLATFORMS = ['claude', 'chatgpt', 'gemini', 'perplexity', 'google_ai
 // 24h-Cache pro Site gedeckelt, kein echtes Monats-Kontingent — bei mehreren Sites theoretisch näher
 // an "täglich pro Site" als an einem echten Limit. Werte proportional zu maxSites.
 const PLAN_LIMITS = {
-    einsteiger: { maxSites: 1,  maxKeywords: 10, platforms: ['claude', 'gemini'],                                      manualChecksPerMonth: 2, promptVariants: 1, competitorAnalyticsEnabled: false, historicalTrendsEnabled: false, keywordSuggestionsPerMonth: 5  },
-    pro:        { maxSites: 3,  maxKeywords: 20, platforms: ['claude', 'chatgpt', 'gemini', 'perplexity', 'google_aio'], manualChecksPerMonth: 2, promptVariants: 2, competitorAnalyticsEnabled: true,  historicalTrendsEnabled: false, keywordSuggestionsPerMonth: 15 },
-    expert:     { maxSites: 10, maxKeywords: 60, platforms: ['claude', 'chatgpt', 'gemini', 'perplexity', 'google_aio'], manualChecksPerMonth: 3, promptVariants: 2, competitorAnalyticsEnabled: true,  historicalTrendsEnabled: true,  keywordSuggestionsPerMonth: 30 },
+    einsteiger: { maxSites: 1,  maxKeywords: 10, platforms: ['claude', 'gemini'],                                      manualChecksPerMonth: 2, promptVariants: 1, competitorAnalyticsEnabled: false, historicalTrendsEnabled: false, keywordSuggestionsPerMonth: 5,  citabilityDiagnosisEnabled: false },
+    pro:        { maxSites: 3,  maxKeywords: 20, platforms: ['claude', 'chatgpt', 'gemini', 'perplexity', 'google_aio'], manualChecksPerMonth: 2, promptVariants: 2, competitorAnalyticsEnabled: true,  historicalTrendsEnabled: false, keywordSuggestionsPerMonth: 15, citabilityDiagnosisEnabled: true  },
+    expert:     { maxSites: 10, maxKeywords: 60, platforms: ['claude', 'chatgpt', 'gemini', 'perplexity', 'google_aio'], manualChecksPerMonth: 3, promptVariants: 2, competitorAnalyticsEnabled: true,  historicalTrendsEnabled: true,  keywordSuggestionsPerMonth: 30, citabilityDiagnosisEnabled: true  },
 }
 
 async function getGeoPlan(userId) {
@@ -536,8 +537,39 @@ export async function triggerCheck(req, res) {
 }
 
 // On-demand statt automatisch bei jedem Check — verhindert, dass sich die Kosten mit der Zitat-Anzahl multiplizieren.
-const CITATION_ANALYSIS_CACHE = new Map() // url -> { data, expiresAt }
+// Wird sowohl von analyzeCitation (Klick auf eine fremde Quelle) als auch von diagnoseCitability
+// (eigene Domain + die auf Platz 1 zitierte Konkurrenz-URL) verwendet — ein Cache für "wie zitierbar
+// ist diese URL", unabhängig davon, wessen URL es ist.
+const CITATION_ANALYSIS_CACHE = new Map() // "lang:url" -> { data, expiresAt }
 const CITATION_CACHE_TTL_MS = 24 * 60 * 60 * 1000
+
+async function analyzeUrlCached(url, language) {
+    // Cache-Key muss die Sprache einschliessen — analyzeGEO()'s issues/recommendations/generatedLlmsTxt
+    // sind jetzt sprachabhaengig, ein reiner url-Key wuerde sonst z.B. eine deutsch generierte Analyse
+    // an eine englische Anfrage fuer dieselbe URL ausliefern.
+    const cacheKey = `${language === 'en' ? 'en' : 'de'}:${url}`
+    const cached = CITATION_ANALYSIS_CACHE.get(cacheKey)
+    if (cached && cached.expiresAt > Date.now()) return { analysis: cached.data, cached: true }
+
+    let pageRes
+    try {
+        pageRes = await fetchSafely(url, { headers: { 'User-Agent': 'Scanora-GEO-Bot/1.0' }, timeoutMs: 10000 })
+    } catch (err) {
+        const e = new Error(err.message || t('PAGE_FETCH_FAILED', language))
+        e.status = 400
+        throw e
+    }
+    if (!pageRes.ok) {
+        const e = new Error(language === 'en' ? `Page responded with status ${pageRes.status}` : `Seite antwortete mit Status ${pageRes.status}`)
+        e.status = 502
+        throw e
+    }
+
+    const html = await pageRes.text()
+    const analysis = await analyzeGEO(url, html, language)
+    CITATION_ANALYSIS_CACHE.set(cacheKey, { data: analysis, expiresAt: Date.now() + CITATION_CACHE_TTL_MS })
+    return { analysis, cached: false }
+}
 
 // POST /api/geo/analyze-citation  { url }
 export async function analyzeCitation(req, res) {
@@ -555,31 +587,245 @@ export async function analyzeCitation(req, res) {
             return res.status(400).json({ error: err.message || t('INVALID_URL', req.language) })
         }
 
-        const normalizedUrl = parsedUrl.toString()
-        const cached = CITATION_ANALYSIS_CACHE.get(normalizedUrl)
-        if (cached && cached.expiresAt > Date.now()) {
-            return res.json({ analysis: cached.data, cached: true })
+        const { analysis, cached } = await analyzeUrlCached(parsedUrl.toString(), req.language)
+        res.json({ analysis, cached })
+    } catch (err) {
+        res.status(err.status || 500).json({ error: err.message })
+    }
+}
+
+// Backlink-Profile ändern sich langsam — wöchentlicher Cache statt bei jeder Diagnose neu abfragen,
+// haelt die DataForSEO-Kosten fuer die Zitierbarkeits-Diagnose auf einen Bruchteil eines Cents pro Domain/Woche.
+const BACKLINK_CACHE = new Map() // domain -> { data, expiresAt }
+const BACKLINK_CACHE_TTL_MS = 7 * 24 * 60 * 60 * 1000
+
+async function getBacklinkSummaryCached(domain) {
+    const cached = BACKLINK_CACHE.get(domain)
+    if (cached && cached.expiresAt > Date.now()) return cached.data
+
+    const data = await getBacklinkSummary(domain)
+    BACKLINK_CACHE.set(domain, { data, expiresAt: Date.now() + BACKLINK_CACHE_TTL_MS })
+    return data
+}
+
+function normalizeDomain(domain) {
+    return (domain || '').replace(/^www\./, '').toLowerCase()
+}
+
+// Spiegelt die Gewichtung aus analyzeGEO() in geo.js — bei Aenderungen dort beide Stellen abgleichen.
+const CITABILITY_FACTORS = [
+    { key: 'hasLlmsTxt',          weight: 10, label: 'llms.txt vorhanden',                   labelEn: 'llms.txt present' },
+    { key: 'hasFAQ',              weight: 8,  label: 'FAQ-Schema',                           labelEn: 'FAQ schema' },
+    { key: 'robotsAllowsAI',      weight: 8,  label: 'KI-Bots erlaubt (robots.txt)',         labelEn: 'AI bots allowed (robots.txt)' },
+    { key: 'hasDirectDefinition', weight: 8,  label: 'Direkte Produktdefinition im Content', labelEn: 'Direct product definition in content' },
+    { key: 'hasOrganization',     weight: 6,  label: 'Organization-Schema',                  labelEn: 'Organization schema' },
+    { key: 'hasStatistics',       weight: 6,  label: 'Konkrete Zahlen/Statistiken',          labelEn: 'Concrete numbers/statistics' },
+    { key: 'hasSitemap',          weight: 5,  label: 'sitemap.xml',                          labelEn: 'sitemap.xml' },
+    { key: 'hasAuthorInfo',       weight: 5,  label: 'Autor/About-Informationen',            labelEn: 'Author/about info' },
+]
+
+// Vergleicht die eigene analyzeGEO-Checkliste mit der einer zitierten Konkurrenz-URL plus der
+// externen Autoritaet (Backlinks) — nur die Faktoren, in denen sie sich unterscheiden, sind fuer
+// eine Empfehlung nuetzlich, deshalb keine reine 1:1-Auflistung aller ~20 analyzeGEO-Checks.
+function buildCitabilityDiff(ownChecks, competitorChecks, ownBacklinks, competitorBacklinks, language) {
+    const en = language === 'en'
+    const rows = CITABILITY_FACTORS.map(({ key, weight, label, labelEn }) => ({
+        factor: en ? labelEn : label,
+        key,
+        weight,
+        own: !!ownChecks[key],
+        competitor: !!competitorChecks[key],
+    }))
+
+    rows.push({
+        factor: en ? 'Content length (words)' : 'Content-Umfang (Woerter)',
+        key: 'wordCount',
+        weight: 5,
+        own: ownChecks.wordCount ?? 0,
+        competitor: competitorChecks.wordCount ?? 0,
+        numeric: true,
+    })
+
+    if (ownBacklinks && competitorBacklinks) {
+        rows.push({
+            factor: en ? 'Referring domains' : 'Verweisende Domains',
+            key: 'referringDomains',
+            weight: 12,
+            own: ownBacklinks.referringDomains ?? 0,
+            competitor: competitorBacklinks.referringDomains ?? 0,
+            numeric: true,
+        })
+    }
+
+    return rows
+}
+
+// Groesster Hebel = hoechstgewichteter Faktor, den die zitierte Konkurrenz hat und die eigene
+// Domain (noch) nicht — bewusst nur EIN Vorschlag statt einer langen To-do-Liste, siehe Diagnose-Vorschau.
+function pickCitabilityLever(diff, language) {
+    const en = language === 'en'
+    const candidates = diff
+        .map(row => {
+            if (row.numeric) {
+                const own = row.own ?? 0, competitor = row.competitor ?? 0
+                const meaningfulGap = competitor > 0 && (own === 0 ? competitor >= 5 : competitor / own >= 1.5)
+                return meaningfulGap ? { ...row, score: row.weight } : null
+            }
+            return (!row.own && row.competitor) ? { ...row, score: row.weight } : null
+        })
+        .filter(Boolean)
+        .sort((a, b) => b.score - a.score)
+
+    if (!candidates.length) return null
+    const top = candidates[0]
+
+    if (top.key === 'referringDomains') {
+        const ratio = top.own > 0 ? Math.round(top.competitor / top.own) : null
+        const strong = ratio && ratio >= 2
+        return { factor: top.factor, text: en
+            ? (strong
+                ? `External authority is the biggest lever: the cited source has ${ratio}x more referring domains on this topic — hard to close with on-page changes alone.`
+                : `External authority is the biggest lever: the cited source has ${top.competitor} referring domains instead of ${top.own}.`)
+            : (strong
+                ? `Externe Autoritaet ist der groesste Hebel: die zitierte Quelle hat ${ratio}x mehr verweisende Domains zum Thema — ueber On-Page-Anpassungen allein kaum aufzuholen.`
+                : `Externe Autoritaet ist der groesste Hebel: die zitierte Quelle hat ${top.competitor} statt ${top.own} verweisende Domains.`) }
+    }
+    if (top.key === 'wordCount') {
+        return { factor: top.factor, text: en
+            ? `The cited source has significantly more content on this topic (${top.competitor} vs. ${top.own} words) — answer more sub-questions on the same page.`
+            : `Die zitierte Quelle hat deutlich mehr Content zum Thema (${top.competitor} statt ${top.own} Woerter) — mehr Unterfragen auf derselben Seite beantworten.` }
+    }
+    return { factor: top.factor, text: en
+        ? `Biggest lever: ${top.factor}. The cited source has it, your own page doesn't (yet).`
+        : `Groesster Hebel: ${top.factor}. Die zitierte Quelle hat das, die eigene Seite (noch) nicht.` }
+}
+
+function hasBooleanGap(diff) {
+    return diff.some(row => !row.numeric && !row.own && row.competitor)
+}
+
+// Baut die Liste an Daten-Luecken/Erklaerungen fuer alles, was die Diagnose NICHT zeigen konnte oder
+// wo die Checkliste keinen Unterschied findet — bewusst explizit statt eine Zeile stillschweigend
+// wegzulassen. Ohne das sah "keine Backlink-Daten" genauso aus wie "Backlinks sind kein Thema hier",
+// und "Checkliste zu 100% erfuellt, trotzdem nicht zitiert" wirkte wie ein Fehler in der Diagnose statt
+// wie ein ehrlicher Hinweis, dass die Ursache ausserhalb der Checkliste liegt.
+function buildCitabilityCaveats({ language, topCompetitor, competitorAnalysis, ownBacklinks, competitorBacklinks, diff, lever }) {
+    const caveats = []
+    const en = language === 'en'
+
+    if (!topCompetitor) {
+        caveats.push(en
+            ? 'No cited source was captured for this check — no comparison possible.'
+            : 'Fuer diesen Check wurde keine zitierte Quelle erfasst — kein Vergleich moeglich.')
+        return caveats
+    }
+
+    if (!competitorAnalysis) {
+        caveats.push(en
+            ? `The cited page (${topCompetitor.domain}) could not be analyzed — no on-page comparison possible.`
+            : `Die zitierte Seite (${topCompetitor.domain}) konnte nicht analysiert werden — kein On-Page-Vergleich moeglich.`)
+    }
+
+    if (!ownBacklinks) {
+        caveats.push(en
+            ? 'No backlink data found for your own domain — likely too new or too few links yet to appear in the authority index. On its own, that is already a plausible explanation.'
+            : 'Keine Backlink-Daten fuer die eigene Domain gefunden — vermutlich noch zu neu oder zu wenig verlinkt, um im Autoritaets-Index zu erscheinen. Das allein ist schon eine plausible Erklaerung.')
+    } else if (!competitorBacklinks) {
+        caveats.push(en
+            ? `No backlink data found for ${topCompetitor.domain}.`
+            : `Keine Backlink-Daten fuer ${topCompetitor.domain} gefunden.`)
+    }
+
+    if (diff && !hasBooleanGap(diff) && lever?.key !== 'referringDomains') {
+        caveats.push(en
+            ? 'No clear technical gap found in this checklist — the real reason likely lies outside it (brand recognition, how long the competitor has existed online, mentions elsewhere, or the AI model’s training cutoff).'
+            : 'Laut Checkliste gibt es keinen klaren technischen Unterschied — die eigentliche Ursache liegt wahrscheinlich ausserhalb davon (Markenbekanntheit, wie lange die Konkurrenz schon online ist, Erwaehnungen auf anderen Seiten, oder der Wissensstand des KI-Modells).')
+    }
+
+    return caveats
+}
+
+// POST /api/geo/sites/:id/diagnose-citability  { keyword, platform, promptIntent }
+// Fall A (nicht zitiert): eigene analyzeGEO-Checkliste + Luecke zur zitierten Quelle.
+// Fall B (zitiert, Platz 1): nur die eigene Checkliste als wahrscheinlicher Grund, kein Vergleich noetig.
+// Fall C (zitiert, aber nicht zuerst): Luecke zur auf Platz 1 zitierten Quelle.
+export async function diagnoseCitability(req, res) {
+    try {
+        const plan = await getGeoPlan(req.userId)
+        if (!plan) return res.status(403).json({ error: t('NO_ACTIVE_GEO_SUB', req.language) })
+        if (!(await getLimits(req.userId, plan)).citabilityDiagnosisEnabled) {
+            return res.status(403).json({ error: req.language === 'en'
+                ? 'Citability diagnosis requires the Pro or Expert plan'
+                : 'Zitierbarkeits-Diagnose erfordert den Pro- oder Expert-Plan' })
         }
 
-        let pageRes
+        const site = await GeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId }).lean()
+        if (!site) return res.status(404).json({ error: t('SITE_NOT_FOUND', req.language) })
+
+        const { keyword, platform, promptIntent } = req.body
+        if (!keyword || !platform || !promptIntent) {
+            return res.status(400).json({ error: req.language === 'en'
+                ? 'keyword, platform and promptIntent are required'
+                : 'keyword, platform und promptIntent sind erforderlich' })
+        }
+
+        const check = await GeoMentionCheck.findOne({
+            siteId: site._id, keyword, platform, promptIntent: intentQuery(promptIntent),
+        }).sort({ checkedAt: -1 }).lean()
+        if (!check) return res.status(404).json({ error: req.language === 'en'
+            ? 'No check found for this keyword/platform combination'
+            : 'Kein Check fuer diese Keyword/Plattform-Kombination gefunden' })
+
+        const ownDomain = normalizeDomain(site.domain)
+        let own
         try {
-            pageRes = await fetchSafely(normalizedUrl, {
-                headers: { 'User-Agent': 'Scanora-GEO-Bot/1.0' },
-                timeoutMs: 10000,
-            })
+            own = (await analyzeUrlCached(`https://${site.domain}`, req.language)).analysis
         } catch (err) {
-            return res.status(400).json({ error: err.message || t('PAGE_FETCH_FAILED', req.language) })
+            return res.status(err.status || 502).json({ error: err.message })
         }
-        if (!pageRes.ok) return res.status(502).json({ error: req.language === 'en'
-            ? `Page responded with status ${pageRes.status}`
-            : `Seite antwortete mit Status ${pageRes.status}` })
 
-        const html = await pageRes.text()
-        const analysis = await analyzeGEO(normalizedUrl, html)
+        const status = !check.mentioned ? 'not_cited' : (check.ownPosition === 1 ? 'cited_first' : 'cited_gap')
 
-        CITATION_ANALYSIS_CACHE.set(normalizedUrl, { data: analysis, expiresAt: Date.now() + CITATION_CACHE_TTL_MS })
+        if (status === 'cited_first') {
+            return res.json({ status, own, ownBacklinks: null, competitor: null, diff: null, lever: null, caveats: [] })
+        }
 
-        res.json({ analysis, cached: false })
+        const topCompetitor = (check.citations || []).find(c => c.domain && normalizeDomain(c.domain) !== ownDomain)
+        if (!topCompetitor) {
+            const caveats = buildCitabilityCaveats({ language: req.language, topCompetitor: null })
+            return res.json({ status, own, ownBacklinks: null, competitor: null, diff: null, lever: null, caveats })
+        }
+
+        let competitorAnalysis = null
+        try {
+            competitorAnalysis = (await analyzeUrlCached(topCompetitor.url || `https://${topCompetitor.domain}`, req.language)).analysis
+        } catch {
+            // Konkurrenz-Seite nicht erreichbar/analysierbar — Diagnose faellt auf die eigene Checkliste zurueck.
+        }
+
+        const [ownBacklinks, competitorBacklinks] = await Promise.all([
+            getBacklinkSummaryCached(ownDomain),
+            getBacklinkSummaryCached(normalizeDomain(topCompetitor.domain)),
+        ])
+
+        const diff = competitorAnalysis ? buildCitabilityDiff(own.checks, competitorAnalysis.checks, ownBacklinks, competitorBacklinks, req.language) : null
+        const lever = diff ? pickCitabilityLever(diff, req.language) : null
+        const caveats = buildCitabilityCaveats({ language: req.language, topCompetitor, competitorAnalysis, ownBacklinks, competitorBacklinks, diff, lever })
+
+        res.json({
+            status,
+            own,
+            ownBacklinks,
+            competitor: {
+                domain: topCompetitor.domain,
+                url: topCompetitor.url || null,
+                analysis: competitorAnalysis,
+                backlinks: competitorBacklinks,
+            },
+            diff,
+            lever,
+            caveats,
+        })
     } catch (err) {
         res.status(500).json({ error: err.message })
     }

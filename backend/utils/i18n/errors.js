@@ -4,6 +4,11 @@ const MESSAGES = {
     EMAIL_PASSWORD_REQUIRED: { de: "Email und Passwort sind erforderlich", en: "Email and password are required" },
     USER_NOT_FOUND: { de: "User nicht gefunden", en: "User not found" },
     WRONG_PASSWORD: { de: "Falsches Passwort", en: "Incorrect password" },
+    // Bewusst dieselbe Meldung fuer "E-Mail existiert nicht" und "Passwort falsch" beim Login —
+    // sonst laesst sich per Fehlermeldung erraten, ob eine E-Mail-Adresse registriert ist
+    // (E-Mail-Enumeration). Nicht mit USER_NOT_FOUND/WRONG_PASSWORD oben verwechseln, die bleiben
+    // fuer authentifizierte Kontexte (z.B. Profil-Lookup) bestehen, wo das kein Problem ist.
+    INVALID_CREDENTIALS: { de: "E-Mail oder Passwort falsch", en: "Email or password is incorrect" },
     EMAIL_REQUIRED: { de: "E-Mail ist erforderlich", en: "Email is required" },
     TOKEN_PASSWORD_REQUIRED: { de: "Token und Passwort sind erforderlich", en: "Token and password are required" },
     PASSWORD_TOO_SHORT: { de: "Passwort muss mindestens 6 Zeichen haben", en: "Password must be at least 6 characters" },

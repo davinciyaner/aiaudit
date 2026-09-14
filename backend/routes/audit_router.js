@@ -151,7 +151,7 @@ async function handleAudit(req, res, next) {
         }
         const isPro = ['pro', 'agency'].includes(plan);
 
-        const auditData = await runAudit(cleanUrl);
+        const auditData = await runAudit(cleanUrl, req.language);
 
         let aiReport = null;
         let pdfFile = null;
