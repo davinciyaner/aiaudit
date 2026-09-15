@@ -201,6 +201,28 @@ export default function DatenschutzPage() {
                             </p>
                         </Sub>
 
+                        <Sub title="3.3 Eigenes KI-Referral-Lead-Tracking auf scanora.ai">
+                            <p>
+                                Anders als in Abschnitt 2.5 beschrieben (Leads-Tracking als Auftragsverarbeitung für unsere Nutzer auf deren eigenen Websites) setzen wir dieselbe Technik auch auf unserer eigenen Website <strong className="text-[var(--text-body)]">scanora.ai</strong> ein. Hier sind wir selbst datenschutzrechtlich Verantwortlicher (Art. 4 Nr. 7 DSGVO), nicht Auftragsverarbeiter.
+                            </p>
+                            <p>
+                                Nur nach deiner Einwilligung über das Cookie-Banner erkennen wir, ob du über ChatGPT, Claude, Perplexity oder Gemini auf unsere Seite gelangt bist (anhand des Referrer-Headers, gespeichert im LocalStorage). Sendest du danach eine Nachricht über unser Kontaktformular ab, ordnen wir deine E-Mail-Adresse dieser erkannten Quelle zu.
+                            </p>
+                            <ul className="list-disc list-inside space-y-1 ml-2">
+                                <li>E-Mail-Adresse (nur bei Absenden des Kontaktformulars)</li>
+                                <li>Automatisiert erkannte KI-Quelle, Referrer-URL und aufgerufene Zielseite</li>
+                                <li>Zeitstempel der Erfassung</li>
+                            </ul>
+                            <p>
+                                Lehnst du die Einwilligung ab oder widerrufst sie, findet keinerlei Erkennung oder Zuordnung statt — auch nicht, wenn du danach das Kontaktformular nutzt.
+                            </p>
+                            <p>
+                                <strong className="text-[var(--text-body)]">Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. a DSGVO (Einwilligung), § 25 Abs. 1 TTDSG.<br />
+                                <strong className="text-[var(--text-body)]">Speicherdauer:</strong> 12 Monate, danach automatisierte Löschung.<br />
+                                <strong className="text-[var(--text-body)]">Deine Rechte:</strong> Auskunft (Art. 15 DSGVO) und Löschung (Art. 17 DSGVO) kannst du jederzeit über <a href="/support" className="text-violet-400 hover:text-violet-300">unser Support-Formular</a> geltend machen.
+                            </p>
+                        </Sub>
+
                     </Section>
 
                     <Section title="4. Zahlungsabwicklung über PayPal">
