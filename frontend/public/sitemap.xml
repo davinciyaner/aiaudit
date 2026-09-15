@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.scanora.ai</loc>
-    <lastmod>2026-09-09</lastmod>
+    <lastmod>2026-09-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -145,6 +145,36 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://www.scanora.ai/datenschutz</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.scanora.ai/avv</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.scanora.ai/agb</loc>
+    <lastmod>2026-09-12</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.scanora.ai/nutzungsbedingungen</loc>
+    <lastmod>2026-09-12</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.scanora.ai/impressum</loc>
+    <lastmod>2026-09-12</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
     <loc>https://www.scanora.ai/blog</loc>
     <lastmod>2026-07-28</lastmod>
     <changefreq>weekly</changefreq>
@@ -218,19 +248,19 @@
   </url>
   <url>
     <loc>https://www.scanora.ai/vergleich</loc>
-    <lastmod>2026-09-03</lastmod>
+    <lastmod>2026-09-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.scanora.ai/vergleich/otterly-alternative</loc>
-    <lastmod>2026-09-03</lastmod>
+    <lastmod>2026-09-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.scanora.ai/vergleich/peec-alternative</loc>
-    <lastmod>2026-09-03</lastmod>
+    <lastmod>2026-09-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -248,7 +278,7 @@
   </url>
   <url>
     <loc>https://www.scanora.ai/en/compare</loc>
-    <lastmod>2026-09-03</lastmod>
+    <lastmod>2026-09-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -278,13 +308,13 @@
   </url>
   <url>
     <loc>https://www.scanora.ai/loesungen</loc>
-    <lastmod>2026-08-29</lastmod>
+    <lastmod>2026-09-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.scanora.ai/loesungen/guenstiges-ki-sichtbarkeit-tool</loc>
-    <lastmod>2026-09-03</lastmod>
+    <lastmod>2026-09-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -296,19 +326,19 @@
   </url>
   <url>
     <loc>https://www.scanora.ai/loesungen/seo-geo-tool</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.scanora.ai/en/solutions</loc>
-    <lastmod>2026-08-29</lastmod>
+    <lastmod>2026-09-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.scanora.ai/en/solutions/affordable-ai-visibility-tool</loc>
-    <lastmod>2026-09-03</lastmod>
+    <lastmod>2026-09-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>

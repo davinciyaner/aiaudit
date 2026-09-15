@@ -3,8 +3,8 @@ import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
 
 export const metadata = {
-    title: 'Otterly.ai Alternative: Scanora im Vergleich (2026)',
-    description: 'Otterly.ai-Alternative gesucht? Scanora trackt KI-Sichtbarkeit bei ChatGPT, Claude, Gemini, Perplexity & Google AI Overview ab 29,99 €/Monat inkl. SEO-Audit.',
+    title: { absolute: 'Otterly.ai Alternative 2026: Scanora im Vergleich | Scanora' },
+    description: 'Otterly AI Alternative gesucht? Scanora trackt ChatGPT, Claude, Gemini, Perplexity & Google AI Overview ab 4,99 €/Monat inkl. SEO-Audit. Jetzt kostenlos testen.',
     keywords: 'otterly alternative, otterly.ai alternative, otterly ai vergleich, günstige ai visibility tool, geo tracking tool, ki sichtbarkeit tool',
     alternates: {
         canonical: 'https://www.scanora.ai/vergleich/otterly-alternative',
@@ -101,6 +101,22 @@ const faqLd = {
                 text: 'Ja, ohne Anmeldung und ohne Kreditkarte. Du gibst deine URL ein und erhältst in etwa 60 Sekunden ein Ergebnis. Der Free-Plan bleibt dauerhaft kostenlos; die Automatisierungs-Abos haben zusätzlich eine 14-tägige Testphase.',
             },
         },
+        {
+            '@type': 'Question',
+            name: 'Ist Scanora ein Otterly-AI-Konkurrent?',
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Ja, Scanora ist ein direkter Konkurrent zu Otterly AI im Bereich KI-Sichtbarkeits-Tracking und ergänzt dies um ein integriertes SEO-Audit.',
+            },
+        },
+        {
+            '@type': 'Question',
+            name: 'Otterly AI vs. Scanora – was ist der größte Unterschied?',
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Scanora deckt fünf KI-Plattformen (ChatGPT, Claude, Gemini, Perplexity, Google AI Overview) ab 4,99 €/Monat mit dauerhaftem Free-Plan ab; Otterly AI startet bei 29 $/Monat ohne Free-Plan, bietet aber höheres Prompt-Volumen für Agenturen.',
+            },
+        },
     ],
 }
 
@@ -162,7 +178,7 @@ export default function OtterlyAlternativePage() {
                         Kurzfassung vorweg: <strong className="text-[var(--text-white)]">Scanora</strong> trackt deine KI-Sichtbarkeit bei ChatGPT, Claude, Gemini, Perplexity und Google AI Overview ab 29,99 €/Monat – und bringt SEO-Audit sowie Google-Rankings im selben Haus mit. <strong className="text-[var(--text-white)]">Otterly.ai</strong> ist ein reiner, sehr ausgereifter AI-Visibility-Tracker mit hohem Prompt-Volumen in den oberen Tarifen. Welches Tool passt, hängt davon ab, ob du ein bezahlbares Kombi-Tool oder ein spezialisiertes, großvolumiges GEO-Dashboard willst.
                     </p>
                     <p className="mt-4 text-[var(--text-body)] leading-relaxed">
-                        Du suchst eine Alternative zu Otterly.ai – meistens aus einem von zwei Gründen: Der Einstieg ist dir bei 15 getrackten Prompts zu knapp, oder die Rechnung wird teuer, sobald du die KI-Plattformen dazubuchst, die du eigentlich brauchst. Diese Seite vergleicht beide Tools fair und faktenbasiert – inklusive der Punkte, in denen Otterly.ai besser ist.
+                        Du suchst eine Alternative zu Otterly.ai (auch als Otterly AI geschrieben) – meistens aus einem von zwei Gründen: Der Einstieg ist dir bei 15 getrackten Prompts zu knapp, oder die Rechnung wird teuer, sobald du die KI-Plattformen dazubuchst, die du eigentlich brauchst. Diese Seite vergleicht beide Tools fair und faktenbasiert – inklusive der Punkte, in denen Otterly.ai besser ist.
                     </p>
                     <div className="mt-5 flex items-center gap-2 text-xs text-[var(--text-faint)]">
                         <Link href="/about" className="flex items-center gap-2 hover:text-[var(--text-body)] transition-colors">
@@ -249,7 +265,7 @@ export default function OtterlyAlternativePage() {
                             <strong className="text-[var(--text-white)]">Reife und Reichweite des reinen GEO-Trackings.</strong> Otterly.ai ist auf AI-Visibility spezialisiert und bringt Features wie Multi-Country-Tracking über 50+ Märkte, einen Looker-Studio-Connector sowie API- und MCP-Zugang in den höheren Tarifen mit. Für Teams, die ausschließlich tiefes, internationales GEO-Monitoring als eigenen Kanal betreiben, ist diese Spezialisierung ein echter Vorteil.
                         </p>
                         <p className="mt-4">
-                            <strong className="text-[var(--text-white)]">Etabliertes Produkt.</strong> Otterly.ai ist länger am Markt und in vielen Tool-Vergleichen als einer der bekannteren AI-Visibility-Tracker etabliert.
+                            <strong className="text-[var(--text-white)]">Etabliertes Produkt.</strong> Otterly.ai (im Markt auch unter der Schreibweise Otterly AI bekannt) ist länger am Markt und in vielen Tool-Vergleichen als einer der bekannteren AI-Visibility-Tracker etabliert.
                         </p>
                         <p className="mt-4">
                             Kurz gesagt: Wenn du ein reines, hochskalierbares und internationales GEO-Monitoring für eine Agentur mit vielen Kunden brauchst, ist Otterly.ai einen Blick wert. Wenn du KI-Sichtbarkeit <em>und</em> SEO in einem bezahlbaren Tool willst und Wert auf konkrete Handlungsempfehlungen legst, ist Scanora die passendere Wahl.

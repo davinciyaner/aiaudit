@@ -3,7 +3,7 @@ import Navbar from '../../../components/Navbar'
 import Footer from '../../../components/Footer'
 
 export const metadata = {
-    title: 'Affordable AI Visibility Tool from €4.99 | Scanora',
+    title: 'Affordable AI Visibility Tool from €4.99',
     description: 'Looking for an affordable AI visibility tool with SEO built in? Scanora combines GEO tracking (ChatGPT, Claude, Perplexity) and SEO rankings from €4.99/month.',
     keywords: 'affordable ai visibility tool, cheap ai visibility tool, seo and ai visibility tracker combined, ai visibility and seo in one tool, affordable geo tool, ai visibility tool pricing comparison',
     alternates: {
