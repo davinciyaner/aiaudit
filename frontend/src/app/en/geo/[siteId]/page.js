@@ -5,6 +5,7 @@ import {
     ArrowLeft, Globe, Loader2, RefreshCw, Plus, Trash2, X,
     Sparkles, Check, ChevronDown, ChevronUp, Settings2, Lock,
     LayoutDashboard, Users, GitCompare, Lightbulb, ArrowUp, ArrowDown, Minus,
+    UserPlus, Copy,
 } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter, useParams } from 'next/navigation'
@@ -44,6 +45,7 @@ const INTENT_META = {
 // Mentions" closes as the strongest differentiator — both stick better than sitting mid-list.
 const NAV_ITEMS = [
     { id: 'overview',    label: 'Overview',                     description: 'Your mention rate, trend over time, and every tracked keyword in detail.',   icon: LayoutDashboard },
+    { id: 'leads',       label: 'Leads',                        description: 'Leads on your own website that came in via ChatGPT, Perplexity, Claude, or Gemini.', icon: UserPlus },
     { id: 'competitors', label: 'Competitors',                  description: 'Which other domains AI models cite alongside you - as a list or a chart.',    icon: Users },
     { id: 'suggestions', label: 'Suggest Keywords',             description: 'SEO keywords that would also make sense to track for GEO.',                   icon: Lightbulb },
     { id: 'correlation', label: 'SEO Ranking + AI Mentions',    description: 'Does a page rank on Google but never get mentioned by AI models, or the other way around?', icon: GitCompare },
@@ -561,6 +563,448 @@ function CompetitorsPanel({ siteId, onGoToOverview }) {
     )
 }
 
+// Same platform colors as PLATFORM_META above (chatgpt green, perplexity teal, claude violet,
+// gemini amber) — separate, smaller map because only these four referrer sources apply here,
+// not google_aio.
+const LEAD_SOURCE_META = {
+    chatgpt:    { label: 'ChatGPT',    color: 'text-green-400',  bg: 'bg-green-500/10',  border: 'border-green-500/20',  bar: 'bg-green-500'  },
+    perplexity: { label: 'Perplexity', color: 'text-teal-400',   bg: 'bg-teal-500/10',   border: 'border-teal-500/20',   bar: 'bg-teal-500'   },
+    claude:     { label: 'Claude',     color: 'text-violet-400', bg: 'bg-violet-500/10', border: 'border-violet-500/20', bar: 'bg-violet-500' },
+    gemini:     { label: 'Gemini',     color: 'text-amber-400',  bg: 'bg-amber-500/10',  border: 'border-amber-500/20',  bar: 'bg-amber-500'  },
+}
+
+function LeadSourceChip({ source }) {
+    const meta = LEAD_SOURCE_META[source]
+    if (!meta) return (
+        <span className="inline-flex items-center text-xs font-medium px-2 py-0.5 rounded-md text-[var(--text-faint)] bg-[var(--surface-08)] border border-[var(--border-subtle)]">
+            Direct
+        </span>
+    )
+    return (
+        <span className={`inline-flex items-center text-xs font-medium px-2 py-0.5 rounded-md ${meta.color} ${meta.bg} border ${meta.border}`}>
+            {meta.label}
+        </span>
+    )
+}
+
+function leadTimeAgo(dateStr) {
+    const min = Math.floor((Date.now() - new Date(dateStr).getTime()) / 60000)
+    if (min < 1) return 'just now'
+    if (min < 60) return `${min} min ago`
+    const hrs = Math.floor(min / 60)
+    if (hrs < 24) return `${hrs} hr ago`
+    const days = Math.floor(hrs / 24)
+    return `${days} day${days === 1 ? '' : 's'} ago`
+}
+
+// ScanoraLeads.init() doesn't run automatically when the script loads — the customer calls it
+// themselves only after obtaining their visitor's consent (e.g. in their own cookie-consent
+// tool's callback). The snippet deliberately doesn't make that call itself, since under your
+// DPA the customer is the "controller" for their own website, not Scanora.
+// init() also sends a throttled (max once every 6h from the snippet itself) heartbeat to
+// /leads/verify, so the dashboard can show whether the snippet is installed at all — even
+// before a single real lead has come in.
+function buildLeadSnippet(siteKey) {
+    const trackApi = `${process.env.NEXT_PUBLIC_API_URL}/leads/track`
+    const verifyApi = `${process.env.NEXT_PUBLIC_API_URL}/leads/verify`
+    return `<script>
+(function(){
+  var TRACK_API='${trackApi}';
+  var VERIFY_API='${verifyApi}';
+  var KEY='${siteKey}';
+  var SK='scanora_ai_ref';
+  var VK='scanora_verify_at';
+  var VERIFY_THROTTLE_MS=6*60*60*1000;
+  var HOSTS={'chatgpt.com':'chatgpt','chat.openai.com':'chatgpt','perplexity.ai':'perplexity','claude.ai':'claude','gemini.google.com':'gemini'};
+
+  window.ScanoraLeads = window.ScanoraLeads || {};
+
+  window.ScanoraLeads.init = function(){
+    try {
+      if(!localStorage.getItem(SK)&&document.referrer){
+        var h=new URL(document.referrer).hostname.replace(/^www\\./,'');
+        var s=HOSTS[h];
+        if(s) localStorage.setItem(SK, JSON.stringify({source:s, referrerRaw:document.referrer, landingPage:location.pathname}));
+      }
+    } catch(e){}
+
+    try {
+      var lastVerify = Number(localStorage.getItem(VK) || 0);
+      if (Date.now() - lastVerify > VERIFY_THROTTLE_MS) {
+        fetch(VERIFY_API,{method:'POST',headers:{'Content-Type':'application/json'},keepalive:true,body:JSON.stringify({siteKey:KEY})}).catch(function(){});
+        localStorage.setItem(VK, String(Date.now()));
+      }
+    } catch(e){}
+  };
+
+  window.ScanoraLeads.track = function(email){
+    var ref=null;
+    try{ ref=JSON.parse(localStorage.getItem(SK)); }catch(e){}
+    fetch(TRACK_API,{method:'POST',headers:{'Content-Type':'application/json'},keepalive:true,body:JSON.stringify({
+      siteKey:KEY, email:email,
+      aiSource: ref?ref.source:null,
+      referrerRaw: ref?ref.referrerRaw:null,
+      landingPage: ref?ref.landingPage:location.pathname
+    })}).catch(function(){});
+    try{localStorage.removeItem(SK);}catch(e){}
+  };
+})();
+</script>`
+}
+
+function LeadsSnippetBox({ siteKey }) {
+    const [copied, setCopied] = useState(false)
+    const snippet = buildLeadSnippet(siteKey)
+
+    const handleCopy = async () => {
+        try {
+            await navigator.clipboard.writeText(snippet)
+            setCopied(true)
+            toast.success('Snippet copied')
+            setTimeout(() => setCopied(false), 2000)
+        } catch {
+            toast.error('Copy failed')
+        }
+    }
+
+    return (
+        <div className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-xl p-4">
+            <div className="flex items-center justify-between mb-2">
+                <p className="text-xs font-semibold text-[var(--text-white)]">Add this snippet to your website</p>
+                <button onClick={handleCopy}
+                    className="flex items-center gap-1.5 text-[11px] font-medium text-[var(--accent)] hover:opacity-80 shrink-0">
+                    {copied ? <Check className="w-3 h-3" /> : <Copy className="w-3 h-3" />}
+                    {copied ? 'Copied' : 'Copy'}
+                </button>
+            </div>
+            <pre className="text-[10.5px] text-[var(--text-faint)] bg-[var(--surface-08)] rounded-lg p-3 overflow-x-auto whitespace-pre-wrap break-all">
+{snippet}
+            </pre>
+            <div className="text-[11px] text-[var(--text-faint)] mt-2 leading-relaxed space-y-1">
+                <p>Add this right before the closing <code className="text-[var(--text-body)]">&lt;/body&gt;</code> tag on your own website.</p>
+                <p>Only call <code className="text-[var(--text-body)]">ScanoraLeads.init()</code> after your visitor has consented to your tracking — e.g. in your cookie-consent tool's callback. The snippet deliberately doesn&apos;t start anything on its own.</p>
+                <p>Call <code className="text-[var(--text-body)]">ScanoraLeads.track(&apos;customer@email.com&apos;)</code> once your own form has been submitted successfully.</p>
+            </div>
+        </div>
+    )
+}
+
+// Answers "did the customer even add the snippet" independent of whether a real lead has come
+// in yet — without this, "0 leads" could mean either "snippet missing" or "snippet running, just
+// no conversions yet", and you wouldn't know which.
+function SnippetStatusBadge({ lastSeenAt, className = '' }) {
+    if (!lastSeenAt) {
+        return (
+            <div className={`inline-flex items-center gap-1.5 text-xs font-medium text-[var(--text-faint)] bg-[var(--surface-08)] border border-[var(--border-subtle)] rounded-md px-2.5 py-1 ${className}`}>
+                <span className="w-1.5 h-1.5 rounded-full bg-[var(--text-faint)]" />
+                Snippet not detected yet
+            </div>
+        )
+    }
+    return (
+        <div className={`inline-flex items-center gap-1.5 text-xs font-medium text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 rounded-md px-2.5 py-1 ${className}`}>
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+            Snippet active · last seen {leadTimeAgo(lastSeenAt)}
+        </div>
+    )
+}
+
+// Shows leads (contact-form submissions etc.) on the SCANORA CUSTOMER's own website, not on
+// scanora.ai itself — data comes in via the snippet above + POST /api/leads/track, see
+// backend/controllers/leads.js. Ownership is enforced server-side via GeoTrackedSite.userId, so
+// this just needs the same siteId fetch as every other panel.
+// Mini trend line for the stat tile — deliberately no hover/tooltip (unlike MentionHistoryChart
+// further up), because here it's only "roughly up or down", not the exact weekly value.
+function LeadsSparkline({ points }) {
+    if (!points || points.filter(Boolean).length < 2) return null
+    const max = Math.max(...points, 1)
+    const W = 96, H = 26, pad = 2
+    const stepX = points.length > 1 ? (W - pad * 2) / (points.length - 1) : 0
+    const coords = points.map((v, i) => [pad + i * stepX, H - pad - (v / max) * (H - pad * 2)])
+    const linePoints = coords.map(([x, y]) => `${x},${y}`).join(' ')
+    const areaPoints = `${linePoints} ${coords[coords.length - 1][0]},${H} ${coords[0][0]},${H}`
+    const [lastX, lastY] = coords[coords.length - 1]
+    const gradientId = 'leadsSparkGradientEn'
+
+    return (
+        <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`} className="mt-2 block" role="img" aria-label="Trend over the last 8 weeks">
+            <defs>
+                <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" style={{ stopColor: 'var(--accent)', stopOpacity: 0.25 }} />
+                    <stop offset="100%" style={{ stopColor: 'var(--accent)', stopOpacity: 0 }} />
+                </linearGradient>
+            </defs>
+            <polygon points={areaPoints} style={{ fill: `url(#${gradientId})` }} />
+            <polyline points={linePoints} style={{ fill: 'none', stroke: 'var(--accent)', strokeWidth: 1.75, strokeLinejoin: 'round', strokeLinecap: 'round' }} />
+            <circle cx={lastX} cy={lastY} r="2.2" style={{ fill: 'var(--accent)' }} />
+        </svg>
+    )
+}
+
+function LeadsPanel({ siteId }) {
+    const [data, setData]       = useState(null)
+    const [loading, setLoading] = useState(true)
+    const [showSnippet, setShowSnippet] = useState(false)
+    const [showLookup, setShowLookup]   = useState(false)
+    const [lookupEmail, setLookupEmail] = useState('')
+    const [lookupResults, setLookupResults] = useState(null)
+    const [lookupLoading, setLookupLoading] = useState(false)
+    const [deletingId, setDeletingId] = useState(null)
+
+    const fetchLeads = useCallback(() => {
+        const token = localStorage.getItem('token')
+        return fetch(`${process.env.NEXT_PUBLIC_API_URL}/geo/sites/${siteId}/leads`, {
+            headers: { Authorization: `Bearer ${token}`, 'Accept-Language': 'en' },
+        })
+            .then(res => res.json())
+            .then(setData)
+            .catch(() => {})
+    }, [siteId])
+
+    useEffect(() => {
+        setLoading(true)
+        fetchLeads().finally(() => setLoading(false))
+    }, [fetchLeads])
+
+    // Deletion for data-subject requests (Art. 17 GDPR) — a lead contacts the site owner and asks
+    // for deletion, the owner handles it right here instead of emailing Scanora.
+    const handleDelete = async (lead) => {
+        if (!confirm(`Permanently delete lead "${lead.email}"?`)) return
+        setDeletingId(lead._id)
+        try {
+            const token = localStorage.getItem('token')
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/geo/sites/${siteId}/leads/${lead._id}`, {
+                method: 'DELETE',
+                headers: { Authorization: `Bearer ${token}`, 'Accept-Language': 'en' },
+            })
+            if (!res.ok) throw new Error()
+            setData(prev => ({
+                ...prev,
+                leads: prev.leads.filter(l => l._id !== lead._id),
+                totalLeads: prev.totalLeads - 1,
+            }))
+            toast.success('Lead deleted')
+        } catch {
+            toast.error('Delete failed')
+        } finally {
+            setDeletingId(null)
+        }
+    }
+
+    // Data-subject access request (Art. 15 GDPR) — searches ALL records for an email, not just
+    // the latest 50 from the normal feed, in case a lead asks what you have stored about them.
+    const handleLookup = async (e) => {
+        e.preventDefault()
+        if (!lookupEmail.trim()) return
+        setLookupLoading(true)
+        setLookupResults(null)
+        try {
+            const token = localStorage.getItem('token')
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/geo/sites/${siteId}/leads/lookup?email=${encodeURIComponent(lookupEmail.trim())}`, {
+                headers: { Authorization: `Bearer ${token}`, 'Accept-Language': 'en' },
+            })
+            const json = await res.json()
+            if (!res.ok) throw new Error(json.error)
+            setLookupResults(json.leads)
+        } catch {
+            toast.error('Search failed')
+        } finally {
+            setLookupLoading(false)
+        }
+    }
+
+    const handleCopyLookup = async () => {
+        const text = lookupResults.map(l =>
+            `Email: ${l.email}\nAI source: ${l.aiSource || 'none'}\nReferrer: ${l.referrerRaw || '—'}\nLanding page: ${l.landingPage || '—'}\nCaptured at: ${new Date(l.createdAt).toLocaleString('en-US')}`
+        ).join('\n\n---\n\n')
+        try {
+            await navigator.clipboard.writeText(text || 'No data found for this email.')
+            toast.success('Copied as text')
+        } catch {
+            toast.error('Copy failed')
+        }
+    }
+
+    if (loading) return (
+        <div className="flex flex-col items-center justify-center py-20 gap-3">
+            <Loader2 className="w-6 h-6 text-[var(--accent)] animate-spin" />
+            <span className="text-sm text-[var(--text-faint)]">Loading data…</span>
+        </div>
+    )
+    if (!data) return null
+
+    const maxCount = Math.max(...data.breakdown.map(b => b.count), 1)
+
+    if (data.totalLeads === 0) {
+        return (
+            <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl p-5 mb-6">
+                <SnippetStatusBadge lastSeenAt={data.snippetLastSeenAt} className="mb-4" />
+                <div className="flex flex-col items-center justify-center text-center gap-3 py-10">
+                    <div className="w-10 h-10 rounded-xl bg-[var(--surface-08)] flex items-center justify-center">
+                        <Users className="w-4.5 h-4.5 text-[var(--text-faint)]" />
+                    </div>
+                    <p className="text-sm text-[var(--text-faint)] max-w-md">
+                        No leads captured yet. Add the snippet below to your website — once someone arrives via ChatGPT, Perplexity, Claude, or Gemini and submits your form, the lead shows up here.
+                    </p>
+                </div>
+                <LeadsSnippetBox siteKey={data.siteKey} />
+            </div>
+        )
+    }
+
+    return (
+        <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl p-5 mb-6">
+            <SnippetStatusBadge lastSeenAt={data.snippetLastSeenAt} className="mb-4" />
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-5">
+                <div className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-xl p-4">
+                    <div className="flex items-center gap-1.5 text-xs text-[var(--text-faint)] mb-1.5">
+                        AI-attributed leads
+                    </div>
+                    <div className="text-2xl font-bold text-[var(--text-white)] tracking-tight">{data.aiAttributedCount}</div>
+                    <LeadsSparkline points={data.trend} />
+                    <div className="text-[11px] text-[var(--text-faint)] mt-1">
+                        {data.trendDeltaPercent != null && (
+                            <span className={data.trendDeltaPercent >= 0 ? 'text-emerald-400 font-semibold' : 'text-red-400 font-semibold'}>
+                                {data.trendDeltaPercent >= 0 ? '+' : ''}{data.trendDeltaPercent}%{' '}
+                            </span>
+                        )}
+                        {data.trendDeltaPercent != null ? 'vs. the 4 weeks before · ' : ''}last 8 weeks
+                    </div>
+                </div>
+                <div className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-xl p-4">
+                    <div className="flex items-center gap-1.5 text-xs text-[var(--text-faint)] mb-1.5">
+                        Share of all leads
+                    </div>
+                    <div className="text-2xl font-bold text-[var(--text-white)] tracking-tight">{data.aiAttributedPercent}%</div>
+                    <div className="text-xs text-[var(--text-faint)] mt-0.5">of {data.totalLeads} leads total</div>
+                </div>
+                <div className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-xl p-4">
+                    <div className="text-xs text-[var(--text-faint)] mb-1.5">Top source</div>
+                    {data.topSource ? (
+                        <>
+                            <LeadSourceChip source={data.topSource} />
+                            <div className="text-xs text-[var(--text-faint)] mt-1.5">
+                                {data.breakdown.find(b => b.source === data.topSource)?.percent}% of AI-attributed leads
+                            </div>
+                        </>
+                    ) : <span className="text-sm text-[var(--text-faint)]">—</span>}
+                </div>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_1.4fr] gap-4 mb-4 items-start">
+                <div className="border border-[var(--border-subtle)] rounded-xl p-4">
+                    <p className="text-xs font-semibold text-[var(--text-white)] mb-3">Leads by AI source</p>
+                    {data.breakdown.length > 0 ? (
+                        <div className="space-y-2.5">
+                            {data.breakdown.map(b => {
+                                const meta = LEAD_SOURCE_META[b.source]
+                                return (
+                                    <div key={b.source}>
+                                        <div className="flex items-center justify-between text-xs mb-1">
+                                            <span className="text-[var(--text-body)]">{meta?.label || b.source}</span>
+                                            <span className="text-[var(--text-faint)]">{b.count} · {b.percent}%</span>
+                                        </div>
+                                        <div className="relative h-2 bg-[var(--surface-08)] rounded-full overflow-hidden">
+                                            <div className={`h-full rounded-full ${meta?.bar || 'bg-[var(--text-faint)]'}`}
+                                                style={{ width: `${Math.max((b.count / maxCount) * 100, 3)}%` }} />
+                                        </div>
+                                    </div>
+                                )
+                            })}
+                        </div>
+                    ) : (
+                        <p className="text-xs text-[var(--text-faint)]">No AI-attributed leads yet to break down.</p>
+                    )}
+                </div>
+
+                <div className="border border-[var(--border-subtle)] rounded-xl overflow-hidden">
+                    <div className="overflow-x-auto">
+                        <table className="w-full min-w-[460px]">
+                            <thead>
+                                <tr className="border-b border-[var(--border-subtle)]">
+                                    <th className="text-left text-[10px] font-semibold text-[var(--text-faint)] uppercase tracking-wider px-4 py-2.5">Lead</th>
+                                    <th className="text-left text-[10px] font-semibold text-[var(--text-faint)] uppercase tracking-wider px-3 py-2.5">Source</th>
+                                    <th className="text-left text-[10px] font-semibold text-[var(--text-faint)] uppercase tracking-wider px-3 py-2.5 hidden sm:table-cell">Page</th>
+                                    <th className="text-left text-[10px] font-semibold text-[var(--text-faint)] uppercase tracking-wider px-4 py-2.5">Time</th>
+                                    <th className="px-3 py-2.5 w-8"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {data.leads.map(lead => (
+                                    <tr key={lead._id} className="border-b border-[var(--border-subtle)] last:border-0 group">
+                                        <td className="px-4 py-2.5 text-sm text-[var(--text-body)]">{lead.email}</td>
+                                        <td className="px-3 py-2.5"><LeadSourceChip source={lead.aiSource} /></td>
+                                        <td className="px-3 py-2.5 text-xs text-[var(--text-faint)] hidden sm:table-cell">{lead.landingPage || '—'}</td>
+                                        <td className="px-4 py-2.5 text-xs text-[var(--text-faint)] whitespace-nowrap">{leadTimeAgo(lead.createdAt)}</td>
+                                        <td className="px-3 py-2.5">
+                                            <button type="button" onClick={() => handleDelete(lead)} disabled={deletingId === lead._id}
+                                                title="Delete lead (data-subject request)"
+                                                className="opacity-0 group-hover:opacity-100 text-[var(--text-faint)] hover:text-red-400 transition-all disabled:opacity-50">
+                                                {deletingId === lead._id ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Trash2 className="w-3.5 h-3.5" />}
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div className="flex items-center gap-5">
+                <button type="button" onClick={() => setShowSnippet(v => !v)}
+                    className="text-[11px] font-semibold text-[var(--accent)] hover:opacity-80 inline-flex items-center gap-1">
+                    {showSnippet ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
+                    {showSnippet ? 'Hide' : 'Show'} snippet
+                </button>
+                <button type="button" onClick={() => setShowLookup(v => !v)}
+                    className="text-[11px] font-semibold text-[var(--accent)] hover:opacity-80 inline-flex items-center gap-1">
+                    {showLookup ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
+                    {showLookup ? 'Hide' : 'Request'} info about an email
+                </button>
+            </div>
+            {showSnippet && <div className="mt-3"><LeadsSnippetBox siteKey={data.siteKey} /></div>}
+            {showLookup && (
+                <div className="mt-3 bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-xl p-4">
+                    <p className="text-xs font-semibold text-[var(--text-white)] mb-1">Data-subject access request (Art. 15 GDPR)</p>
+                    <p className="text-[11px] text-[var(--text-faint)] mb-3 leading-relaxed">
+                        Searches every lead you have stored for this email — not just the latest 50 in the list above.
+                    </p>
+                    <form onSubmit={handleLookup} className="flex items-center gap-2 mb-3">
+                        <input type="email" required value={lookupEmail} onChange={e => setLookupEmail(e.target.value)}
+                            placeholder="customer@email.com"
+                            className="flex-1 bg-[var(--surface-08)] border border-[var(--border-subtle)] rounded-lg px-3 py-1.5 text-sm text-[var(--text-body)] placeholder:text-[var(--text-faint)] focus:outline-none focus:border-[var(--accent-border)]" />
+                        <button type="submit" disabled={lookupLoading}
+                            className="shrink-0 bg-[var(--surface-08)] hover:bg-[var(--surface-10)] border border-[var(--border-subtle)] text-[var(--text-body)] text-xs font-semibold px-3 py-1.5 rounded-lg transition-all disabled:opacity-50">
+                            {lookupLoading ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : 'Search'}
+                        </button>
+                    </form>
+                    {lookupResults && (
+                        lookupResults.length === 0 ? (
+                            <p className="text-xs text-[var(--text-faint)]">No data found for this email.</p>
+                        ) : (
+                            <div className="space-y-2">
+                                {lookupResults.map((l, i) => (
+                                    <div key={i} className="text-[11px] text-[var(--text-faint)] bg-[var(--surface-08)] rounded-lg p-2.5 leading-relaxed">
+                                        <div><span className="text-[var(--text-body)]">Source:</span> {l.aiSource || 'none'}</div>
+                                        <div><span className="text-[var(--text-body)]">Referrer:</span> {l.referrerRaw || '—'}</div>
+                                        <div><span className="text-[var(--text-body)]">Landing page:</span> {l.landingPage || '—'}</div>
+                                        <div><span className="text-[var(--text-body)]">Captured at:</span> {new Date(l.createdAt).toLocaleString('en-US')}</div>
+                                    </div>
+                                ))}
+                                <button type="button" onClick={handleCopyLookup}
+                                    className="text-[11px] font-semibold text-[var(--accent)] hover:opacity-80 inline-flex items-center gap-1 mt-1">
+                                    <Copy className="w-3 h-3" />Copy as text
+                                </button>
+                            </div>
+                        )
+                    )}
+                </div>
+            )}
+        </div>
+    )
+}
+
 function CitationAnalysis({ url }) {
     const [loading, setLoading]   = useState(false)
     const [analysis, setAnalysis] = useState(null)
@@ -658,6 +1102,120 @@ function CitationChip({ citation: cit }) {
                         Open page ↗
                     </a>
                     <CitationAnalysis url={cit.url} />
+                </div>
+            )}
+        </div>
+    )
+}
+
+// Pro/Expert-only (see citabilityDiagnosisEnabled in backend/controllers/geo_tracking.js). When
+// "No", it answers "why not" — when "Yes, but not #1", it answers "what does #1 have that we
+// don't" — both via the same analyzeGEO check as CitationAnalysis above, just pointed at our own
+// domain instead of a foreign citation URL, plus a backlink comparison for external authority.
+// Nothing to diagnose once cited at #1, so the component renders nothing there.
+function CitabilityDiagnosis({ siteId, keyword, platform, promptIntent, mentioned, ownPosition, plan }) {
+    const [state, setState]   = useState('idle') // idle | loading | error | done
+    const [data, setData]     = useState(null)
+    const [error, setError]   = useState(null)
+
+    if (plan === 'einsteiger') return null
+    if (mentioned && ownPosition === 1) return null
+
+    const handleDiagnose = async () => {
+        setState('loading')
+        setError(null)
+        try {
+            const token = localStorage.getItem('token')
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/geo/sites/${siteId}/diagnose-citability`, {
+                method: 'POST',
+                // Explicit Accept-Language instead of relying on the visitor's browser locale — otherwise
+                // a German-locale browser on this English page gets German caveats/lever text back, since
+                // backend/middleware/language.js reads this header, not which route the request came from.
+                headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}`, 'Accept-Language': 'en' },
+                body: JSON.stringify({ keyword, platform, promptIntent }),
+            })
+            const d = await res.json()
+            if (!res.ok) throw new Error(d.error)
+            setData(d)
+            setState('done')
+        } catch (err) {
+            setError(err.message || 'Diagnosis failed')
+            setState('error')
+        }
+    }
+
+    if (state !== 'done') {
+        return (
+            <div className="mt-1.5">
+                <button type="button" onClick={handleDiagnose} disabled={state === 'loading'}
+                    className="text-[11px] text-[var(--accent)] hover:text-[var(--accent)] underline underline-offset-2 disabled:opacity-50 disabled:no-underline">
+                    {state === 'loading' ? 'Diagnosing…' : state === 'error' ? 'Error — try again' : mentioned ? 'Show gap to #1' : 'Why not cited?'}
+                </button>
+                {state === 'error' && error && <p className="text-[10px] text-[var(--text-faint)] mt-0.5">{error}</p>}
+            </div>
+        )
+    }
+
+    return <CitabilityDiagnosisResult data={data} />
+}
+
+function CitabilityDiagnosisResult({ data }) {
+    const { own, competitor, diff, lever, caveats } = data
+    const topFindings = (own?.recommendations || []).slice(0, 3)
+
+    return (
+        <div className="mt-1.5 p-2.5 bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-lg space-y-3">
+            {caveats?.length > 0 && (
+                <div className="space-y-1.5">
+                    {caveats.map((note, i) => (
+                        <div key={i} className="flex items-start gap-1.5 text-[11px] text-[var(--warning)] leading-relaxed">
+                            <Lightbulb className="w-3 h-3 mt-0.5 shrink-0" />
+                            <span>{note}</span>
+                        </div>
+                    ))}
+                </div>
+            )}
+            <div>
+                <div className="text-xs font-semibold text-[var(--text-white)] mb-1.5">Own GEO score: {own.score}/100</div>
+                {topFindings.length > 0 ? (
+                    <ul className="space-y-1">
+                        {topFindings.map((f, i) => (
+                            <li key={i} className="text-[11px] text-[var(--text-muted)]">
+                                <span className="text-[var(--text-faint)]">✗</span> {f.title} <span className="text-[var(--text-faint)]">— {f.effort}</span>
+                            </li>
+                        ))}
+                    </ul>
+                ) : (
+                    <p className="text-[11px] text-emerald-400">✓ No critical gaps found on your own page</p>
+                )}
+            </div>
+
+            {competitor && diff && (
+                <div className="pt-2.5 border-t border-[var(--border-subtle)]">
+                    <p className="text-[10px] text-[var(--text-faint)] mb-1.5">
+                        Comparison to the cited source <span className="text-[var(--text-body)]">{competitor.domain}</span>:
+                    </p>
+                    <div className="space-y-1 mb-2">
+                        {diff.filter(row => !row.numeric).map((row, i) => (
+                            <div key={i} className="flex items-center justify-between text-[11px] gap-3">
+                                <span className="text-[var(--text-muted)]">{row.factor}</span>
+                                <span className="flex items-center gap-2 shrink-0">
+                                    <span className={row.own ? 'text-emerald-400' : 'text-[var(--text-faint)]'}>{row.own ? '✓' : '✗'} you</span>
+                                    <span className={row.competitor ? 'text-emerald-400' : 'text-[var(--text-faint)]'}>{row.competitor ? '✓' : '✗'} them</span>
+                                </span>
+                            </div>
+                        ))}
+                    </div>
+                    <div className="space-y-0.5 mb-2">
+                        {diff.filter(row => row.numeric).map((row, i) => (
+                            <p key={i} className="text-[11px] text-[var(--text-muted)]">
+                                {row.factor}: <span className="text-[var(--text-body)] font-semibold">{row.own}</span> (you) vs. <span className="text-[var(--text-body)] font-semibold">{row.competitor}</span> ({competitor.domain})
+                            </p>
+                        ))}
+                    </div>
+                    {lever && (
+                        <p className="text-[11px] text-[var(--accent)] leading-relaxed border-l-2 border-[var(--accent-border)] pl-2">{lever.text}</p>
+                    )}
                 </div>
             )}
         </div>
@@ -1317,6 +1875,8 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated }) {
                                                                                                 <p className="text-sm text-[var(--text-body)] italic leading-relaxed mt-1">&ldquo;{c.context}&rdquo;</p>
                                                                                             )}
                                                                                             <CitationList citations={c.citations} />
+                                                                                            <CitabilityDiagnosis siteId={siteId} keyword={keyword} platform={p} promptIntent={i}
+                                                                                                mentioned={c.mentioned} ownPosition={c.ownPosition} plan={plan} />
                                                                                         </div>
                                                                                     </div>
                                                                                 )
@@ -1455,6 +2015,7 @@ export default function GeoSitePageEn() {
                             </div>
                         )}
                         {activeView === 'overview'    && <ResultsTab siteId={siteId} site={site} plan={plan} onSiteUpdated={fetchSite} />}
+                        {activeView === 'leads'       && <LeadsPanel siteId={siteId} />}
                         {activeView === 'competitors' && <CompetitorsPanel siteId={siteId} onGoToOverview={() => setActiveView('overview')} />}
                         {activeView === 'correlation' && <CorrelationPanel siteId={siteId} onGoToSuggestions={() => setActiveView('suggestions')} />}
                         {activeView === 'suggestions' && <KeywordSuggestionsPanel siteId={siteId} onAdded={fetchSite} />}

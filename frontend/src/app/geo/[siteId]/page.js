@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import {
     ArrowLeft, Globe, Loader2, RefreshCw, Plus, Trash2, X,
     Sparkles, Check, ChevronDown, ChevronUp, Settings2, Lock,
-    ArrowUp, ArrowDown, Minus, GitCompare, Users, Lightbulb,
+    ArrowUp, ArrowDown, Minus, GitCompare, Users, Lightbulb, Copy,
 } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter, useParams } from 'next/navigation'
@@ -28,9 +28,6 @@ const PLAN_PLATFORMS = {
 }
 const ALL_PLATFORMS = ['claude', 'chatgpt', 'gemini', 'perplexity', 'google_aio']
 
-// Themen-Sichtbarkeit und Historien-Trends sind nach Tier gestaffelt (wie die Content-Gap-
-// Analyse bei SEO Automatisierung) — muss mit competitorAnalyticsEnabled/historicalTrendsEnabled
-// in backend/controllers/geo_tracking.js übereinstimmen.
 const PLAN_FEATURES = {
     einsteiger: { competitorAnalytics: false, historicalTrends: false },
     pro:        { competitorAnalytics: true,  historicalTrends: false },
@@ -50,11 +47,9 @@ const INTENT_META = {
     custom:     { label: 'Eigener Prompt' },
 }
 
-// Reihenfolge nach Serial Position: "Übersicht" eröffnet als wichtigster Punkt, "SEO-Ranking +
-// KI-Erwähnungen" schließt als stärkstes Alleinstellungsmerkmal ab — beides bleibt so eher im
-// Gedächtnis als wenn es irgendwo in der Mitte der Liste steht.
 const NAV_ITEMS = [
     { id: 'overview',    label: 'Übersicht',                   description: 'Deine Mention-Rate, Verlauf und alle getrackten Keywords im Detail.' },
+    { id: 'leads',       label: 'Leads',                        description: 'Leads auf eurer eigenen Website, die über ChatGPT, Perplexity, Claude oder Gemini zustande kamen.' },
     { id: 'competitors', label: 'Wettbewerber',                 description: 'Welche anderen Domains KI-Modelle neben dir zitieren — als Liste oder Diagramm.' },
     { id: 'market',      label: 'Themen-Sichtbarkeit',           description: 'Welche Domains in KI-Antworten zu deinen Keywords am häufigsten zitiert werden — über alle Kontexte hinweg (Erklärungen, Vergleiche, Tutorials), nicht nur Empfehlungen. Für Konkurrenz-Tools siehe „Wettbewerber".' },
     { id: 'suggestions', label: 'Keywords vorschlagen',         description: 'SEO-Keywords, die sich auch für GEO-Tracking eignen würden.' },
@@ -149,8 +144,6 @@ const CORRELATION_VERDICT_META = {
     neither:  { label: 'Beides fehlt',    color: 'text-[var(--text-faint)]',   bg: 'bg-[var(--surface-08)]',        border: 'border-[var(--border-subtle)]'      },
 }
 
-// Muss mit SEO_VISIBLE_THRESHOLD in backend/controllers/geo_tracking.js übereinstimmen — eine
-// Position kann existieren (z.B. #91), zählt aber erst ab hier als "bei Google auffindbar" (Seite 1-2).
 const SEO_VISIBLE_THRESHOLD = 20
 
 function CorrelationPanel({ siteId, onGoToSuggestions }) {
@@ -222,12 +215,7 @@ function CorrelationPanel({ siteId, onGoToSuggestions }) {
     const visible = expanded ? data.matched : data.matched.slice(0, 3)
 
     const totalKeywords = data.matched.length + data.seoOnlyKeywords.length + data.geoOnlyKeywords.length
-    // Bei der Platzierung ist eine kleinere Zahl besser — Delta umkehren, damit "verbessert"
-    // (Position gesunken) den grünen Pfeil nach oben bekommt, wie bei Rank-Trackern üblich.
     const positionTrendDelta = data.avgPositionDelta != null ? Math.round(-data.avgPositionDelta * 10) / 10 : null
-    // Der Durchschnitt allein kann irreführen (ein paar sehr schlechte Positionen ziehen ihn nach
-    // oben) — separat zeigen, wie viele tatsächlich sichtbar ranken (derselbe Schwellenwert wie
-    // im Backend für "seoVisible").
     const visibleCount = data.matched.filter(m => m.seoPosition != null && m.seoPosition <= SEO_VISIBLE_THRESHOLD).length
 
     return (
@@ -319,7 +307,7 @@ function KeywordSuggestionsPanel({ siteId, onAdded }) {
         const d = await res.json()
         const list = res.ok ? (d.suggestions || []) : []
         setSuggestions(list)
-        setSelected(new Set(list.map(s => s.keyword))) // standardmäßig alle vorausgewählt — Nutzer kann gezielt abwählen
+        setSelected(new Set(list.map(s => s.keyword)))
         setLoading(false)
     }, [siteId])
 
@@ -343,7 +331,7 @@ function KeywordSuggestionsPanel({ siteId, onAdded }) {
             if (!res.ok) throw new Error(d.error)
             toast.success(`${d.added} Keyword${d.added !== 1 ? 's' : ''} zu GEO hinzugefügt`)
             onAdded?.()
-            await fetchSuggestions() // Liste aktualisiert sich automatisch, da weniger seoOnlyKeywords übrig sind
+            await fetchSuggestions()
         } catch (err) {
             toast.error(err.message || 'Keywords konnten nicht hinzugefügt werden — bitte nochmal versuchen.')
         } finally {
@@ -616,6 +604,440 @@ function CompetitorsPanel({ siteId, onGoToOverview }) {
     )
 }
 
+const LEAD_SOURCE_META = {
+    chatgpt:    { label: 'ChatGPT',    color: 'text-green-400',  bg: 'bg-green-500/10',  border: 'border-green-500/20',  bar: 'bg-green-500'  },
+    perplexity: { label: 'Perplexity', color: 'text-teal-400',   bg: 'bg-teal-500/10',   border: 'border-teal-500/20',   bar: 'bg-teal-500'   },
+    claude:     { label: 'Claude',     color: 'text-violet-400', bg: 'bg-violet-500/10', border: 'border-violet-500/20', bar: 'bg-violet-500' },
+    gemini:     { label: 'Gemini',     color: 'text-amber-400',  bg: 'bg-amber-500/10',  border: 'border-amber-500/20',  bar: 'bg-amber-500'  },
+}
+
+function LeadSourceChip({ source }) {
+    const meta = LEAD_SOURCE_META[source]
+    if (!meta) return (
+        <span className="inline-flex items-center text-xs font-medium px-2 py-0.5 rounded-md text-[var(--text-faint)] bg-[var(--surface-08)] border border-[var(--border-subtle)]">
+            Direkt
+        </span>
+    )
+    return (
+        <span className={`inline-flex items-center text-xs font-medium px-2 py-0.5 rounded-md ${meta.color} ${meta.bg} border ${meta.border}`}>
+            {meta.label}
+        </span>
+    )
+}
+
+function leadTimeAgo(dateStr) {
+    const min = Math.floor((Date.now() - new Date(dateStr).getTime()) / 60000)
+    if (min < 1) return 'gerade eben'
+    if (min < 60) return `vor ${min} Min.`
+    const hrs = Math.floor(min / 60)
+    if (hrs < 24) return `vor ${hrs} Std.`
+    const days = Math.floor(hrs / 24)
+    return `vor ${days} Tag${days === 1 ? '' : 'en'}`
+}
+
+// ScanoraLeads.init() startet nichts automatisch beim Laden des Scripts — der Kunde ruft es erst
+// auf, nachdem er selbst die Einwilligung seines Besuchers eingeholt hat (z.B. im Callback seines
+// eigenen Cookie-Consent-Tools). Das Snippet trifft diese Entscheidung bewusst nicht selbst, weil
+// der Kunde laut eurem AVV "Verantwortlicher" fuer seine eigene Website ist, nicht Scanora.
+// init() schickt zusaetzlich (gedrosselt auf max. 1x/6h uebers Snippet selbst) ein Lebenszeichen an
+// /leads/verify, damit im Dashboard sichtbar ist, ob das Snippet ueberhaupt eingebunden ist — auch
+// wenn noch kein einziger echter Lead reinkam.
+function buildLeadSnippet(siteKey) {
+    const trackApi = `${process.env.NEXT_PUBLIC_API_URL}/leads/track`
+    const verifyApi = `${process.env.NEXT_PUBLIC_API_URL}/leads/verify`
+    return `<script>
+(function(){
+  var TRACK_API='${trackApi}';
+  var VERIFY_API='${verifyApi}';
+  var KEY='${siteKey}';
+  var SK='scanora_ai_ref';
+  var VK='scanora_verify_at';
+  var VERIFY_THROTTLE_MS=6*60*60*1000;
+  var HOSTS={'chatgpt.com':'chatgpt','chat.openai.com':'chatgpt','perplexity.ai':'perplexity','claude.ai':'claude','gemini.google.com':'gemini'};
+
+  window.ScanoraLeads = window.ScanoraLeads || {};
+
+  window.ScanoraLeads.init = function(){
+    try {
+      if(!localStorage.getItem(SK)&&document.referrer){
+        var h=new URL(document.referrer).hostname.replace(/^www\\./,'');
+        var s=HOSTS[h];
+        if(s) localStorage.setItem(SK, JSON.stringify({source:s, referrerRaw:document.referrer, landingPage:location.pathname}));
+      }
+    } catch(e){}
+
+    try {
+      var lastVerify = Number(localStorage.getItem(VK) || 0);
+      if (Date.now() - lastVerify > VERIFY_THROTTLE_MS) {
+        fetch(VERIFY_API,{method:'POST',headers:{'Content-Type':'application/json'},keepalive:true,body:JSON.stringify({siteKey:KEY})}).catch(function(){});
+        localStorage.setItem(VK, String(Date.now()));
+      }
+    } catch(e){}
+  };
+
+  window.ScanoraLeads.track = function(email){
+    var ref=null;
+    try{ ref=JSON.parse(localStorage.getItem(SK)); }catch(e){}
+    fetch(TRACK_API,{method:'POST',headers:{'Content-Type':'application/json'},keepalive:true,body:JSON.stringify({
+      siteKey:KEY, email:email,
+      aiSource: ref?ref.source:null,
+      referrerRaw: ref?ref.referrerRaw:null,
+      landingPage: ref?ref.landingPage:location.pathname
+    })}).catch(function(){});
+    try{localStorage.removeItem(SK);}catch(e){}
+  };
+})();
+</script>`
+}
+
+function LeadsSnippetBox({ siteKey }) {
+    const [copied, setCopied] = useState(false)
+    const snippet = buildLeadSnippet(siteKey)
+
+    const handleCopy = async () => {
+        try {
+            await navigator.clipboard.writeText(snippet)
+            setCopied(true)
+            toast.success('Snippet kopiert')
+            setTimeout(() => setCopied(false), 2000)
+        } catch {
+            toast.error('Kopieren fehlgeschlagen')
+        }
+    }
+
+    return (
+        <div className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-xl p-4">
+            <div className="flex items-center justify-between mb-2">
+                <p className="text-xs font-semibold text-[var(--text-white)]">Snippet auf eurer Website einbinden</p>
+                <button onClick={handleCopy}
+                    className="flex items-center gap-1.5 text-[11px] font-medium text-[var(--accent)] hover:opacity-80 shrink-0">
+                    {copied ? <Check className="w-3 h-3" /> : <Copy className="w-3 h-3" />}
+                    {copied ? 'Kopiert' : 'Kopieren'}
+                </button>
+            </div>
+            <pre className="text-[10.5px] text-[var(--text-faint)] bg-[var(--surface-08)] rounded-lg p-3 overflow-x-auto whitespace-pre-wrap break-all">
+{snippet}
+            </pre>
+            <div className="text-[11px] text-[var(--text-faint)] mt-2 leading-relaxed space-y-1">
+                <p>Vor dem schließenden <code className="text-[var(--text-body)]">&lt;/body&gt;</code> auf eurer eigenen Website einfügen.</p>
+                <p>Ruft <code className="text-[var(--text-body)]">ScanoraLeads.init()</code> erst auf, nachdem der Besucher eurem Tracking zugestimmt hat — z.&nbsp;B. im Callback eures Cookie-Consent-Tools. Das Snippet startet bewusst nichts von selbst.</p>
+                <p>Ruft <code className="text-[var(--text-body)]">ScanoraLeads.track(&apos;kunde@email.de&apos;)</code> auf, sobald euer eigenes Formular erfolgreich abgeschickt wurde.</p>
+            </div>
+        </div>
+    )
+}
+
+function LeadsSparkline({ points }) {
+    if (!points || points.filter(Boolean).length < 2) return null
+    const max = Math.max(...points, 1)
+    const W = 96, H = 26, pad = 2
+    const stepX = points.length > 1 ? (W - pad * 2) / (points.length - 1) : 0
+    const coords = points.map((v, i) => [pad + i * stepX, H - pad - (v / max) * (H - pad * 2)])
+    const linePoints = coords.map(([x, y]) => `${x},${y}`).join(' ')
+    const areaPoints = `${linePoints} ${coords[coords.length - 1][0]},${H} ${coords[0][0]},${H}`
+    const [lastX, lastY] = coords[coords.length - 1]
+    const gradientId = 'leadsSparkGradient'
+
+    return (
+        <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`} className="mt-2 block" role="img" aria-label="Trend der letzten 8 Wochen">
+            <defs>
+                <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" style={{ stopColor: 'var(--accent)', stopOpacity: 0.25 }} />
+                    <stop offset="100%" style={{ stopColor: 'var(--accent)', stopOpacity: 0 }} />
+                </linearGradient>
+            </defs>
+            <polygon points={areaPoints} style={{ fill: `url(#${gradientId})` }} />
+            <polyline points={linePoints} style={{ fill: 'none', stroke: 'var(--accent)', strokeWidth: 1.75, strokeLinejoin: 'round', strokeLinecap: 'round' }} />
+            <circle cx={lastX} cy={lastY} r="2.2" style={{ fill: 'var(--accent)' }} />
+        </svg>
+    )
+}
+
+// Beantwortet "hat der Kunde das Snippet ueberhaupt eingebunden" unabhaengig davon, ob schon ein
+// echter Lead reinkam — ohne das koennte "0 Leads" entweder "Snippet fehlt" oder "Snippet laeuft,
+// aber noch niemand konvertiert" bedeuten, und man wuesste nicht, welcher Fall gerade vorliegt.
+function SnippetStatusBadge({ lastSeenAt, className = '' }) {
+    if (!lastSeenAt) {
+        return (
+            <div className={`inline-flex items-center gap-1.5 text-xs font-medium text-[var(--text-faint)] bg-[var(--surface-08)] border border-[var(--border-subtle)] rounded-md px-2.5 py-1 ${className}`}>
+                <span className="w-1.5 h-1.5 rounded-full bg-[var(--text-faint)]" />
+                Snippet noch nicht erkannt
+            </div>
+        )
+    }
+    return (
+        <div className={`inline-flex items-center gap-1.5 text-xs font-medium text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 rounded-md px-2.5 py-1 ${className}`}>
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+            Snippet aktiv · zuletzt gesehen {leadTimeAgo(lastSeenAt)}
+        </div>
+    )
+}
+
+function LeadsPanel({ siteId }) {
+    const [data, setData]       = useState(null)
+    const [loading, setLoading] = useState(true)
+    const [showSnippet, setShowSnippet] = useState(false)
+    const [showLookup, setShowLookup]   = useState(false)
+    const [lookupEmail, setLookupEmail] = useState('')
+    const [lookupResults, setLookupResults] = useState(null)
+    const [lookupLoading, setLookupLoading] = useState(false)
+    const [deletingId, setDeletingId] = useState(null)
+
+    const fetchLeads = useCallback(() => {
+        const token = localStorage.getItem('token')
+        return fetch(`${process.env.NEXT_PUBLIC_API_URL}/geo/sites/${siteId}/leads`, {
+            headers: { Authorization: `Bearer ${token}`, 'Accept-Language': 'de' },
+        })
+            .then(res => res.json())
+            .then(setData)
+            .catch(() => {})
+    }, [siteId])
+
+    useEffect(() => {
+        setLoading(true)
+        fetchLeads().finally(() => setLoading(false))
+    }, [fetchLeads])
+
+    // Loeschfunktion fuer Betroffenenanfragen (Art. 17 DSGVO) — ein Lead meldet sich beim Site-Owner
+    // und verlangt Loeschung, der Owner erledigt das hier direkt statt per Mail an Scanora.
+    const handleDelete = async (lead) => {
+        if (!confirm(`Lead "${lead.email}" endgültig löschen?`)) return
+        setDeletingId(lead._id)
+        try {
+            const token = localStorage.getItem('token')
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/geo/sites/${siteId}/leads/${lead._id}`, {
+                method: 'DELETE',
+                headers: { Authorization: `Bearer ${token}`, 'Accept-Language': 'de' },
+            })
+            if (!res.ok) throw new Error()
+            setData(prev => ({
+                ...prev,
+                leads: prev.leads.filter(l => l._id !== lead._id),
+                totalLeads: prev.totalLeads - 1,
+            }))
+            toast.success('Lead gelöscht')
+        } catch {
+            toast.error('Löschen fehlgeschlagen')
+        } finally {
+            setDeletingId(null)
+        }
+    }
+
+    // Auskunftsfunktion (Art. 15 DSGVO) — sucht ALLE Datensaetze zu einer E-Mail (nicht nur die
+    // letzten 50 aus dem normalen Feed), fuer den Fall dass ein Lead Auskunft ueber die bei euch
+    // gespeicherten Daten verlangt.
+    const handleLookup = async (e) => {
+        e.preventDefault()
+        if (!lookupEmail.trim()) return
+        setLookupLoading(true)
+        setLookupResults(null)
+        try {
+            const token = localStorage.getItem('token')
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/geo/sites/${siteId}/leads/lookup?email=${encodeURIComponent(lookupEmail.trim())}`, {
+                headers: { Authorization: `Bearer ${token}`, 'Accept-Language': 'de' },
+            })
+            const json = await res.json()
+            if (!res.ok) throw new Error(json.error)
+            setLookupResults(json.leads)
+        } catch {
+            toast.error('Suche fehlgeschlagen')
+        } finally {
+            setLookupLoading(false)
+        }
+    }
+
+    const handleCopyLookup = async () => {
+        const text = lookupResults.map(l =>
+            `E-Mail: ${l.email}\nKI-Quelle: ${l.aiSource || 'keine'}\nReferrer: ${l.referrerRaw || '—'}\nZielseite: ${l.landingPage || '—'}\nErfasst am: ${new Date(l.createdAt).toLocaleString('de-DE')}`
+        ).join('\n\n---\n\n')
+        try {
+            await navigator.clipboard.writeText(text || 'Keine Daten zu dieser E-Mail gefunden.')
+            toast.success('Auskunft als Text kopiert')
+        } catch {
+            toast.error('Kopieren fehlgeschlagen')
+        }
+    }
+
+    if (loading) return (
+        <div className="flex flex-col items-center justify-center py-20 gap-3">
+            <Loader2 className="w-6 h-6 text-[var(--accent)] animate-spin" />
+            <span className="text-sm text-[var(--text-faint)]">Daten werden geladen…</span>
+        </div>
+    )
+    if (!data) return null
+
+    const maxCount = Math.max(...data.breakdown.map(b => b.count), 1)
+
+    if (data.totalLeads === 0) {
+        return (
+            <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl p-5 mb-6">
+                <SnippetStatusBadge lastSeenAt={data.snippetLastSeenAt} className="mb-4" />
+                <div className="flex flex-col items-center justify-center text-center gap-3 py-10">
+                    <div className="w-10 h-10 rounded-xl bg-[var(--surface-08)] flex items-center justify-center">
+                        <Users className="w-4.5 h-4.5 text-[var(--text-faint)]" />
+                    </div>
+                    <p className="text-sm text-[var(--text-faint)] max-w-md">
+                        Noch keine Leads erfasst. Bindet das Snippet unten auf eurer Website ein — sobald jemand über ChatGPT, Perplexity, Claude oder Gemini kommt und euer Formular abschickt, taucht der Lead hier auf.
+                    </p>
+                </div>
+                <LeadsSnippetBox siteKey={data.siteKey} />
+            </div>
+        )
+    }
+
+    return (
+        <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl p-5 mb-6">
+            <SnippetStatusBadge lastSeenAt={data.snippetLastSeenAt} className="mb-4" />
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-5">
+                <div className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-xl p-4">
+                    <div className="flex items-center gap-1.5 text-xs text-[var(--text-faint)] mb-1.5">
+                        KI-zugeordnete Leads
+                    </div>
+                    <div className="text-2xl font-bold text-[var(--text-white)] tracking-tight">{data.aiAttributedCount}</div>
+                    <LeadsSparkline points={data.trend} />
+                    <div className="text-[11px] text-[var(--text-faint)] mt-1">
+                        {data.trendDeltaPercent != null && (
+                            <span className={data.trendDeltaPercent >= 0 ? 'text-emerald-400 font-semibold' : 'text-red-400 font-semibold'}>
+                                {data.trendDeltaPercent >= 0 ? '+' : ''}{data.trendDeltaPercent}%{' '}
+                            </span>
+                        )}
+                        {data.trendDeltaPercent != null ? 'ggü. den 4 Wochen davor · ' : ''}letzte 8 Wochen
+                    </div>
+                </div>
+                <div className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-xl p-4">
+                    <div className="flex items-center gap-1.5 text-xs text-[var(--text-faint)] mb-1.5">
+                        Anteil an allen Leads
+                    </div>
+                    <div className="text-2xl font-bold text-[var(--text-white)] tracking-tight">{data.aiAttributedPercent}%</div>
+                    <div className="text-xs text-[var(--text-faint)] mt-0.5">von {data.totalLeads} Leads insgesamt</div>
+                </div>
+                <div className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-xl p-4">
+                    <div className="text-xs text-[var(--text-faint)] mb-1.5">Häufigste Quelle</div>
+                    {data.topSource ? (
+                        <>
+                            <LeadSourceChip source={data.topSource} />
+                            <div className="text-xs text-[var(--text-faint)] mt-1.5">
+                                {data.breakdown.find(b => b.source === data.topSource)?.percent}% aller KI-zugeordneten Leads
+                            </div>
+                        </>
+                    ) : <span className="text-sm text-[var(--text-faint)]">—</span>}
+                </div>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_1.4fr] gap-4 mb-4 items-start">
+                <div className="border border-[var(--border-subtle)] rounded-xl p-4">
+                    <p className="text-xs font-semibold text-[var(--text-white)] mb-3">Leads nach KI-Quelle</p>
+                    {data.breakdown.length > 0 ? (
+                        <div className="space-y-2.5">
+                            {data.breakdown.map(b => {
+                                const meta = LEAD_SOURCE_META[b.source]
+                                return (
+                                    <div key={b.source}>
+                                        <div className="flex items-center justify-between text-xs mb-1">
+                                            <span className="text-[var(--text-body)]">{meta?.label || b.source}</span>
+                                            <span className="text-[var(--text-faint)]">{b.count} · {b.percent}%</span>
+                                        </div>
+                                        <div className="relative h-2 bg-[var(--surface-08)] rounded-full overflow-hidden">
+                                            <div className={`h-full rounded-full ${meta?.bar || 'bg-[var(--text-faint)]'}`}
+                                                style={{ width: `${Math.max((b.count / maxCount) * 100, 3)}%` }} />
+                                        </div>
+                                    </div>
+                                )
+                            })}
+                        </div>
+                    ) : (
+                        <p className="text-xs text-[var(--text-faint)]">Noch keine KI-zugeordneten Leads für eine Verteilung.</p>
+                    )}
+                </div>
+
+                <div className="border border-[var(--border-subtle)] rounded-xl overflow-hidden">
+                    <div className="overflow-x-auto">
+                        <table className="w-full min-w-[460px]">
+                            <thead>
+                                <tr className="border-b border-[var(--border-subtle)]">
+                                    <th className="text-left text-[10px] font-semibold text-[var(--text-faint)] uppercase tracking-wider px-4 py-2.5">Lead</th>
+                                    <th className="text-left text-[10px] font-semibold text-[var(--text-faint)] uppercase tracking-wider px-3 py-2.5">Quelle</th>
+                                    <th className="text-left text-[10px] font-semibold text-[var(--text-faint)] uppercase tracking-wider px-3 py-2.5 hidden sm:table-cell">Seite</th>
+                                    <th className="text-left text-[10px] font-semibold text-[var(--text-faint)] uppercase tracking-wider px-4 py-2.5">Zeit</th>
+                                    <th className="px-3 py-2.5 w-8"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {data.leads.map(lead => (
+                                    <tr key={lead._id} className="border-b border-[var(--border-subtle)] last:border-0 group">
+                                        <td className="px-4 py-2.5 text-sm text-[var(--text-body)]">{lead.email}</td>
+                                        <td className="px-3 py-2.5"><LeadSourceChip source={lead.aiSource} /></td>
+                                        <td className="px-3 py-2.5 text-xs text-[var(--text-faint)] hidden sm:table-cell">{lead.landingPage || '—'}</td>
+                                        <td className="px-4 py-2.5 text-xs text-[var(--text-faint)] whitespace-nowrap">{leadTimeAgo(lead.createdAt)}</td>
+                                        <td className="px-3 py-2.5">
+                                            <button type="button" onClick={() => handleDelete(lead)} disabled={deletingId === lead._id}
+                                                title="Lead löschen (Betroffenenanfrage)"
+                                                className="opacity-0 group-hover:opacity-100 text-[var(--text-faint)] hover:text-red-400 transition-all disabled:opacity-50">
+                                                {deletingId === lead._id ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Trash2 className="w-3.5 h-3.5" />}
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div className="flex items-center gap-5">
+                <button type="button" onClick={() => setShowSnippet(v => !v)}
+                    className="text-[11px] font-semibold text-[var(--accent)] hover:opacity-80 inline-flex items-center gap-1">
+                    {showSnippet ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
+                    Snippet {showSnippet ? 'ausblenden' : 'anzeigen'}
+                </button>
+                <button type="button" onClick={() => setShowLookup(v => !v)}
+                    className="text-[11px] font-semibold text-[var(--accent)] hover:opacity-80 inline-flex items-center gap-1">
+                    {showLookup ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
+                    Auskunft zu einer E-Mail {showLookup ? 'ausblenden' : 'anfordern'}
+                </button>
+            </div>
+            {showSnippet && <div className="mt-3"><LeadsSnippetBox siteKey={data.siteKey} /></div>}
+            {showLookup && (
+                <div className="mt-3 bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-xl p-4">
+                    <p className="text-xs font-semibold text-[var(--text-white)] mb-1">Auskunft nach Art. 15 DSGVO</p>
+                    <p className="text-[11px] text-[var(--text-faint)] mb-3 leading-relaxed">
+                        Sucht alle bei euch zu dieser E-Mail gespeicherten Leads — nicht nur die letzten 50 aus der Liste oben.
+                    </p>
+                    <form onSubmit={handleLookup} className="flex items-center gap-2 mb-3">
+                        <input type="email" required value={lookupEmail} onChange={e => setLookupEmail(e.target.value)}
+                            placeholder="kunde@email.de"
+                            className="flex-1 bg-[var(--surface-08)] border border-[var(--border-subtle)] rounded-lg px-3 py-1.5 text-sm text-[var(--text-body)] placeholder:text-[var(--text-faint)] focus:outline-none focus:border-[var(--accent-border)]" />
+                        <button type="submit" disabled={lookupLoading}
+                            className="shrink-0 bg-[var(--surface-08)] hover:bg-[var(--surface-10)] border border-[var(--border-subtle)] text-[var(--text-body)] text-xs font-semibold px-3 py-1.5 rounded-lg transition-all disabled:opacity-50">
+                            {lookupLoading ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : 'Suchen'}
+                        </button>
+                    </form>
+                    {lookupResults && (
+                        lookupResults.length === 0 ? (
+                            <p className="text-xs text-[var(--text-faint)]">Keine Daten zu dieser E-Mail gefunden.</p>
+                        ) : (
+                            <div className="space-y-2">
+                                {lookupResults.map((l, i) => (
+                                    <div key={i} className="text-[11px] text-[var(--text-faint)] bg-[var(--surface-08)] rounded-lg p-2.5 leading-relaxed">
+                                        <div><span className="text-[var(--text-body)]">Quelle:</span> {l.aiSource || 'keine'}</div>
+                                        <div><span className="text-[var(--text-body)]">Referrer:</span> {l.referrerRaw || '—'}</div>
+                                        <div><span className="text-[var(--text-body)]">Zielseite:</span> {l.landingPage || '—'}</div>
+                                        <div><span className="text-[var(--text-body)]">Erfasst am:</span> {new Date(l.createdAt).toLocaleString('de-DE')}</div>
+                                    </div>
+                                ))}
+                                <button type="button" onClick={handleCopyLookup}
+                                    className="text-[11px] font-semibold text-[var(--accent)] hover:opacity-80 inline-flex items-center gap-1 mt-1">
+                                    <Copy className="w-3 h-3" />Als Text kopieren
+                                </button>
+                            </div>
+                        )
+                    )}
+                </div>
+            )}
+        </div>
+    )
+}
+
 function UpsellCard({ label }) {
     return (
         <div className="bg-[var(--bg-surface)] border border-dashed border-[var(--border-subtle)] rounded-2xl p-8 flex flex-col items-center text-center gap-3">
@@ -630,9 +1052,6 @@ function UpsellCard({ label }) {
     )
 }
 
-// Wie CompetitorsPanel, aber gegen DataForSEOs eigenen (breiteren) Mentions-Datensatz statt
-// gegen die eigenen Check-Ergebnisse — zeigt Domains, die zu den getrackten Keywords generell
-// oft von KI-Systemen genannt werden, nicht nur die, die in den eigenen Checks auftauchten.
 function MarketAnalyticsPanel({ siteId, plan }) {
     const [data, setData]       = useState(null)
     const [loading, setLoading] = useState(true)
@@ -806,6 +1225,121 @@ function CitationChip({ citation: cit }) {
                         Seite öffnen ↗
                     </a>
                     <CitationAnalysis url={cit.url} />
+                </div>
+            )}
+        </div>
+    )
+}
+
+// Pro/Expert-only (siehe citabilityDiagnosisEnabled in backend/controllers/geo_tracking.js). Bei
+// "Nein" beantwortet sie "warum nicht", bei "Ja, aber nicht Platz 1" "was hat Platz 1, was wir nicht
+// haben" — beides über denselben analyzeGEO-Check wie CitationAnalysis oben, nur gegen die eigene
+// Domain statt gegen eine fremde Zitat-URL gerichtet, plus einem Backlink-Abgleich für die externe
+// Autorität. Auf Platz 1 zitiert gibt es nichts zu diagnostizieren, dort rendert die Funktion nichts.
+function CitabilityDiagnosis({ siteId, keyword, platform, promptIntent, mentioned, ownPosition, plan }) {
+    const [state, setState]   = useState('idle') // idle | loading | error | done
+    const [data, setData]     = useState(null)
+    const [error, setError]   = useState(null)
+
+    if (plan === 'einsteiger') return null
+    if (mentioned && ownPosition === 1) return null
+
+    const handleDiagnose = async () => {
+        setState('loading')
+        setError(null)
+        try {
+            const token = localStorage.getItem('token')
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/geo/sites/${siteId}/diagnose-citability`, {
+                method: 'POST',
+                // Explizites Accept-Language statt sich auf die Browser-Spracheinstellung zu verlassen —
+                // sonst bekaeme ein englisch eingestellter Browser auf dieser deutschen Seite die
+                // Caveats/Hebel-Texte auf Englisch zurueck, weil backend/middleware/language.js diesen
+                // Header liest, nicht welche Route den Request ausgeloest hat.
+                headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}`, 'Accept-Language': 'de' },
+                body: JSON.stringify({ keyword, platform, promptIntent }),
+            })
+            const d = await res.json()
+            if (!res.ok) throw new Error(d.error)
+            setData(d)
+            setState('done')
+        } catch (err) {
+            setError(err.message || 'Diagnose fehlgeschlagen')
+            setState('error')
+        }
+    }
+
+    if (state !== 'done') {
+        return (
+            <div className="mt-1.5">
+                <button type="button" onClick={handleDiagnose} disabled={state === 'loading'}
+                    className="text-[11px] text-[var(--accent)] hover:text-[var(--accent)] underline underline-offset-2 disabled:opacity-50 disabled:no-underline">
+                    {state === 'loading' ? 'Diagnose läuft…' : state === 'error' ? 'Fehler — nochmal versuchen' : mentioned ? 'Lücke zu Platz 1 anzeigen' : 'Warum nicht zitiert?'}
+                </button>
+                {state === 'error' && error && <p className="text-[10px] text-[var(--text-faint)] mt-0.5">{error}</p>}
+            </div>
+        )
+    }
+
+    return <CitabilityDiagnosisResult data={data} />
+}
+
+function CitabilityDiagnosisResult({ data }) {
+    const { own, competitor, diff, lever, caveats } = data
+    const topFindings = (own?.recommendations || []).slice(0, 3)
+
+    return (
+        <div className="mt-1.5 p-2.5 bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-lg space-y-3">
+            {caveats?.length > 0 && (
+                <div className="space-y-1.5">
+                    {caveats.map((note, i) => (
+                        <div key={i} className="flex items-start gap-1.5 text-[11px] text-[var(--warning)] leading-relaxed">
+                            <Lightbulb className="w-3 h-3 mt-0.5 shrink-0" />
+                            <span>{note}</span>
+                        </div>
+                    ))}
+                </div>
+            )}
+            <div>
+                <div className="text-xs font-semibold text-[var(--text-white)] mb-1.5">Eigener GEO-Score: {own.score}/100</div>
+                {topFindings.length > 0 ? (
+                    <ul className="space-y-1">
+                        {topFindings.map((f, i) => (
+                            <li key={i} className="text-[11px] text-[var(--text-muted)]">
+                                <span className="text-[var(--text-faint)]">✗</span> {f.title} <span className="text-[var(--text-faint)]">— {f.effort}</span>
+                            </li>
+                        ))}
+                    </ul>
+                ) : (
+                    <p className="text-[11px] text-emerald-400">✓ Keine kritischen Lücken auf der eigenen Seite gefunden</p>
+                )}
+            </div>
+
+            {competitor && diff && (
+                <div className="pt-2.5 border-t border-[var(--border-subtle)]">
+                    <p className="text-[10px] text-[var(--text-faint)] mb-1.5">
+                        Vergleich zur zitierten Quelle <span className="text-[var(--text-body)]">{competitor.domain}</span>:
+                    </p>
+                    <div className="space-y-1 mb-2">
+                        {diff.filter(row => !row.numeric).map((row, i) => (
+                            <div key={i} className="flex items-center justify-between text-[11px] gap-3">
+                                <span className="text-[var(--text-muted)]">{row.factor}</span>
+                                <span className="flex items-center gap-2 shrink-0">
+                                    <span className={row.own ? 'text-emerald-400' : 'text-[var(--text-faint)]'}>{row.own ? '✓' : '✗'} ihr</span>
+                                    <span className={row.competitor ? 'text-emerald-400' : 'text-[var(--text-faint)]'}>{row.competitor ? '✓' : '✗'} die</span>
+                                </span>
+                            </div>
+                        ))}
+                    </div>
+                    <div className="space-y-0.5 mb-2">
+                        {diff.filter(row => row.numeric).map((row, i) => (
+                            <p key={i} className="text-[11px] text-[var(--text-muted)]">
+                                {row.factor}: <span className="text-[var(--text-body)] font-semibold">{row.own}</span> (ihr) vs. <span className="text-[var(--text-body)] font-semibold">{row.competitor}</span> ({competitor.domain})
+                            </p>
+                        ))}
+                    </div>
+                    {lever && (
+                        <p className="text-[11px] text-[var(--accent)] leading-relaxed border-l-2 border-[var(--accent-border)] pl-2">{lever.text}</p>
+                    )}
                 </div>
             )}
         </div>
@@ -1636,6 +2170,8 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated, onStatsChange }) {
                                                                                                 <p className="text-sm text-[var(--text-body)] italic leading-relaxed mt-1">&ldquo;{c.context}&rdquo;</p>
                                                                                             )}
                                                                                             <CitationList citations={c.citations} />
+                                                                                            <CitabilityDiagnosis siteId={siteId} keyword={keyword} platform={p} promptIntent={i}
+                                                                                                mentioned={c.mentioned} ownPosition={c.ownPosition} plan={plan} />
                                                                                         </div>
                                                                                     </div>
                                                                                 )
@@ -1813,6 +2349,7 @@ export default function GeoSitePage() {
                             </div>
                         )}
                         {activeView === 'overview'    && <ResultsTab siteId={siteId} site={site} plan={plan} onSiteUpdated={fetchSite} onStatsChange={setOverview} />}
+                        {activeView === 'leads'       && <LeadsPanel siteId={siteId} />}
                         {activeView === 'competitors' && <CompetitorsPanel siteId={siteId} onGoToOverview={() => setActiveView('overview')} />}
                         {activeView === 'market'      && <MarketAnalyticsPanel siteId={siteId} plan={plan} />}
                         {activeView === 'correlation' && <CorrelationPanel siteId={siteId} onGoToSuggestions={() => setActiveView('suggestions')} />}

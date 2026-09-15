@@ -1,7 +1,7 @@
 'use client'
 import { useState, useEffect, useCallback } from 'react'
-import { motion } from 'framer-motion'
-import { RefreshCw, LogOut } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { RefreshCw, LogOut, ChevronDown, Send } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
@@ -15,6 +15,10 @@ export default function SupportAdminPage() {
     const [tickets, setTickets] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState('')
+    const [expanded, setExpanded] = useState(null)
+    const [details, setDetails] = useState({})
+    const [replyText, setReplyText] = useState('')
+    const [sending, setSending] = useState(false)
     const router = useRouter()
 
     const fetchTickets = useCallback(async () => {
@@ -46,6 +50,42 @@ export default function SupportAdminPage() {
             body: JSON.stringify({ status }),
         })
         if (!res.ok) setTickets(prev)
+    }
+
+    async function toggleExpand(ticketNumber) {
+        if (expanded === ticketNumber) {
+            setExpanded(null)
+            return
+        }
+        setExpanded(ticketNumber)
+        setReplyText('')
+        if (!details[ticketNumber]) {
+            const res = await fetch(`/api/admin-support/${ticketNumber}`)
+            if (res.ok) {
+                const data = await res.json()
+                setDetails(d => ({ ...d, [ticketNumber]: data }))
+            }
+        }
+    }
+
+    async function sendReply(ticketNumber) {
+        const text = replyText.trim()
+        if (!text || sending) return
+        setSending(true)
+        try {
+            const res = await fetch(`/api/admin-support/${ticketNumber}/messages`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ body: text }),
+            })
+            if (res.ok) {
+                const data = await res.json()
+                setDetails(d => ({ ...d, [ticketNumber]: { ...d[ticketNumber], messages: data.messages } }))
+                setReplyText('')
+            }
+        } finally {
+            setSending(false)
+        }
     }
 
     async function handleLogout() {
@@ -140,8 +180,71 @@ export default function SupportAdminPage() {
                                                     → {c.label}
                                                 </button>
                                             ))}
+                                        <button
+                                            onClick={() => toggleExpand(ticket.ticketNumber)}
+                                            className="flex items-center gap-1 text-xs px-3 py-1.5 rounded-lg border border-[var(--text-white)]/10 text-[var(--text-muted)] hover:text-[var(--text-white)] transition-colors"
+                                        >
+                                            Bearbeiten
+                                            <ChevronDown className={`w-3.5 h-3.5 transition-transform ${expanded === ticket.ticketNumber ? 'rotate-180' : ''}`} />
+                                        </button>
                                     </div>
                                 </div>
+
+                                <AnimatePresence>
+                                    {expanded === ticket.ticketNumber && (
+                                        <motion.div
+                                            initial={{ opacity: 0, height: 0 }}
+                                            animate={{ opacity: 1, height: 'auto' }}
+                                            exit={{ opacity: 0, height: 0 }}
+                                            className="overflow-hidden"
+                                        >
+                                            <div className="mt-4 pt-4 border-t border-[var(--text-white)]/[0.06] space-y-3">
+                                                {!details[ticket.ticketNumber] ? (
+                                                    <p className="text-xs text-[var(--text-faint)]">Lade Verlauf...</p>
+                                                ) : (
+                                                    <>
+                                                        <div className="bg-[var(--text-white)]/[0.03] rounded-xl p-4">
+                                                            <p className="text-xs text-[var(--text-faint)] mb-1">Ursprüngliche Nachricht</p>
+                                                            <p className="text-sm text-[var(--text-body)] whitespace-pre-wrap">{details[ticket.ticketNumber].message}</p>
+                                                        </div>
+                                                        {(details[ticket.ticketNumber].messages || []).map((m, i) => (
+                                                            <div
+                                                                key={i}
+                                                                className={`rounded-xl p-4 max-w-[85%] ${
+                                                                    m.author === 'admin'
+                                                                        ? 'bg-violet-500/10 border border-violet-500/20 ml-auto'
+                                                                        : 'bg-[var(--text-white)]/[0.03]'
+                                                                }`}
+                                                            >
+                                                                <p className="text-xs text-[var(--text-faint)] mb-1">
+                                                                    {m.author === 'admin' ? 'Support-Team' : ticket.name} ·{' '}
+                                                                    {new Date(m.createdAt).toLocaleString('de-DE', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' })}
+                                                                </p>
+                                                                <p className="text-sm text-[var(--text-body)] whitespace-pre-wrap">{m.body}</p>
+                                                            </div>
+                                                        ))}
+                                                        <div className="flex gap-2 pt-1">
+                                                            <textarea
+                                                                value={replyText}
+                                                                onChange={e => setReplyText(e.target.value)}
+                                                                placeholder="Antwort schreiben..."
+                                                                rows={2}
+                                                                className="flex-1 bg-[var(--text-white)]/[0.03] border border-[var(--text-white)]/10 rounded-xl px-3 py-2 text-sm text-[var(--text-white)] placeholder:text-[var(--text-faint)] resize-none focus:outline-none focus:border-violet-500/40"
+                                                            />
+                                                            <button
+                                                                onClick={() => sendReply(ticket.ticketNumber)}
+                                                                disabled={sending || !replyText.trim()}
+                                                                className="flex items-center gap-1.5 px-4 rounded-xl bg-violet-500/15 border border-violet-500/30 text-violet-300 text-sm font-medium hover:bg-violet-500/25 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                                                            >
+                                                                <Send className="w-3.5 h-3.5" /> Senden
+                                                            </button>
+                                                        </div>
+                                                    </>
+                                                )}
+                                            </div>
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>
                             </motion.div>
                         )
                     })}

@@ -68,7 +68,7 @@ router.post("/login", async (req, res) => {
 
         if (!user) {
             return res.status(400).json({
-                error: t("USER_NOT_FOUND", req.language)
+                error: t("INVALID_CREDENTIALS", req.language)
             });
         }
 
@@ -76,7 +76,7 @@ router.post("/login", async (req, res) => {
 
         if (!isMatch) {
             return res.status(400).json({
-                error: t("WRONG_PASSWORD", req.language)
+                error: t("INVALID_CREDENTIALS", req.language)
             });
         }
 

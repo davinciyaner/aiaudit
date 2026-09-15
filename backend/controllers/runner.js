@@ -182,7 +182,7 @@ function aggregateSEO(seoResults) {
     }
 }
 
-export async function runAudit(url) {
+export async function runAudit(url, language) {
     console.log(`Starte Audit fuer: ${url}`)
 
     if (!url.startsWith('http')) url = 'https://' + url
@@ -316,7 +316,7 @@ export async function runAudit(url) {
             })),
             analyzePerformance(url, page, { timing, resources: landingResources }),
             analyzeKeywords(url, landingHtml),
-            analyzeGEO(url, landingHtml),
+            analyzeGEO(url, landingHtml, language),
         ])
         const seo = aggregateSEO(seoResults)
         console.log('Analyse done')

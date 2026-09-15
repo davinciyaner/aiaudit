@@ -4,6 +4,11 @@ const MESSAGES = {
     EMAIL_PASSWORD_REQUIRED: { de: "Email und Passwort sind erforderlich", en: "Email and password are required" },
     USER_NOT_FOUND: { de: "User nicht gefunden", en: "User not found" },
     WRONG_PASSWORD: { de: "Falsches Passwort", en: "Incorrect password" },
+    // Bewusst dieselbe Meldung fuer "E-Mail existiert nicht" und "Passwort falsch" beim Login —
+    // sonst laesst sich per Fehlermeldung erraten, ob eine E-Mail-Adresse registriert ist
+    // (E-Mail-Enumeration). Nicht mit USER_NOT_FOUND/WRONG_PASSWORD oben verwechseln, die bleiben
+    // fuer authentifizierte Kontexte (z.B. Profil-Lookup) bestehen, wo das kein Problem ist.
+    INVALID_CREDENTIALS: { de: "E-Mail oder Passwort falsch", en: "Email or password is incorrect" },
     EMAIL_REQUIRED: { de: "E-Mail ist erforderlich", en: "Email is required" },
     TOKEN_PASSWORD_REQUIRED: { de: "Token und Passwort sind erforderlich", en: "Token and password are required" },
     PASSWORD_TOO_SHORT: { de: "Passwort muss mindestens 6 Zeichen haben", en: "Password must be at least 6 characters" },
@@ -67,6 +72,7 @@ const MESSAGES = {
     EMAIL_MISSING: { de: "E-Mail fehlt.", en: "Email is missing." },
     TICKET_NOT_FOUND: { de: "Ticket nicht gefunden.", en: "Ticket not found." },
     INVALID_STATUS: { de: "Ungültiger Status.", en: "Invalid status." },
+    MESSAGE_MISSING: { de: "Nachricht darf nicht leer sein.", en: "Message must not be empty." },
     RATING_MUST_BE_1_TO_5: { de: "rating muss zwischen 1 und 5 liegen", en: "rating must be between 1 and 5" },
     VOTE_MUST_BE_YES_OR_NO: { de: 'vote muss "yes" oder "no" sein', en: 'vote must be "yes" or "no"' },
 

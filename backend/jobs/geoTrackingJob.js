@@ -13,14 +13,14 @@ const PRIORITY_WEIGHT = { critical: 0, high: 1, medium: 2 }
 // Läuft nur bei tatsächlichen Erwähnungsverlusten, nicht bei jedem Check — bewusst kein Beleg für
 // Kausalität ("das war die Ursache"), sondern eine zeitgleiche Momentaufnahme der aktuellen technischen
 // GEO-Schwachstellen der Domain ("das sind mögliche Gründe, die dazu beitragen könnten").
-async function getPossibleCauses(domain) {
+async function getPossibleCauses(domain, language) {
     try {
         const url = `https://${domain}`
         const pageRes = await fetchSafely(url, { headers: { 'User-Agent': 'Scanora-GEO-Bot/1.0' }, timeoutMs: 10000 })
         if (!pageRes.ok) return null
 
         const html = await pageRes.text()
-        const analysis = await analyzeGEO(url, html)
+        const analysis = await analyzeGEO(url, html, language)
 
         const topFindings = [...(analysis.recommendations || [])]
             .sort((a, b) => (PRIORITY_WEIGHT[a.priority] ?? 9) - (PRIORITY_WEIGHT[b.priority] ?? 9))
@@ -102,7 +102,7 @@ async function runWeeklyGeoChecks() {
                         try {
                             const user = await User.findById(site.userId).lean()
                             if (user?.email && user.geoEmailAlerts !== false) {
-                                const possibleCauses = losses.length ? await getPossibleCauses(site.domain) : null
+                                const possibleCauses = losses.length ? await getPossibleCauses(site.domain, user.language) : null
                                 await sendGeoRankingAlert({ email: user.email, domain: site.domain, gains, losses, possibleCauses, language: user.language })
                                 console.log(`GEO alert gesendet an ${user.email} für ${site.domain} (${losses.length} Verluste, ${gains.length} Gewinne)`)
                             }

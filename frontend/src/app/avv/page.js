@@ -73,6 +73,8 @@ export default function AvvPage() {
                         <ul className="list-disc list-inside space-y-1 ml-2">
                             <li>Speicherung der vom Verantwortlichen eingetragenen Domains, Keywords und der dazugehörigen Google-Ranking-Positionen (SEO Automatisierung)</li>
                             <li>Abruf von Ranking-, Keyword- und Backlink-Daten über die DataForSEO API im Auftrag des Verantwortlichen</li>
+                            <li>Automatisiertes Tracking, ob und wie die Domains des Verantwortlichen in Antworten von KI-Modellen erwähnt werden (GEO Automatisierung)</li>
+                            <li>Erfassung und Zuordnung von Leads auf der Website des Verantwortlichen zu der KI-Quelle, über die der jeweilige Besuch zustande kam (Leads-Tracking)</li>
                         </ul>
                         <p>
                             Die Verarbeitung erfolgt für die Dauer des aktiven Abonnements zuzüglich einer Löschfrist von 30 Tagen nach Vertragsende.
@@ -87,6 +89,31 @@ export default function AvvPage() {
                                 <TableRow label="Drittanbieter" value="DataForSEO Ltd., Vilnius, Litauen (EU) — nur Keyword + Standort + Sprachcode werden übermittelt, keine personenbezogenen Nutzerdaten" />
                                 <TableRow label="Ort der Verarbeitung" value="Deutschland / EU (MongoDB Atlas, Vercel, DataForSEO)" />
                             </div>
+                        </Sub>
+
+                        <Sub title="Verarbeitungsübersicht GEO Automatisierung">
+                            <div className="bg-[var(--text-white)]/2 border border-[var(--text-white)]/5 rounded-xl p-4">
+                                <TableRow label="Art der Daten" value="Domains, Keywords/Prompts, Auszüge aus KI-Antworten, erkannte Zitationen und Konkurrenz-Domains, automatisierte Sentiment-Einordnung" />
+                                <TableRow label="Zweck" value="Automatisiertes Tracking, ob und wie eine Domain in Antworten von KI-Modellen (ChatGPT, Claude, Gemini, Perplexity, Google AI Overview) erwähnt wird; Wettbewerbsanalyse; Sentiment-Klassifizierung" />
+                                <TableRow label="Betroffene Personen" value="Mittelbar: Betreiber der getrackten Domains (soweit natürliche Personen)" />
+                                <TableRow label="Speicherdauer" value="Wie SEO-Ranking-Daten: 12 Monate" />
+                                <TableRow label="Drittanbieter" value="DataForSEO Ltd., Vilnius, Litauen (EU) — Abruf der KI-Antworten; Anthropic PBC, USA (Standardvertragsklauseln) — Sentiment-Klassifizierung einzelner Textauszüge über die Claude API, keine dauerhafte Speicherung beim Anbieter" />
+                                <TableRow label="Ort der Verarbeitung" value="Deutschland / EU (MongoDB Atlas) und USA (Anthropic, Sentiment-Klassifizierung)" />
+                            </div>
+                        </Sub>
+
+                        <Sub title="Verarbeitungsübersicht Leads-Tracking">
+                            <div className="bg-[var(--text-white)]/2 border border-[var(--text-white)]/5 rounded-xl p-4">
+                                <TableRow label="Art der Daten" value="E-Mail-Adresse des Leads, automatisiert erkannte KI-Quelle (ChatGPT, Perplexity, Claude, Gemini), Referrer-URL, aufgerufene Zielseite, Zeitstempel" />
+                                <TableRow label="Zweck" value="Zuordnung eingehender Leads auf der Website des Verantwortlichen zu der KI-Quelle, über die der jeweilige Besuch zustande kam" />
+                                <TableRow label="Betroffene Personen" value="Website-Besucher/Leads des Verantwortlichen (Endnutzer der jeweiligen Kundenwebsite, keine Scanora-Nutzer)" />
+                                <TableRow label="Speicherdauer" value="12 Monate, automatisierte wöchentliche Löschung. Der Verantwortliche kann einzelne Datensätze jederzeit über das Dashboard einsehen (Art. 15 DSGVO) oder vorzeitig löschen (Art. 17 DSGVO)" />
+                                <TableRow label="Drittanbieter" value="Keine zusätzlichen — läuft über dieselbe Infrastruktur wie SEO/GEO Automatisierung" />
+                                <TableRow label="Ort der Verarbeitung" value="Deutschland / EU (MongoDB Atlas)" />
+                            </div>
+                            <p className="text-xs text-[var(--text-faint)] mt-2">
+                                Die Erfassung erfolgt über ein vom Verantwortlichen selbst auf seiner Website eingebundenes Tracking-Snippet. Für die Rechtsgrundlage der Datenerhebung auf seiner eigenen Website (z. B. Einwilligung nach TTDSG/ePrivacy) ist der Verantwortliche selbst zuständig.
+                            </p>
                         </Sub>
                     </Section>
 
@@ -130,7 +157,11 @@ export default function AvvPage() {
                             </div>
                             <div className="border-t border-[var(--text-white)]/5 pt-3">
                                 <strong className="text-[var(--text-body)]">DataForSEO Ltd.</strong><br />
-                                <span className="text-[var(--text-faint)]">Zweck: Abruf von Google-Ranking-Daten, Keyword-Suchvolumina, Wettbewerbs- und Backlink-Daten für SEO Automatisierung · Standort: Vilnius, Litauen (EU) · Übermittelte Daten: Keyword, Standortname, Sprachcode — keine personenbezogenen Daten der Endnutzer</span>
+                                <span className="text-[var(--text-faint)]">Zweck: Abruf von Google-Ranking-Daten, Keyword-Suchvolumina, Wettbewerbs- und Backlink-Daten für SEO Automatisierung sowie Abruf von KI-Antworten für GEO Automatisierung · Standort: Vilnius, Litauen (EU) · Übermittelte Daten: Keyword/Prompt, Domain, Standortname, Sprachcode — keine personenbezogenen Daten der Endnutzer</span>
+                            </div>
+                            <div className="border-t border-[var(--text-white)]/5 pt-3">
+                                <strong className="text-[var(--text-body)]">Anthropic PBC</strong><br />
+                                <span className="text-[var(--text-faint)]">Zweck: Sentiment-Klassifizierung einzelner KI-Antwort-Auszüge über die Claude API (GEO Automatisierung) · Standort: USA (Standardvertragsklauseln) · Übermittelte Daten: Textauszug der KI-Antwort, keine personenbezogenen Daten der Endnutzer</span>
                             </div>
                         </div>
                         <p>

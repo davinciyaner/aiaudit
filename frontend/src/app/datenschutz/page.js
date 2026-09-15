@@ -106,7 +106,47 @@ export default function DatenschutzPage() {
                             </p>
                         </Sub>
 
-                        <Sub title="2.5 Serverdaten / Zugriffsprotokolle">
+                        <Sub title="2.4 GEO Automatisierungsdaten">
+                            <p>
+                                Nutzer der GEO Automatisierung tragen Domains und Keywords/Prompts ein, für die automatisiert geprüft wird, ob und wie sie in Antworten von KI-Modellen erwähnt werden. Dabei werden folgende Daten verarbeitet und gespeichert:
+                            </p>
+                            <ul className="list-disc list-inside space-y-1 ml-2">
+                                <li>Domain-Name der getrackten Website</li>
+                                <li>Eingetragene Keywords/Prompts</li>
+                                <li>Erwähnung (ja/nein) je KI-Plattform (ChatGPT, Claude, Gemini, Perplexity, Google AI Overview)</li>
+                                <li>Auszüge aus KI-Antworten (Kontext der Erwähnung), erkannte Zitationen und Konkurrenz-Domains</li>
+                                <li>Automatisierte Sentiment-Einordnung der Erwähnung</li>
+                            </ul>
+                            <p>
+                                Zur Ermittlung der KI-Erwähnungen werden Keywords/Prompts und Domain an die <strong className="text-[var(--text-body)]">DataForSEO API</strong> übermittelt (siehe Abschnitt 5a). Für die Sentiment-Klassifizierung einzelner Antwort-Auszüge wird zusätzlich die <strong className="text-[var(--text-body)]">Claude API von Anthropic</strong> genutzt (siehe Abschnitt 5). Es werden keine personenbezogenen Daten der Endnutzer der KI-Modelle erhoben.
+                            </p>
+                            <p>
+                                <strong className="text-[var(--text-body)]">Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung).<br />
+                                <strong className="text-[var(--text-body)]">Speicherdauer:</strong> Wie SEO-Ranking-Daten: für die Dauer des aktiven Abonnements, danach Löschung innerhalb von 30 Tagen.<br />
+                                <strong className="text-[var(--text-body)]">Auftragsverarbeitung:</strong> Soweit personenbezogene Daten im Auftrag des Nutzers verarbeitet werden, gilt der <a href="/avv" className="text-violet-400 hover:text-violet-300">Auftragsverarbeitungsvertrag (AVV)</a> gemäß Art. 28 DSGVO.
+                            </p>
+                        </Sub>
+
+                        <Sub title="2.5 Leads-Tracking">
+                            <p>
+                                Nutzer der GEO Automatisierung können ein Tracking-Snippet auf ihrer eigenen Website einbinden, um eingehende Leads (z. B. Kontaktformular-Anfragen) der KI-Quelle zuzuordnen, über die der jeweilige Besuch zustande kam. Dabei werden folgende Daten verarbeitet und gespeichert:
+                            </p>
+                            <ul className="list-disc list-inside space-y-1 ml-2">
+                                <li>E-Mail-Adresse des Leads</li>
+                                <li>Automatisiert erkannte KI-Quelle (ChatGPT, Perplexity, Claude, Gemini)</li>
+                                <li>Referrer-URL und aufgerufene Zielseite</li>
+                                <li>Zeitstempel der Erfassung</li>
+                            </ul>
+                            <p>
+                                Betroffen sind hierbei die Website-Besucher des jeweiligen Scanora-Nutzers, nicht die Nutzer von Scanora selbst. Für die Rechtsgrundlage der Datenerhebung auf seiner eigenen Website (z. B. eine etwaige Einwilligung nach TTDSG/ePrivacy) ist der jeweilige Scanora-Nutzer als datenschutzrechtlich Verantwortlicher für seine eigene Website selbst zuständig.
+                            </p>
+                            <p>
+                                <strong className="text-[var(--text-body)]">Rechtsgrundlage (Verarbeitung durch Scanora im Auftrag):</strong> Art. 28 DSGVO i. V. m. dem <a href="/avv" className="text-violet-400 hover:text-violet-300">Auftragsverarbeitungsvertrag (AVV)</a>.<br />
+                                <strong className="text-[var(--text-body)]">Speicherdauer:</strong> 12 Monate, danach automatisierte Löschung. Der Scanora-Nutzer kann einzelne Datensätze jederzeit über sein Dashboard einsehen (Art. 15 DSGVO) oder vorzeitig löschen (Art. 17 DSGVO).
+                            </p>
+                        </Sub>
+
+                        <Sub title="2.6 Serverdaten / Zugriffsprotokolle">
                             <p>
                                 Bei jedem Seitenaufruf werden technisch bedingt folgende Daten vorübergehend verarbeitet:
                             </p>
@@ -188,16 +228,17 @@ export default function DatenschutzPage() {
 
                     <Section title="5. Nutzung der Claude API (Anthropic)">
                         <p>
-                            Scanora nutzt die <strong className="text-[var(--text-body)]">Claude API von Anthropic, Inc.</strong> zur Erstellung KI-generierter Website-Analysen und Berichte.
+                            Scanora nutzt die <strong className="text-[var(--text-body)]">Claude API von Anthropic, Inc.</strong> zur Erstellung KI-generierter Website-Analysen und Berichte sowie zur automatisierten Sentiment-Klassifizierung einzelner KI-Antwort-Auszüge im Rahmen der GEO Automatisierung (siehe Abschnitt 2.4).
                         </p>
                         <p>
                             Anbieter: Anthropic, Inc., 548 Market Street, San Francisco, CA 94104, USA.
                         </p>
                         <Sub title="Was wird an Anthropic übermittelt?">
-                            <p>Zur Erstellung des KI-Reports werden folgende Daten an die Anthropic-Server übermittelt:</p>
+                            <p>Zur Erstellung des KI-Reports sowie zur Sentiment-Klassifizierung werden folgende Daten an die Anthropic-Server übermittelt:</p>
                             <ul className="list-disc list-inside space-y-1 ml-2">
                                 <li>Die zu analysierende Website-URL</li>
                                 <li>Die technischen Analyseergebnisse (SEO-Daten, Performance-Daten, GEO-Daten)</li>
+                                <li>Auszüge aus KI-Antworten anderer Modelle, die zu einer eingetragenen Domain gefunden wurden (GEO Automatisierung)</li>
                             </ul>
                             <p>
                                 Es werden <strong className="text-[var(--text-body)]">keine personenbezogenen Nutzerdaten</strong> (Name, E-Mail etc.) an Anthropic übermittelt.

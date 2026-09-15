@@ -12,6 +12,11 @@ const supportTicketSchema = new mongoose.Schema({
         default: 'open',
     },
     language: { type: String, enum: ['de', 'en'], default: 'de' },
+    messages: [{
+        author: { type: String, enum: ['user', 'admin'], required: true },
+        body: { type: String, required: true },
+        createdAt: { type: Date, default: Date.now },
+    }],
 }, { timestamps: true })
 
 export default mongoose.model('SupportTicket', supportTicketSchema)

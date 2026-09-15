@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import rateLimit from 'express-rate-limit'
 import SupportTicket from '../models/support_ticket.js'
-import { sendTicketCreatedUser, sendTicketCreatedAdmin, sendTicketStatusChanged } from '../utils/mailer.js'
+import { sendTicketCreatedUser, sendTicketCreatedAdmin, sendTicketStatusChanged, sendTicketReplyUser, sendTicketReplyAdmin } from '../utils/mailer.js'
 import { t } from '../utils/i18n/errors.js'
 
 const router = Router()
@@ -21,6 +21,14 @@ const lookupLimiter = rateLimit({
 // Admin routes are gated by ADMIN_TOKEN, but without a rate limit the token itself
 // can be brute-forced at unlimited speed — this bounds guess attempts regardless.
 const adminLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 20,
+    message: (req) => ({ error: t('TOO_MANY_REQUESTS', req.language) }),
+})
+
+// Shared by both the user- and admin-side reply post (ticketNumber is the only
+// capability check on the user side, same as the existing GET/by-email routes).
+const messageLimiter = rateLimit({
     windowMs: 15 * 60 * 1000,
     max: 20,
     message: (req) => ({ error: t('TOO_MANY_REQUESTS', req.language) }),
@@ -113,10 +121,48 @@ router.get('/:ticketNumber', lookupLimiter, async (req, res, next) => {
 
         const ticket = await SupportTicket.findOne(
             { ticketNumber },
-            'ticketNumber subject status createdAt updatedAt'
+            'ticketNumber subject status createdAt updatedAt message messages'
         )
         if (!ticket) return res.status(404).json({ error: t('TICKET_NOT_FOUND', req.language) })
         res.json(ticket)
+    } catch (err) {
+        next(err)
+    }
+})
+
+// POST /api/support/:ticketNumber/messages — Antwort hinzufügen (Nutzer ohne Auth-Header,
+// Admin mit Bearer-ADMIN_TOKEN — die Ticketnummer selbst ist die Nutzer-Capability, wie
+// bei den übrigen öffentlichen Routen oben).
+router.post('/:ticketNumber/messages', messageLimiter, async (req, res, next) => {
+    try {
+        const idMatch = /^TK-[A-Z0-9]{8}$/.exec(String(req.params.ticketNumber || '').toUpperCase())
+        if (!idMatch) return res.status(404).json({ error: t('TICKET_NOT_FOUND', req.language) })
+        const ticketNumber = idMatch[0]
+
+        const { body } = req.body
+        if (!body?.trim()) return res.status(400).json({ error: t('MESSAGE_MISSING', req.language) })
+
+        const isAdmin = isAdminAuthorized(req)
+        const author = isAdmin ? 'admin' : 'user'
+
+        const ticket = await SupportTicket.findOne({ ticketNumber })
+        if (!ticket) return res.status(404).json({ error: t('TICKET_NOT_FOUND', req.language) })
+
+        ticket.messages.push({ author, body: body.trim() })
+        // A user replying to a closed ticket reopens it; admin-side status changes stay
+        // explicit via PATCH /:ticketNumber/status.
+        if (!isAdmin && ticket.status === 'closed') {
+            ticket.status = 'open'
+        }
+        await ticket.save()
+
+        if (isAdmin) {
+            sendTicketReplyUser(ticket, body.trim()).catch(console.error)
+        } else {
+            sendTicketReplyAdmin(ticket, body.trim()).catch(console.error)
+        }
+
+        res.status(201).json({ ticketNumber: ticket.ticketNumber, status: ticket.status, messages: ticket.messages })
     } catch (err) {
         next(err)
     }
