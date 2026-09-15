@@ -12,6 +12,13 @@ import { trackLead, verifySnippet } from '../controllers/leads.js'
 // globale Restriktion jeden Request von einer Kundendomain schon vorher abweisen.
 const router = express.Router()
 
+// Mounted via router.use() (not per-route) so the `cors` package's own preflight handling
+// actually fires: a real cross-origin browser POST with a JSON content-type sends an OPTIONS
+// preflight first, and Express only reaches a `.post(...)` handler for POST — never for
+// OPTIONS. Attaching cors() only inside .post(...) never sees the preflight, so the browser
+// gets no Access-Control-Allow-Origin on it and blocks the real request before it's even sent.
+router.use(cors({ origin: true }))
+
 const trackLimiter = rateLimit({
     windowMs: 60 * 1000,
     limit: 20,
@@ -25,7 +32,6 @@ const trackLimiter = rateLimit({
 })
 
 router.post('/track',
-    cors({ origin: true }),
     express.json({ limit: '10kb' }),
     sanitizeBody,
     language,
@@ -34,7 +40,6 @@ router.post('/track',
 )
 
 router.post('/verify',
-    cors({ origin: true }),
     express.json({ limit: '10kb' }),
     sanitizeBody,
     language,

@@ -2,7 +2,6 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, Send, ArrowRight, CheckCircle } from 'lucide-react'
-import { trackScanoraLead } from '../lib/scanoraLeads'
 
 const FIXED_SUBJECT = {
     de: 'Kontaktanfrage über die Website',
@@ -31,7 +30,6 @@ export default function ContactModal({ open, onClose, locale = 'de' }) {
             })
             const data = await res.json()
             if (!res.ok) throw new Error(data.error || (locale === 'en' ? 'Error sending your message.' : 'Fehler beim Senden deiner Nachricht.'))
-            trackScanoraLead(form.email)
             setSent(true)
         } catch (err) {
             setError(err.message)

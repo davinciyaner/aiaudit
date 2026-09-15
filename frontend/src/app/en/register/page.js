@@ -5,6 +5,7 @@ import {motion} from 'framer-motion'
 import {Zap, Mail, Lock, User, ArrowRight, Check, Search, Globe} from 'lucide-react'
 import toast from 'react-hot-toast'
 import {useRouter} from 'next/navigation'
+import {trackScanoraLead} from '../../lib/scanoraLeads'
 
 const BENEFITS = [
     {icon: Check, text: '1 audit per month - full & free'},
@@ -55,6 +56,7 @@ export default function RegisterPageEn() {
             if (typeof window.gtag === 'function' && localStorage.getItem('cookie_consent') === 'granted') {
                 window.gtag('event', 'conversion', {send_to: 'AW-691789119/o2S4CPr_1bUcEL-678kC'})
             }
+            trackScanoraLead(formData.email)
             setTimeout(() => router.push(geoCheckContext ? '/en/geo/pricing' : '/dashboard'), 1000)
         } catch (err) {
             toast.error(err.message)
