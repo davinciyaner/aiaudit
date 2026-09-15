@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { initScanoraLeads } from '../lib/scanoraLeads'
 
 function loadClarity() {
     if (typeof window === 'undefined' || window.clarity) return
@@ -41,6 +42,7 @@ export default function CookieBanner() {
             } else if (consent === 'granted') {
                 updateConsent(true)
                 loadClarity()
+                initScanoraLeads()
             }
         } catch (e) {}
     }, [])
@@ -49,6 +51,7 @@ export default function CookieBanner() {
         try { localStorage.setItem('cookie_consent', 'granted') } catch (e) {}
         updateConsent(true)
         loadClarity()
+        initScanoraLeads()
         setVisible(false)
     }
 
@@ -75,8 +78,9 @@ export default function CookieBanner() {
                             <>
                                 <p className="text-sm text-[var(--text-body)] leading-relaxed">
                                     We use <strong className="text-[var(--text-body)]">analytics and marketing cookies</strong> from{' '}
-                                    <strong className="text-[var(--text-body)]">Microsoft Clarity</strong> (heatmaps & session recordings) and{' '}
-                                    <strong className="text-[var(--text-body)]">Google Ads</strong> (conversion tracking). Technically necessary data (login session) is stored regardless of your choice.
+                                    <strong className="text-[var(--text-body)]">Microsoft Clarity</strong> (heatmaps & session recordings),{' '}
+                                    <strong className="text-[var(--text-body)]">Google Ads</strong> (conversion tracking), and our own{' '}
+                                    <strong className="text-[var(--text-body)]">AI-referral lead tracking</strong> (recognizing visits from ChatGPT, Claude, Perplexity, or Gemini). Technically necessary data (login session) is stored regardless of your choice.
                                 </p>
                                 <p className="text-xs text-[var(--text-faint)] mt-2">
                                     You can decline — the website works fully without these cookies.{' '}
@@ -89,8 +93,9 @@ export default function CookieBanner() {
                             <>
                                 <p className="text-sm text-[var(--text-body)] leading-relaxed">
                                     Wir verwenden <strong className="text-[var(--text-body)]">Analyse- und Marketing-Cookies</strong> von{' '}
-                                    <strong className="text-[var(--text-body)]">Microsoft Clarity</strong> (Heatmaps & Sitzungsaufzeichnungen) und{' '}
-                                    <strong className="text-[var(--text-body)]">Google Ads</strong> (Conversion-Tracking). Technisch notwendige Daten (Login-Session) werden unabhängig von deiner Wahl gespeichert.
+                                    <strong className="text-[var(--text-body)]">Microsoft Clarity</strong> (Heatmaps & Sitzungsaufzeichnungen),{' '}
+                                    <strong className="text-[var(--text-body)]">Google Ads</strong> (Conversion-Tracking) sowie unser eigenes{' '}
+                                    <strong className="text-[var(--text-body)]">KI-Referral-Lead-Tracking</strong> (Erkennung von Besuchen über ChatGPT, Claude, Perplexity oder Gemini). Technisch notwendige Daten (Login-Session) werden unabhängig von deiner Wahl gespeichert.
                                 </p>
                                 <p className="text-xs text-[var(--text-faint)] mt-2">
                                     Du kannst ablehnen — die Website funktioniert vollständig ohne diese Cookies.{' '}

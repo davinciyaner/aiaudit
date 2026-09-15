@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import SupportModal from './SupportModal'
+import ContactModal from './ContactModal'
 import { t } from '../../lib/i18n/dictionaries'
 
 const COLUMNS_DE = [
@@ -103,6 +104,7 @@ const COLUMNS_EN = [
 export default function Footer({ locale = 'de' }) {
     const COLUMNS = locale === 'en' ? COLUMNS_EN : COLUMNS_DE
     const [supportOpen, setSupportOpen] = useState(false)
+    const [contactOpen, setContactOpen] = useState(false)
 
     return (
         <>
@@ -155,17 +157,26 @@ export default function Footer({ locale = 'de' }) {
                     {/* Bottom: Divider + Copyright + Support */}
                     <div className="mt-12 pt-6 border-t border-[var(--border-subtle)] flex flex-col sm:flex-row items-center justify-between gap-3">
                         <p className="text-xs text-[var(--text-faint)]">{t(locale, 'footer.copyright')}</p>
-                        <button
-                            onClick={() => setSupportOpen(true)}
-                            className="text-xs text-[var(--text-muted)] hover:text-[var(--text-body)] transition-colors py-2 -my-2"
-                        >
-                            {t(locale, 'footer.support')}
-                        </button>
+                        <div className="flex items-center gap-4">
+                            <button
+                                onClick={() => setContactOpen(true)}
+                                className="text-xs text-[var(--text-muted)] hover:text-[var(--text-body)] transition-colors py-2 -my-2"
+                            >
+                                {t(locale, 'footer.contact')}
+                            </button>
+                            <button
+                                onClick={() => setSupportOpen(true)}
+                                className="text-xs text-[var(--text-muted)] hover:text-[var(--text-body)] transition-colors py-2 -my-2"
+                            >
+                                {t(locale, 'footer.support')}
+                            </button>
+                        </div>
                     </div>
                 </div>
             </footer>
 
             <SupportModal open={supportOpen} onClose={() => setSupportOpen(false)} locale={locale} />
+            <ContactModal open={contactOpen} onClose={() => setContactOpen(false)} locale={locale} />
         </>
     )
 }

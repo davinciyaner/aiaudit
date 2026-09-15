@@ -22,6 +22,7 @@ export const dictionaries = {
             legal: 'Rechtliches',
             copyright: '© 2026 Scanora. Alle Rechte vorbehalten.',
             support: 'Support kontaktieren',
+            contact: 'Kontakt aufnehmen',
         },
         common: {
             loading: 'Lädt...',
@@ -51,6 +52,7 @@ export const dictionaries = {
             legal: 'Legal',
             copyright: '© 2026 Scanora. All rights reserved.',
             support: 'Contact support',
+            contact: 'Get in touch',
         },
         common: {
             loading: 'Loading...',
