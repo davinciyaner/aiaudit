@@ -3,8 +3,8 @@ import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
 
 export const metadata = {
-    title: 'Günstiges KI-Sichtbarkeit-Tool & AI-Sichtbarkeit-Tool ab 4,99 € | Scanora',
-    description: 'Günstiges KI-Sichtbarkeit-Tool gesucht? Scanora kombiniert GEO-Tracking (ChatGPT, Claude, Perplexity) und SEO-Rankings ab 4,99 €/Monat.',
+    title: 'Günstiges KI-Sichtbarkeit-Tool ab 4,99 €/Monat',
+    description: 'Günstiges KI-Sichtbarkeit-Tool gesucht? Scanora trackt ChatGPT, Claude, Perplexity & Google AI Overview plus SEO ab 4,99 €/Monat. Jetzt kostenlos testen.',
     keywords: 'günstiges ki sichtbarkeit tool, ki sichtbarkeit tool günstig, ki sichtbarkeit tracker, ai sichtbarkeit tool, ai visibility und seo in einem tool, seo und ki sichtbarkeit kombiniert, günstiges geo tool, ai visibility tool preisvergleich',
     alternates: {
         canonical: 'https://www.scanora.ai/loesungen/guenstiges-ki-sichtbarkeit-tool',
@@ -54,6 +54,25 @@ const breadcrumbLd = {
         { '@type': 'ListItem', position: 1, name: 'Scanora', item: 'https://www.scanora.ai' },
         { '@type': 'ListItem', position: 2, name: 'Lösungen', item: 'https://www.scanora.ai/loesungen' },
         { '@type': 'ListItem', position: 3, name: 'Günstiges KI-Sichtbarkeit-Tool', item: 'https://www.scanora.ai/loesungen/guenstiges-ki-sichtbarkeit-tool' },
+    ],
+}
+
+// Seitenspezifisches SoftwareApplication-Schema mit den echten Preisen dieser Seite
+// (Free Audit / GEO Einsteiger 4,99 € / GEO Pro 29,99 € / SEO Einsteiger 19 €). Das sitewide
+// SoftwareApplication-Schema aus dem Root-Layout (Free 0 € / Pro 29 € / Agency 99 €) beschreibt
+// das generische Audit-Produkt und weicht von der Preistabelle auf dieser Seite ab.
+const softwareLd = {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: 'Scanora',
+    url: 'https://www.scanora.ai/loesungen/guenstiges-ki-sichtbarkeit-tool',
+    applicationCategory: 'BusinessApplication',
+    operatingSystem: 'Web',
+    offers: [
+        { '@type': 'Offer', name: 'Free Audit', price: '0', priceCurrency: 'EUR', description: '1 Audit pro Monat' },
+        { '@type': 'Offer', name: 'GEO Einsteiger', price: '4.99', priceCurrency: 'EUR', description: 'Claude-Tracking, 1 Website, 10 Keywords' },
+        { '@type': 'Offer', name: 'GEO Pro', price: '29.99', priceCurrency: 'EUR', description: 'ChatGPT, Claude, Gemini, Perplexity, Google AI Overview' },
+        { '@type': 'Offer', name: 'SEO Einsteiger', price: '19', priceCurrency: 'EUR', description: '3 Websites, 50 Keywords' },
     ],
 }
 
@@ -144,6 +163,7 @@ export default function GuenstigesGeoToolPage() {
     return (
         <main className="bg-[var(--bg-base)] min-h-screen">
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
             <Navbar />

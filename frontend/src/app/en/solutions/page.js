@@ -3,7 +3,7 @@ import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
 
 export const metadata = {
-    title: 'Solutions | Scanora',
+    title: 'Solutions',
     description: 'Scanora solutions for specific use cases: affordable AI visibility tool, combined SEO and AI visibility tracking, and more.',
     alternates: {
         canonical: 'https://www.scanora.ai/en/solutions',

@@ -3,8 +3,8 @@ import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
 
 export const metadata = {
-    title: 'SEO-GEO-Tool: Google-Rankings & KI-Sichtbarkeit | Scanora',
-    description: 'Scanora ist ein SEO-GEO-Tool: KI-Sichtbarkeit bei ChatGPT, Claude, Gemini & Perplexity plus SEO-Rankings in einem Dashboard.',
+    title: 'SEO GEO Tool: Google-Rankings & KI-Sichtbarkeit',
+    description: 'Scanora ist dein SEO GEO Tool: Google-Rankings und KI-Sichtbarkeit bei ChatGPT, Claude, Gemini & Perplexity in einem Dashboard. Jetzt kostenlos testen →',
     keywords: 'seo geo tool, seo-geo-tool, geo tool, geo-tool, seo geo, geoseo, seo und geo, geo audit, generative engine optimization, generative optimization engine, ki sichtbarkeit, ai visibility, geo automatisierung, seo automatisierung',
     alternates: {
         canonical: 'https://www.scanora.ai/loesungen/seo-geo-tool',
@@ -46,6 +46,36 @@ const breadcrumbLd = {
         { '@type': 'ListItem', position: 2, name: 'Lösungen', item: 'https://www.scanora.ai/loesungen' },
         { '@type': 'ListItem', position: 3, name: 'SEO-GEO-Tool', item: 'https://www.scanora.ai/loesungen/seo-geo-tool' },
     ],
+}
+
+// Seitenspezifisches WebPage/Service-Schema: Das sitewide Article-Schema aus dem Root-Layout
+// (frontend/src/lib/i18n/rootJsonLd.js) referenziert per mainEntityOfPage fälschlich die
+// Startseite (https://www.scanora.ai/#webpage) auf jeder Unterseite. Dieses lokale WebPage-Schema
+// gibt dieser Seite ihre eigene, korrekte @id/mainEntity statt der Startseiten-Entität.
+const webPageLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    '@id': 'https://www.scanora.ai/loesungen/seo-geo-tool#webpage',
+    url: 'https://www.scanora.ai/loesungen/seo-geo-tool',
+    name: 'SEO GEO Tool: Google-Rankings & KI-Sichtbarkeit | Scanora',
+    description: 'Scanora ist ein SEO GEO Tool: KI-Sichtbarkeit bei ChatGPT, Claude, Gemini & Perplexity plus SEO-Rankings in einem Dashboard.',
+    isPartOf: { '@id': 'https://www.scanora.ai/#website' },
+    about: { '@type': 'Thing', name: 'SEO GEO Tool' },
+    mainEntity: {
+        '@type': 'SoftwareApplication',
+        '@id': 'https://www.scanora.ai/loesungen/seo-geo-tool#product',
+        name: 'Scanora SEO GEO Tool',
+        applicationCategory: 'BusinessApplication',
+        operatingSystem: 'Web',
+        url: 'https://www.scanora.ai/loesungen/seo-geo-tool',
+        description: 'SEO-GEO-Tool: trackt Google-Rankings und KI-Sichtbarkeit bei ChatGPT, Claude, Gemini, Perplexity und Google AI Overview in einem Dashboard.',
+        offers: [
+            { '@type': 'Offer', name: 'Free', price: '0', priceCurrency: 'EUR' },
+            { '@type': 'Offer', name: 'Pro', price: '29', priceCurrency: 'EUR' },
+            { '@type': 'Offer', name: 'Agency', price: '99', priceCurrency: 'EUR' },
+        ],
+        publisher: { '@id': 'https://www.scanora.ai/#organization' },
+    },
 }
 
 const faqLd = {
@@ -151,6 +181,7 @@ export default function SeoGeoToolPage() {
     return (
         <main className="bg-[var(--bg-base)] min-h-screen">
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareLd) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
             <Navbar />

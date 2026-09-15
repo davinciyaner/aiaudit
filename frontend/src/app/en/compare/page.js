@@ -3,7 +3,7 @@ import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
 
 export const metadata = {
-    title: 'Alternatives | Scanora',
+    title: 'Alternatives',
     description: 'Scanora compared honestly to well-known AI visibility and SEO tools: pricing, features, and who each tool is really for.',
     alternates: {
         canonical: 'https://www.scanora.ai/en/compare',

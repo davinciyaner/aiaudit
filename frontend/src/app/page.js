@@ -50,9 +50,53 @@ const faqLd = {
     })),
 }
 
+// WebPage + Article für die Startseite selbst. Vorher lag dieser Block global in
+// rootJsonLd.js und wurde von JEDER Unterseite der Domain identisch ausgeliefert, wodurch
+// z.B. /vergleich/otterly-alternative strukturiert behauptete, mainEntityOfPage der Startseite
+// zu sein — ein Widerspruch zum seitenspezifischen Canonical-Tag. Jetzt erscheint dieser Block
+// nur noch hier, wo mainEntityOfPage korrekt auf die eigene URL zeigt.
+const webPageLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    '@id': 'https://www.scanora.ai/#webpage',
+    url: 'https://www.scanora.ai',
+    name: 'AI Visibility & SEO prüfen: Wirst du von ChatGPT, Perplexity und Google zitiert?',
+    isPartOf: { '@id': 'https://www.scanora.ai/#website' },
+    inLanguage: 'de-DE',
+    primaryImageOfPage: { '@id': 'https://www.scanora.ai/logo' },
+    datePublished: '2026-01-15',
+    dateModified: '2026-09-12',
+    about: [
+        { '@type': 'Thing', name: 'Generative Engine Optimization' },
+        { '@type': 'Thing', name: 'AI Visibility' },
+        { '@type': 'Thing', name: 'SEO-Audit' },
+    ],
+}
+
+const articleLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    '@id': 'https://www.scanora.ai/#article',
+    headline: 'AI Visibility & SEO prüfen: Wirst du von ChatGPT, Perplexity und Google zitiert?',
+    description: 'Scanora prüft in unter 60 Sekunden kostenlos, ob eine Website bei ChatGPT, Claude, Perplexity und Google AI Overview zitiert wird, plus klassische SEO-Rankings.',
+    author: { '@id': 'https://www.scanora.ai/#founder' },
+    publisher: { '@id': 'https://www.scanora.ai/#organization' },
+    datePublished: '2026-01-15',
+    dateModified: '2026-09-12',
+    mainEntityOfPage: { '@id': 'https://www.scanora.ai/#webpage' },
+    about: [
+        { '@type': 'Thing', name: 'Generative Engine Optimization' },
+        { '@type': 'Thing', name: 'AI Visibility' },
+        { '@type': 'Thing', name: 'SEO-Audit' },
+    ],
+    isPartOf: { '@id': 'https://www.scanora.ai/#website' },
+}
+
 export default function LandingPage() {
     return (
         <main className="bg-[var(--bg-base)] min-h-screen pb-20 sm:pb-0">
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageLd) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
             <Navbar />
             <Hero />

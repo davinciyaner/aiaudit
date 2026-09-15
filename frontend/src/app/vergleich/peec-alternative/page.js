@@ -3,8 +3,8 @@ import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
 
 export const metadata = {
-    title: 'Peec.ai Alternative & Alternativen 2026: Scanora im Vergleich',
-    description: 'Peec.ai Alternative gesucht? Scanora trackt KI-Sichtbarkeit bei ChatGPT, Claude, Gemini & Perplexity ab 29,99 €/Monat – Claude schon im Einstiegstarif.',
+    title: 'Peec.ai Alternative 2026: Scanora im ehrlichen Vergleich',
+    description: 'Peec.ai Alternative gesucht? Scanora trackt ChatGPT, Claude, Gemini & Perplexity ab 29,99€/Monat inkl. SEO-Audit. Jetzt Preise & Features vergleichen.',
     keywords: 'peec alternative, peec.ai alternative, peec ai alternativen, peec ai competitors, peec ai vergleich, günstige ai visibility tool, geo tracking tool, ki sichtbarkeit tool',
     alternates: {
         canonical: 'https://www.scanora.ai/vergleich/peec-alternative',
@@ -155,13 +155,13 @@ export default function PeecAlternativePage() {
             <article className="max-w-3xl mx-auto px-5 sm:px-8 pt-32 pb-24">
 
                 {/* Breadcrumb */}
-                <div className="flex items-center gap-2 text-xs text-[var(--text-faint)] mb-8">
+                <nav aria-label="breadcrumb" className="flex items-center gap-2 text-xs text-[var(--text-faint)] mb-8">
                     <Link href="/" className="hover:text-[var(--text-muted)] transition-colors">Scanora</Link>
                     <span>/</span>
                     <Link href="/vergleich" className="hover:text-[var(--text-muted)] transition-colors">Vergleich</Link>
                     <span>/</span>
-                    <span className="text-[var(--text-faint)]">Peec.ai Alternative</span>
-                </div>
+                    <span className="text-[var(--text-faint)]" aria-current="page">Peec.ai Alternative</span>
+                </nav>
 
                 {/* Header */}
                 <div className="mb-10">
