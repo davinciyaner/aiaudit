@@ -206,10 +206,10 @@ export default function DatenschutzPage() {
                                 Anders als in Abschnitt 2.5 beschrieben (Leads-Tracking als Auftragsverarbeitung für unsere Nutzer auf deren eigenen Websites) setzen wir dieselbe Technik auch auf unserer eigenen Website <strong className="text-[var(--text-body)]">scanora.ai</strong> ein. Hier sind wir selbst datenschutzrechtlich Verantwortlicher (Art. 4 Nr. 7 DSGVO), nicht Auftragsverarbeiter.
                             </p>
                             <p>
-                                Nur nach deiner Einwilligung über das Cookie-Banner erkennen wir, ob du über ChatGPT, Claude, Perplexity oder Gemini auf unsere Seite gelangt bist (anhand des Referrer-Headers, gespeichert im LocalStorage). Sendest du danach eine Nachricht über unser Kontaktformular ab, ordnen wir deine E-Mail-Adresse dieser erkannten Quelle zu.
+                                Nur nach deiner Einwilligung über das Cookie-Banner erkennen wir, ob du über ChatGPT, Claude, Perplexity oder Gemini auf unsere Seite gelangt bist (anhand des Referrer-Headers, gespeichert im LocalStorage). Registrierst du dich danach für einen Scanora-Account, ordnen wir deine E-Mail-Adresse dieser erkannten Quelle zu.
                             </p>
                             <ul className="list-disc list-inside space-y-1 ml-2">
-                                <li>E-Mail-Adresse (nur bei Absenden des Kontaktformulars)</li>
+                                <li>E-Mail-Adresse (nur bei erfolgreicher Registrierung)</li>
                                 <li>Automatisiert erkannte KI-Quelle, Referrer-URL und aufgerufene Zielseite</li>
                                 <li>Zeitstempel der Erfassung</li>
                             </ul>
