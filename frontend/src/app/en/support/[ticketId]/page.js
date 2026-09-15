@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'next/navigation'
 import { motion } from 'framer-motion'
-import { Clock, Wrench, CheckCircle, XCircle } from 'lucide-react'
+import { Clock, Wrench, CheckCircle, XCircle, Send } from 'lucide-react'
 import Link from 'next/link'
 
 const STATUSES = [
@@ -47,6 +47,8 @@ export default function TicketStatusPageEn() {
     const [ticket, setTicket] = useState(null)
     const [loading, setLoading] = useState(true)
     const [notFound, setNotFound] = useState(false)
+    const [replyText, setReplyText] = useState('')
+    const [sending, setSending] = useState(false)
 
     useEffect(() => {
         if (!ticketId) return
@@ -58,6 +60,26 @@ export default function TicketStatusPageEn() {
             .then(data => { if (data) setTicket(data) })
             .finally(() => setLoading(false))
     }, [ticketId])
+
+    async function sendReply() {
+        const text = replyText.trim()
+        if (!text || sending) return
+        setSending(true)
+        try {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/support/${ticketId}/messages`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ body: text }),
+            })
+            if (res.ok) {
+                const data = await res.json()
+                setTicket(t => ({ ...t, status: data.status, messages: data.messages }))
+                setReplyText('')
+            }
+        } finally {
+            setSending(false)
+        }
+    }
 
     const currentStatus = ticket ? STATUSES.find(s => s.key === ticket.status) : null
     const currentIndex = ticket ? getStatusIndex(ticket.status) : 0
@@ -164,6 +186,54 @@ export default function TicketStatusPageEn() {
                                 <p className="text-sm text-[var(--text-body)]">
                                     {new Date(ticket.updatedAt).toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric' })}
                                 </p>
+                            </div>
+                        </div>
+
+                        {/* History & replies */}
+                        <div className="bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-2xl p-6 space-y-3">
+                            <p className="text-xs text-[var(--text-faint)] uppercase tracking-wider font-semibold mb-2">Conversation</p>
+
+                            <div className="bg-[var(--text-white)]/[0.03] rounded-xl p-4">
+                                <p className="text-xs text-[var(--text-faint)] mb-1">Your message</p>
+                                <p className="text-sm text-[var(--text-body)] whitespace-pre-wrap">{ticket.message}</p>
+                            </div>
+
+                            {(ticket.messages || []).map((m, i) => (
+                                <div
+                                    key={i}
+                                    className={`rounded-xl p-4 ${
+                                        m.author === 'admin'
+                                            ? 'bg-violet-500/10 border border-violet-500/20'
+                                            : 'bg-[var(--text-white)]/[0.03] ml-auto'
+                                    }`}
+                                >
+                                    <p className="text-xs text-[var(--text-faint)] mb-1">
+                                        {m.author === 'admin' ? 'Scanora Support' : 'You'} ·{' '}
+                                        {new Date(m.createdAt).toLocaleString('en-US', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' })}
+                                    </p>
+                                    <p className="text-sm text-[var(--text-body)] whitespace-pre-wrap">{m.body}</p>
+                                </div>
+                            ))}
+
+                            {ticket.status === 'closed' && (
+                                <p className="text-xs text-amber-400/80">This ticket is closed — replying will reopen it.</p>
+                            )}
+
+                            <div className="flex gap-2 pt-1">
+                                <textarea
+                                    value={replyText}
+                                    onChange={e => setReplyText(e.target.value)}
+                                    placeholder="Write a reply..."
+                                    rows={2}
+                                    className="flex-1 bg-[var(--text-white)]/[0.03] border border-[var(--text-white)]/10 rounded-xl px-3 py-2 text-sm text-[var(--text-white)] placeholder:text-[var(--text-faint)] resize-none focus:outline-none focus:border-violet-500/40"
+                                />
+                                <button
+                                    onClick={sendReply}
+                                    disabled={sending || !replyText.trim()}
+                                    className="flex items-center gap-1.5 px-4 rounded-xl bg-violet-500/15 border border-violet-500/30 text-violet-300 text-sm font-medium hover:bg-violet-500/25 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                                >
+                                    <Send className="w-3.5 h-3.5" /> Send
+                                </button>
                             </div>
                         </div>
 

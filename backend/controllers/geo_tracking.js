@@ -762,11 +762,22 @@ export async function diagnoseCitability(req, res) {
         const site = await GeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId }).lean()
         if (!site) return res.status(404).json({ error: t('SITE_NOT_FOUND', req.language) })
 
-        const { keyword, platform, promptIntent } = req.body
+        // Coerce to strings before they ever reach a Mongo query — req.body values are
+        // otherwise user-controlled and an object here (e.g. { "$ne": null }) would inject
+        // a query operator instead of matching a literal value.
+        const keyword = String(req.body?.keyword || '').trim()
+        const platform = String(req.body?.platform || '').trim()
+        const promptIntent = String(req.body?.promptIntent || '').trim()
         if (!keyword || !platform || !promptIntent) {
             return res.status(400).json({ error: req.language === 'en'
                 ? 'keyword, platform and promptIntent are required'
                 : 'keyword, platform und promptIntent sind erforderlich' })
+        }
+        const trackedQueries = [...site.keywords, ...(site.customPrompts || []).map(cp => cp.prompt)]
+        if (!trackedQueries.includes(keyword) || !VALID_PLATFORMS.includes(platform) || !PROMPT_INTENTS.includes(promptIntent)) {
+            return res.status(400).json({ error: req.language === 'en'
+                ? 'Unknown keyword, platform, or promptIntent for this site'
+                : 'Unbekanntes Keyword, Plattform oder promptIntent fuer diese Seite' })
         }
 
         const check = await GeoMentionCheck.findOne({

@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer';
 
-const APP_URL = process.env.APP_URL || process.env.ALLOWED_ORIGIN || 'https://www.scanora.ai';
+const APP_URL = (process.env.APP_URL || process.env.ALLOWED_ORIGIN || 'https://www.scanora.ai').replace(/\/+$/, '');
 
 const transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST,
@@ -74,8 +74,8 @@ function ticketStatusChangedHtml(ticket, cfg, statusUrl, language = 'de') {
       <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
         <tr><td align="center" style="padding-bottom:32px;">
           <table cellpadding="0" cellspacing="0"><tr>
-            <td style="background:linear-gradient(135deg,#7c3aed,#06b6d4);border-radius:12px;width:40px;height:40px;text-align:center;vertical-align:middle;">
-              <span style="color:#fff;font-size:18px;font-weight:bold;">&#x26A1;</span>
+            <td style="width:40px;height:40px;">
+              <img src="${APP_URL}/icon.png" width="40" height="40" alt="Scanora" style="display:block;width:40px;height:40px;border-radius:12px;" />
             </td>
             <td style="padding-left:10px;vertical-align:middle;">
               <span style="color:#ffffff;font-size:20px;font-weight:700;">Scanora</span>
@@ -124,8 +124,8 @@ function ticketStatusChangedHtml(ticket, cfg, statusUrl, language = 'de') {
       <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
         <tr><td align="center" style="padding-bottom:32px;">
           <table cellpadding="0" cellspacing="0"><tr>
-            <td style="background:linear-gradient(135deg,#7c3aed,#06b6d4);border-radius:12px;width:40px;height:40px;text-align:center;vertical-align:middle;">
-              <span style="color:#fff;font-size:18px;font-weight:bold;">&#x26A1;</span>
+            <td style="width:40px;height:40px;">
+              <img src="${APP_URL}/icon.png" width="40" height="40" alt="Scanora" style="display:block;width:40px;height:40px;border-radius:12px;" />
             </td>
             <td style="padding-left:10px;vertical-align:middle;">
               <span style="color:#ffffff;font-size:20px;font-weight:700;">Scanora</span>
@@ -204,8 +204,8 @@ function ticketUserHtml(ticket, statusUrl, language = 'de') {
       <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
         <tr><td align="center" style="padding-bottom:32px;">
           <table cellpadding="0" cellspacing="0"><tr>
-            <td style="background:linear-gradient(135deg,#7c3aed,#06b6d4);border-radius:12px;width:40px;height:40px;text-align:center;vertical-align:middle;">
-              <span style="color:#fff;font-size:18px;font-weight:bold;">&#x26A1;</span>
+            <td style="width:40px;height:40px;">
+              <img src="${APP_URL}/icon.png" width="40" height="40" alt="Scanora" style="display:block;width:40px;height:40px;border-radius:12px;" />
             </td>
             <td style="padding-left:10px;vertical-align:middle;">
               <span style="color:#ffffff;font-size:20px;font-weight:700;">Scanora</span>
@@ -254,8 +254,8 @@ function ticketUserHtml(ticket, statusUrl, language = 'de') {
       <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
         <tr><td align="center" style="padding-bottom:32px;">
           <table cellpadding="0" cellspacing="0"><tr>
-            <td style="background:linear-gradient(135deg,#7c3aed,#06b6d4);border-radius:12px;width:40px;height:40px;text-align:center;vertical-align:middle;">
-              <span style="color:#fff;font-size:18px;font-weight:bold;">&#x26A1;</span>
+            <td style="width:40px;height:40px;">
+              <img src="${APP_URL}/icon.png" width="40" height="40" alt="Scanora" style="display:block;width:40px;height:40px;border-radius:12px;" />
             </td>
             <td style="padding-left:10px;vertical-align:middle;">
               <span style="color:#ffffff;font-size:20px;font-weight:700;">Scanora</span>
@@ -369,8 +369,8 @@ function welcomeHtml(name, language = 'de') {
       <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
         <tr><td align="center" style="padding-bottom:32px;">
           <table cellpadding="0" cellspacing="0"><tr>
-            <td style="background:linear-gradient(135deg,#7c3aed,#06b6d4);border-radius:12px;width:40px;height:40px;text-align:center;vertical-align:middle;">
-              <span style="color:#fff;font-size:18px;font-weight:bold;">&#x26A1;</span>
+            <td style="width:40px;height:40px;">
+              <img src="${APP_URL}/icon.png" width="40" height="40" alt="Scanora" style="display:block;width:40px;height:40px;border-radius:12px;" />
             </td>
             <td style="padding-left:10px;vertical-align:middle;">
               <span style="color:#ffffff;font-size:20px;font-weight:700;">Scanora</span>
@@ -420,8 +420,8 @@ function welcomeHtml(name, language = 'de') {
       <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
         <tr><td align="center" style="padding-bottom:32px;">
           <table cellpadding="0" cellspacing="0"><tr>
-            <td style="background:linear-gradient(135deg,#7c3aed,#06b6d4);border-radius:12px;width:40px;height:40px;text-align:center;vertical-align:middle;">
-              <span style="color:#fff;font-size:18px;font-weight:bold;">&#x26A1;</span>
+            <td style="width:40px;height:40px;">
+              <img src="${APP_URL}/icon.png" width="40" height="40" alt="Scanora" style="display:block;width:40px;height:40px;border-radius:12px;" />
             </td>
             <td style="padding-left:10px;vertical-align:middle;">
               <span style="color:#ffffff;font-size:20px;font-weight:700;">Scanora</span>
@@ -473,8 +473,8 @@ function subscriptionConfirmHtml(name, planLabel, planPrice, auditLimit, languag
       <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
         <tr><td align="center" style="padding-bottom:32px;">
           <table cellpadding="0" cellspacing="0"><tr>
-            <td style="background:linear-gradient(135deg,#7c3aed,#06b6d4);border-radius:12px;width:40px;height:40px;text-align:center;vertical-align:middle;">
-              <span style="color:#fff;font-size:18px;font-weight:bold;">&#x26A1;</span>
+            <td style="width:40px;height:40px;">
+              <img src="${APP_URL}/icon.png" width="40" height="40" alt="Scanora" style="display:block;width:40px;height:40px;border-radius:12px;" />
             </td>
             <td style="padding-left:10px;vertical-align:middle;">
               <span style="color:#ffffff;font-size:20px;font-weight:700;">Scanora</span>
@@ -525,8 +525,8 @@ function subscriptionConfirmHtml(name, planLabel, planPrice, auditLimit, languag
       <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
         <tr><td align="center" style="padding-bottom:32px;">
           <table cellpadding="0" cellspacing="0"><tr>
-            <td style="background:linear-gradient(135deg,#7c3aed,#06b6d4);border-radius:12px;width:40px;height:40px;text-align:center;vertical-align:middle;">
-              <span style="color:#fff;font-size:18px;font-weight:bold;">&#x26A1;</span>
+            <td style="width:40px;height:40px;">
+              <img src="${APP_URL}/icon.png" width="40" height="40" alt="Scanora" style="display:block;width:40px;height:40px;border-radius:12px;" />
             </td>
             <td style="padding-left:10px;vertical-align:middle;">
               <span style="color:#ffffff;font-size:20px;font-weight:700;">Scanora</span>
@@ -668,8 +668,8 @@ function passwordResetHtml(name, resetUrl, language = 'de') {
       <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
         <tr><td align="center" style="padding-bottom:32px;">
           <table cellpadding="0" cellspacing="0"><tr>
-            <td style="background:linear-gradient(135deg,#7c3aed,#06b6d4);border-radius:12px;width:40px;height:40px;text-align:center;vertical-align:middle;">
-              <span style="color:#fff;font-size:18px;font-weight:bold;">&#x26A1;</span>
+            <td style="width:40px;height:40px;">
+              <img src="${APP_URL}/icon.png" width="40" height="40" alt="Scanora" style="display:block;width:40px;height:40px;border-radius:12px;" />
             </td>
             <td style="padding-left:10px;vertical-align:middle;">
               <span style="color:#ffffff;font-size:20px;font-weight:700;">Scanora</span>
@@ -718,8 +718,8 @@ function passwordResetHtml(name, resetUrl, language = 'de') {
       <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
         <tr><td align="center" style="padding-bottom:32px;">
           <table cellpadding="0" cellspacing="0"><tr>
-            <td style="background:linear-gradient(135deg,#7c3aed,#06b6d4);border-radius:12px;width:40px;height:40px;text-align:center;vertical-align:middle;">
-              <span style="color:#fff;font-size:18px;font-weight:bold;">&#x26A1;</span>
+            <td style="width:40px;height:40px;">
+              <img src="${APP_URL}/icon.png" width="40" height="40" alt="Scanora" style="display:block;width:40px;height:40px;border-radius:12px;" />
             </td>
             <td style="padding-left:10px;vertical-align:middle;">
               <span style="color:#ffffff;font-size:20px;font-weight:700;">Scanora</span>
@@ -849,8 +849,8 @@ export async function sendSeoRankingAlert({ email, domain, gains, losses, conten
       <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
         <tr><td align="center" style="padding-bottom:32px;">
           <table cellpadding="0" cellspacing="0"><tr>
-            <td style="background:linear-gradient(135deg,#059669,#0d9488);border-radius:12px;width:40px;height:40px;text-align:center;vertical-align:middle;">
-              <span style="color:#fff;font-size:18px;font-weight:bold;">&#x26A1;</span>
+            <td style="width:40px;height:40px;">
+              <img src="${APP_URL}/icon.png" width="40" height="40" alt="Scanora" style="display:block;width:40px;height:40px;border-radius:12px;" />
             </td>
             <td style="padding-left:10px;vertical-align:middle;">
               <span style="color:#ffffff;font-size:20px;font-weight:700;">Scanora</span>
@@ -985,8 +985,8 @@ export async function sendGeoRankingAlert({ email, domain, gains, losses, possib
       <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
         <tr><td align="center" style="padding-bottom:32px;">
           <table cellpadding="0" cellspacing="0"><tr>
-            <td style="background:linear-gradient(135deg,#7c3aed,#9333ea);border-radius:12px;width:40px;height:40px;text-align:center;vertical-align:middle;">
-              <span style="color:#fff;font-size:18px;font-weight:bold;">&#x2728;</span>
+            <td style="width:40px;height:40px;">
+              <img src="${APP_URL}/icon.png" width="40" height="40" alt="Scanora" style="display:block;width:40px;height:40px;border-radius:12px;" />
             </td>
             <td style="padding-left:10px;vertical-align:middle;">
               <span style="color:#ffffff;font-size:20px;font-weight:700;">Scanora</span>
@@ -1072,8 +1072,8 @@ function newKeywordsAlertHtml(domain, keywords, dashboardUrl, language = 'de') {
       <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
         <tr><td align="center" style="padding-bottom:32px;">
           <table cellpadding="0" cellspacing="0"><tr>
-            <td style="background:linear-gradient(135deg,#059669,#0d9488);border-radius:12px;width:40px;height:40px;text-align:center;vertical-align:middle;">
-              <span style="color:#fff;font-size:18px;font-weight:bold;">&#x26A1;</span>
+            <td style="width:40px;height:40px;">
+              <img src="${APP_URL}/icon.png" width="40" height="40" alt="Scanora" style="display:block;width:40px;height:40px;border-radius:12px;" />
             </td>
             <td style="padding-left:10px;vertical-align:middle;">
               <span style="color:#ffffff;font-size:20px;font-weight:700;">Scanora</span>
@@ -1128,8 +1128,8 @@ function newKeywordsAlertHtml(domain, keywords, dashboardUrl, language = 'de') {
       <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
         <tr><td align="center" style="padding-bottom:32px;">
           <table cellpadding="0" cellspacing="0"><tr>
-            <td style="background:linear-gradient(135deg,#059669,#0d9488);border-radius:12px;width:40px;height:40px;text-align:center;vertical-align:middle;">
-              <span style="color:#fff;font-size:18px;font-weight:bold;">&#x26A1;</span>
+            <td style="width:40px;height:40px;">
+              <img src="${APP_URL}/icon.png" width="40" height="40" alt="Scanora" style="display:block;width:40px;height:40px;border-radius:12px;" />
             </td>
             <td style="padding-left:10px;vertical-align:middle;">
               <span style="color:#ffffff;font-size:20px;font-weight:700;">Scanora</span>
@@ -1167,6 +1167,75 @@ function newKeywordsAlertHtml(domain, keywords, dashboardUrl, language = 'de') {
         </td></tr>
         <tr><td align="center" style="padding-top:24px;">
           <p style="margin:0;font-size:11px;color:#334155;">Diese E-Mail wurde automatisch durch neue Inhalte auf deiner Website ausgel&ouml;st.</p>
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`
+}
+
+export async function sendTicketReplyUser(ticket, body) {
+    const language = ticket.language === 'en' ? 'en' : 'de'
+    const statusUrl = `${APP_URL}/support/${ticket.ticketNumber}`
+    await transporter.sendMail({
+        from: process.env.SMTP_FROM || process.env.SMTP_USER,
+        to: ticket.email,
+        subject: language === 'en'
+            ? `[${ticket.ticketNumber}] New reply to your support ticket`
+            : `[${ticket.ticketNumber}] Neue Antwort auf dein Support-Ticket`,
+        text: language === 'en'
+            ? `Hi ${ticket.name},\n\nour support team replied to your ticket "${ticket.subject}":\n\n${body}\n\nView and reply: ${statusUrl}\n\nYour Scanora Team`
+            : `Hallo ${ticket.name},\n\nunser Support-Team hat auf dein Ticket "${ticket.subject}" geantwortet:\n\n${body}\n\nAnsehen und antworten: ${statusUrl}\n\nDein Scanora Team`,
+        html: ticketReplyHtml({ heading: language === 'en' ? 'Support replied' : 'Support hat geantwortet', body, url: statusUrl, ctaLabel: language === 'en' ? 'View & reply' : 'Ansehen & antworten', language }),
+    })
+}
+
+export async function sendTicketReplyAdmin(ticket, body) {
+    const adminEmail = process.env.ADMIN_EMAIL || process.env.SMTP_USER
+    const adminUrl = `${APP_URL}/support/admin`
+    await transporter.sendMail({
+        from: process.env.SMTP_FROM || process.env.SMTP_USER,
+        to: adminEmail,
+        subject: `[${ticket.ticketNumber}] Neue Antwort von ${ticket.name}`,
+        text: `${ticket.name} (${ticket.email}) hat auf Ticket "${ticket.subject}" geantwortet:\n\n${body}\n\nAdmin-Panel: ${adminUrl}`,
+        html: ticketReplyHtml({ heading: 'Neue Kundenantwort', body, url: adminUrl, ctaLabel: 'Im Admin-Panel ansehen', language: 'de' }),
+    })
+}
+
+function ticketReplyHtml({ heading, body, url, ctaLabel, language }) {
+    const footer = language === 'en' ? 'Your Scanora Team' : 'Dein Scanora Team'
+    return `<!DOCTYPE html>
+<html lang="${language}">
+<head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/></head>
+<body style="margin:0;padding:0;background:#05080f;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#05080f;padding:40px 20px;">
+    <tr><td align="center">
+      <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
+        <tr><td align="center" style="padding-bottom:32px;">
+          <table cellpadding="0" cellspacing="0"><tr>
+            <td style="width:40px;height:40px;">
+              <img src="${APP_URL}/icon.png" width="40" height="40" alt="Scanora" style="display:block;width:40px;height:40px;border-radius:12px;" />
+            </td>
+            <td style="padding-left:10px;vertical-align:middle;">
+              <span style="color:#ffffff;font-size:20px;font-weight:700;">Scanora</span>
+            </td>
+          </tr></table>
+        </td></tr>
+        <tr><td style="background:#0d1117;border:1px solid rgba(255,255,255,0.07);border-radius:20px;padding:36px 40px;">
+          <p style="margin:0 0 20px;font-size:20px;font-weight:700;color:#ffffff;">${heading}</p>
+          <table cellpadding="0" cellspacing="0" width="100%" style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:16px 20px;margin-bottom:28px;">
+            <tr><td style="font-size:14px;color:#cbd5e1;line-height:1.6;white-space:pre-wrap;">${body.replace(/</g, '&lt;')}</td></tr>
+          </table>
+          <table cellpadding="0" cellspacing="0"><tr>
+            <td style="background:linear-gradient(135deg,#7c3aed,#06b6d4);border-radius:12px;padding:1px;">
+              <a href="${url}" style="display:block;background:#0d1117;border-radius:11px;padding:12px 28px;font-size:14px;font-weight:600;color:#ffffff;text-decoration:none;">
+                ${ctaLabel} &rarr;
+              </a>
+            </td>
+          </tr></table>
+          <hr style="border:none;border-top:1px solid rgba(255,255,255,0.06);margin:28px 0;"/>
+          <p style="margin:0;font-size:13px;color:#64748b;">${footer}</p>
         </td></tr>
       </table>
     </td></tr>

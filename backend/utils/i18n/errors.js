@@ -72,6 +72,7 @@ const MESSAGES = {
     EMAIL_MISSING: { de: "E-Mail fehlt.", en: "Email is missing." },
     TICKET_NOT_FOUND: { de: "Ticket nicht gefunden.", en: "Ticket not found." },
     INVALID_STATUS: { de: "Ungültiger Status.", en: "Invalid status." },
+    MESSAGE_MISSING: { de: "Nachricht darf nicht leer sein.", en: "Message must not be empty." },
     RATING_MUST_BE_1_TO_5: { de: "rating muss zwischen 1 und 5 liegen", en: "rating must be between 1 and 5" },
     VOTE_MUST_BE_YES_OR_NO: { de: 'vote muss "yes" oder "no" sein', en: 'vote must be "yes" or "no"' },
 
