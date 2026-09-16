@@ -34,7 +34,7 @@
   --text-white: oklch(97% 0.006 260);
   --text-body: oklch(80% 0.014 259.733);
   --text-muted: oklch(66% 0.02 259.733);
-  --text-faint: oklch(54% 0.02 259.733);
+  --text-faint: oklch(60% 0.02 259.733);
 
   /* Semantic status colors — layered on top of the primitives above so every
      "good/warning/danger" state in the app (rankings, difficulty, spam score)
@@ -88,7 +88,7 @@
   --text-white: oklch(24% 0.025 255);
   --text-body: oklch(35% 0.028 255);
   --text-muted: oklch(48% 0.026 255);
-  --text-faint: oklch(56% 0.02 255);
+  --text-faint: oklch(48% 0.02 255);
 
   --success: oklch(48% 0.13 155);
   --success-soft: oklch(48% 0.13 155 / 10%);

@@ -13,7 +13,7 @@ export function PlatformIcon({ platform, size = 'md', locked = false }) {
     const meta = PLATFORM_META[platform]
     const dims = { sm: 'w-7 h-7 text-[10px]', md: 'w-9 h-9 text-xs', lg: 'w-12 h-12 text-sm' }[size]
     return (
-        <div className={`relative shrink-0 ${dims} rounded-full flex items-center justify-center font-bold text-[var(--text-white)]`}
+        <div className={`relative shrink-0 ${dims} rounded-full flex items-center justify-center font-bold ${locked ? 'text-[var(--text-white)]' : 'text-[#0f1117]'}`}
             style={{ background: locked ? '#334155' : meta.solid }}
         >
             {locked ? <Lock className="w-1/2 h-1/2 opacity-70" /> : meta.mono}
