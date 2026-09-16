@@ -1,7 +1,7 @@
 import Subscription from '../models/subscription.js'
 import User from '../models/auth_model.js'
 import { generateInvoiceHTML, renderToPDF } from '../utils/invoice.js'
-import { sendAdminNewSubscription, sendSubscriptionConfirmation, sendRecurringInvoice } from '../utils/mailer.js'
+import { sendAdminNewSubscription, sendAdminSubscriptionCancelled, sendSubscriptionConfirmation, sendRecurringInvoice, sendPaymentFailedAlert } from '../utils/mailer.js'
 import { parsePaypalSubscriptionId } from '../utils/paypalValidation.js'
 import { verifyPaypalWebhookSignature } from '../utils/paypalWebhook.js'
 
@@ -107,6 +107,10 @@ export async function cancelSubscription(req, res) {
         })
 
         await Subscription.findOneAndUpdate({ userId: req.userId }, { status: 'CANCELLED' })
+
+        const user = await User.findById(req.userId).select('name email').lean()
+        if (user) sendAdminSubscriptionCancelled({ name: user.name, email: user.email, plan: sub.plan, reason: 'User cancelled in dashboard' }).catch(() => {})
+
         res.json({ success: true })
     } catch (err) {
         res.status(500).json({ error: err.message })
@@ -175,35 +179,85 @@ export async function handlePaypalWebhook(req, res) {
         if (!verified) return res.status(400).json({ error: 'Invalid webhook signature' })
 
         const event = req.body
-        if (event.event_type !== 'PAYMENT.SALE.COMPLETED') return res.json({ received: true })
-
         const resource = event.resource || {}
-        const paypalSubscriptionId = resource.billing_agreement_id
-        if (!paypalSubscriptionId) return res.json({ received: true })
 
-        const sub = await Subscription.findOne({ paypalSubscriptionId, status: 'ACTIVE' })
-        if (!sub) return res.json({ received: true })
+        switch (event.event_type) {
+            case 'PAYMENT.SALE.COMPLETED': {
+                const paypalSubscriptionId = resource.billing_agreement_id
+                if (!paypalSubscriptionId) break
 
-        if (sub.lastInvoicedAt && Date.now() - new Date(sub.lastInvoicedAt).getTime() < MIN_INVOICE_INTERVAL_DAYS * 24 * 60 * 60 * 1000) {
-            return res.json({ received: true })
+                const sub = await Subscription.findOne({ paypalSubscriptionId, status: 'ACTIVE' })
+                if (!sub) break
+
+                if (sub.lastInvoicedAt && Date.now() - new Date(sub.lastInvoicedAt).getTime() < MIN_INVOICE_INTERVAL_DAYS * 24 * 60 * 60 * 1000) {
+                    break
+                }
+
+                const user = await User.findById(sub.userId).select('name email language').lean()
+                if (!user) break
+
+                const invoiceTx = {
+                    id: resource.id,
+                    time: resource.create_time || new Date().toISOString(),
+                    amount_with_breakdown: resource.amount ? { gross_amount: { value: resource.amount.total, currency_code: resource.amount.currency } } : undefined,
+                }
+                const html = generateInvoiceHTML(invoiceTx, user, sub.plan, user.language)
+                const pdf = await renderToPDF(html)
+
+                await sendRecurringInvoice({
+                    name: user.name, email: user.email, plan: sub.plan, language: user.language,
+                    invoicePdf: pdf, invoiceFilename: `${user.language === 'en' ? 'invoice' : 'rechnung'}-${resource.id}.pdf`,
+                })
+                await Subscription.findByIdAndUpdate(sub._id, { lastInvoicedAt: new Date() })
+                break
+            }
+
+            case 'PAYMENT.SALE.DENIED': {
+                const paypalSubscriptionId = resource.billing_agreement_id
+                if (!paypalSubscriptionId) break
+
+                const sub = await Subscription.findOne({ paypalSubscriptionId })
+                if (!sub) break
+
+                const user = await User.findById(sub.userId).select('name email language').lean()
+                if (!user) break
+
+                await sendPaymentFailedAlert({ name: user.name, email: user.email, plan: sub.plan, language: user.language }).catch(() => {})
+                break
+            }
+
+            case 'PAYMENT.SALE.PENDING': {
+                console.log('PayPal-Zahlung pending:', resource.billing_agreement_id, resource.id)
+                break
+            }
+
+            case 'BILLING.SUBSCRIPTION.CANCELLED':
+            case 'BILLING.SUBSCRIPTION.SUSPENDED':
+            case 'BILLING.SUBSCRIPTION.RE-ACTIVATED': {
+                // For these, resource.id IS the subscription ID itself (unlike PAYMENT.SALE.*,
+                // where it's the sale/transaction ID and billing_agreement_id holds the subscription).
+                const paypalSubscriptionId = resource.id
+                if (!paypalSubscriptionId) break
+
+                const newStatus = {
+                    'BILLING.SUBSCRIPTION.CANCELLED': 'CANCELLED',
+                    'BILLING.SUBSCRIPTION.SUSPENDED': 'SUSPENDED',
+                    'BILLING.SUBSCRIPTION.RE-ACTIVATED': 'ACTIVE',
+                }[event.event_type]
+                const updatedSub = await Subscription.findOneAndUpdate({ paypalSubscriptionId }, { status: newStatus })
+
+                if (updatedSub && event.event_type === 'BILLING.SUBSCRIPTION.CANCELLED') {
+                    const user = await User.findById(updatedSub.userId).select('name email').lean()
+                    if (user) {
+                        sendAdminSubscriptionCancelled({ name: user.name, email: user.email, plan: updatedSub.plan, reason: 'Von PayPal gemeldet (nicht über Dashboard)' }).catch(() => {})
+                    }
+                }
+                break
+            }
+
+            default:
+                break
         }
-
-        const user = await User.findById(sub.userId).select('name email language').lean()
-        if (!user) return res.json({ received: true })
-
-        const invoiceTx = {
-            id: resource.id,
-            time: resource.create_time || new Date().toISOString(),
-            amount_with_breakdown: resource.amount ? { gross_amount: { value: resource.amount.total, currency_code: resource.amount.currency } } : undefined,
-        }
-        const html = generateInvoiceHTML(invoiceTx, user, sub.plan, user.language)
-        const pdf = await renderToPDF(html)
-
-        await sendRecurringInvoice({
-            name: user.name, email: user.email, plan: sub.plan, language: user.language,
-            invoicePdf: pdf, invoiceFilename: `${user.language === 'en' ? 'invoice' : 'rechnung'}-${resource.id}.pdf`,
-        })
-        await Subscription.findByIdAndUpdate(sub._id, { lastInvoicedAt: new Date() })
 
         res.json({ received: true })
     } catch (err) {
