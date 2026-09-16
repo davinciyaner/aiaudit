@@ -242,7 +242,7 @@ export default function GuenstigesGeoToolPage() {
                             </table>
                         </div>
                         <p className="text-xs text-[var(--text-faint)] mt-3">
-                            Preise Stand August 2026, inkl. MwSt. Alle Automatisierungs-Pläne (SEO + GEO) haben 14 Tage kostenlose Testphase, monatlich kündbar. Details auf den{' '}
+                            Preise Stand August 2026. Alle Automatisierungs-Pläne (SEO + GEO) haben 14 Tage kostenlose Testphase, monatlich kündbar. Details auf den{' '}
                             <Link href="/pricing" className="text-[var(--text-faint)] hover:text-[var(--text-body)] underline underline-offset-2">Preisseiten</Link>.
                         </p>
                     </section>

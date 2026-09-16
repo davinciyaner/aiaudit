@@ -1,16 +1,31 @@
 import { chromium } from 'playwright'
 
+const APP_URL = (process.env.APP_URL || process.env.ALLOWED_ORIGIN || 'https://www.scanora.ai').replace(/\/+$/, '')
 const PLAN_NAMES = { pro: 'Pro Plan', agency: 'Agency Plan' }
 const PLAN_PRICES = { pro: '29,00', agency: '99,00' }
+const PLAN_PRICES_EN = { pro: '29.00', agency: '99.00' }
 
-export function generateInvoiceHTML(transaction, user, plan) {
-    const date = new Date(transaction.time).toLocaleDateString('de-DE', { day: '2-digit', month: 'long', year: 'numeric' })
-    const amount = transaction.amount_with_breakdown?.gross_amount?.value || PLAN_PRICES[plan]
+export function generateInvoiceHTML(transaction, user, plan, language = 'de') {
+    const isEn = language === 'en'
+    const date = new Date(transaction.time).toLocaleDateString(isEn ? 'en-GB' : 'de-DE', { day: '2-digit', month: 'long', year: 'numeric' })
+    const amount = transaction.amount_with_breakdown?.gross_amount?.value || (isEn ? PLAN_PRICES_EN[plan] : PLAN_PRICES[plan])
     const currency = transaction.amount_with_breakdown?.gross_amount?.currency_code || 'EUR'
     const invoiceNr = `INV-${transaction.id.slice(-8).toUpperCase()}`
 
+    const t = isEn ? {
+        invoice: 'Invoice', from: 'From', to: 'To', invoiceDate: 'Invoice Date', invoiceNumber: 'Invoice Number',
+        paymentMethod: 'Payment Method', description: 'Description', period: 'Period', amount: 'Amount',
+        subscription: 'Monthly Subscription', total: 'Total', vatNote: 'No VAT is charged pursuant to § 19 UStG (German small business regulation).',
+        thanks: 'Thank you for trusting Scanora.', paidVia: 'Paid via PayPal · Transaction:', paid: '✓ Paid',
+    } : {
+        invoice: 'Rechnung', from: 'Von', to: 'An', invoiceDate: 'Rechnungsdatum', invoiceNumber: 'Rechnungsnummer',
+        paymentMethod: 'Zahlungsmethode', description: 'Beschreibung', period: 'Zeitraum', amount: 'Betrag',
+        subscription: 'Monatliches Abonnement', total: 'Gesamtbetrag', vatNote: 'Gemäß § 19 UStG wird keine Umsatzsteuer berechnet (Kleinunternehmerregelung).',
+        thanks: 'Vielen Dank für dein Vertrauen in Scanora.', paidVia: 'Bezahlt via PayPal · Transaktion:', paid: '✓ Bezahlt',
+    }
+
     return `<!DOCTYPE html>
-<html lang="de">
+<html lang="${isEn ? 'en' : 'de'}">
 <head>
 <meta charset="UTF-8"/>
 <style>
@@ -19,7 +34,7 @@ export function generateInvoiceHTML(transaction, user, plan) {
 body { font-family: -apple-system, 'Segoe UI', sans-serif; background: #ffffff; color: #1a1a2e; width: 210mm; min-height: 297mm; padding: 48px 56px; }
 .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 56px; }
 .logo { display: flex; align-items: center; gap: 10px; }
-.logo-icon { width: 40px; height: 40px; background: linear-gradient(135deg, #7c3aed, #06b6d4); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+.logo-icon { width: 40px; height: 40px; border-radius: 10px; display: block; }
 .logo-name { font-size: 22px; font-weight: 800; color: #0f172a; }
 .logo-name span { color: #7c3aed; }
 .invoice-label { font-size: 28px; font-weight: 700; color: #0f172a; }
@@ -49,11 +64,11 @@ tbody td:last-child { text-align: right; font-weight: 600; color: #0f172a; }
 <body>
 <div class="header">
     <div class="logo">
-        <div class="logo-icon">⚡</div>
+        <img class="logo-icon" src="${APP_URL}/icon.png" alt="Scanora" />
         <div class="logo-name">Scanora</div>
     </div>
     <div style="text-align:right">
-        <div class="invoice-label">Rechnung</div>
+        <div class="invoice-label">${t.invoice}</div>
         <div class="invoice-nr">${invoiceNr}</div>
     </div>
 </div>
@@ -62,12 +77,12 @@ tbody td:last-child { text-align: right; font-weight: 600; color: #0f172a; }
 
 <div class="parties">
     <div>
-        <div class="party-label">Von</div>
+        <div class="party-label">${t.from}</div>
         <div class="party-name">Scanora</div>
         <div class="party-detail">scanora.ai<br/>support@scanora.ai</div>
     </div>
     <div>
-        <div class="party-label">An</div>
+        <div class="party-label">${t.to}</div>
         <div class="party-name">${user.name}</div>
         <div class="party-detail">${user.email}</div>
     </div>
@@ -75,15 +90,15 @@ tbody td:last-child { text-align: right; font-weight: 600; color: #0f172a; }
 
 <div class="date-box">
     <div>
-        <div class="date-item-label">Rechnungsdatum</div>
+        <div class="date-item-label">${t.invoiceDate}</div>
         <div class="date-item-value">${date}</div>
     </div>
     <div>
-        <div class="date-item-label">Rechnungsnummer</div>
+        <div class="date-item-label">${t.invoiceNumber}</div>
         <div class="date-item-value">${invoiceNr}</div>
     </div>
     <div>
-        <div class="date-item-label">Zahlungsmethode</div>
+        <div class="date-item-label">${t.paymentMethod}</div>
         <div class="date-item-value">PayPal</div>
     </div>
 </div>
@@ -91,16 +106,16 @@ tbody td:last-child { text-align: right; font-weight: 600; color: #0f172a; }
 <table>
     <thead>
         <tr>
-            <th>Beschreibung</th>
-            <th>Zeitraum</th>
-            <th>Betrag</th>
+            <th>${t.description}</th>
+            <th>${t.period}</th>
+            <th>${t.amount}</th>
         </tr>
     </thead>
     <tbody>
         <tr>
             <td>
                 <div style="font-weight:600;color:#0f172a;margin-bottom:3px">Scanora ${PLAN_NAMES[plan] || plan}</div>
-                <div style="font-size:12px;color:#94a3b8">Monatliches Abonnement</div>
+                <div style="font-size:12px;color:#94a3b8">${t.subscription}</div>
             </td>
             <td style="color:#64748b">${date}</td>
             <td>${amount} ${currency}</td>
@@ -110,17 +125,21 @@ tbody td:last-child { text-align: right; font-weight: 600; color: #0f172a; }
 
 <div class="total-row">
     <div class="total-box">
-        <div class="total-label">Gesamtbetrag</div>
+        <div class="total-label">${t.total}</div>
         <div class="total-amount">${amount} ${currency}</div>
     </div>
 </div>
 
+<div style="margin-top:16px;text-align:right;font-size:11px;color:#94a3b8;">
+    ${t.vatNote}
+</div>
+
 <div class="footer">
     <div class="footer-note">
-        Vielen Dank für dein Vertrauen in Scanora.<br/>
-        Bezahlt via PayPal · Transaktion: ${transaction.id}
+        ${t.thanks}<br/>
+        ${t.paidVia} ${transaction.id}
     </div>
-    <div class="paid-badge">✓ Bezahlt</div>
+    <div class="paid-badge">${t.paid}</div>
 </div>
 </body>
 </html>`

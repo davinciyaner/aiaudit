@@ -264,7 +264,7 @@ export default function RankscaleAlternativePage() {
                             </table>
                         </div>
                         <p className="text-xs text-[var(--text-faint)] mt-3">
-                            Pricing as of August 2026, based on the vendor's publicly listed pricing and plan pages. Rankscale bills primarily in USD, Scanora in EUR incl. VAT. Always double-check current terms directly with the vendor.
+                            Pricing as of August 2026, based on the vendor's publicly listed pricing and plan pages. Rankscale bills primarily in USD, Scanora in EUR. Always double-check current terms directly with the vendor.
                         </p>
                     </section>
 

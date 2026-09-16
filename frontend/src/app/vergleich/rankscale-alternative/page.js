@@ -264,7 +264,7 @@ export default function RankscaleAlternativePage() {
                             </table>
                         </div>
                         <p className="text-xs text-[var(--text-faint)] mt-3">
-                            Preise Stand August 2026, laut öffentlich einsehbarer Preisseite und Tarifübersicht des Anbieters. Rankscale rechnet primär in US-Dollar, Scanora in Euro inkl. MwSt. Prüfe die aktuellen Konditionen jeweils direkt beim Anbieter.
+                            Preise Stand August 2026, laut öffentlich einsehbarer Preisseite und Tarifübersicht des Anbieters. Rankscale rechnet primär in US-Dollar, Scanora in Euro. Prüfe die aktuellen Konditionen jeweils direkt beim Anbieter.
                         </p>
                     </section>
 

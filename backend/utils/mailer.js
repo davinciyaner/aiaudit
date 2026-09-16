@@ -340,7 +340,7 @@ export async function sendWelcome({ name, email, language = 'de' }) {
     })
 }
 
-export async function sendSubscriptionConfirmation({ name, email, plan, language = 'de' }) {
+export async function sendSubscriptionConfirmation({ name, email, plan, language = 'de', invoicePdf = null, invoiceFilename = 'rechnung.pdf' }) {
     const planLabel = plan === 'agency' ? 'Agency' : 'Pro'
     const planPrice = language === 'en'
         ? (plan === 'agency' ? '€99/month' : '€29/month')
@@ -355,7 +355,67 @@ export async function sendSubscriptionConfirmation({ name, email, plan, language
             ? `Your Scanora ${planLabel} subscription is active`
             : `Dein Scanora ${planLabel}-Abo ist aktiv`,
         html: subscriptionConfirmHtml(name, planLabel, planPrice, auditLimit, language),
+        attachments: invoicePdf ? [{ filename: invoiceFilename, content: invoicePdf, contentType: 'application/pdf' }] : undefined,
     })
+}
+
+export async function sendRecurringInvoice({ name, email, plan, language = 'de', invoicePdf, invoiceFilename }) {
+    const planLabel = plan === 'agency' ? 'Agency' : 'Pro'
+    await transporter.sendMail({
+        from: process.env.SMTP_FROM || process.env.SMTP_USER,
+        to: email,
+        subject: language === 'en'
+            ? `Your Scanora ${planLabel} invoice`
+            : `Deine Scanora ${planLabel}-Rechnung`,
+        html: recurringInvoiceHtml(name, planLabel, language),
+        attachments: invoicePdf ? [{ filename: invoiceFilename, content: invoicePdf, contentType: 'application/pdf' }] : undefined,
+    })
+}
+
+function recurringInvoiceHtml(name, planLabel, language = 'de') {
+    const isEn = language === 'en'
+    return `<!DOCTYPE html>
+<html lang="${isEn ? 'en' : 'de'}">
+<head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/></head>
+<body style="margin:0;padding:0;background:#05080f;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#05080f;padding:40px 20px;">
+    <tr><td align="center">
+      <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
+        <tr><td align="center" style="padding-bottom:32px;">
+          <table cellpadding="0" cellspacing="0"><tr>
+            <td style="width:40px;height:40px;">
+              <img src="${APP_URL}/icon.png" width="40" height="40" alt="Scanora" style="display:block;width:40px;height:40px;border-radius:12px;" />
+            </td>
+            <td style="padding-left:10px;vertical-align:middle;">
+              <span style="color:#ffffff;font-size:20px;font-weight:700;">Scanora</span>
+            </td>
+          </tr></table>
+        </td></tr>
+        <tr><td style="background:#0d1117;border:1px solid rgba(255,255,255,0.07);border-radius:20px;padding:40px;">
+          <p style="margin:0 0 8px;font-size:22px;font-weight:700;color:#ffffff;">${isEn ? `Hi ${name},` : `Hallo ${name},`}</p>
+          <p style="margin:0 0 24px;font-size:15px;color:#94a3b8;line-height:1.6;">
+            ${isEn
+                ? `your Scanora ${planLabel} subscription was renewed. The invoice for this billing period is attached as a PDF.`
+                : `dein Scanora ${planLabel}-Abo wurde verlängert. Die Rechnung für diesen Abrechnungszeitraum findest du als PDF im Anhang.`}
+          </p>
+          <table cellpadding="0" cellspacing="0"><tr>
+            <td style="background:linear-gradient(135deg,#7c3aed,#06b6d4);border-radius:12px;padding:1px;">
+              <a href="${APP_URL}/dashboard" style="display:block;background:#0d1117;border-radius:11px;padding:12px 28px;font-size:14px;font-weight:600;color:#ffffff;text-decoration:none;">
+                ${isEn ? 'Go to dashboard' : 'Zum Dashboard'} &rarr;
+              </a>
+            </td>
+          </tr></table>
+          <hr style="border:none;border-top:1px solid rgba(255,255,255,0.06);margin:28px 0;"/>
+          <p style="margin:0;font-size:14px;color:#64748b;">${isEn ? 'Thanks for being with us,' : 'Danke, dass du dabei bist,'}<br/><strong style="color:#94a3b8;">${isEn ? 'Your Scanora Team' : 'Dein Scanora Team'}</strong></p>
+        </td></tr>
+        <tr><td align="center" style="padding-top:24px;">
+          <p style="margin:0;font-size:11px;color:#334155;">${isEn ? `You're receiving this email because you have an active subscription at` : 'Du erhältst diese E-Mail, weil du ein aktives Abo bei'} <a href="${APP_URL}" style="color:#475569;text-decoration:none;">scanora.ai</a>${isEn ? '.' : ' hast.'}</p>
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`
 }
 
 function welcomeHtml(name, language = 'de') {

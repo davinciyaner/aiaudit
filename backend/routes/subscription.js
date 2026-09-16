@@ -1,9 +1,11 @@
 import { Router } from 'express'
 import { auth } from '../middleware/auth.js'
-import { captureSubscription, getStatus, cancelSubscription, getBilling, downloadInvoice } from '../controllers/subscription_controller.js'
+import { captureSubscription, getStatus, cancelSubscription, getBilling, downloadInvoice, handlePaypalWebhook } from '../controllers/subscription_controller.js'
 
 const router = Router()
 
+// Called by PayPal directly (no user session) — auth is the verified webhook signature, not JWT.
+router.post('/paypal-webhook', handlePaypalWebhook)
 router.post('/capture', auth, captureSubscription)
 router.get('/status', auth, getStatus)
 router.delete('/cancel', auth, cancelSubscription)

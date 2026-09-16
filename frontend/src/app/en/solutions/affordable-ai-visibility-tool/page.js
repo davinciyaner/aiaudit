@@ -213,7 +213,7 @@ export default function AffordableGeoToolPageEn() {
                             </table>
                         </div>
                         <p className="text-xs text-[var(--text-faint)] mt-3">
-                            Prices as of August 2026, VAT included. All automation plans (SEO + GEO) include a 14-day free trial, cancel anytime. See details on the{' '}
+                            Prices as of August 2026. All automation plans (SEO + GEO) include a 14-day free trial, cancel anytime. See details on the{' '}
                             <Link href="/en/pricing" className="text-[var(--text-faint)] hover:text-[var(--text-body)] underline underline-offset-2">pricing pages</Link>.
                         </p>
                     </section>
