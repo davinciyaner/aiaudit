@@ -56,7 +56,7 @@ const jsonLd = getRootJsonLd('de')
 
 export default function RootLayout({ children }) {
     return (
-        <html lang="de" className="dark" suppressHydrationWarning>
+        <html lang="de" className="dark" data-scroll-behavior="smooth" suppressHydrationWarning>
         <head>
         <script
             type="application/ld+json"
