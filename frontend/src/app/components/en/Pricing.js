@@ -59,7 +59,7 @@ export default function Pricing() {
                                 <div className="text-xs text-[var(--text-faint)] mt-0.5">ChatGPT, Claude, Gemini, Perplexity &amp; Google AI Overview — from €4.99/month</div>
                             </div>
                         </div>
-                        <Link href="/geo/pricing"
+                        <Link href="/geo/pricing" aria-label="Learn more about AI visibility tracking pricing"
                             className="flex items-center gap-1 text-[var(--text-body)] hover:text-[var(--accent)] text-xs font-semibold transition-colors shrink-0 whitespace-nowrap">
                             Learn more <ArrowRight className="w-3.5 h-3.5" />
                         </Link>
@@ -75,7 +75,7 @@ export default function Pricing() {
                                 <div className="text-xs text-[var(--text-faint)] mt-0.5">Weekly updates &amp; competitor analysis — from €19/month</div>
                             </div>
                         </div>
-                        <Link href="/seo/pricing"
+                        <Link href="/seo/pricing" aria-label="Learn more about SEO ranking tracking pricing"
                             className="flex items-center gap-1 text-[var(--text-body)] hover:text-[var(--accent)] text-xs font-semibold transition-colors shrink-0 whitespace-nowrap">
                             Learn more <ArrowRight className="w-3.5 h-3.5" />
                         </Link>

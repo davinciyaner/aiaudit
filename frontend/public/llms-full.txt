@@ -189,11 +189,11 @@ Ja, für alle vier gilt: Scanora deckt dieselben zentralen KI-Plattformen ab (Cl
 
 ## Kontakt & Links
 
-- Website: https://scanora.ai
-- Website (English): https://scanora.ai/en
-- Dashboard: https://scanora.ai/dashboard
-- Preise (Audit): https://scanora.ai/pricing
-- Preise (SEO-Automatisierung): https://scanora.ai/seo/pricing
-- Preise (GEO-Automatisierung): https://scanora.ai/geo/pricing
-- Datenschutz: https://scanora.ai/datenschutz
-- Impressum: https://scanora.ai/impressum
+- [Website](https://scanora.ai): Deutschsprachige Startseite
+- [Website (English)](https://scanora.ai/en): English homepage
+- [Dashboard](https://scanora.ai/dashboard): Login zum Scanora-Dashboard
+- [Preise (Audit)](https://scanora.ai/pricing): Preise für den einmaligen Website-Audit
+- [Preise (SEO-Automatisierung)](https://scanora.ai/seo/pricing): Preise für das laufende SEO-Ranking-Monitoring
+- [Preise (GEO-Automatisierung)](https://scanora.ai/geo/pricing): Preise für das laufende KI-Sichtbarkeits-Monitoring
+- [Datenschutz](https://scanora.ai/datenschutz): Datenschutzerklärung
+- [Impressum](https://scanora.ai/impressum): Impressum
