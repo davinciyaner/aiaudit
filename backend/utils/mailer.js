@@ -418,6 +418,55 @@ function recurringInvoiceHtml(name, planLabel, language = 'de') {
 </html>`
 }
 
+export async function sendPaymentFailedAlert({ name, email, plan, language = 'de' }) {
+    const planLabel = plan === 'agency' ? 'Agency' : 'Pro'
+    const isEn = language === 'en'
+    await transporter.sendMail({
+        from: process.env.SMTP_FROM || process.env.SMTP_USER,
+        to: email,
+        subject: isEn ? 'Your Scanora payment failed' : 'Deine Scanora-Zahlung ist fehlgeschlagen',
+        html: `<!DOCTYPE html>
+<html lang="${isEn ? 'en' : 'de'}">
+<head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/></head>
+<body style="margin:0;padding:0;background:#05080f;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#05080f;padding:40px 20px;">
+    <tr><td align="center">
+      <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
+        <tr><td align="center" style="padding-bottom:32px;">
+          <table cellpadding="0" cellspacing="0"><tr>
+            <td style="width:40px;height:40px;">
+              <img src="${APP_URL}/icon.png" width="40" height="40" alt="Scanora" style="display:block;width:40px;height:40px;border-radius:12px;" />
+            </td>
+            <td style="padding-left:10px;vertical-align:middle;">
+              <span style="color:#ffffff;font-size:20px;font-weight:700;">Scanora</span>
+            </td>
+          </tr></table>
+        </td></tr>
+        <tr><td style="background:#0d1117;border:1px solid rgba(255,255,255,0.07);border-radius:20px;padding:40px;">
+          <p style="margin:0 0 8px;font-size:22px;font-weight:700;color:#ffffff;">${isEn ? `Hi ${name},` : `Hallo ${name},`}</p>
+          <p style="margin:0 0 24px;font-size:15px;color:#94a3b8;line-height:1.6;">
+            ${isEn
+                ? `the payment for your Scanora ${planLabel} subscription could not be processed. Please check your PayPal payment method so your subscription keeps running without interruption.`
+                : `die Zahlung für dein Scanora ${planLabel}-Abo konnte nicht verarbeitet werden. Bitte prüfe deine PayPal-Zahlungsmethode, damit dein Abo ohne Unterbrechung weiterläuft.`}
+          </p>
+          <table cellpadding="0" cellspacing="0"><tr>
+            <td style="background:linear-gradient(135deg,#7c3aed,#06b6d4);border-radius:12px;padding:1px;">
+              <a href="${APP_URL}/profile" style="display:block;background:#0d1117;border-radius:11px;padding:12px 28px;font-size:14px;font-weight:600;color:#ffffff;text-decoration:none;">
+                ${isEn ? 'Check payment method' : 'Zahlungsmethode prüfen'} &rarr;
+              </a>
+            </td>
+          </tr></table>
+          <hr style="border:none;border-top:1px solid rgba(255,255,255,0.06);margin:28px 0;"/>
+          <p style="margin:0;font-size:14px;color:#64748b;">${isEn ? 'Your Scanora Team' : 'Dein Scanora Team'}</p>
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`,
+    })
+}
+
 function welcomeHtml(name, language = 'de') {
     if (language === 'en') {
         return `<!DOCTYPE html>
@@ -671,6 +720,24 @@ export async function sendAdminNewSubscription({ name, email, plan }) {
             ['Plan', planLabel],
             ['Name', name],
             ['E-Mail', email],
+            ['Zeitpunkt', now],
+        ]),
+    })
+}
+
+export async function sendAdminSubscriptionCancelled({ name, email, plan, reason = 'User cancelled' }) {
+    const adminEmail = process.env.ADMIN_EMAIL || process.env.SMTP_USER
+    const now = new Date().toLocaleString('de-DE', { timeZone: 'Europe/Berlin' })
+    const planLabel = plan === 'agency' ? 'Agency (€99/mo)' : 'Pro (€29/mo)'
+    await transporter.sendMail({
+        from: process.env.SMTP_FROM || process.env.SMTP_USER,
+        to: adminEmail,
+        subject: `Abo gekündigt: ${planLabel} — ${name}`,
+        html: adminNotifyHtml('Abonnement gekündigt', [
+            ['Plan', planLabel],
+            ['Name', name],
+            ['E-Mail', email],
+            ['Grund', reason],
             ['Zeitpunkt', now],
         ]),
     })
