@@ -81,7 +81,7 @@ function HeroAuditInput() {
                     {submitting
                         ? <span className="w-4 h-4 rounded-full border-2 border-[var(--bg-base)]/30 border-t-[var(--bg-base)] animate-spin" aria-hidden="true" />
                         : <Search className="w-4 h-4" />}
-                    {submitting ? 'Checking…' : 'Check now'}
+                    <span>{submitting ? 'Checking…' : 'Check now'}</span>
                     {!submitting && <ArrowRight className="w-3.5 h-3.5" />}
                 </button>
             </div>
@@ -106,7 +106,7 @@ export default function Hero() {
     }
 
     return (
-        <main id="hero" className="relative flex items-center pt-28 pb-16 sm:pt-36 sm:pb-24 overflow-hidden">
+        <section id="hero" className="relative flex items-center pt-28 pb-16 sm:pt-36 sm:pb-24 overflow-hidden">
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[500px] rounded-full blur-3xl pointer-events-none"
                 style={{ background: 'radial-gradient(ellipse, var(--accent-glow) 0%, transparent 70%)' }} />
 
@@ -136,11 +136,11 @@ export default function Hero() {
                         </p>
                     </motion.div>
 
-                    <motion.h1 initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
-                        className="order-1 text-4xl sm:text-6xl lg:text-7xl font-bold leading-[1.08] tracking-tight mb-5">
+                    {/* Plain <h1>, no framer-motion — see DE Hero.js for why. */}
+                    <h1 className="order-1 text-4xl sm:text-6xl lg:text-7xl font-bold leading-[1.08] tracking-tight mb-5">
                         AI Visibility &amp; SEO<br />
                         Google knows you - Does AI?
-                    </motion.h1>
+                    </h1>
 
                     <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }}
                         className="order-2 text-sm font-semibold text-[var(--accent)] mb-4">
@@ -199,6 +199,6 @@ export default function Hero() {
                     </motion.div>
                 </div>
             </div>
-        </main>
+        </section>
     )
 }

@@ -334,36 +334,36 @@ export default function Navbar({ locale = 'de' }) {
                             <div className="p-1.5 space-y-0.5">
                                                 <Link href={locale === 'en' ? '/en/dashboard' : '/dashboard'} onClick={() => setUserDropdownOpen(false)}
                                                     className="flex items-center gap-2.5 px-3 py-2 text-sm text-[var(--text-body)] hover:text-[var(--text-white)] hover:bg-[var(--surface-06)] rounded-lg transition-all">
-                                                    <LayoutDashboard className="w-3.5 h-3.5 text-[var(--text-faint)]" /> {t(locale, 'nav.dashboard')}
+                                                    <LayoutDashboard className="w-3.5 h-3.5 text-[var(--text-faint)]" /> <span>{t(locale, 'nav.dashboard')}</span>
                                                 </Link>
                                                 <Link href={locale === 'en' ? '/en/profile' : '/profile'} onClick={() => setUserDropdownOpen(false)}
                                                     className="flex items-center gap-2.5 px-3 py-2 text-sm text-[var(--text-body)] hover:text-[var(--text-white)] hover:bg-[var(--surface-06)] rounded-lg transition-all">
-                                                    <User className="w-3.5 h-3.5 text-[var(--text-faint)]" /> {t(locale, 'nav.profile')}
+                                                    <User className="w-3.5 h-3.5 text-[var(--text-faint)]" /> <span>{t(locale, 'nav.profile')}</span>
                                                 </Link>
                                                 <div className="my-1 border-t border-[var(--border-subtle)]" />
                                                 <p className="px-3 pt-1 pb-0.5 text-[10px] text-[var(--text-muted)] font-semibold uppercase tracking-wider">{t(locale, 'nav.seoAutomatisierung')}</p>
                                                 <Link href={locale === 'en' ? '/en/seo/dashboard' : '/seo/dashboard'} onClick={() => setUserDropdownOpen(false)}
                                                     className="flex items-center gap-2.5 px-3 py-2 text-sm text-[var(--text-body)] hover:text-[var(--text-white)] hover:bg-[var(--surface-06)] rounded-lg transition-all">
-                                                    <TrendingUp className="w-3.5 h-3.5 text-[var(--accent)]" /> {t(locale, 'nav.rankings')}
+                                                    <TrendingUp className="w-3.5 h-3.5 text-[var(--accent)]" /> <span>{t(locale, 'nav.rankings')}</span>
                                                 </Link>
                                                 <Link href={locale === 'en' ? '/en/seo/pricing' : '/seo/pricing'} onClick={() => setUserDropdownOpen(false)}
                                                     className="flex items-center gap-2.5 px-3 py-2 text-sm text-[var(--text-body)] hover:text-[var(--text-white)] hover:bg-[var(--surface-06)] rounded-lg transition-all">
-                                                    <CreditCard className="w-3.5 h-3.5 text-[var(--text-faint)]" /> {t(locale, 'nav.trackingPreise')}
+                                                    <CreditCard className="w-3.5 h-3.5 text-[var(--text-faint)]" /> <span>{t(locale, 'nav.trackingPreise')}</span>
                                                 </Link>
                                                 <div className="my-1 border-t border-[var(--border-subtle)]" />
                                                 <p className="px-3 pt-1 pb-0.5 text-[10px] text-[var(--text-muted)] font-semibold uppercase tracking-wider">{t(locale, 'nav.geoAutomatisierung')}</p>
                                                 <Link href={locale === 'en' ? '/en/geo/dashboard' : '/geo/dashboard'} onClick={() => setUserDropdownOpen(false)}
                                                     className="flex items-center gap-2.5 px-3 py-2 text-sm text-[var(--text-body)] hover:text-[var(--text-white)] hover:bg-[var(--surface-06)] rounded-lg transition-all">
-                                                    <Globe className="w-3.5 h-3.5 text-[var(--accent)]" /> {t(locale, 'nav.kiTracking')}
+                                                    <Globe className="w-3.5 h-3.5 text-[var(--accent)]" /> <span>{t(locale, 'nav.kiTracking')}</span>
                                                 </Link>
                                                 <Link href={locale === 'en' ? '/en/geo/pricing' : '/geo/pricing'} onClick={() => setUserDropdownOpen(false)}
                                                     className="flex items-center gap-2.5 px-3 py-2 text-sm text-[var(--text-body)] hover:text-[var(--text-white)] hover:bg-[var(--surface-06)] rounded-lg transition-all">
-                                                    <CreditCard className="w-3.5 h-3.5 text-[var(--text-faint)]" /> {t(locale, 'nav.geoPreise')}
+                                                    <CreditCard className="w-3.5 h-3.5 text-[var(--text-faint)]" /> <span>{t(locale, 'nav.geoPreise')}</span>
                                                 </Link>
                                                 <div className="my-1 border-t border-[var(--border-subtle)]" />
                                                 <button onClick={handleLogout}
                                                     className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-[var(--text-muted)] hover:text-red-400 hover:bg-red-500/5 rounded-lg transition-all">
-                                                    <LogOut className="w-3.5 h-3.5" /> {t(locale, 'nav.logout')}
+                                                    <LogOut className="w-3.5 h-3.5" /> <span>{t(locale, 'nav.logout')}</span>
                                                 </button>
                                             </div>
                                         </motion.div>
@@ -377,7 +377,7 @@ export default function Navbar({ locale = 'de' }) {
                         )}
                         <Link href={locale === 'en' ? '/en/dashboard' : '/dashboard'}
                             className="flex items-center gap-2 px-5 py-2.5 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-[var(--accent-border)] active:scale-[0.97] active:duration-75 hover:-translate-y-px">
-                            {t(locale, 'nav.cta')} <ArrowRight className="w-3.5 h-3.5" />
+                            <span>{t(locale, 'nav.cta')}</span> <ArrowRight className="w-3.5 h-3.5" />
                         </Link>
                         {counterpart && (
                             <Link href={counterpart}
@@ -434,23 +434,23 @@ export default function Navbar({ locale = 'de' }) {
                             <>
                                 <Link href={locale === 'en' ? '/en/dashboard' : '/dashboard'} onClick={() => setMobileOpen(false)}
                                     className="flex items-center gap-2 px-4 py-3 text-sm text-[var(--text-body)] hover:text-[var(--text-white)] rounded-lg hover:bg-[var(--surface-06)] transition-all">
-                                    <LayoutDashboard className="w-4 h-4 text-[var(--text-faint)]" /> {t(locale, 'nav.dashboard')}
+                                    <LayoutDashboard className="w-4 h-4 text-[var(--text-faint)]" /> <span>{t(locale, 'nav.dashboard')}</span>
                                 </Link>
                                 <Link href={locale === 'en' ? '/en/profile' : '/profile'} onClick={() => setMobileOpen(false)}
                                     className="flex items-center gap-2 px-4 py-3 text-sm text-[var(--text-body)] hover:text-[var(--text-white)] rounded-lg hover:bg-[var(--surface-06)] transition-all">
-                                    <User className="w-4 h-4 text-[var(--text-faint)]" /> {t(locale, 'nav.profile')}
+                                    <User className="w-4 h-4 text-[var(--text-faint)]" /> <span>{t(locale, 'nav.profile')}</span>
                                 </Link>
                                 <Link href={locale === 'en' ? '/en/seo/dashboard' : '/seo/dashboard'} onClick={() => setMobileOpen(false)}
                                     className="flex items-center gap-2 px-4 py-3 text-sm text-[var(--text-body)] hover:text-[var(--text-white)] rounded-lg hover:bg-[var(--surface-06)] transition-all">
-                                    <TrendingUp className="w-4 h-4 text-[var(--accent)]" /> {t(locale, 'nav.seoAutomatisierung')}
+                                    <TrendingUp className="w-4 h-4 text-[var(--accent)]" /> <span>{t(locale, 'nav.seoAutomatisierung')}</span>
                                 </Link>
                                 <Link href={locale === 'en' ? '/en/geo/dashboard' : '/geo/dashboard'} onClick={() => setMobileOpen(false)}
                                     className="flex items-center gap-2 px-4 py-3 text-sm text-[var(--text-body)] hover:text-[var(--text-white)] rounded-lg hover:bg-[var(--surface-06)] transition-all">
-                                    <Globe className="w-4 h-4 text-[var(--accent)]" /> {t(locale, 'nav.geoAutomatisierung')}
+                                    <Globe className="w-4 h-4 text-[var(--accent)]" /> <span>{t(locale, 'nav.geoAutomatisierung')}</span>
                                 </Link>
                                 <button onClick={handleLogout}
                                     className="w-full flex items-center gap-2 px-4 py-3 text-sm text-[var(--text-muted)] hover:text-red-400 rounded-lg hover:bg-red-500/5 transition-all">
-                                    <LogOut className="w-4 h-4" /> {t(locale, 'nav.logout')}
+                                    <LogOut className="w-4 h-4" /> <span>{t(locale, 'nav.logout')}</span>
                                 </button>
                             </>
                         ) : (
@@ -462,7 +462,7 @@ export default function Navbar({ locale = 'de' }) {
 
                         <Link href={locale === 'en' ? '/en/dashboard' : '/dashboard'} onClick={() => setMobileOpen(false)}
                             className="mt-2 block px-4 py-3 text-center font-semibold text-[var(--bg-base)] rounded-xl bg-[var(--accent)] text-sm">
-                            {t(locale, 'nav.cta')} →
+                            <span>{t(locale, 'nav.cta')} →</span>
                         </Link>
 
                         {counterpart && (

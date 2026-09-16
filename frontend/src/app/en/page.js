@@ -1,9 +1,8 @@
 import Navbar from '../components/Navbar'
 import Hero from '../components/en/Hero'
 import ResultsSection from '../components/en/ResultsSection'
+import LeadsShowcase from '../components/en/LeadsShowcase'
 import ProductShowcase from '../components/en/ProductShowcase'
-import WhyAudit from '../components/en/WhyAudit'
-import AIVisibilityExplainer from '../components/en/AIVisibilityExplainer'
 import Pricing from '../components/en/Pricing'
 import FinalCTA from '../components/en/FinalCTA'
 import Footer from '../components/Footer'
@@ -57,9 +56,8 @@ export default function LandingPageEn() {
             <Navbar locale="en" />
             <Hero />
             <ResultsSection />
+            <LeadsShowcase />
             <ProductShowcase />
-            <AIVisibilityExplainer />
-            <WhyAudit />
             <Pricing />
             <FAQ />
             <FinalCTA />

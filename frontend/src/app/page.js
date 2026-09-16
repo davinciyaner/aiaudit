@@ -1,6 +1,7 @@
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import ResultsSection from './components/ResultsSection'
+import LeadsShowcase from './components/LeadsShowcase'
 import ProductShowcase from './components/ProductShowcase'
 import WhyAudit from './components/WhyAudit'
 import AIVisibilityExplainer from './components/AIVisibilityExplainer'
@@ -101,6 +102,7 @@ export default function LandingPage() {
             <Navbar />
             <Hero />
             <ResultsSection />
+            <LeadsShowcase />
             <ProductShowcase />
             <AIVisibilityExplainer />
             <WhyAudit />
