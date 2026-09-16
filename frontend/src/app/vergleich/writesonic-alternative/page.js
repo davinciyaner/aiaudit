@@ -210,7 +210,7 @@ export default function WritesonicAlternativePage() {
                             </table>
                         </div>
                         <p className="text-xs text-[var(--text-faint)] mt-3">
-                            Preise Stand August 2026, laut öffentlich einsehbarer Preisseite und Tarifübersicht des Anbieters. Writesonic rechnet primär in US-Dollar, Scanora in Euro inkl. MwSt. Tarifnamen und -grenzen ändern sich bei Writesonic laut mehreren Quellen relativ häufig - prüfe die aktuellen Konditionen direkt beim Anbieter.
+                            Preise Stand August 2026, laut öffentlich einsehbarer Preisseite und Tarifübersicht des Anbieters. Writesonic rechnet primär in US-Dollar, Scanora in Euro. Tarifnamen und -grenzen ändern sich bei Writesonic laut mehreren Quellen relativ häufig - prüfe die aktuellen Konditionen direkt beim Anbieter.
                         </p>
                     </section>
 

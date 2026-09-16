@@ -515,7 +515,7 @@ export default function PricingPage() {
                                                 <span className="text-4xl sm:text-5xl font-bold text-[var(--text-white)]">{plan.price}</span>
                                                 <span className="text-[var(--text-muted)] text-lg">€</span>
                                             </div>
-                                            <div className="text-sm text-[var(--text-faint)] mb-3">per month, VAT incl.</div>
+                                            <div className="text-sm text-[var(--text-faint)] mb-3">per month</div>
                                             <p className="text-sm text-[var(--text-muted)]">{plan.desc}</p>
                                         </div>
                                         <div className="space-y-3 mb-8 flex-1">

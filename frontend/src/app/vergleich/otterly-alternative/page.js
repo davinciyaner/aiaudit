@@ -217,7 +217,7 @@ export default function OtterlyAlternativePage() {
                             </table>
                         </div>
                         <p className="text-xs text-[var(--text-faint)] mt-3">
-                            Preise Stand August 2026. Otterly rechnet in US-Dollar, Scanora in Euro inkl. MwSt. Otterly-Zahlen laut{' '}
+                            Preise Stand August 2026. Otterly rechnet in US-Dollar, Scanora in Euro. Otterly-Zahlen laut{' '}
                             <a href="https://otterly.ai/pricing" target="_blank" rel="noopener noreferrer" className="text-[var(--text-faint)] hover:text-[var(--text-body)] underline underline-offset-2">
                                 offizieller Otterly.ai-Preisseite
                             </a>. Prüfe die aktuellen Konditionen jeweils direkt beim Anbieter.

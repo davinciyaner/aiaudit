@@ -153,7 +153,7 @@ function PlanCard({ plan, user, currentPlan, loading, onSuccess }) {
                     <span className="text-5xl font-bold text-[var(--text-white)]">{plan.price}</span>
                     <span className="text-[var(--text-muted)] text-lg">€</span>
                 </div>
-                <div className="text-sm text-[var(--text-faint)] mb-3">{plan.period} inkl. MwSt.</div>
+                <div className="text-sm text-[var(--text-faint)] mb-3">{plan.period}</div>
                 <p className="text-sm text-[var(--text-muted)]">{plan.desc}</p>
             </div>
 

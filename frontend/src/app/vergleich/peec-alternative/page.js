@@ -219,7 +219,7 @@ export default function PeecAlternativePage() {
                             </table>
                         </div>
                         <p className="text-xs text-[var(--text-faint)] mt-3">
-                            Preise Stand August 2026, laut öffentlich einsehbarer Preisseite und Tarifübersicht des Anbieters. Peec.ai rechnet primär in Euro, Scanora ebenfalls in Euro inkl. MwSt. Prüfe die aktuellen Konditionen jeweils direkt beim Anbieter.
+                            Preise Stand August 2026, laut öffentlich einsehbarer Preisseite und Tarifübersicht des Anbieters. Peec.ai rechnet primär in Euro, Scanora ebenfalls in Euro. Prüfe die aktuellen Konditionen jeweils direkt beim Anbieter.
                         </p>
                     </section>
 

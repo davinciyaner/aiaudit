@@ -201,7 +201,7 @@ export default function OtterlyAlternativePage() {
                             </table>
                         </div>
                         <p className="text-xs text-[var(--text-faint)] mt-3">
-                            Pricing as of August 2026. Otterly bills in USD, Scanora in EUR incl. VAT. Otterly figures sourced from its{' '}
+                            Pricing as of August 2026. Otterly bills in USD, Scanora in EUR. Otterly figures sourced from its{' '}
                             <a href="https://otterly.ai/pricing" target="_blank" rel="noopener noreferrer" className="text-[var(--text-faint)] hover:text-[var(--text-body)] underline underline-offset-2">
                                 official pricing page
                             </a>. Always double-check current terms directly with the vendor.

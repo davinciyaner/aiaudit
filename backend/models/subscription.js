@@ -5,6 +5,7 @@ const subscriptionSchema = new mongoose.Schema({
     plan: { type: String, enum: ['pro', 'agency'], required: true },
     paypalSubscriptionId: { type: String, required: true, unique: true },
     status: { type: String, default: 'ACTIVE' },
+    lastInvoicedAt: { type: Date },
 }, { timestamps: true })
 
 export default mongoose.model('Subscription', subscriptionSchema)
