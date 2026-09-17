@@ -19,8 +19,6 @@ export function getRootJsonLd(locale) {
                     founder: { '@id': 'https://www.scanora.ai/#founder' },
                     sameAs: [
                         'https://x.com/scanoraai',
-                        'https://www.linkedin.com/company/scanora-ai',
-                        'https://github.com/scanora-ai',
                     ],
                 },
                 {
