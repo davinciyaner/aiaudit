@@ -183,7 +183,7 @@ export async function handlePaypalWebhook(req, res) {
 
         switch (event.event_type) {
             case 'PAYMENT.SALE.COMPLETED': {
-                const paypalSubscriptionId = resource.billing_agreement_id
+                const paypalSubscriptionId = parsePaypalSubscriptionId(resource.billing_agreement_id)
                 if (!paypalSubscriptionId) break
 
                 const sub = await Subscription.findOne({ paypalSubscriptionId, status: 'ACTIVE' })
@@ -213,7 +213,7 @@ export async function handlePaypalWebhook(req, res) {
             }
 
             case 'PAYMENT.SALE.DENIED': {
-                const paypalSubscriptionId = resource.billing_agreement_id
+                const paypalSubscriptionId = parsePaypalSubscriptionId(resource.billing_agreement_id)
                 if (!paypalSubscriptionId) break
 
                 const sub = await Subscription.findOne({ paypalSubscriptionId })
@@ -236,7 +236,7 @@ export async function handlePaypalWebhook(req, res) {
             case 'BILLING.SUBSCRIPTION.RE-ACTIVATED': {
                 // For these, resource.id IS the subscription ID itself (unlike PAYMENT.SALE.*,
                 // where it's the sale/transaction ID and billing_agreement_id holds the subscription).
-                const paypalSubscriptionId = resource.id
+                const paypalSubscriptionId = parsePaypalSubscriptionId(resource.id)
                 if (!paypalSubscriptionId) break
 
                 const newStatus = {
