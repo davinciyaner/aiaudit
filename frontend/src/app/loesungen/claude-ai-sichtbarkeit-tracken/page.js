@@ -166,6 +166,7 @@ export default function ClaudeAiSichtbarkeitPage() {
                             Lösung
                         </span>
                         <span className="text-xs text-[var(--text-faint)]">29. August 2026</span>
+                        <span className="text-xs text-[var(--text-faint)]">· Aktualisiert: 17. September 2026</span>
                         <span className="text-xs text-[var(--text-faint)]">· 7 min Lesezeit</span>
                     </div>
                     <h1 className="text-3xl sm:text-5xl font-bold text-[var(--text-white)] leading-tight tracking-tight mb-5">
@@ -299,6 +300,27 @@ export default function ClaudeAiSichtbarkeitPage() {
                             className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--surface-08)] hover:bg-[var(--surface-10)] text-[var(--text-white)] text-sm font-semibold rounded-xl transition-all duration-200 shrink-0"
                         >
                             Preise ansehen
+                        </Link>
+                    </div>
+                </div>
+
+                {/* Cross-link: ChatGPT */}
+                <div className="mt-5 bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl p-6 sm:p-8">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 justify-between">
+                        <div>
+                            <span className="text-xs font-semibold text-[var(--accent)] uppercase tracking-wider mb-1 block">Verwandt</span>
+                            <h3 className="text-base sm:text-lg font-bold text-[var(--text-white)] mb-2">
+                                Sichtbarkeit in ChatGPT tracken
+                            </h3>
+                            <p className="text-[var(--text-muted)] text-sm leading-relaxed max-w-md">
+                                ChatGPT ist die meistgenutzte KI-Suchoberfläche - so trackst du deine Sichtbarkeit dort zusammen mit Google-Rankings.
+                            </p>
+                        </div>
+                        <Link
+                            href="/loesungen/chatgpt-sichtbarkeit-tracken"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--surface-08)] hover:bg-[var(--surface-10)] text-[var(--text-white)] text-sm font-semibold rounded-xl transition-all duration-200 shrink-0"
+                        >
+                            Seite ansehen
                         </Link>
                     </div>
                 </div>

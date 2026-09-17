@@ -169,6 +169,7 @@ export default function OtterlyAlternativePage() {
                             Vergleich
                         </span>
                         <span className="text-xs text-[var(--text-faint)]">27. August 2026</span>
+                        <span className="text-xs text-[var(--text-faint)]">· Aktualisiert: 17. September 2026</span>
                         <span className="text-xs text-[var(--text-faint)]">· 8 min Lesezeit</span>
                     </div>
                     <h1 className="text-3xl sm:text-5xl font-bold text-[var(--text-white)] leading-tight tracking-tight mb-5">

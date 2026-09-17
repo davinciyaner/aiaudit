@@ -283,7 +283,7 @@ export default function KiSichtbarkeitErlangenPage() {
                             </table>
                         </div>
                         <p className="mt-4">
-                            Genau diese Streuung ist auch der Grund, warum Monitoring pro Plattform getrennt sinnvoll ist statt einer einzigen Gesamtzahl - eine Marke kann auf Claude sehr sichtbar und auf ChatGPT für dieselbe Frage komplett unsichtbar sein.
+                            Genau diese Streuung ist auch der Grund, warum Monitoring pro Plattform getrennt sinnvoll ist statt einer einzigen Gesamtzahl - eine Marke kann auf Claude sehr sichtbar und auf ChatGPT für dieselbe Frage komplett unsichtbar sein. Mehr dazu: <Link href="/loesungen/chatgpt-sichtbarkeit-tracken" className="text-violet-400 hover:text-violet-300">Sichtbarkeit in ChatGPT tracken</Link> und <Link href="/loesungen/claude-ai-sichtbarkeit-tracken" className="text-violet-400 hover:text-violet-300">Sichtbarkeit in Claude tracken</Link>. Einen Überblick über GEO-Tools inklusive Preisen liefert unser <Link href="/blog/beste-geo-ki-sichtbarkeit-tools-2026" className="text-violet-400 hover:text-violet-300">Vergleich der besten GEO-Tools 2026</Link>.
                         </p>
                     </section>
 

@@ -192,6 +192,8 @@ export default function SeoGeoToolPage() {
                 <Link href="/loesungen" className="hover:text-[var(--text-muted)] transition-colors">Lösungen</Link>
                 <span>/</span>
                 <span className="text-[var(--text-faint)]">SEO-GEO-Tool</span>
+                <span>·</span>
+                <span>Aktualisiert: 17. September 2026</span>
             </div>
 
             {/* HERO */}
@@ -404,6 +406,22 @@ export default function SeoGeoToolPage() {
                         </div>
                     ))}
                 </div>
+            </section>
+
+            {/* Cross-links */}
+            <section className="max-w-4xl mx-auto px-5 sm:px-8 pb-16 flex flex-col sm:flex-row gap-4">
+                <Link href="/blog/beste-geo-ki-sichtbarkeit-tools-2026"
+                    className="flex-1 bg-[var(--bg-surface)] border border-[var(--border-subtle)] hover:border-[var(--border-strong)] rounded-2xl p-6 transition-all">
+                    <span className="text-xs font-semibold text-[var(--accent)] uppercase tracking-wider mb-1 block">Vergleich</span>
+                    <h3 className="font-bold text-[var(--text-white)] text-sm mb-2">Beste GEO-Tools 2026: 5 Tools im Vergleich</h3>
+                    <p className="text-sm text-[var(--text-muted)] leading-relaxed">Scanora, Peec.ai, Otterly.ai, Writesonic und Rankscale nach Preis und Funktionsumfang.</p>
+                </Link>
+                <Link href="/loesungen/chatgpt-sichtbarkeit-tracken"
+                    className="flex-1 bg-[var(--bg-surface)] border border-[var(--border-subtle)] hover:border-[var(--border-strong)] rounded-2xl p-6 transition-all">
+                    <span className="text-xs font-semibold text-[var(--accent)] uppercase tracking-wider mb-1 block">Lösung</span>
+                    <h3 className="font-bold text-[var(--text-white)] text-sm mb-2">Sichtbarkeit in ChatGPT tracken</h3>
+                    <p className="text-sm text-[var(--text-muted)] leading-relaxed">ChatGPT-Tracking plus Google-Rankings im selben Dashboard.</p>
+                </Link>
             </section>
 
             {/* FINAL CTA */}

@@ -42,6 +42,12 @@ const SOLUTIONS = [
         description: 'Bei den meisten Tools ist Claude-Tracking ein teures Enterprise-Add-on oder gar nicht verfügbar. So funktioniert es bei Scanora ab 4,99 €/Monat.',
         tag: 'Ab 4,99 €/Monat',
     },
+    {
+        slug: 'chatgpt-sichtbarkeit-tracken',
+        title: 'ChatGPT Sichtbarkeit tracken: So siehst du, ob ChatGPT dich empfiehlt',
+        description: 'ChatGPT-Tracking plus klassische Google-Rankings im selben Dashboard statt zwei getrennter Abos. So funktioniert es bei Scanora ab 29,99 €/Monat.',
+        tag: 'Ab 29,99 €/Monat',
+    },
 ]
 
 export default function LoesungenHubPage() {
