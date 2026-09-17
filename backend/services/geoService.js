@@ -205,7 +205,7 @@ async function checkWithGoogleAIOverview(keyword, domain, language, intent, cust
 
     const task = data.tasks?.[0]
     if (task?.status_code !== 20000) {
-        console.warn(`[geoService] Google AI Overview endgültig fehlgeschlagen bei "${keyword}":`, task?.status_code, task?.status_message)
+        console.warn(`[geoService] Google AI Overview endgültig fehlgeschlagen bei "${keyword}": status=${task?.status_code} message=${task?.status_message}`)
         return { mentioned: false, context: null, citations: [] }
     }
 

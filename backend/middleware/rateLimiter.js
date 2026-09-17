@@ -50,3 +50,15 @@ export const authedAuditLimiter = rateLimit({
     keyGenerator: (req) => req.userId,
     message: (req) => ({ error: t("API_RATE_LIMIT", req.language) }),
 });
+
+// The PayPal webhook is public/unauthenticated by nature (PayPal calls it directly, no JWT) —
+// real access control is the signature check inside the handler, not this limiter. This only
+// guards against random internet traffic hammering the endpoint (each request triggers an
+// outbound call to PayPal's verify API). Generous ceiling since real PayPal delivery bursts
+// (retries, several events at once) must never be throttled.
+export const paypalWebhookLimiter = rateLimit({
+    windowMs: 60 * 1000,
+    max: 60,
+    standardHeaders: true,
+    legacyHeaders: false,
+});

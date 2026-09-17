@@ -330,7 +330,7 @@ export async function addCustomPrompt(req, res) {
 // DELETE /api/geo/sites/:id/custom-prompts
 export async function removeCustomPrompt(req, res) {
     try {
-        const { prompt } = req.body
+        const prompt = String(req.body?.prompt || '').trim()
         if (!prompt) return res.status(400).json({ error: req.language === 'en' ? 'prompt is required' : 'prompt erforderlich' })
 
         const site = await GeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId })
