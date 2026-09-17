@@ -29,6 +29,14 @@ const securityHeaders = [
 
 const nextConfig = {
     reactCompiler: true,
+    // Tailwind's CSS output is small enough that inlining it beats the extra render-blocking
+    // <link> round-trip for first-time visitors — directly targets the FCP/LCP gap. Only kicks
+    // in on production builds (next build), not `next dev`. Trade-off: returning visitors can't
+    // cache the stylesheet separately, but new-visitor performance is what matters here (top-of-
+    // funnel is the bottleneck, not repeat traffic).
+    experimental: {
+        inlineCss: true,
+    },
     async headers() {
         return [
             {
