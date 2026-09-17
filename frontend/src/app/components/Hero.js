@@ -113,10 +113,7 @@ export default function Hero() {
             <div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-8 w-full">
                 <div className="flex flex-col items-center text-center">
 
-                    {/* Source order first (Answer-First for GEO/crawlers) but visually placed after the
-                        CTA via `order-6` — decouples HTML text order from render position. */}
-                    <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
-                        className="order-6 w-full max-w-2xl mt-10 mb-4 p-5 rounded-2xl bg-[var(--surface-06)] border border-[var(--border-subtle)] text-left">
+                    <div className="order-6 w-full max-w-2xl mt-10 mb-4 p-5 rounded-2xl bg-[var(--surface-06)] border border-[var(--border-subtle)] text-left">
                         <h2 className="text-xs font-semibold text-[var(--accent)] uppercase tracking-wide">Kurz erklärt</h2>
                         <p className="mt-2 text-sm text-[var(--text-body)] leading-relaxed">
                             Scanora ist eine SEO- &amp; GEO-Monitoring-Plattform aus Deutschland. Fürs SEO-Tracking bekommst du
@@ -134,33 +131,26 @@ export default function Hero() {
                         <p className="mt-3 pt-3 border-t border-[var(--border-subtle)] text-xs text-[var(--text-faint)]">
                             Zuletzt aktualisiert: 12. September 2026 · Von Finn Paustian, Gründer von Scanora
                         </p>
-                    </motion.div>
+                    </div>
 
-                    {/* Plain <h1>, no framer-motion — this is the LCP element; starting it at
-                        opacity:0 ties its visible paint time to JS hydration completing, which
-                        can inflate or even indefinitely stall the measured LCP if hydration is
-                        slow or errors out before the animation fires. */}
                     <h1 className="order-1 text-4xl sm:text-6xl lg:text-7xl font-bold leading-[1.08] tracking-tight mb-5">
                         AI Visibility &amp; SEO<br />
                         Google kennt dich - KI auch?
                     </h1>
 
-                    <motion.h2 initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }}
-                        className="order-2 text-sm font-semibold text-[var(--accent)] mb-4">
+                    <h2 className="order-2 text-sm font-semibold text-[var(--accent)] mb-4">
                         Scanora – AI Visibility & SEO Tool
-                    </motion.h2>
+                    </h2>
 
-                    <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-                        className="order-3 text-base sm:text-lg text-[var(--text-muted)] mb-8 max-w-2xl leading-relaxed">
+                    <p className="order-3 text-base sm:text-lg text-[var(--text-muted)] mb-8 max-w-2xl leading-relaxed">
                         Für Marketing-Teams und Agenturen: Scanora prüft, ob ChatGPT, Claude, Gemini, Perplexity und
                         Google AI Overview deine Seite kennen — und wie du bei Google rankst. Kostenloser Score
                         sofort, konkrete KI-Fixes ab Pro.
-                    </motion.p>
+                    </p>
 
-                    <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}
-                        className="order-4 w-full max-w-2xl mb-8">
+                    <div className="order-4 w-full max-w-2xl mb-8">
                         <HeroAuditInput />
-                    </motion.div>
+                    </div>
 
                     <div className="order-5 flex flex-wrap items-center justify-center gap-2">
                         <Link href="/geo/dashboard"
@@ -179,8 +169,7 @@ export default function Hero() {
                         </Link>
                     </div>
 
-                    <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
-                        className="order-7 w-full max-w-3xl mt-14 pt-10 border-t border-[var(--border-subtle)]">
+                    <div className="order-7 w-full max-w-3xl mt-14 pt-10 border-t border-[var(--border-subtle)]">
                         <h2 className="text-base sm:text-lg font-bold text-[var(--text-white)] mb-1.5 text-center">GEO Check pro KI-Tool starten</h2>
                         <p className="text-sm text-[var(--text-muted)] mb-5 max-w-lg mx-auto text-center">
                             Wähle ChatGPT, Claude, Perplexity oder Google AI Overview — Ergebnis in wenigen Sekunden, ganz ohne Anmeldung.
@@ -199,7 +188,7 @@ export default function Hero() {
                                 )
                             })}
                         </div>
-                    </motion.div>
+                    </div>
                 </div>
             </div>
         </section>
