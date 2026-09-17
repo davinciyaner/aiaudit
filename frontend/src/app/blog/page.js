@@ -25,6 +25,15 @@ const breadcrumbLd = {
 
 const ARTICLES = [
     {
+        slug: 'beste-geo-ki-sichtbarkeit-tools-2026',
+        title: 'Beste GEO- & KI-Sichtbarkeits-Tools 2026: 5 Tools im Vergleich',
+        description: 'Scanora, Peec.ai, Otterly.ai, Writesonic und Rankscale im Preis- und Funktionsvergleich - faktenbasiert, mit Preisen Stand September 2026.',
+        category: 'GEO',
+        categoryColor: '#06b6d4',
+        date: '17. September 2026',
+        readTime: '11 min',
+    },
+    {
         slug: 'ki-sichtbarkeit-erlangen',
         title: 'KI-Sichtbarkeit erlangen: So wirst du von ChatGPT, Claude & Perplexity zitiert',
         description: 'KI-Sichtbarkeit ist mehr als llms.txt und Schema Markup. Wie du wirklich von ChatGPT, Claude, Perplexity und Google AI Overview zitiert wirst - inklusive Monitoring mit Scanora.',
