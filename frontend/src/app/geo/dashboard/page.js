@@ -95,11 +95,12 @@ function SiteCard({ site, onDelete }) {
 const PLATFORMS = [
     { id: 'claude',     label: 'Claude',             sub: 'claude.ai',       color: 'violet' },
     { id: 'chatgpt',    label: 'ChatGPT',            sub: 'chat.openai.com', color: 'green'  },
+    { id: 'gemini',     label: 'Gemini',             sub: 'gemini.google.com', color: 'amber' },
     { id: 'perplexity', label: 'Perplexity',         sub: 'perplexity.ai',   color: 'teal'   },
     { id: 'google_aio', label: 'Google AI Overview', sub: 'google.com',      color: 'blue'   },
 ]
 
-const COST_PER_CHECK = { claude: 0.0066, chatgpt: 0.0045, perplexity: 0.0056, google_aio: 0.0026 }
+const COST_PER_CHECK = { claude: 0.0066, chatgpt: 0.0045, gemini: 0.0110, perplexity: 0.0056, google_aio: 0.0026 }
 
 function calcCost(keywords, platforms) {
     const checks = keywords * platforms.length * 4
@@ -111,7 +112,7 @@ function AddSiteModal({ slotsLeft, onClose, onAdded, initialDomain = '', initial
     const [domain, setDomain]             = useState(initialDomain)
     const [keywordsText, setKeywordsText] = useState(initialKeyword)
     const [selectedPlatforms, setSelectedPlatforms] = useState(
-        PLATFORMS.some(p => p.id === initialPlatform) ? [initialPlatform] : ['claude', 'chatgpt', 'perplexity', 'google_aio']
+        PLATFORMS.some(p => p.id === initialPlatform) ? [initialPlatform] : ['claude', 'chatgpt', 'gemini', 'perplexity', 'google_aio']
     )
     const [loading, setLoading]           = useState(false)
 
