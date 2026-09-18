@@ -5,7 +5,7 @@ import {
     ArrowLeft, TrendingUp, TrendingDown, Minus, Plus, Trash2,
     Loader2, RefreshCw, Globe, X, Lightbulb, Users, Link2,
     ExternalLink, ChevronUp, ChevronDown, GitCompare, Check, Lock, Download, Bell, Settings,
-    FileText, Copy, Award, AlertTriangle,
+    FileText, Copy, Search, Award, AlertTriangle,
 } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter, useParams } from 'next/navigation'
@@ -17,13 +17,13 @@ import Navbar from '../../../components/Navbar'
 // Tiers pair color with a shape/icon signal (not color alone) so top-3 vs. the rest stays
 // distinguishable for color-blind users — same tokens as the DE dashboard's globals.css.
 function PositionCell({ position }) {
-    if (position == null) return <span className="text-[var(--text-faint)] text-sm">—</span>
+    if (position == null) return <span className="text-[var(--text-faint)] text-sm tabular-nums">—</span>
     const tier =
         position <= 10 ? { chip: 'bg-[var(--success-soft)] border-[var(--success-border)]', text: 'text-[var(--success)]', icon: position <= 3 ? Award : null } :
         position <= 30 ? { chip: 'bg-[var(--warning-soft)] border-[var(--warning-border)]',  text: 'text-[var(--warning)]', icon: null } :
-                         { chip: 'border-transparent',                                       text: 'text-[var(--text-muted)]',        icon: null }
+                         { chip: 'bg-[var(--surface-08)] border-[var(--border-subtle)]',      text: 'text-[var(--text-muted)]',        icon: null }
     return (
-        <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md border text-sm font-bold ${tier.chip} ${tier.text}`}>
+        <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md border text-sm font-bold tabular-nums ${tier.chip} ${tier.text}`}>
             {tier.icon && <tier.icon className="w-3 h-3" strokeWidth={2.5} />}
             #{position}
         </span>
@@ -31,10 +31,26 @@ function PositionCell({ position }) {
 }
 
 function ChangeCell({ change }) {
-    if (change == null) return <span className="text-[var(--text-faint)] text-xs">—</span>
-    if (change > 0) return <span className="flex items-center gap-0.5 text-[var(--success)] text-xs font-semibold"><ChevronUp className="w-3 h-3" />+{change}</span>
-    if (change < 0) return <span className="flex items-center gap-0.5 text-[var(--danger)] text-xs font-semibold"><ChevronDown className="w-3 h-3" />{change}</span>
-    return <span className="flex items-center gap-0.5 text-[var(--text-faint)] text-xs"><Minus className="w-3 h-3" />0</span>
+    if (change == null) return <span className="flex items-center justify-end text-[var(--text-faint)] text-xs">—</span>
+    if (change > 0) return <span className="flex items-center justify-end gap-0.5 text-[var(--success)] text-xs font-semibold tabular-nums"><ChevronUp className="w-3 h-3 shrink-0" />+{change}</span>
+    if (change < 0) return <span className="flex items-center justify-end gap-0.5 text-[var(--danger)] text-xs font-semibold tabular-nums"><ChevronDown className="w-3 h-3 shrink-0" />{change}</span>
+    return <span className="flex items-center justify-end gap-0.5 text-[var(--text-faint)] text-xs tabular-nums"><Minus className="w-3 h-3 shrink-0" />0</span>
+}
+
+// Compact variant of VolumeBar (further below) — same "value as bar plus number" visual language,
+// scaled to the CTR value range (max 28%, see CTR_RATES).
+function CTRCell({ position }) {
+    if (!position) return <span className="text-xs text-[var(--text-faint)]">—</span>
+    const pct = getCTR(position)
+    const barPct = Math.min((pct / CTR_RATES[0]) * 100, 100)
+    return (
+        <div className="flex items-center justify-end gap-2">
+            <span className="text-xs font-semibold text-[var(--text-body)] tabular-nums">~{pct}%</span>
+            <div className="w-10 h-1.5 bg-[var(--surface-08)] rounded-full overflow-hidden shrink-0">
+                <div className="h-full bg-[var(--accent)] rounded-full" style={{ width: `${barPct}%` }} />
+            </div>
+        </div>
+    )
 }
 
 function VolumeBar({ value, max }) {
@@ -59,13 +75,31 @@ function LoadingTab() {
     )
 }
 
-function EmptyTab({ icon: Icon, text }) {
+function EmptyTab({ icon: Icon, text, onRetry, retrying = false, retryLabel = 'Reload' }) {
     return (
         <div className="flex flex-col items-center justify-center py-20 gap-3">
             <Icon className="w-8 h-8 text-[var(--text-faint)]" />
-            <span className="text-sm text-[var(--text-faint)]">{text}</span>
+            <span className="text-sm text-[var(--text-faint)] text-center max-w-sm">{text}</span>
+            {onRetry && (
+                <button onClick={onRetry} disabled={retrying}
+                    className="mt-1 flex items-center gap-2 px-3.5 py-2 text-xs font-semibold rounded-xl bg-[var(--surface-08)] hover:bg-[var(--surface-10)] text-[var(--text-body)] border border-[var(--border-subtle)] transition-all disabled:opacity-50">
+                    <RefreshCw className={`w-3.5 h-3.5 ${retrying ? 'animate-spin' : ''}`} />
+                    {retrying ? 'Loading…' : retryLabel}
+                </button>
+            )}
         </div>
     )
+}
+
+// DataForSEO returns first_seen as "YYYY-MM-DD HH:MM:SS +00:00" (space instead of "T") — Chrome/V8
+// parses that fine, but Safari's stricter Date parser returns "Invalid Date". Normalize to ISO 8601
+// so it works cross-browser; falls back to "—" instead of showing Invalid Date.
+function formatFirstSeen(value) {
+    if (!value) return '—'
+    const raw = typeof value === 'object' ? (value.date || value.value) : value
+    const isoLike = typeof raw === 'string' ? raw.replace(' ', 'T') : raw
+    const date = new Date(isoLike)
+    return isNaN(date.getTime()) ? '—' : date.toLocaleDateString('en-US')
 }
 
 // Mirrors the known table shape instead of a bare spinner while rankings load.
@@ -467,6 +501,7 @@ function RankingHistoryChart({ siteId, refreshKey }) {
     const W = 640, H = 180, padL = 34, padR = 12, padT = 12, padB = 24
     const plotW = W - padL - padR, plotH = H - padT - padB
     const n = history.length
+    const gradientId = `pos-history-fill-${siteId}`
 
     const positions = history.map(h => h.avgPosition)
     const rawMin = Math.min(...positions)
@@ -481,54 +516,94 @@ function RankingHistoryChart({ siteId, refreshKey }) {
     const yAt = (pos) => padT + plotH * (pos - minPos) / range
 
     const points = history.map((h, i) => `${xAt(i)},${yAt(h.avgPosition)}`).join(' ')
+    const areaPoints = `${xAt(0)},${padT + plotH} ${points} ${xAt(n - 1)},${padT + plotH}`
     const formatDate = (iso) => new Date(iso).toLocaleDateString('en-US', { day: '2-digit', month: '2-digit' })
     const yTicks = [minPos, Math.round((minPos + maxPos) / 2), maxPos]
 
+    // Positive = improved (lower position) — same convention as ChangeCell/change in the
+    // keyword table (previous - current), applied here across the full history span.
+    const trendDelta = n > 1 ? Math.round((positions[0] - positions[n - 1]) * 10) / 10 : null
+
     return (
         <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl p-5 mb-6">
-            <div className="flex items-center justify-between mb-4">
-                <h3 className="text-sm font-semibold text-[var(--text-white)]">Avg. Position History</h3>
+            <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
+                <div className="flex items-center gap-2.5">
+                    <h3 className="text-sm font-semibold text-[var(--text-white)]">Avg. Position History</h3>
+                    {trendDelta != null && trendDelta !== 0 && (
+                        <span className={`inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md text-xs font-semibold tabular-nums ${
+                            trendDelta > 0 ? 'bg-[var(--success-soft)] text-[var(--success)]' : 'bg-[var(--danger-soft)] text-[var(--danger)]'
+                        }`}>
+                            {trendDelta > 0 ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
+                            {Math.abs(trendDelta)}
+                        </span>
+                    )}
+                </div>
                 <span className="text-xs text-[var(--text-faint)]">{n} check{n !== 1 ? 's' : ''} recorded</span>
             </div>
 
             <div className="relative">
                 <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-auto" preserveAspectRatio="xMidYMid meet">
+                    <defs>
+                        <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stopColor="var(--accent)" stopOpacity="0.22" />
+                            <stop offset="100%" stopColor="var(--accent)" stopOpacity="0" />
+                        </linearGradient>
+                    </defs>
+
                     {yTicks.map(v => (
                         <g key={v}>
                             <line x1={padL} x2={W - padR} y1={yAt(v)} y2={yAt(v)} stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
-                            <text x={padL - 8} y={yAt(v) + 3} textAnchor="end" fontSize="9" fill="#64748b">#{v}</text>
+                            <text x={padL - 8} y={yAt(v) + 3} textAnchor="end" fontSize="9" fill="var(--text-faint)">#{v}</text>
                         </g>
                     ))}
 
                     {history.map((h, i) => {
                         if (n > 1 && i !== 0 && i !== n - 1 && i % Math.ceil(n / 6) !== 0) return null
                         return (
-                            <text key={i} x={xAt(i)} y={H - 6} textAnchor="middle" fontSize="9" fill="#64748b">
+                            <text key={i} x={xAt(i)} y={H - 6} textAnchor="middle" fontSize="9" fill="var(--text-faint)">
                                 {formatDate(h.date)}
                             </text>
                         )
                     })}
 
+                    {n > 1 && <polygon points={areaPoints} fill={`url(#${gradientId})`} stroke="none" />}
+
+                    {hover != null && (
+                        <line x1={xAt(hover)} x2={xAt(hover)} y1={padT} y2={padT + plotH}
+                            stroke="var(--border-strong)" strokeWidth="1" strokeDasharray="3 3" />
+                    )}
+
                     {n > 1 && (
                         <polyline points={points} fill="none" stroke="var(--accent)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                     )}
-                    {history.map((h, i) => (
-                        <circle key={i} cx={xAt(i)} cy={yAt(h.avgPosition)} r={hover === i ? 5 : 3.5}
-                            fill="var(--accent)" stroke="var(--bg-surface)" strokeWidth="2"
-                            style={{ cursor: 'pointer' }}
-                            onMouseEnter={() => setHover(i)} onMouseLeave={() => setHover(null)} />
-                    ))}
+                    {history.map((h, i) => {
+                        const isLast = i === n - 1
+                        const isHovered = hover === i
+                        return (
+                            <g key={i}>
+                                {/* Visible point — the latest check is emphasized by default, not just on hover */}
+                                <circle cx={xAt(i)} cy={yAt(h.avgPosition)} r={isHovered ? 6 : isLast ? 5 : 3.5}
+                                    fill="var(--accent)" stroke="var(--bg-surface)" strokeWidth="2" />
+                                {/* Invisible larger hit target — a 3.5px radius is hard to hit with a
+                                    mouse and nearly impossible on touch */}
+                                <circle cx={xAt(i)} cy={yAt(h.avgPosition)} r="14" fill="transparent"
+                                    style={{ cursor: 'pointer' }}
+                                    onMouseEnter={() => setHover(i)} onMouseLeave={() => setHover(null)}
+                                    onTouchStart={() => setHover(i)} />
+                            </g>
+                        )
+                    })}
                 </svg>
 
                 {hover != null && (
-                    <div className="absolute px-2.5 py-1.5 bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-lg text-xs pointer-events-none shadow-lg"
+                    <div className="absolute px-2.5 py-1.5 bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-lg text-xs pointer-events-none shadow-lg whitespace-nowrap z-10"
                         style={{
-                            left: `${(xAt(hover) / W) * 100}%`,
+                            left: `${Math.min(Math.max((xAt(hover) / W) * 100, 12), 88)}%`,
                             top: `${(yAt(history[hover].avgPosition) / H) * 100}%`,
                             transform: 'translate(-50%, -130%)',
                         }}>
                         <div className="text-[var(--text-faint)]">{formatDate(history[hover].date)}</div>
-                        <div className="text-[var(--text-white)] font-semibold">Avg. #{history[hover].avgPosition} &middot; {history[hover].keywordsRanked} keywords</div>
+                        <div className="text-[var(--text-white)] font-semibold tabular-nums">Avg. #{history[hover].avgPosition} &middot; {history[hover].keywordsRanked} keywords</div>
                     </div>
                 )}
             </div>
@@ -815,11 +890,11 @@ function RankingsTab({ siteId, site, onSiteUpdated, onStatsChange }) {
                                             className="w-3.5 h-3.5 rounded border-[var(--border-strong)] accent-red-500 cursor-pointer" />
                                     </th>
                                     <th className="px-5 py-3 text-left text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider">Keyword</th>
-                                    <th className="px-5 py-3 text-left text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider">Position</th>
-                                    <th className="px-5 py-3 text-left text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider">Change</th>
-                                    <th className="px-5 py-3 text-left text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider hidden sm:table-cell">CTR (est.)</th>
+                                    <th className="px-5 py-3 text-right text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider">Position</th>
+                                    <th className="px-5 py-3 text-right text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider">Change</th>
+                                    <th className="px-5 py-3 text-right text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider hidden sm:table-cell">CTR (est.)</th>
                                     <th className="px-5 py-3 text-left text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider hidden sm:table-cell">URL</th>
-                                    <th className="px-5 py-3 text-left text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider hidden md:table-cell">Date</th>
+                                    <th className="px-5 py-3 text-right text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider hidden md:table-cell">Date</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -842,8 +917,8 @@ function RankingsTab({ siteId, site, onSiteUpdated, onStatsChange }) {
                                                 <td className="px-5 py-3.5">
                                                     <div className="flex items-center gap-2">
                                                         <span className="text-sm text-[var(--text-body)]">{keyword}</span>
-                                                        {insightDone && <span className="w-1.5 h-1.5 rounded-full bg-emerald-500/70 shrink-0" title="Content plan available" />}
-                                                        {insightPending && <Loader2 className="w-2.5 h-2.5 text-[var(--text-faint)] animate-spin shrink-0" />}
+                                                        {insightDone && <span className="w-1.5 h-1.5 rounded-full bg-emerald-500/70 shrink-0" role="img" aria-label="Content plan available" title="Content plan available" />}
+                                                        {insightPending && <Loader2 className="w-2.5 h-2.5 text-[var(--text-faint)] animate-spin shrink-0" aria-label="Content plan generating" />}
                                                         <button type="button" onClick={e => { e.stopPropagation(); toggleExpand(keyword) }}
                                                             aria-expanded={isExpanded} aria-controls={`kw-detail-${keyword}`}
                                                             aria-label={isExpanded ? 'Collapse details' : 'Expand details'}
@@ -852,12 +927,10 @@ function RankingsTab({ siteId, site, onSiteUpdated, onStatsChange }) {
                                                         </button>
                                                     </div>
                                                 </td>
-                                                <td className="px-5 py-3.5"><PositionCell position={current?.position} /></td>
-                                                <td className="px-5 py-3.5"><ChangeCell change={change} /></td>
-                                                <td className="px-5 py-3.5 hidden sm:table-cell">
-                                                    {current?.position ? (
-                                                        <span className="text-xs font-semibold text-[var(--text-body)]">~{getCTR(current.position)}%</span>
-                                                    ) : <span className="text-xs text-[var(--text-faint)]">—</span>}
+                                                <td className="px-5 py-3.5 text-right"><PositionCell position={current?.position} /></td>
+                                                <td className="px-5 py-3.5 text-right"><ChangeCell change={change} /></td>
+                                                <td className="px-5 py-3.5 hidden sm:table-cell text-right">
+                                                    <CTRCell position={current?.position} />
                                                 </td>
                                                 <td className="px-5 py-3.5 hidden sm:table-cell">
                                                     {current?.url && /^https?:\/\//.test(current.url) ? (
@@ -867,9 +940,9 @@ function RankingsTab({ siteId, site, onSiteUpdated, onStatsChange }) {
                                                         </a>
                                                     ) : <span className="text-xs text-[var(--text-faint)]">—</span>}
                                                 </td>
-                                                <td className="px-5 py-3.5 hidden md:table-cell">
+                                                <td className="px-5 py-3.5 hidden md:table-cell text-right">
                                                     {current?.checkedAt
-                                                        ? <span className="text-xs text-[var(--text-faint)]">{new Date(current.checkedAt).toLocaleDateString('en-US')}</span>
+                                                        ? <span className="text-xs text-[var(--text-faint)] tabular-nums">{new Date(current.checkedAt).toLocaleDateString('en-US')}</span>
                                                         : <span className="text-xs text-[var(--text-faint)]">—</span>}
                                                 </td>
                                             </tr>
@@ -915,13 +988,14 @@ const DIFF_FILTERS = [
     { id: 'HIGH',   label: 'High' },
 ]
 
-function KeywordIdeasTab({ siteId }) {
+function KeywordIdeasTab({ siteId, plan }) {
     const [data, setData]             = useState(null)
     const [loading, setLoading]       = useState(false)
     const [loaded, setLoaded]         = useState(false)
     const [adding, setAdding]         = useState(new Set())
     const [added, setAdded]           = useState(new Set())
     const [diffFilter, setDiffFilter] = useState('ALL')
+    const [limitReached, setLimitReached] = useState(null) // { used, limit }
 
     const handleAddKeyword = async (keyword) => {
         setAdding(prev => new Set(prev).add(keyword))
@@ -942,12 +1016,14 @@ function KeywordIdeasTab({ siteId }) {
 
     const fetch_ = async () => {
         setLoading(true)
+        setLimitReached(null)
         try {
             const token = localStorage.getItem('token')
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/seo/sites/${siteId}/keyword-ideas`, {
                 headers: { Authorization: `Bearer ${token}` },
             })
             const d = await res.json()
+            if (res.status === 429 && d.error === 'monthly_limit_reached') { setLimitReached({ used: d.used, limit: d.limit }); setLoaded(true); return }
             if (!res.ok) throw new Error(d.error)
             setData(d); setLoaded(true)
         } catch (err) { toast.error(err.message || 'Error') }
@@ -961,6 +1037,29 @@ function KeywordIdeasTab({ siteId }) {
     const filterByDiff = (items) => diffFilter === 'ALL' ? items : (items || []).filter(i => (i.competition || '').toUpperCase() === diffFilter)
     const filteredVolumes = filterByDiff(data?.volumes)
     const filteredIdeas   = filterByDiff(data?.ideas)
+
+    if (limitReached) return (
+        <div className="flex flex-col items-center justify-center py-12 gap-4 bg-[var(--bg-surface)] border border-amber-500/15 rounded-2xl">
+            <div className="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center">
+                <Lock className="w-5 h-5 text-amber-400" />
+            </div>
+            <div className="text-center">
+                <p className="text-sm font-semibold text-[var(--text-white)] mb-1">Monthly limit reached</p>
+                <p className="text-xs text-[var(--text-faint)]">
+                    You've used {limitReached.limit} of {limitReached.limit} keyword idea lookups this month.<br />
+                    {plan === 'einsteiger' || plan === 'pro'
+                        ? 'Upgrade for more lookups per month.'
+                        : 'The limit resets on the 1st of next month.'}
+                </p>
+            </div>
+            {(plan === 'einsteiger' || plan === 'pro') && (
+                <Link href="/en/seo/pricing"
+                    className="flex items-center gap-2 px-4 py-2 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all">
+                    Upgrade plan →
+                </Link>
+            )}
+        </div>
+    )
 
     if (!loaded) return (
         <div className="flex flex-col items-center justify-center py-20 gap-4">
@@ -1196,11 +1295,67 @@ function CompetitorsTab({ siteId }) {
 
 // ─── Backlinks Tab ────────────────────────────────────────────────────────────
 
-function BacklinksTab({ siteId }) {
+function DonutChart({ segments, size = 128, strokeWidth = 20 }) {
+    const total = segments.reduce((sum, s) => sum + s.value, 0)
+    if (!total) return null
+
+    const radius = (size - strokeWidth) / 2
+    const circumference = 2 * Math.PI * radius
+
+    let cumulative = 0
+    const arcs = segments.map(s => {
+        const dash = (s.value / total) * circumference
+        const arc = { ...s, dash, offset: cumulative }
+        cumulative += dash
+        return arc
+    })
+
+    return (
+        <div className="flex items-center gap-5 flex-wrap">
+            <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className="-rotate-90 shrink-0">
+                <circle cx={size / 2} cy={size / 2} r={radius} fill="none" stroke="var(--surface-08)" strokeWidth={strokeWidth} />
+                {arcs.map((a, i) => (
+                    <motion.circle key={a.label}
+                        cx={size / 2} cy={size / 2} r={radius} fill="none"
+                        stroke={a.color} strokeWidth={strokeWidth}
+                        strokeDasharray={`${a.dash} ${circumference - a.dash}`}
+                        strokeDashoffset={-a.offset}
+                        initial={{ opacity: 0, scale: 0.85 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.5, delay: i * 0.08, ease: 'easeOut' }}
+                        style={{ transformOrigin: '50% 50%' }}
+                    />
+                ))}
+            </svg>
+            <div className="space-y-2 min-w-[140px]">
+                {arcs.map(a => (
+                    <div key={a.label} className="flex items-center gap-2">
+                        <span className="w-2.5 h-2.5 rounded-full shrink-0" style={{ background: a.color }} />
+                        <span className="text-xs text-[var(--text-muted)] truncate">{a.label}</span>
+                        <span className="text-xs text-[var(--text-white)] font-semibold tabular-nums ml-auto pl-3">{a.value} · {Math.round((a.value / total) * 100)}%</span>
+                    </div>
+                ))}
+            </div>
+        </div>
+    )
+}
+
+function BacklinksTab({ siteId, plan }) {
     const [summary, setSummary]     = useState(null)
     const [checkedAt, setCheckedAt] = useState(null)
     const [loading, setLoading]     = useState(false)
     const [loaded, setLoaded]       = useState(false)
+
+    const [refDomains, setRefDomains]           = useState(null)
+    const [refCheckedAt, setRefCheckedAt]       = useState(null)
+    const [refLoading, setRefLoading]           = useState(false)
+    const [refLoaded, setRefLoaded]             = useState(false)
+
+    const [gap, setGap]                         = useState(null)
+    const [gapLoading, setGapLoading]           = useState(false)
+    const [gapLoaded, setGapLoaded]             = useState(false)
+    const [gapLimitReached, setGapLimitReached] = useState(null) // { used, limit }
+    const [competitorsInput, setCompetitorsInput] = useState('')
 
     const fetch_ = async (force = false) => {
         setLoading(true)
@@ -1211,43 +1366,136 @@ function BacklinksTab({ siteId }) {
             const d = await res.json()
             if (!res.ok) throw new Error(d.error)
             setSummary(d.summary); setCheckedAt(d.checkedAt); setLoaded(true)
-            if (force) toast.success('Loaded current backlink data')
-        } catch (err) { toast.error(err.message || 'Error') }
+            if (d.staleError) toast.error('Update failed — showing last known state.')
+            else if (force) toast.success('Loaded current backlink data')
+        } catch (err) {
+            toast.error(err.message || 'Error')
+            setLoaded(true) // otherwise the view stays stuck on the loading spinner if the first check fails
+        }
         finally { setLoading(false) }
     }
 
-    useEffect(() => { fetch_() }, [siteId])
+    const fetchReferringDomains = async (force = false) => {
+        setRefLoading(true)
+        try {
+            const token = localStorage.getItem('token')
+            const url = `${process.env.NEXT_PUBLIC_API_URL}/seo/sites/${siteId}/referring-domains${force ? '?force=true' : ''}`
+            const res = await fetch(url, { headers: { Authorization: `Bearer ${token}` } })
+            const d = await res.json()
+            if (!res.ok) throw new Error(d.error)
+            setRefDomains(d.domains); setRefCheckedAt(d.checkedAt); setRefLoaded(true)
+            if (force) toast.success('Loaded current referring domains')
+        } catch (err) { toast.error(err.message || 'Error') }
+        finally { setRefLoading(false) }
+    }
+
+    const fetchGap = async (force = false, competitorsOverride = '') => {
+        setGapLoading(true)
+        setGapLimitReached(null)
+        try {
+            const token = localStorage.getItem('token')
+            const params = new URLSearchParams()
+            if (force) params.set('force', 'true')
+            if (competitorsOverride) params.set('competitors', competitorsOverride)
+            const qs = params.toString()
+            const url = `${process.env.NEXT_PUBLIC_API_URL}/seo/sites/${siteId}/backlink-gap${qs ? `?${qs}` : ''}`
+            const res = await fetch(url, { headers: { Authorization: `Bearer ${token}` } })
+            const d = await res.json()
+            if (res.status === 429 && d.error === 'monthly_limit_reached') { setGapLimitReached({ used: d.used, limit: d.limit }); setGapLoaded(true); return }
+            if (!res.ok) throw new Error(d.error)
+            setGap(d); setGapLoaded(true)
+            if (d.manual && d.competitors?.length) setCompetitorsInput(d.competitors.join(', '))
+            if (force) toast.success('Link gap analysis updated')
+        } catch (err) { toast.error(err.message || 'Error running the link gap analysis') }
+        finally { setGapLoading(false) }
+    }
+
+    const handleGapSubmit = (e) => {
+        e.preventDefault()
+        fetchGap(true, competitorsInput.trim())
+    }
+
+    useEffect(() => {
+        fetch_()
+        fetchReferringDomains()
+        if (plan && plan !== 'einsteiger') fetchGap()
+    }, [siteId, plan])
 
     if (!loaded) return <LoadingTab />
 
-    if (!summary) return <EmptyTab icon={Link2} text="No backlink data found." />
+    // Summary is a separate, aggregated DataForSEO metric set that's often still empty for
+    // small/new domains, even though the raw lists (referring domains, link gap) below already
+    // have hits. An empty summary must not hide the sections below it.
+    const stats = summary ? [
+        { label: 'Total Backlinks', value: summary.backlinks?.toLocaleString('en-US') ?? '—' },
+        { label: 'Referring Domains', value: summary.referringDomains?.toLocaleString('en-US') ?? '—' },
+        { label: 'Referring IPs', value: summary.referringIPs?.toLocaleString('en-US') ?? '—' },
+        { label: 'Dofollow', value: summary.dofollow?.toLocaleString('en-US') ?? '—' },
+        { label: 'Nofollow', value: summary.nofollow?.toLocaleString('en-US') ?? '—' },
+        { label: 'Spam Score', value: summary.spamScore != null ? `${summary.spamScore}%` : '—', risky: summary.spamScore > 30 },
+    ] : []
 
-    const stats = [
-        { label: 'Total Backlinks',      value: summary.backlinks?.toLocaleString('en-US') ?? '—', color: 'text-[var(--text-white)]' },
-        { label: 'Referring Domains',    value: summary.referringDomains?.toLocaleString('en-US') ?? '—', color: 'text-[var(--accent)]' },
-        { label: 'Referring IPs',        value: summary.referringIPs?.toLocaleString('en-US') ?? '—', color: 'text-[var(--accent)]' },
-        { label: 'Dofollow',             value: summary.dofollow?.toLocaleString('en-US') ?? '—', color: 'text-[var(--accent)]' },
-        { label: 'Nofollow',             value: summary.nofollow?.toLocaleString('en-US') ?? '—', color: 'text-[var(--text-muted)]' },
-        { label: 'Spam Score',           value: summary.spamScore != null ? `${summary.spamScore}%` : '—', risky: summary.spamScore > 30 },
+    // Domains linking to several competitors at once come first — highest link-building value
+    const sortedGap = gap?.gap?.length
+        ? [...gap.gap].sort((a, b) => (b.linksToCount - a.linksToCount) || ((b.rank || 0) - (a.rank || 0)))
+        : []
+    const maxRank = sortedGap.length ? Math.max(...sortedGap.map(g => g.rank || 0)) : 0
+
+    const competitorCounts = (gap?.competitors || [])
+        .map(c => ({ domain: c, count: sortedGap.filter(g => g.linksTo.some(l => l.competitor === c)).length }))
+        .sort((a, b) => b.count - a.count)
+    const maxCompetitorCount = competitorCounts.length ? Math.max(...competitorCounts.map(c => c.count)) : 0
+
+    // Overlap degree: how many domains link to 1, 2, 3, 4+ competitors at once. Deliberately
+    // spread-out Tailwind color families (400 shade, bold on dark ground) instead of adjacent
+    // tones like emerald/teal, which look too similar to each other.
+    const OVERLAP_COLORS = [
+        'var(--accent)',              // Blue (brand)
+        'oklch(70.4% 0.191 22)',      // Red
+        'oklch(82.8% 0.189 84)',      // Amber
+        'oklch(76.5% 0.177 163)',     // Emerald
+        'oklch(74% 0.238 322)',       // Fuchsia
     ]
+    const overlapCounts = {}
+    sortedGap.forEach(g => { overlapCounts[g.linksToCount] = (overlapCounts[g.linksToCount] || 0) + 1 })
+    const overlapSegments = Object.keys(overlapCounts)
+        .map(Number)
+        .sort((a, b) => b - a)
+        .map((n, i) => ({ label: `${n}× competitors`, value: overlapCounts[n], color: OVERLAP_COLORS[i] ?? '#475569' }))
+
+    // Rank distribution: rough authority breakdown of the gap domains
+    const RANK_BUCKETS = [
+        { label: 'Low (< 100)', test: r => r < 100 },
+        { label: 'Medium (100–199)', test: r => r >= 100 && r < 200 },
+        { label: 'High (200+)', test: r => r >= 200 },
+    ]
+    const rankBuckets = RANK_BUCKETS.map(b => ({ label: b.label, count: sortedGap.filter(g => b.test(g.rank || 0)).length }))
+    const maxRankBucket = Math.max(...rankBuckets.map(b => b.count), 1)
 
     return (
         <div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-6">
-                {stats.map(s => (
-                    <div key={s.label} className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-xl p-4">
-                        <div className="text-xs text-[var(--text-faint)] mb-1.5">{s.label}</div>
-                        <div className={`flex items-center gap-1.5 text-xl font-bold ${s.risky ? 'text-[var(--danger)]' : (s.color || 'text-[var(--text-white)]')}`}>
-                            {s.risky && <AlertTriangle className="w-4 h-4 shrink-0" strokeWidth={2.5} />}
-                            {s.value}
-                        </div>
+            {summary ? (
+                <>
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-6">
+                        {stats.map(s => (
+                            <div key={s.label} className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-xl p-4">
+                                <div className="text-xs text-[var(--text-faint)] mb-1.5">{s.label}</div>
+                                <div className={`flex items-center gap-1.5 text-xl font-bold ${s.risky ? 'text-[var(--danger)]' : 'text-[var(--text-white)]'}`}>
+                                    {s.risky && <AlertTriangle className="w-4 h-4 shrink-0" strokeWidth={2.5} />}
+                                    {s.value}
+                                </div>
+                            </div>
+                        ))}
                     </div>
-                ))}
-            </div>
-
-            {summary.firstSeen && (
-                <div className="text-xs text-[var(--text-faint)]">
-                    First backlink since: {new Date(summary.firstSeen).toLocaleDateString('en-US')}
+                    {summary.firstSeen && (
+                        <div className="text-xs text-[var(--text-faint)]">
+                            First backlink since: {new Date(summary.firstSeen).toLocaleDateString('en-US')}
+                        </div>
+                    )}
+                </>
+            ) : (
+                <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl py-10 mb-6">
+                    <EmptyTab icon={Link2} text="No backlink summary available yet — this often takes longer for new/small domains at DataForSEO. The raw data below may still show hits." onRetry={() => fetch_(true)} retrying={loading} />
                 </div>
             )}
             {checkedAt && (
@@ -1256,11 +1504,274 @@ function BacklinksTab({ siteId }) {
                 </div>
             )}
 
-            <button onClick={() => fetch_(true)} disabled={loading}
-                className="mt-4 flex items-center gap-2 text-xs text-[var(--text-faint)] hover:text-[var(--text-muted)] transition-colors">
-                <RefreshCw className={`w-3 h-3 ${loading ? 'animate-spin' : ''}`} />
-                Reload
-            </button>
+            {summary && (
+                <button onClick={() => fetch_(true)} disabled={loading}
+                    className="mt-4 flex items-center gap-2 text-xs text-[var(--text-faint)] hover:text-[var(--text-muted)] transition-colors">
+                    <RefreshCw className={`w-3 h-3 ${loading ? 'animate-spin' : ''}`} />
+                    Reload
+                </button>
+            )}
+
+            {/* Referring Domains: who links to me */}
+            <div className="mt-10 pt-8 border-t border-[var(--border-subtle)]">
+                <h3 className="text-base font-bold text-[var(--text-white)] flex items-center gap-2 mb-1">
+                    <Globe className="w-4 h-4 text-[var(--accent)]" />
+                    Who links to me
+                </h3>
+                <p className="text-xs text-[var(--text-faint)] mb-4">
+                    Domains that actually link to you — sorted by domain rank (authority).
+                </p>
+
+                {!refLoaded ? (
+                    <div className="flex items-center justify-center py-14">
+                        <Loader2 className="w-5 h-5 text-[var(--text-faint)] animate-spin" />
+                    </div>
+                ) : !refDomains?.length ? (
+                    <EmptyTab icon={Globe} text="No referring domains found." onRetry={() => fetchReferringDomains(true)} retrying={refLoading} />
+                ) : (
+                    <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl overflow-hidden">
+                        <div className="overflow-x-auto">
+                            <table className="w-full">
+                                <thead>
+                                    <tr className="border-b border-[var(--border-subtle)]">
+                                        <th className="px-5 py-3 text-left text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider">Domain</th>
+                                        <th className="px-5 py-3 text-left text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider">Rank</th>
+                                        <th className="px-5 py-3 text-left text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider hidden sm:table-cell">Backlinks</th>
+                                        <th className="px-5 py-3 text-left text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider hidden sm:table-cell">Since</th>
+                                        <th className="px-5 py-3 w-10"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {refDomains.map((d, i) => (
+                                        <tr key={d.domain} className={i < refDomains.length - 1 ? 'border-b border-[var(--border-subtle)]' : ''}>
+                                            <td className="px-5 py-3.5">
+                                                <span className="text-sm text-[var(--text-white)] truncate">{d.domain}</span>
+                                            </td>
+                                            <td className="px-5 py-3.5">
+                                                <span className="text-sm text-[var(--text-muted)] tabular-nums">{d.rank ?? '—'}</span>
+                                            </td>
+                                            <td className="px-5 py-3.5 hidden sm:table-cell">
+                                                <span className="text-sm text-[var(--text-muted)] tabular-nums">{d.backlinks?.toLocaleString('en-US') ?? '—'}</span>
+                                            </td>
+                                            <td className="px-5 py-3.5 hidden sm:table-cell">
+                                                <span className="text-xs text-[var(--text-faint)]">{formatFirstSeen(d.firstSeen)}</span>
+                                            </td>
+                                            <td className="px-5 py-3.5 text-right">
+                                                <a href={`https://${d.domain}`} target="_blank" rel="noopener noreferrer"
+                                                    className="inline-flex items-center text-[var(--text-faint)] hover:text-[var(--accent)] transition-colors">
+                                                    <ExternalLink className="w-3.5 h-3.5" />
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                )}
+
+                {refCheckedAt && (
+                    <div className="text-xs text-[var(--text-faint)] mt-3">
+                        Last checked: {new Date(refCheckedAt).toLocaleDateString('en-US')} {new Date(refCheckedAt).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}
+                    </div>
+                )}
+                <button onClick={() => fetchReferringDomains(true)} disabled={refLoading}
+                    className="mt-2 flex items-center gap-2 text-xs text-[var(--text-faint)] hover:text-[var(--text-muted)] transition-colors">
+                    <RefreshCw className={`w-3 h-3 ${refLoading ? 'animate-spin' : ''}`} />
+                    Reload
+                </button>
+            </div>
+
+            {/* Link gap vs. competitors */}
+            <div className="mt-10 pt-8 border-t border-[var(--border-subtle)]">
+                <h3 className="text-base font-bold text-[var(--text-white)] flex items-center gap-2 mb-1">
+                    <GitCompare className="w-4 h-4 text-[var(--accent)]" />
+                    Link gap vs. competitors
+                </h3>
+                <p className="text-xs text-[var(--text-faint)] mb-4">
+                    Domains that link to your competitors — but not (yet) to you. Concrete outreach targets for link building.
+                </p>
+
+                {plan !== 'einsteiger' && (
+                    <form onSubmit={handleGapSubmit} className="flex flex-col sm:flex-row gap-3 mb-5">
+                        <input
+                            value={competitorsInput}
+                            onChange={e => setCompetitorsInput(e.target.value)}
+                            placeholder="peec.ai, otterly.ai, rankscale.ai — leave empty for automatic detection"
+                            className="flex-1 bg-[var(--surface-06)] border border-[var(--border-subtle)] focus:border-[var(--accent-border)] rounded-xl px-4 py-2.5 text-[var(--text-white)] placeholder:text-[var(--text-faint)] outline-none text-sm"
+                        />
+                        <button type="submit" disabled={gapLoading}
+                            className="flex items-center gap-2 px-4 py-2.5 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all disabled:opacity-50 whitespace-nowrap">
+                            {gapLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <GitCompare className="w-4 h-4" />}
+                            {gapLoading ? 'Analyzing…' : competitorsInput.trim() ? 'Analyze' : 'Re-analyze'}
+                        </button>
+                    </form>
+                )}
+
+                {plan === 'einsteiger' ? (
+                    <div className="flex flex-col items-center justify-center py-14 gap-4 bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl">
+                        <div className="w-12 h-12 rounded-2xl bg-[var(--accent-soft)] border border-[var(--accent-border)] flex items-center justify-center">
+                            <Lock className="w-5 h-5 text-[var(--accent)]" />
+                        </div>
+                        <div className="text-center">
+                            <p className="text-sm font-semibold text-[var(--text-white)] mb-1">Available from Pro</p>
+                            <p className="text-xs text-[var(--text-faint)] max-w-sm">
+                                Find domains that link to your competitors but not to you — from <strong className="text-[var(--text-white)]">Pro (€79/month)</strong>.
+                            </p>
+                        </div>
+                        <Link href="/en/seo/pricing"
+                            className="flex items-center gap-2 px-5 py-2.5 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all">
+                            Upgrade to Pro →
+                        </Link>
+                    </div>
+                ) : gapLimitReached ? (
+                    <div className="flex flex-col items-center justify-center py-12 gap-3 bg-[var(--bg-surface)] border border-amber-500/15 rounded-2xl">
+                        <div className="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center">
+                            <Lock className="w-5 h-5 text-amber-400" />
+                        </div>
+                        <p className="text-sm font-semibold text-[var(--text-white)]">Monthly limit reached</p>
+                        <p className="text-xs text-[var(--text-faint)] text-center">
+                            {gapLimitReached.used}/{gapLimitReached.limit} analyses used this month.<br />
+                            {plan === 'pro' ? 'Upgrade to Expert for more analyses/month.' : 'The limit resets on the 1st of next month.'}
+                        </p>
+                        {plan === 'pro' && (
+                            <Link href="/en/seo/pricing"
+                                className="flex items-center gap-2 px-4 py-2 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all">
+                                Upgrade to Expert →
+                            </Link>
+                        )}
+                    </div>
+                ) : !gapLoaded ? (
+                    <div className="flex items-center justify-center py-14">
+                        <Loader2 className="w-5 h-5 text-[var(--text-faint)] animate-spin" />
+                    </div>
+                ) : sortedGap.length === 0 ? (
+                    <div className="flex flex-col items-center justify-center py-14 gap-3">
+                        <GitCompare className="w-8 h-8 text-[var(--text-faint)]" />
+                        <span className="text-sm text-[var(--text-faint)] text-center max-w-sm">
+                            {gap?.competitors?.length
+                                ? 'No link gap found — a great sign, your competitors have no detectable link-building advantage.'
+                                : 'No competitors found — the gap analysis needs at least one detected competitor (tab "Competitors").'}
+                        </span>
+                    </div>
+                ) : (
+                    <>
+                        <div className="flex flex-wrap items-center gap-1.5 mb-5">
+                            <span className="text-xs text-[var(--text-faint)]">Compared against ({gap.manual ? 'manually entered' : 'automatically detected'}):</span>
+                            {gap.competitors.map(c => (
+                                <span key={c} className="text-xs px-2 py-1 rounded-md bg-[var(--surface-08)] text-[var(--text-muted)]">{c}</span>
+                            ))}
+                        </div>
+
+                        {/* Charts: overlap degree (donut) + rank distribution */}
+                        <div className="grid sm:grid-cols-2 gap-4 mb-5">
+                            <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl p-5">
+                                <h4 className="text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider mb-4">Overlap degree</h4>
+                                <DonutChart segments={overlapSegments} />
+                            </div>
+                            <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl p-5">
+                                <h4 className="text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider mb-4">Rank distribution</h4>
+                                <div className="space-y-3">
+                                    {rankBuckets.map((b, i) => (
+                                        <div key={b.label}>
+                                            <div className="flex items-center justify-between gap-3 mb-1">
+                                                <span className="text-sm text-[var(--text-body)]">{b.label}</span>
+                                                <span className="text-xs text-[var(--accent)] font-semibold tabular-nums shrink-0">{b.count}</span>
+                                            </div>
+                                            <div className="relative h-2 rounded-full bg-[var(--surface-08)] overflow-hidden">
+                                                <motion.div
+                                                    className="absolute inset-y-0 left-0 rounded-full bg-[var(--accent)]"
+                                                    initial={{ width: 0 }}
+                                                    animate={{ width: `${(b.count / maxRankBucket) * 100}%` }}
+                                                    transition={{ duration: 0.6, delay: i * 0.06, ease: 'easeOut' }}
+                                                />
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Chart: gap domains per competitor */}
+                        <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl p-5 mb-5">
+                            <h4 className="text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider mb-4">Gap domains per competitor</h4>
+                            <div className="space-y-3">
+                                {competitorCounts.map((c, i) => (
+                                    <div key={c.domain}>
+                                        <div className="flex items-center justify-between gap-3 mb-1">
+                                            <span className="text-sm text-[var(--text-body)] truncate">{c.domain}</span>
+                                            <span className="text-xs text-[var(--accent)] font-semibold tabular-nums shrink-0">{c.count} domains</span>
+                                        </div>
+                                        <div className="relative h-2 rounded-full bg-[var(--surface-08)] overflow-hidden">
+                                            <motion.div
+                                                className="absolute inset-y-0 left-0 rounded-full bg-[var(--accent)]"
+                                                initial={{ width: 0 }}
+                                                animate={{ width: maxCompetitorCount ? `${(c.count / maxCompetitorCount) * 100}%` : '0%' }}
+                                                transition={{ duration: 0.6, delay: i * 0.06, ease: 'easeOut' }}
+                                            />
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Table: concrete link-building targets */}
+                        <div className="bg-[var(--bg-surface)] border border-[var(--accent-border)] rounded-2xl overflow-hidden">
+                            <div className="overflow-x-auto">
+                                <table className="w-full">
+                                    <thead>
+                                        <tr className="border-b border-[var(--border-subtle)]">
+                                            <th className="px-5 py-3 text-left text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider">Domain</th>
+                                            <th className="px-5 py-3 text-left text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider">Rank</th>
+                                            <th className="px-5 py-3 text-left text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider hidden sm:table-cell">Links to</th>
+                                            <th className="px-5 py-3 w-10"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {sortedGap.map((g, i) => (
+                                            <tr key={g.domain} className={i < sortedGap.length - 1 ? 'border-b border-[var(--border-subtle)]' : ''}>
+                                                <td className="px-5 py-3.5">
+                                                    <div className="flex items-center gap-2">
+                                                        <span className="text-sm text-[var(--text-white)] truncate">{g.domain}</span>
+                                                        {g.linksToCount > 1 && (
+                                                            <span className="text-[10px] px-1.5 py-0.5 rounded-md bg-[var(--accent-soft)] border border-[var(--accent-border)] text-[var(--accent)] font-semibold shrink-0">
+                                                                {g.linksToCount}×
+                                                            </span>
+                                                        )}
+                                                    </div>
+                                                </td>
+                                                <td className="px-5 py-3.5">
+                                                    <VolumeBar value={g.rank} max={maxRank} />
+                                                </td>
+                                                <td className="px-5 py-3.5 hidden sm:table-cell">
+                                                    <div className="flex flex-wrap gap-1">
+                                                        {g.linksTo.map(l => (
+                                                            <span key={l.competitor} className="text-[11px] px-1.5 py-0.5 rounded-md bg-[var(--surface-08)] text-[var(--text-muted)]">
+                                                                {l.competitor}
+                                                            </span>
+                                                        ))}
+                                                    </div>
+                                                </td>
+                                                <td className="px-5 py-3.5 text-right">
+                                                    <a href={`https://${g.domain}`} target="_blank" rel="noopener noreferrer"
+                                                        className="inline-flex items-center text-[var(--text-faint)] hover:text-[var(--accent)] transition-colors">
+                                                        <ExternalLink className="w-3.5 h-3.5" />
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        {gap.checkedAt && (
+                            <div className="text-xs text-[var(--text-faint)] mt-3">
+                                Last analyzed: {new Date(gap.checkedAt).toLocaleDateString('en-US')} {new Date(gap.checkedAt).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}
+                            </div>
+                        )}
+                    </>
+                )}
+            </div>
         </div>
     )
 }
@@ -1472,6 +1983,159 @@ function ContentGapTab({ siteId, plan }) {
     )
 }
 
+// ─── Discover Rankings Tab ───────────────────────────────────────────────────
+
+function RankedKeywordsTab({ siteId }) {
+    const [loading, setLoading]           = useState(true)
+    const [keywords, setKeywords]         = useState(null)
+    const [checkedAt, setCheckedAt]       = useState(null)
+    const [used, setUsed]                 = useState(0)
+    const [limit, setLimit]               = useState(0)
+    const [limitReached, setLimitReached] = useState(null) // { used, limit }
+    const [adding, setAdding]             = useState(new Set())
+    const [added, setAdded]               = useState(new Set())
+
+    const maxVolume = keywords?.length ? Math.max(...keywords.map(k => k.searchVolume || 0)) : 0
+
+    const fetch_ = async (force = false) => {
+        setLoading(true)
+        setLimitReached(null)
+        try {
+            const token = localStorage.getItem('token')
+            const url = `${process.env.NEXT_PUBLIC_API_URL}/seo/sites/${siteId}/ranked-keywords${force ? '?force=true' : ''}`
+            const res = await fetch(url, { headers: { Authorization: `Bearer ${token}` } })
+            const d = await res.json()
+            if (res.status === 429 && d.error === 'monthly_limit_reached') { setLimitReached({ used: d.used, limit: d.limit }); return }
+            if (!res.ok) throw new Error(d.error)
+            setKeywords(d.keywords); setCheckedAt(d.checkedAt); setUsed(d.used); setLimit(d.limit)
+            setAdded(new Set())
+        } catch (err) { toast.error(err.message || 'Error') }
+        finally { setLoading(false) }
+    }
+
+    useEffect(() => { fetch_() }, [siteId])
+
+    const handleAddKeyword = async (keyword) => {
+        setAdding(prev => new Set(prev).add(keyword))
+        try {
+            const token = localStorage.getItem('token')
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/seo/sites/${siteId}/keywords`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+                body: JSON.stringify({ keywords: [keyword] }),
+            })
+            const d = await res.json()
+            if (!res.ok) throw new Error(d.error)
+            setAdded(prev => new Set(prev).add(keyword))
+            toast.success(`"${keyword}" is now being tracked`)
+        } catch (err) { toast.error(err.message || 'Error') }
+        finally { setAdding(prev => { const n = new Set(prev); n.delete(keyword); return n }) }
+    }
+
+    if (loading && !keywords) return <LoadingTab />
+
+    return (
+        <div className="space-y-6">
+            <div className="flex items-center justify-between bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl p-5">
+                <p className="text-sm text-[var(--text-muted)] max-w-lg">
+                    Keywords your website currently has a confirmed position for on Google — including real search volume. The starting point for deciding what's worth tracking.
+                </p>
+                {limit > 0 && (
+                    <span className="text-xs text-[var(--text-faint)] whitespace-nowrap ml-4">{used}/{limit} this month</span>
+                )}
+            </div>
+
+            {limitReached && (
+                <div className="flex flex-col items-center justify-center py-12 gap-4 bg-[var(--bg-surface)] border border-amber-500/15 rounded-2xl">
+                    <div className="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center">
+                        <Lock className="w-5 h-5 text-amber-400" />
+                    </div>
+                    <div className="text-center">
+                        <p className="text-sm font-semibold text-[var(--text-white)] mb-1">Monthly limit reached</p>
+                        <p className="text-xs text-[var(--text-faint)]">
+                            You've used {limitReached.limit} of {limitReached.limit} ranking lookups this month.<br />
+                            The limit resets on the 1st of next month.
+                        </p>
+                    </div>
+                </div>
+            )}
+
+            {limitReached ? null : !keywords?.length ? (
+                <EmptyTab icon={Search} text="No confirmed rankings found." onRetry={() => fetch_(true)} retrying={loading} />
+            ) : (
+                <>
+                    <div className="flex items-center justify-between mb-3">
+                        <h3 className="text-sm font-semibold text-[var(--text-muted)] uppercase tracking-wider">
+                            {keywords.length} keywords you currently rank for
+                        </h3>
+                        <span className="text-xs text-[var(--text-faint)]">Sorted by position</span>
+                    </div>
+                    <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl overflow-hidden">
+                        <div className="overflow-x-auto">
+                            <table className="w-full">
+                                <thead>
+                                    <tr className="border-b border-[var(--border-subtle)]">
+                                        <th className="px-5 py-3 text-left text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider">Keyword</th>
+                                        <th className="px-5 py-3 text-left text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider">Position</th>
+                                        <th className="px-5 py-3 text-left text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider hidden sm:table-cell">Volume/mo</th>
+                                        <th className="px-5 py-3 text-left text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider hidden sm:table-cell">Competition</th>
+                                        <th className="px-5 py-3 text-left text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider hidden md:table-cell">CPC</th>
+                                        <th className="px-5 py-3" />
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {keywords.map(item => {
+                                        const isAdded  = added.has(item.keyword)
+                                        const isAdding = adding.has(item.keyword)
+                                        return (
+                                            <tr key={item.keyword} className="border-b border-[var(--border-subtle)] last:border-0 hover:bg-[var(--surface-08)] transition-colors">
+                                                <td className="px-5 py-3.5"><span className="text-sm text-[var(--text-body)] font-medium">{item.keyword}</span></td>
+                                                <td className="px-5 py-3.5"><PositionCell position={item.position} /></td>
+                                                <td className="px-5 py-3.5 hidden sm:table-cell"><VolumeBar value={item.searchVolume} max={maxVolume} /></td>
+                                                <td className="px-5 py-3.5 hidden sm:table-cell">
+                                                    <span className={`text-xs font-medium ${item.competition === 'HIGH' ? 'text-red-400' : item.competition === 'MEDIUM' ? 'text-amber-400' : 'text-emerald-400'}`}>
+                                                        {item.competition || '—'}
+                                                    </span>
+                                                </td>
+                                                <td className="px-5 py-3.5 hidden md:table-cell">
+                                                    <span className="text-xs text-[var(--text-faint)]">{item.cpc ? `€${item.cpc.toFixed(2)}` : '—'}</span>
+                                                </td>
+                                                <td className="px-5 py-3.5 text-right">
+                                                    {isAdded ? (
+                                                        <span className="flex items-center justify-end gap-1 text-xs text-emerald-400 font-semibold">
+                                                            <Check className="w-3.5 h-3.5" />Tracked
+                                                        </span>
+                                                    ) : (
+                                                        <button onClick={() => handleAddKeyword(item.keyword)} disabled={isAdding}
+                                                            className="flex items-center gap-1 ml-auto px-2.5 py-1.5 text-xs font-semibold rounded-lg bg-[var(--accent-soft)] hover:bg-[var(--accent-soft-strong)] text-[var(--accent)] border border-[var(--accent-border)] transition-all disabled:opacity-50 whitespace-nowrap">
+                                                            {isAdding ? <Loader2 className="w-3 h-3 animate-spin" /> : <Plus className="w-3 h-3" />}
+                                                            Track
+                                                        </button>
+                                                    )}
+                                                </td>
+                                            </tr>
+                                        )
+                                    })}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    {checkedAt && (
+                        <div className="text-xs text-[var(--text-faint)] mt-3">
+                            Last checked: {new Date(checkedAt).toLocaleDateString('en-US')} {new Date(checkedAt).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}
+                        </div>
+                    )}
+                    <button onClick={() => fetch_(true)} disabled={loading}
+                        className="mt-2 flex items-center gap-2 text-xs text-[var(--text-faint)] hover:text-[var(--text-muted)] transition-colors">
+                        <RefreshCw className={`w-3 h-3 ${loading ? 'animate-spin' : ''}`} />
+                        Reload
+                    </button>
+                </>
+            )}
+        </div>
+    )
+}
+
 // ─── Settings Tab ────────────────────────────────────────────────────────────
 
 function SettingsTab({ siteId }) {
@@ -1576,6 +2240,7 @@ function SettingsTab({ siteId }) {
 
 const TABS = [
     { id: 'rankings',    label: 'Rankings' },
+    { id: 'ranked',      label: 'Discover Rankings' },
     { id: 'ideas',       label: 'Keyword Ideas' },
     { id: 'gap',         label: 'Content Gap' },
     { id: 'competitors', label: 'Competitors' },
@@ -1666,7 +2331,7 @@ export default function SeoSitePageEn() {
         <div className="min-h-screen bg-[var(--bg-base)]">
             <Navbar locale="en" />
 
-            <div className="max-w-6xl mx-auto px-5 sm:px-8 pt-28 pb-16">
+            <div className="max-w-[1600px] mx-auto px-5 sm:px-8 pt-28 pb-16">
 
                 {/* Back + Header */}
                 <div className="mb-8">
@@ -1706,10 +2371,11 @@ export default function SeoSitePageEn() {
                     {/* Tab Content */}
                     <div className="flex-1 min-w-0">
                         {tab === 'rankings'    && <RankingsTab siteId={siteId} site={site} onSiteUpdated={fetchSite} onStatsChange={setOverview} />}
-                        {tab === 'ideas'       && <KeywordIdeasTab siteId={siteId} />}
+                        {tab === 'ranked'      && <RankedKeywordsTab siteId={siteId} />}
+                        {tab === 'ideas'       && <KeywordIdeasTab siteId={siteId} plan={plan} />}
                         {tab === 'gap'         && <ContentGapTab siteId={siteId} plan={plan} />}
                         {tab === 'competitors' && <CompetitorsTab siteId={siteId} />}
-                        {tab === 'backlinks'   && <BacklinksTab siteId={siteId} />}
+                        {tab === 'backlinks'   && <BacklinksTab siteId={siteId} plan={plan} />}
                         {tab === 'settings'    && <SettingsTab siteId={siteId} />}
                     </div>
                 </div>
