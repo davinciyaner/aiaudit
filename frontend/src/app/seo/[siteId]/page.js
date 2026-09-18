@@ -16,13 +16,13 @@ import Navbar from '../../components/Navbar'
 // Tiers unterscheiden sich nicht nur über Farbe (emerald/teal/amber wären für farbfehlsichtige
 // Nutzer kaum zu trennen) — Top 3 bekommt zusätzlich ein Award-Icon als formbasiertes Signal.
 function PositionCell({ position }) {
-    if (position == null) return <span className="text-[var(--text-faint)] text-sm">—</span>
+    if (position == null) return <span className="text-[var(--text-faint)] text-sm tabular-nums">—</span>
     const tier =
         position <= 10 ? { chip: 'bg-[var(--success-soft)] border-[var(--success-border)]', text: 'text-[var(--success)]', icon: position <= 3 ? Award : null } :
         position <= 30 ? { chip: 'bg-[var(--warning-soft)] border-[var(--warning-border)]',  text: 'text-[var(--warning)]', icon: null } :
-                         { chip: 'border-transparent',                                       text: 'text-[var(--text-muted)]',        icon: null }
+                         { chip: 'bg-[var(--surface-08)] border-[var(--border-subtle)]',      text: 'text-[var(--text-muted)]',        icon: null }
     return (
-        <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md border text-sm font-bold ${tier.chip} ${tier.text}`}>
+        <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md border text-sm font-bold tabular-nums ${tier.chip} ${tier.text}`}>
             {tier.icon && <tier.icon className="w-3 h-3" strokeWidth={2.5} />}
             #{position}
         </span>
@@ -30,10 +30,26 @@ function PositionCell({ position }) {
 }
 
 function ChangeCell({ change }) {
-    if (change == null) return <span className="text-[var(--text-faint)] text-xs">—</span>
-    if (change > 0) return <span className="flex items-center gap-0.5 text-[var(--success)] text-xs font-semibold"><ChevronUp className="w-3 h-3" />+{change}</span>
-    if (change < 0) return <span className="flex items-center gap-0.5 text-[var(--danger)] text-xs font-semibold"><ChevronDown className="w-3 h-3" />{change}</span>
-    return <span className="flex items-center gap-0.5 text-[var(--text-faint)] text-xs"><Minus className="w-3 h-3" />0</span>
+    if (change == null) return <span className="flex items-center justify-end text-[var(--text-faint)] text-xs">—</span>
+    if (change > 0) return <span className="flex items-center justify-end gap-0.5 text-[var(--success)] text-xs font-semibold tabular-nums"><ChevronUp className="w-3 h-3 shrink-0" />+{change}</span>
+    if (change < 0) return <span className="flex items-center justify-end gap-0.5 text-[var(--danger)] text-xs font-semibold tabular-nums"><ChevronDown className="w-3 h-3 shrink-0" />{change}</span>
+    return <span className="flex items-center justify-end gap-0.5 text-[var(--text-faint)] text-xs tabular-nums"><Minus className="w-3 h-3 shrink-0" />0</span>
+}
+
+// Kompakte Variante von VolumeBar (weiter unten) — gleiche visuelle Sprache fürs "Wert als Balken
+// plus Zahl"-Muster, hier an den CTR-Wertebereich (max. 28%, siehe CTR_RATES) angepasst.
+function CTRCell({ position }) {
+    if (!position) return <span className="text-xs text-[var(--text-faint)]">—</span>
+    const pct = getCTR(position)
+    const barPct = Math.min((pct / CTR_RATES[0]) * 100, 100)
+    return (
+        <div className="flex items-center justify-end gap-2">
+            <span className="text-xs font-semibold text-[var(--text-body)] tabular-nums">~{pct}%</span>
+            <div className="w-10 h-1.5 bg-[var(--surface-08)] rounded-full overflow-hidden shrink-0">
+                <div className="h-full bg-[var(--accent)] rounded-full" style={{ width: `${barPct}%` }} />
+            </div>
+        </div>
+    )
 }
 
 function VolumeBar({ value, max }) {
@@ -483,6 +499,7 @@ function RankingHistoryChart({ siteId, refreshKey }) {
     const W = 640, H = 180, padL = 34, padR = 12, padT = 12, padB = 24
     const plotW = W - padL - padR, plotH = H - padT - padB
     const n = history.length
+    const gradientId = `pos-history-fill-${siteId}`
 
     const positions = history.map(h => h.avgPosition)
     const rawMin = Math.min(...positions)
@@ -497,54 +514,94 @@ function RankingHistoryChart({ siteId, refreshKey }) {
     const yAt = (pos) => padT + plotH * (pos - minPos) / range
 
     const points = history.map((h, i) => `${xAt(i)},${yAt(h.avgPosition)}`).join(' ')
+    const areaPoints = `${xAt(0)},${padT + plotH} ${points} ${xAt(n - 1)},${padT + plotH}`
     const formatDate = (iso) => new Date(iso).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit' })
     const yTicks = [minPos, Math.round((minPos + maxPos) / 2), maxPos]
 
+    // Positiv = besser geworden (weniger Position) — dieselbe Konvention wie ChangeCell/change
+    // in der Keyword-Tabelle (previous - current), hier über die volle Verlaufsspanne.
+    const trendDelta = n > 1 ? Math.round((positions[0] - positions[n - 1]) * 10) / 10 : null
+
     return (
         <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl p-5 mb-6">
-            <div className="flex items-center justify-between mb-4">
-                <h3 className="text-sm font-semibold text-[var(--text-white)]">Ø Position Verlauf</h3>
+            <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
+                <div className="flex items-center gap-2.5">
+                    <h3 className="text-sm font-semibold text-[var(--text-white)]">Ø Position Verlauf</h3>
+                    {trendDelta != null && trendDelta !== 0 && (
+                        <span className={`inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md text-xs font-semibold tabular-nums ${
+                            trendDelta > 0 ? 'bg-[var(--success-soft)] text-[var(--success)]' : 'bg-[var(--danger-soft)] text-[var(--danger)]'
+                        }`}>
+                            {trendDelta > 0 ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
+                            {Math.abs(trendDelta)}
+                        </span>
+                    )}
+                </div>
                 <span className="text-xs text-[var(--text-faint)]">{n} Check{n !== 1 ? 's' : ''} aufgezeichnet</span>
             </div>
 
             <div className="relative">
                 <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-auto" preserveAspectRatio="xMidYMid meet">
+                    <defs>
+                        <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stopColor="var(--accent)" stopOpacity="0.22" />
+                            <stop offset="100%" stopColor="var(--accent)" stopOpacity="0" />
+                        </linearGradient>
+                    </defs>
+
                     {yTicks.map(v => (
                         <g key={v}>
                             <line x1={padL} x2={W - padR} y1={yAt(v)} y2={yAt(v)} stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
-                            <text x={padL - 8} y={yAt(v) + 3} textAnchor="end" fontSize="9" fill="#64748b">#{v}</text>
+                            <text x={padL - 8} y={yAt(v) + 3} textAnchor="end" fontSize="9" fill="var(--text-faint)">#{v}</text>
                         </g>
                     ))}
 
                     {history.map((h, i) => {
                         if (n > 1 && i !== 0 && i !== n - 1 && i % Math.ceil(n / 6) !== 0) return null
                         return (
-                            <text key={i} x={xAt(i)} y={H - 6} textAnchor="middle" fontSize="9" fill="#64748b">
+                            <text key={i} x={xAt(i)} y={H - 6} textAnchor="middle" fontSize="9" fill="var(--text-faint)">
                                 {formatDate(h.date)}
                             </text>
                         )
                     })}
 
+                    {n > 1 && <polygon points={areaPoints} fill={`url(#${gradientId})`} stroke="none" />}
+
+                    {hover != null && (
+                        <line x1={xAt(hover)} x2={xAt(hover)} y1={padT} y2={padT + plotH}
+                            stroke="var(--border-strong)" strokeWidth="1" strokeDasharray="3 3" />
+                    )}
+
                     {n > 1 && (
                         <polyline points={points} fill="none" stroke="var(--accent)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                     )}
-                    {history.map((h, i) => (
-                        <circle key={i} cx={xAt(i)} cy={yAt(h.avgPosition)} r={hover === i ? 5 : 3.5}
-                            fill="var(--accent)" stroke="var(--bg-surface)" strokeWidth="2"
-                            style={{ cursor: 'pointer' }}
-                            onMouseEnter={() => setHover(i)} onMouseLeave={() => setHover(null)} />
-                    ))}
+                    {history.map((h, i) => {
+                        const isLast = i === n - 1
+                        const isHovered = hover === i
+                        return (
+                            <g key={i}>
+                                {/* Sichtbarer Punkt — letzter Check dauerhaft betont, nicht nur bei Hover */}
+                                <circle cx={xAt(i)} cy={yAt(h.avgPosition)} r={isHovered ? 6 : isLast ? 5 : 3.5}
+                                    fill="var(--accent)" stroke="var(--bg-surface)" strokeWidth="2" />
+                                {/* Unsichtbares, groesseres Hit-Target — 3.5px Radius ist auf Maus und
+                                    besonders Touch kaum treffbar */}
+                                <circle cx={xAt(i)} cy={yAt(h.avgPosition)} r="14" fill="transparent"
+                                    style={{ cursor: 'pointer' }}
+                                    onMouseEnter={() => setHover(i)} onMouseLeave={() => setHover(null)}
+                                    onTouchStart={() => setHover(i)} />
+                            </g>
+                        )
+                    })}
                 </svg>
 
                 {hover != null && (
-                    <div className="absolute px-2.5 py-1.5 bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-lg text-xs pointer-events-none shadow-lg"
+                    <div className="absolute px-2.5 py-1.5 bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-lg text-xs pointer-events-none shadow-lg whitespace-nowrap z-10"
                         style={{
-                            left: `${(xAt(hover) / W) * 100}%`,
+                            left: `${Math.min(Math.max((xAt(hover) / W) * 100, 12), 88)}%`,
                             top: `${(yAt(history[hover].avgPosition) / H) * 100}%`,
                             transform: 'translate(-50%, -130%)',
                         }}>
                         <div className="text-[var(--text-faint)]">{formatDate(history[hover].date)}</div>
-                        <div className="text-[var(--text-white)] font-semibold">Ø #{history[hover].avgPosition} &middot; {history[hover].keywordsRanked} Keywords</div>
+                        <div className="text-[var(--text-white)] font-semibold tabular-nums">Ø #{history[hover].avgPosition} &middot; {history[hover].keywordsRanked} Keywords</div>
                     </div>
                 )}
             </div>
@@ -897,11 +954,11 @@ function RankingsTab({ siteId, site, onSiteUpdated, onStatsChange }) {
                                             className="w-3.5 h-3.5 rounded border-[var(--border-strong)] accent-red-500 cursor-pointer" />
                                     </th>
                                     <th className="px-5 py-3 text-left text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider">Keyword</th>
-                                    <th className="px-5 py-3 text-left text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider">Position</th>
-                                    <th className="px-5 py-3 text-left text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider">Änderung</th>
-                                    <th className="px-5 py-3 text-left text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider hidden sm:table-cell">CTR (est.)</th>
+                                    <th className="px-5 py-3 text-right text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider">Position</th>
+                                    <th className="px-5 py-3 text-right text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider">Änderung</th>
+                                    <th className="px-5 py-3 text-right text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider hidden sm:table-cell">CTR (est.)</th>
                                     <th className="px-5 py-3 text-left text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider hidden sm:table-cell">URL</th>
-                                    <th className="px-5 py-3 text-left text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider hidden md:table-cell">Datum</th>
+                                    <th className="px-5 py-3 text-right text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider hidden md:table-cell">Datum</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -924,8 +981,8 @@ function RankingsTab({ siteId, site, onSiteUpdated, onStatsChange }) {
                                                 <td className="px-5 py-3.5">
                                                     <div className="flex items-center gap-2">
                                                         <span className="text-sm text-[var(--text-body)]">{keyword}</span>
-                                                        {insightDone && <span className="w-1.5 h-1.5 rounded-full bg-emerald-500/70 shrink-0" title="Content-Plan verfügbar" />}
-                                                        {insightPending && <Loader2 className="w-2.5 h-2.5 text-[var(--text-faint)] animate-spin shrink-0" />}
+                                                        {insightDone && <span className="w-1.5 h-1.5 rounded-full bg-emerald-500/70 shrink-0" role="img" aria-label="Content-Plan verfügbar" title="Content-Plan verfügbar" />}
+                                                        {insightPending && <Loader2 className="w-2.5 h-2.5 text-[var(--text-faint)] animate-spin shrink-0" aria-label="Content-Plan wird erstellt" />}
                                                         <button type="button" onClick={e => { e.stopPropagation(); toggleExpand(keyword) }}
                                                             aria-expanded={isExpanded} aria-controls={`kw-detail-${keyword}`}
                                                             aria-label={isExpanded ? 'Details einklappen' : 'Details ausklappen'}
@@ -934,12 +991,10 @@ function RankingsTab({ siteId, site, onSiteUpdated, onStatsChange }) {
                                                         </button>
                                                     </div>
                                                 </td>
-                                                <td className="px-5 py-3.5"><PositionCell position={current?.position} /></td>
-                                                <td className="px-5 py-3.5"><ChangeCell change={change} /></td>
-                                                <td className="px-5 py-3.5 hidden sm:table-cell">
-                                                    {current?.position ? (
-                                                        <span className="text-xs font-semibold text-[var(--text-body)]">~{getCTR(current.position)}%</span>
-                                                    ) : <span className="text-xs text-[var(--text-faint)]">—</span>}
+                                                <td className="px-5 py-3.5 text-right"><PositionCell position={current?.position} /></td>
+                                                <td className="px-5 py-3.5 text-right"><ChangeCell change={change} /></td>
+                                                <td className="px-5 py-3.5 hidden sm:table-cell text-right">
+                                                    <CTRCell position={current?.position} />
                                                 </td>
                                                 <td className="px-5 py-3.5 hidden sm:table-cell">
                                                     {current?.url && /^https?:\/\//.test(current.url) ? (
@@ -949,9 +1004,9 @@ function RankingsTab({ siteId, site, onSiteUpdated, onStatsChange }) {
                                                         </a>
                                                     ) : <span className="text-xs text-[var(--text-faint)]">—</span>}
                                                 </td>
-                                                <td className="px-5 py-3.5 hidden md:table-cell">
+                                                <td className="px-5 py-3.5 hidden md:table-cell text-right">
                                                     {current?.checkedAt
-                                                        ? <span className="text-xs text-[var(--text-faint)]">{new Date(current.checkedAt).toLocaleDateString('de-DE')}</span>
+                                                        ? <span className="text-xs text-[var(--text-faint)] tabular-nums">{new Date(current.checkedAt).toLocaleDateString('de-DE')}</span>
                                                         : <span className="text-xs text-[var(--text-faint)]">—</span>}
                                                 </td>
                                             </tr>
