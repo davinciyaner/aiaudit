@@ -273,7 +273,7 @@ export default function AiVisibilityPage() {
                             </table>
                         </div>
                         <p className="mt-4">
-                            That spread is also why monitoring per platform separately makes more sense than a single overall number - a brand can be highly visible on Claude and completely invisible on ChatGPT for the exact same question.
+                            That spread is also why monitoring per platform separately makes more sense than a single overall number - a brand can be highly visible on Claude and completely invisible on ChatGPT for the exact same question. For the KPIs, dashboard walkthrough, and how to connect visibility to actual leads, see <Link href="/en/blog/measure-ai-visibility" className="text-violet-400 hover:text-violet-300">Measure AI Visibility: KPIs, Dashboard &amp; Your Own Data</Link>.
                         </p>
                     </section>
 

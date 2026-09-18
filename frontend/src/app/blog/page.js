@@ -25,6 +25,15 @@ const breadcrumbLd = {
 
 const ARTICLES = [
     {
+        slug: 'ki-sichtbarkeit-messen',
+        title: 'KI-Sichtbarkeit messen 2026: Kennzahlen, Dashboard & eigene Daten',
+        description: 'Die 3 Kennzahlen, die beim Messen von KI-Sichtbarkeit wirklich zählen - mit echten Dashboard-Screenshots und dem Schritt, den die meisten Guides auslassen: der Verbindung zu Leads.',
+        category: 'GEO',
+        categoryColor: '#06b6d4',
+        date: '18. September 2026',
+        readTime: '10 min',
+    },
+    {
         slug: 'beste-geo-ki-sichtbarkeit-tools-2026',
         title: 'Beste GEO- & KI-Sichtbarkeits-Tools 2026: 5 Tools im Vergleich',
         description: 'Scanora, Peec.ai, Otterly.ai, Writesonic und Rankscale im Preis- und Funktionsvergleich - faktenbasiert, mit Preisen Stand September 2026.',

@@ -25,6 +25,15 @@ const breadcrumbLd = {
 
 const ARTICLES = [
     {
+        slug: 'measure-ai-visibility',
+        title: 'Measure AI Visibility 2026: KPIs, Dashboard & Your Own Data',
+        description: 'The 3 KPIs that actually matter when measuring AI visibility - with real dashboard screenshots and the step most guides skip: connecting visibility to leads.',
+        category: 'GEO',
+        categoryColor: '#06b6d4',
+        date: 'Sep 18, 2026',
+        readTime: '10 min',
+    },
+    {
         slug: 'ai-visibility',
         title: 'AI Visibility: How to Get Cited by ChatGPT, Claude & Perplexity',
         description: 'AI visibility is more than llms.txt and schema markup. How to actually get cited by ChatGPT, Claude, Perplexity and Google AI Overview - including monitoring with Scanora.',

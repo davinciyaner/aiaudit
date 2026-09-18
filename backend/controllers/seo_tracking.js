@@ -823,10 +823,22 @@ export async function getRankingHistory(req, res) {
         const site = await SeoTrackedSite.findOne({ _id: req.params.id, userId: req.userId }).lean()
         if (!site) return res.status(404).json({ error: t('SITE_NOT_FOUND', req.language) })
 
+        // Drei Stufen, damit mehrfache Checks am selben Tag (z.B. manuelles "Jetzt prüfen"
+        // wiederholt gedrückt) nicht alle Treffer zusammenwerfen: erst OHNE Null-Filter pro
+        // (Tag, Keyword) nur den jeweils neuesten Check behalten (auch wenn der neueste "nicht
+        // gefunden" war — sonst würde ein späteres Null-Ergebnis durch einen älteren Treffer
+        // desselben Tages "gerettet"), dann Keywords ohne aktuelle Position rauswerfen, erst
+        // danach den Tages-Durchschnitt bilden.
         const byDay = await SeoKeywordRanking.aggregate([
-            { $match: { siteId: site._id, position: { $ne: null } } },
+            { $match: { siteId: site._id } },
+            { $sort: { checkedAt: -1 } },
             { $group: {
-                _id: { $dateToString: { format: '%Y-%m-%d', date: '$checkedAt' } },
+                _id: { day: { $dateToString: { format: '%Y-%m-%d', date: '$checkedAt' } }, keyword: '$keyword' },
+                position: { $first: '$position' },
+            } },
+            { $match: { position: { $ne: null } } },
+            { $group: {
+                _id: '$_id.day',
                 avgPosition: { $avg: '$position' },
                 keywordsRanked: { $sum: 1 },
             } },

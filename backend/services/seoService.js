@@ -8,6 +8,12 @@ import SeoTrackedSite from '../models/seo_tracked_site.js'
 const LOGIN    = process.env.DATAFORSEO_LOGIN
 const PASSWORD = process.env.DATAFORSEO_PASSWORD
 
+// DATAFORSEO_SANDBOX=true in .env schaltet auf sandbox.dataforseo.com um — gleiche Zugangsdaten,
+// gleiches Response-Format, aber Dummy-Daten statt echter Rankings und ohne Kosten. Nur fuers
+// Testen/Debuggen der SEO-Rank-Tracking-Integration gedacht, NICHT fuer GEO-Mention-Checks (dort
+// braucht es echte KI-Antworten, Sandbox wuerde das Ergebnis sinnlos machen).
+const DFS_HOST = process.env.DATAFORSEO_SANDBOX === 'true' ? 'sandbox.dataforseo.com' : 'api.dataforseo.com'
+
 const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
 
 function auth() {
@@ -23,7 +29,7 @@ function isConfigured() {
 }
 
 async function dfsPost(endpoint, body) {
-    const res = await fetch(`https://api.dataforseo.com${endpoint}`, {
+    const res = await fetch(`https://${DFS_HOST}${endpoint}`, {
         method: 'POST',
         headers: { 'Authorization': `Basic ${auth()}`, 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
