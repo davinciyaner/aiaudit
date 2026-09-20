@@ -33,6 +33,7 @@ export default function LoginPage() {
             if (!response.ok) throw new Error(data.error || 'Login fehlgeschlagen')
             localStorage.setItem('token', data.token)
             localStorage.setItem('user', JSON.stringify(data.user))
+            if (data.showReactivationBanner) localStorage.setItem('showReactivationBanner', '1')
             toast.success('Willkommen zurück!')
             setTimeout(() => router.push('/dashboard'), 1000)
         } catch (err) {
