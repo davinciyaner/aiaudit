@@ -25,7 +25,7 @@ const MESSAGES = {
         breadcrumb:       () => ['BreadcrumbList Schema fehlt', 'BreadcrumbList Schema hinzufuegen — hilft KI-Modellen und Google, die Seitenhierarchie zu verstehen'],
         brokenImages:     (list) => [list.length ? `Bild-Link(s) in strukturierten Daten sind kaputt (404): ${list.join(', ')}` : 'Bild-Links in strukturierten Daten kaputt', 'Alle image/logo-URLs im JSON-LD muessen erreichbar sein, sonst wirken die strukturierten Daten unglaubwuerdig'],
         faqMismatch:      (missing, total) => [`${missing} von ${total} FAQ-Antworten stehen im Schema, aber nicht im sichtbaren Server-HTML`, 'Alle FAQ-Antworten muessen als Text im initialen HTML vorhanden sein (z.B. via CSS-Transition statt Conditional-Unmount) — sonst sehen Crawler/LLMs nur die Fragen, nicht die Antworten'],
-        testimonials:     () => ['Keine Kundenstimmen/Testimonials gefunden', 'Echte Kundenzitate oder Case Studies ergaenzen (z.B. als <blockquote>) — starkes Vertrauenssignal fuer Nutzer und KI-Systeme'],
+        testimonials:     () => ['Keine Kundenstimmen/Testimonials gefunden', 'Echte Kundenzitate oder Case Studies als Zitat-Block ergaenzen — starkes Vertrauenssignal fuer Nutzer und KI-Systeme'],
         llmsTxt:          () => ['llms.txt fehlt — wichtigste GEO-Datei', 'llms.txt unter /llms.txt ablegen: erklaert KI-Modellen direkt was dein Produkt macht'],
         llmsFullTxt:      () => ['llms-full.txt fehlt', 'llms-full.txt mit vollstaendigem Seiteninhalt hinzufuegen (erweiterter llms.txt-Standard)'],
         aiCrawlers:       (list) => [list.length ? `KI-Crawler blockiert: ${list.join(', ')}` : 'KI-Crawler blockiert', 'GPTBot, ClaudeBot, PerplexityBot und weitere KI-Crawler in robots.txt erlauben'],
@@ -50,7 +50,7 @@ const MESSAGES = {
         breadcrumb:       () => ['BreadcrumbList schema missing', 'Add a BreadcrumbList schema — helps AI models and Google understand your page hierarchy'],
         brokenImages:     (list) => [list.length ? `Image link(s) in structured data are broken (404): ${list.join(', ')}` : 'Image links in structured data are broken', 'Every image/logo URL in the JSON-LD must be reachable, otherwise the structured data looks untrustworthy'],
         faqMismatch:      (missing, total) => [`${missing} of ${total} FAQ answers are in the schema but not in the visible server HTML`, "Every FAQ answer must exist as text in the initial HTML (e.g. via a CSS transition instead of a conditional unmount) — otherwise crawlers/LLMs only see the questions, not the answers"],
-        testimonials:     () => ['No customer testimonials found', 'Add real customer quotes or case studies (e.g. as a <blockquote>) — a strong trust signal for users and AI systems'],
+        testimonials:     () => ['No customer testimonials found', 'Add real customer quotes or case studies as a quote block — a strong trust signal for users and AI systems'],
         llmsTxt:          () => ['llms.txt missing — the most important GEO file', 'Add an llms.txt at /llms.txt: tells AI models directly what your product does'],
         llmsFullTxt:      () => ['llms-full.txt missing', 'Add an llms-full.txt with the full page content (extended llms.txt standard)'],
         aiCrawlers:       (list) => [list.length ? `AI crawlers blocked: ${list.join(', ')}` : 'AI crawlers blocked', 'Allow GPTBot, ClaudeBot, PerplexityBot, and other AI crawlers in robots.txt'],
@@ -379,6 +379,7 @@ export async function analyzeGEO(url, html, language) {
 
 function generateLlmsTxt(url, title, description, language) {
     const hostname = new URL(url).hostname
+    const sitemapUrl = new URL('/sitemap.xml', url).href
     if (language === 'en') {
         return `# ${title || hostname}
 
@@ -392,7 +393,7 @@ ${title || hostname} is a web service, available at ${url}.
 - Description: ${description || 'See the website for details'}
 
 ## Sitemap
-- ${url}/sitemap.xml
+- ${sitemapUrl}
 
 ## For AI systems
 This file follows the llms.txt standard (https://llmstxt.org).
@@ -410,7 +411,7 @@ ${title || hostname} ist ein Webdienst, erreichbar unter ${url}.
 - Beschreibung: ${description || 'Siehe Website fuer Details'}
 
 ## Sitemap
-- ${url}/sitemap.xml
+- ${sitemapUrl}
 
 ## Fuer KI-Systeme
 Diese Datei folgt dem llms.txt-Standard (https://llmstxt.org).

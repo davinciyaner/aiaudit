@@ -56,7 +56,7 @@ export default function AgbPage() {
                         <p className="bg-[var(--text-white)]/2 border border-[var(--text-white)]/5 rounded-xl p-4">
                             Finn Paustian<br />
                             Am Rund 6, 23566 Lübeck<br />
-                            E-Mail: <a href="mailto:sitecheckai@gmail.com" className="text-violet-400 hover:text-violet-300">sitecheckai@gmail.com</a><br />
+                            E-Mail: <a href="mailto:scanoraai@gmail.com" className="text-violet-400 hover:text-violet-300">scanoraai@gmail.com</a><br />
                             (nachfolgend „Anbieter")
                         </p>
                         <p>

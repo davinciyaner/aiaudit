@@ -50,7 +50,7 @@ export default function DatenschutzPage() {
                             Am Rund 6<br />
                             23566 Lübeck<br />
                             Deutschland<br />
-                            E-Mail: <a href="mailto:sitecheckai@gmail.com" className="text-violet-400 hover:text-violet-300">sitecheckai@gmail.com</a>
+                            E-Mail: <a href="mailto:scanoraai@gmail.com" className="text-violet-400 hover:text-violet-300">scanoraai@gmail.com</a>
                         </p>
                     </Section>
 
@@ -219,6 +219,28 @@ export default function DatenschutzPage() {
                             <p>
                                 <strong className="text-[var(--text-body)]">Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. a DSGVO (Einwilligung), § 25 Abs. 1 TTDSG.<br />
                                 <strong className="text-[var(--text-body)]">Speicherdauer:</strong> 12 Monate, danach automatisierte Löschung.<br />
+                                <strong className="text-[var(--text-body)]">Deine Rechte:</strong> Auskunft (Art. 15 DSGVO) und Löschung (Art. 17 DSGVO) kannst du jederzeit über <a href="/support" className="text-violet-400 hover:text-violet-300">unser Support-Formular</a> geltend machen.
+                            </p>
+                        </Sub>
+
+                        <Sub title="3.4 Beispiel-Report-Download (Lead-Magnet)">
+                            <p>
+                                Auf <strong className="text-[var(--text-body)]">scanora.ai/beispiel-report</strong> kannst du einen Beispiel-Report per E-Mail anfordern. Der Versand des Reports selbst ist rein transaktional — dafür ist keine gesonderte Einwilligung nötig, er erfolgt automatisch nach Angabe deiner E-Mail-Adresse.
+                            </p>
+                            <p>
+                                Zusätzlich schicken wir dir eine separate E-Mail mit der Frage, ob du außerdem gelegentlich Tipps und Erinnerungen zu deiner KI-Sichtbarkeit von uns erhalten möchtest (Double-Opt-In). Nur wenn du den Bestätigungslink in dieser E-Mail anklickst, nutzen wir deine Adresse für solche Updates. Ohne Klick passiert nichts weiter.
+                            </p>
+                            <ul className="list-disc list-inside space-y-1 ml-2">
+                                <li>E-Mail-Adresse und gewählte Sprache</li>
+                                <li>IP-Adresse und Zeitstempel der Anfrage sowie — falls erfolgt — des Bestätigungsklicks (Nachweis der wirksamen Einwilligung)</li>
+                                <li>Bestätigungs- und Abmeldestatus</li>
+                            </ul>
+                            <p>
+                                Jede Update-Mail enthält einen Abmeldelink, über den du die Nutzung deiner Adresse für Tipps & Erinnerungen jederzeit sofort beenden kannst.
+                            </p>
+                            <p>
+                                <strong className="text-[var(--text-body)]">Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. b DSGVO für den Versand des angeforderten Reports; Art. 6 Abs. 1 lit. a DSGVO (Einwilligung) für Tipps & Erinnerungen nach bestätigtem Opt-In.<br />
+                                <strong className="text-[var(--text-body)]">Speicherdauer:</strong> bis zum Widerruf/Abmeldung bzw. auf Anfrage über unser Support-Formular.<br />
                                 <strong className="text-[var(--text-body)]">Deine Rechte:</strong> Auskunft (Art. 15 DSGVO) und Löschung (Art. 17 DSGVO) kannst du jederzeit über <a href="/support" className="text-violet-400 hover:text-violet-300">unser Support-Formular</a> geltend machen.
                             </p>
                         </Sub>
@@ -436,7 +458,7 @@ export default function DatenschutzPage() {
                             <li><strong className="text-[var(--text-body)]">Beschwerde</strong>: Du hast das Recht, Beschwerde bei einer Datenschutzaufsichtsbehörde einzulegen. Zuständig ist das Unabhängige Landeszentrum für Datenschutz Schleswig-Holstein (ULD), Holstenstraße 98, 24103 Kiel, <a href="https://www.datenschutzzentrum.de" className="text-violet-400 hover:text-violet-300" target="_blank" rel="noopener noreferrer">datenschutzzentrum.de</a>.</li>
                         </ul>
                         <p>
-                            Zur Ausübung dieser Rechte wende dich per E-Mail an: <a href="mailto:sitecheckai@gmail.com" className="text-violet-400 hover:text-violet-300">sitecheckai@gmail.com</a>. Anfragen werden innerhalb von 30 Tagen beantwortet.
+                            Zur Ausübung dieser Rechte wende dich per E-Mail an: <a href="mailto:scanoraai@gmail.com" className="text-violet-400 hover:text-violet-300">scanoraai@gmail.com</a>. Anfragen werden innerhalb von 30 Tagen beantwortet.
                         </p>
                     </Section>
 

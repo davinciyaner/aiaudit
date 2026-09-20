@@ -36,7 +36,7 @@ export default function ImpressumPage() {
                     <section>
                         <h2 className="text-[var(--text-white)] font-semibold text-base mb-3">Kontakt</h2>
                         <p>
-                            E-Mail: <a href="mailto:sitecheckai@gmail.com" className="text-violet-400 hover:text-violet-300">sitecheckai@gmail.com</a><br />
+                            E-Mail: <a href="mailto:scanoraai@gmail.com" className="text-violet-400 hover:text-violet-300">scanoraai@gmail.com</a><br />
                             Telefon: 01752436318
                         </p>
                     </section>

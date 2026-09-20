@@ -310,12 +310,12 @@ export async function runAudit(url, language) {
         console.log('Analyse läuft...')
         const [seoResults, performance, keywords, geo] = await Promise.all([
             Promise.all(crawledPages.map(async p => {
-                const result = await analyzeSEO(p.url, p.html)
+                const result = await analyzeSEO(p.url, p.html, language)
                 result._url = p.url
                 return result
             })),
             analyzePerformance(url, page, { timing, resources: landingResources }),
-            analyzeKeywords(url, landingHtml),
+            analyzeKeywords(url, landingHtml, language),
             analyzeGEO(url, landingHtml, language),
         ])
         const seo = aggregateSEO(seoResults)

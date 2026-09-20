@@ -10,6 +10,7 @@ const MESSAGES = {
     // fuer authentifizierte Kontexte (z.B. Profil-Lookup) bestehen, wo das kein Problem ist.
     INVALID_CREDENTIALS: { de: "E-Mail oder Passwort falsch", en: "Email or password is incorrect" },
     EMAIL_REQUIRED: { de: "E-Mail ist erforderlich", en: "Email is required" },
+    INVALID_EMAIL: { de: "Bitte eine gültige E-Mail-Adresse eingeben", en: "Please enter a valid email address" },
     TOKEN_PASSWORD_REQUIRED: { de: "Token und Passwort sind erforderlich", en: "Token and password are required" },
     PASSWORD_TOO_SHORT: { de: "Passwort muss mindestens 6 Zeichen haben", en: "Password must be at least 6 characters" },
     LINK_INVALID_OR_EXPIRED: { de: "Link ungültig oder abgelaufen", en: "Link is invalid or expired" },

@@ -148,7 +148,7 @@ export default function NutzungsbedingungenPage() {
                             Es gilt das Recht der Bundesrepublik Deutschland. Für Verbraucher gilt dies nur, sofern dadurch keine zwingenden Verbraucherschutzbestimmungen des Aufenthaltslandes eingeschränkt werden.
                         </p>
                         <p>
-                            Bei Fragen oder Beschwerden: <a href="mailto:sitecheckai@gmail.com" className="text-violet-400 hover:text-violet-300">sitecheckai@gmail.com</a>
+                            Bei Fragen oder Beschwerden: <a href="mailto:scanoraai@gmail.com" className="text-violet-400 hover:text-violet-300">scanoraai@gmail.com</a>
                         </p>
                     </Section>
 

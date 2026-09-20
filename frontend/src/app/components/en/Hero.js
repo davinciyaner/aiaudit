@@ -1,10 +1,8 @@
 'use client'
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { ArrowRight, Globe, TrendingUp, Search, CheckCircle2, AlertCircle } from 'lucide-react'
-import Link from 'next/link'
+import { ArrowRight, Globe, Search, CheckCircle2, AlertCircle } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import { PLATFORM_META, ALL_PLATFORMS, PlatformIcon } from '../../geo/components/PlatformBadges'
 
 function normalizeUrl(input) {
     const trimmed = input.trim()
@@ -96,15 +94,6 @@ function HeroAuditInput() {
 }
 
 export default function Hero() {
-    const router = useRouter()
-
-    const goToAutomation = (e, dashboardHref, pricingHref) => {
-        if (!localStorage.getItem('user')) {
-            e.preventDefault()
-            router.push(pricingHref)
-        }
-    }
-
     return (
         <section id="hero" className="relative flex items-center pt-28 pb-16 sm:pt-36 sm:pb-24 overflow-hidden">
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[500px] rounded-full blur-3xl pointer-events-none"
@@ -152,43 +141,6 @@ export default function Hero() {
                         <HeroAuditInput />
                     </div>
 
-                    <div className="order-5 flex flex-wrap items-center justify-center gap-2">
-                        <Link href="/geo/dashboard"
-                            onClick={e => goToAutomation(e, '/geo/dashboard', '/geo/pricing')}
-                            className="group inline-flex items-center gap-1.5 pl-3 pr-2.5 py-2.5 rounded-full bg-[var(--surface-08)] border border-[var(--border-subtle)] hover:border-[var(--accent-border)] hover:bg-[var(--surface-10)] transition-all duration-200">
-                            <Globe className="w-3 h-3 text-[var(--text-muted)] group-hover:text-[var(--accent)] transition-colors" />
-                            <span className="text-xs font-medium text-[var(--text-body)] group-hover:text-[var(--text-white)] transition-colors">Start GEO Automation</span>
-                            <ArrowRight className="w-3 h-3 text-[var(--text-faint)] group-hover:translate-x-0.5 group-hover:text-[var(--accent)] transition-all" />
-                        </Link>
-                        <Link href="/seo/dashboard"
-                            onClick={e => goToAutomation(e, '/seo/dashboard', '/seo/pricing')}
-                            className="group inline-flex items-center gap-1.5 pl-3 pr-2.5 py-2.5 rounded-full bg-[var(--surface-08)] border border-[var(--border-subtle)] hover:border-[var(--accent-border)] hover:bg-[var(--surface-10)] transition-all duration-200">
-                            <TrendingUp className="w-3 h-3 text-[var(--text-muted)] group-hover:text-[var(--accent)] transition-colors" />
-                            <span className="text-xs font-medium text-[var(--text-body)] group-hover:text-[var(--text-white)] transition-colors">Track rankings automatically</span>
-                            <ArrowRight className="w-3 h-3 text-[var(--text-faint)] group-hover:translate-x-0.5 group-hover:text-[var(--accent)] transition-all" />
-                        </Link>
-                    </div>
-
-                    <div className="order-7 w-full max-w-3xl mt-14 pt-10 border-t border-[var(--border-subtle)]">
-                        <h2 className="text-base sm:text-lg font-bold text-[var(--text-white)] mb-1.5 text-center">Run a GEO Check per AI tool</h2>
-                        <p className="text-sm text-[var(--text-muted)] mb-5 max-w-lg mx-auto text-center">
-                            Pick ChatGPT, Claude, Perplexity, or Google AI Overview — results in seconds, no sign-up required.
-                        </p>
-                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-                            {ALL_PLATFORMS.map(p => {
-                                const meta = PLATFORM_META[p]
-                                return (
-                                    <Link key={p} href={`/en/geo/check?platform=${p}`}
-                                        title={`Check ${meta.label} visibility`}
-                                        className={`flex flex-col items-center text-center gap-2 py-4 px-2 rounded-2xl border transition-all duration-200 hover-lift hover:-translate-y-2 ${meta.bg} ${meta.border} hover:border-opacity-60`}>
-                                        <PlatformIcon platform={p} size="md" />
-                                        <span className="text-sm font-semibold text-[var(--text-white)] leading-tight">{meta.label}</span>
-                                        <span className="text-[11px] text-[var(--text-muted)]">Check visibility</span>
-                                    </Link>
-                                )
-                            })}
-                        </div>
-                    </div>
                 </div>
             </div>
         </section>

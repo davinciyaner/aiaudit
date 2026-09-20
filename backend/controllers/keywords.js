@@ -1,6 +1,31 @@
 import * as cheerio from 'cheerio'
 
-export async function analyzeKeywords(url, html) {
+const MESSAGES = {
+    de: {
+        fewTitleKeywords: () => 'Zu wenige Keywords im Title Tag — wichtigste Keywords einbauen',
+        fewH1Keywords: () => 'H1 enthält zu wenige Keywords — Hauptkeyword in H1 platzieren',
+        notInMeta: (list) => `Top-Keywords nicht in Meta Description: ${list.join(', ')}`,
+        weakKeywords: (n) => `${n} Keywords erscheinen nur einmal und haben keinen SEO-Wert`,
+    },
+    en: {
+        fewTitleKeywords: () => 'Too few keywords in the title tag — add your most important keywords',
+        fewH1Keywords: () => 'H1 contains too few keywords — place your main keyword in the H1',
+        notInMeta: (list) => `Top keywords missing from the meta description: ${list.join(', ')}`,
+        weakKeywords: (n) => `${n} keywords appear only once and have no SEO value`,
+    },
+}
+
+// "kostenlos"/"Vergleich"/"wie X funktioniert" sind DE-Templates; EN braucht eigene
+// grammatisch passende Muster statt einer woertlichen Uebersetzung.
+const LONGTAIL_TEMPLATES = {
+    de: (term) => [`${term} kostenlos`, `${term} Test`, `${term} Vergleich`, `${term} 2026`, `wie ${term} funktioniert`],
+    en: (term) => [`${term} free`, `${term} review`, `${term} vs`, `${term} 2026`, `how does ${term} work`],
+}
+
+export async function analyzeKeywords(url, html, language) {
+    const outputLang = language === 'en' ? 'en' : 'de'
+    const M = MESSAGES[outputLang]
+
     const $ = cheerio.load(html)
     $('script, style, noscript').remove()
 
@@ -12,13 +37,31 @@ export async function analyzeKeywords(url, html) {
     const metaKeywords = ($('meta[name="keywords"]').attr('content') || '').toLowerCase()
     const bodyText = $('body').text().toLowerCase().replace(/\s+/g, ' ')
 
-    // Keyword-Extraktion
+    // Keyword-Extraktion — deutsche Liste bewusst breit (Pronomen, Artikel, Hilfsverben,
+    // Konjunktionen), sonst rutschen haeufige Fuellwoerter wie "deine" oder "auch" als
+    // vermeintliches Top-Keyword durch und erzeugen sinnlose Long-Tail-Vorschlaege daraus.
     const stopWords = new Set([
-        'und', 'oder', 'die', 'der', 'das', 'ein', 'eine', 'ist', 'sind', 'mit',
-        'für', 'von', 'auf', 'an', 'in', 'zu', 'bei', 'nach', 'aus', 'the', 'and',
-        'for', 'with', 'this', 'that', 'are', 'was', 'has', 'have', 'been', 'will',
-        'from', 'they', 'their', 'what', 'which', 'when', 'how', 'not', 'but',
-        'also', 'more', 'than', 'your', 'our', 'you', 'can', 'all', 'over'
+        // Artikel/Pronomen
+        'und', 'oder', 'die', 'der', 'das', 'des', 'dem', 'den', 'ein', 'eine', 'einer', 'eines', 'einem', 'einen',
+        'ich', 'du', 'dein', 'deine', 'deiner', 'deines', 'deinem', 'deinen', 'mein', 'meine', 'meiner', 'meines',
+        'meinem', 'meinen', 'sein', 'seine', 'seiner', 'ihr', 'ihre', 'ihrer', 'unser', 'unsere', 'euer', 'eure',
+        'wir', 'ihr', 'sie', 'es', 'man', 'diese', 'dieser', 'dieses', 'diesem', 'diesen', 'jede', 'jeder', 'jedes',
+        'alle', 'alles', 'kein', 'keine', 'keiner',
+        // Hilfs-/Modalverben (haeufigste Formen)
+        'ist', 'sind', 'war', 'waren', 'sein', 'bin', 'bist', 'seid', 'wird', 'werden', 'wurde', 'wurden',
+        'hat', 'haben', 'hatte', 'hatten', 'kann', 'können', 'konnte', 'muss', 'müssen', 'musste',
+        'soll', 'sollen', 'sollte', 'will', 'wollen', 'wollte', 'darf', 'dürfen',
+        // Praepositionen/Konjunktionen/Adverbien
+        'für', 'von', 'vom', 'auf', 'an', 'am', 'in', 'im', 'zu', 'zum', 'zur', 'bei', 'nach', 'aus', 'als',
+        'wenn', 'weil', 'dass', 'ob', 'wie', 'was', 'wer', 'wo', 'wann', 'warum', 'auch', 'noch', 'nur',
+        'schon', 'sehr', 'mehr', 'viel', 'viele', 'so', 'doch', 'aber', 'denn', 'dann', 'also', 'sowie',
+        'nicht', 'kein', 'über', 'unter', 'durch', 'gegen', 'ohne', 'um', 'bis', 'seit', 'zwischen', 'hier',
+        'dort', 'jetzt', 'heute', 'immer', 'kannst', 'wirst',
+        // Englisch
+        'the', 'and', 'for', 'with', 'this', 'that', 'are', 'was', 'has', 'have', 'been', 'will',
+        'from', 'they', 'their', 'what', 'which', 'when', 'how', 'not', 'but', 'you', 'your', 'yours',
+        'also', 'more', 'than', 'our', 'can', 'all', 'over', 'about', 'into', 'just', 'like', 'get',
+        'its', 'his', 'her', 'she', 'him', 'them', 'who', 'whom', 'would', 'could', 'should',
     ])
 
     function extractKeywords(text, weight = 1) {
@@ -77,7 +120,7 @@ export async function analyzeKeywords(url, html) {
     if (titleKeywords.length < 3) {
         recommendations.push({
             type: 'add',
-            message: 'Zu wenige Keywords im Title Tag — wichtigste Keywords einbauen',
+            message: M.fewTitleKeywords(),
             priority: 'high'
         })
     }
@@ -86,7 +129,7 @@ export async function analyzeKeywords(url, html) {
     if (h1Keywords.length < 2) {
         recommendations.push({
             type: 'add',
-            message: 'H1 enthält zu wenige Keywords — Hauptkeyword in H1 platzieren',
+            message: M.fewH1Keywords(),
             priority: 'high'
         })
     }
@@ -95,7 +138,7 @@ export async function analyzeKeywords(url, html) {
     if (notInMeta.length > 0) {
         recommendations.push({
             type: 'optimize',
-            message: `Top-Keywords nicht in Meta Description: ${notInMeta.map(k => k.keyword).join(', ')}`,
+            message: M.notInMeta(notInMeta.map(k => k.keyword)),
             priority: 'medium'
         })
     }
@@ -103,7 +146,7 @@ export async function analyzeKeywords(url, html) {
     if (weakKeywords.length > 5) {
         recommendations.push({
             type: 'remove',
-            message: `${weakKeywords.length} Keywords erscheinen nur einmal und haben keinen SEO-Wert`,
+            message: M.weakKeywords(weakKeywords.length),
             priority: 'low',
             keywords: weakKeywords.slice(0, 5).map(k => k.keyword)
         })
@@ -111,14 +154,20 @@ export async function analyzeKeywords(url, html) {
 
     // Long-tail Keyword-Vorschläge basierend auf gefundenen Keywords
     const domain = new URL(url).hostname.replace('www.', '')
-    const topTerms = topKeywords.slice(0, 3).map(k => k.keyword)
-    const longTailSuggestions = topTerms.flatMap(term => [
-        `${term} kostenlos`,
-        `${term} ohne Gebühren`,
-        `beste ${term} Seite`,
-        `${term} 2026`,
-        `wie ${term} funktioniert`,
-    ]).slice(0, 10)
+
+    // Plattform-/Marken-Begriffe wie "google" oder "chatgpt" tauchen oft haeufig auf (weil die
+    // Seite ueber sie schreibt), sind aber als Long-Tail-Ziel sinnlos — niemand sucht "google 2026"
+    // und man kann nicht fuer "Google" ranken. Fuer die Vorschlags-Templates raus, aus der reinen
+    // Keyword-Haeufigkeitsanzeige oben aber bewusst nicht (die zeigt korrekt, was auf der Seite steht).
+    const nonBrandableTerms = new Set([
+        'google', 'chatgpt', 'claude', 'gemini', 'perplexity', 'openai', 'anthropic', 'microsoft',
+        'scanora', domain.split('.')[0],
+    ])
+    const topTerms = topKeywords.filter(k => !nonBrandableTerms.has(k.keyword)).slice(0, 3).map(k => k.keyword)
+    // "beste X Seite"/"X ohne Gebühren" klingen bei vielen Begriffen holprig ("beste website
+    // Seite"). Diese Muster passen grammatisch auf praktisch jedes Substantiv/jeden Markennamen.
+    const buildLongTail = LONGTAIL_TEMPLATES[outputLang]
+    const longTailSuggestions = topTerms.flatMap(term => buildLongTail(term)).slice(0, 10)
 
     return {
         topKeywords: keywordDensity,

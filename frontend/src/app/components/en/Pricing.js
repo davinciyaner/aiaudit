@@ -83,6 +83,7 @@ export default function Pricing() {
                 </motion.div>
 
                 <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
+                    <span className="inline-block text-xs font-semibold text-[var(--accent)] uppercase tracking-wide mb-3">Website Audit</span>
                     <h2 className="text-3xl sm:text-5xl font-bold tracking-tight mb-5">
                         Start for free.<br />Grow when you need to.
                     </h2>
@@ -137,9 +138,9 @@ export default function Pricing() {
                 </div>
 
                 <p className="text-center text-sm text-[var(--text-faint)] mt-8">
-                    Comparing tools?{' '}
-                    <Link href="/en/compare/otterly-alternative" className="text-[var(--text-body)] hover:text-[var(--accent)] underline underline-offset-2">
-                        Scanora vs. Otterly.ai
+                    Not sure yet?{' '}
+                    <Link href="/en/compare" className="text-[var(--text-body)] hover:text-[var(--accent)] underline underline-offset-2">
+                        Compare us with other tools
                     </Link>
                 </p>
             </div>

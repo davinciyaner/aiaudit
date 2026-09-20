@@ -1,5 +1,7 @@
 'use client'
 import { motion } from 'framer-motion'
+import Link from 'next/link'
+import { FileDown, ArrowRight } from 'lucide-react'
 import VisibilityTrendChart from './charts/VisibilityTrendChart'
 import RankingBars from './charts/RankingBars'
 import ScoreGauges from './charts/ScoreGauges'
@@ -37,7 +39,30 @@ export default function ResultsSection() {
                     <RankingBars />
                 </motion.div>
 
-                <p className="text-center text-xs text-[var(--text-muted)] mt-6">
+                <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }}
+                    className="mt-8">
+                    <Link href="/beispiel-report"
+                        onClick={() => { if (typeof window.gtag === 'function') window.gtag('event', 'sample_report_click') }}
+                        className="group relative flex flex-col sm:flex-row items-center justify-between gap-5 overflow-hidden rounded-2xl border border-[var(--accent-border)] bg-[var(--surface-08)] px-6 py-6 sm:px-8 sm:py-7 transition-colors duration-200 hover:border-[var(--accent)]">
+                        <div className="pointer-events-none absolute inset-0 opacity-60 transition-opacity duration-300 group-hover:opacity-100"
+                            style={{ background: 'radial-gradient(circle at 15% 50%, var(--accent-glow) 0%, transparent 60%)' }} />
+                        <div className="relative flex items-center gap-4 text-center sm:text-left">
+                            <div className="hidden sm:flex shrink-0 w-11 h-11 rounded-xl bg-[var(--accent)] items-center justify-center">
+                                <FileDown className="w-5 h-5 text-[var(--bg-base)]" />
+                            </div>
+                            <div>
+                                <p className="font-semibold text-[var(--text-white)]">Neugierig, wie ein echter Report aussieht?</p>
+                                <p className="text-sm text-[var(--text-muted)]">Kostenloser Download – kompletter Scanora-Audit deiner eigenen Website</p>
+                            </div>
+                        </div>
+                        <span className="relative inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[var(--accent)] text-[var(--bg-base)] text-sm font-semibold shadow-lg shadow-[var(--accent-border)] transition-all group-hover:opacity-90 shrink-0">
+                            Beispiel-Report ansehen
+                            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+                        </span>
+                    </Link>
+                </motion.div>
+
+                <p className="text-center text-xs text-[var(--text-muted)] mt-4">
                     Beispieldaten zur Veranschaulichung des Scanora-Trackings — kein Ergebnisversprechen für eine bestimmte Website.
                 </p>
             </div>
