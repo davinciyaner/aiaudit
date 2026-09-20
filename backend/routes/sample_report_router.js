@@ -3,7 +3,7 @@ import crypto from 'crypto'
 import path from 'path'
 import rateLimit from 'express-rate-limit'
 import SampleReportLead from '../models/sample_report_lead.js'
-import { sendSampleReportOptIn } from '../utils/mailer.js'
+import { sendSampleReportOptIn, sendAdminSampleReportDownload, sendAdminSampleReportConfirmed, sendAdminSampleReportUnsubscribed } from '../utils/mailer.js'
 import { t } from '../utils/i18n/errors.js'
 
 const router = Router()
@@ -75,6 +75,9 @@ router.post('/', sampleReportLimiter, async (req, res) => {
     sendSampleReportOptIn({ email, language, confirmToken }).catch(err => {
         console.error('Opt-In-Mail fehlgeschlagen:', err.message)
     })
+    sendAdminSampleReportDownload({ email, language }).catch(err => {
+        console.error('Admin-Benachrichtigung (Download) fehlgeschlagen:', err.message)
+    })
 
     res.json({ success: true, filename: FILENAME_BY_LANGUAGE[language] })
 })
@@ -101,6 +104,9 @@ router.get('/confirm/:token', sampleReportReadLimiter, async (req, res) => {
         lead.confirmedAt = new Date()
         lead.confirmIp = req.ip
         await lead.save()
+        sendAdminSampleReportConfirmed({ email: lead.email, language: lead.language }).catch(err => {
+            console.error('Admin-Benachrichtigung (Confirm) fehlgeschlagen:', err.message)
+        })
     }
     res.json({ success: true, language: lead.language })
 })
@@ -113,6 +119,9 @@ router.get('/unsubscribe/:token', sampleReportReadLimiter, async (req, res) => {
         lead.unsubscribed = true
         lead.unsubscribedAt = new Date()
         await lead.save()
+        sendAdminSampleReportUnsubscribed({ email: lead.email, language: lead.language }).catch(err => {
+            console.error('Admin-Benachrichtigung (Unsubscribe) fehlgeschlagen:', err.message)
+        })
     }
     res.json({ success: true, language: lead.language })
 })
