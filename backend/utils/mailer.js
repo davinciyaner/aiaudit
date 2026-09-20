@@ -2,6 +2,19 @@ import nodemailer from 'nodemailer';
 
 const APP_URL = (process.env.APP_URL || process.env.ALLOWED_ORIGIN || 'https://www.scanora.ai').replace(/\/+$/, '');
 
+// adminNotifyHtml() rendert Werte, die teils direkt aus User-Input stammen (z.B. die vom Nutzer
+// eingegebene E-Mail-Adresse im Sample-Report-Formular), ungeprueft in das HTML der internen
+// Admin-Benachrichtigung (CodeQL js/xss). Escaping vor der Interpolation verhindert, dass so ein
+// Wert als HTML/Script im Admin-Postfach ausgefuehrt wird.
+function escapeHtml(value) {
+    return String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;')
+}
+
 const transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST,
     port: parseInt(process.env.SMTP_PORT || '587'),
@@ -84,13 +97,13 @@ function ticketStatusChangedHtml(ticket, cfg, statusUrl, language = 'de') {
         </td></tr>
         <tr><td style="background:#0d1117;border:1px solid rgba(255,255,255,0.07);border-radius:20px;padding:40px;">
           <p style="margin:0 0 6px;font-size:24px;font-weight:700;color:#ffffff;">${cfg.headline}</p>
-          <p style="margin:0 0 28px;font-size:15px;color:#94a3b8;line-height:1.6;">Hi ${ticket.name}, ${cfg.body}</p>
+          <p style="margin:0 0 28px;font-size:15px;color:#94a3b8;line-height:1.6;">Hi ${escapeHtml(ticket.name)}, ${cfg.body}</p>
           <table cellpadding="0" cellspacing="0" width="100%" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:20px;margin-bottom:28px;">
             <tr><td>
               <p style="margin:0 0 4px;font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;">Ticket number</p>
               <p style="margin:0 0 16px;font-size:16px;font-weight:700;color:#a78bfa;letter-spacing:0.05em;">${ticket.ticketNumber}</p>
               <p style="margin:0 0 4px;font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;">Subject</p>
-              <p style="margin:0 0 16px;font-size:14px;color:#e2e8f0;">${ticket.subject}</p>
+              <p style="margin:0 0 16px;font-size:14px;color:#e2e8f0;">${escapeHtml(ticket.subject)}</p>
               <p style="margin:0 0 4px;font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;">Status</p>
               <p style="margin:0;font-size:13px;color:${cfg.statusColor};font-weight:600;">&#x25CF; ${cfg.statusLabel}</p>
             </td></tr>
@@ -134,13 +147,13 @@ function ticketStatusChangedHtml(ticket, cfg, statusUrl, language = 'de') {
         </td></tr>
         <tr><td style="background:#0d1117;border:1px solid rgba(255,255,255,0.07);border-radius:20px;padding:40px;">
           <p style="margin:0 0 6px;font-size:24px;font-weight:700;color:#ffffff;">${cfg.headline}</p>
-          <p style="margin:0 0 28px;font-size:15px;color:#94a3b8;line-height:1.6;">Hallo ${ticket.name}, ${cfg.body}</p>
+          <p style="margin:0 0 28px;font-size:15px;color:#94a3b8;line-height:1.6;">Hallo ${escapeHtml(ticket.name)}, ${cfg.body}</p>
           <table cellpadding="0" cellspacing="0" width="100%" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:20px;margin-bottom:28px;">
             <tr><td>
               <p style="margin:0 0 4px;font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;">Ticketnummer</p>
               <p style="margin:0 0 16px;font-size:16px;font-weight:700;color:#a78bfa;letter-spacing:0.05em;">${ticket.ticketNumber}</p>
               <p style="margin:0 0 4px;font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;">Betreff</p>
-              <p style="margin:0 0 16px;font-size:14px;color:#e2e8f0;">${ticket.subject}</p>
+              <p style="margin:0 0 16px;font-size:14px;color:#e2e8f0;">${escapeHtml(ticket.subject)}</p>
               <p style="margin:0 0 4px;font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;">Status</p>
               <p style="margin:0;font-size:13px;color:${cfg.statusColor};font-weight:600;">&#x25CF; ${cfg.statusLabel}</p>
             </td></tr>
@@ -214,13 +227,13 @@ function ticketUserHtml(ticket, statusUrl, language = 'de') {
         </td></tr>
         <tr><td style="background:#0d1117;border:1px solid rgba(255,255,255,0.07);border-radius:20px;padding:40px;">
           <p style="margin:0 0 6px;font-size:24px;font-weight:700;color:#ffffff;">Ticket created &#x2713;</p>
-          <p style="margin:0 0 28px;font-size:15px;color:#94a3b8;line-height:1.6;">Hi ${ticket.name}, we've received your request and will get back to you as soon as possible.</p>
+          <p style="margin:0 0 28px;font-size:15px;color:#94a3b8;line-height:1.6;">Hi ${escapeHtml(ticket.name)}, we've received your request and will get back to you as soon as possible.</p>
           <table cellpadding="0" cellspacing="0" width="100%" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:20px;margin-bottom:28px;">
             <tr><td>
               <p style="margin:0 0 4px;font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;">Ticket number</p>
               <p style="margin:0 0 16px;font-size:18px;font-weight:700;color:#a78bfa;letter-spacing:0.05em;">${ticket.ticketNumber}</p>
               <p style="margin:0 0 4px;font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;">Subject</p>
-              <p style="margin:0 0 16px;font-size:14px;color:#e2e8f0;">${ticket.subject}</p>
+              <p style="margin:0 0 16px;font-size:14px;color:#e2e8f0;">${escapeHtml(ticket.subject)}</p>
               <p style="margin:0 0 4px;font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;">Status</p>
               <p style="margin:0;font-size:13px;color:#f59e0b;font-weight:600;">&#x25CF; Waiting for support</p>
             </td></tr>
@@ -264,13 +277,13 @@ function ticketUserHtml(ticket, statusUrl, language = 'de') {
         </td></tr>
         <tr><td style="background:#0d1117;border:1px solid rgba(255,255,255,0.07);border-radius:20px;padding:40px;">
           <p style="margin:0 0 6px;font-size:24px;font-weight:700;color:#ffffff;">Ticket erstellt &#x2713;</p>
-          <p style="margin:0 0 28px;font-size:15px;color:#94a3b8;line-height:1.6;">Hallo ${ticket.name}, wir haben deine Anfrage erhalten und melden uns so schnell wie möglich.</p>
+          <p style="margin:0 0 28px;font-size:15px;color:#94a3b8;line-height:1.6;">Hallo ${escapeHtml(ticket.name)}, wir haben deine Anfrage erhalten und melden uns so schnell wie möglich.</p>
           <table cellpadding="0" cellspacing="0" width="100%" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:20px;margin-bottom:28px;">
             <tr><td>
               <p style="margin:0 0 4px;font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;">Ticketnummer</p>
               <p style="margin:0 0 16px;font-size:18px;font-weight:700;color:#a78bfa;letter-spacing:0.05em;">${ticket.ticketNumber}</p>
               <p style="margin:0 0 4px;font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;">Betreff</p>
-              <p style="margin:0 0 16px;font-size:14px;color:#e2e8f0;">${ticket.subject}</p>
+              <p style="margin:0 0 16px;font-size:14px;color:#e2e8f0;">${escapeHtml(ticket.subject)}</p>
               <p style="margin:0 0 4px;font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;">Status</p>
               <p style="margin:0;font-size:13px;color:#f59e0b;font-weight:600;">&#x25CF; Warten auf Support</p>
             </td></tr>
@@ -312,12 +325,12 @@ function ticketAdminHtml(ticket, adminUrl) {
               <p style="margin:0 0 4px;font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;">Ticket</p>
               <p style="margin:0 0 16px;font-size:16px;font-weight:700;color:#a78bfa;">${ticket.ticketNumber}</p>
               <p style="margin:0 0 4px;font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;">Von</p>
-              <p style="margin:0 0 4px;font-size:14px;color:#e2e8f0;font-weight:600;">${ticket.name}</p>
-              <p style="margin:0 0 16px;font-size:13px;color:#64748b;">${ticket.email}</p>
+              <p style="margin:0 0 4px;font-size:14px;color:#e2e8f0;font-weight:600;">${escapeHtml(ticket.name)}</p>
+              <p style="margin:0 0 16px;font-size:13px;color:#64748b;">${escapeHtml(ticket.email)}</p>
               <p style="margin:0 0 4px;font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;">Betreff</p>
-              <p style="margin:0 0 16px;font-size:14px;color:#e2e8f0;">${ticket.subject}</p>
+              <p style="margin:0 0 16px;font-size:14px;color:#e2e8f0;">${escapeHtml(ticket.subject)}</p>
               <p style="margin:0 0 4px;font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;">Nachricht</p>
-              <p style="margin:0;font-size:14px;color:#94a3b8;line-height:1.6;white-space:pre-wrap;">${ticket.message}</p>
+              <p style="margin:0;font-size:14px;color:#94a3b8;line-height:1.6;white-space:pre-wrap;">${escapeHtml(ticket.message)}</p>
             </td></tr>
           </table>
           <a href="${adminUrl}" style="display:inline-block;background:linear-gradient(135deg,#7c3aed,#06b6d4);border-radius:12px;padding:12px 28px;font-size:14px;font-weight:600;color:#ffffff;text-decoration:none;">
@@ -392,7 +405,7 @@ function recurringInvoiceHtml(name, planLabel, language = 'de') {
           </tr></table>
         </td></tr>
         <tr><td style="background:#0d1117;border:1px solid rgba(255,255,255,0.07);border-radius:20px;padding:40px;">
-          <p style="margin:0 0 8px;font-size:22px;font-weight:700;color:#ffffff;">${isEn ? `Hi ${name},` : `Hallo ${name},`}</p>
+          <p style="margin:0 0 8px;font-size:22px;font-weight:700;color:#ffffff;">${isEn ? `Hi ${escapeHtml(name)},` : `Hallo ${escapeHtml(name)},`}</p>
           <p style="margin:0 0 24px;font-size:15px;color:#94a3b8;line-height:1.6;">
             ${isEn
                 ? `your Scanora ${planLabel} subscription was renewed. The invoice for this billing period is attached as a PDF.`
@@ -443,7 +456,7 @@ export async function sendPaymentFailedAlert({ name, email, plan, language = 'de
           </tr></table>
         </td></tr>
         <tr><td style="background:#0d1117;border:1px solid rgba(255,255,255,0.07);border-radius:20px;padding:40px;">
-          <p style="margin:0 0 8px;font-size:22px;font-weight:700;color:#ffffff;">${isEn ? `Hi ${name},` : `Hallo ${name},`}</p>
+          <p style="margin:0 0 8px;font-size:22px;font-weight:700;color:#ffffff;">${isEn ? `Hi ${escapeHtml(name)},` : `Hallo ${escapeHtml(name)},`}</p>
           <p style="margin:0 0 24px;font-size:15px;color:#94a3b8;line-height:1.6;">
             ${isEn
                 ? `the payment for your Scanora ${planLabel} subscription could not be processed. Please check your PayPal payment method so your subscription keeps running without interruption.`
@@ -487,7 +500,7 @@ function welcomeHtml(name, language = 'de') {
           </tr></table>
         </td></tr>
         <tr><td style="background:#0d1117;border:1px solid rgba(255,255,255,0.07);border-radius:20px;padding:40px;">
-          <p style="margin:0 0 8px;font-size:24px;font-weight:700;color:#ffffff;">Welcome, ${name}!</p>
+          <p style="margin:0 0 8px;font-size:24px;font-weight:700;color:#ffffff;">Welcome, ${escapeHtml(name)}!</p>
           <p style="margin:0 0 28px;font-size:15px;color:#94a3b8;line-height:1.6;">
             Glad to have you. With Scanora you can analyze your website for SEO, GEO, security, and performance &mdash; in seconds.
           </p>
@@ -538,7 +551,7 @@ function welcomeHtml(name, language = 'de') {
           </tr></table>
         </td></tr>
         <tr><td style="background:#0d1117;border:1px solid rgba(255,255,255,0.07);border-radius:20px;padding:40px;">
-          <p style="margin:0 0 8px;font-size:24px;font-weight:700;color:#ffffff;">Willkommen, ${name}!</p>
+          <p style="margin:0 0 8px;font-size:24px;font-weight:700;color:#ffffff;">Willkommen, ${escapeHtml(name)}!</p>
           <p style="margin:0 0 28px;font-size:15px;color:#94a3b8;line-height:1.6;">
             Schön, dass du dabei bist. Mit Scanora kannst du deine Website auf SEO, GEO, Sicherheit und Performance analysieren &mdash; in Sekunden.
           </p>
@@ -591,7 +604,7 @@ function subscriptionConfirmHtml(name, planLabel, planPrice, auditLimit, languag
           </tr></table>
         </td></tr>
         <tr><td style="background:#0d1117;border:1px solid rgba(255,255,255,0.07);border-radius:20px;padding:40px;">
-          <p style="margin:0 0 8px;font-size:24px;font-weight:700;color:#ffffff;">Thank you, ${name}!</p>
+          <p style="margin:0 0 8px;font-size:24px;font-weight:700;color:#ffffff;">Thank you, ${escapeHtml(name)}!</p>
           <p style="margin:0 0 28px;font-size:15px;color:#94a3b8;line-height:1.6;">
             Your <strong style="color:#a78bfa;">${planLabel} subscription</strong> is now active. We're excited to welcome you as a ${planLabel} member.
           </p>
@@ -643,7 +656,7 @@ function subscriptionConfirmHtml(name, planLabel, planPrice, auditLimit, languag
           </tr></table>
         </td></tr>
         <tr><td style="background:#0d1117;border:1px solid rgba(255,255,255,0.07);border-radius:20px;padding:40px;">
-          <p style="margin:0 0 8px;font-size:24px;font-weight:700;color:#ffffff;">Vielen Dank, ${name}!</p>
+          <p style="margin:0 0 8px;font-size:24px;font-weight:700;color:#ffffff;">Vielen Dank, ${escapeHtml(name)}!</p>
           <p style="margin:0 0 28px;font-size:15px;color:#94a3b8;line-height:1.6;">
             Dein <strong style="color:#a78bfa;">${planLabel}-Abo</strong> ist jetzt aktiv. Wir freuen uns sehr, dich als ${planLabel}-Mitglied begrüßen zu dürfen.
           </p>
@@ -791,8 +804,8 @@ export async function sendAdminSampleReportUnsubscribed({ email, language }) {
 function adminNotifyHtml(title, rows) {
     const rowsHtml = rows.map(([label, value]) => `
       <tr>
-        <td style="padding:8px 0;font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;width:100px;">${label}</td>
-        <td style="padding:8px 0;font-size:14px;color:#e2e8f0;font-weight:500;">${value}</td>
+        <td style="padding:8px 0;font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;width:100px;">${escapeHtml(label)}</td>
+        <td style="padding:8px 0;font-size:14px;color:#e2e8f0;font-weight:500;">${escapeHtml(value)}</td>
       </tr>`).join('')
     return `<!DOCTYPE html>
 <html lang="de">
@@ -1021,7 +1034,7 @@ function passwordResetHtml(name, resetUrl, language = 'de') {
         <tr><td style="background:#0d1117;border:1px solid rgba(255,255,255,0.07);border-radius:20px;padding:40px;">
           <p style="margin:0 0 8px;font-size:24px;font-weight:700;color:#ffffff;">Reset your password</p>
           <p style="margin:0 0 28px;font-size:15px;color:#94a3b8;line-height:1.6;">
-            Hi ${name}, you requested to reset your password. Click the button below &mdash; the link is <strong style="color:#ffffff;">valid for 1 hour</strong>.
+            Hi ${escapeHtml(name)}, you requested to reset your password. Click the button below &mdash; the link is <strong style="color:#ffffff;">valid for 1 hour</strong>.
           </p>
           <table cellpadding="0" cellspacing="0" style="margin-bottom:28px;"><tr>
             <td style="background:linear-gradient(135deg,#7c3aed,#06b6d4);border-radius:12px;padding:1px;">
@@ -1071,7 +1084,7 @@ function passwordResetHtml(name, resetUrl, language = 'de') {
         <tr><td style="background:#0d1117;border:1px solid rgba(255,255,255,0.07);border-radius:20px;padding:40px;">
           <p style="margin:0 0 8px;font-size:24px;font-weight:700;color:#ffffff;">Passwort zurücksetzen</p>
           <p style="margin:0 0 28px;font-size:15px;color:#94a3b8;line-height:1.6;">
-            Hallo ${name}, du hast angefordert, dein Passwort zurückzusetzen. Klicke auf den Button unten &mdash; der Link ist <strong style="color:#ffffff;">1 Stunde gültig</strong>.
+            Hallo ${escapeHtml(name)}, du hast angefordert, dein Passwort zurückzusetzen. Klicke auf den Button unten &mdash; der Link ist <strong style="color:#ffffff;">1 Stunde gültig</strong>.
           </p>
           <table cellpadding="0" cellspacing="0" style="margin-bottom:28px;"><tr>
             <td style="background:linear-gradient(135deg,#7c3aed,#06b6d4);border-radius:12px;padding:1px;">
@@ -1567,7 +1580,7 @@ function ticketReplyHtml({ heading, body, url, ctaLabel, language }) {
         <tr><td style="background:#0d1117;border:1px solid rgba(255,255,255,0.07);border-radius:20px;padding:36px 40px;">
           <p style="margin:0 0 20px;font-size:20px;font-weight:700;color:#ffffff;">${heading}</p>
           <table cellpadding="0" cellspacing="0" width="100%" style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:16px 20px;margin-bottom:28px;">
-            <tr><td style="font-size:14px;color:#cbd5e1;line-height:1.6;white-space:pre-wrap;">${body.replace(/</g, '&lt;')}</td></tr>
+            <tr><td style="font-size:14px;color:#cbd5e1;line-height:1.6;white-space:pre-wrap;">${escapeHtml(body)}</td></tr>
           </table>
           <table cellpadding="0" cellspacing="0"><tr>
             <td style="background:linear-gradient(135deg,#7c3aed,#06b6d4);border-radius:12px;padding:1px;">
