@@ -743,6 +743,51 @@ export async function sendAdminSubscriptionCancelled({ name, email, plan, reason
     })
 }
 
+export async function sendAdminSampleReportDownload({ email, language }) {
+    const adminEmail = process.env.ADMIN_EMAIL || process.env.SMTP_USER
+    const now = new Date().toLocaleString('de-DE', { timeZone: 'Europe/Berlin' })
+    await transporter.sendMail({
+        from: process.env.SMTP_FROM || process.env.SMTP_USER,
+        to: adminEmail,
+        subject: `Beispiel-Report heruntergeladen: ${email}`,
+        html: adminNotifyHtml('Beispiel-Report heruntergeladen', [
+            ['E-Mail', email],
+            ['Sprache', language],
+            ['Zeitpunkt', now],
+        ]),
+    })
+}
+
+export async function sendAdminSampleReportConfirmed({ email, language }) {
+    const adminEmail = process.env.ADMIN_EMAIL || process.env.SMTP_USER
+    const now = new Date().toLocaleString('de-DE', { timeZone: 'Europe/Berlin' })
+    await transporter.sendMail({
+        from: process.env.SMTP_FROM || process.env.SMTP_USER,
+        to: adminEmail,
+        subject: `Opt-In bestätigt: ${email}`,
+        html: adminNotifyHtml('Marketing-Opt-In bestätigt', [
+            ['E-Mail', email],
+            ['Sprache', language],
+            ['Zeitpunkt', now],
+        ]),
+    })
+}
+
+export async function sendAdminSampleReportUnsubscribed({ email, language }) {
+    const adminEmail = process.env.ADMIN_EMAIL || process.env.SMTP_USER
+    const now = new Date().toLocaleString('de-DE', { timeZone: 'Europe/Berlin' })
+    await transporter.sendMail({
+        from: process.env.SMTP_FROM || process.env.SMTP_USER,
+        to: adminEmail,
+        subject: `Abgemeldet: ${email}`,
+        html: adminNotifyHtml('Von Nurture-Mails abgemeldet', [
+            ['E-Mail', email],
+            ['Sprache', language],
+            ['Zeitpunkt', now],
+        ]),
+    })
+}
+
 function adminNotifyHtml(title, rows) {
     const rowsHtml = rows.map(([label, value]) => `
       <tr>
