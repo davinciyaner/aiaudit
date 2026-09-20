@@ -43,7 +43,13 @@ const COPY = {
     },
 }
 
-export default function NewsletterActionClient({ locale = 'de', action = 'confirm' }) {
+// endpoint erlaubt anderen Flows (z.B. Marketing-Consent fuer registrierte Nutzer statt
+// Sample-Report-Leads) denselben Confirm/Unsubscribe-Bildschirm mit eigenem Backend-Endpoint zu
+// nutzen, ohne diese Komponente zu duplizieren. Nur ein String (keine Funktion) als Prop, weil
+// page.js als Server Component keine Funktionen an diese Client Component durchreichen kann.
+// 'path'  → /<endpoint>/<action>/<token>   (bestehendes Sample-Report-Verhalten)
+// 'query' → /<endpoint>/<action>?token=<token>  (Marketing-Consent-Endpoints)
+export default function NewsletterActionClient({ locale = 'de', action = 'confirm', endpoint = 'sample-report', tokenStyle = 'path' }) {
     const localeCopy = COPY[locale] || COPY.de
     const t = localeCopy[action] || localeCopy.confirm
     const homeHref = locale === 'en' ? '/en' : '/'
@@ -53,11 +59,14 @@ export default function NewsletterActionClient({ locale = 'de', action = 'confir
 
     useEffect(() => {
         if (!token) { setStatus('error'); return }
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/sample-report/${action}/${token}`)
+        const apiUrl = tokenStyle === 'query'
+            ? `${process.env.NEXT_PUBLIC_API_URL}/${endpoint}/${action}?token=${token}`
+            : `${process.env.NEXT_PUBLIC_API_URL}/${endpoint}/${action}/${token}`
+        fetch(apiUrl)
             .then(res => { if (!res.ok) throw new Error('invalid'); return res.json() })
             .then(() => setStatus('success'))
             .catch(() => setStatus('error'))
-    }, [token, action])
+    }, [token, action, endpoint, tokenStyle])
 
     return (
         <div className="min-h-screen bg-[var(--bg-base)]">

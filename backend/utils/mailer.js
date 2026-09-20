@@ -973,6 +973,109 @@ export async function sendSampleReportNurtureHasAudit({ email, language = 'de', 
     })
 }
 
+// Free-Nutzer-Nurture: nur fuer registrierte Nutzer mit marketingConsent === true (siehe
+// freeUserNurtureJob.js). unsubscribeUrl fuehrt auf einen eigenen Endpoint, der marketingConsent
+// direkt auf false setzt — unabhaengig vom Sample-Report-Unsubscribe (andere Zielgruppe, anderer Token).
+export async function sendFreeNurtureStep1({ email, name, language = 'de', topFinding, unsubscribeUrl }) {
+    const isEn = language === 'en'
+    const dashboardUrl = isEn ? `${APP_URL}/en/dashboard` : `${APP_URL}/dashboard`
+    const safeFinding = topFinding ? escapeHtml(topFinding) : null
+
+    await transporter.sendMail({
+        from: process.env.SMTP_FROM || process.env.SMTP_USER,
+        to: email,
+        subject: isEn ? 'Your audit found something worth fixing' : 'Dein Audit hat etwas gefunden, das sich lohnt zu fixen',
+        text: isEn
+            ? `Hi ${name},\n\nyour free Scanora audit is done.${safeFinding ? ` One concrete finding: ${safeFinding}` : ''}\n\nSee the full report and all fixes here:\n${dashboardUrl}\n\nUnsubscribe from these emails at any time: ${unsubscribeUrl}\n\nYour Scanora Team`
+            : `Hallo ${name},\n\ndein kostenloses Scanora-Audit ist fertig.${safeFinding ? ` Ein konkreter Fund: ${safeFinding}` : ''}\n\nDen vollständigen Report und alle Fixes siehst du hier:\n${dashboardUrl}\n\nDu kannst dich jederzeit von diesen E-Mails abmelden: ${unsubscribeUrl}\n\nDein Scanora Team`,
+        html: nurtureHtml({
+            isEn,
+            headline: isEn ? 'Your audit found something worth fixing' : 'Dein Audit hat etwas gefunden, das sich lohnt',
+            body: isEn
+                ? `Your free Scanora audit is done.${safeFinding ? ` One concrete finding: <strong style="color:#e2e8f0;">${safeFinding}</strong>.` : ''} See the full report and every fix in your dashboard.`
+                : `Dein kostenloses Scanora-Audit ist fertig.${safeFinding ? ` Ein konkreter Fund: <strong style="color:#e2e8f0;">${safeFinding}</strong>.` : ''} Den vollständigen Report und alle Fixes siehst du in deinem Dashboard.`,
+            ctaLabel: isEn ? 'See my report' : 'Meinen Report ansehen',
+            ctaUrl: dashboardUrl,
+            unsubscribeUrl,
+        }),
+    })
+}
+
+export async function sendFreeNurtureStep2({ email, name, language = 'de', unsubscribeUrl }) {
+    const isEn = language === 'en'
+    const geoUrl = isEn ? `${APP_URL}/en/geo/pricing` : `${APP_URL}/geo/pricing`
+
+    await transporter.sendMail({
+        from: process.env.SMTP_FROM || process.env.SMTP_USER,
+        to: email,
+        subject: isEn ? 'Your score from last week is already outdated' : 'Dein Score von letzter Woche ist schon wieder veraltet',
+        text: isEn
+            ? `Hi ${name},\n\nGoogle rankings and AI mentions on ChatGPT, Claude, Perplexity & co. shift constantly - a one-off audit only shows a snapshot. With automated tracking you see changes as they happen instead of finding out weeks later:\n${geoUrl}\n\nUnsubscribe at any time: ${unsubscribeUrl}\n\nYour Scanora Team`
+            : `Hallo ${name},\n\nGoogle-Rankings und KI-Erwähnungen bei ChatGPT, Claude, Perplexity & Co. verändern sich laufend - ein einmaliges Audit zeigt nur eine Momentaufnahme. Mit automatisiertem Tracking siehst du Veränderungen sofort, statt Wochen später davon zu erfahren:\n${geoUrl}\n\nJederzeit abmelden: ${unsubscribeUrl}\n\nDein Scanora Team`,
+        html: nurtureHtml({
+            isEn,
+            headline: isEn ? 'Your score is already a snapshot of the past' : 'Dein Score ist schon wieder Vergangenheit',
+            body: isEn
+                ? 'Google rankings and AI mentions shift constantly. A one-off audit only shows a snapshot - automated weekly tracking shows you the trend instead, so you catch drops early.'
+                : 'Google-Rankings und KI-Erwähnungen verändern sich laufend. Ein einmaliges Audit zeigt nur eine Momentaufnahme - automatisiertes wöchentliches Tracking zeigt dir stattdessen den Trend, damit du Einbrüche früh siehst.',
+            ctaLabel: isEn ? 'See tracking plans' : 'Tracking-Pläne ansehen',
+            ctaUrl: geoUrl,
+            unsubscribeUrl,
+        }),
+    })
+}
+
+export async function sendFreeNurtureStep3({ email, name, language = 'de', unsubscribeUrl }) {
+    const isEn = language === 'en'
+    const pricingUrl = isEn ? `${APP_URL}/en/pricing` : `${APP_URL}/pricing`
+
+    await transporter.sendMail({
+        from: process.env.SMTP_FROM || process.env.SMTP_USER,
+        to: email,
+        subject: isEn ? 'Ready for ongoing SEO & GEO tracking?' : 'Bereit für laufendes SEO- & GEO-Tracking?',
+        text: isEn
+            ? `Hi ${name},\n\nif you want to keep watching your Google rankings and AI visibility instead of manually re-checking, SEO and GEO tracking start at €19 and €4.99 per month:\n${pricingUrl}\n\nUnsubscribe at any time: ${unsubscribeUrl}\n\nYour Scanora Team`
+            : `Hallo ${name},\n\nfalls du deine Google-Rankings und KI-Sichtbarkeit laufend im Blick behalten willst statt manuell nachzuprüfen: SEO- und GEO-Tracking starten ab 19€ bzw. 4,99€ pro Monat:\n${pricingUrl}\n\nJederzeit abmelden: ${unsubscribeUrl}\n\nDein Scanora Team`,
+        html: nurtureHtml({
+            isEn,
+            headline: isEn ? 'Ready for ongoing tracking?' : 'Bereit für laufendes Tracking?',
+            body: isEn
+                ? 'SEO tracking starts at €19/month, GEO tracking at €4.99/month - or combine both. No manual re-checking, automated weekly updates and alerts when something changes.'
+                : 'SEO-Tracking startet ab 19€/Monat, GEO-Tracking ab 4,99€/Monat - oder beides kombiniert. Kein manuelles Nachprüfen mehr, automatisierte wöchentliche Updates und Alerts bei Veränderungen.',
+            ctaLabel: isEn ? 'See all plans' : 'Alle Pläne ansehen',
+            ctaUrl: pricingUrl,
+            unsubscribeUrl,
+        }),
+    })
+}
+
+// Einmalige Re-Permission-Mail fuer Bestandsnutzer ohne dokumentierte marketingConsent (siehe
+// scripts/send-marketing-repermission.js). Enthaelt bewusst KEINE Werbung/kein Produkt-Pitch,
+// nur die Frage nach Einwilligung — das ist selbst keine "Werbung" im Sinne des UWG und braucht
+// deshalb keine vorherige Einwilligung, um verschickt zu werden.
+export async function sendMarketingRepermission({ email, name, language = 'de', confirmUrl, declineUrl }) {
+    const isEn = language === 'en'
+
+    await transporter.sendMail({
+        from: process.env.SMTP_FROM || process.env.SMTP_USER,
+        to: email,
+        subject: isEn ? 'Want occasional emails from Scanora?' : 'Möchtest du gelegentlich von Scanora hören?',
+        text: isEn
+            ? `Hi ${name},\n\nyou registered with Scanora a while ago. We'd like to occasionally send you tips and updates about your website's SEO and AI visibility - but only if you actually want that.\n\nIf yes, confirm here:\n${confirmUrl}\n\nIf you don't confirm, we simply won't email you again beyond this one message.\n\nYour Scanora Team`
+            : `Hallo ${name},\n\ndu hast dich vor einer Weile bei Scanora registriert. Wir würden dir gerne gelegentlich Tipps und Updates zu SEO und KI-Sichtbarkeit deiner Website schicken - aber nur, wenn du das wirklich willst.\n\nWenn ja, bestätige das hier:\n${confirmUrl}\n\nBestätigst du nicht, schreiben wir dir über diese eine Nachricht hinaus einfach nicht mehr.\n\nDein Scanora Team`,
+        html: nurtureHtml({
+            isEn,
+            headline: isEn ? 'Want to hear from us occasionally?' : 'Willst du gelegentlich von uns hören?',
+            body: isEn
+                ? "You registered with Scanora a while ago. We'd like to occasionally send tips and updates about your website's SEO and AI visibility - only if you actually want that. If you don't confirm, we won't email you again beyond this message."
+                : 'Du hast dich vor einer Weile bei Scanora registriert. Wir würden dir gerne gelegentlich Tipps und Updates zu SEO und KI-Sichtbarkeit deiner Website schicken - nur wenn du das wirklich willst. Bestätigst du nicht, schreiben wir dir über diese Nachricht hinaus nicht mehr.',
+            ctaLabel: isEn ? 'Yes, keep me posted' : 'Ja, halte mich auf dem Laufenden',
+            ctaUrl: confirmUrl,
+            unsubscribeUrl: declineUrl,
+        }),
+    })
+}
+
 function nurtureHtml({ isEn, headline, body, ctaLabel, ctaUrl, unsubscribeUrl }) {
     return `<!DOCTYPE html>
 <html lang="${isEn ? 'en' : 'de'}">

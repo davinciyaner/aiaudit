@@ -26,6 +26,7 @@ import ScoreCard from '../../components/ScoreCard'
 import AuditForm from '../../components/AuditForm'
 import Loading from '../../components/Loading'
 import ReauditCTA from '../../components/ReauditCTA'
+import ReactivationBanner from '../../components/ReactivationBanner'
 import FeedbackWidget from '../../components/FeedbackWidget'
 import Navbar from '../../components/Navbar'
 
@@ -200,6 +201,8 @@ export default function DashboardEn() {
             <Navbar locale="en" />
 
             <div className="max-w-5xl mx-auto px-4 sm:px-8 pt-28 pb-8 sm:pb-12">
+
+                <ReactivationBanner locale="en" />
 
                 {/* HEADER */}
                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-10">

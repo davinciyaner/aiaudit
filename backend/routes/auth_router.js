@@ -3,15 +3,19 @@ import jwt from "jsonwebtoken";
 import crypto from "crypto";
 
 import User from "../models/auth_model.js";
+import Subscription from "../models/subscription.js";
+import ProductSubscription from "../models/product_subscription.js";
 import bcrypt from "bcrypt";
 import {sendAdminNewUser, sendPasswordReset, sendWelcome} from "../utils/mailer.js";
 import { t } from "../utils/i18n/errors.js";
+
+const REACTIVATION_INACTIVE_DAYS = 35;
 
 const router = Router();
 
 
 router.post("/register", async (req, res) => {
-    const { name, email, password, language } = req.body;
+    const { name, email, password, language, marketingConsent } = req.body;
     const userLanguage = language === "en" ? "en" : "de";
 
     if (!name || typeof email !== "string" || !email || !password) {
@@ -30,8 +34,17 @@ router.post("/register", async (req, res) => {
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
+        const consent = !!marketingConsent;
 
-        const user = await User.create({ name, email, password: hashedPassword, language: userLanguage });
+        const user = await User.create({
+            name,
+            email,
+            password: hashedPassword,
+            language: userLanguage,
+            marketingConsent: consent,
+            marketingConsentUpdatedAt: consent ? new Date() : undefined,
+            lastLoginAt: new Date(), // Basislinie fuer die 35-Tage-Inaktivitaets-Erkennung beim naechsten echten Login
+        });
 
         const token = jwt.sign(
             { id: user._id },
@@ -86,10 +99,35 @@ router.post("/login", async (req, res) => {
             { expiresIn: "7d" }
         );
 
+        // Inaktivitaet anhand des vorherigen Logins bestimmen, BEVOR lastLoginAt ueberschrieben
+        // wird — sonst waere der Nutzer durch das gerade stattfindende Login selbst nie mehr
+        // "inaktiv". Kein vorheriger Login (z.B. direkt nach Registrierung noch nie erneut
+        // eingeloggt) zaehlt bewusst nicht als Reaktivierung, dafuer fehlt der Vergleichspunkt.
+        const previousLoginAt = user.lastLoginAt;
+        const daysSincePreviousLogin = previousLoginAt
+            ? (Date.now() - previousLoginAt.getTime()) / (1000 * 60 * 60 * 24)
+            : null;
+        const wasInactive = daysSincePreviousLogin !== null && daysSincePreviousLogin >= REACTIVATION_INACTIVE_DAYS;
+
+        let showReactivationBanner = false
+        if (wasInactive) {
+            const [sub, productSub] = await Promise.all([
+                Subscription.exists({ userId: user._id, status: 'ACTIVE' }),
+                ProductSubscription.exists({ userId: user._id, status: 'ACTIVE' }),
+            ]);
+            // Zahlende Nutzer bekommen keinen "starte jetzt Tracking"-Banner — der Hinweis passt
+            // nur fuer Free-Nutzer, die noch keinen naechsten Schritt gegangen sind.
+            showReactivationBanner = !sub && !productSub;
+        }
+
+        user.lastLoginAt = new Date();
+        await user.save();
+
         res.json({
             success: true,
             token,
-            user: { id: user._id, name: user.name, email: user.email }
+            user: { id: user._id, name: user.name, email: user.email },
+            showReactivationBanner,
         });
 
     } catch (err) {
