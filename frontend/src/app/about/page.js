@@ -106,9 +106,9 @@ export default function AboutPage() {
                     <h2 className="text-xl font-bold text-[var(--text-white)] mb-3 mt-10">Kontakt</h2>
                     <p>
                         Fragen oder Feedback zu Scanora:{' '}
-                        <a href="mailto:sitecheckai@gmail.com" className="text-violet-400 hover:text-violet-300 inline-flex items-center gap-1.5">
+                        <a href="mailto:scanoraai@gmail.com" className="text-violet-400 hover:text-violet-300 inline-flex items-center gap-1.5">
                             <Mail className="w-3.5 h-3.5" />
-                            sitecheckai@gmail.com
+                            scanoraai@gmail.com
                         </a>
                     </p>
                 </div>

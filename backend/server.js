@@ -19,9 +19,11 @@ import seoTrackingRouter from "./routes/seo_tracking_router.js";
 import geoRouter from "./routes/geo_router.js";
 import geoOneoffRouter from "./routes/geo_oneoff_router.js";
 import leadsRouter from "./routes/leads_router.js";
+import sampleReportRouter from "./routes/sample_report_router.js";
 import { startSeoTrackingJob, runWeeklySeoChecks } from "./jobs/seoTrackingJob.js";
 import { startGeoTrackingJob } from "./jobs/geoTrackingJob.js";
 import { startLeadsRetentionJob } from "./jobs/leadsRetentionJob.js";
+import { startSampleReportNurtureJob } from "./jobs/sampleReportNurtureJob.js";
 
 const app = express();
 
@@ -61,6 +63,7 @@ app.use("/api/landing-feedback", landingFeedbackRouter);
 app.use("/api/seo", seoTrackingRouter);
 app.use("/api/geo", geoRouter);
 app.use("/api/geo-check", geoOneoffRouter);
+app.use("/api/sample-report", sampleReportRouter);
 app.use("/reports", express.static("reports"));
 
 app.get("/health", (req, res) => {
@@ -91,4 +94,5 @@ app.listen(PORT, () => {
     startSeoTrackingJob()
     startGeoTrackingJob()
     startLeadsRetentionJob()
+    startSampleReportNurtureJob()
 });

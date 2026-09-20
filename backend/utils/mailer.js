@@ -784,6 +784,176 @@ export async function sendPasswordReset({ name, email, token, language = 'de' })
     })
 }
 
+// Double-Opt-In fuer den Beispiel-Report-Lead-Magneten (SS7 UWG/DSGVO) — der Download selbst
+// lief schon transaktional durch, diese Mail entscheidet nur, ob die Adresse spaeter fuer
+// Marketing (Produkt-Updates etc.) genutzt werden darf. Abmeldelink ist von Anfang an dabei,
+// nicht erst in spaeteren Marketing-Mails.
+export async function sendSampleReportOptIn({ email, language = 'de', confirmToken }) {
+    const confirmUrl = language === 'en'
+        ? `${APP_URL}/en/newsletter-confirm?token=${confirmToken}`
+        : `${APP_URL}/newsletter-bestaetigen?token=${confirmToken}`
+    const unsubscribeUrl = language === 'en'
+        ? `${APP_URL}/en/newsletter-unsubscribe?token=${confirmToken}`
+        : `${APP_URL}/newsletter-abmelden?token=${confirmToken}`
+    const isEn = language === 'en'
+
+    await transporter.sendMail({
+        from: process.env.SMTP_FROM || process.env.SMTP_USER,
+        to: email,
+        subject: isEn ? 'Please confirm your email — Scanora' : 'Bitte bestätige deine E-Mail — Scanora',
+        text: isEn
+            ? `Hi,\n\nthanks for downloading the Scanora example report. If you'd also like occasional tips and reminders to help you keep an eye on your AI visibility, please confirm your email:\n${confirmUrl}\n\nIf you didn't request this, you can ignore this email — no confirmation, no further emails.\n\nUnsubscribe at any time: ${unsubscribeUrl}\n\nYour Scanora Team`
+            : `Hallo,\n\ndanke fürs Herunterladen des Scanora-Beispiel-Reports. Wenn du außerdem gelegentlich Tipps und Erinnerungen bekommen möchtest, die dir helfen, deine KI-Sichtbarkeit im Blick zu behalten, bestätige bitte deine E-Mail:\n${confirmUrl}\n\nFalls du das nicht angefordert hast, kannst du diese E-Mail ignorieren — ohne Bestätigung bekommst du keine weiteren Mails.\n\nJederzeit abmelden: ${unsubscribeUrl}\n\nDein Scanora Team`,
+        html: sampleReportOptInHtml(confirmUrl, unsubscribeUrl, language),
+    })
+}
+
+function sampleReportOptInHtml(confirmUrl, unsubscribeUrl, language = 'de') {
+    const isEn = language === 'en'
+    return `<!DOCTYPE html>
+<html lang="${isEn ? 'en' : 'de'}">
+<head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/></head>
+<body style="margin:0;padding:0;background:#05080f;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#05080f;padding:40px 20px;">
+    <tr><td align="center">
+      <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
+        <tr><td align="center" style="padding-bottom:32px;">
+          <table cellpadding="0" cellspacing="0"><tr>
+            <td style="width:40px;height:40px;">
+              <img src="${APP_URL}/icon.png" width="40" height="40" alt="Scanora" style="display:block;width:40px;height:40px;border-radius:12px;" />
+            </td>
+            <td style="padding-left:10px;vertical-align:middle;">
+              <span style="color:#ffffff;font-size:20px;font-weight:700;">Scanora</span>
+            </td>
+          </tr></table>
+        </td></tr>
+        <tr><td style="background:#0d1117;border:1px solid rgba(255,255,255,0.07);border-radius:20px;padding:40px;">
+          <p style="margin:0 0 8px;font-size:22px;font-weight:700;color:#ffffff;">${isEn ? 'One more step' : 'Noch ein Schritt'}</p>
+          <p style="margin:0 0 28px;font-size:15px;color:#94a3b8;line-height:1.6;">
+            ${isEn
+                ? "Thanks for downloading the Scanora example report. If you'd also like occasional tips and reminders to help you keep an eye on your AI visibility, please confirm your email address."
+                : 'Danke fürs Herunterladen des Scanora-Beispiel-Reports. Wenn du außerdem gelegentlich Tipps und Erinnerungen bekommen möchtest, die dir helfen, deine KI-Sichtbarkeit im Blick zu behalten, bestätige bitte deine E-Mail-Adresse.'}
+          </p>
+          <table cellpadding="0" cellspacing="0" style="margin-bottom:28px;"><tr>
+            <td style="background:linear-gradient(135deg,#7c3aed,#06b6d4);border-radius:12px;padding:1px;">
+              <a href="${confirmUrl}" style="display:block;background:#0d1117;border-radius:11px;padding:14px 32px;font-size:15px;font-weight:600;color:#ffffff;text-decoration:none;">
+                ${isEn ? 'Confirm email' : 'E-Mail bestätigen'} &rarr;
+              </a>
+            </td>
+          </tr></table>
+          <p style="margin:0;font-size:13px;color:#64748b;">
+            ${isEn
+                ? "If you didn't request this, simply ignore this email — without confirmation you won't receive any further emails."
+                : 'Falls du das nicht angefordert hast, ignoriere diese E-Mail einfach — ohne Bestätigung bekommst du keine weiteren E-Mails.'}
+          </p>
+        </td></tr>
+        <tr><td align="center" style="padding-top:24px;">
+          <a href="${unsubscribeUrl}" style="display:inline-block;padding:10px 20px;border:1px solid rgba(255,255,255,0.16);border-radius:10px;font-size:13px;font-weight:600;color:#cbd5e1;text-decoration:none;">${isEn ? 'Unsubscribe' : 'Abmelden'}</a>
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`
+}
+
+// Nurture-Mails fuer den Beispiel-Report-Lead-Magneten — werden NUR fuer confirmed:true UND
+// unsubscribed:false Adressen aufgerufen (Filter + atomares Setzen von nurtureSentAt lebt in
+// jobs/sampleReportNurtureJob.js, nicht hier). Jede Variante bekommt trotzdem ihren eigenen
+// Abmeldelink, falls diese Funktion je unabhaengig vom Job aufgerufen wird.
+export async function sendSampleReportNurtureNoAudit({ email, language = 'de', confirmToken }) {
+    const isEn = language === 'en'
+    const auditUrl = isEn ? `${APP_URL}/en` : APP_URL
+    const unsubscribeUrl = isEn
+        ? `${APP_URL}/en/newsletter-unsubscribe?token=${confirmToken}`
+        : `${APP_URL}/newsletter-abmelden?token=${confirmToken}`
+
+    await transporter.sendMail({
+        from: process.env.SMTP_FROM || process.env.SMTP_USER,
+        to: email,
+        subject: isEn ? "You haven't run your free audit yet" : 'Du hast noch kein kostenloses Audit durchgeführt',
+        text: isEn
+            ? `Hi,\n\na few days ago you downloaded our example report. Curious how your own website performs on Google and with ChatGPT, Claude & co.? Run your free audit in about a minute:\n${auditUrl}\n\nUnsubscribe at any time: ${unsubscribeUrl}\n\nYour Scanora Team`
+            : `Hallo,\n\nvor ein paar Tagen hast du unseren Beispiel-Report heruntergeladen. Neugierig, wie deine eigene Website bei Google und bei ChatGPT, Claude & Co. abschneidet? Starte dein kostenloses Audit in etwa einer Minute:\n${auditUrl}\n\nJederzeit abmelden: ${unsubscribeUrl}\n\nDein Scanora Team`,
+        html: nurtureHtml({
+            isEn,
+            headline: isEn ? "Still curious how you'd score?" : 'Neugierig, wie du abschneidest?',
+            body: isEn
+                ? "A few days ago you downloaded our example report. Running the same check on your own website only takes about a minute — and shows you exactly what to fix for Google, ChatGPT, Claude, and Perplexity."
+                : 'Vor ein paar Tagen hast du unseren Beispiel-Report heruntergeladen. Der gleiche Check auf deiner eigenen Website dauert nur etwa eine Minute — und zeigt dir genau, was du für Google, ChatGPT, Claude und Perplexity verbessern kannst.',
+            ctaLabel: isEn ? 'Run my free audit' : 'Mein kostenloses Audit starten',
+            ctaUrl: auditUrl,
+            unsubscribeUrl,
+        }),
+    })
+}
+
+export async function sendSampleReportNurtureHasAudit({ email, language = 'de', confirmToken }) {
+    const isEn = language === 'en'
+    const geoUrl = isEn ? `${APP_URL}/en/geo/pricing` : `${APP_URL}/geo/pricing`
+    const unsubscribeUrl = isEn
+        ? `${APP_URL}/en/newsletter-unsubscribe?token=${confirmToken}`
+        : `${APP_URL}/newsletter-abmelden?token=${confirmToken}`
+
+    await transporter.sendMail({
+        from: process.env.SMTP_FROM || process.env.SMTP_USER,
+        to: email,
+        subject: isEn ? 'Keep an eye on your AI visibility' : 'Behalte deine KI-Sichtbarkeit im Auge',
+        text: isEn
+            ? `Hi,\n\nnice that you've already run an audit with Scanora. Your AI visibility on ChatGPT, Claude, Perplexity, and Google AI Overview can shift week to week — with automated GEO tracking you'll see changes as they happen instead of finding out too late:\n${geoUrl}\n\nUnsubscribe at any time: ${unsubscribeUrl}\n\nYour Scanora Team`
+            : `Hallo,\n\nschön, dass du bereits ein Audit mit Scanora durchgeführt hast. Deine KI-Sichtbarkeit bei ChatGPT, Claude, Perplexity und Google AI Overview kann sich von Woche zu Woche verändern — mit automatisiertem GEO-Tracking siehst du Veränderungen sofort, statt sie zu spät zu bemerken:\n${geoUrl}\n\nJederzeit abmelden: ${unsubscribeUrl}\n\nDein Scanora Team`,
+        html: nurtureHtml({
+            isEn,
+            headline: isEn ? 'Your AI visibility keeps moving' : 'Deine KI-Sichtbarkeit bleibt in Bewegung',
+            body: isEn
+                ? 'Nice that you already ran an audit with Scanora. ChatGPT, Claude, Perplexity, and Google AI Overview can change how they mention you week to week — automated GEO tracking keeps watch so you catch changes early instead of finding out too late.'
+                : 'Schön, dass du bereits ein Audit mit Scanora durchgeführt hast. Wie dich ChatGPT, Claude, Perplexity und Google AI Overview erwähnen, kann sich von Woche zu Woche ändern — automatisiertes GEO-Tracking behält das für dich im Blick, damit du Veränderungen früh erkennst statt zu spät.',
+            ctaLabel: isEn ? 'See GEO tracking' : 'GEO-Tracking ansehen',
+            ctaUrl: geoUrl,
+            unsubscribeUrl,
+        }),
+    })
+}
+
+function nurtureHtml({ isEn, headline, body, ctaLabel, ctaUrl, unsubscribeUrl }) {
+    return `<!DOCTYPE html>
+<html lang="${isEn ? 'en' : 'de'}">
+<head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/></head>
+<body style="margin:0;padding:0;background:#05080f;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#05080f;padding:40px 20px;">
+    <tr><td align="center">
+      <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
+        <tr><td align="center" style="padding-bottom:32px;">
+          <table cellpadding="0" cellspacing="0"><tr>
+            <td style="width:40px;height:40px;">
+              <img src="${APP_URL}/icon.png" width="40" height="40" alt="Scanora" style="display:block;width:40px;height:40px;border-radius:12px;" />
+            </td>
+            <td style="padding-left:10px;vertical-align:middle;">
+              <span style="color:#ffffff;font-size:20px;font-weight:700;">Scanora</span>
+            </td>
+          </tr></table>
+        </td></tr>
+        <tr><td style="background:#0d1117;border:1px solid rgba(255,255,255,0.07);border-radius:20px;padding:40px;">
+          <p style="margin:0 0 8px;font-size:22px;font-weight:700;color:#ffffff;">${headline}</p>
+          <p style="margin:0 0 28px;font-size:15px;color:#94a3b8;line-height:1.6;">${body}</p>
+          <table cellpadding="0" cellspacing="0"><tr>
+            <td style="background:linear-gradient(135deg,#7c3aed,#06b6d4);border-radius:12px;padding:1px;">
+              <a href="${ctaUrl}" style="display:block;background:#0d1117;border-radius:11px;padding:14px 32px;font-size:15px;font-weight:600;color:#ffffff;text-decoration:none;">
+                ${ctaLabel} &rarr;
+              </a>
+            </td>
+          </tr></table>
+        </td></tr>
+        <tr><td align="center" style="padding-top:24px;">
+          <a href="${unsubscribeUrl}" style="display:inline-block;padding:10px 20px;border:1px solid rgba(255,255,255,0.16);border-radius:10px;font-size:13px;font-weight:600;color:#cbd5e1;text-decoration:none;">${isEn ? 'Unsubscribe' : 'Abmelden'}</a>
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`
+}
+
 function passwordResetHtml(name, resetUrl, language = 'de') {
     if (language === 'en') {
         return `<!DOCTYPE html>

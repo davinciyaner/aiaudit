@@ -3,8 +3,6 @@ import Hero from './components/Hero'
 import ResultsSection from './components/ResultsSection'
 import LeadsShowcase from './components/LeadsShowcase'
 import ProductShowcase from './components/ProductShowcase'
-import WhyAudit from './components/WhyAudit'
-import AIVisibilityExplainer from './components/AIVisibilityExplainer'
 import Pricing from './components/Pricing'
 import FinalCTA from './components/FinalCTA'
 import Footer from './components/Footer'
@@ -104,8 +102,6 @@ export default function LandingPage() {
             <ResultsSection />
             <LeadsShowcase />
             <ProductShowcase />
-            <AIVisibilityExplainer />
-            <WhyAudit />
             <Pricing />
             <FAQ />
             <FinalCTA />

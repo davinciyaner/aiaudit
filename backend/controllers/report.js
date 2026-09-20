@@ -25,6 +25,18 @@ const LABELS = {
         screenshots: 'Screenshots', desktopMobile: 'Desktop & Mobile Capture', desktop: 'Desktop', mobile: 'Mobile',
         priority: { critical: 'CRITICAL', high: 'HIGH', medium: 'MEDIUM', low: 'LOW' },
         scoreGood: 'Good', scoreNeedsWork: 'Needs Work', scoreCritical: 'Critical',
+        geoChecks: {
+            structuredData: 'Schema.org', organization: 'Organization', faq: 'FAQ Schema', websiteOrApp: 'WebSite/SoftwareApp Schema',
+            breadcrumb: 'Breadcrumb Schema', brokenImages: 'No broken schema images', faqMismatch: 'FAQ answers in content',
+            testimonials: 'Testimonials', llmsTxt: 'llms.txt', llmsFullTxt: 'llms-full.txt', aiCrawlers: 'AI crawlers allowed',
+            sitemap: 'Sitemap.xml', directDefinition: 'Direct definition', statistics: 'Statistics', wordCount: 'Word count ≥ 800',
+            h2Count: '≥ 3 H2 headings', externalLinks: 'External links', authorInfo: 'Author info', contactInfo: 'Contact info',
+            privacyPolicy: 'Privacy policy linked', https: 'HTTPS', canonical: 'Canonical tag', lang: 'HTML lang attribute',
+        },
+        geoChecksTitle: 'AI Visibility Signals', geoChecksSubtitle: 'signals passed',
+        sampleDisclaimer: 'Example report — this is our own analysis of scanora.ai. Your report will look different for your own website.',
+        ctaTitle: 'Get your own report', ctaSubtitle: 'Free in under 60 seconds — no credit card required',
+        ctaButton: 'Check my website now', ctaPricingNote: 'Free score instantly. Full AI report with concrete fixes from €29/month (Pro).',
     },
     de: {
         websitePerformanceReport: 'Website Performance Report',
@@ -43,14 +55,31 @@ const LABELS = {
         keywordIntelligence: 'Keyword Intelligence', words: 'Wörter', keywordsIdentified: 'Keywords identifiziert',
         removeOrStrengthen: 'Entfernen oder stärken', longTail: 'Long-Tail-Keywords zum Testen',
         geoAnalysis: 'GEO-Analyse', aiVisibilityScore: 'KI-Sichtbarkeits-Score', aiVisibility: 'KI-Sichtbarkeit',
-        actionItems: 'Massnahmen', generatedLlms: 'Generierte llms.txt — als /llms.txt im Projekt speichern',
+        actionItems: 'Maßnahmen', generatedLlms: 'Generierte llms.txt — als /llms.txt im Projekt speichern',
         screenshots: 'Screenshots', desktopMobile: 'Desktop- & Mobile-Aufnahme', desktop: 'Desktop', mobile: 'Mobile',
         priority: { critical: 'KRITISCH', high: 'HOCH', medium: 'MITTEL', low: 'NIEDRIG' },
         scoreGood: 'Gut', scoreNeedsWork: 'Verbesserungswürdig', scoreCritical: 'Kritisch',
+        geoChecks: {
+            structuredData: 'Schema.org', organization: 'Organisation', faq: 'FAQ-Schema', websiteOrApp: 'WebSite/SoftwareApp-Schema',
+            breadcrumb: 'Breadcrumb-Schema', brokenImages: 'Keine defekten Schema-Bilder', faqMismatch: 'FAQ-Antworten im Content',
+            testimonials: 'Testimonials', llmsTxt: 'llms.txt', llmsFullTxt: 'llms-full.txt', aiCrawlers: 'KI-Crawler erlaubt',
+            sitemap: 'Sitemap.xml', directDefinition: 'Direkte Definition', statistics: 'Statistiken', wordCount: 'Wortanzahl ≥ 800',
+            h2Count: '≥ 3 H2-Überschriften', externalLinks: 'Externe Links', authorInfo: 'Autoren-Info', contactInfo: 'Kontakt-Info',
+            privacyPolicy: 'Datenschutzerklärung verlinkt', https: 'HTTPS', canonical: 'Canonical-Tag', lang: 'HTML lang-Attribut',
+        },
+        geoChecksTitle: 'KI-Sichtbarkeits-Signale', geoChecksSubtitle: 'Signale erfüllt',
+        sampleDisclaimer: 'Beispiel-Report — das ist unsere eigene Analyse von scanora.ai. Dein Report sieht für deine eigene Website anders aus.',
+        ctaTitle: 'Hol dir deinen eigenen Report', ctaSubtitle: 'Kostenlos in unter 60 Sekunden — keine Kreditkarte nötig',
+        ctaButton: 'Jetzt meine Website prüfen', ctaPricingNote: 'Kostenloser Score sofort. Voller KI-Bericht mit konkreten Fixes ab 29 €/Monat (Pro).',
     },
 }
 
-export function generateHTMLReport(auditData, aiReport, language = 'de') {
+// isSample=true fuegt einen Disclaimer ("eigenes Beispiel") + eine Abschluss-CTA-Seite hinzu —
+// nur fuer den ffentlichen Marketing-Beispiel-Download gedacht. Echte Kundenreports (der
+// Normalfall dieser Funktion, siehe audit_router.js) duerfen das nicht zeigen: der Disclaimer
+// waere dort schlicht falsch, und "Hol dir deinen eigenen Report" ergibt fuer jemanden, der
+// bereits seinen eigenen Report in der Hand hat, keinen Sinn.
+export function generateHTMLReport(auditData, aiReport, language = 'de', { isSample = false } = {}) {
     const { url, timestamp, overallScore, seo, performance, keywords, geo, screenshots } = auditData
     const T = language === 'en' ? LABELS.en : LABELS.de
 
@@ -132,7 +161,41 @@ export function generateHTMLReport(auditData, aiReport, language = 'de') {
             : [{ title: language === 'en' ? 'AI ANALYSIS' : 'AI ANALYSE', content: cleaned }]
     }
 
-    const aiSections = parseAISections(aiReport)
+    const allAISections = parseAISections(aiReport)
+
+    // Fließtext- und Rohdaten-Abschnitte trugen bisher denselben Titel ("SEO-Analyse" etc.), tauchten
+    // aber an zwei getrennten Stellen im Dokument auf — die Cover-Tags versprechen 5 klare Themen,
+    // das Dokument selbst wirkte aber doppelt gegliedert. Deshalb werden die vier thematisch
+    // passenden KI-Abschnitte hier herausgezogen und weiter unten direkt in die jeweilige
+    // Datenseite eingebettet, statt als eigene Seite vorneweg zu laufen. Was keinem der vier
+    // Themen zugeordnet werden kann (Zusammenfassung, Kritische Probleme, Aktionsplan, Fallback-
+    // Blob bei fehlgeschlagenem Parsing) bleibt als eigenständige Seite bestehen.
+    const takeAISection = (pattern) => {
+        const idx = allAISections.findIndex(s => pattern.test(s.title))
+        if (idx === -1) return null
+        return allAISections.splice(idx, 1)[0]
+    }
+    const seoAISection        = takeAISection(/SEO/i)
+    const performanceAISection = takeAISection(/PERFORMANCE/i)
+    const keywordAISection    = takeAISection(/KEYWORD/i)
+    const geoAISection        = takeAISection(/GEO/i)
+    const aiSections = allAISections
+
+    const renderAIProse = (content) => {
+        const lines = content.split('\n').filter(l => l.trim())
+        return lines.map(line => {
+            if (line.startsWith('•') || line.startsWith('-')) {
+                const text = line.replace(/^[•\-]\s*/, '')
+                return `<div style="display:flex;gap:9px;margin-bottom:7px"><div style="width:5px;height:5px;border-radius:50%;background:#7c3aed;flex-shrink:0;margin-top:7px"></div><div style="font-size:12px;color:#94a3b8;line-height:1.65">${text}</div></div>`
+            }
+            return `<div style="font-size:12px;color:#94a3b8;line-height:1.75;margin-bottom:9px">${line}</div>`
+        }).join('')
+    }
+
+    const aiProseBox = (section) => section ? `
+        <div style="background:rgba(15,23,42,0.55);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:18px;margin-bottom:16px">
+            ${renderAIProse(section.content)}
+        </div>` : ''
 
     const issueRow = (text) =>
         `<div style="display:flex;gap:10px;align-items:flex-start;background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);border-left:3px solid #ef4444;border-radius:10px;padding:10px 14px;margin-bottom:8px"><div style="color:#fca5a5;font-size:12px;line-height:1.55;flex:1">${text}</div></div>`
@@ -149,7 +212,14 @@ export function generateHTMLReport(auditData, aiReport, language = 'de') {
             <a href="${SITE_URL}" style="font-size:10px;color:#475569;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;text-decoration:none">Scanora</a>
         </div>`
 
+    // Nur das Cover bekommt eine feste volle A4-Seite (dramatischer erster Eindruck). Alle
+    // Inhalts-Abschnitte nutzen sectionStyle ohne fixe Mindesthöhe/Seitenumbruch — Chromiums
+    // PDF-Paginierung packt dann mehrere kurze Abschnitte auf eine physische Seite, statt bei
+    // wenigen Problemen/kurzem Text eine fast leere A4-Seite pro Abschnitt zu erzeugen.
+    // break-inside:avoid verhindert trotzdem, dass ein einzelner Abschnitt mitten in einer
+    // Tabelle/Karte hässlich zerschnitten wird.
     const pageStyle = `width:210mm;min-height:297mm;padding:32px 36px;page-break-after:always;break-after:page;display:flex;flex-direction:column;background:#0a0e1a;position:relative;overflow:hidden;box-sizing:border-box`
+    const sectionStyle = `width:210mm;padding:24px 36px;margin-bottom:4px;page-break-inside:avoid;break-inside:avoid;display:flex;flex-direction:column;background:#0a0e1a;position:relative;overflow:hidden;box-sizing:border-box`
 
     const glow = (top, right, bottom, left, color) => {
         let style = `position:absolute;width:250px;height:250px;background:radial-gradient(circle,${color},transparent 70%);border-radius:50%;pointer-events:none;`
@@ -188,35 +258,31 @@ export function generateHTMLReport(auditData, aiReport, language = 'de') {
         `<span style="font-size:10px;padding:4px 12px;background:${c}18;border:1px solid ${c}35;border-radius:999px;color:${c};font-weight:600">${l}</span>`
     ).join('')}
             </div>
+            ${isSample ? `
+            <div style="margin-top:20px;max-width:420px;font-size:10px;color:#64748b;line-height:1.5;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:10px 14px">
+                ${T.sampleDisclaimer}
+            </div>` : ''}
         </div>
         <div style="text-align:center;font-size:10px;color:#334155;padding-top:14px;border-top:1px solid rgba(255,255,255,0.04)">${T.poweredBy}</div>
     </div>`
 
-    // PAGE 2+: AI Sections
-    const aiPages = aiSections.map(section => {
-        const lines = section.content.split('\n').filter(l => l.trim())
-        const rendered = lines.map(line => {
-            if (line.startsWith('•') || line.startsWith('-')) {
-                const text = line.replace(/^[•\-]\s*/, '')
-                return `<div style="display:flex;gap:9px;margin-bottom:7px"><div style="width:5px;height:5px;border-radius:50%;background:#7c3aed;flex-shrink:0;margin-top:7px"></div><div style="font-size:12px;color:#94a3b8;line-height:1.65">${text}</div></div>`
-            }
-            return `<div style="font-size:12px;color:#94a3b8;line-height:1.75;margin-bottom:9px">${line}</div>`
-        }).join('')
-        return `
-        <div style="${pageStyle}">
+    // PAGE 2+: AI Sections — nur noch die, die keinem der vier Datenthemen zugeordnet wurden
+    // (Zusammenfassung, Kritische Probleme, Aktionsplan, ggf. Fallback-Blob).
+    const aiPages = aiSections.map(section => `
+        <div style="${sectionStyle}">
             ${glow(-60, -60, null, null, 'rgba(124,58,237,0.07)')}
             ${sectionHeader(section.title, T.generatedAnalysis)}
             <div style="flex:1;background:rgba(15,23,42,0.55);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:20px;">
-                ${rendered}
+                ${renderAIProse(section.content)}
             </div>
-        </div>`
-    }).join('')
+        </div>`).join('')
 
     // PAGE: Performance
     const performancePage = `
-    <div style="${pageStyle}">
+    <div style="${sectionStyle}">
         ${glow(-60, -60, null, null, 'rgba(245,158,11,0.07)')}
         ${sectionHeader(T.performanceAnalysis, `${performance.metrics.resourceCount} ${T.requestsLower} · ${performance.metrics.totalSize} KB ${T.totalLower}`)}
+        ${aiProseBox(performanceAISection)}
         <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px">
             ${[
         ['TTFB', performance.metrics.ttfb + 'ms', performance.metrics.ttfb < 600, T.timeToFirstByte],
@@ -249,9 +315,10 @@ export function generateHTMLReport(auditData, aiReport, language = 'de') {
 
     // PAGE: SEO
     const seoPage = `
-    <div style="${pageStyle}">
+    <div style="${sectionStyle}">
         ${glow(-60, -60, null, null, 'rgba(16,185,129,0.07)')}
         ${sectionHeader(T.seoAnalysis, `${T.score}: ${seo.score}/100 · ${seo.issues.length} ${T.issuesFoundCount}`)}
+        ${aiProseBox(seoAISection)}
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
             <div style="background:rgba(15,23,42,0.7);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:16px">
                 <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:#475569;font-weight:600;margin-bottom:8px">${T.titleTag}</div>
@@ -305,9 +372,10 @@ export function generateHTMLReport(auditData, aiReport, language = 'de') {
 
     // PAGE: Keywords
     const keywordsPage = `
-    <div style="${pageStyle}">
+    <div style="${sectionStyle}">
         ${glow(-60, -60, null, null, 'rgba(167,139,250,0.07)')}
         ${sectionHeader(T.keywordIntelligence, `${keywords.totalWords} ${T.words} · ${keywords.topKeywords.length} ${T.keywordsIdentified}`)}
+        ${aiProseBox(keywordAISection)}
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px">
             ${keywords.topKeywords.slice(0, 8).map(k => `
             <div style="background:rgba(15,23,42,0.7);border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:14px;display:flex;align-items:center;justify-content:space-between">
@@ -339,34 +407,60 @@ export function generateHTMLReport(auditData, aiReport, language = 'de') {
         </div>` : ''}
     </div>`
 
-    // PAGE: GEO
+    // PAGE: GEO — alle 23 realen Scoring-Signale aus analyzeGEO() zeigen (nicht nur eine
+    // Teilauswahl), damit der Report die tatsächliche Analysetiefe abbildet statt sie zu
+    // untertreiben. Reihenfolge/Schwellenwerte exakt wie in controllers/geo.js's check()-Aufrufen.
+    const geoChecksList = geo ? [
+        [T.geoChecks.structuredData, geo.checks.hasStructuredData],
+        [T.geoChecks.organization, geo.checks.hasOrganization],
+        [T.geoChecks.faq, geo.checks.hasFAQ],
+        [T.geoChecks.websiteOrApp, geo.checks.hasSoftwareApp || geo.checks.hasWebSite],
+        [T.geoChecks.breadcrumb, geo.checks.hasBreadcrumb],
+        [T.geoChecks.brokenImages, (geo.checks.brokenSchemaImages?.length ?? 0) === 0],
+        ...(geo.checks.hasFAQ ? [[T.geoChecks.faqMismatch, (geo.checks.faqAnswersMissingFromContent ?? 0) === 0]] : []),
+        [T.geoChecks.testimonials, geo.checks.hasTestimonials],
+        [T.geoChecks.llmsTxt, geo.checks.hasLlmsTxt],
+        [T.geoChecks.llmsFullTxt, geo.checks.hasLlmsFullTxt],
+        [T.geoChecks.aiCrawlers, geo.checks.robotsAllowsAI],
+        [T.geoChecks.sitemap, geo.checks.hasSitemap],
+        [T.geoChecks.directDefinition, geo.checks.hasDirectDefinition],
+        [T.geoChecks.statistics, geo.checks.hasStatistics],
+        [T.geoChecks.wordCount, (geo.checks.wordCount ?? 0) >= 800],
+        [T.geoChecks.h2Count, (geo.checks.h2Count ?? 0) >= 3],
+        [T.geoChecks.externalLinks, (geo.checks.externalLinksCount ?? 0) > 0],
+        [T.geoChecks.authorInfo, geo.checks.hasAuthorInfo],
+        [T.geoChecks.contactInfo, geo.checks.hasContactInfo],
+        [T.geoChecks.privacyPolicy, geo.checks.hasPrivacyPolicy],
+        [T.geoChecks.https, geo.checks.hasHTTPS],
+        [T.geoChecks.canonical, geo.checks.canonical],
+        [T.geoChecks.lang, geo.checks.hasLang],
+    ] : []
+    const geoChecksPassed = geoChecksList.filter(([, ok]) => ok).length
+
     const geoPage = geo ? `
-    <div style="${pageStyle}">
+    <div style="${sectionStyle}">
         ${glow(-60, -60, null, null, 'rgba(99,102,241,0.08)')}
         ${sectionHeader(T.geoAnalysis, `${T.aiVisibilityScore}: ${geo.score}/100`)}
+        ${aiProseBox(geoAISection)}
 
-        <div style="display:grid;grid-template-columns:160px 1fr;gap:16px;margin-bottom:20px">
+        <div style="display:grid;grid-template-columns:160px 1fr;gap:16px;margin-bottom:16px">
             <div style="background:rgba(15,23,42,0.7);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:20px;text-align:center;display:flex;flex-direction:column;justify-content:center;align-items:center">
                 <div style="font-size:48px;font-weight:800;color:${scoreColor(geo.score)};line-height:1">${geo.score}</div>
                 <div style="font-size:10px;color:#64748b;margin-top:6px;text-transform:uppercase;letter-spacing:0.08em">${T.aiVisibility}</div>
                 <div style="font-size:11px;font-weight:600;color:${scoreColor(geo.score)};margin-top:4px">${scoreLabel(geo.score)}</div>
             </div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-                ${[
-        ['llms.txt', geo.checks.hasLlmsTxt],
-        ['Schema.org', geo.checks.hasStructuredData],
-        ['FAQ Schema', geo.checks.hasFAQ],
-        ['Organization', geo.checks.hasOrganization],
-        ['AI Crawlers OK', geo.checks.robotsAllowsAI],
-        ['Direct Definition', geo.checks.hasDirectDefinition],
-        ['Statistics', geo.checks.hasStatistics],
-        ['HTTPS', geo.checks.hasHTTPS],
-    ].map(([name, ok]) => `
-                <div style="background:${ok ? 'rgba(16,185,129,0.07)' : 'rgba(239,68,68,0.07)'};border:1px solid ${ok ? 'rgba(16,185,129,0.2)' : 'rgba(239,68,68,0.2)'};border-radius:10px;padding:10px 12px;display:flex;align-items:center;gap:8px">
-                    <span style="font-size:14px">${ok ? '&#9989;' : '&#10060;'}</span>
-                    <span style="font-size:11px;color:${ok ? '#6ee7b7' : '#fca5a5'};font-weight:600">${name}</span>
-                </div>`).join('')}
+            <div style="background:rgba(15,23,42,0.7);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:16px;display:flex;flex-direction:column;justify-content:center">
+                <div style="font-size:10px;color:#475569;text-transform:uppercase;letter-spacing:0.1em;font-weight:600;margin-bottom:6px">${T.geoChecksTitle}</div>
+                <div style="font-size:26px;font-weight:800;color:#f1f5f9;line-height:1">${geoChecksPassed}<span style="font-size:14px;color:#64748b;font-weight:600">/${geoChecksList.length} ${T.geoChecksSubtitle}</span></div>
             </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin-bottom:20px">
+            ${geoChecksList.map(([name, ok]) => `
+            <div style="background:${ok ? 'rgba(16,185,129,0.07)' : 'rgba(239,68,68,0.07)'};border:1px solid ${ok ? 'rgba(16,185,129,0.2)' : 'rgba(239,68,68,0.2)'};border-radius:10px;padding:9px 10px;display:flex;align-items:center;gap:7px">
+                <span style="font-size:12px;flex-shrink:0">${ok ? '&#9989;' : '&#10060;'}</span>
+                <span style="font-size:10px;color:${ok ? '#6ee7b7' : '#fca5a5'};font-weight:600;line-height:1.3">${name}</span>
+            </div>`).join('')}
         </div>
 
         ${geo.recommendations?.length > 0 ? `
@@ -390,7 +484,7 @@ export function generateHTMLReport(auditData, aiReport, language = 'de') {
     </div>` : ''
 
     const screenshotsPage = screenshots ? `
-    <div style="${pageStyle}">
+    <div style="${sectionStyle}">
         ${glow(-60, -60, null, null, 'rgba(124,58,237,0.07)')}
         ${sectionHeader(T.screenshots, T.desktopMobile)}
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;flex:1">
@@ -409,6 +503,23 @@ export function generateHTMLReport(auditData, aiReport, language = 'de') {
         </div>
     </div>` : ''
 
+    // Abschluss-CTA — nur im oeffentlichen Beispiel-Download: der eigentliche Conversion-Moment
+    // nach dem Lesen. Ergibt fuer echte Kundenreports keinen Sinn (die haben ihren Report ja
+    // schon), deshalb an isSample gekoppelt statt immer angehaengt.
+    const ctaUrl = language === 'en' ? `${SITE_URL}/en` : SITE_URL
+    const ctaPage = isSample ? `
+    <div style="${sectionStyle}">
+        ${glow(-80, -80, null, null, 'rgba(124,58,237,0.15)')}
+        ${glow(null, null, -60, -60, 'rgba(6,182,212,0.08)')}
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 20px;position:relative;z-index:1">
+            <div style="font-size:22px;font-weight:800;color:#f8fafc;margin-bottom:8px">${T.ctaTitle}</div>
+            <div style="font-size:13px;color:#94a3b8;margin-bottom:24px">${T.ctaSubtitle}</div>
+            <a href="${ctaUrl}" style="display:inline-block;background:linear-gradient(to right,#7c3aed,#06b6d4);color:#f8fafc;font-size:14px;font-weight:700;padding:14px 32px;border-radius:12px;text-decoration:none;margin-bottom:20px">${T.ctaButton} →</a>
+            <div style="font-size:11px;color:#64748b;max-width:340px;line-height:1.6">${T.ctaPricingNote}</div>
+            <a href="${ctaUrl}" style="margin-top:20px;font-size:12px;color:#67e8f9;text-decoration:none;font-weight:600">${ctaUrl.replace('https://', '')}</a>
+        </div>
+    </div>` : ''
+
     return `<!DOCTYPE html>
 <html lang="${language === 'en' ? 'en' : 'de'}">
 <head>
@@ -422,11 +533,12 @@ body { font-family: -apple-system, 'Segoe UI', sans-serif; background:#0a0e1a; c
 <body>
 ${coverPage}
 ${aiPages}
-${performancePage}
 ${seoPage}
+${performancePage}
 ${keywordsPage}
 ${geoPage}
 ${screenshotsPage}
+${ctaPage}
 </body>
 </html>`
 }
