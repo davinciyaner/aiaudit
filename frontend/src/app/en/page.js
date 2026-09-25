@@ -1,5 +1,6 @@
 import Navbar from '../components/Navbar'
 import Hero from '../components/en/Hero'
+import LiveAuditStats from '../components/en/LiveAuditStats'
 import ResultsSection from '../components/en/ResultsSection'
 import LeadsShowcase from '../components/en/LeadsShowcase'
 import ProductShowcase from '../components/en/ProductShowcase'
@@ -55,6 +56,7 @@ export default function LandingPageEn() {
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
             <Navbar locale="en" />
             <Hero />
+            <LiveAuditStats />
             <ResultsSection />
             <LeadsShowcase />
             <ProductShowcase />

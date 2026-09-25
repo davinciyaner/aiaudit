@@ -1,5 +1,6 @@
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
+import LiveAuditStats from './components/LiveAuditStats'
 import ResultsSection from './components/ResultsSection'
 import LeadsShowcase from './components/LeadsShowcase'
 import ProductShowcase from './components/ProductShowcase'
@@ -64,7 +65,7 @@ const webPageLd = {
     inLanguage: 'de-DE',
     primaryImageOfPage: { '@id': 'https://www.scanora.ai/logo' },
     datePublished: '2026-01-15',
-    dateModified: '2026-09-12',
+    dateModified: '2026-09-26',
     about: [
         { '@type': 'Thing', name: 'Generative Engine Optimization' },
         { '@type': 'Thing', name: 'AI Visibility' },
@@ -81,7 +82,7 @@ const articleLd = {
     author: { '@id': 'https://www.scanora.ai/#founder' },
     publisher: { '@id': 'https://www.scanora.ai/#organization' },
     datePublished: '2026-01-15',
-    dateModified: '2026-09-12',
+    dateModified: '2026-09-26',
     mainEntityOfPage: { '@id': 'https://www.scanora.ai/#webpage' },
     about: [
         { '@type': 'Thing', name: 'Generative Engine Optimization' },
@@ -99,6 +100,7 @@ export default function LandingPage() {
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
             <Navbar />
             <Hero />
+            <LiveAuditStats />
             <ResultsSection />
             <LeadsShowcase />
             <ProductShowcase />
