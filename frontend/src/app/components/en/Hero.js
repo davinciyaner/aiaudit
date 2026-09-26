@@ -79,7 +79,7 @@ function HeroAuditInput() {
                     {submitting
                         ? <span className="w-4 h-4 rounded-full border-2 border-[var(--bg-base)]/30 border-t-[var(--bg-base)] animate-spin" aria-hidden="true" />
                         : <Search className="w-4 h-4" />}
-                    <span>{submitting ? 'Checking…' : 'Check now'}</span>
+                    <span>{submitting ? 'Checking…' : 'Check for free now'}</span>
                     {!submitting && <ArrowRight className="w-3.5 h-3.5" />}
                 </button>
             </div>

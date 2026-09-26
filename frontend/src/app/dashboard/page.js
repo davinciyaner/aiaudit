@@ -25,7 +25,6 @@ import { useRouter } from 'next/navigation'
 import ScoreCard from '../components/ScoreCard'
 import AuditForm from '../components/AuditForm'
 import Loading from '../components/Loading'
-import ReauditCTA from '../components/ReauditCTA'
 import ReactivationBanner from '../components/ReactivationBanner'
 import FeedbackWidget from '../components/FeedbackWidget'
 import Navbar from "@/app/components/Navbar";
@@ -184,7 +183,9 @@ export default function Dashboard() {
         setResult(data || null)
         if (data && !data.limitReached && !data.domainLimitReached) {
             const token = localStorage.getItem('token')
-            if (!token) setTimeout(() => setShowRegisterModal(true), 2500)
+            // Vorher 2500ms — Modal verdeckte die Scores, bevor der Nutzer sie überhaupt gesehen
+            // hatte. Erst den Score wirken lassen, dann registrieren vorschlagen.
+            if (!token) setTimeout(() => setShowRegisterModal(true), 7000)
         }
     }
 
@@ -643,21 +644,27 @@ export default function Dashboard() {
                                                 Der KI-Bericht analysiert deine spezifischen Ergebnisse und liefert Schritt-für-Schritt-Fixes — kein generisches "optimiere deinen Title-Tag".
                                             </p>
                                             <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                                                <Link href="/pricing"
-                                                    className="flex items-center justify-center gap-2 px-6 py-3 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] font-semibold rounded-xl transition-all shadow-lg shadow-[var(--accent-border)] active:scale-[0.97] active:duration-75 text-sm">
-                                                    Pro für €29/Monat <ArrowRight className="w-4 h-4" />
-                                                </Link>
-                                                <Link href="/pricing"
-                                                    className="flex items-center justify-center gap-2 px-6 py-3 text-[var(--text-muted)] hover:text-[var(--text-white)] border border-[var(--border-subtle)] hover:border-[var(--border-strong)] rounded-xl transition-all text-sm">
-                                                    Alle Preise
-                                                </Link>
+                                                {isLoggedIn ? (
+                                                    <>
+                                                        <Link href="/pricing"
+                                                            className="flex items-center justify-center gap-2 px-6 py-3 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] font-semibold rounded-xl transition-all shadow-lg shadow-[var(--accent-border)] active:scale-[0.97] active:duration-75 text-sm">
+                                                            Pro für €29/Monat <ArrowRight className="w-4 h-4" />
+                                                        </Link>
+                                                        <Link href="/pricing"
+                                                            className="flex items-center justify-center gap-2 px-6 py-3 text-[var(--text-muted)] hover:text-[var(--text-white)] border border-[var(--border-subtle)] hover:border-[var(--border-strong)] rounded-xl transition-all text-sm">
+                                                            Alle Preise
+                                                        </Link>
+                                                    </>
+                                                ) : (
+                                                    <button onClick={openRegisterModal}
+                                                        className="flex items-center justify-center gap-2 px-6 py-3 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] font-semibold rounded-xl transition-all shadow-lg shadow-[var(--accent-border)] active:scale-[0.97] active:duration-75 text-sm">
+                                                        Kostenlos registrieren <ArrowRight className="w-4 h-4" />
+                                                    </button>
+                                                )}
                                             </div>
                                         </div>
                                     </motion.div>
                                 )}
-
-                                {/* PRO UPSELL — nur wenn nicht Pro */}
-                                {!isPro && <ReauditCTA />}
 
                                 {/* SEO AUTOMATISIERUNG UPSELL */}
                                     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}
@@ -717,7 +724,7 @@ export default function Dashboard() {
                                             <ExternalLink className="w-3.5 h-3.5" />
                                         </a>
                                     </div>
-                                ) : (
+                                ) : isLoggedIn ? (
                                     <div className="flex items-center justify-between gap-4 px-4 sm:px-5 py-4 rounded-xl border border-[var(--border-subtle)] bg-[var(--surface-06)]">
                                         <div className="flex items-center gap-3">
                                             <FileText className="w-4 h-4 text-[var(--text-faint)] shrink-0" />
@@ -728,7 +735,7 @@ export default function Dashboard() {
                                             Upgraden <ArrowRight className="w-3 h-3" />
                                         </Link>
                                     </div>
-                                )}
+                                ) : null}
                             </>
                         )}
                     </motion.div>

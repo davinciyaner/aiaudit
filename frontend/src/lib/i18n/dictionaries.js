@@ -2,7 +2,7 @@ export const dictionaries = {
     de: {
         nav: {
             login: 'Anmelden',
-            cta: 'Jetzt prüfen',
+            cta: 'Jetzt kostenlos prüfen',
             dashboard: 'Dashboard',
             profile: 'Mein Profil',
             logout: 'Abmelden',
@@ -32,7 +32,7 @@ export const dictionaries = {
     en: {
         nav: {
             login: 'Log in',
-            cta: 'Check now',
+            cta: 'Check for free now',
             dashboard: 'Dashboard',
             profile: 'My Profile',
             logout: 'Log out',
