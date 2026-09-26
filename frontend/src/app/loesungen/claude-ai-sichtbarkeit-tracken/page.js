@@ -4,7 +4,7 @@ import Footer from '../../components/Footer'
 
 export const metadata = {
     title: 'Sichtbarkeit in Claude tracken 2026: Claude AI Sichtbarkeit prüfen',
-    description: 'Sichtbarkeit in Claude tracken ab 4,99 €/Monat: wöchentliches Tracking, Mention-Rate über Zeit und Zitate mit Quellenkontext.',
+    description: 'Wie Claude AI wirklich entscheidet, wen es zitiert: Training vs. Websuche, Crawler-Steuerung & Zitierregeln - plus Strategien. Sichtbarkeit in Claude jetzt mit Scanora tracken.',
     keywords: 'sichtbarkeit in claude, claude ai sichtbarkeit, claude sichtbarkeit tracken, claude visibility tracking, claude ai visibility, perplexity sichtbarkeit, claude ki sichtbarkeit, generative engine optimization claude',
     alternates: {
         canonical: 'https://www.scanora.ai/loesungen/claude-ai-sichtbarkeit-tracken',
@@ -30,7 +30,7 @@ const jsonLd = {
     description: 'Sichtbarkeit in Claude tracken ab 4,99 €/Monat inklusive Perplexity-Sichtbarkeit - während Claude-Tracking bei den meisten AI-Visibility-Tools nur als teures Enterprise-Add-on verfügbar ist.',
     image: 'https://www.scanora.ai/loesungen/claude-ai-sichtbarkeit-tracken/opengraph-image',
     datePublished: '2026-08-29T09:00:00+02:00',
-    dateModified: '2026-09-12T09:00:00+02:00',
+    dateModified: '2026-09-26T09:00:00+02:00',
     author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.scanora.ai/about' },
     publisher: {
         '@type': 'Organization',
@@ -67,6 +67,38 @@ const faqLd = {
             acceptedAnswer: {
                 '@type': 'Answer',
                 text: 'Sichtbarkeit in Claude beschreibt, ob und wie oft Anthropics Claude deine Website oder Marke erwähnt, wenn Nutzer zu relevanten Themen aus deiner Branche fragen. Gemessen wird das über die Mention-Rate (Anteil der Prüfungen mit Erwähnung) und über Zitate mit Quellenkontext, die zeigen, in welchem Zusammenhang und mit welchem Sentiment du genannt wirst. Anders als eine einmalige Stichprobe zeigt automatisiertes, wöchentliches Tracking den Verlauf über Zeit - inklusive welcher Konkurrenten Claude stattdessen zitiert.',
+            },
+        },
+        {
+            '@type': 'Question',
+            name: 'Sucht Claude bei jeder Anfrage im Web, oder antwortet es auch ohne Suche?',
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Nein. Laut Anthropics eigener Dokumentation antwortet Claude bei stabilem Wissen (etablierte Fakten, Grundlagenwissen) direkt aus dem Training. Es sucht aktiv, wenn eine Frage aktuelle, veränderliche oder produktspezifische Informationen verlangt - genau der Fall bei den meisten Kaufentscheidungs-Prompts.',
+            },
+        },
+        {
+            '@type': 'Question',
+            name: 'Kann ich als Website-Betreiber steuern, ob Claude meine Seite fürs Training oder nur für Live-Antworten nutzt?',
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Ja. Anthropic betreibt drei getrennte Crawler (ClaudeBot fürs Training, Claude-User und Claude-SearchBot für Live-Anfragen), die sich einzeln per robots.txt steuern lassen. Ein pauschales Blockieren "aller Bots" nimmt dir beide Kanäle gleichzeitig.',
+            },
+        },
+        {
+            '@type': 'Question',
+            name: 'Hat Constitutional AI Einfluss darauf, welche Quellen Claude zitiert?',
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Nach Anthropics eigener Veröffentlichung zur Verfassung: nein, jedenfalls nicht direkt. Die Prinzipien betreffen Schadensvermeidung und ethisches Verhalten, nicht die Auswahl von Quellen in einer Websuche-Antwort. Die Quellenauswahl steuert der Websuche-Mechanismus selbst.',
+            },
+        },
+        {
+            '@type': 'Question',
+            name: 'Wie unterscheidet sich "Sichtbarkeit in Claude" von "Sichtbarkeit in ChatGPT"?',
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Technisch vor allem in der Zugriffssteuerung: Claude trennt Training und Live-Suche über drei separate Crawler, ChatGPT hat Websuche standardmäßig aktiviert und ein einheitlicheres Crawler-System. Inhaltlich zählen bei beiden ähnliche Faktoren: Auffindbarkeit, kompakte Fakten, Aktualität.',
             },
         },
         {
@@ -132,6 +164,45 @@ const MARKET_ROWS = [
     ['Rankscale', '20 $/Monat', 'Ja, aber über ein Credit-System statt Fixpreis abgerechnet'],
 ]
 
+const CLAUDE_CRAWLERS = [
+    { name: 'ClaudeBot', role: 'Sammelt Daten für das Modelltraining.' },
+    { name: 'Claude-User', role: 'Ruft Seiten ab, wenn ein Nutzer eine konkrete Suche auslöst.' },
+    { name: 'Claude-SearchBot', role: 'Verbessert die Qualität der Suchergebnisse und Indexierung.' },
+]
+
+const VISIBILITY_FACTORS = [
+    { num: 1, title: 'Crawler-Zugriff', text: 'Ohne Freigabe für ClaudeBot, Claude-User und Claude-SearchBot in der robots.txt bist du aus beiden Kanälen - Training und Live-Suche - ausgeschlossen. Das ist die Grundvoraussetzung vor jeder inhaltlichen Optimierung.' },
+    { num: 2, title: 'Klassische Auffindbarkeit', text: 'Claudes Websuche-Tool greift auf reguläre Suchergebnisse zurück. Wer bei Google nicht sauber indexiert ist, taucht auch in Claudes Suchergebnissen nicht auf - technisches SEO ist damit indirekt auch GEO.' },
+    { num: 3, title: 'Kompakte, eigenständige Fakten-Sätze', text: 'Pro Quelle zitiert Claude nur einen Ausschnitt von bis zu 150 Zeichen. Sätze, die auch isoliert verständlich sind und eine konkrete Aussage treffen, gewinnen gegen verschachtelte Marketing-Formulierungen.' },
+    { num: 4, title: 'Sichtbares Aktualitätsdatum', text: 'Claude erhält zu jedem Suchergebnis das Alter der Seite mitgeliefert. Bei Themen mit Aktualitätsbezug - Preise, Vergleichszahlen, DR-Werte - spricht ein gepflegtes "Stand: [Monat/Jahr]" für sich.' },
+    { num: 5, title: 'Nachbarschaft in Domain-Listen', text: 'Wer Claude in eine eigene Anwendung integriert, kann die Websuche auf bestimmte Domains beschränken oder ausschließen. Erwähnungen auf seriösen Drittseiten erhöhen die Chance, in einer solchen Nachbarschaft mitgedacht zu werden.' },
+    { num: 6, title: 'Präsenz im Trainingskorpus', text: 'Für Antworten ohne Websuche zählt nur, was zum Trainingsstichtag öffentlich prominent war - Wikipedia, Presse, breit verlinkte Verzeichniseinträge. Sehr neue oder isoliert stehende Seiten haben hier praktisch keine Chance.' },
+]
+
+const VISIBILITY_STRATEGIES = [
+    { num: 1, title: 'robots.txt aktiv prüfen', text: 'ClaudeBot, Claude-User und Claude-SearchBot müssen explizit erlaubt sein. Ein pauschales Disallow für alle Bots trifft auch diese drei mit.' },
+    { num: 2, title: 'Technisches SEO nicht vernachlässigen', text: 'Claude sucht über reale Suchergebnisse - jede Verbesserung deiner klassischen Google-Sichtbarkeit wirkt sich indirekt auch auf deine Claude-Sichtbarkeit aus.' },
+    { num: 3, title: 'In zitierfähigen Sätzen schreiben', text: 'Eine Kernaussage pro Satz, konkrete Zahlen und Namen statt vager Formulierungen. Testfrage: Ergibt dieser eine Satz auch isoliert für sich Sinn?' },
+    { num: 4, title: 'Aktualität sichtbar machen', text: 'Ein gepflegtes Datum bei Vergleichs- und Datenseiten ist ein Signal, das Claude direkt mitgeliefert bekommt.' },
+    { num: 5, title: 'Substanzielle Drittpräsenz aufbauen', text: 'Erwähnungen in Fachpresse, anerkannten Verzeichnissen und - wo thematisch gerechtfertigt - Wikipedia erhöhen sowohl die Chance auf Trainingskorpus-Präsenz als auch auf vertrauenswürdige Domain-Nachbarschaften.' },
+    { num: 6, title: 'Regelmäßig selbst testen', text: 'Frag Claude mit aktivierter Websuche typische Kaufentscheidungs-Prompts aus deiner Branche und prüfe, ob dein Produkt auftaucht - genau diese Lücken schließt du dann gezielt auf deiner Seite.' },
+]
+
+const PLATFORM_COMPARISON_ROWS = [
+    ['Grundprinzip', 'LLM mit optionalem Websuche-Tool, das Entwickler pro Anwendung gezielt aktivieren', 'Websuche standardmäßig aktiv, drei Stufen: schnelle Suche, agentisches Reasoning, Deep Research', 'Von Grund auf Such-Engine; vier Modellstufen (Sonar bis Sonar Deep Research) - Suche ist Kernprodukt'],
+    ['Wann wird gesucht?', 'Claude entscheidet selbst nach Aktualitätsbedarf der Frage; über Systemprompt und Suchlimit steuerbar', 'Standardmäßig bei jeder Anfrage aktiv, lässt sich deaktivieren', 'Grundsätzlich bei jeder Antwort - Modellwahl bestimmt nur die Recherchetiefe'],
+    ['Zitierformat', 'Präziser Ausschnitt bis 150 Zeichen pro Quelle, exakt im Text verortet', 'Inline-Zitate mit Start-/End-Position, plus separate "Sources"-Liste aller konsultierten Seiten', 'Inline-Quellenangaben nach Relevanz/Aktualität - Auswahlkriterien nicht offiziell dokumentiert'],
+    ['Steuerung durch dich', 'Granular über drei getrennte Bots für Training, Live-Nutzeranfrage und Suchindex', 'Ein Crawler-System; Domain-Filterung liegt beim App-Entwickler, nicht bei dir', 'Eigenes Crawling, kaum öffentlich dokumentierte Steuerungsmöglichkeiten'],
+]
+
+const CLAUDE_SOURCES = [
+    { label: 'Anthropic: Web search tool - Dokumentation', href: 'https://platform.claude.com/docs/en/agents-and-tools/tool-use/web-search-tool' },
+    { label: "Anthropic: Claude's Constitution", href: 'https://www.anthropic.com/news/claudes-constitution' },
+    { label: 'Anthropic Support: Wie Anthropic das Web crawlt', href: 'https://support.claude.com/en/articles/8896518-does-anthropic-crawl-data-from-the-web-and-how-can-site-owners-block-the-crawler' },
+    { label: 'OpenAI: Web search guide', href: 'https://developers.openai.com/api/docs/guides/tools-web-search' },
+    { label: 'Perplexity: Model-Dokumentation', href: 'https://docs.perplexity.ai/getting-started/models' },
+]
+
 const TRACKING_STEPS = [
     { num: 1, title: 'Keywords festlegen', text: 'Themen und Suchanfragen definieren, zu denen Claude deine Marke erwähnen könnte - z. B. "bestes Tool für X" oder "X vs Y".' },
     { num: 2, title: 'Zwei Prompt-Varianten prüfen', text: 'Jedes Keyword empfehlungsorientiert ("Welches Tool kennst du für X?") und vergleichend ("Was ist das beste Tool für X?") abfragen - Claude antwortet je nach Formulierung unterschiedlich.' },
@@ -166,8 +237,8 @@ export default function ClaudeAiSichtbarkeitPage() {
                             Lösung
                         </span>
                         <span className="text-xs text-[var(--text-faint)]">29. August 2026</span>
-                        <span className="text-xs text-[var(--text-faint)]">· Aktualisiert: 17. September 2026</span>
-                        <span className="text-xs text-[var(--text-faint)]">· 7 min Lesezeit</span>
+                        <span className="text-xs text-[var(--text-faint)]">· Aktualisiert: 26. September 2026</span>
+                        <span className="text-xs text-[var(--text-faint)]">· 12 min Lesezeit</span>
                     </div>
                     <h1 className="text-3xl sm:text-5xl font-bold text-[var(--text-white)] leading-tight tracking-tight mb-5">
                         Sichtbarkeit in Claude tracken 2026: So siehst du, ob Claude dich empfiehlt
@@ -191,6 +262,132 @@ export default function ClaudeAiSichtbarkeitPage() {
                 <div className="border-t border-[var(--border-subtle)] mb-10" />
 
                 <div className="space-y-10 text-[var(--text-body)] leading-relaxed">
+
+                    <section>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Wie funktioniert Claude eigentlich?</h2>
+                        <p>
+                            Bevor man optimiert, muss man verstehen, dass „Sichtbarkeit in Claude" zwei völlig unterschiedliche Dinge meinen kann.
+                        </p>
+                        <p className="mt-4">
+                            <strong className="text-[var(--text-white)]">Weg 1: Claude antwortet aus dem Trainingskorpus.</strong> Ohne Websuche kennt Claude nur, was bis zu seinem Trainingsstichtag öffentlich prominent genug war, um in den Trainingsdaten zu landen - gesammelt über einen eigenen Crawler namens ClaudeBot. Fragt jemand direkt nach deinem Produkt und Claude sucht nicht, antwortet es ausschließlich aus diesem eingefrorenen Wissensstand. Neue oder schwach verlinkte Produkte tauchen hier schlicht nicht auf, unabhängig davon, wie gut die eigene Website aktuell ist.
+                        </p>
+                        <p className="mt-4">
+                            <strong className="text-[var(--text-white)]">Weg 2: Claude nutzt die Websuche.</strong> Laut Anthropics eigener Dokumentation entscheidet Claude von Fall zu Fall, ob es das Web durchsucht: Bei stabilem Wissen (etablierte Fakten, Mathematik, Programmierkonzepte) antwortet es direkt. Bei allem, was aktuell, veränderlich oder auf ein bestimmtes Unternehmen, eine Person oder ein Produkt bezogen ist, sucht es aktiv. Eine Frage wie „welches Tool zeigt mir meine Sichtbarkeit in Claude?" fällt fast immer in die zweite Kategorie - genau der Moment, in dem eine gut aufgestellte Website eine echte Chance hat.
+                        </p>
+                        <p className="mt-4">
+                            Technisch läuft das so ab: Claude formuliert eine Suchanfrage, erhält Ergebnisse mit URL, Titel und Alter der Seite zurück, und zitiert daraus einen präzisen Ausschnitt von <strong className="text-[var(--text-white)]">maximal 150 Zeichen</strong> pro Quelle - keine Zusammenfassung der ganzen Seite, sondern ein exakt verorteter Satz oder Halbsatz. Nicht die Seite als Ganzes „gewinnt", sondern der eine Satz, der sich sauber herausschneiden lässt.
+                        </p>
+                        <p className="mt-5 font-semibold text-[var(--text-white)] text-sm">Zugriff ist keine Selbstverständlichkeit</p>
+                        <p className="mt-2">
+                            Anthropic betreibt laut eigener Support-Dokumentation drei getrennte Crawler mit unterschiedlicher Aufgabe:
+                        </p>
+                        <div className="space-y-2 mt-4">
+                            {CLAUDE_CRAWLERS.map((c) => (
+                                <div key={c.name} className="flex gap-3 bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-xl p-4">
+                                    <span className="text-[var(--accent)] font-mono font-semibold text-sm shrink-0">{c.name}</span>
+                                    <span className="text-sm text-[var(--text-muted)]">{c.role}</span>
+                                </div>
+                            ))}
+                        </div>
+                        <p className="mt-4">
+                            Das heißt konkret: Eine Seite kann fürs Training gesperrt sein und trotzdem in Live-Antworten mit Websuche zitiert werden - oder umgekehrt. Wer in seiner robots.txt pauschal „alle Bots" blockiert, verschwindet aus beiden Kanälen gleichzeitig, ohne es zu merken.
+                        </p>
+                        <p className="mt-5 font-semibold text-[var(--text-white)] text-sm">Ein verbreiteter Irrtum</p>
+                        <p className="mt-2">
+                            Viele Ratgeber behaupten, „Constitutional AI" entscheide, welchen Quellen Claude vertraut. Das lässt sich anhand von Anthropics eigener Veröffentlichung zur Verfassung nicht bestätigen. Die dortigen Prinzipien - u. a. abgeleitet aus der UN-Menschenrechtserklärung, Apples Nutzungsbedingungen und DeepMinds Sparrow-Regeln - drehen sich um Schadensvermeidung, Diskriminierung und ethisches Verhalten, nicht um Kriterien zur Quellenauswahl. Welche Quelle in einer Antwort landet, entscheidet der Websuche-Mechanismus (Suchergebnis-Relevanz, ggf. Domain-Filter, Aktualität der Seite) - nicht die Verfassung. Man optimiert also nicht für „Vertrauenswürdigkeit im ethischen Sinn", sondern für technische Auffindbarkeit und zitierfähige Fakten.
+                        </p>
+                    </section>
+
+                    <section>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Welche Faktoren beeinflussen, ob Claude dich zitiert?</h2>
+                        <div className="space-y-3">
+                            {VISIBILITY_FACTORS.map((f) => (
+                                <div key={f.num} className="flex gap-4 bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl p-5">
+                                    <span className="text-[var(--accent)] font-mono font-bold text-sm shrink-0">{f.num}</span>
+                                    <div>
+                                        <h3 className="font-semibold text-[var(--text-white)] mb-1 text-sm">{f.title}</h3>
+                                        <p className="text-sm text-[var(--text-muted)] leading-relaxed">{f.text}</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+
+                    <section>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">So verbesserst du deine Sichtbarkeit in Claude</h2>
+                        <div className="space-y-3">
+                            {VISIBILITY_STRATEGIES.map((s) => (
+                                <div key={s.num} className="flex gap-4 bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl p-5">
+                                    <span className="text-[var(--accent)] font-mono font-bold text-sm shrink-0">{s.num}</span>
+                                    <div>
+                                        <h3 className="font-semibold text-[var(--text-white)] mb-1 text-sm">{s.title}</h3>
+                                        <p className="text-sm text-[var(--text-muted)] leading-relaxed">{s.text}</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+
+                    <section>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">So funktioniert Claude-Sichtbarkeits-Tracking</h2>
+                        <p>Vier Schritte, automatisiert statt manuell:</p>
+                        <div className="space-y-3 mt-5">
+                            {TRACKING_STEPS.map((s) => (
+                                <div key={s.num} className="flex gap-4 bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl p-5">
+                                    <span className="text-[var(--accent)] font-mono font-bold text-sm shrink-0">{s.num}</span>
+                                    <div>
+                                        <h3 className="font-semibold text-[var(--text-white)] mb-1 text-sm">{s.title}</h3>
+                                        <p className="text-sm text-[var(--text-muted)] leading-relaxed">{s.text}</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+
+                    <section>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Was Scanora konkret liefert</h2>
+                        <p>
+                            Ab dem Einsteiger-Plan (4,99 €/Monat, 1 Website, 10 Keywords) prüft Scanora wöchentlich automatisch, ob Claude und Gemini deine Website erwähnen - inklusive Mention-Verlauf über Zeit. Der Pro-Plan (29,99 €/Monat) ergänzt ChatGPT, Perplexity und Google AI Overview im selben Dashboard, plus zwei Prompt-Varianten pro Keyword statt einer.
+                        </p>
+                        <p className="mt-4">
+                            Anders als reine Analytics-Dashboards bleibt es nicht bei der Zahl: Scanora prüft zusätzlich, ob llms.txt vorhanden ist, ob Schema Markup korrekt gesetzt ist und ob ClaudeBot überhaupt crawlen darf - und zeigt dir priorisiert, was zu tun ist, um öfter zitiert zu werden.
+                        </p>
+                    </section>
+
+                    <section>
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Claude vs. ChatGPT vs. Perplexity - was wirklich unterscheidet</h2>
+                        <p>
+                            Die drei Plattformen werden in den meisten Ratgebern in einen Topf geworfen. Tatsächlich unterscheiden sie sich an genau den Stellen, die für Sichtbarkeit zählen - technisch, nicht nur im Ton.
+                        </p>
+                        <div className="overflow-x-auto rounded-2xl border border-[var(--border-subtle)] mt-5">
+                            <table className="w-full text-sm min-w-[720px]">
+                                <thead>
+                                    <tr className="border-b border-[var(--border-subtle)] bg-[var(--surface-06)]">
+                                        <th className="text-left px-5 py-3 text-[var(--text-muted)] font-semibold">Kriterium</th>
+                                        <th className="text-left px-5 py-3 text-[var(--accent)] font-semibold">Claude</th>
+                                        <th className="text-left px-5 py-3 text-[var(--text-muted)] font-semibold">ChatGPT</th>
+                                        <th className="text-left px-5 py-3 text-[var(--text-muted)] font-semibold">Perplexity</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {PLATFORM_COMPARISON_ROWS.map(([criterion, claude, chatgpt, perplexity], i) => (
+                                        <tr key={i} className="border-b border-[var(--border-subtle)] last:border-0 align-top">
+                                            <td className="px-5 py-3 text-[var(--text-white)] font-medium whitespace-nowrap">{criterion}</td>
+                                            <td className="px-5 py-3 text-[var(--text-body)]">{claude}</td>
+                                            <td className="px-5 py-3 text-[var(--text-body)]">{chatgpt}</td>
+                                            <td className="px-5 py-3 text-[var(--text-body)]">{perplexity}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                        <p className="mt-4">
+                            Die Grundhygiene - crawlbar sein, Fakten kompakt und aktuell halten - wirkt bei allen drei Plattformen ähnlich. Der Unterschied liegt in der Kontrolle: Nur bei Claude kannst du über robots.txt granular festlegen, ob du fürs Training, für Live-Antworten oder für beides sichtbar sein willst. Bei ChatGPT und Perplexity ist diese Entscheidung entweder pauschaler oder liegt außerhalb deiner Reichweite.
+                        </p>
+                        <p className="text-xs text-[var(--text-faint)] mt-3">
+                            Perplexitys Ranking-/Zitations-Kriterien sind nicht vollständig offiziell dokumentiert; die entsprechenden Angaben basieren auf beobachtbaren Mustern.
+                        </p>
+                    </section>
 
                     <section>
                         <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Claude-Tracking ist am Markt oft teurer als die Basis-Plattformen</h2>
@@ -223,28 +420,21 @@ export default function ClaudeAiSichtbarkeitPage() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">So funktioniert Claude-Sichtbarkeits-Tracking</h2>
-                        <p>Vier Schritte, automatisiert statt manuell:</p>
-                        <div className="space-y-3 mt-5">
-                            {TRACKING_STEPS.map((s) => (
-                                <div key={s.num} className="flex gap-4 bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl p-5">
-                                    <span className="text-[var(--accent)] font-mono font-bold text-sm shrink-0">{s.num}</span>
-                                    <div>
-                                        <h3 className="font-semibold text-[var(--text-white)] mb-1 text-sm">{s.title}</h3>
-                                        <p className="text-sm text-[var(--text-muted)] leading-relaxed">{s.text}</p>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </section>
-
-                    <section>
-                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Was Scanora konkret liefert</h2>
-                        <p>
-                            Ab dem Einsteiger-Plan (4,99 €/Monat, 1 Website, 10 Keywords) prüft Scanora wöchentlich automatisch, ob Claude und Gemini deine Website erwähnen - inklusive Mention-Verlauf über Zeit. Der Pro-Plan (29,99 €/Monat) ergänzt ChatGPT, Perplexity und Google AI Overview im selben Dashboard, plus zwei Prompt-Varianten pro Keyword statt einer.
+                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Quellen</h2>
+                        <p className="text-sm text-[var(--text-muted)] mb-3">
+                            Primärquellen, direkt bei den Anbietern recherchiert.
                         </p>
-                        <p className="mt-4">
-                            Anders als reine Analytics-Dashboards bleibt es nicht bei der Zahl: Scanora prüft zusätzlich, ob llms.txt vorhanden ist, ob Schema Markup korrekt gesetzt ist und ob ClaudeBot überhaupt crawlen darf - und zeigt dir priorisiert, was zu tun ist, um öfter zitiert zu werden.
+                        <ul className="space-y-2">
+                            {CLAUDE_SOURCES.map((s) => (
+                                <li key={s.href} className="text-sm">
+                                    <a href={s.href} target="_blank" rel="noopener noreferrer" className="text-[var(--accent)] hover:underline break-words">
+                                        {s.label}
+                                    </a>
+                                </li>
+                            ))}
+                        </ul>
+                        <p className="text-xs text-[var(--text-faint)] mt-3">
+                            Stand: September 2026.
                         </p>
                     </section>
 
