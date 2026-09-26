@@ -9,19 +9,19 @@ import ScoreRegisterModal from '../ScoreRegisterModal'
 const plans = [
     {
         id: 'free', name: 'Free', price: '0', period: 'forever',
-        desc: 'To try out Scanora',
+        desc: 'To try out Scanora', persona: 'For beginners',
         features: ['1 audit per month', 'GEO visibility (AI Visibility)', 'SEO score & analysis', 'Performance metrics', 'Audit history'],
-        cta: 'Start for free', highlight: false,
+        cta: 'Check for free now', highlight: false,
     },
     {
         id: 'pro', name: 'Pro', price: '29', period: 'per month',
-        desc: 'For freelancers and small agencies',
+        desc: 'For freelancers and small agencies', persona: 'For in-house SEOs',
         features: ['10 audits per month', 'Everything in Free', 'AI deep analysis', 'GEO, SEO, performance & keywords', 'Concrete fixes & prioritized action plan', 'Desktop + mobile screenshots', 'PDF export'],
         cta: 'Get Pro', highlight: true, badge: 'Most popular',
     },
     {
         id: 'agency', name: 'Agency', price: '99', period: 'per month',
-        desc: 'For teams with multiple clients',
+        desc: 'For teams with multiple clients', persona: 'For agencies',
         features: ['Unlimited audits', 'Everything in Pro', 'AI deep analysis', 'Priority support'],
         cta: 'Get Agency', highlight: false,
     },
@@ -47,41 +47,6 @@ export default function Pricing() {
         <section id="pricing" className="relative py-16 md:py-28 bg-[var(--bg-base)] overflow-hidden">
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] rounded-full blur-3xl pointer-events-none" style={{ background: 'radial-gradient(ellipse, rgba(124,58,237,0.06) 0%, transparent 70%)' }} />
             <div className="relative z-10 max-w-6xl mx-auto px-5 sm:px-8">
-                <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-                    className="mb-10 grid sm:grid-cols-2 gap-3">
-                    <div className="flex items-center justify-between gap-4 px-5 py-4 rounded-2xl border border-[var(--border-subtle)] bg-[var(--surface-06)]">
-                        <div className="flex items-center gap-3">
-                            <div className="w-8 h-8 rounded-lg bg-[var(--accent-soft)] border border-[var(--accent-border)] flex items-center justify-center shrink-0">
-                                <Globe className="w-4 h-4 text-[var(--accent)]" strokeWidth={1.8} />
-                            </div>
-                            <div>
-                                <div className="text-sm font-semibold text-[var(--text-white)]">Track AI Visibility</div>
-                                <div className="text-xs text-[var(--text-faint)] mt-0.5">ChatGPT, Claude, Gemini, Perplexity &amp; Google AI Overview — from €4.99/month</div>
-                            </div>
-                        </div>
-                        <Link href="/geo/pricing" aria-label="Learn more about AI visibility tracking pricing"
-                            className="flex items-center gap-1 text-[var(--text-body)] hover:text-[var(--accent)] text-xs font-semibold transition-colors shrink-0 whitespace-nowrap">
-                            Learn more <ArrowRight className="w-3.5 h-3.5" />
-                        </Link>
-                    </div>
-
-                    <div className="flex items-center justify-between gap-4 px-5 py-4 rounded-2xl border border-[var(--border-subtle)] bg-[var(--surface-06)]">
-                        <div className="flex items-center gap-3">
-                            <div className="w-8 h-8 rounded-lg bg-[var(--accent-soft)] border border-[var(--accent-border)] flex items-center justify-center shrink-0">
-                                <TrendingUp className="w-4 h-4 text-[var(--accent)]" strokeWidth={1.8} />
-                            </div>
-                            <div>
-                                <div className="text-sm font-semibold text-[var(--text-white)]">Track SEO rankings</div>
-                                <div className="text-xs text-[var(--text-faint)] mt-0.5">Weekly updates &amp; competitor analysis — from €19/month</div>
-                            </div>
-                        </div>
-                        <Link href="/seo/pricing" aria-label="Learn more about SEO ranking tracking pricing"
-                            className="flex items-center gap-1 text-[var(--text-body)] hover:text-[var(--accent)] text-xs font-semibold transition-colors shrink-0 whitespace-nowrap">
-                            Learn more <ArrowRight className="w-3.5 h-3.5" />
-                        </Link>
-                    </div>
-                </motion.div>
-
                 <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
                     <span className="inline-block text-xs font-semibold text-[var(--accent)] uppercase tracking-wide mb-3">Website Audit</span>
                     <h2 className="text-3xl sm:text-5xl font-bold tracking-tight mb-5">
@@ -101,6 +66,9 @@ export default function Pricing() {
                                 </div>
                             )}
                             <div className="mb-6">
+                                <span className="inline-block text-[11px] font-semibold text-[var(--accent)] bg-[var(--accent-soft)] border border-[var(--accent-border)] rounded-full px-2.5 py-1 mb-3">
+                                    {plan.persona}
+                                </span>
                                 <div className="flex items-center gap-2 mb-2">
                                     {plan.highlight && <Zap className="w-4 h-4 text-[var(--accent)]" />}
                                     <span className="text-sm font-semibold text-[var(--text-muted)] uppercase tracking-wider">{plan.name}</span>
@@ -136,6 +104,41 @@ export default function Pricing() {
                         </motion.div>
                     ))}
                 </div>
+
+                <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+                    className="mt-10 grid sm:grid-cols-2 gap-3">
+                    <div className="flex items-center justify-between gap-4 px-5 py-4 rounded-2xl border border-[var(--border-subtle)] bg-[var(--surface-06)]">
+                        <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 rounded-lg bg-[var(--accent-soft)] border border-[var(--accent-border)] flex items-center justify-center shrink-0">
+                                <Globe className="w-4 h-4 text-[var(--accent)]" strokeWidth={1.8} />
+                            </div>
+                            <div>
+                                <div className="text-sm font-semibold text-[var(--text-white)]">Track AI Visibility</div>
+                                <div className="text-xs text-[var(--text-faint)] mt-0.5">ChatGPT, Claude, Gemini, Perplexity &amp; Google AI Overview — from €4.99/month</div>
+                            </div>
+                        </div>
+                        <Link href="/geo/pricing" aria-label="Learn more about AI visibility tracking pricing"
+                            className="flex items-center gap-1 text-[var(--text-body)] hover:text-[var(--accent)] text-xs font-semibold transition-colors shrink-0 whitespace-nowrap">
+                            Learn more <ArrowRight className="w-3.5 h-3.5" />
+                        </Link>
+                    </div>
+
+                    <div className="flex items-center justify-between gap-4 px-5 py-4 rounded-2xl border border-[var(--border-subtle)] bg-[var(--surface-06)]">
+                        <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 rounded-lg bg-[var(--accent-soft)] border border-[var(--accent-border)] flex items-center justify-center shrink-0">
+                                <TrendingUp className="w-4 h-4 text-[var(--accent)]" strokeWidth={1.8} />
+                            </div>
+                            <div>
+                                <div className="text-sm font-semibold text-[var(--text-white)]">Track SEO rankings</div>
+                                <div className="text-xs text-[var(--text-faint)] mt-0.5">Weekly updates &amp; competitor analysis — from €19/month</div>
+                            </div>
+                        </div>
+                        <Link href="/seo/pricing" aria-label="Learn more about SEO ranking tracking pricing"
+                            className="flex items-center gap-1 text-[var(--text-body)] hover:text-[var(--accent)] text-xs font-semibold transition-colors shrink-0 whitespace-nowrap">
+                            Learn more <ArrowRight className="w-3.5 h-3.5" />
+                        </Link>
+                    </div>
+                </motion.div>
 
                 <p className="text-center text-sm text-[var(--text-faint)] mt-8">
                     Not sure yet?{' '}
