@@ -29,9 +29,6 @@ import { startFreeUserNurtureJob } from "./jobs/freeUserNurtureJob.js";
 
 const app = express();
 
-// Muss VOR der globalen CORS-Restriktion unten stehen: das Leads-Tracking-Snippet läuft auf der
-// Website eines Scanora-Kunden (fremde Domain), nicht auf scanora.ai — die globale Origin-Prüfung
-// würde jeden Request von dort sonst schon vor dem eigenen (permissiven) CORS in leads_router.js abweisen.
 app.use("/api/leads", leadsRouter);
 
 // CORS — nur eigene Domain erlauben

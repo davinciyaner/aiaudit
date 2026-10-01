@@ -1,9 +1,9 @@
-import Link from 'next/link'
+import BlogIndex from '../components/site/BlogIndex'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 
 export const metadata = {
-    title: 'Blog – SEO, GEO & Website-Optimierung',
+    title: 'Blog - SEO, GEO & Website-Optimierung',
     description: 'Praxisnahe Artikel über SEO, GEO-Optimierung und Performance. Lerne wie du deine Website für Google und KI-Modelle optimierst.',
     alternates: {
         canonical: 'https://www.scanora.ai/blog',
@@ -29,7 +29,7 @@ const ARTICLES = [
         title: 'KI-Sichtbarkeit messen 2026: Kennzahlen, Dashboard & eigene Daten',
         description: 'Die 3 Kennzahlen, die beim Messen von KI-Sichtbarkeit wirklich zählen - mit echten Dashboard-Screenshots und dem Schritt, den die meisten Guides auslassen: der Verbindung zu Leads.',
         category: 'GEO',
-        categoryColor: '#06b6d4',
+        categoryColor: 'var(--accent)',
         date: '18. September 2026',
         readTime: '10 min',
     },
@@ -38,7 +38,7 @@ const ARTICLES = [
         title: 'Beste GEO- & KI-Sichtbarkeits-Tools 2026: 5 Tools im Vergleich',
         description: 'Scanora, Peec.ai, Otterly.ai, Writesonic und Rankscale im Preis- und Funktionsvergleich - faktenbasiert, mit Preisen Stand September 2026.',
         category: 'GEO',
-        categoryColor: '#06b6d4',
+        categoryColor: 'var(--accent)',
         date: '17. September 2026',
         readTime: '11 min',
     },
@@ -47,7 +47,7 @@ const ARTICLES = [
         title: 'KI-Sichtbarkeit erlangen: So wirst du von ChatGPT, Claude & Perplexity zitiert',
         description: 'KI-Sichtbarkeit ist mehr als llms.txt und Schema Markup. Wie du wirklich von ChatGPT, Claude, Perplexity und Google AI Overview zitiert wirst - inklusive Monitoring mit Scanora.',
         category: 'GEO',
-        categoryColor: '#06b6d4',
+        categoryColor: 'var(--accent)',
         date: '10. August 2026',
         readTime: '9 min',
     },
@@ -56,7 +56,7 @@ const ARTICLES = [
         title: 'Core Web Vitals 2026: Verstehen und kostenlos testen',
         description: 'LCP, INP und CLS erklärt - mit den offiziellen Google-Schwellenwerten. Plus: wie du sie in unter 2 Minuten kostenlos testest.',
         category: 'Performance',
-        categoryColor: '#f59e0b',
+        categoryColor: 'var(--warning)',
         date: '26. Juli 2026',
         readTime: '8 min',
     },
@@ -65,7 +65,7 @@ const ARTICLES = [
         title: 'SEO-Test selbst machen oder Agentur beauftragen? Der ehrliche Kostenvergleich',
         description: 'SEO-Audit selbst durchführen vs. SEO-Agentur beauftragen: Kosten, Leistungsumfang und für wen sich was lohnt - ohne Verkaufsrhetorik.',
         category: 'SEO',
-        categoryColor: '#7c3aed',
+        categoryColor: 'var(--accent)',
         date: '26. Juli 2026',
         readTime: '8 min',
     },
@@ -74,7 +74,7 @@ const ARTICLES = [
         title: 'llms.txt erklärt: Was es ist und wie du es richtig einrichtest',
         description: 'Die robots.txt für KI-Modelle: Herkunft, Aufbau, Unterschied zu llms-full.txt und eine Schritt-für-Schritt-Anleitung zum Erstellen.',
         category: 'GEO',
-        categoryColor: '#06b6d4',
+        categoryColor: 'var(--accent)',
         date: '26. Juli 2026',
         readTime: '7 min',
     },
@@ -83,7 +83,7 @@ const ARTICLES = [
         title: 'Schema Markup für KI-Zitate: So wirst du für ChatGPT & Co. zitierfähig',
         description: 'Die wichtigsten Schema-Typen für KI-Zitierbarkeit, kostenlose Test-Tools und der häufigste Fehler, der Rich Results kostet.',
         category: 'GEO',
-        categoryColor: '#06b6d4',
+        categoryColor: 'var(--accent)',
         date: '26. Juli 2026',
         readTime: '7 min',
     },
@@ -92,7 +92,7 @@ const ARTICLES = [
         title: 'Manuelles SEO-Tracking vs. automatisiert: Was lohnt sich wirklich?',
         description: 'Manuelles SEO- und GEO-Tracking vs. Automatisierung im Vergleich: Zeitaufwand, Kosten und warum KI-Sichtbarkeit manuell kaum zuverlässig messbar ist.',
         category: 'SEO & GEO',
-        categoryColor: '#10b981',
+        categoryColor: 'var(--success)',
         date: '15. Juli 2026',
         readTime: '9 min',
     },
@@ -101,7 +101,7 @@ const ARTICLES = [
         title: 'Website SEO Check & Audit: Scanora mit GEO-Analyse (2026)',
         description: 'Website SEO Check und Website Audit mit Scanora: SEO, Performance und GEO (KI-Sichtbarkeit für ChatGPT, Claude & Perplexity) in einem Report. Alle Features, Preise und was du als Nutzer bekommst.',
         category: 'Tools',
-        categoryColor: '#f59e0b',
+        categoryColor: 'var(--warning)',
         date: '15. Juli 2026',
         readTime: '8 min',
     },
@@ -110,7 +110,7 @@ const ARTICLES = [
         title: 'SEO-Checkliste 2026: In 15 Minuten alle Fehler selbst finden',
         description: 'Die komplette SEO-Checkliste 2026 in fester Reihenfolge: 6 Phasen, 15 Minuten, alle wichtigen SEO- und GEO-Signale.',
         category: 'SEO',
-        categoryColor: '#7c3aed',
+        categoryColor: 'var(--accent)',
         date: '15. Juli 2026',
         readTime: '7 min',
     },
@@ -119,16 +119,16 @@ const ARTICLES = [
         title: 'SEO Rank Tracker & KI-Sichtbarkeits-Monitor: SEO- und GEO-Tracking automatisieren',
         description: 'Ein automatisierter SEO Rank Tracker und Keyword Tracker, plus KI-Sichtbarkeits-Monitoring für ChatGPT, Claude, Perplexity & Google AI Overview - wöchentlich automatisch statt manuell geprüft. Mit Preisen und Vergleich.',
         category: 'SEO & GEO',
-        categoryColor: '#10b981',
+        categoryColor: 'var(--success)',
         date: '5. Juli 2026',
         readTime: '10 min',
     },
     {
         slug: 'seo-test-haeufige-fehler',
         title: 'SEO-Test: Die 10 häufigsten Fehler die deinen Google-Rank kosten',
-        description: 'Diese 10 SEO-Fehler machen die meisten Websites — und keiner merkt es. Mit kostenlosem SEO-Test-Tool checken und sofort beheben.',
+        description: 'Diese 10 SEO-Fehler machen die meisten Websites, und keiner merkt es. Mit kostenlosem SEO-Test-Tool checken und sofort beheben.',
         category: 'SEO',
-        categoryColor: '#7c3aed',
+        categoryColor: 'var(--accent)',
         date: '10. Juni 2026',
         readTime: '9 min',
     },
@@ -137,7 +137,7 @@ const ARTICLES = [
         title: 'GEO-Optimierung 2026: So wirst du von ChatGPT und Claude empfohlen',
         description: 'GEO (Generative Engine Optimization) erklärt: Wie du deine Website optimierst damit ChatGPT, Claude, Perplexity und Google AI Overview sie als Quelle zitieren. Mit konkreter Checkliste.',
         category: 'GEO',
-        categoryColor: '#06b6d4',
+        categoryColor: 'var(--accent)',
         date: '10. Juni 2026',
         readTime: '8 min',
     },
@@ -145,43 +145,10 @@ const ARTICLES = [
 
 export default function BlogPage() {
     return (
-        <main className="bg-[var(--bg-base)] min-h-screen">
+        <main className="bg-(--bg-base) min-h-screen">
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
             <Navbar />
-            <div className="max-w-4xl mx-auto px-5 sm:px-8 pt-32 pb-24">
-                <div className="mb-12">
-                    <h1 className="text-3xl sm:text-5xl font-bold text-[var(--text-white)] tracking-tight mb-4">Blog</h1>
-                    <p className="text-[var(--text-muted)] text-lg">SEO, GEO und Performance — praxisnah erklärt.</p>
-                </div>
-
-                <div className="space-y-4">
-                    {ARTICLES.map((article) => (
-                        <Link
-                            key={article.slug}
-                            href={`/blog/${article.slug}`}
-                            className="group block bg-[var(--text-white)]/[0.02] hover:bg-[var(--text-white)]/[0.04] border border-[var(--text-white)]/[0.06] hover:border-[var(--text-white)]/10 rounded-2xl p-6 sm:p-8 transition-all duration-200"
-                        >
-                            <div className="flex items-center gap-3 mb-3">
-                                <span
-                                    className="text-[11px] font-semibold px-2.5 py-1 rounded-full uppercase tracking-wider"
-                                    style={{ background: article.categoryColor + '18', color: article.categoryColor }}
-                                >
-                                    {article.category}
-                                </span>
-                                <span className="text-xs text-[var(--text-faint)]">{article.date}</span>
-                                <span className="text-xs text-[var(--text-faint)]">· {article.readTime} Lesezeit</span>
-                            </div>
-                            <h2 className="text-lg sm:text-xl font-bold text-[var(--text-white)] mb-2 group-hover:text-violet-300 transition-colors leading-snug">
-                                {article.title}
-                            </h2>
-                            <p className="text-sm text-[var(--text-muted)] leading-relaxed">{article.description}</p>
-                            <div className="mt-4 text-xs text-violet-400 font-medium group-hover:text-violet-300 transition-colors">
-                                Artikel lesen →
-                            </div>
-                        </Link>
-                    ))}
-                </div>
-            </div>
+            <BlogIndex title="Blog: SEO und GEO in der Praxis" lead="Anleitungen, Vergleiche und eigene Daten dazu, wie du bei Google und in KI-Antworten von ChatGPT, Claude und Perplexity sichtbar wirst." articles={ARTICLES} basePath="/blog" readLabel="Lesezeit" />
             <Footer />
         </main>
     )

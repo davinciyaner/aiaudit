@@ -1,21 +1,22 @@
 'use client'
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { Check, TrendingUp, Zap, Star, Building2, LogIn, Loader2, Lock } from 'lucide-react'
+import { Check, LogIn, Loader2, Lock } from 'lucide-react'
 import Link from 'next/link'
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js'
 import toast from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
 import Navbar from '../../../components/Navbar'
+import { withPlanData } from '@/lib/plans'
 
 const FAQS = [
     {
         q: 'What does SEO automation cost?',
-        a: 'SEO automation at Scanora starts at €19/month for 3 websites and 50 keywords with weekly ranking updates. The Pro plan (€59/month) expands to 10 websites and 200 keywords including content gap analysis, the Expert plan (€149/month) covers up to 20 websites and 500 keywords. All plans include a 14-day free trial.',
+        a: 'SEO automation at Scanora starts at €29.99/month for 3 websites and 50 keywords with weekly ranking updates. The Pro plan (€89.99/month) expands to 10 websites and 200 keywords including content gap analysis, the Expert plan (€179.99/month) covers up to 20 websites and 500 keywords. All plans include a 14-day free trial.',
     },
     {
         q: 'What\'s the difference between a one-time SEO audit and SEO automation?',
-        a: 'A one-time SEO audit (part of the free Scanora website audit) shows your SEO score at a single point in time. SEO automation tracks your Google rankings, keyword ideas, competitor analysis, and backlink overview automatically every week — as an ongoing history rather than a single snapshot.',
+        a: 'A one-time SEO audit (part of the free Scanora website audit) shows your SEO score at a single point in time. SEO automation tracks your Google rankings, keyword ideas, competitor analysis, and backlink overview automatically every week - as an ongoing history rather than a single snapshot.',
     },
     {
         q: 'Is there a free trial for SEO automation?',
@@ -23,11 +24,11 @@ const FAQS = [
     },
 ]
 
-const PLANS = [
+const PLANS = withPlanData('en', 'seo', [
     {
         id: 'einsteiger',
         name: 'Starter',
-        price: 19,
+        price: '29.99',
         period: 'per month',
         desc: 'For individuals and small projects',
         features: [
@@ -51,7 +52,7 @@ const PLANS = [
     {
         id: 'pro',
         name: 'Pro',
-        price: 59,
+        price: '89.99',
         period: 'per month',
         desc: 'For freelancers and growing companies',
         highlight: true,
@@ -66,7 +67,7 @@ const PLANS = [
             'Email alerts from 5 positions',
             'Competitor analysis (automatic, weekly)',
             'Backlink overview (automatic, monthly)',
-            'Content gap analysis — weekly, automatic per website, up to 100 lookups/month total',
+            'Content gap analysis - weekly, automatic per website, up to 100 lookups/month total',
         ],
         cta: 'Start Pro',
         planEnvKey: 'NEXT_PUBLIC_PAYPAL_PLAN_ID_SEO_PRO',
@@ -74,7 +75,7 @@ const PLANS = [
     {
         id: 'expert',
         name: 'Expert',
-        price: 149,
+        price: '179.99',
         period: 'per month',
         desc: 'For agencies with many clients',
         features: [
@@ -88,13 +89,13 @@ const PLANS = [
             'Email alerts from 3 positions',
             'Competitor analysis (automatic, weekly)',
             'Backlink overview (automatic, monthly)',
-            'Content gap analysis — weekly, automatic per website, up to 300 lookups/month total',
+            'Content gap analysis - weekly, automatic per website, up to 300 lookups/month total',
             'Priority support',
         ],
         cta: 'Start Expert',
         planEnvKey: 'NEXT_PUBLIC_PAYPAL_PLAN_ID_SEO_EXPERT',
     },
-]
+])
 
 const PLAN_IDS = {
     einsteiger: process.env.NEXT_PUBLIC_PAYPAL_PLAN_ID_SEO_EINSTEIGER,
@@ -112,55 +113,55 @@ function PlanCard({ plan, user, currentPlan, loading, onSuccess }) {
             transition={{ delay: PLANS.indexOf(plan) * 0.1 }}
             className={`relative flex flex-col rounded-2xl p-8 border transition-all duration-300 ${
                 plan.highlight
-                    ? 'bg-[var(--accent-soft)] border-[var(--accent-border)] shadow-2xl shadow-[var(--accent-border)]'
-                    : 'bg-[var(--surface-06)] border-[var(--border-subtle)]'
+                    ? 'shadow-card bg-(--card) border-(--accent) '
+                    : 'bg-(--card) border-(--line)'
             }`}
         >
 
             {currentPlan === plan.id && (
-                <div className="absolute -top-3 right-6 px-3 py-1 bg-[var(--accent-soft-strong)] border border-[var(--accent-border)] rounded-full text-xs font-semibold text-[var(--accent)]">
+                <div className="absolute -top-3 right-6 px-3 py-1 bg-(--accent-soft-strong) border border-(--accent-border) rounded-full text-xs font-semibold text-(--accent-ink)">
                     Current
                 </div>
             )}
 
             <div className="mb-6">
                 <div className="flex items-center gap-2 mb-3">
-                    <span className="text-sm font-semibold text-[var(--text-muted)] uppercase tracking-wider">{plan.name}</span>
+                    <span className="text-sm font-semibold text-(--text-muted) ">{plan.name}</span>
                 </div>
                 <div className="flex items-baseline gap-1 mb-1">
-                    <span className="text-5xl font-bold text-[var(--text-white)]">{plan.price}</span>
-                    <span className="text-[var(--text-muted)] text-lg">€</span>
+                    <span className="text-5xl font-bold text-(--text-white)">{plan.price}</span>
+                    <span className="text-(--text-muted) text-lg">€</span>
                 </div>
-                <div className="text-sm text-[var(--text-faint)] mb-3">{plan.period}</div>
-                <p className="text-sm text-[var(--text-muted)]">{plan.desc}</p>
+                <div className="text-sm text-(--text-faint) mb-3">{plan.period}</div>
+                <p className="text-sm text-(--text-muted)">{plan.desc}</p>
             </div>
 
             <div className="space-y-3 mb-8 flex-1">
                 {plan.features.map(f => (
                     <div key={f} className="flex items-center gap-3 text-sm">
-                        <div className={`w-4 h-4 rounded-full flex items-center justify-center shrink-0 ${plan.highlight ? 'bg-[var(--accent-soft-strong)]' : 'bg-[var(--surface-08)]'}`}>
-                            <Check className={`w-2.5 h-2.5 ${plan.highlight ? 'text-[var(--accent)]' : 'text-[var(--text-muted)]'}`} strokeWidth={3} />
+                        <div className={`w-4 h-4 rounded-full flex items-center justify-center shrink-0 ${plan.highlight ? 'bg-(--accent-soft-strong)' : 'bg-(--surface-08)'}`}>
+                            <Check className={`w-2.5 h-2.5 ${plan.highlight ? 'text-(--accent-ink)' : 'text-(--text-muted)'}`} strokeWidth={3} />
                         </div>
-                        <span className="text-[var(--text-body)]">{f}</span>
+                        <span className="text-(--text-body)">{f}</span>
                     </div>
                 ))}
                 {plan.locked?.map(f => (
                     <div key={f} className="flex items-center gap-3 text-sm opacity-40">
-                        <div className="w-4 h-4 rounded-full flex items-center justify-center shrink-0 bg-[var(--surface-08)]">
-                            <Lock className="w-2.5 h-2.5 text-[var(--text-faint)]" strokeWidth={3} />
+                        <div className="w-4 h-4 rounded-full flex items-center justify-center shrink-0 bg-(--surface-08)">
+                            <Lock className="w-2.5 h-2.5 text-(--text-faint)" strokeWidth={3} />
                         </div>
-                        <span className="text-[var(--text-faint)] line-through">{f}</span>
+                        <span className="text-(--text-faint) line-through">{f}</span>
                     </div>
                 ))}
             </div>
 
             <div>
                 {loading ? (
-                    <div className="flex items-center justify-center w-full py-3 rounded-xl border border-[var(--border-subtle)]">
-                        <Loader2 className="w-4 h-4 text-[var(--text-faint)] animate-spin" />
+                    <div className="flex items-center justify-center w-full py-3 rounded-xl border border-(--border-subtle)">
+                        <Loader2 className="w-4 h-4 text-(--text-faint) animate-spin" />
                     </div>
                 ) : currentPlan === plan.id ? (
-                    <div className="block w-full py-3 text-center text-sm font-semibold rounded-xl border border-[var(--accent-border)] text-[var(--accent)] bg-[var(--accent-soft)]">
+                    <div className="block w-full py-3 text-center text-sm font-semibold rounded-xl border border-(--accent-border) text-(--accent-ink) bg-(--accent-soft)">
                         Active subscription
                     </div>
                 ) : !user ? (
@@ -168,8 +169,8 @@ function PlanCard({ plan, user, currentPlan, loading, onSuccess }) {
                         href="/en/login?redirect=/en/seo/pricing"
                         className={`flex items-center justify-center gap-2 w-full py-3 text-center text-sm font-semibold rounded-xl transition-all duration-200 ${
                             plan.highlight
-                                ? 'bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] shadow-lg shadow-[var(--accent-border)] active:scale-[0.97] active:duration-75 hover:-translate-y-0.5'
-                                : 'border border-[var(--border-subtle)] text-[var(--text-body)] hover:text-[var(--text-white)] hover:border-[var(--border-strong)] hover:bg-[var(--surface-06)]'
+                                ? 'bg-(--accent) hover:bg-(--accent-hover) text-(--on-accent) active:scale-[0.97] active:duration-75 '
+                                : 'border border-(--border-subtle) text-(--text-body) hover:text-(--text-white) hover:border-(--border-strong) hover:bg-(--surface-06)'
                         }`}
                     >
                         <LogIn className="w-4 h-4" /> Log in to subscribe
@@ -263,30 +264,25 @@ export default function SeoPricingPageEn() {
 
     return (
         <>
-            <div className="min-h-screen bg-[var(--bg-base)]">
+            <div className="min-h-screen bg-(--bg-base)">
                 <Navbar locale="en" />
 
-                <div className="relative pt-32 pb-24 px-5 sm:px-8">
-                    <div
-                        className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] rounded-full blur-3xl pointer-events-none"
-                        style={{ background: 'radial-gradient(ellipse, var(--accent-glow) 0%, transparent 70%)' }}
-                    />
+                <div className="relative pt-28 md:pt-34 pb-18 md:pb-28 px-4 sm:px-8">
 
-                    <div className="relative z-10 max-w-6xl mx-auto">
-                        <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-16">
-                            <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-5">
-                                Your rankings.<br />
-                                Always in view.
+                    <div className="relative max-w-300 mx-auto">
+                        <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} className="mb-14 max-w-190">
+                            <h1 className="text-[clamp(34px,4.4vw,54px)] leading-[1.05] tracking-[-0.038em] font-bold text-(--text-white) mb-5">
+                                Your rankings. Always in view.
                             </h1>
-                            <p className="text-lg text-[var(--text-muted)] max-w-xl mx-auto mb-6">
+                            <p className="text-lg text-(--text-body) max-w-[62ch] mb-6">
                                 Track your Google positions every week. See instantly when you rise or fall.
                             </p>
-                            <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-[var(--accent-border)] bg-[var(--accent-soft)] text-sm">
-                                <span className="text-[var(--accent)] font-semibold">Try free for 14 days</span>
+                            <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-(--accent-border) bg-(--accent-soft) text-sm">
+                                <span className="text-(--accent-ink) font-semibold">Try free for 14 days</span>
                             </div>
                         </motion.div>
 
-                        <h2 className="text-xl sm:text-2xl font-bold text-[var(--text-white)] text-center mb-8">
+                        <h2 className="text-xl sm:text-2xl font-bold text-(--text-white) text-center mb-8">
                             SEO Automation Pricing Overview
                         </h2>
 
@@ -302,20 +298,20 @@ export default function SeoPricingPageEn() {
                         ) : plansGrid}
 
                         <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}
-                            className="text-center text-sm text-[var(--text-faint)] mt-10">
+                            className="text-center text-sm text-(--text-faint) mt-10">
                             14 days free trial, then billed automatically, cancel anytime, payment via PayPal
                         </motion.p>
 
                         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
                             className="mt-20 max-w-2xl mx-auto">
-                            <h2 className="text-xl sm:text-2xl font-bold text-[var(--text-white)] text-center mb-8">
+                            <h2 className="text-xl sm:text-2xl font-bold text-(--text-white) text-center mb-8">
                                 Frequently Asked Questions About SEO Automation Pricing
                             </h2>
                             <div className="space-y-4">
                                 {FAQS.map((faq, i) => (
-                                    <div key={i} className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl p-5">
-                                        <h3 className="font-semibold text-[var(--text-white)] mb-2 text-sm">{faq.q}</h3>
-                                        <p className="text-sm text-[var(--text-muted)] leading-relaxed">{faq.a}</p>
+                                    <div key={i} className="bg-(--card) border border-(--line) rounded-2xl p-5">
+                                        <h3 className="font-semibold text-(--text-white) mb-2 text-sm">{faq.q}</h3>
+                                        <p className="text-sm text-(--text-muted) leading-relaxed">{faq.a}</p>
                                     </div>
                                 ))}
                             </div>

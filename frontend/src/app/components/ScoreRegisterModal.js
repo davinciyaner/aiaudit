@@ -1,6 +1,6 @@
 'use client'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, Lock, UserPlus, Search, Zap, Globe, Calendar, BarChart2 } from 'lucide-react'
+import { X, Lock, UserPlus, Search, Globe, Calendar, BarChart2 } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
@@ -18,7 +18,6 @@ const FREE_ITEMS_EN = [
     { icon: BarChart2, label: 'Performance metrics', desc: 'Load times, Core Web Vitals & all issues' },
 ]
 
-// mode="start" → Pre-Audit (registration required to start)
 export default function ScoreRegisterModal({ open, onClose, auditUrl = '', mode = 'start', locale = 'de' }) {
     const router = useRouter()
     const FREE_ITEMS = locale === 'en' ? FREE_ITEMS_EN : FREE_ITEMS_DE
@@ -50,46 +49,45 @@ export default function ScoreRegisterModal({ open, onClose, auditUrl = '', mode 
                             animate={{ opacity: 1, scale: 1, y: 0 }}
                             exit={{ opacity: 0, scale: 0.94, y: 16 }}
                             transition={{ type: 'spring', damping: 28, stiffness: 320 }}
-                            className="relative w-full max-w-md bg-[var(--bg-surface)] border border-[var(--accent-border)] rounded-2xl shadow-2xl shadow-[var(--accent-border)] overflow-hidden pointer-events-auto"
+                            className="relative w-full max-w-md bg-(--bg-surface) border border-(--accent-border) rounded-2xl shadow-2xl shadow-(--accent-border) overflow-hidden pointer-events-auto"
                         >
-                            <div className="pointer-events-none absolute -top-24 left-1/2 -translate-x-1/2 w-72 h-72 rounded-full bg-[var(--accent-soft)] blur-3xl" />
 
                             <div className="relative z-10 p-6 sm:p-8 text-center">
                                 <button
                                     onClick={onClose}
                                     aria-label={locale === 'en' ? 'Close' : 'Schließen'}
-                                    className="absolute top-4 right-4 w-11 h-11 flex items-center justify-center rounded-lg bg-[var(--surface-06)] hover:bg-[var(--surface-10)] text-[var(--text-muted)] hover:text-[var(--text-white)] transition-all"
+                                    className="absolute top-4 right-4 w-11 h-11 flex items-center justify-center rounded-lg bg-(--surface-06) hover:bg-(--surface-10) text-(--text-muted) hover:text-(--text-white) transition-all"
                                 >
                                     <X className="w-4 h-4" />
                                 </button>
 
-                                <div className="w-14 h-14 rounded-2xl bg-[var(--accent-soft)] border border-[var(--accent-border)] flex items-center justify-center mx-auto mb-5">
-                                    <Lock className="w-6 h-6 text-[var(--accent)]" />
+                                <div className="w-14 h-14 rounded-2xl bg-(--accent-soft) border border-(--accent-border) flex items-center justify-center mx-auto mb-5">
+                                    <Lock className="w-6 h-6 text-(--accent-ink)" />
                                 </div>
 
-                                <h3 className="text-xl font-bold text-[var(--text-white)] mb-2">
+                                <h3 className="text-xl font-bold text-(--text-white) mb-2">
                                     {locale === 'en' ? 'Start free - in 30 seconds' : 'Gratis starten - in 30 Sekunden'}
                                 </h3>
-                                <p className="text-[var(--text-muted)] text-sm mb-5 leading-relaxed">
+                                <p className="text-(--text-muted) text-sm mb-5 leading-relaxed">
                                     {locale === 'en'
-                                        ? 'With a free account you see every score, issue, and optimization for your website.'
-                                        : 'Mit einem kostenlosen Account siehst du alle Scores, Probleme und Optimierungen deiner Website.'}
+                                        ? 'With a free account you see every score and every issue on your website. AI fixes and the PDF report are included from Pro.'
+                                        : 'Mit einem kostenlosen Account siehst du alle Scores und alle Fehler deiner Website. KI-Fixes und PDF-Report gibt es ab Pro.'}
                                 </p>
 
                                 <div className="mb-3">
                                     <div className="flex items-center gap-2 mb-2">
-                                        <span className="text-[10px] font-semibold uppercase tracking-wider text-[var(--accent)]">{locale === 'en' ? 'Included for free' : 'Kostenlos enthalten'}</span>
-                                        <div className="flex-1 h-px bg-[var(--border-subtle)]" />
+                                        <span className="text-xs font-semibold text-(--accent-ink)">{locale === 'en' ? 'Included for free' : 'Kostenlos enthalten'}</span>
+                                        <div className="flex-1 h-px bg-(--border-subtle)" />
                                     </div>
                                     <div className="flex flex-col gap-1.5">
                                         {FREE_ITEMS.map(({ icon: Icon, label, desc }) => (
-                                            <div key={label} className="flex items-center gap-3 px-3 py-2.5 bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-xl text-left">
-                                                <div className="w-7 h-7 rounded-lg bg-[var(--accent-soft)] flex items-center justify-center shrink-0">
-                                                    <Icon className="w-3.5 h-3.5 text-[var(--accent)]" />
+                                            <div key={label} className="flex items-center gap-3 px-3 py-2.5 bg-(--card) border border-(--line) rounded-xl text-left">
+                                                <div className="w-7 h-7 rounded-lg bg-(--accent-soft) flex items-center justify-center shrink-0">
+                                                    <Icon className="w-3.5 h-3.5 text-(--accent-ink)" />
                                                 </div>
                                                 <div className="min-w-0">
-                                                    <div className="text-xs font-medium text-[var(--text-body)] leading-tight">{label}</div>
-                                                    <div className="text-[11px] text-[var(--text-faint)] leading-tight mt-0.5">{desc}</div>
+                                                    <div className="text-xs font-medium text-(--text-body) leading-tight">{label}</div>
+                                                    <div className="text-[11px] text-(--text-faint) leading-tight mt-0.5">{desc}</div>
                                                 </div>
                                             </div>
                                         ))}
@@ -99,7 +97,7 @@ export default function ScoreRegisterModal({ open, onClose, auditUrl = '', mode 
 
                                 <button
                                     onClick={handleRegister}
-                                    className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] font-semibold rounded-xl transition-all shadow-lg shadow-[var(--accent-border)] active:scale-[0.97] active:duration-75 mb-3"
+                                    className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-(--accent) hover:bg-(--accent-hover) text-(--on-accent) font-semibold rounded-[10px] transition-all active:scale-[0.97] active:duration-75 mb-3"
                                 >
                                     <UserPlus className="w-4 h-4" />
                                     {locale === 'en' ? 'Create free account' : 'Kostenlosen Account erstellen'}
@@ -108,7 +106,7 @@ export default function ScoreRegisterModal({ open, onClose, auditUrl = '', mode 
                                 <Link
                                     href="/login"
                                     onClick={onClose}
-                                    className="block text-xs text-[var(--text-faint)] hover:text-[var(--text-muted)] transition-colors"
+                                    className="block text-xs text-(--text-faint) hover:text-(--text-muted) transition-colors"
                                 >
                                     {locale === 'en' ? 'Already registered? Log in →' : 'Bereits registriert? Einloggen →'}
                                 </Link>

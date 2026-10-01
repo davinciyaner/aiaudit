@@ -137,43 +137,43 @@ const GENERATOR_TOOLS = [
 
 export default function SchemaMarkupPageEn() {
     return (
-        <main className="bg-[var(--bg-base)] min-h-screen">
+        <main className="bg-(--bg-base) min-h-screen">
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToLd) }} />
             <Navbar locale="en" />
 
-            <article className="max-w-3xl mx-auto px-5 sm:px-8 pt-32 pb-24">
+            <article className="max-w-190 mx-auto px-4 sm:px-8 pt-28 md:pt-34 pb-18 md:pb-28">
 
                 {/* Breadcrumb */}
-                <div className="flex items-center gap-2 text-xs text-[var(--text-faint)] mb-8">
-                    <Link href="/en" className="hover:text-[var(--text-muted)] transition-colors">Scanora</Link>
+                <div className="flex flex-wrap items-center gap-2 text-sm text-(--text-muted) mb-8">
+                    <Link href="/en" className="hover:text-(--accent-ink) transition-colors">Scanora</Link>
                     <span>/</span>
-                    <Link href="/en/blog" className="hover:text-[var(--text-muted)] transition-colors">Blog</Link>
+                    <Link href="/en/blog" className="hover:text-(--accent-ink) transition-colors">Blog</Link>
                     <span>/</span>
-                    <span className="text-[var(--text-faint)]">Schema Markup for AI Citations</span>
+                    <span className="text-(--text-faint)">Schema Markup for AI Citations</span>
                 </div>
 
                 {/* Header */}
                 <div className="mb-10">
                     <div className="flex items-center gap-3 mb-4">
-                        <span className="text-[11px] font-semibold px-2.5 py-1 rounded-full uppercase tracking-wider bg-cyan-500/15 text-cyan-400">
+                        <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-(--accent-soft) text-(--accent-ink)">
                             GEO
                         </span>
-                        <span className="text-xs text-[var(--text-faint)]">Jul 26, 2026</span>
-                        <span className="text-xs text-[var(--text-faint)]">· 8 min read</span>
-                        <span className="text-xs text-[var(--text-faint)]">· Updated Sep 12, 2026</span>
+                        <span className="text-xs text-(--text-faint)">Jul 26, 2026</span>
+                        <span className="text-xs text-(--text-faint)">· 8 min read</span>
+                        <span className="text-xs text-(--text-faint)">· Updated Sep 12, 2026</span>
                     </div>
-                    <h1 className="text-3xl sm:text-5xl font-bold text-[var(--text-white)] leading-tight tracking-tight mb-5">
+                    <h1 className="text-[clamp(34px,4.4vw,52px)] font-bold text-(--text-white) leading-[1.06] tracking-[-0.035em] mb-5">
                         Schema Markup for AI Citations 2026: How to Get Cited by ChatGPT & Co.
                     </h1>
-                    <p className="text-lg text-[var(--text-muted)] leading-relaxed">
-                        <strong className="text-[var(--text-white)] font-semibold">Schema markup for AI search citations</strong> is structured data in JSON-LD format that helps AI systems like ChatGPT, Perplexity, and Google AI Overviews understand a page's content correctly and cite it as a source - invisible to visitors, but exactly the language Google and AI models use to communicate. The key types in the right order, ready-to-copy JSON-LD code, free generators and testing tools, and the mistake that most often makes all of it worthless.
+                    <p className="text-lg text-(--text-body) leading-relaxed">
+                        <strong className="text-(--text-white) font-semibold">Schema markup for AI search citations</strong> is structured data in JSON-LD format that helps AI systems like ChatGPT, Perplexity, and Google AI Overviews understand a page's content correctly and cite it as a source - invisible to visitors, but exactly the language Google and AI models use to communicate. The key types in the right order, ready-to-copy JSON-LD code, free generators and testing tools, and the mistake that most often makes all of it worthless.
                     </p>
-                    <div className="mt-5 flex items-center gap-2 text-xs text-[var(--text-faint)]">
-                        <Link href="/about" className="flex items-center gap-2 hover:text-[var(--text-body)] transition-colors">
-                            <div className="w-6 h-6 rounded-full bg-gradient-to-br from-violet-600 to-cyan-600 flex items-center justify-center text-[var(--text-white)] text-[10px] font-bold">F</div>
+                    <div className="mt-5 flex items-center gap-2 text-xs text-(--text-faint)">
+                        <Link href="/about" className="flex items-center gap-2 hover:text-(--text-body) transition-colors">
+                            <div className="w-6 h-6 rounded-full bg-(--accent) flex items-center justify-center text-(--on-accent) text-[10px] font-bold">F</div>
                             <span>Finn Paustian</span>
                         </Link>
                         <span>·</span>
@@ -181,48 +181,48 @@ export default function SchemaMarkupPageEn() {
                     </div>
                 </div>
 
-                <div className="border-t border-[var(--text-white)]/5 mb-10" />
+                <div className="border-t border-(--line) mb-10" />
 
-                <div className="space-y-10 text-[var(--text-body)] leading-relaxed">
+                <div className="space-y-10 text-(--text-body) leading-relaxed">
 
                     <section>
-                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">What is schema markup for AI search citations?</h2>
+                        <h2 className="text-[28px] leading-tight tracking-[-0.03em] font-bold text-(--text-white) mb-4">What is schema markup for AI search citations?</h2>
                         <p>
-                            <strong className="text-[var(--text-white)]">Schema markup for AI search citations</strong> is structured data in{' '}
-                            <a href="https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline underline-offset-2">
+                            <strong className="text-(--text-white)">Schema markup for AI search citations</strong> is structured data in{' '}
+                            <a href="https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data" target="_blank" rel="noopener noreferrer" className="text-(--accent-ink) hover:text-(--accent-ink) underline underline-offset-2">
                                 JSON-LD format
                             </a>
-                            , a standardized vocabulary (schema.org) used to describe content in a machine-readable way - usually embedded invisibly in the <code className="text-xs bg-[var(--text-white)]/[0.06] px-1.5 py-0.5 rounded">&lt;head&gt;</code> section. It helps AI systems like ChatGPT, Perplexity, and Google AI Overviews understand a page's content correctly and cite it as a source, instead of an AI having to guess who wrote an article or what a product costs from body text.
+                            , a standardized vocabulary (schema.org) used to describe content in a machine-readable way - usually embedded invisibly in the <code className="text-xs bg-(--tint) px-1.5 py-0.5 rounded">&lt;head&gt;</code> section. It helps AI systems like ChatGPT, Perplexity, and Google AI Overviews understand a page's content correctly and cite it as a source, instead of an AI having to guess who wrote an article or what a product costs from body text.
                         </p>
                         <p className="mt-4">
                             For classic SEO, schema markup enables rich results - star ratings, FAQ boxes, pricing shown directly in search results. For{' '}
-                            <Link href="/en/blog/what-is-geo" className="text-cyan-400 hover:text-cyan-300 underline underline-offset-2">GEO</Link>
+                            <Link href="/en/blog/what-is-geo" className="text-(--accent-ink) hover:text-(--accent-ink) underline underline-offset-2">GEO</Link>
                             {' '}the effect is similar, but even more direct: AI models use structured data to extract facts precisely instead of interpreting them out of ambiguous text. Along with{' '}
-                            <Link href="/en/blog/llms-txt-explained" className="text-cyan-400 hover:text-cyan-300 underline underline-offset-2">llms.txt</Link>
+                            <Link href="/en/blog/llms-txt-explained" className="text-(--accent-ink) hover:text-(--accent-ink) underline underline-offset-2">llms.txt</Link>
                             {' '}it's one of the two central technical foundations of GEO.
                         </p>
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Implement in this order</h2>
+                        <h2 className="text-[28px] leading-tight tracking-[-0.03em] font-bold text-(--text-white) mb-4">Implement in this order</h2>
                         <p>The order isn't arbitrary - each type builds on the trust and context signal of the one before it.</p>
-                        <div className="overflow-x-auto rounded-2xl border border-[var(--text-white)]/[0.07] mt-5">
-                            <table className="w-full text-sm min-w-[560px]">
+                        <div className="overflow-x-auto rounded-2xl border border-(--line) mt-5">
+                            <table className="w-full text-sm min-w-140">
                                 <thead>
-                                    <tr className="border-b border-[var(--text-white)]/5 bg-[var(--text-white)]/[0.02]">
-                                        <th className="text-left px-4 py-3 text-[var(--text-muted)] font-semibold w-10">#</th>
-                                        <th className="text-left px-4 py-3 text-[var(--text-muted)] font-semibold">Schema type</th>
-                                        <th className="text-left px-4 py-3 text-[var(--text-muted)] font-semibold">Purpose</th>
-                                        <th className="text-left px-4 py-3 text-[var(--text-muted)] font-semibold">Why at this step</th>
+                                    <tr className="border-b border-(--line) bg-(--card)">
+                                        <th className="text-left px-4 py-3 text-(--text-muted) font-semibold w-10">#</th>
+                                        <th className="text-left px-4 py-3 text-(--text-muted) font-semibold">Schema type</th>
+                                        <th className="text-left px-4 py-3 text-(--text-muted) font-semibold">Purpose</th>
+                                        <th className="text-left px-4 py-3 text-(--text-muted) font-semibold">Why at this step</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {PRIORITY_STEPS.map((s) => (
-                                        <tr key={s.num} className="border-b border-[var(--text-white)]/[0.04] last:border-0">
-                                            <td className="px-4 py-3 text-cyan-400 font-mono font-bold">{s.num}</td>
-                                            <td className="px-4 py-3 text-[var(--text-white)] font-mono text-xs font-semibold whitespace-nowrap">{s.type}</td>
-                                            <td className="px-4 py-3 text-[var(--text-body)]">{s.purpose}</td>
-                                            <td className="px-4 py-3 text-[var(--text-muted)]">{s.why}</td>
+                                        <tr key={s.num} className="border-b border-(--line) last:border-0">
+                                            <td className="px-4 py-3 text-(--accent-ink) font-mono font-bold">{s.num}</td>
+                                            <td className="px-4 py-3 text-(--text-white) font-mono text-xs font-semibold whitespace-nowrap">{s.type}</td>
+                                            <td className="px-4 py-3 text-(--text-body)">{s.purpose}</td>
+                                            <td className="px-4 py-3 text-(--text-muted)">{s.why}</td>
                                         </tr>
                                     ))}
                                 </tbody>
@@ -231,9 +231,9 @@ export default function SchemaMarkupPageEn() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Organization schema, ready to copy</h2>
+                        <h2 className="text-[28px] leading-tight tracking-[-0.03em] font-bold text-(--text-white) mb-4">Organization schema, ready to copy</h2>
                         <p>The minimum every website should start with - ready to use as-is:</p>
-                        <pre className="mt-4 text-xs bg-[var(--text-white)]/[0.04] border border-[var(--text-white)]/[0.06] rounded-xl p-4 text-[var(--text-muted)] font-mono overflow-x-auto">
+                        <pre className="mt-4 text-xs bg-(--card) border border-(--line) rounded-xl p-4 text-(--text-muted) font-mono overflow-x-auto">
 {`<script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -246,7 +246,7 @@ export default function SchemaMarkupPageEn() {
 </script>`}
                         </pre>
                         <p className="mt-5">Next, FAQPage schema - but only for questions that are also visible on the page (more on that below):</p>
-                        <pre className="mt-4 text-xs bg-[var(--text-white)]/[0.04] border border-[var(--text-white)]/[0.06] rounded-xl p-4 text-[var(--text-muted)] font-mono overflow-x-auto">
+                        <pre className="mt-4 text-xs bg-(--card) border border-(--line) rounded-xl p-4 text-(--text-muted) font-mono overflow-x-auto">
 {`{
   "@context": "https://schema.org",
   "@type": "FAQPage",
@@ -261,7 +261,7 @@ export default function SchemaMarkupPageEn() {
 }`}
                         </pre>
                         <p className="mt-5">For blog posts, add Article schema too - the exact type this article itself carries in its &lt;head&gt;:</p>
-                        <pre className="mt-4 text-xs bg-[var(--text-white)]/[0.04] border border-[var(--text-white)]/[0.06] rounded-xl p-4 text-[var(--text-muted)] font-mono overflow-x-auto">
+                        <pre className="mt-4 text-xs bg-(--card) border border-(--line) rounded-xl p-4 text-(--text-muted) font-mono overflow-x-auto">
 {`{
   "@context": "https://schema.org",
   "@type": "Article",
@@ -276,33 +276,33 @@ export default function SchemaMarkupPageEn() {
   }
 }`}
                         </pre>
-                        <p className="text-xs text-[var(--text-faint)] mt-3">
+                        <p className="text-xs text-(--text-faint) mt-3">
                             For the priority table above, this page also carries HowTo schema in its &lt;head&gt; - invisible in the text, but machine-readable for the implementation order itself.
                         </p>
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Free generators</h2>
+                        <h2 className="text-[28px] leading-tight tracking-[-0.03em] font-bold text-(--text-white) mb-4">Free generators</h2>
                         <p>If writing code by hand isn't an option, these three produce valid JSON-LD from a form:</p>
                         <div className="space-y-2 mt-4">
                             {GENERATOR_TOOLS.map((t) => (
-                                <div key={t.name} className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-3 bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-xl p-4">
-                                    <span className="text-sm font-semibold text-[var(--text-white)] sm:min-w-[220px] shrink-0">{t.name}</span>
-                                    <span className="text-sm text-[var(--text-faint)]">{t.desc}</span>
+                                <div key={t.name} className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-3 bg-(--card) border border-(--line) rounded-xl p-4">
+                                    <span className="text-sm font-semibold text-(--text-white) sm:min-w-55 shrink-0">{t.name}</span>
+                                    <span className="text-sm text-(--text-faint)">{t.desc}</span>
                                 </div>
                             ))}
                         </div>
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">How to test schema markup for free</h2>
+                        <h2 className="text-[28px] leading-tight tracking-[-0.03em] font-bold text-(--text-white) mb-4">How to test schema markup for free</h2>
                         <p>
                             Google's{' '}
-                            <a href="https://search.google.com/test/rich-results" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline underline-offset-2">
+                            <a href="https://search.google.com/test/rich-results" target="_blank" rel="noopener noreferrer" className="text-(--accent-ink) hover:text-(--accent-ink) underline underline-offset-2">
                                 Rich Results Test
                             </a>{' '}
                             is the standard check: enter a URL and every schema type found is displayed along with errors and warnings. For pure syntax validation without Google's rich-result-specific scoring, the{' '}
-                            <a href="https://validator.schema.org" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline underline-offset-2">
+                            <a href="https://validator.schema.org" target="_blank" rel="noopener noreferrer" className="text-(--accent-ink) hover:text-(--accent-ink) underline underline-offset-2">
                                 Schema Markup Validator
                             </a>{' '}
                             from schema.org itself is a good addition.
@@ -310,28 +310,28 @@ export default function SchemaMarkupPageEn() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">The most common mistake: schema that doesn't match the visible content</h2>
+                        <h2 className="text-[28px] leading-tight tracking-[-0.03em] font-bold text-(--text-white) mb-4">The most common mistake: schema that doesn't match the visible content</h2>
                         <p>
                             One mistake we keep seeing in audits, even with technically sharp teams: the FAQ schema in JSON-LD lists different or additional questions than what's actually visible on the page. It happens easily when FAQ content and schema are maintained in two separate places in the code, and a content change only gets applied to one of them.
                         </p>
                         <p className="mt-4">
                             The problem: both Google and AI models cross-check structured data against the visible HTML. A mismatch doesn't just mean the extra schema questions have no effect - Google explicitly treats blatant discrepancies between markup and visible content as a policy violation.
                         </p>
-                        <div className="bg-red-500/8 border border-red-500/20 rounded-2xl p-5 mt-5">
-                            <p className="text-sm text-red-300 font-medium mb-1">The most reliable fix</p>
-                            <p className="text-sm text-[var(--text-muted)]">
+                        <div className="bg-(--danger-soft) border border-(--danger-border) rounded-2xl p-5 mt-5">
+                            <p className="text-sm text-(--danger) font-medium mb-1">The most reliable fix</p>
+                            <p className="text-sm text-(--text-muted)">
                                 Generate FAQ schema (or any other content schema) directly from the same data source that renders the visible content, instead of maintaining schema and HTML separately. That way the two can never drift apart in the first place.
                             </p>
                         </div>
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Frequently asked questions about schema markup</h2>
+                        <h2 className="text-[28px] leading-tight tracking-[-0.03em] font-bold text-(--text-white) mb-4">Frequently asked questions about schema markup</h2>
                         <div className="space-y-4">
                             {faqLd.mainEntity.map((faq, i) => (
-                                <div key={i} className="bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-2xl p-5">
-                                    <h3 className="font-semibold text-[var(--text-white)] mb-2 text-sm">{faq.name}</h3>
-                                    <p className="text-sm text-[var(--text-muted)] leading-relaxed">{faq.acceptedAnswer.text}</p>
+                                <div key={i} className="bg-(--card) border border-(--line) rounded-2xl p-5">
+                                    <h3 className="font-semibold text-(--text-white) mb-2 text-sm">{faq.name}</h3>
+                                    <p className="text-sm text-(--text-muted) leading-relaxed">{faq.acceptedAnswer.text}</p>
                                 </div>
                             ))}
                         </div>
@@ -340,57 +340,57 @@ export default function SchemaMarkupPageEn() {
                 </div>
 
                 {/* CTA */}
-                <div className="mt-14 bg-gradient-to-br from-cyan-950/40 to-[var(--bg-base)] border border-cyan-500/20 rounded-2xl p-6 sm:p-8 text-center">
-                    <h2 className="text-xl sm:text-2xl font-bold text-[var(--text-white)] mb-3">
+                <div className="mt-14 bg-(--tint) border border-(--line) rounded-2xl p-6 sm:p-8 text-center">
+                    <h2 className="text-xl sm:text-2xl font-bold text-(--text-white) mb-3">
                         Does your schema match your visible content?
                     </h2>
-                    <p className="text-[var(--text-muted)] text-sm mb-6 max-w-md mx-auto leading-relaxed">
+                    <p className="text-(--text-muted) text-sm mb-6 max-w-md mx-auto leading-relaxed">
                         Scanora automatically checks whether Organization, FAQ, and other schema types are present and correct - as part of 19 GEO signals in under 60 seconds. Start without registration, sign up free for the full report with all scores.
                     </p>
                     <Link
                         href="/dashboard"
-                        className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-cyan-600 to-violet-600 hover:from-cyan-500 hover:to-violet-500 text-[var(--text-white)] text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-cyan-500/20"
+                        className="inline-flex items-center gap-2 px-6 py-3 bg-(--accent) hover:bg-(--accent) hover:text-(--on-accent) text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-(--accent-border)"
                     >
                         Check your GEO score now
                     </Link>
-                    <div className="mt-3 text-xs text-[var(--text-faint)]">No registration to start · Full report free · 60 seconds</div>
+                    <div className="mt-3 text-xs text-(--text-faint)">No registration to start · Full report free · 60 seconds</div>
                 </div>
 
                 {/* Cross-link to sibling posts */}
-                <div className="mt-5 bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-2xl p-6 sm:p-8">
+                <div className="mt-5 bg-(--card) border border-(--line) rounded-2xl p-6 sm:p-8">
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 justify-between">
                         <div>
-                            <span className="text-xs font-semibold text-cyan-400 uppercase tracking-wider mb-1 block">Keep reading</span>
-                            <h3 className="text-base sm:text-lg font-bold text-[var(--text-white)] mb-2">
+                            <span className="text-xs font-semibold text-(--accent-ink) mb-1 block">Keep reading</span>
+                            <h3 className="text-base sm:text-lg font-bold text-(--text-white) mb-2">
                                 llms.txt explained
                             </h3>
-                            <p className="text-[var(--text-muted)] text-sm leading-relaxed max-w-md">
+                            <p className="text-(--text-muted) text-sm leading-relaxed max-w-md">
                                 Schema markup is one GEO signal among many - llms.txt is the other one AI crawlers read first.
                             </p>
                         </div>
                         <Link
                             href="/en/blog/llms-txt-explained"
-                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--text-white)]/[0.06] hover:bg-[var(--text-white)]/10 text-[var(--text-white)] text-sm font-semibold rounded-xl transition-all duration-200 shrink-0"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-(--tint) hover:bg-(--tint) text-(--text-white) text-sm font-semibold rounded-xl transition-all duration-200 shrink-0"
                         >
                             Read article
                         </Link>
                     </div>
                 </div>
 
-                <div className="mt-4 bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-2xl p-6 sm:p-8">
+                <div className="mt-4 bg-(--card) border border-(--line) rounded-2xl p-6 sm:p-8">
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 justify-between">
                         <div>
-                            <span className="text-xs font-semibold text-cyan-400 uppercase tracking-wider mb-1 block">Keep reading</span>
-                            <h3 className="text-base sm:text-lg font-bold text-[var(--text-white)] mb-2">
+                            <span className="text-xs font-semibold text-(--accent-ink) mb-1 block">Keep reading</span>
+                            <h3 className="text-base sm:text-lg font-bold text-(--text-white) mb-2">
                                 GEO in 2026: How to Get Recommended by ChatGPT and Claude
                             </h3>
-                            <p className="text-[var(--text-muted)] text-sm leading-relaxed max-w-md">
+                            <p className="text-(--text-muted) text-sm leading-relaxed max-w-md">
                                 Schema markup is one of five GEO signals - see the bigger picture and how they work together.
                             </p>
                         </div>
                         <Link
                             href="/en/blog/what-is-geo"
-                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--text-white)]/[0.06] hover:bg-[var(--text-white)]/10 text-[var(--text-white)] text-sm font-semibold rounded-xl transition-all duration-200 shrink-0"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-(--tint) hover:bg-(--tint) text-(--text-white) text-sm font-semibold rounded-xl transition-all duration-200 shrink-0"
                         >
                             Read article
                         </Link>
@@ -398,8 +398,8 @@ export default function SchemaMarkupPageEn() {
                 </div>
 
                 {/* Back */}
-                <div className="mt-10 pt-8 border-t border-[var(--text-white)]/5">
-                    <Link href="/en/blog" className="text-sm text-[var(--text-faint)] hover:text-[var(--text-body)] transition-colors">
+                <div className="mt-10 pt-8 border-t border-(--line)">
+                    <Link href="/en/blog" className="text-sm text-(--text-faint) hover:text-(--text-body) transition-colors">
                         ← Back to blog
                     </Link>
                 </div>

@@ -31,7 +31,7 @@ const jsonLd = {
     description: 'GEO (Generative Engine Optimization) explained: how to optimize your website so ChatGPT, Claude, Perplexity, and Google AI Overview cite it as a source.',
     image: 'https://www.scanora.ai/en/blog/what-is-geo/opengraph-image',
     datePublished: '2026-06-10T09:00:00+02:00',
-    dateModified: '2026-08-24T09:00:00+02:00',
+    dateModified: '2026-10-01T09:00:00+02:00',
     author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.scanora.ai/about' },
     publisher: {
         '@type': 'Organization',
@@ -134,7 +134,7 @@ const SIGNALS = [
     {
         number: '01',
         title: 'Create llms.txt',
-        color: '#06b6d4',
+        color: 'var(--accent)',
         desc: 'A file popular among GEO enthusiasts, but currently unconfirmed: no major AI provider (Google, OpenAI, Anthropic) has confirmed actually using llms.txt - Google has explicitly called it unnecessary for Search and AI Overviews. It doesn\'t hurt to have one, though, and it doubles as compact product documentation: a file at /llms.txt with a clear description of your website, your products, and your key points, structured with Markdown headings. Optionally add /llms-full.txt for a detailed version.',
         example: '# MyTool\n> MyTool is an X for Y that does Z in under 60 seconds.',
         source: { label: 'llms.txt specification (llmstxt.org)', url: 'https://llmstxt.org' },
@@ -143,7 +143,7 @@ const SIGNALS = [
     {
         number: '02',
         title: 'Schema.org structured data',
-        color: '#7c3aed',
+        color: 'var(--accent)',
         desc: 'JSON-LD in the head of your page. At minimum, Organization schema (name, URL, logo), FAQPage schema for common questions, and depending on your website type, SoftwareApplication or Product.',
         example: null,
         source: { label: 'Official Schema.org documentation', url: 'https://schema.org' },
@@ -152,14 +152,14 @@ const SIGNALS = [
     {
         number: '03',
         title: 'FAQ schema with real HTML content',
-        color: '#10b981',
+        color: 'var(--success)',
         desc: 'Important: FAQ schema in JSON-LD alone isn\'t enough. The questions and answers also need to exist as visible HTML text on the page. AI models scrape the visible content - not just the head.',
         example: null,
     },
     {
         number: '04',
         title: 'Allow AI crawlers in robots.txt',
-        color: '#f59e0b',
+        color: 'var(--warning)',
         desc: 'Many websites unknowingly block AI crawlers. Make sure GPTBot, ClaudeBot, anthropic-ai, PerplexityBot, and YouBot are explicitly allowed in your robots.txt.',
         example: 'User-agent: GPTBot\nAllow: /\n\nUser-agent: ClaudeBot\nAllow: /',
         source: { label: 'Official crawler docs: OpenAI GPTBot', url: 'https://developers.openai.com/api/docs/bots' },
@@ -167,14 +167,14 @@ const SIGNALS = [
     {
         number: '05',
         title: 'Clear product definition',
-        color: '#ef4444',
+        color: 'var(--danger)',
         desc: 'AI models need an unambiguous "X is Y for Z" definition. Write, in one of the first paragraphs of your homepage, precisely what your tool is, who it\'s for, and what problem it solves. Avoid marketing fluff.',
         example: null,
     },
     {
         number: '06',
         title: 'E-E-A-T signals',
-        color: '#a78bfa',
+        color: 'var(--accent)',
         desc: 'Experience, Expertise, Authoritativeness, Trustworthiness. AI models favor sources with an identifiable author, contact details, a privacy policy, and an imprint. An /about page with founder info significantly increases trust.',
         example: null,
     },
@@ -182,43 +182,43 @@ const SIGNALS = [
 
 export default function WhatIsGeoPageEn() {
     return (
-        <main className="bg-[var(--bg-base)] min-h-screen">
+        <main className="bg-(--bg-base) min-h-screen">
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
             <Navbar locale="en" />
 
-            <article className="max-w-3xl mx-auto px-5 sm:px-8 pt-32 pb-24">
+            <article className="max-w-190 mx-auto px-4 sm:px-8 pt-28 md:pt-34 pb-18 md:pb-28">
 
                 {/* Breadcrumb */}
-                <div className="flex items-center gap-2 text-xs text-[var(--text-faint)] mb-8">
-                    <Link href="/en" className="hover:text-[var(--text-muted)] transition-colors">Scanora</Link>
+                <div className="flex flex-wrap items-center gap-2 text-sm text-(--text-muted) mb-8">
+                    <Link href="/en" className="hover:text-(--accent-ink) transition-colors">Scanora</Link>
                     <span>/</span>
-                    <Link href="/en/blog" className="hover:text-[var(--text-muted)] transition-colors">Blog</Link>
+                    <Link href="/en/blog" className="hover:text-(--accent-ink) transition-colors">Blog</Link>
                     <span>/</span>
-                    <span className="text-[var(--text-faint)]">What is GEO?</span>
+                    <span className="text-(--text-faint)">What is GEO?</span>
                 </div>
 
                 {/* Header */}
                 <div className="mb-10">
                     <div className="flex items-center gap-3 mb-4">
-                        <span className="text-[11px] font-semibold px-2.5 py-1 rounded-full uppercase tracking-wider bg-cyan-500/15 text-cyan-400">
+                        <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-(--accent-soft) text-(--accent-ink)">
                             GEO
                         </span>
-                        <span className="text-xs text-[var(--text-faint)]">June 10, 2026</span>
-                        <span className="text-xs text-[var(--text-faint)]">· 8 min read</span>
-                        <span className="text-xs text-[var(--text-faint)]">· Updated Aug 24, 2026</span>
+                        <span className="text-xs text-(--text-faint)">June 10, 2026</span>
+                        <span className="text-xs text-(--text-faint)">· 8 min read</span>
+                        <span className="text-xs text-(--text-faint)">· Updated October 1, 2026</span>
                     </div>
-                    <h1 className="text-3xl sm:text-5xl font-bold text-[var(--text-white)] leading-tight tracking-tight mb-5">
+                    <h1 className="text-[clamp(34px,4.4vw,52px)] font-bold text-(--text-white) leading-[1.06] tracking-[-0.035em] mb-5">
                         What is GEO? Generative Engine Optimization Explained
                     </h1>
-                    <p className="text-lg text-[var(--text-muted)] leading-relaxed">
+                    <p className="text-lg text-(--text-body) leading-relaxed">
                         Classic SEO optimizes for Google. But in 2026, AI models like ChatGPT, Claude, Perplexity, and Google AI Overview decide daily which websites they recommend to their users - by completely different rules. Here's how GEO works and how to meaningfully improve your score in 60 minutes.
                     </p>
-                    <div className="mt-5 flex items-center gap-2 text-xs text-[var(--text-faint)]">
-                        <Link href="/about" className="flex items-center gap-2 hover:text-[var(--text-body)] transition-colors">
-                            <div className="w-6 h-6 rounded-full bg-gradient-to-br from-violet-600 to-cyan-600 flex items-center justify-center text-[var(--text-white)] text-[10px] font-bold">F</div>
+                    <div className="mt-5 flex items-center gap-2 text-xs text-(--text-faint)">
+                        <Link href="/about" className="flex items-center gap-2 hover:text-(--text-body) transition-colors">
+                            <div className="w-6 h-6 rounded-full bg-(--accent) flex items-center justify-center text-(--on-accent) text-[10px] font-bold">F</div>
                             <span>Finn Paustian</span>
                         </Link>
                         <span>·</span>
@@ -227,65 +227,65 @@ export default function WhatIsGeoPageEn() {
                 </div>
 
                 {/* Divider */}
-                <div className="border-t border-[var(--text-white)]/5 mb-10" />
+                <div className="border-t border-(--line) mb-10" />
 
                 {/* Content */}
-                <div className="prose prose-invert prose-slate max-w-none space-y-10 text-[var(--text-body)] leading-relaxed">
+                <div className="prose prose-invert prose-slate max-w-none space-y-10 text-(--text-body) leading-relaxed">
 
-                    <nav aria-label="Table of contents" className="bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-2xl p-5 sm:p-6">
-                        <p className="text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider mb-3">In this article</p>
+                    <nav aria-label="Table of contents" className="bg-(--card) border border-(--line) rounded-2xl p-5 sm:p-6">
+                        <p className="text-xs font-semibold text-(--text-faint) mb-3">In this article</p>
                         <ol className="grid sm:grid-cols-2 gap-x-6 gap-y-1.5 text-sm">
-                            <li><a href="#what-is-geo" className="text-[var(--text-muted)] hover:text-cyan-300 transition-colors">What is GEO (Generative Engine Optimization)?</a></li>
-                            <li><a href="#why-geo" className="text-[var(--text-muted)] hover:text-cyan-300 transition-colors">Why does GEO matter in 2026?</a></li>
-                            <li><a href="#geo-vs-seo" className="text-[var(--text-muted)] hover:text-cyan-300 transition-colors">GEO vs. SEO compared</a></li>
+                            <li><a href="#what-is-geo" className="text-(--text-muted) hover:text-(--accent-ink) transition-colors">What is GEO (Generative Engine Optimization)?</a></li>
+                            <li><a href="#why-geo" className="text-(--text-muted) hover:text-(--accent-ink) transition-colors">Why does GEO matter in 2026?</a></li>
+                            <li><a href="#geo-vs-seo" className="text-(--text-muted) hover:text-(--accent-ink) transition-colors">GEO vs. SEO compared</a></li>
                             {SIGNALS.map((s) => (
                                 <li key={s.number}>
-                                    <a href={`#signal-${s.number}`} className="text-[var(--text-muted)] hover:text-cyan-300 transition-colors">
-                                        <span className="font-mono text-[var(--text-faint)] mr-1.5">{s.number}</span>{s.title}
+                                    <a href={`#signal-${s.number}`} className="text-(--text-muted) hover:text-(--accent-ink) transition-colors">
+                                        <span className="font-mono text-(--text-faint) mr-1.5">{s.number}</span>{s.title}
                                     </a>
                                 </li>
                             ))}
-                            <li><a href="#ai-models" className="text-[var(--text-muted)] hover:text-cyan-300 transition-colors">Which AI models benefit from GEO?</a></li>
-                            <li><a href="#quick-wins" className="text-[var(--text-muted)] hover:text-cyan-300 transition-colors">10 GEO quick wins</a></li>
-                            <li><a href="#faq" className="text-[var(--text-muted)] hover:text-cyan-300 transition-colors">Frequently asked questions</a></li>
+                            <li><a href="#ai-models" className="text-(--text-muted) hover:text-(--accent-ink) transition-colors">Which AI models benefit from GEO?</a></li>
+                            <li><a href="#quick-wins" className="text-(--text-muted) hover:text-(--accent-ink) transition-colors">10 GEO quick wins</a></li>
+                            <li><a href="#faq" className="text-(--text-muted) hover:text-(--accent-ink) transition-colors">Frequently asked questions</a></li>
                         </ol>
                     </nav>
 
                     <section id="what-is-geo" className="scroll-mt-28">
-                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">What is GEO (Generative Engine Optimization)?</h2>
+                        <h2 className="text-[28px] leading-tight tracking-[-0.03em] font-bold text-(--text-white) mb-4">What is GEO (Generative Engine Optimization)?</h2>
                         <p>
-                            GEO stands for <strong className="text-[var(--text-white)]">Generative Engine Optimization</strong> (sometimes also called AI search optimization or ChatGPT SEO) - optimizing your website for AI models like ChatGPT, Claude, Perplexity, Gemini, or YouChat. The term was coined in 2023 in the <a href="https://arxiv.org/abs/2311.09735" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline underline-offset-2">GEO research paper from Princeton, Georgia Tech, and the Allen Institute for AI</a>. While SEO aims to rank high in Google's search results, GEO makes sure AI models recognize your website as a trustworthy source and cite it in their answers.
+                            GEO stands for <strong className="text-(--text-white)">Generative Engine Optimization</strong> (sometimes also called AI search optimization or ChatGPT SEO) - optimizing your website for AI models like ChatGPT, Claude, Perplexity, Gemini, or YouChat. The term was coined in 2023 in the <a href="https://arxiv.org/abs/2311.09735" target="_blank" rel="noopener noreferrer" className="text-(--accent-ink) hover:text-(--accent-ink) underline underline-offset-2">GEO research paper from Princeton, Georgia Tech, and the Allen Institute for AI</a>. While SEO aims to rank high in Google's search results, GEO makes sure AI models recognize your website as a trustworthy source and cite it in their answers.
                         </p>
                         <p className="mt-4">
-                            The difference is fundamental: Google ranks by keywords, backlinks, and technical signals. AI models, by contrast, look for <strong className="text-[var(--text-white)]">structured, citable content</strong>, clear entity definitions, and trust signals. A website that ranks on page 1 of Google can still be invisible to AI models - and vice versa.
+                            The difference is fundamental: Google ranks by keywords, backlinks, and technical signals. AI models, by contrast, look for <strong className="text-(--text-white)">structured, citable content</strong>, clear entity definitions, and trust signals. A website that ranks on page 1 of Google can still be invisible to AI models - and vice versa.
                         </p>
                     </section>
 
                     <section id="why-geo" className="scroll-mt-28">
-                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Why does GEO matter in 2026?</h2>
+                        <h2 className="text-[28px] leading-tight tracking-[-0.03em] font-bold text-(--text-white) mb-4">Why does GEO matter in 2026?</h2>
                         <p>
-                            ChatGPT has over <a href="https://techcrunch.com/2026/02/27/chatgpt-reaches-900m-weekly-active-users" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline underline-offset-2">900 million weekly users according to OpenAI</a> (as of February 2026). Perplexity delivers directly cited sources as an answer engine instead of a list of links, and keeps growing rapidly. Claude is increasingly used in business workflows. More and more people no longer ask Google - they ask an AI.
+                            ChatGPT has over <a href="https://techcrunch.com/2026/02/27/chatgpt-reaches-900m-weekly-active-users" target="_blank" rel="noopener noreferrer" className="text-(--accent-ink) hover:text-(--accent-ink) underline underline-offset-2">900 million weekly users according to OpenAI</a> (as of February 2026). Perplexity delivers directly cited sources as an answer engine instead of a list of links, and keeps growing rapidly. Claude is increasingly used in business workflows. More and more people no longer ask Google - they ask an AI.
                         </p>
                         <p className="mt-4">
                             If you don't show up in these answers, you visibly lose reach - even if your Google rankings don't change at all. That's the blind spot in most 2026 SEO strategies.
                         </p>
-                        <div className="bg-cyan-500/8 border border-cyan-500/20 rounded-2xl p-5 mt-5">
-                            <p className="text-sm text-cyan-300 font-medium mb-1">Key takeaway</p>
-                            <p className="text-sm text-[var(--text-muted)]">
+                        <div className="bg-(--accent-soft) border border-(--accent-border) rounded-2xl p-5 mt-5">
+                            <p className="text-sm text-(--accent-ink) font-medium mb-1">Key takeaway</p>
+                            <p className="text-sm text-(--text-muted)">
                                 GEO doesn't replace SEO - it complements it. If you only optimize for Google today, you're leaving a growing channel untapped. The websites that start building GEO signals now will have a clear edge in 2027.
                             </p>
                         </div>
                     </section>
 
                     <section id="geo-vs-seo" className="scroll-mt-28">
-                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">GEO vs. SEO: What's the difference?</h2>
-                        <div className="overflow-hidden rounded-2xl border border-[var(--text-white)]/[0.07]">
+                        <h2 className="text-[28px] leading-tight tracking-[-0.03em] font-bold text-(--text-white) mb-4">GEO vs. SEO: What's the difference?</h2>
+                        <div className="overflow-hidden rounded-2xl border border-(--line)">
                             <table className="w-full text-sm">
                                 <thead>
-                                    <tr className="border-b border-[var(--text-white)]/5 bg-[var(--text-white)]/[0.02]">
-                                        <th className="text-left px-5 py-3 text-[var(--text-muted)] font-semibold">Aspect</th>
-                                        <th className="text-left px-5 py-3 text-[var(--text-muted)] font-semibold">SEO (Google)</th>
-                                        <th className="text-left px-5 py-3 text-cyan-400 font-semibold">GEO (AI models)</th>
+                                    <tr className="border-b border-(--line) bg-(--card)">
+                                        <th className="text-left px-5 py-3 text-(--text-muted) font-semibold">Aspect</th>
+                                        <th className="text-left px-5 py-3 text-(--text-muted) font-semibold">SEO (Google)</th>
+                                        <th className="text-left px-5 py-3 text-(--accent-ink) font-semibold">GEO (AI models)</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -296,10 +296,10 @@ export default function WhatIsGeoPageEn() {
                                         ['Content', 'Keyword density, E-E-A-T', 'Citable facts, clear definitions'],
                                         ['Measurement', 'Rankings, impressions, CTR', 'GEO score, crawler access, mentions'],
                                     ].map(([aspect, seo, geo], i) => (
-                                        <tr key={i} className="border-b border-[var(--text-white)]/[0.04] last:border-0">
-                                            <td className="px-5 py-3 text-[var(--text-white)] font-medium">{aspect}</td>
-                                            <td className="px-5 py-3 text-[var(--text-muted)]">{seo}</td>
-                                            <td className="px-5 py-3 text-[var(--text-body)]">{geo}</td>
+                                        <tr key={i} className="border-b border-(--line) last:border-0">
+                                            <td className="px-5 py-3 text-(--text-white) font-medium">{aspect}</td>
+                                            <td className="px-5 py-3 text-(--text-muted)">{seo}</td>
+                                            <td className="px-5 py-3 text-(--text-body)">{geo}</td>
                                         </tr>
                                     ))}
                                 </tbody>
@@ -308,30 +308,30 @@ export default function WhatIsGeoPageEn() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-2">What are the 6 most important GEO signals?</h2>
-                        <p className="text-[var(--text-muted)] mb-6">Scanora checks 19 GEO signals in total. These are the six with the biggest impact:</p>
+                        <h2 className="text-[28px] leading-tight tracking-[-0.03em] font-bold text-(--text-white) mb-2">What are the 6 most important GEO signals?</h2>
+                        <p className="text-(--text-muted) mb-6">Scanora checks 19 GEO signals in total. These are the six with the biggest impact:</p>
                         <figure className="mb-6">
                             <Image
                                 src="/blog/scanora-geo-report.png"
                                 alt="Scanora GEO report showing checked AI visibility signals like llms.txt, Organization schema, AI crawler access, and sitemap.xml"
                                 width={960}
                                 height={411}
-                                className="w-full h-auto rounded-2xl border border-[var(--text-white)]/[0.07]"
+                                className="w-full h-auto rounded-2xl border border-(--line)"
                             />
-                            <figcaption className="text-xs text-[var(--text-faint)] mt-2">
-                                A real GEO score report from Scanora — all 12 AI visibility signals at a glance, including a found issue.
+                            <figcaption className="text-xs text-(--text-faint) mt-2">
+                                A real GEO score report from Scanora - all 12 AI visibility signals at a glance, including a found issue.
                             </figcaption>
                         </figure>
                         <div className="space-y-4">
                             {SIGNALS.map((s) => (
-                                <div key={s.number} id={`signal-${s.number}`} className="bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-2xl p-5 scroll-mt-28">
+                                <div key={s.number} id={`signal-${s.number}`} className="bg-(--card) border border-(--line) rounded-2xl p-5 scroll-mt-28">
                                     <div className="flex items-start gap-4">
                                         <span className="text-[11px] font-bold font-mono shrink-0 mt-0.5" style={{ color: s.color }}>{s.number}</span>
                                         <div className="flex-1">
-                                            <h3 className="font-semibold text-[var(--text-white)] mb-2">{s.title}</h3>
-                                            <p className="text-sm text-[var(--text-muted)] leading-relaxed">{s.desc}</p>
+                                            <h3 className="font-semibold text-(--text-white) mb-2">{s.title}</h3>
+                                            <p className="text-sm text-(--text-muted) leading-relaxed">{s.desc}</p>
                                             {s.example && (
-                                                <pre className="mt-3 text-xs bg-[var(--text-white)]/[0.04] border border-[var(--text-white)]/[0.06] rounded-xl p-3 text-[var(--text-muted)] font-mono overflow-x-auto">
+                                                <pre className="mt-3 text-xs bg-(--card) border border-(--line) rounded-xl p-3 text-(--text-muted) font-mono overflow-x-auto">
                                                     {s.example}
                                                 </pre>
                                             )}
@@ -340,7 +340,7 @@ export default function WhatIsGeoPageEn() {
                                                     href={s.source.url}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
-                                                    className="mt-3 inline-block text-xs text-cyan-400 hover:text-cyan-300 underline underline-offset-2"
+                                                    className="mt-3 inline-block text-xs text-(--accent-ink) hover:text-(--accent-ink) underline underline-offset-2"
                                                 >
                                                     Source: {s.source.label} ↗
                                                 </a>
@@ -348,7 +348,7 @@ export default function WhatIsGeoPageEn() {
                                             {s.internalLink && (
                                                 <Link
                                                     href={s.internalLink.href}
-                                                    className="mt-3 ml-4 inline-block text-xs text-violet-400 hover:text-violet-300 underline underline-offset-2"
+                                                    className="mt-3 ml-4 inline-block text-xs text-(--accent-ink) hover:text-(--accent-ink) underline underline-offset-2"
                                                 >
                                                     {s.internalLink.label} →
                                                 </Link>
@@ -361,23 +361,23 @@ export default function WhatIsGeoPageEn() {
                     </section>
 
                     <section id="ai-models" className="scroll-mt-28">
-                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Which AI models benefit from GEO?</h2>
+                        <h2 className="text-[28px] leading-tight tracking-[-0.03em] font-bold text-(--text-white) mb-4">Which AI models benefit from GEO?</h2>
                         <p>
                             Not all AI models work the same way. There are two fundamental types:
                         </p>
                         <p className="mt-4">
-                            <strong className="text-[var(--text-white)]">RAG-based systems</strong> (Retrieval Augmented Generation) like Perplexity or Bing Copilot crawl the web in real time and cite sources directly. GEO signals take effect fastest here - within days to weeks.
+                            <strong className="text-(--text-white)">RAG-based systems</strong> (Retrieval Augmented Generation) like Perplexity or Bing Copilot crawl the web in real time and cite sources directly. GEO signals take effect fastest here - within days to weeks.
                         </p>
                         <p className="mt-4">
-                            <strong className="text-[var(--text-white)]">Models with a training cutoff</strong> like ChatGPT (without browsing) or Claude (without web access) only know content from their training data. It takes longer here - but the more your website is discussed across the public web (GitHub, Reddit, Hacker News, product pages), the higher the chance of being picked up in future training runs.
+                            <strong className="text-(--text-white)">Models with a training cutoff</strong> like ChatGPT (without browsing) or Claude (without web access) only know content from their training data. It takes longer here - but the more your website is discussed across the public web (GitHub, Reddit, Hacker News, product pages), the higher the chance of being picked up in future training runs.
                         </p>
                         <p className="mt-4">
-                            <strong className="text-[var(--text-white)]">Hybrid systems</strong> like ChatGPT with browsing enabled or Claude with web access combine both approaches. For these, a solid technical GEO foundation (Schema.org, clean canonicals, citable facts) is especially important.
+                            <strong className="text-(--text-white)">Hybrid systems</strong> like ChatGPT with browsing enabled or Claude with web access combine both approaches. For these, a solid technical GEO foundation (Schema.org, clean canonicals, citable facts) is especially important.
                         </p>
                     </section>
 
                     <section id="quick-wins" className="scroll-mt-28">
-                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Which 10 GEO quick wins should you implement first?</h2>
+                        <h2 className="text-[28px] leading-tight tracking-[-0.03em] font-bold text-(--text-white) mb-4">Which 10 GEO quick wins should you implement first?</h2>
                         <div className="space-y-2">
                             {[
                                 ['Create llms.txt', 'Add /llms.txt with a clear product description'],
@@ -391,13 +391,13 @@ export default function WhatIsGeoPageEn() {
                                 ['About/founder page', 'Who\'s behind it - E-E-A-T signal for AI'],
                                 ['External source links', 'Links to authoritative sources (Google, OWASP, Schema.org)'],
                             ].map(([title, desc], i) => (
-                                <div key={i} className="flex items-start gap-3 py-2.5 border-b border-[var(--text-white)]/[0.04] last:border-0">
-                                    <div className="w-5 h-5 rounded-full bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center shrink-0 mt-0.5">
-                                        <span className="text-[9px] font-bold text-cyan-400">{i + 1}</span>
+                                <div key={i} className="flex items-start gap-3 py-2.5 border-b border-(--line) last:border-0">
+                                    <div className="w-5 h-5 rounded-full bg-(--accent-soft) border border-(--accent-border) flex items-center justify-center shrink-0 mt-0.5">
+                                        <span className="text-[9px] font-bold text-(--accent-ink)">{i + 1}</span>
                                     </div>
                                     <div>
-                                        <span className="text-sm font-medium text-[var(--text-white)]">{title}</span>
-                                        <span className="text-sm text-[var(--text-faint)]"> - {desc}</span>
+                                        <span className="text-sm font-medium text-(--text-white)">{title}</span>
+                                        <span className="text-sm text-(--text-faint)"> - {desc}</span>
                                     </div>
                                 </div>
                             ))}
@@ -405,7 +405,7 @@ export default function WhatIsGeoPageEn() {
                     </section>
 
                     <section id="faq" className="scroll-mt-28">
-                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Frequently asked questions about GEO</h2>
+                        <h2 className="text-[28px] leading-tight tracking-[-0.03em] font-bold text-(--text-white) mb-4">Frequently asked questions about GEO</h2>
                         <div className="space-y-4">
                             {[
                                 {
@@ -429,9 +429,9 @@ export default function WhatIsGeoPageEn() {
                                     a: 'RAG-based systems like Perplexity react to technical GEO signals within days to weeks. Models with a fixed training-data cutoff like GPT-4 can take months until the next training update. Technical quick wins like schema markup and AI crawler access work fastest - llms.txt excepted, since no major provider has confirmed using it.',
                                 },
                             ].map((faq, i) => (
-                                <div key={i} className="bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-2xl p-5">
-                                    <h3 className="font-semibold text-[var(--text-white)] mb-2 text-sm">{faq.q}</h3>
-                                    <p className="text-sm text-[var(--text-muted)] leading-relaxed">{faq.a}</p>
+                                <div key={i} className="bg-(--card) border border-(--line) rounded-2xl p-5">
+                                    <h3 className="font-semibold text-(--text-white) mb-2 text-sm">{faq.q}</h3>
+                                    <p className="text-sm text-(--text-muted) leading-relaxed">{faq.a}</p>
                                 </div>
                             ))}
                         </div>
@@ -440,25 +440,25 @@ export default function WhatIsGeoPageEn() {
                 </div>
 
                 {/* CTA */}
-                <div className="mt-14 bg-gradient-to-br from-cyan-950/40 to-[var(--bg-base)] border border-cyan-500/20 rounded-2xl p-6 sm:p-8 text-center">
-                    <h2 className="text-xl sm:text-2xl font-bold text-[var(--text-white)] mb-3">
+                <div className="mt-14 bg-(--tint) border border-(--line) rounded-2xl p-6 sm:p-8 text-center">
+                    <h2 className="text-xl sm:text-2xl font-bold text-(--text-white) mb-3">
                         How good is your GEO score?
                     </h2>
-                    <p className="text-[var(--text-muted)] text-sm mb-6 max-w-md mx-auto leading-relaxed">
+                    <p className="text-(--text-muted) text-sm mb-6 max-w-md mx-auto leading-relaxed">
                         Scanora checks all 19 GEO signals in under 60 seconds - including llms.txt, Schema.org, AI crawler access, and content quality. Start without registration, sign up free for the full report with all scores.
                     </p>
                     <Link
                         href="/dashboard"
-                        className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-cyan-600 to-violet-600 hover:from-cyan-500 hover:to-violet-500 text-[var(--text-white)] text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-cyan-500/20"
+                        className="inline-flex items-center gap-2 px-6 py-3 bg-(--accent) hover:bg-(--accent) hover:text-(--on-accent) text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-(--accent-border)"
                     >
                         Check your GEO score now
                     </Link>
-                    <div className="mt-3 text-xs text-[var(--text-faint)]">No registration to start · Full report free · 60 seconds</div>
+                    <div className="mt-3 text-xs text-(--text-faint)">No registration to start · Full report free · 60 seconds</div>
                 </div>
 
                 {/* Back to blog */}
-                <div className="mt-10 pt-8 border-t border-[var(--text-white)]/5">
-                    <Link href="/en/blog" className="text-sm text-[var(--text-faint)] hover:text-[var(--text-body)] transition-colors">
+                <div className="mt-10 pt-8 border-t border-(--line)">
+                    <Link href="/en/blog" className="text-sm text-(--text-faint) hover:text-(--text-body) transition-colors">
                         ← Back to blog
                     </Link>
                 </div>

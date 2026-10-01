@@ -16,17 +16,17 @@ export default function RankingBars() {
 
     return (
         <div
-            className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl p-5 sm:p-6"
+            className="bg-(--bg-surface) border border-(--border-subtle) rounded-2xl p-5 sm:p-6"
             role="img"
             aria-label="Google-Ranking-Verbesserung nach Scanora-Fixes für 5 Keywords, durchschnittlich mehrere Positionen nach oben"
         >
             <div className="flex items-start justify-between gap-3 mb-5">
                 <div>
                     <div className="flex items-center gap-2">
-                        <h3 className="text-sm font-semibold text-[var(--text-white)]">Ranking-Verbesserung</h3>
-                        <span className="text-[10px] px-1.5 py-0.5 rounded-md bg-[var(--surface-08)] text-[var(--text-faint)] font-medium">Beispiel</span>
+                        <h3 className="text-sm font-semibold text-(--text-white)">Ranking-Verbesserung</h3>
+                        <span className="text-[10px] px-1.5 py-0.5 rounded-md bg-(--surface-08) text-(--text-faint) font-medium">Beispiel</span>
                     </div>
-                    <p className="text-xs text-[var(--text-faint)] mt-0.5">Google-Position vor und nach umgesetzten Scanora-Fixes</p>
+                    <p className="text-xs text-(--text-faint) mt-0.5">Google-Position vor und nach umgesetzten Scanora-Fixes</p>
                 </div>
             </div>
 
@@ -34,17 +34,17 @@ export default function RankingBars() {
                 {ROWS.map((r, i) => (
                     <div key={r.keyword}>
                         <div className="flex items-center justify-between gap-3 mb-1.5">
-                            <span className="text-sm text-[var(--text-body)] truncate">{r.keyword}</span>
+                            <span className="text-sm text-(--text-body) truncate">{r.keyword}</span>
                             <div className="flex items-center gap-2 shrink-0">
-                                <span className="text-xs text-[var(--text-faint)] tabular-nums">Platz {r.before} → Platz {r.after}</span>
-                                <span className="flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-[var(--accent-soft)] border border-[var(--accent-border)] text-[var(--accent)] text-[11px] font-semibold tabular-nums">
+                                <span className="text-xs text-(--text-faint) tabular-nums">Platz {r.before} → Platz {r.after}</span>
+                                <span className="flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-(--accent-soft) border border-(--accent-border) text-(--accent-ink) text-[11px] font-semibold tabular-nums">
                                     <ArrowUp className="w-2.5 h-2.5" />{r.delta}
                                 </span>
                             </div>
                         </div>
-                        <div className="relative h-2.5 rounded-full bg-[var(--surface-08)] overflow-hidden">
+                        <div className="relative h-2.5 rounded-full bg-(--surface-08) overflow-hidden">
                             <motion.div
-                                className="absolute inset-y-0 left-0 rounded-full bg-[var(--accent)]"
+                                className="absolute inset-y-0 left-0 rounded-full bg-(--accent)"
                                 initial={reduceMotion ? false : { width: 0 }}
                                 whileInView={{ width: `${r.score}%` }}
                                 viewport={{ once: true }}

@@ -27,49 +27,49 @@ const ALTERNATIVES = [
     {
         slug: 'otterly-alternative',
         title: 'Otterly.ai Alternative: Scanora im ehrlichen Vergleich',
-        description: 'Preise, abgedeckte KI-Plattformen und Funktionsumfang im direkten Vergleich – inklusive der Punkte, in denen Otterly.ai besser ist.',
-        tag: 'Ab 29,99 €/Monat',
+        description: 'Preise, abgedeckte KI-Plattformen und Funktionsumfang im direkten Vergleich - inklusive der Punkte, in denen Otterly.ai besser ist.',
+        tag: 'Ab 74,99 €/Monat',
     },
     {
         slug: 'peec-alternative',
         title: 'Peec.ai Alternative: Scanora im ehrlichen Vergleich',
-        description: 'Preise, abgedeckte KI-Plattformen und Funktionsumfang im direkten Vergleich – inklusive der Punkte, in denen Peec.ai besser ist.',
-        tag: 'Ab 29,99 €/Monat',
+        description: 'Preise, abgedeckte KI-Plattformen und Funktionsumfang im direkten Vergleich - inklusive der Punkte, in denen Peec.ai besser ist.',
+        tag: 'Ab 74,99 €/Monat',
     },
     {
         slug: 'rankscale-alternative',
         title: 'Rankscale Alternative: Scanora im ehrlichen Vergleich',
-        description: 'Feste Preise statt Credit-System, abgedeckte KI-Plattformen und Funktionsumfang im direkten Vergleich – inklusive der Punkte, in denen Rankscale besser ist.',
-        tag: 'Ab 29,99 €/Monat',
+        description: 'Feste Preise statt Credit-System, abgedeckte KI-Plattformen und Funktionsumfang im direkten Vergleich - inklusive der Punkte, in denen Rankscale besser ist.',
+        tag: 'Ab 74,99 €/Monat',
     },
     {
         slug: 'writesonic-alternative',
         title: 'Writesonic Alternative: Scanora im ehrlichen Vergleich',
-        description: 'GEO-Tracking von Anfang an statt erst im 249-$-Tarif, feste Limits statt verfallender Credits – inklusive der Punkte, in denen Writesonic besser ist.',
-        tag: 'Ab 29,99 €/Monat',
+        description: 'GEO-Tracking von Anfang an statt erst im 249-$-Tarif, feste Limits statt verfallender Credits - inklusive der Punkte, in denen Writesonic besser ist.',
+        tag: 'Ab 74,99 €/Monat',
     },
 ]
 
 export default function VergleichHubPage() {
     return (
-        <main className="bg-[var(--bg-base)] min-h-screen">
+        <main className="bg-(--bg-base) min-h-screen">
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
             <Navbar />
-            <div className="max-w-4xl mx-auto px-5 sm:px-8 pt-32 pb-24">
+            <div className="max-w-300 mx-auto px-4 sm:px-8 pt-28 md:pt-34 pb-24">
 
                 {/* Breadcrumb */}
-                <div className="flex items-center gap-2 text-xs text-[var(--text-faint)] mb-8">
-                    <Link href="/" className="hover:text-[var(--text-muted)] transition-colors">Scanora</Link>
+                <div className="flex items-center gap-2 text-xs text-(--text-faint) mb-8">
+                    <Link href="/" className="hover:text-(--text-muted) transition-colors">Scanora</Link>
                     <span>/</span>
-                    <span className="text-[var(--text-faint)]">Vergleich</span>
+                    <span className="text-(--text-faint)">Vergleich</span>
                 </div>
 
                 <div className="mb-12">
-                    <h1 className="text-3xl sm:text-5xl font-bold text-[var(--text-white)] tracking-tight mb-4">Alternativen</h1>
-                    <p className="text-[var(--text-muted)] text-lg max-w-2xl leading-relaxed">
-                        Ehrliche, faktenbasierte Vergleiche von Scanora zu bekannten AI-Visibility- und SEO-Tools – inklusive der Punkte, in denen der jeweilige Wettbewerber besser ist.
+                    <h1 className="text-[clamp(34px,4.4vw,54px)] leading-[1.05] tracking-[-0.038em] font-bold text-(--text-white) mb-5">Alternativen</h1>
+                    <p className="text-(--text-muted) text-lg max-w-2xl leading-relaxed">
+                        Ehrliche, faktenbasierte Vergleiche von Scanora zu bekannten AI-Visibility- und SEO-Tools - inklusive der Punkte, in denen der jeweilige Wettbewerber besser ist.
                         Suchst du stattdessen eine Lösung für ein konkretes Budget oder einen bestimmten Anwendungsfall, findest du die auf der{' '}
-                        <Link href="/loesungen" className="text-[var(--text-body)] hover:text-[var(--accent)] underline underline-offset-2">Lösungen-Seite</Link>.
+                        <Link href="/loesungen" className="text-(--text-body) hover:text-(--accent-ink) underline underline-offset-2">Lösungen-Seite</Link>.
                     </p>
                 </div>
 
@@ -78,18 +78,18 @@ export default function VergleichHubPage() {
                         <Link
                             key={alt.slug}
                             href={`/vergleich/${alt.slug}`}
-                            className="group block bg-[var(--surface-06)] hover:bg-[var(--surface-08)] border border-[var(--border-subtle)] hover:border-[var(--border-strong)] rounded-2xl p-6 sm:p-8 transition-all duration-200"
+                            className="group block bg-(--card) hover:bg-(--surface-08) border border-(--line) hover:border-(--border-strong) rounded-2xl p-6 sm:p-8 transition-all duration-200"
                         >
                             <div className="flex items-center gap-3 mb-3">
-                                <span className="text-[11px] font-semibold px-2.5 py-1 rounded-full uppercase tracking-wider bg-[var(--accent-soft)] text-[var(--accent)]">
+                                <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-(--accent-soft) text-(--accent-ink)">
                                     {alt.tag}
                                 </span>
                             </div>
-                            <h2 className="text-lg sm:text-xl font-bold text-[var(--text-white)] mb-2 group-hover:text-[var(--accent)] transition-colors leading-snug">
+                            <h2 className="text-lg sm:text-xl font-bold text-(--text-white) mb-2 group-hover:text-(--accent) transition-colors leading-snug">
                                 {alt.title}
                             </h2>
-                            <p className="text-sm text-[var(--text-muted)] leading-relaxed">{alt.description}</p>
-                            <div className="mt-4 text-xs text-[var(--accent)] font-medium">
+                            <p className="text-sm text-(--text-muted) leading-relaxed">{alt.description}</p>
+                            <div className="mt-4 text-xs text-(--accent-ink) font-medium">
                                 Vergleich lesen →
                             </div>
                         </Link>

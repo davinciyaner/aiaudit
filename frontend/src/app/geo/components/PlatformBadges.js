@@ -1,10 +1,10 @@
 import { Check, X, Lock } from 'lucide-react'
 
 export const PLATFORM_META = {
-    claude: { label: 'Claude', mono: 'C', solid: '#d97757', color: 'text-violet-400', bg: 'bg-violet-500/10', border: 'border-violet-500/20' },
-    chatgpt: { label: 'ChatGPT', mono: 'GPT', solid: '#74aa9c', color: 'text-green-400', bg: 'bg-green-500/10', border: 'border-green-500/20' },
-    perplexity: { label: 'Perplexity', mono: 'P', solid: '#20b8cd', color: 'text-teal-400', bg: 'bg-teal-500/10', border: 'border-teal-500/20' },
-    google_aio: { label: 'Google AI Overview', mono: 'G', solid: '#4285f4', color: 'text-blue-400', bg: 'bg-blue-500/10', border: 'border-blue-500/20' },
+    claude: { label: 'Claude', mono: 'C', solid: '#d97757', color: 'text-(--accent-ink)', bg: 'bg-(--accent-soft)', border: 'border-(--accent-border)' },
+    chatgpt: { label: 'ChatGPT', mono: 'GPT', solid: '#74aa9c', color: 'text-(--success)', bg: 'bg-(--success-soft)', border: 'border-(--success-border)' },
+    perplexity: { label: 'Perplexity', mono: 'P', solid: '#20b8cd', color: 'text-(--success)', bg: 'bg-(--success-soft)', border: 'border-(--success-border)' },
+    google_aio: { label: 'Google AI Overview', mono: 'G', solid: '#4285f4', color: 'text-(--accent-ink)', bg: 'bg-(--accent-soft)', border: 'border-(--accent-border)' },
 }
 
 export const ALL_PLATFORMS = ['claude', 'chatgpt', 'perplexity', 'google_aio']
@@ -13,8 +13,8 @@ export function PlatformIcon({ platform, size = 'md', locked = false }) {
     const meta = PLATFORM_META[platform]
     const dims = { sm: 'w-7 h-7 text-[10px]', md: 'w-9 h-9 text-xs', lg: 'w-12 h-12 text-sm' }[size]
     return (
-        <div className={`relative shrink-0 ${dims} rounded-full flex items-center justify-center font-bold ${locked ? 'text-[var(--text-white)]' : 'text-[#0f1117]'}`}
-            style={{ background: locked ? '#334155' : meta.solid }}
+        <div className={`relative shrink-0 ${dims} rounded-full flex items-center justify-center font-bold ${locked ? 'text-(--text-white)' : 'text-[#0f1117]'}`}
+            style={{ background: locked ? 'var(--border-strong)' : meta.solid }}
         >
             {locked ? <Lock className="w-1/2 h-1/2 opacity-70" /> : meta.mono}
         </div>
@@ -22,18 +22,18 @@ export function PlatformIcon({ platform, size = 'md', locked = false }) {
 }
 
 export function MentionBadge({ mentioned, labels = { yes: 'Ja', no: 'Nein' } }) {
-    if (mentioned == null) return <span className="text-xs text-[var(--text-faint)]">-</span>
+    if (mentioned == null) return <span className="text-xs text-(--text-faint)">-</span>
     return mentioned
-        ? <span className="inline-flex items-center gap-1 text-xs font-semibold text-[var(--accent)] bg-[var(--accent-soft)] border border-[var(--accent-border)] px-2 py-0.5 rounded-md"><Check className="w-3 h-3" />{labels.yes}</span>
-        : <span className="inline-flex items-center gap-1 text-xs font-semibold text-[var(--text-faint)] bg-[var(--surface-08)] border border-[var(--border-subtle)] px-2 py-0.5 rounded-md"><X className="w-3 h-3 opacity-50" />{labels.no}</span>
+        ? <span className="inline-flex items-center gap-1 text-xs font-semibold text-(--accent-ink) bg-(--accent-soft) border border-(--accent-border) px-2 py-0.5 rounded-md"><Check className="w-3 h-3" />{labels.yes}</span>
+        : <span className="inline-flex items-center gap-1 text-xs font-semibold text-(--text-faint) bg-(--surface-08) border border-(--border-subtle) px-2 py-0.5 rounded-md"><X className="w-3 h-3 opacity-50" />{labels.no}</span>
 }
 
 export function SentimentBadge({ sentiment, labels = { positive: 'Positiv', neutral: 'Neutral', negative: 'Negativ' } }) {
     if (!sentiment) return null
     const meta = {
-        positive: { label: labels.positive, color: 'text-emerald-400', bg: 'bg-emerald-500/10', border: 'border-emerald-500/20' },
-        neutral:  { label: labels.neutral,  color: 'text-[var(--text-muted)]',   bg: 'bg-[var(--surface-08)]', border: 'border-[var(--border-subtle)]' },
-        negative: { label: labels.negative, color: 'text-red-400',    bg: 'bg-red-500/10',   border: 'border-red-500/20' },
+        positive: { label: labels.positive, color: 'text-(--success)', bg: 'bg-(--success-soft)', border: 'border-(--success-border)' },
+        neutral:  { label: labels.neutral,  color: 'text-(--text-muted)',   bg: 'bg-(--surface-08)', border: 'border-(--border-subtle)' },
+        negative: { label: labels.negative, color: 'text-(--danger)',    bg: 'bg-(--danger-soft)',   border: 'border-(--danger-border)' },
     }[sentiment]
     if (!meta) return null
     return (

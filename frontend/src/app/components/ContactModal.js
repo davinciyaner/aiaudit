@@ -65,18 +65,18 @@ export default function ContactModal({ open, onClose, locale = 'de' }) {
                         transition={{ duration: 0.2 }}
                         className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none"
                     >
-                        <div className="w-full max-w-lg bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl shadow-card-hover pointer-events-auto">
-                            <div className="flex items-center justify-between px-4 sm:px-6 py-4 sm:py-5 border-b border-[var(--border-subtle)]">
+                        <div className="w-full max-w-lg bg-(--bg-surface) border border-(--border-subtle) rounded-2xl shadow-card-hover pointer-events-auto">
+                            <div className="flex items-center justify-between px-4 sm:px-6 py-4 sm:py-5 border-b border-(--border-subtle)">
                                 <div className="flex items-center gap-3">
-                                    <div className="w-8 h-8 rounded-lg bg-[var(--accent-soft)] border border-[var(--accent-border)] flex items-center justify-center">
-                                        <Send className="w-4 h-4 text-[var(--accent)]" />
+                                    <div className="w-8 h-8 rounded-lg bg-(--accent-soft) border border-(--accent-border) flex items-center justify-center">
+                                        <Send className="w-4 h-4 text-(--accent-ink)" />
                                     </div>
-                                    <span className="font-semibold text-[var(--text-white)]">{locale === 'en' ? 'Get in touch' : 'Kontakt aufnehmen'}</span>
+                                    <span className="font-semibold text-(--text-white)">{locale === 'en' ? 'Get in touch' : 'Kontakt aufnehmen'}</span>
                                 </div>
                                 <button
                                     onClick={handleClose}
                                     aria-label={locale === 'en' ? 'Close' : 'Schließen'}
-                                    className="p-3 -mr-2 text-[var(--text-faint)] hover:text-[var(--text-white)] transition-colors rounded-lg hover:bg-[var(--surface-06)]"
+                                    className="p-3 -mr-2 text-(--text-faint) hover:text-(--text-white) transition-colors rounded-lg hover:bg-(--surface-06)"
                                 >
                                     <X className="w-5 h-5" />
                                 </button>
@@ -85,16 +85,16 @@ export default function ContactModal({ open, onClose, locale = 'de' }) {
                             <div className="px-4 sm:px-6 py-5 sm:py-6">
                                 {sent ? (
                                     <div className="text-center py-4">
-                                        <div className="w-14 h-14 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mx-auto mb-4">
-                                            <CheckCircle className="w-7 h-7 text-emerald-400" />
+                                        <div className="w-14 h-14 rounded-2xl bg-(--success-soft) border border-(--success-border) flex items-center justify-center mx-auto mb-4">
+                                            <CheckCircle className="w-7 h-7 text-(--success)" />
                                         </div>
-                                        <h3 className="text-lg font-bold text-[var(--text-white)] mb-2">{locale === 'en' ? 'Message sent!' : 'Nachricht gesendet!'}</h3>
-                                        <p className="text-[var(--text-muted)] text-sm mb-6">
+                                        <h3 className="text-lg font-bold text-(--text-white) mb-2">{locale === 'en' ? 'Message sent!' : 'Nachricht gesendet!'}</h3>
+                                        <p className="text-(--text-muted) text-sm mb-6">
                                             {locale === 'en' ? 'We\'ll get back to you as soon as possible.' : 'Wir melden uns so schnell wie möglich bei dir.'}
                                         </p>
                                         <button
                                             onClick={handleClose}
-                                            className="px-5 py-2.5 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all"
+                                            className="px-5 py-2.5 bg-(--accent) hover:bg-(--accent-hover) text-(--on-accent) text-sm font-semibold rounded-[10px] transition-all"
                                         >
                                             {locale === 'en' ? 'Close' : 'Schließen'}
                                         </button>
@@ -106,26 +106,26 @@ export default function ContactModal({ open, onClose, locale = 'de' }) {
                                             <Field label={locale === 'en' ? 'Email' : 'E-Mail'} type="email" value={form.email} onChange={set('email')} placeholder={locale === 'en' ? 'jane@example.com' : 'max@beispiel.de'} required />
                                         </div>
                                         <div>
-                                            <label className="block text-xs font-medium text-[var(--text-muted)] mb-1.5">{locale === 'en' ? 'Message' : 'Nachricht'}</label>
+                                            <label className="block text-xs font-medium text-(--text-muted) mb-1.5">{locale === 'en' ? 'Message' : 'Nachricht'}</label>
                                             <textarea
                                                 value={form.message}
                                                 onChange={set('message')}
                                                 placeholder={locale === 'en' ? 'What can we help you with?' : 'Wobei können wir dir helfen?'}
                                                 rows={5}
                                                 required
-                                                className="w-full bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-xl px-4 py-3 text-sm text-[var(--text-white)] placeholder-[var(--text-faint)] outline-none focus:border-[var(--accent-border)] resize-none transition-colors"
+                                                className="w-full bg-(--card) border border-(--line) rounded-xl px-4 py-3 text-sm text-(--text-white) placeholder-(--text-faint) outline-none focus:border-(--accent) focus:shadow-[0_0_0_4px_var(--accent-ring)] resize-none transition-colors"
                                             />
                                         </div>
                                         {error && (
-                                            <p className="text-sm text-red-400 bg-red-500/10 border border-red-500/20 rounded-xl px-4 py-3">{error}</p>
+                                            <p className="text-sm text-(--danger) bg-(--danger-soft) border border-(--danger-border) rounded-xl px-4 py-3">{error}</p>
                                         )}
                                         <button
                                             type="submit"
                                             disabled={loading}
-                                            className="w-full flex items-center justify-center gap-2 py-3 bg-[var(--accent)] hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all"
+                                            className="w-full flex items-center justify-center gap-2 py-3 bg-(--accent) hover:bg-(--accent-hover) disabled:opacity-50 disabled:cursor-not-allowed text-(--on-accent) text-sm font-semibold rounded-[10px] transition-all"
                                         >
                                             {loading ? (
-                                                <><div className="w-4 h-4 border-2 border-[var(--bg-base)]/30 border-t-[var(--bg-base)] rounded-full animate-spin" />{locale === 'en' ? 'Sending...' : 'Wird gesendet...'}</>
+                                                <><div className="w-4 h-4 border-2 border-(--bg-base)/30 border-t-(--bg-base) rounded-full animate-spin" />{locale === 'en' ? 'Sending...' : 'Wird gesendet...'}</>
                                             ) : (
                                                 <>{locale === 'en' ? 'Send message' : 'Nachricht senden'}<ArrowRight className="w-4 h-4" /></>
                                             )}
@@ -144,14 +144,14 @@ export default function ContactModal({ open, onClose, locale = 'de' }) {
 function Field({ label, type = 'text', value, onChange, placeholder, required }) {
     return (
         <div>
-            <label className="block text-xs font-medium text-[var(--text-muted)] mb-1.5">{label}</label>
+            <label className="block text-xs font-medium text-(--text-muted) mb-1.5">{label}</label>
             <input
                 type={type}
                 value={value}
                 onChange={onChange}
                 placeholder={placeholder}
                 required={required}
-                className="w-full bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-xl px-4 py-2.5 text-sm text-[var(--text-white)] placeholder-[var(--text-faint)] outline-none focus:border-[var(--accent-border)] transition-colors"
+                className="w-full bg-(--card) border border-(--line) rounded-xl px-4 py-2.5 text-sm text-(--text-white) placeholder-(--text-faint) outline-none focus:border-(--accent) focus:shadow-[0_0_0_4px_var(--accent-ring)] transition-colors"
             />
         </div>
     )

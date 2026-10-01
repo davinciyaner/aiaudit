@@ -1,5 +1,5 @@
 export const metadata = {
-    title: 'AI Visibility & SEO Check Pricing – Starts Free',
+    title: 'AI Visibility & SEO Check Pricing - Starts Free',
     description: 'Try Scanora for free or upgrade to Pro/Agency. Free: 1 audit/month. Pro: €29/month with 10 audits. Agency: €99/month, unlimited audits. Cancel anytime.',
     alternates: {
         canonical: 'https://www.scanora.ai/en/pricing',
@@ -10,11 +10,11 @@ export const metadata = {
         },
     },
     openGraph: {
-        title: 'AI Visibility & SEO Check Pricing – Starts Free | Scanora',
+        title: 'AI Visibility & SEO Check Pricing - Starts Free | Scanora',
         description: 'Try Scanora for free or upgrade to Pro/Agency. Free: 1 audit/month. Pro: €29/month with 10 audits. Agency: €99/month, unlimited audits. Cancel anytime.',
         url: 'https://www.scanora.ai/en/pricing',
         locale: 'en_US',
-        images: ['https://www.scanora.ai/opengraph-image'],
+        images: ['https://www.scanora.ai/en/opengraph-image'],
     },
 }
 

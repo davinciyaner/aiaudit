@@ -1,7 +1,7 @@
 'use client'
 import { Toaster } from 'react-hot-toast'
 
-// Single Toaster mounted once in the root layout — react-hot-toast renders every
+// Single Toaster mounted once in the root layout - react-hot-toast renders every
 // toast()/toast.success()/toast.error() call from anywhere in the app through this
 // one instance, so styling it here (via theme tokens) covers every page in both
 // light and dark mode instead of the ~30 near-duplicate <Toaster> blocks this replaced.

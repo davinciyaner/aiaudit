@@ -3,14 +3,15 @@ import { useState } from 'react'
 import Link from 'next/link'
 import SupportModal from './SupportModal'
 import ContactModal from './ContactModal'
-import { t } from '../../lib/i18n/dictionaries'
+import { t } from '@/lib/i18n/dictionaries'
 
 const COLUMNS_DE = [
     {
         heading: 'Produkt',
         links: [
-            { label: 'Features', href: '#features' },
-            { label: 'Pricing', href: '#pricing' },
+            { label: 'Funktionen', href: '/#funktionen' },
+            { label: 'Preise', href: '/pricing' },
+            { label: 'Beispiel-Report', href: '/beispiel-report' },
             { label: 'Dashboard', href: '/dashboard' },
             { label: 'Über Scanora', href: '/about' },
         ],
@@ -57,8 +58,9 @@ const COLUMNS_EN = [
     {
         heading: 'Product',
         links: [
-            { label: 'Features', href: '#features' },
-            { label: 'Pricing', href: '#pricing' },
+            { label: 'Features', href: '/en#features' },
+            { label: 'Pricing', href: '/en/pricing' },
+            { label: 'Example report', href: '/en/example-report' },
             { label: 'Dashboard', href: '/en/dashboard' },
             { label: 'About', href: '/en/about' },
         ],
@@ -108,8 +110,8 @@ export default function Footer({ locale = 'de' }) {
 
     return (
         <>
-            <footer className="border-t border-[var(--border-subtle)] bg-[var(--bg-base)]">
-                <div className="max-w-7xl mx-auto px-5 sm:px-8 py-14">
+            <footer className="border-t border-(--line) bg-(--bg-base)">
+                <div className="max-w-300 mx-auto px-4 sm:px-8 pt-16 pb-10">
 
                     {/* Top: Brand + Columns */}
                     <div className="grid grid-cols-2 gap-10 sm:grid-cols-3 lg:grid-cols-6">
@@ -117,17 +119,17 @@ export default function Footer({ locale = 'de' }) {
                         {/* Brand */}
                         <div className="col-span-2 sm:col-span-3 lg:col-span-1">
                             <Link href={locale === 'en' ? '/en' : '/'} className="inline-flex items-center gap-2.5 mb-3">
-                                <div className="w-7 h-7 rounded-lg bg-[var(--accent)] flex items-center justify-center">
-                                    <svg className="w-3.5 h-3.5 text-[var(--bg-base)]" viewBox="0 0 192 192" fill="none">
+                                <div className="w-7 h-7 rounded-lg bg-(--text-white) flex items-center justify-center">
+                                    <svg className="w-3.5 h-3.5 text-(--bg-base)" viewBox="0 0 192 192" fill="none">
                                         <circle cx="96" cy="96" r="50" stroke="currentColor" strokeWidth="14" />
                                         <circle cx="110" cy="82" r="13" fill="currentColor" />
                                     </svg>
                                 </div>
-                                <span className="font-bold text-[var(--text-white)]">
+                                <span className="font-bold text-(--text-white)">
                                     Scanora
                                 </span>
                             </Link>
-                            <p className="text-xs text-[var(--text-muted)] leading-relaxed max-w-[180px]">
+                            <p className="text-sm text-(--text-body) leading-relaxed max-w-[34ch]">
                                 {t(locale, 'footer.tagline')}
                             </p>
                         </div>
@@ -135,15 +137,15 @@ export default function Footer({ locale = 'de' }) {
                         {/* Link columns */}
                         {COLUMNS.map((col) => (
                             <div key={col.heading}>
-                                <p className="text-[11px] font-semibold uppercase tracking-widest text-[var(--text-faint)] mb-4">
+                                <p className="text-sm font-semibold text-(--text-white) mb-3">
                                     {col.heading}
                                 </p>
-                                <ul className="space-y-3">
+                                <ul className="space-y-2">
                                     {col.links.map((link) => (
                                         <li key={link.label}>
                                             <Link
                                                 href={link.href}
-                                                className="text-xs text-[var(--text-muted)] hover:text-[var(--text-body)] transition-colors"
+                                                className="text-sm text-(--text-body) hover:text-(--accent-ink) transition-colors"
                                             >
                                                 {link.label}
                                             </Link>
@@ -155,18 +157,18 @@ export default function Footer({ locale = 'de' }) {
                     </div>
 
                     {/* Bottom: Divider + Copyright + Support */}
-                    <div className="mt-12 pt-6 border-t border-[var(--border-subtle)] flex flex-col sm:flex-row items-center justify-between gap-3">
-                        <p className="text-xs text-[var(--text-faint)]">{t(locale, 'footer.copyright')}</p>
+                    <div className="mt-12 pt-6 border-t border-(--line-soft) flex flex-col sm:flex-row items-center justify-between gap-3">
+                        <p className="text-sm text-(--text-muted)">{t(locale, 'footer.copyright')}</p>
                         <div className="flex items-center gap-4">
                             <button
                                 onClick={() => setContactOpen(true)}
-                                className="text-xs text-[var(--text-muted)] hover:text-[var(--text-body)] transition-colors py-2 -my-2"
+                                className="text-sm text-(--text-muted) hover:text-(--text-white) transition-colors py-2 -my-2"
                             >
                                 {t(locale, 'footer.contact')}
                             </button>
                             <button
                                 onClick={() => setSupportOpen(true)}
-                                className="text-xs text-[var(--text-muted)] hover:text-[var(--text-body)] transition-colors py-2 -my-2"
+                                className="text-sm text-(--text-muted) hover:text-(--text-white) transition-colors py-2 -my-2"
                             >
                                 {t(locale, 'footer.support')}
                             </button>

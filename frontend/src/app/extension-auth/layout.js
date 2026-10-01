@@ -1,5 +1,5 @@
 export const metadata = {
-    title: 'Erweiterung verbinden – Scanora',
+    title: 'Erweiterung verbinden',
     description: 'Verbinde die Scanora-Browser-Erweiterung mit deinem Konto.',
     robots: { index: false, follow: false },
 }

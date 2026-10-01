@@ -1,5 +1,5 @@
 export const metadata = {
-    title: 'SEO Dashboard – Scanora',
+    title: 'SEO Dashboard',
     description: 'Deine SEO-Automatisierung im Überblick: Rankings, Keyword-Ideen und Konkurrenzanalyse je Website.',
     robots: { index: false, follow: true },
 }

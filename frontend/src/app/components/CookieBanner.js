@@ -15,7 +15,7 @@ function loadClarity() {
 }
 
 // Pushed directly onto dataLayer (not via window.gtag) so this works even if
-// gtag.js hasn't finished loading yet — same mechanism the gtag() stub uses internally.
+// gtag.js hasn't finished loading yet - same mechanism the gtag() stub uses internally.
 function updateConsent(granted) {
     window.dataLayer = window.dataLayer || []
     window.dataLayer.push(['consent', 'update', {
@@ -27,7 +27,7 @@ function updateConsent(granted) {
 }
 
 // Locale wird clientseitig aus dem Pfad gelesen statt als Prop von einem serverseitigen
-// headers()-Aufruf im Layout — der würde die ganze Seite zur Laufzeit dynamisch rendern
+// headers()-Aufruf im Layout - der würde die ganze Seite zur Laufzeit dynamisch rendern
 // lassen statt sie statisch zu bauen (siehe Kommentar in app/layout.js).
 export default function CookieBanner() {
     const pathname = usePathname()
@@ -72,34 +72,34 @@ export default function CookieBanner() {
                     role="dialog"
                     aria-label={locale === 'en' ? 'Cookie consent' : 'Cookie-Einwilligung'}
                 >
-                    <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl p-5 shadow-card-hover">
-                        <p className="text-xs text-[var(--text-faint)] uppercase tracking-wider font-semibold mb-2">{locale === 'en' ? 'Cookie settings' : 'Cookie-Einstellungen'}</p>
+                    <div className="bg-(--bg-surface) border border-(--border-subtle) rounded-2xl p-5 shadow-card-hover">
+                        <p className="text-xs text-(--text-faint) font-semibold mb-2">{locale === 'en' ? 'Cookie settings' : 'Cookie-Einstellungen'}</p>
                         {locale === 'en' ? (
                             <>
-                                <p className="text-sm text-[var(--text-body)] leading-relaxed">
-                                    We use <strong className="text-[var(--text-body)]">analytics and marketing cookies</strong> from{' '}
-                                    <strong className="text-[var(--text-body)]">Microsoft Clarity</strong> (heatmaps & session recordings),{' '}
-                                    <strong className="text-[var(--text-body)]">Google Ads</strong> (conversion tracking), and our own{' '}
-                                    <strong className="text-[var(--text-body)]">AI-referral lead tracking</strong> (recognizing visits from ChatGPT, Claude, Perplexity, or Gemini). Technically necessary data (login session) is stored regardless of your choice.
+                                <p className="text-sm text-(--text-body) leading-relaxed">
+                                    We use <strong className="text-(--text-body)">analytics and marketing cookies</strong> from{' '}
+                                    <strong className="text-(--text-body)">Microsoft Clarity</strong> (heatmaps & session recordings),{' '}
+                                    <strong className="text-(--text-body)">Google Ads</strong> (conversion tracking), and our own{' '}
+                                    <strong className="text-(--text-body)">AI-referral lead tracking</strong> (recognizing visits from ChatGPT, Claude, Perplexity, or Gemini). Technically necessary data (login session) is stored regardless of your choice.
                                 </p>
-                                <p className="text-xs text-[var(--text-faint)] mt-2">
-                                    You can decline — the website works fully without these cookies.{' '}
-                                    <Link href="/datenschutz" className="text-[var(--text-body)] hover:text-[var(--accent)] underline underline-offset-2 transition-colors">
+                                <p className="text-xs text-(--text-faint) mt-2">
+                                    You can decline - the website works fully without these cookies.{' '}
+                                    <Link href="/datenschutz" className="text-(--text-body) hover:text-(--accent-ink) underline underline-offset-2 transition-colors">
                                         Privacy Policy
                                     </Link>
                                 </p>
                             </>
                         ) : (
                             <>
-                                <p className="text-sm text-[var(--text-body)] leading-relaxed">
-                                    Wir verwenden <strong className="text-[var(--text-body)]">Analyse- und Marketing-Cookies</strong> von{' '}
-                                    <strong className="text-[var(--text-body)]">Microsoft Clarity</strong> (Heatmaps & Sitzungsaufzeichnungen),{' '}
-                                    <strong className="text-[var(--text-body)]">Google Ads</strong> (Conversion-Tracking) sowie unser eigenes{' '}
-                                    <strong className="text-[var(--text-body)]">KI-Referral-Lead-Tracking</strong> (Erkennung von Besuchen über ChatGPT, Claude, Perplexity oder Gemini). Technisch notwendige Daten (Login-Session) werden unabhängig von deiner Wahl gespeichert.
+                                <p className="text-sm text-(--text-body) leading-relaxed">
+                                    Wir verwenden <strong className="text-(--text-body)">Analyse- und Marketing-Cookies</strong> von{' '}
+                                    <strong className="text-(--text-body)">Microsoft Clarity</strong> (Heatmaps & Sitzungsaufzeichnungen),{' '}
+                                    <strong className="text-(--text-body)">Google Ads</strong> (Conversion-Tracking) sowie unser eigenes{' '}
+                                    <strong className="text-(--text-body)">KI-Referral-Lead-Tracking</strong> (Erkennung von Besuchen über ChatGPT, Claude, Perplexity oder Gemini). Technisch notwendige Daten (Login-Session) werden unabhängig von deiner Wahl gespeichert.
                                 </p>
-                                <p className="text-xs text-[var(--text-faint)] mt-2">
-                                    Du kannst ablehnen — die Website funktioniert vollständig ohne diese Cookies.{' '}
-                                    <Link href="/datenschutz" className="text-[var(--text-body)] hover:text-[var(--accent)] underline underline-offset-2 transition-colors">
+                                <p className="text-xs text-(--text-faint) mt-2">
+                                    Du kannst ablehnen - die Website funktioniert vollständig ohne diese Cookies.{' '}
+                                    <Link href="/datenschutz" className="text-(--text-body) hover:text-(--accent-ink) underline underline-offset-2 transition-colors">
                                         Datenschutzerklärung
                                     </Link>
                                 </p>
@@ -108,13 +108,13 @@ export default function CookieBanner() {
                         <div className="flex gap-3 mt-4">
                             <button
                                 onClick={accept}
-                                className="flex-1 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold py-2.5 rounded-xl transition-all"
+                                className="flex-1 bg-(--accent) hover:bg-(--accent-hover) text-(--on-accent) text-sm font-semibold py-2.5 rounded-[10px] transition-all"
                             >
                                 {locale === 'en' ? 'Accept' : 'Akzeptieren'}
                             </button>
                             <button
                                 onClick={decline}
-                                className="flex-1 bg-[var(--surface-06)] hover:bg-[var(--surface-10)] text-[var(--text-body)] text-sm font-semibold py-2.5 rounded-xl border border-[var(--border-subtle)] transition-all"
+                                className="flex-1 bg-(--card) hover:bg-(--surface-10) text-(--text-body) text-sm font-semibold py-2.5 rounded-xl border border-(--line) transition-all"
                             >
                                 {locale === 'en' ? 'Decline' : 'Ablehnen'}
                             </button>

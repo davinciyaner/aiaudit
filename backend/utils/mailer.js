@@ -1034,14 +1034,14 @@ export async function sendFreeNurtureStep3({ email, name, language = 'de', unsub
         to: email,
         subject: isEn ? 'Ready for ongoing SEO & GEO tracking?' : 'Bereit für laufendes SEO- & GEO-Tracking?',
         text: isEn
-            ? `Hi ${name},\n\nif you want to keep watching your Google rankings and AI visibility instead of manually re-checking, SEO and GEO tracking start at €19 and €4.99 per month:\n${pricingUrl}\n\nUnsubscribe at any time: ${unsubscribeUrl}\n\nYour Scanora Team`
-            : `Hallo ${name},\n\nfalls du deine Google-Rankings und KI-Sichtbarkeit laufend im Blick behalten willst statt manuell nachzuprüfen: SEO- und GEO-Tracking starten ab 19€ bzw. 4,99€ pro Monat:\n${pricingUrl}\n\nJederzeit abmelden: ${unsubscribeUrl}\n\nDein Scanora Team`,
+            ? `Hi ${name},\n\nif you want to keep watching your Google rankings and AI visibility instead of manually re-checking, SEO and GEO tracking start at €29.99 and €4.99 per month:\n${pricingUrl}\n\nUnsubscribe at any time: ${unsubscribeUrl}\n\nYour Scanora Team`
+            : `Hallo ${name},\n\nfalls du deine Google-Rankings und KI-Sichtbarkeit laufend im Blick behalten willst statt manuell nachzuprüfen: SEO- und GEO-Tracking starten ab 29,99€ bzw. 4,99€ pro Monat:\n${pricingUrl}\n\nJederzeit abmelden: ${unsubscribeUrl}\n\nDein Scanora Team`,
         html: nurtureHtml({
             isEn,
             headline: isEn ? 'Ready for ongoing tracking?' : 'Bereit für laufendes Tracking?',
             body: isEn
-                ? 'SEO tracking starts at €19/month, GEO tracking at €4.99/month - or combine both. No manual re-checking, automated weekly updates and alerts when something changes.'
-                : 'SEO-Tracking startet ab 19€/Monat, GEO-Tracking ab 4,99€/Monat - oder beides kombiniert. Kein manuelles Nachprüfen mehr, automatisierte wöchentliche Updates und Alerts bei Veränderungen.',
+                ? 'SEO tracking starts at €29.99/month, GEO tracking at €4.99/month - or combine both. No manual re-checking, automated weekly updates and alerts when something changes.'
+                : 'SEO-Tracking startet ab 29,99€/Monat, GEO-Tracking ab 4,99€/Monat - oder beides kombiniert. Kein manuelles Nachprüfen mehr, automatisierte wöchentliche Updates und Alerts bei Veränderungen.',
             ctaLabel: isEn ? 'See all plans' : 'Alle Pläne ansehen',
             ctaUrl: pricingUrl,
             unsubscribeUrl,

@@ -1,13 +1,14 @@
 import { ImageResponse } from 'next/og'
 import { blogOgImage } from '../ogImageTemplate'
+import { ogFonts } from '../ogImageTemplate'
 
 export const alt = 'Manuelles SEO-Tracking vs. automatisiert: Was lohnt sich wirklich?'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
-export default function Image() {
+export default async function Image() {
     return new ImageResponse(
         blogOgImage('Manuelles SEO-Tracking vs. automatisiert: Was lohnt sich wirklich?', 'SEO-Tracking'),
-        { ...size },
+        { ...size, fonts: await ogFonts() },
     )
 }

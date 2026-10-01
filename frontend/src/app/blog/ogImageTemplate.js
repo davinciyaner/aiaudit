@@ -1,10 +1,55 @@
-// Echte Marken-Farben aus globals.css (--bg-base, --accent, --text-white, --text-muted),
-// von OKLCH nach Hex konvertiert — next/og (Satori) unterstuetzt kein oklch().
-const BG_BASE = '#030712'
-const ACCENT = '#19a5e8'
-const TEXT_WHITE = '#f3f5f9'
-const TEXT_MUTED = '#8b939f'
+// Brand colors from globals.css (light theme), converted from OKLCH to hex because
+// next/og (Satori) does not support oklch().
+export const OG = {
+    paper: '#f8fafc',  // --bg-base
+    tint: '#ebf1fc',   // --tint
+    line: '#dadee6',   // --line
+    ink: '#101828',    // --text-white (strongest ink)
+    body: '#384050',   // --text-body
+    muted: '#545b69',  // --text-muted
+    accent: '#1554cf', // --accent
+    accentInk: '#0643b5',
+}
 
+// Geist (the site font) for OG images. Satori only ships a regular-weight default font,
+// so headlines would not render bold without this. Falls back to the default font if the
+// download fails, so a build never breaks on it.
+async function loadFont(weight) {
+    try {
+        const css = await (await fetch(`https://fonts.googleapis.com/css2?family=Geist:wght@${weight}`)).text()
+        const src = css.match(/src: url\((.+?)\) format\('(?:opentype|truetype)'\)/)?.[1]
+        if (!src) return null
+        return { name: 'Geist', data: await (await fetch(src)).arrayBuffer(), weight, style: 'normal' }
+    } catch {
+        return null
+    }
+}
+
+export async function ogFonts() {
+    return (await Promise.all([loadFont(500), loadFont(700)])).filter(Boolean)
+}
+
+// Satori spaces words unevenly in wrapped text; laying words out as flex items with a
+// fixed gap keeps the spacing even.
+export function words(text, gap = '0.26em') {
+    return text.split(' ').map((w, i) => <span key={i} style={{ marginRight: gap }}>{w}</span>)
+}
+
+export function OgLogo() {
+    return (
+        <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+            <div style={{ width: 48, height: 48, borderRadius: 12, background: OG.ink, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <svg width="30" height="30" viewBox="0 0 192 192" fill="none">
+                    <circle cx="96" cy="96" r="50" stroke={OG.paper} strokeWidth="14" />
+                    <circle cx="110" cy="82" r="13" fill={OG.paper} />
+                </svg>
+            </div>
+            <span style={{ fontSize: 30, fontWeight: 700, color: OG.ink, letterSpacing: '-0.5px' }}>Scanora</span>
+        </div>
+    )
+}
+
+// Shared Open Graph image for articles, comparisons and solution pages.
 export function blogOgImage(title, tag) {
     return (
         <div
@@ -14,87 +59,38 @@ export function blogOgImage(title, tag) {
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'space-between',
-                background: BG_BASE,
+                background: OG.paper,
                 padding: '64px 80px',
-                fontFamily: 'system-ui, -apple-system, sans-serif',
-                position: 'relative',
-                overflow: 'hidden',
+                fontFamily: 'Geist, system-ui, sans-serif',
+                borderBottom: `14px solid ${OG.accent}`,
             }}
         >
-            {/* Einzelner Accent-Glow oben mittig — wie im echten Hero, kein Zwei-Farben-Verlauf */}
-            <div
-                style={{
-                    position: 'absolute',
-                    top: -160,
-                    left: '50%',
-                    width: 900,
-                    height: 500,
-                    borderRadius: '50%',
-                    background: 'radial-gradient(ellipse, rgba(25,165,232,0.18) 0%, transparent 70%)',
-                    transform: 'translateX(-50%)',
-                }}
-            />
+            <OgLogo />
 
-            {/* Logo — identisch zum echten Navbar-Icon (Kreis + versetzter Punkt) auf Accent-Flaeche */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-                <div
-                    style={{
-                        width: 48,
-                        height: 48,
-                        borderRadius: 14,
-                        background: ACCENT,
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                    }}
-                >
-                    <svg width="24" height="24" viewBox="0 0 192 192" fill="none">
-                        <circle cx="96" cy="96" r="50" stroke={BG_BASE} strokeWidth="14" />
-                        <circle cx="110" cy="82" r="13" fill={BG_BASE} />
-                    </svg>
-                </div>
-                <span style={{ fontSize: 30, fontWeight: 700, color: TEXT_WHITE, letterSpacing: '-0.5px' }}>
-                    Scanora
-                </span>
-            </div>
-
-            {/* Headline */}
             <div
                 style={{
                     display: 'flex',
+                    flexWrap: 'wrap',
                     flex: 1,
                     alignItems: 'center',
-                    fontSize: 50,
-                    fontWeight: 800,
-                    color: TEXT_WHITE,
-                    lineHeight: 1.15,
-                    letterSpacing: '-1px',
+                    alignContent: 'center',
+                    fontSize: 54,
+                    fontWeight: 700,
+                    color: OG.ink,
+                    lineHeight: 1.1,
                     maxWidth: 1040,
                 }}
             >
-                {title}
+                {words(title)}
             </div>
 
-            {/* Footer row */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
                 {tag && (
-                    <div
-                        style={{
-                            padding: '10px 22px',
-                            borderRadius: 24,
-                            background: 'rgba(25,165,232,0.12)',
-                            border: '1px solid rgba(25,165,232,0.3)',
-                            color: ACCENT,
-                            fontSize: 20,
-                            fontWeight: 600,
-                        }}
-                    >
+                    <div style={{ padding: '10px 20px', borderRadius: 999, background: OG.tint, color: OG.accentInk, fontSize: 20, fontWeight: 600 }}>
                         {tag}
                     </div>
                 )}
-                <div style={{ fontSize: 20, color: TEXT_MUTED, fontWeight: 400 }}>
-                    scanora.ai/blog
-                </div>
+                <div style={{ fontSize: 20, color: OG.muted, fontWeight: 500 }}>scanora.ai</div>
             </div>
         </div>
     )

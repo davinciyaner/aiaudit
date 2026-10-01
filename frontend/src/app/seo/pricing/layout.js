@@ -1,11 +1,18 @@
 export const metadata = {
-    title: 'SEO Automatisierung Preise – Rankings wöchentlich automatisch tracken',
-    description: 'SEO Automatisierung ab 19€/Monat: Google-Rankings wöchentlich automatisch tracken, Keyword-Ideen, Konkurrenz- & Backlink-Analyse. 14 Tage kostenlos testen.',
+    title: 'SEO Automatisierung Preise - Rankings wöchentlich automatisch tracken',
+    description: 'SEO Automatisierung ab 29,99€/Monat: Google-Rankings wöchentlich automatisch tracken, Keyword-Ideen, Konkurrenz- & Backlink-Analyse. 14 Tage kostenlos testen.',
     keywords: 'seo automatisierung preise, seo tracking tool, google rankings automatisch tracken, keyword tracking tool, ranking monitoring, seo automatisierung kosten',
-    alternates: { canonical: 'https://www.scanora.ai/seo/pricing' },
+    alternates: {
+        canonical: 'https://www.scanora.ai/seo/pricing',
+        languages: {
+            'de-DE': 'https://www.scanora.ai/seo/pricing',
+            'en-US': 'https://www.scanora.ai/en/seo/pricing',
+            'x-default': 'https://www.scanora.ai/seo/pricing',
+        },
+    },
     openGraph: {
         title: 'SEO Automatisierung Preise | Scanora',
-        description: 'Google-Rankings wöchentlich automatisch tracken statt manuell zu prüfen. Pläne ab 19€/Monat, 14 Tage kostenlos.',
+        description: 'Google-Rankings wöchentlich automatisch tracken statt manuell zu prüfen. Pläne ab 29,99€/Monat, 14 Tage kostenlos.',
         url: 'https://www.scanora.ai/seo/pricing',
         type: 'website',
         locale: 'de_DE',
@@ -22,7 +29,7 @@ const faqJsonLd = {
             name: 'Was kostet SEO Automatisierung?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'SEO Automatisierung bei Scanora startet ab 19 €/Monat für 3 Websites und 50 Keywords mit wöchentlichem Ranking-Update. Der Pro-Plan (59 €/Monat) erweitert auf 10 Websites und 200 Keywords inkl. Content-Gap-Analyse, der Expert-Plan (149 €/Monat) deckt bis zu 20 Websites und 500 Keywords ab. Alle Pläne bieten 14 Tage kostenlose Testphase.',
+                text: 'SEO Automatisierung bei Scanora startet ab 29,99 €/Monat für 3 Websites und 50 Keywords mit wöchentlichem Ranking-Update. Der Pro-Plan (89,99 €/Monat) erweitert auf 10 Websites und 200 Keywords inkl. Content-Gap-Analyse, der Expert-Plan (179,99 €/Monat) deckt bis zu 20 Websites und 500 Keywords ab. Alle Pläne bieten 14 Tage kostenlose Testphase.',
             },
         },
         {
@@ -54,9 +61,9 @@ const seoJsonLd = {
     operatingSystem: 'Web',
     description: 'Wöchentliches Google-Ranking-Tracking, Keyword-Ideen, Konkurrenzanalyse und Backlink-Übersicht.',
     offers: [
-        { '@type': 'Offer', name: 'Einsteiger', price: '19', priceCurrency: 'EUR', description: '3 Websites, 50 Keywords, wöchentliches Ranking-Update' },
-        { '@type': 'Offer', name: 'Pro', price: '59', priceCurrency: 'EUR', description: '10 Websites, 200 Keywords, Content-Gap-Analyse' },
-        { '@type': 'Offer', name: 'Expert', price: '149', priceCurrency: 'EUR', description: '20 Websites, 500 Keywords, priorisierter Support' },
+        { '@type': 'Offer', name: 'Einsteiger', price: '29.99', priceCurrency: 'EUR', description: '3 Websites, 50 Keywords, wöchentliches Ranking-Update' },
+        { '@type': 'Offer', name: 'Pro', price: '89.99', priceCurrency: 'EUR', description: '10 Websites, 200 Keywords, Content-Gap-Analyse' },
+        { '@type': 'Offer', name: 'Expert', price: '179.99', priceCurrency: 'EUR', description: '20 Websites, 500 Keywords, priorisierter Support' },
     ],
 }
 

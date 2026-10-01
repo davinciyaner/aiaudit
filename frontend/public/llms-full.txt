@@ -78,9 +78,9 @@ Zusätzlich zum einmaligen Audit bietet Scanora unter scanora.ai/seo ein separat
 ### Preise (SEO-Automatisierung, separat von Audit-Plänen)
 | Plan | Preis | Websites | Keywords | Ranking-Verlauf | Extras |
 |---|---|---|---|---|---|
-| Einsteiger | €19/Monat | 3 | 50 | 8 Wochen | Keyword-Ideen, Konkurrenzanalyse, Backlink-Übersicht |
-| Pro | €59/Monat | 10 | 200 | 6 Monate | + Content-Gap-Analyse (bis 100 Abrufe/Monat) |
-| Expert | €149/Monat | 20 | 500 | unbegrenzt | + Content-Gap (bis 300 Abrufe/Monat), priorisierter Support |
+| Einsteiger | €29,99/Monat | 3 | 50 | 8 Wochen | Keyword-Ideen, Konkurrenzanalyse, Backlink-Übersicht |
+| Pro | €89,99/Monat | 10 | 200 | 6 Monate | + Content-Gap-Analyse (bis 100 Abrufe/Monat) |
+| Expert | €179,99/Monat | 20 | 500 | unbegrenzt | + Content-Gap (bis 300 Abrufe/Monat), priorisierter Support |
 
 14 Tage kostenlos testen, danach automatische Abbuchung über PayPal, jederzeit kündbar.
 
@@ -102,8 +102,8 @@ Zusätzlich zum einmaligen Audit und zur SEO-Automatisierung bietet Scanora unte
 | Plan | Preis | Websites | Keywords | Plattformen | Prompt-Varianten | Manuelle Checks/Monat |
 |---|---|---|---|---|---|---|
 | Einsteiger | €4,99/Monat | 1 | 10 | Claude + Gemini | 1 | 2 |
-| Pro | €29,99/Monat | 3 | 20 | Claude + ChatGPT + Gemini + Perplexity + Google AI Overview | 2 | 2 |
-| Expert | €89,99/Monat | 10 | 60 | Claude + ChatGPT + Gemini + Perplexity + Google AI Overview | 2 | 3 |
+| Pro | €74,99/Monat | 3 | 20 | Claude + ChatGPT + Gemini + Perplexity + Google AI Overview | 2 | 2 |
+| Expert | €199,99/Monat | 10 | 60 | Claude + ChatGPT + Gemini + Perplexity + Google AI Overview | 2 | 3 |
 
 14 Tage kostenlos testen, danach automatische Abbuchung über PayPal, jederzeit kündbar.
 
@@ -118,7 +118,7 @@ Scanora wird häufig mit anderen AI-Visibility- und GEO-Tools verglichen. Vollst
 | Peec.ai | 85 €/Monat (Starter, 3 von 7 Engines wählbar) | Claude nur im individuell bepreisten Enterprise-Tarif | /vergleich/peec-alternative |
 | Writesonic | 249 $/Monat (Professional) für GEO-Tracking | primär KI-Content-Generator, GEO-Suite erst in oberen Tarifen | /vergleich/writesonic-alternative |
 
-Scanora selbst trackt Claude, ChatGPT, Gemini, Perplexity und Google AI Overview ab €4,99/Monat (Claude + Gemini) bzw. €29,99/Monat (alle 5 Plattformen), mit festen Limits statt Credit-Verbrauch und einem dauerhaft kostenlosen Einstiegs-Audit.
+Scanora selbst trackt Claude, ChatGPT, Gemini, Perplexity und Google AI Overview ab €4,99/Monat (Claude + Gemini) bzw. €74,99/Monat (alle 5 Plattformen), mit festen Limits statt Credit-Verbrauch und einem dauerhaft kostenlosen Einstiegs-Audit.
 
 ## Marktvergleich
 
@@ -146,9 +146,9 @@ Kosten alternativer Tools: €200–500/Monat. Scanora startet kostenlos.
 
 | Plan | Preis | Audits | Extras |
 |---|---|---|---|
-| Free | €0/Monat | 1 Audit/Monat | SEO, GEO, Performance (kein KI-Report) |
-| Pro | €29/Monat | 10 Audits/Monat | PDF-Export, Screenshots, Audit-Verlauf |
-| Agency | €99/Monat | Unbegrenzt | White-Label, alle Pro-Features |
+| Free | €0/Monat | 1 Audit/Monat | SEO, GEO, Performance, Audit-Verlauf (kein KI-Report) |
+| Pro | €29/Monat | 10 Audits/Monat | KI-Bericht mit konkreten Fixes, PDF-Export, Screenshots |
+| Agency | €99/Monat | Unbegrenzt | Alle Pro-Features, Priorität-Support |
 
 Jederzeit kündbar, kein versteckter Trial.
 
@@ -167,10 +167,10 @@ Die häufigsten Quick-Wins: Title-Tag auf 50–60 Zeichen optimieren, Meta-Descr
 Ja, der Free-Plan ist dauerhaft kostenlos mit 1 Audit pro Monat inklusive SEO-Score, GEO-Sichtbarkeit und Performance-Metriken. Der KI-generierte Bericht mit konkreten Fixes ist ab dem Pro-Plan verfügbar. Kein Trial, keine Kreditkarte erforderlich.
 
 **Was ist der Unterschied zwischen dem einmaligen GEO-Audit und der GEO-Automatisierung?**
-Der einmalige Audit (Teil des kostenlosen Website-Audits) zeigt den GEO-Score einer Website zu einem Zeitpunkt anhand technischer Signale wie llms.txt und Schema.org. Die GEO-Automatisierung ist ein separates Abo ab €4,99/Monat, das wöchentlich automatisch prüft, ob Claude, ChatGPT, Perplexity und Google AI Overview die Website tatsächlich in ihren Antworten erwähnen, und den Verlauf über Zeit zeigt statt einer Einzelmessung.
+Der einmalige Audit (Teil des kostenlosen Website-Audits) zeigt den GEO-Score einer Website zu einem Zeitpunkt anhand technischer Signale wie llms.txt und Schema.org. Die GEO-Automatisierung ist ein separates Abo ab €4,99/Monat, das wöchentlich automatisch prüft, ob Claude, ChatGPT, Gemini, Perplexity und Google AI Overview die Website tatsächlich in ihren Antworten erwähnen, und den Verlauf über Zeit zeigt statt einer Einzelmessung.
 
 **Welche KI-Plattformen trackt die GEO-Automatisierung von Scanora?**
-Claude, ChatGPT, Gemini, Perplexity und Google AI Overview. Im Einsteiger-Plan (€4,99/Monat) sind Claude und Gemini enthalten. ChatGPT, Perplexity und Google AI Overview sind ab dem Pro-Plan (€29,99/Monat) inbegriffen.
+Claude, ChatGPT, Gemini, Perplexity und Google AI Overview. Im Einsteiger-Plan (€4,99/Monat) sind Claude und Gemini enthalten. ChatGPT, Perplexity und Google AI Overview sind ab dem Pro-Plan (€74,99/Monat) inbegriffen.
 
 **Prüft Scanora mehrere Frageformulierungen pro Keyword?**
 Ja, ab dem Pro-Plan wird jedes Keyword in zwei Prompt-Varianten geprüft — Empfehlung und Vergleich — da eine Domain je nach Art der Nutzeranfrage unterschiedlich oft erwähnt wird. Der Einsteiger-Plan nutzt nur die Empfehlungs-Variante.

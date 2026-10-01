@@ -1,5 +1,5 @@
 export const metadata = {
-    title: 'GEO Automatisierung Preise – KI-Sichtbarkeit bei ChatGPT, Claude, Gemini, Perplexity & Google AI Overview tracken',
+    title: 'GEO Automatisierung Preise: KI-Sichtbarkeit tracken',
     description: 'GEO Automatisierung ab 4,99€/Monat: Wöchentlich prüfen, ob ChatGPT, Claude, Gemini, Perplexity und Google AI Overview deine Website erwähnen. 14 Tage testen.',
     keywords: 'geo audit preis, geo audit kosten, geo audit, geo automatisierung preise, ki sichtbarkeit tracken, chatgpt sichtbarkeit tool, claude sichtbarkeit tool, gemini sichtbarkeit tool, perplexity sichtbarkeit tool, google ai overview tracken, generative engine optimization tool, geo tracking kosten',
     alternates: {
@@ -28,7 +28,7 @@ const faqJsonLd = {
             name: 'Was kostet ein GEO-Audit?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'Ein einmaliger GEO-Audit ist bei Scanora kostenlos (Teil des Website-Audits im Free-Plan, 1x pro Monat) bzw. ab 29 €/Monat im Pro-Plan mit KI-generiertem Fix-Report. Das laufende, wöchentliche Monitoring - die GEO-Automatisierung - ist ein separates Abo und startet ab 4,99 €/Monat für 1 Website und 10 Keywords mit Claude- und Gemini-Tracking. Der Pro-Plan (29,99 €/Monat) ergänzt ChatGPT-, Perplexity- und Google-AI-Overview-Tracking für 3 Websites und 20 Keywords, 2 Prompt-Varianten pro Keyword sowie eine Themen-Sichtbarkeits-Analyse, der Expert-Plan (89,99 €/Monat) deckt bis zu 10 Websites und 60 Keywords ab und ergänzt Historien-Trends pro Keyword. Alle Automatisierungs-Pläne bieten 14 Tage kostenlose Testphase.',
+                text: 'Ein einmaliger GEO-Audit ist bei Scanora kostenlos (Teil des Website-Audits im Free-Plan, 1x pro Monat) bzw. ab 29 €/Monat im Pro-Plan mit KI-generiertem Fix-Report. Das laufende, wöchentliche Monitoring - die GEO-Automatisierung - ist ein separates Abo und startet ab 4,99 €/Monat für 1 Website und 10 Keywords mit Claude- und Gemini-Tracking. Der Pro-Plan (74,99 €/Monat) ergänzt ChatGPT-, Perplexity- und Google-AI-Overview-Tracking für 3 Websites und 20 Keywords, 2 Prompt-Varianten pro Keyword sowie eine Themen-Sichtbarkeits-Analyse, der Expert-Plan (199,99 €/Monat) deckt bis zu 10 Websites und 60 Keywords ab und ergänzt Historien-Trends pro Keyword. Alle Automatisierungs-Pläne bieten 14 Tage kostenlose Testphase.',
             },
         },
         {
@@ -36,7 +36,7 @@ const faqJsonLd = {
             name: 'Kann ich meine Sichtbarkeit bei Claude (Claude AI) tracken?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'Ja. Schon der Einsteiger-Plan ab 4,99 €/Monat trackt wöchentlich automatisch, ob und wie oft Claude und Google Gemini deine Website bei relevanten Anfragen als Quelle nennen — inklusive Mention-Verlauf über Zeit. Für zusätzliches Tracking bei ChatGPT, Perplexity und Google AI Overview im selben Dashboard brauchst du den Pro-Plan ab 29,99 €/Monat.',
+                text: 'Ja. Schon der Einsteiger-Plan ab 4,99 €/Monat trackt wöchentlich automatisch, ob und wie oft Claude und Google Gemini deine Website bei relevanten Anfragen als Quelle nennen - inklusive Mention-Verlauf über Zeit. Für zusätzliches Tracking bei ChatGPT, Perplexity und Google AI Overview im selben Dashboard brauchst du den Pro-Plan ab 74,99 €/Monat.',
             },
         },
         {
@@ -52,7 +52,7 @@ const faqJsonLd = {
             name: 'Was sind Prompt-Varianten und wozu brauche ich mehrere?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'Reale Nutzer fragen KI-Systeme auf sehr unterschiedliche Art — mal empfehlungsorientiert, mal vergleichend. Ab dem Pro-Plan prüft Scanora pro Keyword beide Varianten separat, damit sichtbar wird, bei welcher Art von Anfrage eine Domain erwähnt wird und bei welcher nicht.',
+                text: 'Reale Nutzer fragen KI-Systeme auf sehr unterschiedliche Art - mal empfehlungsorientiert, mal vergleichend. Ab dem Pro-Plan prüft Scanora pro Keyword beide Varianten separat, damit sichtbar wird, bei welcher Art von Anfrage eine Domain erwähnt wird und bei welcher nicht.',
             },
         },
         {
@@ -60,7 +60,7 @@ const faqJsonLd = {
             name: 'Was zeigt mir die Themen-Sichtbarkeits-Analyse und Historien-Trends?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'Die Themen-Sichtbarkeits-Analyse (ab Pro) zeigt, welche Domains in KI-Antworten zu den getrackten Keywords am häufigsten zitiert werden — über alle Kontexte hinweg, nicht nur Tool-Empfehlungen (dafür gibt es den separaten Wettbewerber-Tab). Historien-Trends (Expert) zeigen pro Keyword, wie stark das Thema insgesamt monatlich in Google-AI-Overview-Antworten vorkommt — ein Trend fürs Themenvolumen, kein domainspezifisches Zitations-Tracking.',
+                text: 'Die Themen-Sichtbarkeits-Analyse (ab Pro) zeigt, welche Domains in KI-Antworten zu den getrackten Keywords am häufigsten zitiert werden - über alle Kontexte hinweg, nicht nur Tool-Empfehlungen (dafür gibt es den separaten Wettbewerber-Tab). Historien-Trends (Expert) zeigen pro Keyword, wie stark das Thema insgesamt monatlich in Google-AI-Overview-Antworten vorkommt - ein Trend fürs Themenvolumen, kein domainspezifisches Zitations-Tracking.',
             },
         },
         {
@@ -85,8 +85,8 @@ const geoJsonLd = {
     description: 'Wöchentliches Tracking, ob ChatGPT, Claude, Gemini, Perplexity und Google AI Overview deine Domain bei relevanten Anfragen als Quelle nennen.',
     offers: [
         { '@type': 'Offer', name: 'Einsteiger', price: '4.99', priceCurrency: 'EUR', description: '1 Website, 10 Keywords, Claude- & Gemini-Tracking' },
-        { '@type': 'Offer', name: 'Pro', price: '29.99', priceCurrency: 'EUR', description: '3 Websites, 20 Keywords, Claude + ChatGPT + Gemini + Perplexity + Google AI Overview Tracking, 2 Prompt-Varianten pro Keyword, Themen-Sichtbarkeits-Analyse' },
-        { '@type': 'Offer', name: 'Expert', price: '89.99', priceCurrency: 'EUR', description: '10 Websites, 60 Keywords, alle Plattformen, 2 Prompt-Varianten pro Keyword, Themen-Sichtbarkeits-Analyse, Historien-Trends pro Keyword (Google AI Overview)' },
+        { '@type': 'Offer', name: 'Pro', price: '74.99', priceCurrency: 'EUR', description: '3 Websites, 20 Keywords, Claude + ChatGPT + Gemini + Perplexity + Google AI Overview Tracking, 2 Prompt-Varianten pro Keyword, Themen-Sichtbarkeits-Analyse' },
+        { '@type': 'Offer', name: 'Expert', price: '199.99', priceCurrency: 'EUR', description: '10 Websites, 60 Keywords, alle Plattformen, 2 Prompt-Varianten pro Keyword, Themen-Sichtbarkeits-Analyse, Historien-Trends pro Keyword (Google AI Overview)' },
     ],
 }
 

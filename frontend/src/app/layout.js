@@ -5,7 +5,11 @@ import { MotionConfig } from 'framer-motion'
 import Script from 'next/script'
 import CookieBanner from './components/CookieBanner'
 import AppToaster from './components/AppToaster'
-import { getRootJsonLd } from '../lib/i18n/rootJsonLd'
+import { getRootJsonLd } from '@/lib/i18n/rootJsonLd'
+import { Geist, Geist_Mono } from 'next/font/google'
+
+const geistSans = Geist({ subsets: ['latin'], variable: '--font-geist-sans', display: 'swap' })
+const geistMono = Geist_Mono({ subsets: ['latin'], variable: '--font-geist-mono', display: 'swap' })
 
 export const metadata = {
     metadataBase: new URL('https://www.scanora.ai'),
@@ -13,7 +17,7 @@ export const metadata = {
         default: 'SEO Automatisierung & KI-Sichtbarkeit | Scanora',
         template: '%s | Scanora',
     },
-    description: 'Kostenloser SEO-Test in unter 60 Sekunden: SEO-Automatisierung, KI-Sichtbarkeit und Core Web Vitals prüfen. KI-Report mit konkreten Fixes ab Pro.',
+    description: 'SEO- und GEO-Tool aus Deutschland: Sieh, ob ChatGPT, Claude, Gemini, Perplexity und Google AI Overview deine Website empfehlen. Gratis-Check in 60 s.',
     keywords: 'seo automatisierung, ki sichtbarkeit, seo test, seo test kostenlos, seo check, kostenloser seo check, website seo check, seo analyse kostenlos, website audit, core web vitals test, performance test, GEO, llms.txt, website checker kostenlos',
     authors: [{ name: 'Scanora' }],
     creator: 'Scanora',
@@ -28,14 +32,14 @@ export const metadata = {
         locale: 'de_DE',
         url: 'https://www.scanora.ai',
         siteName: 'Scanora',
-        title: 'Scanora – KI-gestützter Website Audit',
-        description: 'SEO, Performance & KI-Sichtbarkeit — ein vollständiger Audit in unter 60 Sekunden.',
+        title: 'Scanora: AI Visibility & SEO Tracking',
+        description: 'Sieh, ob ChatGPT & Co. deine Website empfehlen. Kostenloser Check in 60 Sekunden, Tracking ab 4,99 €/Monat.',
         images: ['https://www.scanora.ai/opengraph-image'],
     },
     twitter: {
         card: 'summary_large_image',
-        title: 'Scanora – KI-gestützter Website Audit',
-        description: 'SEO, Performance & GEO in 60 Sekunden. Kostenlos starten.',
+        title: 'Scanora: AI Visibility & SEO Tracking',
+        description: 'Sieh, ob ChatGPT & Co. deine Website empfehlen. Kostenloser Check in 60 Sekunden.',
         creator: '@scanoraai',
     },
     alternates: {
@@ -48,30 +52,37 @@ export const metadata = {
     },
 }
 
-// Bewusst KEIN headers()/cookies() hier — das würde jede abhängige Route zur Laufzeit dynamisch
+// Bewusst KEIN headers()/cookies() hier - das würde jede abhängige Route zur Laufzeit dynamisch
 // rendern lassen (kein Prerendering, kein CDN-Cache) statt sie einmal statisch zu bauen. lang="de"
 // ist der Default für alle Routen außer /en/*; die englischen Routen überschreiben lang clientseitig
 // via SetHtmlLang in app/en/layout.js und liefern ihr eigenes JSON-LD dort.
 const jsonLd = getRootJsonLd('de')
 
+export const viewport = {
+    themeColor: [
+        { media: '(prefers-color-scheme: light)', color: '#f8fafc' },
+        { media: '(prefers-color-scheme: dark)', color: '#0b1120' },
+    ],
+}
+
 export default function RootLayout({ children }) {
     return (
-        <html lang="de" className="dark" data-scroll-behavior="smooth" suppressHydrationWarning>
+        <html lang="de" className={`${geistSans.variable} ${geistMono.variable}`} data-scroll-behavior="smooth" suppressHydrationWarning>
         <head>
         <script
             type="application/ld+json"
             dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        {/* Blocking (not next/script) so it runs before first paint — avoids a flash of the
-            wrong theme. Defaults to dark (matches the server-rendered class) when nothing is
-            stored yet or localStorage is unavailable (e.g. private browsing). */}
+        {/* Blocking (not next/script) so it runs before first paint, which avoids a flash of
+            the wrong theme. Light is the default (matches the server-rendered markup); dark
+            only applies when the visitor chose it via ThemeToggle. */}
         <script
             dangerouslySetInnerHTML={{
-                __html: `try{if(localStorage.getItem('scanora-theme')==='light')document.documentElement.classList.add('light')}catch(e){}`,
+                __html: `try{if(localStorage.getItem('scanora-theme')==='dark')document.documentElement.classList.add('dark')}catch(e){}`,
             }}
         />
         </head>
-        <body className="bg-[var(--bg-base)] text-[var(--text-white)] antialiased">
+        <body className="bg-(--bg-base) text-(--text-white) antialiased">
         <MotionConfig reducedMotion="user">
             {children}
         </MotionConfig>

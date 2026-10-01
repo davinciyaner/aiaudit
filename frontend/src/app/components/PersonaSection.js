@@ -6,13 +6,13 @@ const PERSONAS = [
     {
         icon: Layers,
         title: 'In-House-SEOs & Content-Teams',
-        pain: 'Rankings, Content-Kalender und jetzt auch noch KI-Sichtbarkeit — in drei getrennten Tools.',
+        pain: 'Rankings, Content-Kalender und jetzt auch noch KI-Sichtbarkeit - in drei getrennten Tools.',
         solves: 'Scanora bündelt SEO- und GEO-Monitoring in einem Dashboard.',
     },
     {
         icon: Radar,
         title: 'SaaS-Wachstumsteams',
-        pain: 'Du weißt, wie du bei Google rankst — aber tauchst du auch in ChatGPT-Antworten auf?',
+        pain: 'Du weißt, wie du bei Google rankst - aber tauchst du auch in ChatGPT-Antworten auf?',
         solves: 'Scanora zeigt beides nebeneinander, nicht getrennt.',
     },
     {
@@ -25,11 +25,11 @@ const PERSONAS = [
 
 export default function PersonaSection() {
     return (
-        <section className="relative py-16 sm:py-24 bg-[var(--bg-base)] overflow-hidden">
+        <section className="relative py-16 sm:py-24 bg-(--bg-base) overflow-hidden">
             <div className="relative max-w-6xl mx-auto px-5 sm:px-8">
                 <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
                     className="text-center mb-10 sm:mb-14">
-                    <span className="inline-block text-xs font-semibold text-[var(--accent)] uppercase tracking-wide mb-3">
+                    <span className="inline-block text-xs font-semibold text-(--accent-ink) mb-3">
                         Für wen ist Scanora?
                     </span>
                     <h2 className="text-3xl sm:text-5xl font-bold tracking-tight mb-4 leading-tight text-balance">
@@ -41,13 +41,13 @@ export default function PersonaSection() {
                     {PERSONAS.map((p, i) => (
                         <motion.div key={p.title}
                             initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}
-                            className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl p-6 shadow-card hover-lift hover:shadow-card-hover hover:-translate-y-2 transition-all duration-200">
-                            <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 bg-[var(--accent-soft)] border border-[var(--accent-border)] mb-4">
-                                <p.icon className="w-5 h-5 text-[var(--accent)]" strokeWidth={1.8} />
+                            className="bg-(--card) border border-(--line) rounded-2xl p-6 shadow-card hover-lift hover:shadow-card-hover transition-all duration-200">
+                            <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 bg-(--accent-soft) border border-(--accent-border) mb-4">
+                                <p.icon className="w-5 h-5 text-(--accent-ink)" strokeWidth={1.8} />
                             </div>
-                            <h3 className="text-sm font-bold text-[var(--text-white)] mb-2">{p.title}</h3>
-                            <p className="text-xs text-[var(--text-faint)] leading-relaxed mb-2">{p.pain}</p>
-                            <p className="text-xs text-[var(--text-body)] font-medium leading-relaxed">{p.solves}</p>
+                            <h3 className="text-sm font-bold text-(--text-white) mb-2">{p.title}</h3>
+                            <p className="text-xs text-(--text-faint) leading-relaxed mb-2">{p.pain}</p>
+                            <p className="text-xs text-(--text-body) font-medium leading-relaxed">{p.solves}</p>
                         </motion.div>
                     ))}
                 </div>

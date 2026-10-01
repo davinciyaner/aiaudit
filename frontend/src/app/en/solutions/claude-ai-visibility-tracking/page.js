@@ -4,7 +4,7 @@ import Footer from '../../../components/Footer'
 
 export const metadata = {
     title: { absolute: 'Claude AI Visibility Tracking 2026: See Whether Claude Recommends You' },
-    description: "How Claude AI really decides who it cites: training vs. web search, crawler control & citation rules - plus concrete strategies. Track your Claude visibility with Scanora now.",
+    description: "How Claude AI decides who it cites: training vs. web search, crawler control and citation rules. Track your Claude visibility with Scanora.",
     keywords: 'claude ai visibility, claude visibility tracking, claude ai tracking tool, track claude mentions, generative engine optimization claude',
     alternates: {
         canonical: 'https://www.scanora.ai/en/solutions/claude-ai-visibility-tracking',
@@ -30,7 +30,7 @@ const jsonLd = {
     description: "Claude tracking is an expensive Enterprise add-on - or unavailable - on most AI-visibility tools. Scanora includes it from €4.99/month.",
     image: 'https://www.scanora.ai/en/solutions/claude-ai-visibility-tracking/opengraph-image',
     datePublished: '2026-08-29T09:00:00+02:00',
-    dateModified: '2026-09-26T09:00:00+02:00',
+    dateModified: '2026-10-01T09:00:00+02:00',
     author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.scanora.ai/about' },
     publisher: {
         '@type': 'Organization',
@@ -114,7 +114,7 @@ const faqLd = {
             name: 'How often is my visibility on Claude checked?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'Automatically once a week, plus 2 to 20 manual checks per month depending on the plan. Each check runs two prompt variants (recommendation-oriented and comparative), so you can see which type of query mentions you.',
+                text: 'Automatically once a week, plus 2 to 3 manual checks per month depending on the plan. From the Pro plan, each check runs two prompt variants (recommendation-oriented and comparative), so you can see which type of query mentions you.',
             },
         },
         {
@@ -122,7 +122,7 @@ const faqLd = {
             name: 'Can I combine Claude tracking with other AI platforms?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'Yes. The Starter plan (€4.99/month) covers Claude and Gemini, and the Pro plan (€29.99/month) adds ChatGPT, Perplexity, and Google AI Overview in the same dashboard - no separate booking per platform.',
+                text: 'Yes. The Starter plan (€4.99/month) covers Claude and Gemini, and the Pro plan (€74.99/month) adds ChatGPT, Perplexity, and Google AI Overview in the same dashboard - no separate booking per platform.',
             },
         },
         {
@@ -130,7 +130,7 @@ const faqLd = {
             name: 'Does Scanora also track Perplexity visibility?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: "Yes. Perplexity is one of four platforms - alongside Claude, ChatGPT, and Google AI Overview - that Scanora checks automatically every week on the Pro plan (€29.99/month), in the same dashboard and with the same two prompt variants per keyword as Claude. So you can see directly whether Perplexity names you for a query even though Claude doesn't (yet), or vice versa.",
+                text: "Yes. Perplexity is one of five platforms - alongside Claude, ChatGPT, Gemini, and Google AI Overview - that Scanora checks automatically every week on the Pro plan (€74.99/month), in the same dashboard and with the same two prompt variants per keyword as Claude. So you can see directly whether Perplexity names you for a query even though Claude doesn't (yet), or vice versa.",
             },
         },
         {
@@ -212,46 +212,46 @@ const TRACKING_STEPS = [
 
 export default function ClaudeAiVisibilityPageEn() {
     return (
-        <main className="bg-[var(--bg-base)] min-h-screen">
+        <main className="bg-(--bg-base) min-h-screen">
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToLd) }} />
             <Navbar locale="en" />
 
-            <article className="max-w-3xl mx-auto px-5 sm:px-8 pt-32 pb-24">
+            <article className="max-w-190 mx-auto px-4 sm:px-8 pt-28 md:pt-34 pb-18 md:pb-28">
 
                 {/* Breadcrumb */}
-                <div className="flex items-center gap-2 text-xs text-[var(--text-faint)] mb-8">
-                    <Link href="/en" className="hover:text-[var(--text-muted)] transition-colors">Scanora</Link>
+                <div className="flex flex-wrap items-center gap-2 text-sm text-(--text-muted) mb-8">
+                    <Link href="/en" className="hover:text-(--accent-ink) transition-colors">Scanora</Link>
                     <span>/</span>
-                    <Link href="/en/solutions" className="hover:text-[var(--text-muted)] transition-colors">Solutions</Link>
+                    <Link href="/en/solutions" className="hover:text-(--accent-ink) transition-colors">Solutions</Link>
                     <span>/</span>
-                    <span className="text-[var(--text-faint)]">Claude AI Visibility Tracking</span>
+                    <span className="text-(--text-faint)">Claude AI Visibility Tracking</span>
                 </div>
 
                 {/* Header */}
                 <div className="mb-10">
                     <div className="flex items-center gap-3 mb-4 flex-wrap">
-                        <span className="text-[11px] font-semibold px-2.5 py-1 rounded-full uppercase tracking-wider bg-[var(--accent-soft)] text-[var(--accent)]">
+                        <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-(--accent-soft) text-(--accent-ink)">
                             Solution
                         </span>
-                        <span className="text-xs text-[var(--text-faint)]">August 29, 2026</span>
-                        <span className="text-xs text-[var(--text-faint)]">· Updated: September 26, 2026</span>
-                        <span className="text-xs text-[var(--text-faint)]">· 12 min read</span>
+                        <span className="text-xs text-(--text-faint)">August 29, 2026</span>
+                        <span className="text-xs text-(--text-faint)">· Updated: October 1, 2026</span>
+                        <span className="text-xs text-(--text-faint)">· 12 min read</span>
                     </div>
-                    <h1 className="text-3xl sm:text-5xl font-bold text-[var(--text-white)] leading-tight tracking-tight mb-5">
+                    <h1 className="text-[clamp(34px,4.4vw,52px)] font-bold text-(--text-white) leading-[1.06] tracking-[-0.035em] mb-5">
                         Claude AI Visibility Tracking 2026: See Whether Claude Recommends You
                     </h1>
-                    <p className="text-lg text-[var(--text-muted)] leading-relaxed">
-                        <strong className="text-[var(--text-white)]">Claude visibility</strong> means: how often, and in what context, does Anthropic's Claude name your brand when users ask about topics in your industry? It's measured through the mention rate over time and through citations with source context, rather than a one-off spot check. Scanora tracks this automatically once a week - from €4.99/month, including Gemini on the Starter plan; the Pro plan adds ChatGPT, Perplexity, and Google AI Overview in the same dashboard.
+                    <p className="text-lg text-(--text-body) leading-relaxed">
+                        <strong className="text-(--text-white)">Claude visibility</strong> means: how often, and in what context, does Anthropic's Claude name your brand when users ask about topics in your industry? It's measured through the mention rate over time and through citations with source context, rather than a one-off spot check. Scanora tracks this automatically once a week - from €4.99/month, including Gemini on the Starter plan; the Pro plan adds ChatGPT, Perplexity, and Google AI Overview in the same dashboard.
                     </p>
-                    <p className="mt-4 text-[var(--text-body)] leading-relaxed">
+                    <p className="mt-4 text-(--text-body) leading-relaxed">
                         Claude has become a real answer source in its own right - partly because Claude Code is the first stop for many developers and teams evaluating new tools. If you're only tracking ChatGPT, you're seeing at best half the picture. The problem: on most AI-visibility tools, Claude tracking is either an expensive Enterprise add-on or not bookable at all. Here's the market landscape, how the tracking works technically, and what you actually do with it.
                     </p>
-                    <div className="mt-5 flex items-center gap-2 text-xs text-[var(--text-faint)]">
-                        <Link href="/about" className="flex items-center gap-2 hover:text-[var(--text-body)] transition-colors">
-                            <div className="w-6 h-6 rounded-full bg-[var(--accent)] flex items-center justify-center text-[var(--bg-base)] text-[10px] font-bold">F</div>
+                    <div className="mt-5 flex items-center gap-2 text-xs text-(--text-faint)">
+                        <Link href="/about" className="flex items-center gap-2 hover:text-(--text-body) transition-colors">
+                            <div className="w-6 h-6 rounded-full bg-(--accent) flex items-center justify-center text-(--on-accent) text-[10px] font-bold">F</div>
                             <span>Finn Paustian</span>
                         </Link>
                         <span>·</span>
@@ -259,54 +259,54 @@ export default function ClaudeAiVisibilityPageEn() {
                     </div>
                 </div>
 
-                <div className="border-t border-[var(--border-subtle)] mb-10" />
+                <div className="border-t border-(--border-subtle) mb-10" />
 
-                <div className="space-y-10 text-[var(--text-body)] leading-relaxed">
+                <div className="space-y-10 text-(--text-body) leading-relaxed">
 
                     <section>
-                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">How does Claude actually work?</h2>
+                        <h2 className="text-[28px] leading-tight tracking-[-0.03em] font-bold text-(--text-white) mb-4">How does Claude actually work?</h2>
                         <p>
                             Before you optimize for it, it helps to understand that "visibility in Claude" can mean two very different things.
                         </p>
                         <p className="mt-4">
-                            <strong className="text-[var(--text-white)]">Path 1: Claude answers from the training corpus.</strong> Without web search, Claude only knows what was publicly prominent enough by its training cutoff to make it into the training data - collected via its own crawler called ClaudeBot. If someone asks about your product directly and Claude doesn't search, it answers purely from that frozen knowledge state. New or weakly-linked products simply don't show up here, regardless of how good your current website is.
+                            <strong className="text-(--text-white)">Path 1: Claude answers from the training corpus.</strong> Without web search, Claude only knows what was publicly prominent enough by its training cutoff to make it into the training data - collected via its own crawler called ClaudeBot. If someone asks about your product directly and Claude doesn't search, it answers purely from that frozen knowledge state. New or weakly-linked products simply don't show up here, regardless of how good your current website is.
                         </p>
                         <p className="mt-4">
-                            <strong className="text-[var(--text-white)]">Path 2: Claude uses web search.</strong> According to Anthropic's own documentation, Claude decides case by case whether to search the web: for stable knowledge (established facts, math, coding concepts) it answers directly. For anything current, changing, or tied to a specific company, person, or product, it actively searches. A question like "which tool tracks my visibility in Claude?" almost always falls into the second category - exactly the moment where a well-built website has a real shot.
+                            <strong className="text-(--text-white)">Path 2: Claude uses web search.</strong> According to Anthropic's own documentation, Claude decides case by case whether to search the web: for stable knowledge (established facts, math, coding concepts) it answers directly. For anything current, changing, or tied to a specific company, person, or product, it actively searches. A question like "which tool tracks my visibility in Claude?" almost always falls into the second category - exactly the moment where a well-built website has a real shot.
                         </p>
                         <p className="mt-4">
-                            Technically, it works like this: Claude formulates a search query, gets back results with URL, title, and page age, and cites a precise excerpt of <strong className="text-[var(--text-white)]">up to 150 characters</strong> per source - not a summary of the whole page, but one exactly-located sentence or clause. It's not the page as a whole that "wins" - it's the one sentence that can be cleanly extracted.
+                            Technically, it works like this: Claude formulates a search query, gets back results with URL, title, and page age, and cites a precise excerpt of <strong className="text-(--text-white)">up to 150 characters</strong> per source - not a summary of the whole page, but one exactly-located sentence or clause. It's not the page as a whole that "wins" - it's the one sentence that can be cleanly extracted.
                         </p>
-                        <p className="mt-5 font-semibold text-[var(--text-white)] text-sm">Access isn't a given</p>
+                        <p className="mt-5 font-semibold text-(--text-white) text-sm">Access isn't a given</p>
                         <p className="mt-2">
                             According to Anthropic's own support documentation, Anthropic runs three separate crawlers with distinct jobs:
                         </p>
                         <div className="space-y-2 mt-4">
                             {CLAUDE_CRAWLERS.map((c) => (
-                                <div key={c.name} className="flex gap-3 bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-xl p-4">
-                                    <span className="text-[var(--accent)] font-mono font-semibold text-sm shrink-0">{c.name}</span>
-                                    <span className="text-sm text-[var(--text-muted)]">{c.role}</span>
+                                <div key={c.name} className="flex gap-3 bg-(--card) border border-(--line) rounded-xl p-4">
+                                    <span className="text-(--accent-ink) font-mono font-semibold text-sm shrink-0">{c.name}</span>
+                                    <span className="text-sm text-(--text-muted)">{c.role}</span>
                                 </div>
                             ))}
                         </div>
                         <p className="mt-4">
                             In practice, that means a page can be blocked from training and still get cited in live web-search answers - or the reverse. If your robots.txt blanket-blocks "all bots," you disappear from both channels at once, without necessarily noticing.
                         </p>
-                        <p className="mt-5 font-semibold text-[var(--text-white)] text-sm">A common misconception</p>
+                        <p className="mt-5 font-semibold text-(--text-white) text-sm">A common misconception</p>
                         <p className="mt-2">
                             Many guides claim that "Constitutional AI" decides which sources Claude trusts. That doesn't hold up against Anthropic's own publication on the Constitution. Its principles - drawn in part from the UN Declaration of Human Rights, Apple's Terms of Service, and DeepMind's Sparrow rules - are about harm avoidance, discrimination, and ethical behavior, not criteria for source selection. Which source ends up in an answer is decided by the web search mechanism (search result relevance, any domain filters, page freshness) - not the Constitution. In other words: you're not optimizing for "trustworthiness" in an ethical sense, but for technical findability and citable facts.
                         </p>
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">What factors influence whether Claude cites you?</h2>
+                        <h2 className="text-[28px] leading-tight tracking-[-0.03em] font-bold text-(--text-white) mb-4">What factors influence whether Claude cites you?</h2>
                         <div className="space-y-3">
                             {VISIBILITY_FACTORS.map((f) => (
-                                <div key={f.num} className="flex gap-4 bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl p-5">
-                                    <span className="text-[var(--accent)] font-mono font-bold text-sm shrink-0">{f.num}</span>
+                                <div key={f.num} className="flex gap-4 bg-(--card) border border-(--line) rounded-2xl p-5">
+                                    <span className="text-(--accent-ink) font-mono font-bold text-sm shrink-0">{f.num}</span>
                                     <div>
-                                        <h3 className="font-semibold text-[var(--text-white)] mb-1 text-sm">{f.title}</h3>
-                                        <p className="text-sm text-[var(--text-muted)] leading-relaxed">{f.text}</p>
+                                        <h3 className="font-semibold text-(--text-white) mb-1 text-sm">{f.title}</h3>
+                                        <p className="text-sm text-(--text-muted) leading-relaxed">{f.text}</p>
                                     </div>
                                 </div>
                             ))}
@@ -314,14 +314,14 @@ export default function ClaudeAiVisibilityPageEn() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">How to improve your visibility in Claude</h2>
+                        <h2 className="text-[28px] leading-tight tracking-[-0.03em] font-bold text-(--text-white) mb-4">How to improve your visibility in Claude</h2>
                         <div className="space-y-3">
                             {VISIBILITY_STRATEGIES.map((s) => (
-                                <div key={s.num} className="flex gap-4 bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl p-5">
-                                    <span className="text-[var(--accent)] font-mono font-bold text-sm shrink-0">{s.num}</span>
+                                <div key={s.num} className="flex gap-4 bg-(--card) border border-(--line) rounded-2xl p-5">
+                                    <span className="text-(--accent-ink) font-mono font-bold text-sm shrink-0">{s.num}</span>
                                     <div>
-                                        <h3 className="font-semibold text-[var(--text-white)] mb-1 text-sm">{s.title}</h3>
-                                        <p className="text-sm text-[var(--text-muted)] leading-relaxed">{s.text}</p>
+                                        <h3 className="font-semibold text-(--text-white) mb-1 text-sm">{s.title}</h3>
+                                        <p className="text-sm text-(--text-muted) leading-relaxed">{s.text}</p>
                                     </div>
                                 </div>
                             ))}
@@ -329,15 +329,15 @@ export default function ClaudeAiVisibilityPageEn() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">How Claude visibility tracking works</h2>
+                        <h2 className="text-[28px] leading-tight tracking-[-0.03em] font-bold text-(--text-white) mb-4">How Claude visibility tracking works</h2>
                         <p>Four steps, automated instead of manual:</p>
                         <div className="space-y-3 mt-5">
                             {TRACKING_STEPS.map((s) => (
-                                <div key={s.num} className="flex gap-4 bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl p-5">
-                                    <span className="text-[var(--accent)] font-mono font-bold text-sm shrink-0">{s.num}</span>
+                                <div key={s.num} className="flex gap-4 bg-(--card) border border-(--line) rounded-2xl p-5">
+                                    <span className="text-(--accent-ink) font-mono font-bold text-sm shrink-0">{s.num}</span>
                                     <div>
-                                        <h3 className="font-semibold text-[var(--text-white)] mb-1 text-sm">{s.title}</h3>
-                                        <p className="text-sm text-[var(--text-muted)] leading-relaxed">{s.text}</p>
+                                        <h3 className="font-semibold text-(--text-white) mb-1 text-sm">{s.title}</h3>
+                                        <p className="text-sm text-(--text-muted) leading-relaxed">{s.text}</p>
                                     </div>
                                 </div>
                             ))}
@@ -345,9 +345,9 @@ export default function ClaudeAiVisibilityPageEn() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">What Scanora actually gives you</h2>
+                        <h2 className="text-[28px] leading-tight tracking-[-0.03em] font-bold text-(--text-white) mb-4">What Scanora actually gives you</h2>
                         <p>
-                            From the Starter plan (€4.99/month, 1 website, 10 keywords), Scanora automatically checks every week whether Claude and Gemini mention your website - including a mention history over time. The Pro plan (€29.99/month) adds ChatGPT, Perplexity, and Google AI Overview in the same dashboard, plus two prompt variants per keyword instead of one.
+                            From the Starter plan (€4.99/month, 1 website, 10 keywords), Scanora automatically checks every week whether Claude and Gemini mention your website - including a mention history over time. The Pro plan (€74.99/month) adds ChatGPT, Perplexity, and Google AI Overview in the same dashboard, plus two prompt variants per keyword instead of one.
                         </p>
                         <p className="mt-4">
                             Unlike pure analytics dashboards, it doesn't stop at the number: Scanora also checks whether llms.txt exists, whether schema markup is set up correctly, and whether ClaudeBot is even allowed to crawl - then shows you, in priority order, what to fix to get cited more often.
@@ -355,27 +355,27 @@ export default function ClaudeAiVisibilityPageEn() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Claude vs. ChatGPT vs. Perplexity: what actually differs</h2>
+                        <h2 className="text-[28px] leading-tight tracking-[-0.03em] font-bold text-(--text-white) mb-4">Claude vs. ChatGPT vs. Perplexity: what actually differs</h2>
                         <p>
                             Most guides lump these three platforms together. In reality, they differ exactly where it matters for visibility - technically, not just in tone.
                         </p>
-                        <div className="overflow-x-auto rounded-2xl border border-[var(--border-subtle)] mt-5">
-                            <table className="w-full text-sm min-w-[720px]">
+                        <div className="overflow-x-auto rounded-2xl border border-(--border-subtle) mt-5">
+                            <table className="w-full text-sm min-w-180">
                                 <thead>
-                                    <tr className="border-b border-[var(--border-subtle)] bg-[var(--surface-06)]">
-                                        <th className="text-left px-5 py-3 text-[var(--text-muted)] font-semibold">Criterion</th>
-                                        <th className="text-left px-5 py-3 text-[var(--accent)] font-semibold">Claude</th>
-                                        <th className="text-left px-5 py-3 text-[var(--text-muted)] font-semibold">ChatGPT</th>
-                                        <th className="text-left px-5 py-3 text-[var(--text-muted)] font-semibold">Perplexity</th>
+                                    <tr className="border-b border-(--line) bg-(--card)">
+                                        <th className="text-left px-5 py-3 text-(--text-muted) font-semibold">Criterion</th>
+                                        <th className="text-left px-5 py-3 text-(--accent-ink) font-semibold">Claude</th>
+                                        <th className="text-left px-5 py-3 text-(--text-muted) font-semibold">ChatGPT</th>
+                                        <th className="text-left px-5 py-3 text-(--text-muted) font-semibold">Perplexity</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {PLATFORM_COMPARISON_ROWS.map(([criterion, claude, chatgpt, perplexity], i) => (
-                                        <tr key={i} className="border-b border-[var(--border-subtle)] last:border-0 align-top">
-                                            <td className="px-5 py-3 text-[var(--text-white)] font-medium whitespace-nowrap">{criterion}</td>
-                                            <td className="px-5 py-3 text-[var(--text-body)]">{claude}</td>
-                                            <td className="px-5 py-3 text-[var(--text-body)]">{chatgpt}</td>
-                                            <td className="px-5 py-3 text-[var(--text-body)]">{perplexity}</td>
+                                        <tr key={i} className="border-b border-(--border-subtle) last:border-0 align-top">
+                                            <td className="px-5 py-3 text-(--text-white) font-medium whitespace-nowrap">{criterion}</td>
+                                            <td className="px-5 py-3 text-(--text-body)">{claude}</td>
+                                            <td className="px-5 py-3 text-(--text-body)">{chatgpt}</td>
+                                            <td className="px-5 py-3 text-(--text-body)">{perplexity}</td>
                                         </tr>
                                     ))}
                                 </tbody>
@@ -384,67 +384,67 @@ export default function ClaudeAiVisibilityPageEn() {
                         <p className="mt-4">
                             Basic hygiene - be crawlable, keep facts compact and current - works similarly across all three platforms. The real difference is control: only with Claude can you granularly decide, via robots.txt, whether you want to be visible for training, for live answers, or both. On ChatGPT and Perplexity, that decision is either broader or out of your hands entirely.
                         </p>
-                        <p className="text-xs text-[var(--text-faint)] mt-3">
+                        <p className="text-xs text-(--text-faint) mt-3">
                             Perplexity's ranking/citation criteria aren't fully documented officially; the corresponding points above are based on observable patterns.
                         </p>
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Claude tracking is often pricier than the base platforms</h2>
+                        <h2 className="text-[28px] leading-tight tracking-[-0.03em] font-bold text-(--text-white) mb-4">Claude tracking is often pricier than the base platforms</h2>
                         <p>
                             A pattern shows up across several well-known AI-visibility tools: ChatGPT, Perplexity, and Google AI Overview are usually included in the base price - Claude, on the other hand, is either a separate, expensive add-on or only available on a custom-priced Enterprise plan. If you specifically want to know how you perform on Claude, you often end up paying more for it alone than for all the other platforms combined.
                         </p>
-                        <div className="overflow-x-auto rounded-2xl border border-[var(--border-subtle)] mt-5">
-                            <table className="w-full text-sm min-w-[560px]">
+                        <div className="overflow-x-auto rounded-2xl border border-(--border-subtle) mt-5">
+                            <table className="w-full text-sm min-w-140">
                                 <thead>
-                                    <tr className="border-b border-[var(--border-subtle)] bg-[var(--surface-06)]">
-                                        <th className="text-left px-5 py-3 text-[var(--text-muted)] font-semibold">Tool</th>
-                                        <th className="text-left px-5 py-3 text-[var(--text-muted)] font-semibold">Entry price</th>
-                                        <th className="text-left px-5 py-3 text-[var(--accent)] font-semibold">Claude included at entry price?</th>
+                                    <tr className="border-b border-(--line) bg-(--card)">
+                                        <th className="text-left px-5 py-3 text-(--text-muted) font-semibold">Tool</th>
+                                        <th className="text-left px-5 py-3 text-(--text-muted) font-semibold">Entry price</th>
+                                        <th className="text-left px-5 py-3 text-(--accent-ink) font-semibold">Claude included at entry price?</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {MARKET_ROWS.map(([tool, price, claude], i) => (
-                                        <tr key={i} className="border-b border-[var(--border-subtle)] last:border-0">
-                                            <td className="px-5 py-3 text-[var(--text-white)] font-medium whitespace-nowrap">{tool}</td>
-                                            <td className="px-5 py-3 text-[var(--text-body)] whitespace-nowrap">{price}</td>
-                                            <td className="px-5 py-3 text-[var(--text-body)]">{claude}</td>
+                                        <tr key={i} className="border-b border-(--border-subtle) last:border-0">
+                                            <td className="px-5 py-3 text-(--text-white) font-medium whitespace-nowrap">{tool}</td>
+                                            <td className="px-5 py-3 text-(--text-body) whitespace-nowrap">{price}</td>
+                                            <td className="px-5 py-3 text-(--text-body)">{claude}</td>
                                         </tr>
                                     ))}
                                 </tbody>
                             </table>
                         </div>
-                        <p className="text-xs text-[var(--text-faint)] mt-3">
+                        <p className="text-xs text-(--text-faint) mt-3">
                             Pricing as of August 2026, based on each vendor's publicly listed pricing page. Always double-check current terms directly with the vendor.
                         </p>
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Sources</h2>
-                        <p className="text-sm text-[var(--text-muted)] mb-3">
+                        <h2 className="text-[28px] leading-tight tracking-[-0.03em] font-bold text-(--text-white) mb-4">Sources</h2>
+                        <p className="text-sm text-(--text-muted) mb-3">
                             Primary sources, researched directly from the providers.
                         </p>
                         <ul className="space-y-2">
                             {CLAUDE_SOURCES.map((s) => (
                                 <li key={s.href} className="text-sm">
-                                    <a href={s.href} target="_blank" rel="noopener noreferrer" className="text-[var(--accent)] hover:underline break-words">
+                                    <a href={s.href} target="_blank" rel="noopener noreferrer" className="text-(--accent-ink) hover:underline wrap-break-word">
                                         {s.label}
                                     </a>
                                 </li>
                             ))}
                         </ul>
-                        <p className="text-xs text-[var(--text-faint)] mt-3">
+                        <p className="text-xs text-(--text-faint) mt-3">
                             As of: September 2026.
                         </p>
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Frequently asked questions</h2>
+                        <h2 className="text-[28px] leading-tight tracking-[-0.03em] font-bold text-(--text-white) mb-4">Frequently asked questions</h2>
                         <div className="space-y-4">
                             {faqLd.mainEntity.map((faq, i) => (
-                                <div key={i} className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl p-5">
-                                    <h3 className="font-semibold text-[var(--text-white)] mb-2 text-sm">{faq.name}</h3>
-                                    <p className="text-sm text-[var(--text-muted)] leading-relaxed">{faq.acceptedAnswer.text}</p>
+                                <div key={i} className="bg-(--card) border border-(--line) rounded-2xl p-5">
+                                    <h3 className="font-semibold text-(--text-white) mb-2 text-sm">{faq.name}</h3>
+                                    <p className="text-sm text-(--text-muted) leading-relaxed">{faq.acceptedAnswer.text}</p>
                                 </div>
                             ))}
                         </div>
@@ -453,20 +453,20 @@ export default function ClaudeAiVisibilityPageEn() {
                 </div>
 
                 {/* CTA: Try it yourself */}
-                <div className="mt-14 bg-[var(--accent-soft)] border border-[var(--accent-border)] rounded-2xl p-6 sm:p-8">
+                <div className="mt-14 bg-(--accent-soft) border border-(--accent-border) rounded-2xl p-6 sm:p-8">
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 justify-between">
                         <div>
-                            <span className="text-xs font-semibold text-[var(--accent)] uppercase tracking-wider mb-1 block">Try it yourself</span>
-                            <h3 className="text-base sm:text-lg font-bold text-[var(--text-white)] mb-2">
+                            <span className="text-xs font-semibold text-(--accent-ink) mb-1 block">Try it yourself</span>
+                            <h3 className="text-base sm:text-lg font-bold text-(--text-white) mb-2">
                                 Check for free whether Claude already mentions you
                             </h3>
-                            <p className="text-[var(--text-muted)] text-sm leading-relaxed max-w-md">
+                            <p className="text-(--text-muted) text-sm leading-relaxed max-w-md">
                                 Enter your URL and get your first GEO score in about 60 seconds - no signup, no credit card.
                             </p>
                         </div>
                         <Link
                             href="/dashboard"
-                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-[var(--accent-border)] active:scale-[0.97] active:duration-75 shrink-0"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-(--accent) hover:bg-(--accent-hover) text-(--on-accent) text-sm font-semibold rounded-[10px] transition-all duration-200 active:scale-[0.97] active:duration-75 shrink-0"
                         >
                             Check for free now
                         </Link>
@@ -474,20 +474,20 @@ export default function ClaudeAiVisibilityPageEn() {
                 </div>
 
                 {/* Cross-link: GEO Pricing */}
-                <div className="mt-5 bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl p-6 sm:p-8">
+                <div className="mt-5 bg-(--card) border border-(--line) rounded-2xl p-6 sm:p-8">
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 justify-between">
                         <div>
-                            <span className="text-xs font-semibold text-[var(--accent)] uppercase tracking-wider mb-1 block">Pricing</span>
-                            <h3 className="text-base sm:text-lg font-bold text-[var(--text-white)] mb-2">
+                            <span className="text-xs font-semibold text-(--accent-ink) mb-1 block">Pricing</span>
+                            <h3 className="text-base sm:text-lg font-bold text-(--text-white) mb-2">
                                 GEO automation: every plan in detail
                             </h3>
-                            <p className="text-[var(--text-muted)] text-sm leading-relaxed max-w-md">
+                            <p className="text-(--text-muted) text-sm leading-relaxed max-w-md">
                                 Claude, ChatGPT, Perplexity, and Google AI Overview - websites, keywords, and checks per plan compared.
                             </p>
                         </div>
                         <Link
                             href="/en/geo/pricing"
-                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--surface-08)] hover:bg-[var(--surface-10)] text-[var(--text-white)] text-sm font-semibold rounded-xl transition-all duration-200 shrink-0"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-(--surface-08) hover:bg-(--surface-10) text-(--text-white) text-sm font-semibold rounded-xl transition-all duration-200 shrink-0"
                         >
                             View pricing
                         </Link>
@@ -495,20 +495,20 @@ export default function ClaudeAiVisibilityPageEn() {
                 </div>
 
                 {/* Cross-link: Rankscale */}
-                <div className="mt-5 bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl p-6 sm:p-8">
+                <div className="mt-5 bg-(--card) border border-(--line) rounded-2xl p-6 sm:p-8">
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 justify-between">
                         <div>
-                            <span className="text-xs font-semibold text-[var(--accent)] uppercase tracking-wider mb-1 block">Comparison</span>
-                            <h3 className="text-base sm:text-lg font-bold text-[var(--text-white)] mb-2">
+                            <span className="text-xs font-semibold text-(--accent-ink) mb-1 block">Comparison</span>
+                            <h3 className="text-base sm:text-lg font-bold text-(--text-white) mb-2">
                                 Rankscale Alternative: the full comparison
                             </h3>
-                            <p className="text-[var(--text-muted)] text-sm leading-relaxed max-w-md">
+                            <p className="text-(--text-muted) text-sm leading-relaxed max-w-md">
                                 Rankscale does include Claude, but bills it through a credit system instead of a fixed price - the difference in detail.
                             </p>
                         </div>
                         <Link
                             href="/en/compare/rankscale-alternative"
-                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--surface-08)] hover:bg-[var(--surface-10)] text-[var(--text-white)] text-sm font-semibold rounded-xl transition-all duration-200 shrink-0"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-(--surface-08) hover:bg-(--surface-10) text-(--text-white) text-sm font-semibold rounded-xl transition-all duration-200 shrink-0"
                         >
                             Read comparison
                         </Link>
@@ -516,8 +516,8 @@ export default function ClaudeAiVisibilityPageEn() {
                 </div>
 
                 {/* Back */}
-                <div className="mt-10 pt-8 border-t border-[var(--border-subtle)]">
-                    <Link href="/en" className="text-sm text-[var(--text-faint)] hover:text-[var(--text-body)] transition-colors">
+                <div className="mt-10 pt-8 border-t border-(--border-subtle)">
+                    <Link href="/en" className="text-sm text-(--text-faint) hover:text-(--text-body) transition-colors">
                         ← Back to homepage
                     </Link>
                 </div>

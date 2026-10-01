@@ -1,7 +1,7 @@
 import Link from 'next/link'
 
 export const metadata = {
-    title: 'Auftragsverarbeitungsvertrag – Scanora',
+    title: 'Auftragsverarbeitungsvertrag',
     description: 'AVV gemäß Art. 28 DSGVO für die Nutzung von Scanora.',
     robots: { index: false },
     alternates: { canonical: 'https://www.scanora.ai/avv' },
@@ -10,8 +10,8 @@ export const metadata = {
 function Section({ title, children }) {
     return (
         <section className="mb-10">
-            <h2 className="text-[var(--text-white)] font-semibold text-base mb-3 pb-2 border-b border-[var(--text-white)]/5">{title}</h2>
-            <div className="text-[var(--text-muted)] text-sm leading-relaxed space-y-3">{children}</div>
+            <h2 className="text-(--text-white) font-semibold text-base mb-3 pb-2 border-b border-(--line)">{title}</h2>
+            <div className="text-(--text-muted) text-sm leading-relaxed space-y-3">{children}</div>
         </section>
     )
 }
@@ -19,49 +19,49 @@ function Section({ title, children }) {
 function Sub({ title, children }) {
     return (
         <div className="mt-5">
-            <h3 className="text-[var(--text-body)] font-medium mb-2">{title}</h3>
-            <div className="text-[var(--text-muted)] text-sm leading-relaxed space-y-2">{children}</div>
+            <h3 className="text-(--text-body) font-medium mb-2">{title}</h3>
+            <div className="text-(--text-muted) text-sm leading-relaxed space-y-2">{children}</div>
         </div>
     )
 }
 
 function TableRow({ label, value }) {
     return (
-        <div className="grid grid-cols-2 gap-4 py-2.5 border-b border-[var(--text-white)]/5 last:border-0">
-            <span className="text-[var(--text-faint)] text-xs font-medium uppercase tracking-wider">{label}</span>
-            <span className="text-[var(--text-body)] text-sm">{value}</span>
+        <div className="grid grid-cols-2 gap-4 py-2.5 border-b border-(--line) last:border-0">
+            <span className="text-(--text-faint) text-xs font-medium ">{label}</span>
+            <span className="text-(--text-body) text-sm">{value}</span>
         </div>
     )
 }
 
 export default function AvvPage() {
     return (
-        <div className="min-h-screen bg-[var(--bg-base)] text-[var(--text-body)]">
+        <div className="min-h-screen bg-(--bg-base) text-(--text-body)">
             <div className="max-w-3xl mx-auto px-5 sm:px-8 py-20">
 
                 <div className="mb-12">
                     <Link href="/" className="inline-flex items-center gap-2 text-sm">
-                        <svg className="w-4 h-4 text-violet-400" viewBox="0 0 192 192" fill="none"><circle cx="96" cy="96" r="50" stroke="currentColor" strokeWidth="14" /><circle cx="110" cy="82" r="13" fill="currentColor" /></svg>
-                        <span className="text-[var(--text-white)] font-bold">Scanora</span>
+                        <svg className="w-4 h-4 text-(--accent-ink)" viewBox="0 0 192 192" fill="none"><circle cx="96" cy="96" r="50" stroke="currentColor" strokeWidth="14" /><circle cx="110" cy="82" r="13" fill="currentColor" /></svg>
+                        <span className="text-(--text-white) font-bold">Scanora</span>
                     </Link>
-                    <h1 className="text-3xl font-bold text-[var(--text-white)] mt-6 mb-2">Auftragsverarbeitungsvertrag</h1>
-                    <p className="text-[var(--text-faint)] text-sm">Gemäß Art. 28 DSGVO · Stand: Juni 2026</p>
+                    <h1 className="text-[clamp(34px,4.4vw,54px)] leading-[1.05] tracking-[-0.038em] font-bold text-(--text-white) mt-6 mb-3">Auftragsverarbeitungsvertrag</h1>
+                    <p className="text-(--text-faint) text-sm">Gemäß Art. 28 DSGVO · Stand: Juni 2026</p>
                 </div>
 
                 <div className="space-y-2">
 
                     <Section title="Präambel">
                         <p>
-                            Dieser Auftragsverarbeitungsvertrag (AVV) regelt die datenschutzrechtliche Beziehung zwischen dem Nutzer von Scanora (nachfolgend <strong className="text-[var(--text-body)]">„Verantwortlicher"</strong>) und dem Anbieter des Dienstes (nachfolgend <strong className="text-[var(--text-body)]">„Auftragsverarbeiter"</strong>) gemäß Art. 28 DSGVO.
+                            Dieser Auftragsverarbeitungsvertrag (AVV) regelt die datenschutzrechtliche Beziehung zwischen dem Nutzer von Scanora (nachfolgend <strong className="text-(--text-body)">„Verantwortlicher"</strong>) und dem Anbieter des Dienstes (nachfolgend <strong className="text-(--text-body)">„Auftragsverarbeiter"</strong>) gemäß Art. 28 DSGVO.
                         </p>
                         <p>
-                            Dieser AVV gilt automatisch als geschlossen, sobald der Nutzer kostenpflichtige Dienste von Scanora — insbesondere die SEO Automatisierung — in Anspruch nimmt, bei deren Nutzung personenbezogene Daten im Auftrag des Nutzers verarbeitet werden. Durch die Nutzung des Dienstes erklärt der Nutzer sein Einverständnis mit den Bedingungen dieses AVV.
+                            Dieser AVV gilt automatisch als geschlossen, sobald der Nutzer kostenpflichtige Dienste von Scanora - insbesondere die SEO Automatisierung - in Anspruch nimmt, bei deren Nutzung personenbezogene Daten im Auftrag des Nutzers verarbeitet werden. Durch die Nutzung des Dienstes erklärt der Nutzer sein Einverständnis mit den Bedingungen dieses AVV.
                         </p>
-                        <p className="bg-[var(--text-white)]/2 border border-[var(--text-white)]/5 rounded-xl p-4 not-prose text-sm">
-                            <strong className="text-[var(--text-body)]">Auftragsverarbeiter:</strong><br />
+                        <p className="bg-(--card) border border-(--line) rounded-xl p-4 not-prose text-sm">
+                            <strong className="text-(--text-body)">Auftragsverarbeiter:</strong><br />
                             Finn Paustian, Am Rund 6, 23566 Lübeck<br />
-                            E-Mail: <a href="mailto:scanoraai@gmail.com" className="text-violet-400 hover:text-violet-300">scanoraai@gmail.com</a><br /><br />
-                            <strong className="text-[var(--text-body)]">Verantwortlicher:</strong><br />
+                            E-Mail: <a href="mailto:scanoraai@gmail.com" className="text-(--accent-ink) hover:text-(--accent-ink)">scanoraai@gmail.com</a><br /><br />
+                            <strong className="text-(--text-body)">Verantwortlicher:</strong><br />
                             Der jeweilige Nutzer des Scanora-Dienstes (gemäß Registrierungsdaten)
                         </p>
                     </Section>
@@ -81,37 +81,37 @@ export default function AvvPage() {
                         </p>
 
                         <Sub title="Verarbeitungsübersicht SEO Automatisierung">
-                            <div className="bg-[var(--text-white)]/2 border border-[var(--text-white)]/5 rounded-xl p-4">
+                            <div className="bg-(--card) border border-(--line) rounded-xl p-4">
                                 <TableRow label="Art der Daten" value="Domains, Keywords, Google-Ranking-Positionen (Top 100), Ranking-URLs, Backlink-Zusammenfassungen, Keyword-Suchvolumina" />
                                 <TableRow label="Zweck" value="Wöchentliches Tracking von Google-Rankings für eingetragene Domains und Keywords; Keyword-Analyse; Wettbewerbsanalyse" />
                                 <TableRow label="Betroffene Personen" value="Mittelbar: Betreiber der getrackten Domains (soweit natürliche Personen)" />
                                 <TableRow label="Speicherdauer" value="Ranking-Daten: 12 Monate; Keyword-Listen: bis zur Löschung durch den Nutzer, max. 30 Tage nach Vertragsende" />
-                                <TableRow label="Drittanbieter" value="DataForSEO Ltd., Vilnius, Litauen (EU) — nur Keyword + Standort + Sprachcode werden übermittelt, keine personenbezogenen Nutzerdaten" />
+                                <TableRow label="Drittanbieter" value="DataForSEO Ltd., Vilnius, Litauen (EU) - nur Keyword + Standort + Sprachcode werden übermittelt, keine personenbezogenen Nutzerdaten" />
                                 <TableRow label="Ort der Verarbeitung" value="Deutschland / EU (MongoDB Atlas, Vercel, DataForSEO)" />
                             </div>
                         </Sub>
 
                         <Sub title="Verarbeitungsübersicht GEO Automatisierung">
-                            <div className="bg-[var(--text-white)]/2 border border-[var(--text-white)]/5 rounded-xl p-4">
+                            <div className="bg-(--card) border border-(--line) rounded-xl p-4">
                                 <TableRow label="Art der Daten" value="Domains, Keywords/Prompts, Auszüge aus KI-Antworten, erkannte Zitationen und Konkurrenz-Domains, automatisierte Sentiment-Einordnung" />
                                 <TableRow label="Zweck" value="Automatisiertes Tracking, ob und wie eine Domain in Antworten von KI-Modellen (ChatGPT, Claude, Gemini, Perplexity, Google AI Overview) erwähnt wird; Wettbewerbsanalyse; Sentiment-Klassifizierung" />
                                 <TableRow label="Betroffene Personen" value="Mittelbar: Betreiber der getrackten Domains (soweit natürliche Personen)" />
                                 <TableRow label="Speicherdauer" value="Wie SEO-Ranking-Daten: 12 Monate" />
-                                <TableRow label="Drittanbieter" value="DataForSEO Ltd., Vilnius, Litauen (EU) — Abruf der KI-Antworten; Anthropic PBC, USA (Standardvertragsklauseln) — Sentiment-Klassifizierung einzelner Textauszüge über die Claude API, keine dauerhafte Speicherung beim Anbieter" />
+                                <TableRow label="Drittanbieter" value="DataForSEO Ltd., Vilnius, Litauen (EU) - Abruf der KI-Antworten; Anthropic PBC, USA (Standardvertragsklauseln) - Sentiment-Klassifizierung einzelner Textauszüge über die Claude API, keine dauerhafte Speicherung beim Anbieter" />
                                 <TableRow label="Ort der Verarbeitung" value="Deutschland / EU (MongoDB Atlas) und USA (Anthropic, Sentiment-Klassifizierung)" />
                             </div>
                         </Sub>
 
                         <Sub title="Verarbeitungsübersicht Leads-Tracking">
-                            <div className="bg-[var(--text-white)]/2 border border-[var(--text-white)]/5 rounded-xl p-4">
+                            <div className="bg-(--card) border border-(--line) rounded-xl p-4">
                                 <TableRow label="Art der Daten" value="E-Mail-Adresse des Leads, automatisiert erkannte KI-Quelle (ChatGPT, Perplexity, Claude, Gemini), Referrer-URL, aufgerufene Zielseite, Zeitstempel" />
                                 <TableRow label="Zweck" value="Zuordnung eingehender Leads auf der Website des Verantwortlichen zu der KI-Quelle, über die der jeweilige Besuch zustande kam" />
                                 <TableRow label="Betroffene Personen" value="Website-Besucher/Leads des Verantwortlichen (Endnutzer der jeweiligen Kundenwebsite, keine Scanora-Nutzer)" />
                                 <TableRow label="Speicherdauer" value="12 Monate, automatisierte wöchentliche Löschung. Der Verantwortliche kann einzelne Datensätze jederzeit über das Dashboard einsehen (Art. 15 DSGVO) oder vorzeitig löschen (Art. 17 DSGVO)" />
-                                <TableRow label="Drittanbieter" value="Keine zusätzlichen — läuft über dieselbe Infrastruktur wie SEO/GEO Automatisierung" />
+                                <TableRow label="Drittanbieter" value="Keine zusätzlichen - läuft über dieselbe Infrastruktur wie SEO/GEO Automatisierung" />
                                 <TableRow label="Ort der Verarbeitung" value="Deutschland / EU (MongoDB Atlas)" />
                             </div>
-                            <p className="text-xs text-[var(--text-faint)] mt-2">
+                            <p className="text-xs text-(--text-faint) mt-2">
                                 Die Erfassung erfolgt über ein vom Verantwortlichen selbst auf seiner Website eingebundenes Tracking-Snippet. Für die Rechtsgrundlage der Datenerhebung auf seiner eigenen Website (z. B. Einwilligung nach TTDSG/ePrivacy) ist der Verantwortliche selbst zuständig.
                             </p>
                         </Sub>
@@ -142,26 +142,26 @@ export default function AvvPage() {
                         <p>
                             Der Auftragsverarbeiter setzt zur Erbringung des Dienstes folgende Unterauftragnehmer ein, mit denen datenschutzkonforme Verträge gemäß Art. 28 DSGVO bestehen:
                         </p>
-                        <div className="bg-[var(--text-white)]/2 border border-[var(--text-white)]/5 rounded-xl p-4 space-y-3 text-sm">
+                        <div className="bg-(--card) border border-(--line) rounded-xl p-4 space-y-3 text-sm">
                             <div>
-                                <strong className="text-[var(--text-body)]">MongoDB Atlas (MongoDB, Inc.)</strong><br />
-                                <span className="text-[var(--text-faint)]">Zweck: Datenbankhosting · Standort: EU (Frankfurt)</span>
+                                <strong className="text-(--text-body)">MongoDB Atlas (MongoDB, Inc.)</strong><br />
+                                <span className="text-(--text-faint)">Zweck: Datenbankhosting · Standort: EU (Frankfurt)</span>
                             </div>
-                            <div className="border-t border-[var(--text-white)]/5 pt-3">
-                                <strong className="text-[var(--text-body)]">Vercel Inc.</strong><br />
-                                <span className="text-[var(--text-faint)]">Zweck: Hosting der Webanwendung · Standort: EU / USA (Standardvertragsklauseln)</span>
+                            <div className="border-t border-(--line) pt-3">
+                                <strong className="text-(--text-body)">Vercel Inc.</strong><br />
+                                <span className="text-(--text-faint)">Zweck: Hosting der Webanwendung · Standort: EU / USA (Standardvertragsklauseln)</span>
                             </div>
-                            <div className="border-t border-[var(--text-white)]/5 pt-3">
-                                <strong className="text-[var(--text-body)]">SendGrid / Twilio (für E-Mail-Benachrichtigungen)</strong><br />
-                                <span className="text-[var(--text-faint)]">Zweck: Versand von Alert-E-Mails · Standort: USA (Standardvertragsklauseln)</span>
+                            <div className="border-t border-(--line) pt-3">
+                                <strong className="text-(--text-body)">SendGrid / Twilio (für E-Mail-Benachrichtigungen)</strong><br />
+                                <span className="text-(--text-faint)">Zweck: Versand von Alert-E-Mails · Standort: USA (Standardvertragsklauseln)</span>
                             </div>
-                            <div className="border-t border-[var(--text-white)]/5 pt-3">
-                                <strong className="text-[var(--text-body)]">DataForSEO Ltd.</strong><br />
-                                <span className="text-[var(--text-faint)]">Zweck: Abruf von Google-Ranking-Daten, Keyword-Suchvolumina, Wettbewerbs- und Backlink-Daten für SEO Automatisierung sowie Abruf von KI-Antworten für GEO Automatisierung · Standort: Vilnius, Litauen (EU) · Übermittelte Daten: Keyword/Prompt, Domain, Standortname, Sprachcode — keine personenbezogenen Daten der Endnutzer</span>
+                            <div className="border-t border-(--line) pt-3">
+                                <strong className="text-(--text-body)">DataForSEO Ltd.</strong><br />
+                                <span className="text-(--text-faint)">Zweck: Abruf von Google-Ranking-Daten, Keyword-Suchvolumina, Wettbewerbs- und Backlink-Daten für SEO Automatisierung sowie Abruf von KI-Antworten für GEO Automatisierung · Standort: Vilnius, Litauen (EU) · Übermittelte Daten: Keyword/Prompt, Domain, Standortname, Sprachcode - keine personenbezogenen Daten der Endnutzer</span>
                             </div>
-                            <div className="border-t border-[var(--text-white)]/5 pt-3">
-                                <strong className="text-[var(--text-body)]">Anthropic PBC</strong><br />
-                                <span className="text-[var(--text-faint)]">Zweck: Sentiment-Klassifizierung einzelner KI-Antwort-Auszüge über die Claude API (GEO Automatisierung) · Standort: USA (Standardvertragsklauseln) · Übermittelte Daten: Textauszug der KI-Antwort, keine personenbezogenen Daten der Endnutzer</span>
+                            <div className="border-t border-(--line) pt-3">
+                                <strong className="text-(--text-body)">Anthropic PBC</strong><br />
+                                <span className="text-(--text-faint)">Zweck: Sentiment-Klassifizierung einzelner KI-Antwort-Auszüge über die Claude API (GEO Automatisierung) · Standort: USA (Standardvertragsklauseln) · Übermittelte Daten: Textauszug der KI-Antwort, keine personenbezogenen Daten der Endnutzer</span>
                             </div>
                         </div>
                         <p>
@@ -174,7 +174,7 @@ export default function AvvPage() {
                             Der Auftragsverarbeiter unterstützt den Verantwortlichen bei der Erfüllung von Betroffenenanfragen (Art. 15–22 DSGVO) im Rahmen des Möglichen. Betroffenenanfragen, die direkt beim Auftragsverarbeiter eingehen, leitet dieser unverzüglich an den Verantwortlichen weiter.
                         </p>
                         <p>
-                            Zur Ausübung von Datenschutzrechten wende dich an: <a href="mailto:scanoraai@gmail.com" className="text-violet-400 hover:text-violet-300">scanoraai@gmail.com</a>
+                            Zur Ausübung von Datenschutzrechten wende dich an: <a href="mailto:scanoraai@gmail.com" className="text-(--accent-ink) hover:text-(--accent-ink)">scanoraai@gmail.com</a>
                         </p>
                     </Section>
 
@@ -192,10 +192,10 @@ export default function AvvPage() {
 
                     <Section title="§ 7 Löschung und Rückgabe der Daten">
                         <p>
-                            Nach Beendigung des Vertragsverhältnisses werden alle im Rahmen der Auftragsverarbeitung gespeicherten Daten des Verantwortlichen — darunter SEO-Automatisierungsdaten (Domains, Keywords, Ranking-Positionen) — innerhalb von 30 Tagen automatisch gelöscht, sofern keine gesetzliche Aufbewahrungspflicht entgegensteht.
+                            Nach Beendigung des Vertragsverhältnisses werden alle im Rahmen der Auftragsverarbeitung gespeicherten Daten des Verantwortlichen - darunter SEO-Automatisierungsdaten (Domains, Keywords, Ranking-Positionen) - innerhalb von 30 Tagen automatisch gelöscht, sofern keine gesetzliche Aufbewahrungspflicht entgegensteht.
                         </p>
                         <p>
-                            Der Verantwortliche kann vor Vertragsende einen Datenexport seiner SEO-Automatisierungsdaten per E-Mail an <a href="mailto:scanoraai@gmail.com" className="text-violet-400 hover:text-violet-300">scanoraai@gmail.com</a> anfordern.
+                            Der Verantwortliche kann vor Vertragsende einen Datenexport seiner SEO-Automatisierungsdaten per E-Mail an <a href="mailto:scanoraai@gmail.com" className="text-(--accent-ink) hover:text-(--accent-ink)">scanoraai@gmail.com</a> anfordern.
                         </p>
                     </Section>
 
@@ -232,11 +232,11 @@ export default function AvvPage() {
                         </p>
                     </Section>
 
-                    <div className="border-t border-[var(--text-white)]/5 pt-8 flex gap-6 text-[var(--text-faint)] text-xs">
-                        <Link href="/" className="hover:text-[var(--text-muted)] transition-colors">Startseite</Link>
-                        <Link href="/agb" className="hover:text-[var(--text-muted)] transition-colors">AGB</Link>
-                        <Link href="/datenschutz" className="hover:text-[var(--text-muted)] transition-colors">Datenschutz</Link>
-                        <Link href="/impressum" className="hover:text-[var(--text-muted)] transition-colors">Impressum</Link>
+                    <div className="border-t border-(--line) pt-8 flex gap-6 text-(--text-faint) text-xs">
+                        <Link href="/" className="hover:text-(--text-muted) transition-colors">Startseite</Link>
+                        <Link href="/agb" className="hover:text-(--text-muted) transition-colors">AGB</Link>
+                        <Link href="/datenschutz" className="hover:text-(--text-muted) transition-colors">Datenschutz</Link>
+                        <Link href="/impressum" className="hover:text-(--text-muted) transition-colors">Impressum</Link>
                     </div>
                 </div>
             </div>

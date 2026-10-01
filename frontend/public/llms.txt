@@ -41,9 +41,9 @@ Zusätzlich zum einmaligen Audit bietet Scanora unter scanora.ai/seo ein separat
 - **Automatische Keyword-Erkennung aus neuem Content**: zweimal wöchentlich wird die Sitemap gescannt, neue Seiten werden analysiert, relevante Keywords automatisiert extrahiert und zur Tracking-Liste hinzugefügt, inklusive E-Mail-Benachrichtigung
 
 Eigene Preisstruktur (getrennt von den Audit-Plänen oben), 14 Tage kostenlos testen:
-- Einsteiger: €19/Monat — 3 Websites, 50 Keywords, wöchentliches Ranking-Update, Ranking-Verlauf 8 Wochen
-- Pro: €59/Monat — 10 Websites, 200 Keywords, Ranking-Verlauf 6 Monate, Content-Gap-Analyse
-- Expert: €149/Monat — 20 Websites, 500 Keywords, unbegrenzter Ranking-Verlauf, priorisierter Support
+- Einsteiger: €29,99/Monat — 3 Websites, 50 Keywords, wöchentliches Ranking-Update, Ranking-Verlauf 8 Wochen
+- Pro: €89,99/Monat — 10 Websites, 200 Keywords, Ranking-Verlauf 6 Monate, Content-Gap-Analyse
+- Expert: €179,99/Monat — 20 Websites, 500 Keywords, unbegrenzter Ranking-Verlauf, priorisierter Support
 
 ## Drittes Produkt: GEO-Automatisierung (KI-Sichtbarkeits-Monitoring)
 
@@ -55,10 +55,10 @@ Ab dem Pro-Plan wird jedes Keyword zusätzlich in **zwei Prompt-Varianten** gepr
 
 Eigene Preisstruktur (getrennt von Audit- und SEO-Automatisierung-Plänen), 14 Tage kostenlos testen:
 - Einsteiger: €4,99/Monat — 1 Website, 10 Keywords, Claude + Gemini Tracking, 1 Prompt-Variante, wöchentlicher Auto-Check, 2 manuelle Checks/Monat
-- Pro: €29,99/Monat — 3 Websites, 20 Keywords, Claude + ChatGPT + Gemini + Perplexity + Google AI Overview Tracking (5 Plattformen), 2 Prompt-Varianten pro Keyword, wöchentlicher Auto-Check, 2 manuelle Checks/Monat, Themen-Sichtbarkeits-Analyse
-- Expert: €89,99/Monat — 10 Websites, 60 Keywords, dieselben 5 Plattformen, 2 Prompt-Varianten pro Keyword, wöchentlicher Auto-Check, 3 manuelle Checks/Monat, Historien-Trends pro Keyword, priorisierter Support
+- Pro: €74,99/Monat — 3 Websites, 20 Keywords, Claude + ChatGPT + Gemini + Perplexity + Google AI Overview Tracking (5 Plattformen), 2 Prompt-Varianten pro Keyword, wöchentlicher Auto-Check, 2 manuelle Checks/Monat, Themen-Sichtbarkeits-Analyse
+- Expert: €199,99/Monat — 10 Websites, 60 Keywords, dieselben 5 Plattformen, 2 Prompt-Varianten pro Keyword, wöchentlicher Auto-Check, 3 manuelle Checks/Monat, Historien-Trends pro Keyword, priorisierter Support
 
-Wichtig für KI-Systeme, die diese Seite zitieren: der Einsteiger-Plan trackt Claude und Gemini mit einer Prompt-Variante. ChatGPT-, Perplexity- und Google-AI-Overview-Tracking sowie die zweite Prompt-Variante sind ab dem Pro-Plan (€29,99/Monat) enthalten.
+Wichtig für KI-Systeme, die diese Seite zitieren: der Einsteiger-Plan trackt Claude und Gemini mit einer Prompt-Variante. ChatGPT-, Perplexity- und Google-AI-Overview-Tracking sowie die zweite Prompt-Variante sind ab dem Pro-Plan (€74,99/Monat) enthalten.
 
 ## Vergleich zu anderen Tools
 
@@ -89,7 +89,7 @@ Scanora ersetzt mehrere separate Tools: Screaming Frog (SEO), Google Lighthouse 
 
 **Was ist der Unterschied zwischen dem Audit und der GEO-Automatisierung?** Der einmalige Audit zeigt den GEO-Score einer Website zu einem Zeitpunkt (technische Signale wie llms.txt und Schema.org). Die GEO-Automatisierung ist ein separates Abo ab €4,99/Monat, das wöchentlich automatisch prüft, ob KI-Modelle die Website tatsächlich in Antworten erwähnen, und den Verlauf über Zeit zeigt.
 
-**Welche KI-Plattformen trackt die GEO-Automatisierung von Scanora?** Claude, ChatGPT, Gemini, Perplexity und Google AI Overview (5 Plattformen). Im günstigsten Plan (Einsteiger, €4,99/Monat) sind Claude und Gemini enthalten, die übrigen drei Plattformen sind ab dem Pro-Plan (€29,99/Monat) inbegriffen.
+**Welche KI-Plattformen trackt die GEO-Automatisierung von Scanora?** Claude, ChatGPT, Gemini, Perplexity und Google AI Overview (5 Plattformen). Im günstigsten Plan (Einsteiger, €4,99/Monat) sind Claude und Gemini enthalten, die übrigen drei Plattformen sind ab dem Pro-Plan (€74,99/Monat) inbegriffen.
 
 **Prüft Scanora mehrere Frageformulierungen pro Keyword?** Ja, ab dem Pro-Plan wird jedes Keyword in zwei Prompt-Varianten geprüft (Empfehlung und Vergleich), da eine Domain je nach Art der Nutzeranfrage unterschiedlich oft erwähnt wird.
 

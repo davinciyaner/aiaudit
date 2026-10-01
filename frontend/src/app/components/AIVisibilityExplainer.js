@@ -8,7 +8,7 @@ const STATS = [
     {
         value: '900 Mio.+',
         label: 'wöchentliche ChatGPT-Nutzer',
-        sub: 'Immer mehr Menschen fragen nicht mehr Google — sie fragen eine KI.',
+        sub: 'Immer mehr Menschen fragen nicht mehr Google - sie fragen eine KI.',
         source: { label: 'TechCrunch, Februar 2026 (OpenAI-Angaben)', url: 'https://techcrunch.com/2026/02/27/chatgpt-reaches-900m-weekly-active-users' },
     },
     {
@@ -23,17 +23,17 @@ const CONCEPTS = [
     {
         icon: Eye,
         title: 'Visibility (Mention-Rate)',
-        desc: 'Wird deine Domain überhaupt erwähnt, wenn jemand ChatGPT, Claude, Perplexity oder Google AI Overview nach einer Empfehlung fragt? Die Mention-Rate zeigt dir das in Prozent — pro Keyword und Plattform.',
+        desc: 'Wird deine Domain überhaupt erwähnt, wenn jemand ChatGPT, Claude, Perplexity oder Google AI Overview nach einer Empfehlung fragt? Die Mention-Rate zeigt dir das in Prozent - pro Keyword und Plattform.',
     },
     {
         icon: Quote,
         title: 'Zitierung & Kontext',
-        desc: 'Es zählt nicht nur ob, sondern wie du genannt wirst. Scanora zeigt dir den genauen Satz, in dem die KI dich erwähnt — und welche anderen Quellen sie daneben zitiert.',
+        desc: 'Es zählt nicht nur ob, sondern wie du genannt wirst. Scanora zeigt dir den genauen Satz, in dem die KI dich erwähnt - und welche anderen Quellen sie daneben zitiert.',
     },
     {
         icon: Trophy,
         title: 'Share of Voice',
-        desc: 'Wer wird sonst noch erwähnt? Die Konkurrenzansicht zeigt dir, wo du im Vergleich zu anderen Domains stehst — Domain für Domain, Plattform für Plattform.',
+        desc: 'Wer wird sonst noch erwähnt? Die Konkurrenzansicht zeigt dir, wo du im Vergleich zu anderen Domains stehst - Domain für Domain, Plattform für Plattform.',
     },
 ]
 
@@ -67,9 +67,7 @@ const CHECK_GROUPS = [
 
 export default function AIVisibilityExplainer() {
     return (
-        <section className="relative py-16 md:py-28 bg-[var(--bg-base)] overflow-hidden">
-            <div className="absolute top-1/4 right-0 w-[600px] h-[400px] rounded-full blur-3xl pointer-events-none"
-                style={{ background: 'radial-gradient(ellipse, var(--accent-glow) 0%, transparent 70%)' }} />
+        <section className="relative py-16 md:py-28 bg-(--bg-base) overflow-hidden">
 
             <div className="relative max-w-6xl mx-auto px-5 sm:px-8">
 
@@ -79,15 +77,15 @@ export default function AIVisibilityExplainer() {
                     <h2 className="text-3xl sm:text-5xl font-bold tracking-tight mb-5 leading-tight">
                         Google ist nicht mehr die einzige Suchmaschine.
                     </h2>
-                    <p className="text-[var(--text-muted)] text-base sm:text-lg leading-relaxed">
+                    <p className="text-(--text-muted) text-base sm:text-lg leading-relaxed">
                         Klassisches SEO optimiert für Google-Rankings: Keywords, Backlinks, technische Signale. KI-Modelle wie
-                        ChatGPT, Claude, Perplexity und Google AI Overview suchen nach etwas anderem — strukturierten,
+                        ChatGPT, Claude, Perplexity und Google AI Overview suchen nach etwas anderem - strukturierten,
                         zitierbaren Inhalten und klaren Vertrauenssignalen. Eine Seite kann bei Google auf Platz 1 stehen
                         und für KI-Modelle trotzdem unsichtbar sein.
                     </p>
-                    <p className="text-[var(--text-faint)] text-sm sm:text-base leading-relaxed mt-4">
+                    <p className="text-(--text-faint) text-sm sm:text-base leading-relaxed mt-4">
                         Scanora ist ein KI-gestütztes Audit-Tool, das in unter 60 Sekunden misst, wie sichtbar eine Website bei
-                        ChatGPT, Claude, Perplexity und Google AI Overview ist — und wie sie in den klassischen Google-Rankings
+                        ChatGPT, Claude, Perplexity und Google AI Overview ist - und wie sie in den klassischen Google-Rankings
                         abschneidet. Der Report liefert einen AI-Visibility-Score (0–100), einen SEO-Score und
                         Performance-Metriken (TTFB, FCP) sowie priorisierte Fixes statt generischer Tipps.
                     </p>
@@ -98,12 +96,12 @@ export default function AIVisibilityExplainer() {
                     {STATS.map((s, i) => (
                         <motion.div key={s.value}
                             initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
-                            className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl p-6 sm:p-8 shadow-card hover-lift hover:shadow-card-hover hover:-translate-y-2 transition-all duration-200">
-                            <div className="text-4xl sm:text-5xl font-black text-[var(--text-white)] mb-2">{s.value}</div>
-                            <div className="text-sm font-semibold text-[var(--text-white)] mb-2 leading-snug">{s.label}</div>
-                            <div className="text-xs text-[var(--text-faint)] leading-relaxed">{s.sub}</div>
+                            className="bg-(--card) border border-(--line) rounded-2xl p-6 sm:p-8 shadow-card hover-lift hover:shadow-card-hover transition-all duration-200">
+                            <div className="text-4xl sm:text-5xl font-black text-(--text-white) mb-2">{s.value}</div>
+                            <div className="text-sm font-semibold text-(--text-white) mb-2 leading-snug">{s.label}</div>
+                            <div className="text-xs text-(--text-faint) leading-relaxed">{s.sub}</div>
                             <a href={s.source.url} target="_blank" rel="noopener noreferrer"
-                                className="block text-[10px] text-[var(--text-muted)] hover:text-[var(--text-body)] underline underline-offset-2 mt-3 transition-colors">
+                                className="block text-[10px] text-(--text-muted) hover:text-(--text-body) underline underline-offset-2 mt-3 transition-colors">
                                 Quelle: {s.source.label} ↗
                             </a>
                         </motion.div>
@@ -119,16 +117,16 @@ export default function AIVisibilityExplainer() {
 
                     <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}
                         className="lg:col-span-3">
-                        <h3 className="text-xl font-bold text-[var(--text-white)] mb-5">Was Scanora misst</h3>
+                        <h3 className="text-xl font-bold text-(--text-white) mb-5">Was Scanora misst</h3>
                         <div className="space-y-4">
                             {CONCEPTS.map(c => (
                                 <div key={c.title} className="flex gap-4">
-                                    <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 bg-[var(--accent-soft)] border border-[var(--accent-border)]">
-                                        <c.icon className="w-4 h-4 text-[var(--accent)]" strokeWidth={1.8} />
+                                    <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 bg-(--accent-soft) border border-(--accent-border)">
+                                        <c.icon className="w-4 h-4 text-(--accent-ink)" strokeWidth={1.8} />
                                     </div>
                                     <div>
-                                        <div className="text-sm font-semibold text-[var(--text-white)] mb-1">{c.title}</div>
-                                        <div className="text-sm text-[var(--text-muted)] leading-relaxed">{c.desc}</div>
+                                        <div className="text-sm font-semibold text-(--text-white) mb-1">{c.title}</div>
+                                        <div className="text-sm text-(--text-muted) leading-relaxed">{c.desc}</div>
                                     </div>
                                 </div>
                             ))}
@@ -141,20 +139,20 @@ export default function AIVisibilityExplainer() {
                     <h3 className="text-2xl sm:text-3xl font-bold text-center mb-3 tracking-tight">
                         19 Signale, die Scanora prüft
                     </h3>
-                    <p className="text-[var(--text-muted)] text-center text-sm mb-8 sm:mb-10 max-w-lg mx-auto leading-relaxed">
+                    <p className="text-(--text-muted) text-center text-sm mb-8 sm:mb-10 max-w-lg mx-auto leading-relaxed">
                         Alles, was darüber entscheidet, ob KI-Modelle deine Website als Quelle erkennen und zitieren.
                     </p>
                     <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
                         {CHECK_GROUPS.map(g => (
-                            <div key={g.title} className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl p-5 hover-lift hover:shadow-card hover:-translate-y-1 transition-all duration-200">
-                                <div className="w-9 h-9 rounded-xl flex items-center justify-center mb-4 bg-[var(--accent-soft)] border border-[var(--accent-border)]">
-                                    <g.icon className="w-4 h-4 text-[var(--accent)]" strokeWidth={1.8} />
+                            <div key={g.title} className="bg-(--card) border border-(--line) rounded-2xl p-5 hover-lift hover:shadow-card transition-all duration-200">
+                                <div className="w-9 h-9 rounded-xl flex items-center justify-center mb-4 bg-(--accent-soft) border border-(--accent-border)">
+                                    <g.icon className="w-4 h-4 text-(--accent-ink)" strokeWidth={1.8} />
                                 </div>
-                                <div className="text-sm font-semibold text-[var(--text-white)] mb-3">{g.title}</div>
+                                <div className="text-sm font-semibold text-(--text-white) mb-3">{g.title}</div>
                                 <ul className="space-y-1.5">
                                     {g.checks.map(c => (
-                                        <li key={c} className="text-xs text-[var(--text-faint)] leading-relaxed flex items-start gap-1.5">
-                                            <span className="w-1 h-1 rounded-full bg-[var(--text-faint)] mt-1.5 shrink-0" />
+                                        <li key={c} className="text-xs text-(--text-faint) leading-relaxed flex items-start gap-1.5">
+                                            <span className="w-1 h-1 rounded-full bg-(--text-faint) mt-1.5 shrink-0" />
                                             {c}
                                         </li>
                                     ))}
@@ -166,7 +164,7 @@ export default function AIVisibilityExplainer() {
 
                 <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center">
                     <Link href="/dashboard"
-                        className="inline-flex items-center gap-2 px-6 py-3.5 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-[var(--accent-border)] active:scale-[0.97] active:duration-75">
+                        className="inline-flex items-center gap-2 px-6 py-3.5 bg-(--accent) hover:bg-(--accent-hover) text-(--on-accent) text-sm font-semibold rounded-[10px] transition-all duration-200 active:scale-[0.97] active:duration-75">
                         KI-Sichtbarkeit jetzt prüfen <ArrowRight className="w-3.5 h-3.5" />
                     </Link>
                 </motion.div>

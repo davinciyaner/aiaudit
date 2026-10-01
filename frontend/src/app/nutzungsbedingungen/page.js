@@ -1,7 +1,7 @@
 import Link from 'next/link'
 
 export const metadata = {
-    title: 'Nutzungsbedingungen – Scanora',
+    title: 'Nutzungsbedingungen',
     description: 'Nutzungsbedingungen für die Nutzung von Scanora.',
     robots: { index: false },
     alternates: { canonical: 'https://www.scanora.ai/nutzungsbedingungen' },
@@ -10,8 +10,8 @@ export const metadata = {
 function Section({ title, children }) {
     return (
         <section className="mb-10">
-            <h2 className="text-[var(--text-white)] font-semibold text-base mb-3 pb-2 border-b border-[var(--text-white)]/5">{title}</h2>
-            <div className="text-[var(--text-muted)] text-sm leading-relaxed space-y-3">{children}</div>
+            <h2 className="text-(--text-white) font-semibold text-base mb-3 pb-2 border-b border-(--line)">{title}</h2>
+            <div className="text-(--text-muted) text-sm leading-relaxed space-y-3">{children}</div>
         </section>
     )
 }
@@ -19,34 +19,34 @@ function Section({ title, children }) {
 function Sub({ title, children }) {
     return (
         <div className="mt-5">
-            <h3 className="text-[var(--text-body)] font-medium mb-2">{title}</h3>
-            <div className="text-[var(--text-muted)] text-sm leading-relaxed space-y-2">{children}</div>
+            <h3 className="text-(--text-body) font-medium mb-2">{title}</h3>
+            <div className="text-(--text-muted) text-sm leading-relaxed space-y-2">{children}</div>
         </div>
     )
 }
 
 export default function NutzungsbedingungenPage() {
     return (
-        <div className="min-h-screen bg-[var(--bg-base)] text-[var(--text-body)]">
+        <div className="min-h-screen bg-(--bg-base) text-(--text-body)">
             <div className="max-w-3xl mx-auto px-5 sm:px-8 py-20">
 
                 <div className="mb-12">
                     <Link href="/" className="inline-flex items-center gap-2 text-sm">
-                        <svg className="w-4 h-4 text-violet-400" viewBox="0 0 192 192" fill="none"><circle cx="96" cy="96" r="50" stroke="currentColor" strokeWidth="14" /><circle cx="110" cy="82" r="13" fill="currentColor" /></svg>
-                        <span className="text-[var(--text-white)] font-bold">Scanora</span>
+                        <svg className="w-4 h-4 text-(--accent-ink)" viewBox="0 0 192 192" fill="none"><circle cx="96" cy="96" r="50" stroke="currentColor" strokeWidth="14" /><circle cx="110" cy="82" r="13" fill="currentColor" /></svg>
+                        <span className="text-(--text-white) font-bold">Scanora</span>
                     </Link>
-                    <h1 className="text-3xl font-bold text-[var(--text-white)] mt-6 mb-2">Nutzungsbedingungen</h1>
-                    <p className="text-[var(--text-faint)] text-sm">Stand: Juni 2026 · Anbieter: Finn Paustian, 23566 Lübeck</p>
+                    <h1 className="text-[clamp(34px,4.4vw,54px)] leading-[1.05] tracking-[-0.038em] font-bold text-(--text-white) mt-6 mb-3">Nutzungsbedingungen</h1>
+                    <p className="text-(--text-faint) text-sm">Stand: Juni 2026 · Anbieter: Finn Paustian, 23566 Lübeck</p>
                 </div>
 
                 <div className="space-y-2">
 
                     <Section title="1. Geltungsbereich">
                         <p>
-                            Diese Nutzungsbedingungen gelten für die Nutzung der Webanwendung <strong className="text-[var(--text-body)]">Scanora</strong> unter <strong className="text-[var(--text-body)]">scanora.ai</strong> sowie aller zugehörigen Dienste (Website-Audit, SEO Automatisierung). Mit der Registrierung oder der Nutzung des Dienstes erklärt der Nutzer sein Einverständnis mit diesen Bedingungen.
+                            Diese Nutzungsbedingungen gelten für die Nutzung der Webanwendung <strong className="text-(--text-body)">Scanora</strong> unter <strong className="text-(--text-body)">scanora.ai</strong> sowie aller zugehörigen Dienste (Website-Audit, SEO Automatisierung). Mit der Registrierung oder der Nutzung des Dienstes erklärt der Nutzer sein Einverständnis mit diesen Bedingungen.
                         </p>
                         <p>
-                            Ergänzend gelten die <Link href="/agb" className="text-violet-400 hover:text-violet-300">Allgemeinen Geschäftsbedingungen (AGB)</Link> für kostenpflichtige Abonnements sowie die <Link href="/datenschutz" className="text-violet-400 hover:text-violet-300">Datenschutzerklärung</Link> und der <Link href="/avv" className="text-violet-400 hover:text-violet-300">Auftragsverarbeitungsvertrag (AVV)</Link> für die SEO Automatisierung.
+                            Ergänzend gelten die <Link href="/agb" className="text-(--accent-ink) hover:text-(--accent-ink)">Allgemeinen Geschäftsbedingungen (AGB)</Link> für kostenpflichtige Abonnements sowie die <Link href="/datenschutz" className="text-(--accent-ink) hover:text-(--accent-ink)">Datenschutzerklärung</Link> und der <Link href="/avv" className="text-(--accent-ink) hover:text-(--accent-ink)">Auftragsverarbeitungsvertrag (AVV)</Link> für die SEO Automatisierung.
                         </p>
                     </Section>
 
@@ -70,7 +70,7 @@ export default function NutzungsbedingungenPage() {
                     </Section>
 
                     <Section title="4. Verbotene Nutzung">
-                        <div className="bg-red-500/5 border border-red-500/20 rounded-xl p-4 text-red-200/80 text-sm leading-relaxed">
+                        <div className="bg-(--danger-soft) border border-(--danger-border) rounded-xl p-4 text-(--danger) text-sm leading-relaxed">
                             Folgende Nutzungen sind ausdrücklich untersagt und können zur sofortigen Sperrung des Accounts sowie zur strafrechtlichen Verfolgung führen:
                         </div>
                         <ul className="list-disc list-inside space-y-1.5 ml-2 mt-3">
@@ -92,7 +92,7 @@ export default function NutzungsbedingungenPage() {
                         </Sub>
                         <Sub title="5.2 Analyseergebnisse">
                             <p>
-                                Die von Scanora bereitgestellten Analysen, Scores und Empfehlungen — insbesondere KI-generierte Inhalte — dienen ausschließlich als unverbindliche Hinweise. Der Nutzer ist für alle Entscheidungen, die er auf Basis dieser Ergebnisse trifft, selbst verantwortlich. Der Anbieter übernimmt keine Haftung für Schäden, die durch die Umsetzung von Empfehlungen entstehen.
+                                Die von Scanora bereitgestellten Analysen, Scores und Empfehlungen - insbesondere KI-generierte Inhalte - dienen ausschließlich als unverbindliche Hinweise. Der Nutzer ist für alle Entscheidungen, die er auf Basis dieser Ergebnisse trifft, selbst verantwortlich. Der Anbieter übernimmt keine Haftung für Schäden, die durch die Umsetzung von Empfehlungen entstehen.
                             </p>
                         </Sub>
                         <Sub title="5.3 Zugangsdaten">
@@ -115,10 +115,10 @@ export default function NutzungsbedingungenPage() {
 
                     <Section title="7. Sperrung und Kündigung">
                         <p>
-                            Der Anbieter ist berechtigt, einen Account ohne Vorankündigung zu sperren oder zu löschen, wenn der begründete Verdacht besteht, dass der Nutzer gegen diese Nutzungsbedingungen verstößt — insbesondere gegen Abschnitt 4 (Verbotene Nutzung).
+                            Der Anbieter ist berechtigt, einen Account ohne Vorankündigung zu sperren oder zu löschen, wenn der begründete Verdacht besteht, dass der Nutzer gegen diese Nutzungsbedingungen verstößt - insbesondere gegen Abschnitt 4 (Verbotene Nutzung).
                         </p>
                         <p>
-                            Bei kostenpflichtigen Abonnements gelten ergänzend die Kündigungsregelungen der <Link href="/agb" className="text-violet-400 hover:text-violet-300">AGB (§ 6)</Link>.
+                            Bei kostenpflichtigen Abonnements gelten ergänzend die Kündigungsregelungen der <Link href="/agb" className="text-(--accent-ink) hover:text-(--accent-ink)">AGB (§ 6)</Link>.
                         </p>
                     </Section>
 
@@ -139,7 +139,7 @@ export default function NutzungsbedingungenPage() {
 
                     <Section title="9. Änderungen der Nutzungsbedingungen">
                         <p>
-                            Der Anbieter behält sich vor, diese Nutzungsbedingungen jederzeit zu ändern. Registrierte Nutzer werden über wesentliche Änderungen per E-Mail informiert. Die jeweils aktuelle Fassung ist unter <strong className="text-[var(--text-body)]">scanora.ai/nutzungsbedingungen</strong> abrufbar. Die fortgesetzte Nutzung des Dienstes nach Inkrafttreten der Änderungen gilt als Zustimmung.
+                            Der Anbieter behält sich vor, diese Nutzungsbedingungen jederzeit zu ändern. Registrierte Nutzer werden über wesentliche Änderungen per E-Mail informiert. Die jeweils aktuelle Fassung ist unter <strong className="text-(--text-body)">scanora.ai/nutzungsbedingungen</strong> abrufbar. Die fortgesetzte Nutzung des Dienstes nach Inkrafttreten der Änderungen gilt als Zustimmung.
                         </p>
                     </Section>
 
@@ -148,16 +148,16 @@ export default function NutzungsbedingungenPage() {
                             Es gilt das Recht der Bundesrepublik Deutschland. Für Verbraucher gilt dies nur, sofern dadurch keine zwingenden Verbraucherschutzbestimmungen des Aufenthaltslandes eingeschränkt werden.
                         </p>
                         <p>
-                            Bei Fragen oder Beschwerden: <a href="mailto:scanoraai@gmail.com" className="text-violet-400 hover:text-violet-300">scanoraai@gmail.com</a>
+                            Bei Fragen oder Beschwerden: <a href="mailto:scanoraai@gmail.com" className="text-(--accent-ink) hover:text-(--accent-ink)">scanoraai@gmail.com</a>
                         </p>
                     </Section>
 
-                    <div className="border-t border-[var(--text-white)]/5 pt-8 flex flex-wrap gap-6 text-[var(--text-faint)] text-xs">
-                        <Link href="/" className="hover:text-[var(--text-muted)] transition-colors">Startseite</Link>
-                        <Link href="/agb" className="hover:text-[var(--text-muted)] transition-colors">AGB</Link>
-                        <Link href="/datenschutz" className="hover:text-[var(--text-muted)] transition-colors">Datenschutz</Link>
-                        <Link href="/avv" className="hover:text-[var(--text-muted)] transition-colors">AVV</Link>
-                        <Link href="/impressum" className="hover:text-[var(--text-muted)] transition-colors">Impressum</Link>
+                    <div className="border-t border-(--line) pt-8 flex flex-wrap gap-6 text-(--text-faint) text-xs">
+                        <Link href="/" className="hover:text-(--text-muted) transition-colors">Startseite</Link>
+                        <Link href="/agb" className="hover:text-(--text-muted) transition-colors">AGB</Link>
+                        <Link href="/datenschutz" className="hover:text-(--text-muted) transition-colors">Datenschutz</Link>
+                        <Link href="/avv" className="hover:text-(--text-muted) transition-colors">AVV</Link>
+                        <Link href="/impressum" className="hover:text-(--text-muted) transition-colors">Impressum</Link>
                     </div>
                 </div>
             </div>

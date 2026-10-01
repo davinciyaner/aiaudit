@@ -10,7 +10,7 @@ function FAQItem({ faq, isOpen, onToggle, id }) {
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="border border-[var(--border-subtle)] rounded-2xl overflow-hidden bg-[var(--surface-06)]"
+            className="border border-(--line) rounded-2xl overflow-hidden bg-(--card)"
         >
             <h3 className="m-0">
                 <button
@@ -19,14 +19,14 @@ function FAQItem({ faq, isOpen, onToggle, id }) {
                     aria-expanded={isOpen}
                     aria-controls={`${id}-panel`}
                     id={`${id}-trigger`}
-                    className="w-full flex items-center justify-between gap-4 px-5 py-4 text-left text-sm font-medium text-[var(--text-white)] leading-snug"
+                    className="w-full flex items-center justify-between gap-4 px-5 py-4 text-left text-sm font-medium text-(--text-white) leading-snug"
                 >
                     {faq.q}
-                    <ChevronDown className={`w-4 h-4 text-[var(--text-faint)] shrink-0 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
+                    <ChevronDown className={`w-4 h-4 text-(--text-faint) shrink-0 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
                 </button>
             </h3>
             {/* Always rendered in the DOM (grid-rows 0fr/1fr trick) instead of conditionally
-                unmounting the answer — so crawlers/LLMs see all answer text in the server HTML,
+                unmounting the answer - so crawlers/LLMs see all answer text in the server HTML,
                 not just the currently open one. Visually still collapses to zero height. */}
             <div
                 id={`${id}-panel`}
@@ -36,7 +36,7 @@ function FAQItem({ faq, isOpen, onToggle, id }) {
                 className={`grid overflow-hidden transition-[grid-template-rows] duration-200 ease-in-out ${isOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}
             >
                 <div className="min-h-0 overflow-hidden">
-                    <p className="px-5 pb-4 pt-3 text-sm text-[var(--text-muted)] leading-relaxed border-t border-[var(--border-subtle)] mx-5">
+                    <p className="px-5 pb-4 pt-3 text-sm text-(--text-muted) leading-relaxed border-t border-(--border-subtle) mx-5">
                         {faq.a}
                     </p>
                 </div>
@@ -49,7 +49,7 @@ export default function FAQ() {
     const [openIndex, setOpenIndex] = useState(0)
 
     return (
-        <section id="faq" className="relative py-16 md:py-24 bg-[var(--bg-base)]">
+        <section id="faq" className="relative py-16 md:py-24 bg-(--bg-base)">
             <div className="max-w-3xl mx-auto px-5 sm:px-8">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -60,7 +60,7 @@ export default function FAQ() {
                     <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">
                         Frequently asked questions
                     </h2>
-                    <p className="text-[var(--text-muted)] text-base">
+                    <p className="text-(--text-muted) text-base">
                         Everything you need to know about website audits, SEO tests and GEO.
                     </p>
                 </motion.div>

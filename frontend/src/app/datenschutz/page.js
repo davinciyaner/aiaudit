@@ -10,8 +10,8 @@ export const metadata = {
 function Section({ title, children }) {
     return (
         <section className="mb-10">
-            <h2 className="text-[var(--text-white)] font-semibold text-base mb-3 pb-2 border-b border-[var(--text-white)]/5">{title}</h2>
-            <div className="text-[var(--text-muted)] text-sm leading-relaxed space-y-3">{children}</div>
+            <h2 className="text-(--text-white) font-semibold text-base mb-3 pb-2 border-b border-(--line)">{title}</h2>
+            <div className="text-(--text-muted) text-sm leading-relaxed space-y-3">{children}</div>
         </section>
     )
 }
@@ -19,24 +19,24 @@ function Section({ title, children }) {
 function Sub({ title, children }) {
     return (
         <div className="mt-5">
-            <h3 className="text-[var(--text-body)] font-medium mb-2">{title}</h3>
-            <div className="text-[var(--text-muted)] text-sm leading-relaxed space-y-2">{children}</div>
+            <h3 className="text-(--text-body) font-medium mb-2">{title}</h3>
+            <div className="text-(--text-muted) text-sm leading-relaxed space-y-2">{children}</div>
         </div>
     )
 }
 
 export default function DatenschutzPage() {
     return (
-        <div className="min-h-screen bg-[var(--bg-base)] text-[var(--text-body)]">
+        <div className="min-h-screen bg-(--bg-base) text-(--text-body)">
             <div className="max-w-3xl mx-auto px-5 sm:px-8 py-20">
 
                 <div className="mb-12">
                     <Link href="/" className="inline-flex items-center gap-2 text-sm">
-                        <svg className="w-4 h-4 text-violet-400" viewBox="0 0 192 192" fill="none"><circle cx="96" cy="96" r="50" stroke="currentColor" strokeWidth="14" /><circle cx="110" cy="82" r="13" fill="currentColor" /></svg>
-                        <span className="text-[var(--text-white)] font-bold">Scanora</span>
+                        <svg className="w-4 h-4 text-(--accent-ink)" viewBox="0 0 192 192" fill="none"><circle cx="96" cy="96" r="50" stroke="currentColor" strokeWidth="14" /><circle cx="110" cy="82" r="13" fill="currentColor" /></svg>
+                        <span className="text-(--text-white) font-bold">Scanora</span>
                     </Link>
-                    <h1 className="text-3xl font-bold text-[var(--text-white)] mt-6 mb-2">Datenschutzerklärung</h1>
-                    <p className="text-[var(--text-faint)] text-sm">Stand: Juni 2026 · Gemäß DSGVO, BDSG und TTDSG</p>
+                    <h1 className="text-[clamp(34px,4.4vw,54px)] leading-[1.05] tracking-[-0.038em] font-bold text-(--text-white) mt-6 mb-3">Datenschutzerklärung</h1>
+                    <p className="text-(--text-faint) text-sm">Stand: Juni 2026 · Gemäß DSGVO, BDSG und TTDSG</p>
                 </div>
 
                 <div className="space-y-2">
@@ -45,12 +45,12 @@ export default function DatenschutzPage() {
                         <p>
                             Verantwortlicher im Sinne der DSGVO für die Verarbeitung personenbezogener Daten auf dieser Website:
                         </p>
-                        <p className="bg-[var(--text-white)]/2 border border-[var(--text-white)]/5 rounded-xl p-4 not-prose">
+                        <p className="bg-(--card) border border-(--line) rounded-xl p-4 not-prose">
                             Finn Paustian<br />
                             Am Rund 6<br />
                             23566 Lübeck<br />
                             Deutschland<br />
-                            E-Mail: <a href="mailto:scanoraai@gmail.com" className="text-violet-400 hover:text-violet-300">scanoraai@gmail.com</a>
+                            E-Mail: <a href="mailto:scanoraai@gmail.com" className="text-(--accent-ink) hover:text-(--accent-ink)">scanoraai@gmail.com</a>
                         </p>
                     </Section>
 
@@ -63,9 +63,9 @@ export default function DatenschutzPage() {
                                 <li>Passwort (verschlüsselt gespeichert, nicht einsehbar)</li>
                             </ul>
                             <p>
-                                <strong className="text-[var(--text-body)]">Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung).<br />
-                                <strong className="text-[var(--text-body)]">Zweck:</strong> Bereitstellung des Nutzeraccounts, Authentifizierung, Speicherung von Audit-Reports.<br />
-                                <strong className="text-[var(--text-body)]">Speicherdauer:</strong> Bis zur Löschung des Accounts auf Anfrage.
+                                <strong className="text-(--text-body)">Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung).<br />
+                                <strong className="text-(--text-body)">Zweck:</strong> Bereitstellung des Nutzeraccounts, Authentifizierung, Speicherung von Audit-Reports.<br />
+                                <strong className="text-(--text-body)">Speicherdauer:</strong> Bis zur Löschung des Accounts auf Anfrage.
                             </p>
                         </Sub>
 
@@ -75,13 +75,13 @@ export default function DatenschutzPage() {
                             </p>
                             <ul className="list-disc list-inside space-y-1 ml-2">
                                 <li>Intern: Technische Analyse (SEO, Performance, GEO)</li>
-                                <li><strong className="text-[var(--text-body)]">Claude API (Anthropic, Inc.):</strong> Zur Erstellung des KI-generierten Berichts (siehe Abschnitt 5)</li>
+                                <li><strong className="text-(--text-body)">Claude API (Anthropic, Inc.):</strong> Zur Erstellung des KI-generierten Berichts (siehe Abschnitt 5)</li>
                             </ul>
                             <p>
                                 Audit-Ergebnisse werden in der Datenbank gespeichert und dem jeweiligen Nutzeraccount zugeordnet. Nicht eingeloggte Nutzer erhalten keine persistente Speicherung.
                             </p>
                             <p>
-                                <strong className="text-[var(--text-body)]">Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung) bzw. Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der Erbringung des Dienstes).
+                                <strong className="text-(--text-body)">Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung) bzw. Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der Erbringung des Dienstes).
                             </p>
                         </Sub>
 
@@ -97,12 +97,12 @@ export default function DatenschutzPage() {
                                 <li>Positionsveränderungen im Verlauf</li>
                             </ul>
                             <p>
-                                Zur Ermittlung der Google-Positionen werden Keywords und Domain an die <strong className="text-[var(--text-body)]">DataForSEO API</strong> übermittelt (siehe Abschnitt 5a). Es werden keine personenbezogenen Daten der Suchenden erhoben.
+                                Zur Ermittlung der Google-Positionen werden Keywords und Domain an die <strong className="text-(--text-body)">DataForSEO API</strong> übermittelt (siehe Abschnitt 5a). Es werden keine personenbezogenen Daten der Suchenden erhoben.
                             </p>
                             <p>
-                                <strong className="text-[var(--text-body)]">Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung).<br />
-                                <strong className="text-[var(--text-body)]">Speicherdauer:</strong> Ranking-Daten werden für die Dauer des aktiven Abonnements gespeichert und innerhalb von 30 Tagen nach Kündigung gelöscht.<br />
-                                <strong className="text-[var(--text-body)]">Auftragsverarbeitung:</strong> Soweit personenbezogene Daten im Auftrag des Nutzers verarbeitet werden, gilt der <a href="/avv" className="text-violet-400 hover:text-violet-300">Auftragsverarbeitungsvertrag (AVV)</a> gemäß Art. 28 DSGVO.
+                                <strong className="text-(--text-body)">Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung).<br />
+                                <strong className="text-(--text-body)">Speicherdauer:</strong> Ranking-Daten werden für die Dauer des aktiven Abonnements gespeichert und innerhalb von 30 Tagen nach Kündigung gelöscht.<br />
+                                <strong className="text-(--text-body)">Auftragsverarbeitung:</strong> Soweit personenbezogene Daten im Auftrag des Nutzers verarbeitet werden, gilt der <a href="/avv" className="text-(--accent-ink) hover:text-(--accent-ink)">Auftragsverarbeitungsvertrag (AVV)</a> gemäß Art. 28 DSGVO.
                             </p>
                         </Sub>
 
@@ -118,12 +118,12 @@ export default function DatenschutzPage() {
                                 <li>Automatisierte Sentiment-Einordnung der Erwähnung</li>
                             </ul>
                             <p>
-                                Zur Ermittlung der KI-Erwähnungen werden Keywords/Prompts und Domain an die <strong className="text-[var(--text-body)]">DataForSEO API</strong> übermittelt (siehe Abschnitt 5a). Für die Sentiment-Klassifizierung einzelner Antwort-Auszüge wird zusätzlich die <strong className="text-[var(--text-body)]">Claude API von Anthropic</strong> genutzt (siehe Abschnitt 5). Es werden keine personenbezogenen Daten der Endnutzer der KI-Modelle erhoben.
+                                Zur Ermittlung der KI-Erwähnungen werden Keywords/Prompts und Domain an die <strong className="text-(--text-body)">DataForSEO API</strong> übermittelt (siehe Abschnitt 5a). Für die Sentiment-Klassifizierung einzelner Antwort-Auszüge wird zusätzlich die <strong className="text-(--text-body)">Claude API von Anthropic</strong> genutzt (siehe Abschnitt 5). Es werden keine personenbezogenen Daten der Endnutzer der KI-Modelle erhoben.
                             </p>
                             <p>
-                                <strong className="text-[var(--text-body)]">Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung).<br />
-                                <strong className="text-[var(--text-body)]">Speicherdauer:</strong> Wie SEO-Ranking-Daten: für die Dauer des aktiven Abonnements, danach Löschung innerhalb von 30 Tagen.<br />
-                                <strong className="text-[var(--text-body)]">Auftragsverarbeitung:</strong> Soweit personenbezogene Daten im Auftrag des Nutzers verarbeitet werden, gilt der <a href="/avv" className="text-violet-400 hover:text-violet-300">Auftragsverarbeitungsvertrag (AVV)</a> gemäß Art. 28 DSGVO.
+                                <strong className="text-(--text-body)">Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung).<br />
+                                <strong className="text-(--text-body)">Speicherdauer:</strong> Wie SEO-Ranking-Daten: für die Dauer des aktiven Abonnements, danach Löschung innerhalb von 30 Tagen.<br />
+                                <strong className="text-(--text-body)">Auftragsverarbeitung:</strong> Soweit personenbezogene Daten im Auftrag des Nutzers verarbeitet werden, gilt der <a href="/avv" className="text-(--accent-ink) hover:text-(--accent-ink)">Auftragsverarbeitungsvertrag (AVV)</a> gemäß Art. 28 DSGVO.
                             </p>
                         </Sub>
 
@@ -141,8 +141,8 @@ export default function DatenschutzPage() {
                                 Betroffen sind hierbei die Website-Besucher des jeweiligen Scanora-Nutzers, nicht die Nutzer von Scanora selbst. Für die Rechtsgrundlage der Datenerhebung auf seiner eigenen Website (z. B. eine etwaige Einwilligung nach TTDSG/ePrivacy) ist der jeweilige Scanora-Nutzer als datenschutzrechtlich Verantwortlicher für seine eigene Website selbst zuständig.
                             </p>
                             <p>
-                                <strong className="text-[var(--text-body)]">Rechtsgrundlage (Verarbeitung durch Scanora im Auftrag):</strong> Art. 28 DSGVO i. V. m. dem <a href="/avv" className="text-violet-400 hover:text-violet-300">Auftragsverarbeitungsvertrag (AVV)</a>.<br />
-                                <strong className="text-[var(--text-body)]">Speicherdauer:</strong> 12 Monate, danach automatisierte Löschung. Der Scanora-Nutzer kann einzelne Datensätze jederzeit über sein Dashboard einsehen (Art. 15 DSGVO) oder vorzeitig löschen (Art. 17 DSGVO).
+                                <strong className="text-(--text-body)">Rechtsgrundlage (Verarbeitung durch Scanora im Auftrag):</strong> Art. 28 DSGVO i. V. m. dem <a href="/avv" className="text-(--accent-ink) hover:text-(--accent-ink)">Auftragsverarbeitungsvertrag (AVV)</a>.<br />
+                                <strong className="text-(--text-body)">Speicherdauer:</strong> 12 Monate, danach automatisierte Löschung. Der Scanora-Nutzer kann einzelne Datensätze jederzeit über sein Dashboard einsehen (Art. 15 DSGVO) oder vorzeitig löschen (Art. 17 DSGVO).
                             </p>
                         </Sub>
 
@@ -157,8 +157,8 @@ export default function DatenschutzPage() {
                                 <li>Browser-Typ und Betriebssystem (User-Agent)</li>
                             </ul>
                             <p>
-                                <strong className="text-[var(--text-body)]">Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse am sicheren Betrieb).<br />
-                                <strong className="text-[var(--text-body)]">Speicherdauer:</strong> Maximal 7 Tage, danach automatische Löschung.
+                                <strong className="text-(--text-body)">Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse am sicheren Betrieb).<br />
+                                <strong className="text-(--text-body)">Speicherdauer:</strong> Maximal 7 Tage, danach automatische Löschung.
                             </p>
                         </Sub>
                     </Section>
@@ -167,43 +167,43 @@ export default function DatenschutzPage() {
 
                         <Sub title="3.1 Technisch notwendige Speicherung (kein Consent erforderlich)">
                             <p>
-                                Folgende Daten werden im <strong className="text-[var(--text-body)]">LocalStorage</strong> deines Browsers gespeichert und sind technisch notwendig für den Betrieb des Dienstes:
+                                Folgende Daten werden im <strong className="text-(--text-body)">LocalStorage</strong> deines Browsers gespeichert und sind technisch notwendig für den Betrieb des Dienstes:
                             </p>
                             <ul className="list-disc list-inside space-y-1 ml-2">
-                                <li><code className="text-violet-300 text-xs bg-violet-500/10 px-1.5 py-0.5 rounded">token</code> – JWT-Authentifizierungstoken (Gültigkeit: 7 Tage)</li>
-                                <li><code className="text-violet-300 text-xs bg-violet-500/10 px-1.5 py-0.5 rounded">user</code> – Name und E-Mail des eingeloggten Nutzers (nur lokal)</li>
-                                <li><code className="text-violet-300 text-xs bg-violet-500/10 px-1.5 py-0.5 rounded">cookie_consent</code> – Deine Einwilligungsentscheidung (granted/denied)</li>
+                                <li><code className="text-(--accent-ink) text-xs bg-(--accent-soft) px-1.5 py-0.5 rounded">token</code> - JWT-Authentifizierungstoken (Gültigkeit: 7 Tage)</li>
+                                <li><code className="text-(--accent-ink) text-xs bg-(--accent-soft) px-1.5 py-0.5 rounded">user</code> - Name und E-Mail des eingeloggten Nutzers (nur lokal)</li>
+                                <li><code className="text-(--accent-ink) text-xs bg-(--accent-soft) px-1.5 py-0.5 rounded">cookie_consent</code> - Deine Einwilligungsentscheidung (granted/denied)</li>
                             </ul>
                             <p>
                                 Diese Daten verlassen deinen Browser nicht, werden nicht an Dritte übermittelt und dienen ausschließlich der Authentifizierung sowie der Speicherung deiner Datenschutzentscheidung.
                             </p>
                             <p>
-                                <strong className="text-[var(--text-body)]">Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung), § 25 Abs. 2 Nr. 2 TTDSG (technisch notwendig).
+                                <strong className="text-(--text-body)">Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung), § 25 Abs. 2 Nr. 2 TTDSG (technisch notwendig).
                             </p>
                         </Sub>
 
-                        <Sub title="3.2 Analyse- und Marketing-Cookies – nur mit Einwilligung">
+                        <Sub title="3.2 Analyse- und Marketing-Cookies - nur mit Einwilligung">
                             <p>
-                                Folgende Dienste werden <strong className="text-[var(--text-body)]">ausschließlich nach deiner ausdrücklichen Einwilligung</strong> über das Cookie-Banner aktiviert:
+                                Folgende Dienste werden <strong className="text-(--text-body)">ausschließlich nach deiner ausdrücklichen Einwilligung</strong> über das Cookie-Banner aktiviert:
                             </p>
                             <ul className="list-disc list-inside space-y-1 ml-2">
-                                <li><strong className="text-[var(--text-body)]">Microsoft Clarity</strong> – Heatmaps und Sitzungsaufzeichnungen zur Websiteoptimierung (Details: Abschnitt 8)</li>
-                                <li><strong className="text-[var(--text-body)]">Google Ads</strong> – Conversion-Tracking für Werbeanzeigen (Details: Abschnitt 9)</li>
+                                <li><strong className="text-(--text-body)">Microsoft Clarity</strong> - Heatmaps und Sitzungsaufzeichnungen zur Websiteoptimierung (Details: Abschnitt 8)</li>
+                                <li><strong className="text-(--text-body)">Google Ads</strong> - Conversion-Tracking für Werbeanzeigen (Details: Abschnitt 9)</li>
                             </ul>
                             <p>
                                 Lehnst du ab, werden weder Clarity noch Google Ads geladen. Die Website funktioniert in vollem Umfang ohne diese Dienste.
                             </p>
                             <p>
-                                Du kannst deine Einwilligung jederzeit widerrufen, indem du den LocalStorage-Eintrag <code className="text-violet-300 text-xs bg-violet-500/10 px-1.5 py-0.5 rounded">cookie_consent</code> in den Browser-Entwicklertools (F12 → Application → Local Storage) löschst und die Seite neu lädst. Der Cookie-Banner erscheint dann erneut.
+                                Du kannst deine Einwilligung jederzeit widerrufen, indem du den LocalStorage-Eintrag <code className="text-(--accent-ink) text-xs bg-(--accent-soft) px-1.5 py-0.5 rounded">cookie_consent</code> in den Browser-Entwicklertools (F12 → Application → Local Storage) löschst und die Seite neu lädst. Der Cookie-Banner erscheint dann erneut.
                             </p>
                             <p>
-                                <strong className="text-[var(--text-body)]">Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. a DSGVO (Einwilligung), § 25 Abs. 1 TTDSG.
+                                <strong className="text-(--text-body)">Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. a DSGVO (Einwilligung), § 25 Abs. 1 TTDSG.
                             </p>
                         </Sub>
 
                         <Sub title="3.3 Eigenes KI-Referral-Lead-Tracking auf scanora.ai">
                             <p>
-                                Anders als in Abschnitt 2.5 beschrieben (Leads-Tracking als Auftragsverarbeitung für unsere Nutzer auf deren eigenen Websites) setzen wir dieselbe Technik auch auf unserer eigenen Website <strong className="text-[var(--text-body)]">scanora.ai</strong> ein. Hier sind wir selbst datenschutzrechtlich Verantwortlicher (Art. 4 Nr. 7 DSGVO), nicht Auftragsverarbeiter.
+                                Anders als in Abschnitt 2.5 beschrieben (Leads-Tracking als Auftragsverarbeitung für unsere Nutzer auf deren eigenen Websites) setzen wir dieselbe Technik auch auf unserer eigenen Website <strong className="text-(--text-body)">scanora.ai</strong> ein. Hier sind wir selbst datenschutzrechtlich Verantwortlicher (Art. 4 Nr. 7 DSGVO), nicht Auftragsverarbeiter.
                             </p>
                             <p>
                                 Nur nach deiner Einwilligung über das Cookie-Banner erkennen wir, ob du über ChatGPT, Claude, Perplexity oder Gemini auf unsere Seite gelangt bist (anhand des Referrer-Headers, gespeichert im LocalStorage). Registrierst du dich danach für einen Scanora-Account, ordnen wir deine E-Mail-Adresse dieser erkannten Quelle zu.
@@ -214,34 +214,34 @@ export default function DatenschutzPage() {
                                 <li>Zeitstempel der Erfassung</li>
                             </ul>
                             <p>
-                                Lehnst du die Einwilligung ab oder widerrufst sie, findet keinerlei Erkennung oder Zuordnung statt — auch nicht, wenn du danach das Kontaktformular nutzt.
+                                Lehnst du die Einwilligung ab oder widerrufst sie, findet keinerlei Erkennung oder Zuordnung statt - auch nicht, wenn du danach das Kontaktformular nutzt.
                             </p>
                             <p>
-                                <strong className="text-[var(--text-body)]">Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. a DSGVO (Einwilligung), § 25 Abs. 1 TTDSG.<br />
-                                <strong className="text-[var(--text-body)]">Speicherdauer:</strong> 12 Monate, danach automatisierte Löschung.<br />
-                                <strong className="text-[var(--text-body)]">Deine Rechte:</strong> Auskunft (Art. 15 DSGVO) und Löschung (Art. 17 DSGVO) kannst du jederzeit über <a href="/support" className="text-violet-400 hover:text-violet-300">unser Support-Formular</a> geltend machen.
+                                <strong className="text-(--text-body)">Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. a DSGVO (Einwilligung), § 25 Abs. 1 TTDSG.<br />
+                                <strong className="text-(--text-body)">Speicherdauer:</strong> 12 Monate, danach automatisierte Löschung.<br />
+                                <strong className="text-(--text-body)">Deine Rechte:</strong> Auskunft (Art. 15 DSGVO) und Löschung (Art. 17 DSGVO) kannst du jederzeit über <a href="/support" className="text-(--accent-ink) hover:text-(--accent-ink)">unser Support-Formular</a> geltend machen.
                             </p>
                         </Sub>
 
                         <Sub title="3.4 Beispiel-Report-Download (Lead-Magnet)">
                             <p>
-                                Auf <strong className="text-[var(--text-body)]">scanora.ai/beispiel-report</strong> kannst du einen Beispiel-Report per E-Mail anfordern. Der Versand des Reports selbst ist rein transaktional — dafür ist keine gesonderte Einwilligung nötig, er erfolgt automatisch nach Angabe deiner E-Mail-Adresse.
+                                Auf <strong className="text-(--text-body)">scanora.ai/beispiel-report</strong> kannst du einen Beispiel-Report per E-Mail anfordern. Der Versand des Reports selbst ist rein transaktional - dafür ist keine gesonderte Einwilligung nötig, er erfolgt automatisch nach Angabe deiner E-Mail-Adresse.
                             </p>
                             <p>
                                 Zusätzlich schicken wir dir eine separate E-Mail mit der Frage, ob du außerdem gelegentlich Tipps und Erinnerungen zu deiner KI-Sichtbarkeit von uns erhalten möchtest (Double-Opt-In). Nur wenn du den Bestätigungslink in dieser E-Mail anklickst, nutzen wir deine Adresse für solche Updates. Ohne Klick passiert nichts weiter.
                             </p>
                             <ul className="list-disc list-inside space-y-1 ml-2">
                                 <li>E-Mail-Adresse und gewählte Sprache</li>
-                                <li>IP-Adresse und Zeitstempel der Anfrage sowie — falls erfolgt — des Bestätigungsklicks (Nachweis der wirksamen Einwilligung)</li>
+                                <li>IP-Adresse und Zeitstempel der Anfrage sowie - falls erfolgt - des Bestätigungsklicks (Nachweis der wirksamen Einwilligung)</li>
                                 <li>Bestätigungs- und Abmeldestatus</li>
                             </ul>
                             <p>
                                 Jede Update-Mail enthält einen Abmeldelink, über den du die Nutzung deiner Adresse für Tipps & Erinnerungen jederzeit sofort beenden kannst.
                             </p>
                             <p>
-                                <strong className="text-[var(--text-body)]">Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. b DSGVO für den Versand des angeforderten Reports; Art. 6 Abs. 1 lit. a DSGVO (Einwilligung) für Tipps & Erinnerungen nach bestätigtem Opt-In.<br />
-                                <strong className="text-[var(--text-body)]">Speicherdauer:</strong> bis zum Widerruf/Abmeldung bzw. auf Anfrage über unser Support-Formular.<br />
-                                <strong className="text-[var(--text-body)]">Deine Rechte:</strong> Auskunft (Art. 15 DSGVO) und Löschung (Art. 17 DSGVO) kannst du jederzeit über <a href="/support" className="text-violet-400 hover:text-violet-300">unser Support-Formular</a> geltend machen.
+                                <strong className="text-(--text-body)">Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. b DSGVO für den Versand des angeforderten Reports; Art. 6 Abs. 1 lit. a DSGVO (Einwilligung) für Tipps & Erinnerungen nach bestätigtem Opt-In.<br />
+                                <strong className="text-(--text-body)">Speicherdauer:</strong> bis zum Widerruf/Abmeldung bzw. auf Anfrage über unser Support-Formular.<br />
+                                <strong className="text-(--text-body)">Deine Rechte:</strong> Auskunft (Art. 15 DSGVO) und Löschung (Art. 17 DSGVO) kannst du jederzeit über <a href="/support" className="text-(--accent-ink) hover:text-(--accent-ink)">unser Support-Formular</a> geltend machen.
                             </p>
                         </Sub>
 
@@ -249,7 +249,7 @@ export default function DatenschutzPage() {
 
                     <Section title="4. Zahlungsabwicklung über PayPal">
                         <p>
-                            Für kostenpflichtige Abonnements (Pro und Agency) nutzt Scanora <strong className="text-[var(--text-body)]">PayPal</strong> als Zahlungsdienstleister.
+                            Für kostenpflichtige Abonnements (Pro und Agency) nutzt Scanora <strong className="text-(--text-body)">PayPal</strong> als Zahlungsdienstleister.
                         </p>
                         <p>
                             Anbieter: PayPal (Europe) S.à.r.l. et Cie, S.C.A., 22-24 Boulevard Royal, 2449 Luxemburg.
@@ -262,17 +262,17 @@ export default function DatenschutzPage() {
                             <li>Die Subscription-ID zur Verifizierung der Zahlung</li>
                         </ul>
                         <p>
-                            Die eigentliche Zahlungsabwicklung (Bankdaten, Kartendaten etc.) erfolgt ausschließlich auf den Servern von PayPal. Scanora erhält und speichert <strong className="text-[var(--text-body)]">keine Zahlungsdaten</strong>. Es wird lediglich die PayPal Subscription-ID und der Planstatus gespeichert.
+                            Die eigentliche Zahlungsabwicklung (Bankdaten, Kartendaten etc.) erfolgt ausschließlich auf den Servern von PayPal. Scanora erhält und speichert <strong className="text-(--text-body)">keine Zahlungsdaten</strong>. Es wird lediglich die PayPal Subscription-ID und der Planstatus gespeichert.
                         </p>
                         <p>
-                            <strong className="text-[var(--text-body)]">Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung).<br />
-                            Weitere Informationen: <a href="https://www.paypal.com/de/webapps/mpp/ua/privacy-full" className="text-violet-400 hover:text-violet-300" target="_blank" rel="noopener noreferrer">PayPal Datenschutzerklärung</a>
+                            <strong className="text-(--text-body)">Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung).<br />
+                            Weitere Informationen: <a href="https://www.paypal.com/de/webapps/mpp/ua/privacy-full" className="text-(--accent-ink) hover:text-(--accent-ink)" target="_blank" rel="noopener noreferrer">PayPal Datenschutzerklärung</a>
                         </p>
                     </Section>
 
                     <Section title="5. Nutzung der Claude API (Anthropic)">
                         <p>
-                            Scanora nutzt die <strong className="text-[var(--text-body)]">Claude API von Anthropic, Inc.</strong> zur Erstellung KI-generierter Website-Analysen und Berichte sowie zur automatisierten Sentiment-Klassifizierung einzelner KI-Antwort-Auszüge im Rahmen der GEO Automatisierung (siehe Abschnitt 2.4).
+                            Scanora nutzt die <strong className="text-(--text-body)">Claude API von Anthropic, Inc.</strong> zur Erstellung KI-generierter Website-Analysen und Berichte sowie zur automatisierten Sentiment-Klassifizierung einzelner KI-Antwort-Auszüge im Rahmen der GEO Automatisierung (siehe Abschnitt 2.4).
                         </p>
                         <p>
                             Anbieter: Anthropic, Inc., 548 Market Street, San Francisco, CA 94104, USA.
@@ -285,12 +285,12 @@ export default function DatenschutzPage() {
                                 <li>Auszüge aus KI-Antworten anderer Modelle, die zu einer eingetragenen Domain gefunden wurden (GEO Automatisierung)</li>
                             </ul>
                             <p>
-                                Es werden <strong className="text-[var(--text-body)]">keine personenbezogenen Nutzerdaten</strong> (Name, E-Mail etc.) an Anthropic übermittelt.
+                                Es werden <strong className="text-(--text-body)">keine personenbezogenen Nutzerdaten</strong> (Name, E-Mail etc.) an Anthropic übermittelt.
                             </p>
                         </Sub>
                         <Sub title="Datenverarbeitung in den USA">
                             <p>
-                                Anthropic verarbeitet Daten in den USA. Die Übermittlung erfolgt auf Basis von Standardvertragsklauseln gemäß Art. 46 Abs. 2 lit. c DSGVO. Weitere Informationen: <a href="https://www.anthropic.com/privacy" className="text-violet-400 hover:text-violet-300" target="_blank" rel="noopener noreferrer">Anthropic Privacy Policy</a>
+                                Anthropic verarbeitet Daten in den USA. Die Übermittlung erfolgt auf Basis von Standardvertragsklauseln gemäß Art. 46 Abs. 2 lit. c DSGVO. Weitere Informationen: <a href="https://www.anthropic.com/privacy" className="text-(--accent-ink) hover:text-(--accent-ink)" target="_blank" rel="noopener noreferrer">Anthropic Privacy Policy</a>
                             </p>
                         </Sub>
                         <Sub title="Hinweis zur KI-Nutzung">
@@ -299,13 +299,13 @@ export default function DatenschutzPage() {
                             </p>
                         </Sub>
                         <p>
-                            <strong className="text-[var(--text-body)]">Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung — der KI-Report ist Bestandteil des angebotenen Dienstes).
+                            <strong className="text-(--text-body)">Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung - der KI-Report ist Bestandteil des angebotenen Dienstes).
                         </p>
                     </Section>
 
                     <Section title="5a. Nutzung der DataForSEO API">
                         <p>
-                            Scanora nutzt die <strong className="text-[var(--text-body)]">DataForSEO API</strong> zur Ermittlung von Google-Suchmaschinenrankings im Rahmen der SEO-Automatisierung.
+                            Scanora nutzt die <strong className="text-(--text-body)">DataForSEO API</strong> zur Ermittlung von Google-Suchmaschinenrankings im Rahmen der SEO-Automatisierung.
                         </p>
                         <p>
                             Anbieter: DataForSEO Ltd., Vilnius, Litauen (EU).
@@ -318,14 +318,14 @@ export default function DatenschutzPage() {
                                 <li>Der Sprachcode (z.B. „de")</li>
                             </ul>
                             <p>
-                                Es werden <strong className="text-[var(--text-body)]">keine personenbezogenen Nutzerdaten</strong> (Name, E-Mail, IP-Adresse) an DataForSEO übermittelt. Die Domain wird serverseitig mit den zurückgegebenen SERP-Ergebnissen abgeglichen; sie verlässt nicht die eigenen Server.
+                                Es werden <strong className="text-(--text-body)">keine personenbezogenen Nutzerdaten</strong> (Name, E-Mail, IP-Adresse) an DataForSEO übermittelt. Die Domain wird serverseitig mit den zurückgegebenen SERP-Ergebnissen abgeglichen; sie verlässt nicht die eigenen Server.
                             </p>
                         </Sub>
                         <p>
-                            Da DataForSEO als EU-Anbieter operiert, ist kein Drittlandtransfer erforderlich. Weitere Informationen: <a href="https://dataforseo.com/privacy-policy" className="text-violet-400 hover:text-violet-300" target="_blank" rel="noopener noreferrer">DataForSEO Privacy Policy</a>
+                            Da DataForSEO als EU-Anbieter operiert, ist kein Drittlandtransfer erforderlich. Weitere Informationen: <a href="https://dataforseo.com/privacy-policy" className="text-(--accent-ink) hover:text-(--accent-ink)" target="_blank" rel="noopener noreferrer">DataForSEO Privacy Policy</a>
                         </p>
                         <p>
-                            <strong className="text-[var(--text-body)]">Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung — der Ranking-Check ist Bestandteil der angebotenen SEO-Automatisierung).
+                            <strong className="text-(--text-body)">Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung - der Ranking-Check ist Bestandteil der angebotenen SEO-Automatisierung).
                         </p>
                     </Section>
 
@@ -337,13 +337,13 @@ export default function DatenschutzPage() {
                             Anbieter: MongoDB, Inc., 1633 Broadway, New York, NY 10019, USA. Die Datenbank ist passwortgeschützt, der Zugriff ist auf autorisierte Server beschränkt. Passwörter werden ausschließlich in verschlüsselter Form (bcrypt) gespeichert.
                         </p>
                         <p>
-                            <strong className="text-[var(--text-body)]">Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. b DSGVO.
+                            <strong className="text-(--text-body)">Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. b DSGVO.
                         </p>
                     </Section>
 
                     <Section title="7. Vercel Analytics und Speed Insights">
                         <p>
-                            Scanora nutzt <strong className="text-[var(--text-body)]">Vercel Analytics</strong> und <strong className="text-[var(--text-body)]">Vercel Speed Insights</strong> zur Analyse von Seitenaufrufen und Performance-Metriken.
+                            Scanora nutzt <strong className="text-(--text-body)">Vercel Analytics</strong> und <strong className="text-(--text-body)">Vercel Speed Insights</strong> zur Analyse von Seitenaufrufen und Performance-Metriken.
                         </p>
                         <p>
                             Anbieter: Vercel Inc., 340 Pine Street, Suite 701, San Francisco, CA 94104, USA.
@@ -356,21 +356,21 @@ export default function DatenschutzPage() {
                                 <li>Referrer-URL</li>
                             </ul>
                             <p>
-                                Es werden <strong className="text-[var(--text-body)]">keine Cookies gesetzt</strong> und keine personenbezogenen Daten (Name, E-Mail, IP) gespeichert. Alle Daten werden aggregiert und anonymisiert verarbeitet.
+                                Es werden <strong className="text-(--text-body)">keine Cookies gesetzt</strong> und keine personenbezogenen Daten (Name, E-Mail, IP) gespeichert. Alle Daten werden aggregiert und anonymisiert verarbeitet.
                             </p>
                         </Sub>
                         <p>
                             Die Daten werden auf Servern von Vercel Inc. in den USA verarbeitet. Die Übermittlung erfolgt auf Basis von Standardvertragsklauseln gemäß Art. 46 Abs. 2 lit. c DSGVO.
                         </p>
                         <p>
-                            <strong className="text-[var(--text-body)]">Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der Verbesserung des Dienstes). Da keine personenbezogenen Daten verarbeitet werden, ist eine Einwilligung nicht erforderlich.<br />
-                            Weitere Informationen: <a href="https://vercel.com/legal/privacy-policy" className="text-violet-400 hover:text-violet-300" target="_blank" rel="noopener noreferrer">Vercel Privacy Policy</a>
+                            <strong className="text-(--text-body)">Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der Verbesserung des Dienstes). Da keine personenbezogenen Daten verarbeitet werden, ist eine Einwilligung nicht erforderlich.<br />
+                            Weitere Informationen: <a href="https://vercel.com/legal/privacy-policy" className="text-(--accent-ink) hover:text-(--accent-ink)" target="_blank" rel="noopener noreferrer">Vercel Privacy Policy</a>
                         </p>
                     </Section>
 
-                    <Section title="8. Microsoft Clarity – Heatmaps und Sitzungsanalyse">
+                    <Section title="8. Microsoft Clarity - Heatmaps und Sitzungsanalyse">
                         <p>
-                            Mit deiner Einwilligung verwendet Scanora <strong className="text-[var(--text-body)]">Microsoft Clarity</strong>, ein Analyse-Tool zur Verbesserung der Benutzerfreundlichkeit der Website.
+                            Mit deiner Einwilligung verwendet Scanora <strong className="text-(--text-body)">Microsoft Clarity</strong>, ein Analyse-Tool zur Verbesserung der Benutzerfreundlichkeit der Website.
                         </p>
                         <p>
                             Anbieter: Microsoft Corporation, One Microsoft Way, Redmond, WA 98052-6399, USA.
@@ -385,7 +385,7 @@ export default function DatenschutzPage() {
                                 <li>Geräteinformationen (Browser, Betriebssystem, Bildschirmgröße)</li>
                             </ul>
                             <p>
-                                <strong className="text-[var(--text-body)]">Wichtig:</strong> Microsoft Clarity maskiert automatisch sensible Eingaben (Passwörter, Zahlungsfelder). IP-Adressen werden anonymisiert. Es werden keine personenbezogenen Daten wie Name oder E-Mail erfasst.
+                                <strong className="text-(--text-body)">Wichtig:</strong> Microsoft Clarity maskiert automatisch sensible Eingaben (Passwörter, Zahlungsfelder). IP-Adressen werden anonymisiert. Es werden keine personenbezogenen Daten wie Name oder E-Mail erfasst.
                             </p>
                         </Sub>
                         <Sub title="Zweck der Verarbeitung">
@@ -395,25 +395,25 @@ export default function DatenschutzPage() {
                         </Sub>
                         <Sub title="Einwilligung und Widerruf">
                             <p>
-                                Microsoft Clarity wird <strong className="text-[var(--text-body)]">nur geladen, wenn du im Cookie-Banner aktiv eingewilligt hast</strong>. Ohne Einwilligung werden keinerlei Daten an Microsoft übermittelt.
+                                Microsoft Clarity wird <strong className="text-(--text-body)">nur geladen, wenn du im Cookie-Banner aktiv eingewilligt hast</strong>. Ohne Einwilligung werden keinerlei Daten an Microsoft übermittelt.
                             </p>
                             <p>
-                                Du kannst deine Einwilligung jederzeit widerrufen: Browser-Entwicklertools öffnen (F12) → Application → Local Storage → Eintrag <code className="text-violet-300 text-xs bg-violet-500/10 px-1.5 py-0.5 rounded">cookie_consent</code> löschen → Seite neu laden. Der Cookie-Banner erscheint erneut und du kannst ablehnen.
+                                Du kannst deine Einwilligung jederzeit widerrufen: Browser-Entwicklertools öffnen (F12) → Application → Local Storage → Eintrag <code className="text-(--accent-ink) text-xs bg-(--accent-soft) px-1.5 py-0.5 rounded">cookie_consent</code> löschen → Seite neu laden. Der Cookie-Banner erscheint erneut und du kannst ablehnen.
                             </p>
                             <p>
-                                Alternativ kann Clarity website-übergreifend über das <a href="https://clarity.microsoft.com/opt-out" className="text-violet-400 hover:text-violet-300" target="_blank" rel="noopener noreferrer">Microsoft Clarity Opt-out</a> deaktiviert werden.
+                                Alternativ kann Clarity website-übergreifend über das <a href="https://clarity.microsoft.com/opt-out" className="text-(--accent-ink) hover:text-(--accent-ink)" target="_blank" rel="noopener noreferrer">Microsoft Clarity Opt-out</a> deaktiviert werden.
                             </p>
                         </Sub>
                         <p>
                             Die Datenverarbeitung erfolgt in den USA auf Basis von Standardvertragsklauseln gemäß Art. 46 Abs. 2 lit. c DSGVO.<br />
-                            <strong className="text-[var(--text-body)]">Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. a DSGVO (Einwilligung), § 25 Abs. 1 TTDSG.<br />
-                            Weitere Informationen: <a href="https://privacy.microsoft.com/de-de/privacystatement" className="text-violet-400 hover:text-violet-300" target="_blank" rel="noopener noreferrer">Microsoft Datenschutzerklärung</a>
+                            <strong className="text-(--text-body)">Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. a DSGVO (Einwilligung), § 25 Abs. 1 TTDSG.<br />
+                            Weitere Informationen: <a href="https://privacy.microsoft.com/de-de/privacystatement" className="text-(--accent-ink) hover:text-(--accent-ink)" target="_blank" rel="noopener noreferrer">Microsoft Datenschutzerklärung</a>
                         </p>
                     </Section>
 
-                    <Section title="9. Google Ads – Conversion-Tracking">
+                    <Section title="9. Google Ads - Conversion-Tracking">
                         <p>
-                            Mit deiner Einwilligung nutzt Scanora <strong className="text-[var(--text-body)]">Google Ads Conversion-Tracking</strong> ausschließlich zur Messung der Wirksamkeit von Werbeanzeigen.
+                            Mit deiner Einwilligung nutzt Scanora <strong className="text-(--text-body)">Google Ads Conversion-Tracking</strong> ausschließlich zur Messung der Wirksamkeit von Werbeanzeigen.
                         </p>
                         <p>
                             Anbieter: Google LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA.
@@ -424,11 +424,11 @@ export default function DatenschutzPage() {
                             <li>Datenverarbeitung: USA (Standardvertragsklauseln gem. Art. 46 Abs. 2 lit. c DSGVO)</li>
                         </ul>
                         <p>
-                            Lehnst du ab, bleibt das Google Ads Tracking vollständig deaktiviert (<strong className="text-[var(--text-body)]">Google Consent Mode v2</strong>: <code className="text-violet-300 text-xs bg-violet-500/10 px-1.5 py-0.5 rounded">ad_storage: denied</code>, <code className="text-violet-300 text-xs bg-violet-500/10 px-1.5 py-0.5 rounded">analytics_storage: denied</code>).
+                            Lehnst du ab, bleibt das Google Ads Tracking vollständig deaktiviert (<strong className="text-(--text-body)">Google Consent Mode v2</strong>: <code className="text-(--accent-ink) text-xs bg-(--accent-soft) px-1.5 py-0.5 rounded">ad_storage: denied</code>, <code className="text-(--accent-ink) text-xs bg-(--accent-soft) px-1.5 py-0.5 rounded">analytics_storage: denied</code>).
                         </p>
                         <p>
-                            <strong className="text-[var(--text-body)]">Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. a DSGVO (Einwilligung), § 25 Abs. 1 TTDSG.<br />
-                            Weitere Informationen: <a href="https://policies.google.com/privacy" className="text-violet-400 hover:text-violet-300" target="_blank" rel="noopener noreferrer">Google Datenschutzerklärung</a>
+                            <strong className="text-(--text-body)">Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. a DSGVO (Einwilligung), § 25 Abs. 1 TTDSG.<br />
+                            Weitere Informationen: <a href="https://policies.google.com/privacy" className="text-(--accent-ink) hover:text-(--accent-ink)" target="_blank" rel="noopener noreferrer">Google Datenschutzerklärung</a>
                         </p>
                     </Section>
 
@@ -437,9 +437,9 @@ export default function DatenschutzPage() {
                             Personenbezogene Daten werden nicht an Dritte verkauft, vermietet oder anderweitig weitergegeben, außer:
                         </p>
                         <ul className="list-disc list-inside space-y-1 ml-2">
-                            <li>Zur Vertragserfüllung notwendige Dienstleister (PayPal, Anthropic, MongoDB, Vercel, DataForSEO — wie oben beschrieben)</li>
-                            <li>Microsoft Corporation — nur bei erteilter Einwilligung (Microsoft Clarity)</li>
-                            <li>Google LLC — nur bei erteilter Einwilligung (Google Ads Conversion-Tracking)</li>
+                            <li>Zur Vertragserfüllung notwendige Dienstleister (PayPal, Anthropic, MongoDB, Vercel, DataForSEO - wie oben beschrieben)</li>
+                            <li>Microsoft Corporation - nur bei erteilter Einwilligung (Microsoft Clarity)</li>
+                            <li>Google LLC - nur bei erteilter Einwilligung (Google Ads Conversion-Tracking)</li>
                             <li>Bei gesetzlicher Verpflichtung</li>
                         </ul>
                         <p>Es findet kein Verkauf von Nutzerdaten statt.</p>
@@ -448,17 +448,17 @@ export default function DatenschutzPage() {
                     <Section title="11. Deine Rechte nach DSGVO">
                         <p>Du hast folgende Rechte bezüglich deiner personenbezogenen Daten:</p>
                         <ul className="space-y-2 ml-2">
-                            <li><strong className="text-[var(--text-body)]">Auskunft</strong> (Art. 15 DSGVO): Welche Daten über dich gespeichert sind.</li>
-                            <li><strong className="text-[var(--text-body)]">Berichtigung</strong> (Art. 16 DSGVO): Korrektur falscher oder unvollständiger Daten.</li>
-                            <li><strong className="text-[var(--text-body)]">Löschung</strong> (Art. 17 DSGVO): Vollständige Löschung deines Accounts und aller gespeicherten Daten.</li>
-                            <li><strong className="text-[var(--text-body)]">Einschränkung</strong> (Art. 18 DSGVO): Einschränkung der Verarbeitung deiner Daten.</li>
-                            <li><strong className="text-[var(--text-body)]">Datenübertragbarkeit</strong> (Art. 20 DSGVO): Übermittlung deiner Daten in einem maschinenlesbaren Format.</li>
-                            <li><strong className="text-[var(--text-body)]">Widerspruch</strong> (Art. 21 DSGVO): Widerspruch gegen bestimmte Verarbeitungen.</li>
-                            <li><strong className="text-[var(--text-body)]">Widerruf der Einwilligung</strong> (Art. 7 Abs. 3 DSGVO): Jederzeit widerrufbar für Clarity und Google Ads — siehe Abschnitte 8 und 9.</li>
-                            <li><strong className="text-[var(--text-body)]">Beschwerde</strong>: Du hast das Recht, Beschwerde bei einer Datenschutzaufsichtsbehörde einzulegen. Zuständig ist das Unabhängige Landeszentrum für Datenschutz Schleswig-Holstein (ULD), Holstenstraße 98, 24103 Kiel, <a href="https://www.datenschutzzentrum.de" className="text-violet-400 hover:text-violet-300" target="_blank" rel="noopener noreferrer">datenschutzzentrum.de</a>.</li>
+                            <li><strong className="text-(--text-body)">Auskunft</strong> (Art. 15 DSGVO): Welche Daten über dich gespeichert sind.</li>
+                            <li><strong className="text-(--text-body)">Berichtigung</strong> (Art. 16 DSGVO): Korrektur falscher oder unvollständiger Daten.</li>
+                            <li><strong className="text-(--text-body)">Löschung</strong> (Art. 17 DSGVO): Vollständige Löschung deines Accounts und aller gespeicherten Daten.</li>
+                            <li><strong className="text-(--text-body)">Einschränkung</strong> (Art. 18 DSGVO): Einschränkung der Verarbeitung deiner Daten.</li>
+                            <li><strong className="text-(--text-body)">Datenübertragbarkeit</strong> (Art. 20 DSGVO): Übermittlung deiner Daten in einem maschinenlesbaren Format.</li>
+                            <li><strong className="text-(--text-body)">Widerspruch</strong> (Art. 21 DSGVO): Widerspruch gegen bestimmte Verarbeitungen.</li>
+                            <li><strong className="text-(--text-body)">Widerruf der Einwilligung</strong> (Art. 7 Abs. 3 DSGVO): Jederzeit widerrufbar für Clarity und Google Ads - siehe Abschnitte 8 und 9.</li>
+                            <li><strong className="text-(--text-body)">Beschwerde</strong>: Du hast das Recht, Beschwerde bei einer Datenschutzaufsichtsbehörde einzulegen. Zuständig ist das Unabhängige Landeszentrum für Datenschutz Schleswig-Holstein (ULD), Holstenstraße 98, 24103 Kiel, <a href="https://www.datenschutzzentrum.de" className="text-(--accent-ink) hover:text-(--accent-ink)" target="_blank" rel="noopener noreferrer">datenschutzzentrum.de</a>.</li>
                         </ul>
                         <p>
-                            Zur Ausübung dieser Rechte wende dich per E-Mail an: <a href="mailto:scanoraai@gmail.com" className="text-violet-400 hover:text-violet-300">scanoraai@gmail.com</a>. Anfragen werden innerhalb von 30 Tagen beantwortet.
+                            Zur Ausübung dieser Rechte wende dich per E-Mail an: <a href="mailto:scanoraai@gmail.com" className="text-(--accent-ink) hover:text-(--accent-ink)">scanoraai@gmail.com</a>. Anfragen werden innerhalb von 30 Tagen beantwortet.
                         </p>
                     </Section>
 
@@ -478,16 +478,16 @@ export default function DatenschutzPage() {
 
                     <Section title="13. Änderungen dieser Datenschutzerklärung">
                         <p>
-                            Diese Datenschutzerklärung kann bei Änderungen des Dienstes oder der gesetzlichen Anforderungen aktualisiert werden. Die jeweils aktuelle Version ist unter <a href="https://scanora.ai/datenschutz" className="text-violet-400 hover:text-violet-300">scanora.ai/datenschutz</a> abrufbar. Bei wesentlichen Änderungen werden registrierte Nutzer per E-Mail informiert.
+                            Diese Datenschutzerklärung kann bei Änderungen des Dienstes oder der gesetzlichen Anforderungen aktualisiert werden. Die jeweils aktuelle Version ist unter <a href="https://scanora.ai/datenschutz" className="text-(--accent-ink) hover:text-(--accent-ink)">scanora.ai/datenschutz</a> abrufbar. Bei wesentlichen Änderungen werden registrierte Nutzer per E-Mail informiert.
                         </p>
                     </Section>
 
-                    <div className="border-t border-[var(--text-white)]/5 pt-8 flex flex-wrap gap-6 text-[var(--text-faint)] text-xs">
-                        <Link href="/" className="hover:text-[var(--text-muted)] transition-colors">Startseite</Link>
-                        <Link href="/impressum" className="hover:text-[var(--text-muted)] transition-colors">Impressum</Link>
-                        <Link href="/agb" className="hover:text-[var(--text-muted)] transition-colors">AGB</Link>
-                        <Link href="/avv" className="hover:text-[var(--text-muted)] transition-colors">AVV</Link>
-                        <Link href="/nutzungsbedingungen" className="hover:text-[var(--text-muted)] transition-colors">Nutzungsbedingungen</Link>
+                    <div className="border-t border-(--line) pt-8 flex flex-wrap gap-6 text-(--text-faint) text-xs">
+                        <Link href="/" className="hover:text-(--text-muted) transition-colors">Startseite</Link>
+                        <Link href="/impressum" className="hover:text-(--text-muted) transition-colors">Impressum</Link>
+                        <Link href="/agb" className="hover:text-(--text-muted) transition-colors">AGB</Link>
+                        <Link href="/avv" className="hover:text-(--text-muted) transition-colors">AVV</Link>
+                        <Link href="/nutzungsbedingungen" className="hover:text-(--text-muted) transition-colors">Nutzungsbedingungen</Link>
                     </div>
                 </div>
             </div>

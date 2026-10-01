@@ -113,66 +113,66 @@ const LAYERS = [
     {
         number: '01',
         title: 'Technical foundation',
-        color: '#06b6d4',
+        color: 'var(--accent)',
         desc: 'The prerequisite, not the solution: llms.txt, Schema.org data, FAQ schema backed by visible HTML content, and explicitly allowing AI crawlers like GPTBot, ClaudeBot and PerplexityBot in robots.txt. Without this, an AI can’t read a website at all - but this alone doesn’t get you cited.',
     },
     {
         number: '02',
         title: 'Citable, authoritative content',
-        color: '#a78bfa',
+        color: 'var(--accent)',
         desc: 'AI models favor sources that make a clear claim and can be compared against other sources on the same topic. Concrete facts and numbers instead of marketing fluff, clear "X is Y for Z" definitions, and above all: presence in comparison and roundup content in your space - your own or someone else’s. Training-cutoff models like Claude disproportionately draw on exactly these comparison sources.',
     },
     {
         number: '03',
         title: 'External mentions & E-E-A-T',
-        color: '#10b981',
+        color: 'var(--success)',
         desc: 'Is your brand already being discussed elsewhere on the web - in forums, comparison articles, on GitHub, in reviews? The more often a domain shows up linked to a topic across the open web, the more likely AI models are to pick up that association. A maintained about page with founder info and outbound references to authoritative sources reinforce that trust signal further.',
     },
     {
         number: '04',
         title: 'Ongoing monitoring',
-        color: '#f59e0b',
+        color: 'var(--warning)',
         desc: 'AI answers aren’t deterministic - the same question can get a different answer depending on when you ask. Without repeated measurement, you can’t tell whether a change is actually working or you’re just looking at a snapshot. Monitoring also shows who gets cited instead - and whether an ambiguous phrase like "AI visibility" even gets routed to the right category by a given model.',
     },
 ]
 
 export default function AiVisibilityPage() {
     return (
-        <main className="bg-[var(--bg-base)] min-h-screen">
+        <main className="bg-(--bg-base) min-h-screen">
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
             <Navbar locale="en" />
 
-            <article className="max-w-3xl mx-auto px-5 sm:px-8 pt-32 pb-24">
+            <article className="max-w-190 mx-auto px-4 sm:px-8 pt-28 md:pt-34 pb-18 md:pb-28">
 
                 {/* Breadcrumb */}
-                <div className="flex items-center gap-2 text-xs text-[var(--text-faint)] mb-8">
-                    <Link href="/en" className="hover:text-[var(--text-muted)] transition-colors">Scanora</Link>
+                <div className="flex flex-wrap items-center gap-2 text-sm text-(--text-muted) mb-8">
+                    <Link href="/en" className="hover:text-(--accent-ink) transition-colors">Scanora</Link>
                     <span>/</span>
-                    <Link href="/en/blog" className="hover:text-[var(--text-muted)] transition-colors">Blog</Link>
+                    <Link href="/en/blog" className="hover:text-(--accent-ink) transition-colors">Blog</Link>
                     <span>/</span>
-                    <span className="text-[var(--text-faint)]">AI Visibility</span>
+                    <span className="text-(--text-faint)">AI Visibility</span>
                 </div>
 
                 {/* Header */}
                 <div className="mb-10">
                     <div className="flex items-center gap-3 mb-4">
-                        <span className="text-[11px] font-semibold px-2.5 py-1 rounded-full uppercase tracking-wider bg-violet-500/15 text-violet-400">
+                        <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-(--accent-soft) text-(--accent-ink)">
                             GEO
                         </span>
-                        <span className="text-xs text-[var(--text-faint)]">August 10, 2026</span>
-                        <span className="text-xs text-[var(--text-faint)]">· 9 min read</span>
+                        <span className="text-xs text-(--text-faint)">August 10, 2026</span>
+                        <span className="text-xs text-(--text-faint)">· 9 min read</span>
                     </div>
-                    <h1 className="text-3xl sm:text-5xl font-bold text-[var(--text-white)] leading-tight tracking-tight mb-5">
+                    <h1 className="text-[clamp(34px,4.4vw,52px)] font-bold text-(--text-white) leading-[1.06] tracking-[-0.035em] mb-5">
                         AI Visibility: How to Get Cited by ChatGPT, Claude & Perplexity
                     </h1>
-                    <p className="text-lg text-[var(--text-muted)] leading-relaxed">
+                    <p className="text-lg text-(--text-body) leading-relaxed">
                         Adding llms.txt and schema markup is the easy part. The real reason most websites still don’t get cited sits one layer deeper - in content strategy and monitoring. Here’s the full path to real AI visibility, broken down by platform.
                     </p>
-                    <div className="mt-5 flex items-center gap-2 text-xs text-[var(--text-faint)]">
-                        <Link href="/en/about" className="flex items-center gap-2 hover:text-[var(--text-body)] transition-colors">
-                            <div className="w-6 h-6 rounded-full bg-gradient-to-br from-violet-600 to-cyan-600 flex items-center justify-center text-[var(--text-white)] text-[10px] font-bold">F</div>
+                    <div className="mt-5 flex items-center gap-2 text-xs text-(--text-faint)">
+                        <Link href="/en/about" className="flex items-center gap-2 hover:text-(--text-body) transition-colors">
+                            <div className="w-6 h-6 rounded-full bg-(--accent) flex items-center justify-center text-(--on-accent) text-[10px] font-bold">F</div>
                             <span>Finn Paustian</span>
                         </Link>
                         <span>·</span>
@@ -180,31 +180,31 @@ export default function AiVisibilityPage() {
                     </div>
                 </div>
 
-                <div className="border-t border-[var(--text-white)]/5 mb-10" />
+                <div className="border-t border-(--line) mb-10" />
 
-                <div className="prose prose-invert prose-slate max-w-none space-y-10 text-[var(--text-body)] leading-relaxed">
+                <div className="prose prose-invert prose-slate max-w-none space-y-10 text-(--text-body) leading-relaxed">
 
-                    <nav aria-label="Table of contents" className="bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-2xl p-5 sm:p-6">
-                        <p className="text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider mb-3">In this article</p>
+                    <nav aria-label="Table of contents" className="bg-(--card) border border-(--line) rounded-2xl p-5 sm:p-6">
+                        <p className="text-xs font-semibold text-(--text-faint) mb-3">In this article</p>
                         <ol className="grid sm:grid-cols-2 gap-x-6 gap-y-1.5 text-sm">
-                            <li><a href="#what-is-ai-visibility" className="text-[var(--text-muted)] hover:text-violet-300 transition-colors">What exactly is AI visibility?</a></li>
-                            <li><a href="#why-technical-isnt-enough" className="text-[var(--text-muted)] hover:text-violet-300 transition-colors">Why isn’t technical enough?</a></li>
+                            <li><a href="#what-is-ai-visibility" className="text-(--text-muted) hover:text-(--accent-ink) transition-colors">What exactly is AI visibility?</a></li>
+                            <li><a href="#why-technical-isnt-enough" className="text-(--text-muted) hover:text-(--accent-ink) transition-colors">Why isn’t technical enough?</a></li>
                             {LAYERS.map((l) => (
                                 <li key={l.number}>
-                                    <a href={`#layer-${l.number}`} className="text-[var(--text-muted)] hover:text-violet-300 transition-colors">
-                                        <span className="font-mono text-[var(--text-faint)] mr-1.5">{l.number}</span>{l.title}
+                                    <a href={`#layer-${l.number}`} className="text-(--text-muted) hover:text-(--accent-ink) transition-colors">
+                                        <span className="font-mono text-(--text-faint) mr-1.5">{l.number}</span>{l.title}
                                     </a>
                                 </li>
                             ))}
-                            <li><a href="#per-platform" className="text-[var(--text-muted)] hover:text-violet-300 transition-colors">What matters per platform?</a></li>
-                            <li><a href="#faq" className="text-[var(--text-muted)] hover:text-violet-300 transition-colors">FAQ</a></li>
+                            <li><a href="#per-platform" className="text-(--text-muted) hover:text-(--accent-ink) transition-colors">What matters per platform?</a></li>
+                            <li><a href="#faq" className="text-(--text-muted) hover:text-(--accent-ink) transition-colors">FAQ</a></li>
                         </ol>
                     </nav>
 
                     <section id="what-is-ai-visibility" className="scroll-mt-28">
-                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">What exactly is AI visibility?</h2>
+                        <h2 className="text-[28px] leading-tight tracking-[-0.03em] font-bold text-(--text-white) mb-4">What exactly is AI visibility?</h2>
                         <p>
-                            <strong className="text-[var(--text-white)]">AI visibility</strong> describes how often and how prominently a website or brand gets mentioned in the answers of AI models like ChatGPT, Claude, Perplexity or Google AI Overview. It’s the GEO equivalent of Google rankings in classic SEO - except the "results page" is a generated answer instead of a list of links, and a brand either gets mentioned or it doesn’t, with everything in between (context, sentiment, which other sources get cited alongside it).
+                            <strong className="text-(--text-white)">AI visibility</strong> describes how often and how prominently a website or brand gets mentioned in the answers of AI models like ChatGPT, Claude, Perplexity or Google AI Overview. It’s the GEO equivalent of Google rankings in classic SEO - except the "results page" is a generated answer instead of a list of links, and a brand either gets mentioned or it doesn’t, with everything in between (context, sentiment, which other sources get cited alongside it).
                         </p>
                         <p className="mt-4">
                             "Getting AI visibility" means more than just being crawlable. It means a model knows a domain, associates it with a topic, and considers it citation-worthy relative to other possible sources.
@@ -212,29 +212,29 @@ export default function AiVisibilityPage() {
                     </section>
 
                     <section id="why-technical-isnt-enough" className="scroll-mt-28">
-                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Why isn’t technical alone enough?</h2>
+                        <h2 className="text-[28px] leading-tight tracking-[-0.03em] font-bold text-(--text-white) mb-4">Why isn’t technical alone enough?</h2>
                         <p>
                             llms.txt, Schema.org and open crawler rules solve an accessibility problem: can the AI even read the page? They don’t solve an authority problem: why would the AI cite this particular page instead of one of a hundred others on the same topic?
                         </p>
-                        <div className="bg-violet-500/8 border border-violet-500/20 rounded-2xl p-5 mt-5">
-                            <p className="text-sm text-violet-300 font-medium mb-1">The most common mistake</p>
-                            <p className="text-sm text-[var(--text-muted)]">
+                        <div className="bg-(--accent-soft) border border-(--accent-border) rounded-2xl p-5 mt-5">
+                            <p className="text-sm text-(--accent-ink) font-medium mb-1">The most common mistake</p>
+                            <p className="text-sm text-(--text-muted)">
                                 Websites implement every technical GEO signal and still don’t get cited - because nowhere on the web (including their own site) does a comparison exist that positions their brand next to the answers that are already established for the same question.
                             </p>
                         </div>
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-2">The 4 layers of earning AI visibility</h2>
-                        <p className="text-[var(--text-muted)] mb-6">Technical is only the first of four layers. Only all four together lead to actual citations:</p>
+                        <h2 className="text-[28px] leading-tight tracking-[-0.03em] font-bold text-(--text-white) mb-2">The 4 layers of earning AI visibility</h2>
+                        <p className="text-(--text-muted) mb-6">Technical is only the first of four layers. Only all four together lead to actual citations:</p>
                         <div className="space-y-4">
                             {LAYERS.map((l) => (
-                                <div key={l.number} id={`layer-${l.number}`} className="bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-2xl p-5 scroll-mt-28">
+                                <div key={l.number} id={`layer-${l.number}`} className="bg-(--card) border border-(--line) rounded-2xl p-5 scroll-mt-28">
                                     <div className="flex items-start gap-4">
                                         <span className="text-[11px] font-bold font-mono shrink-0 mt-0.5" style={{ color: l.color }}>{l.number}</span>
                                         <div className="flex-1">
-                                            <h3 className="font-semibold text-[var(--text-white)] mb-2">{l.title}</h3>
-                                            <p className="text-sm text-[var(--text-muted)] leading-relaxed">{l.desc}</p>
+                                            <h3 className="font-semibold text-(--text-white) mb-2">{l.title}</h3>
+                                            <p className="text-sm text-(--text-muted) leading-relaxed">{l.desc}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -243,17 +243,17 @@ export default function AiVisibilityPage() {
                     </section>
 
                     <section id="per-platform" className="scroll-mt-28">
-                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">What matters per platform - Claude, ChatGPT, Perplexity, Google AI Overview?</h2>
+                        <h2 className="text-[28px] leading-tight tracking-[-0.03em] font-bold text-(--text-white) mb-4">What matters per platform - Claude, ChatGPT, Perplexity, Google AI Overview?</h2>
                         <p>
                             AI visibility isn’t a single metric - each platform works differently under the hood, and needs a different priority as a result:
                         </p>
-                        <div className="overflow-hidden rounded-2xl border border-[var(--text-white)]/[0.07] mt-5">
+                        <div className="overflow-hidden rounded-2xl border border-(--line) mt-5">
                             <table className="w-full text-sm">
                                 <thead>
-                                    <tr className="border-b border-[var(--text-white)]/5 bg-[var(--text-white)]/[0.02]">
-                                        <th className="text-left px-5 py-3 text-[var(--text-muted)] font-semibold">Platform</th>
-                                        <th className="text-left px-5 py-3 text-[var(--text-muted)] font-semibold">How it works</th>
-                                        <th className="text-left px-5 py-3 text-violet-400 font-semibold">What matters</th>
+                                    <tr className="border-b border-(--line) bg-(--card)">
+                                        <th className="text-left px-5 py-3 text-(--text-muted) font-semibold">Platform</th>
+                                        <th className="text-left px-5 py-3 text-(--text-muted) font-semibold">How it works</th>
+                                        <th className="text-left px-5 py-3 text-(--accent-ink) font-semibold">What matters</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -263,27 +263,27 @@ export default function AiVisibilityPage() {
                                         ['ChatGPT', 'Training data, partly with web search', 'Unambiguous terms - vague phrasing easily gets misrouted'],
                                         ['Google AI Overview', 'Google’s index as the base', 'Classic SEO ranking remains the prerequisite for the citation source'],
                                     ].map(([platform, how, what], i) => (
-                                        <tr key={i} className="border-b border-[var(--text-white)]/[0.04] last:border-0">
-                                            <td className="px-5 py-3 text-[var(--text-white)] font-medium">{platform}</td>
-                                            <td className="px-5 py-3 text-[var(--text-muted)]">{how}</td>
-                                            <td className="px-5 py-3 text-[var(--text-body)]">{what}</td>
+                                        <tr key={i} className="border-b border-(--line) last:border-0">
+                                            <td className="px-5 py-3 text-(--text-white) font-medium">{platform}</td>
+                                            <td className="px-5 py-3 text-(--text-muted)">{how}</td>
+                                            <td className="px-5 py-3 text-(--text-body)">{what}</td>
                                         </tr>
                                     ))}
                                 </tbody>
                             </table>
                         </div>
                         <p className="mt-4">
-                            That spread is also why monitoring per platform separately makes more sense than a single overall number - a brand can be highly visible on Claude and completely invisible on ChatGPT for the exact same question. For the KPIs, dashboard walkthrough, and how to connect visibility to actual leads, see <Link href="/en/blog/measure-ai-visibility" className="text-violet-400 hover:text-violet-300">Measure AI Visibility: KPIs, Dashboard &amp; Your Own Data</Link>.
+                            That spread is also why monitoring per platform separately makes more sense than a single overall number - a brand can be highly visible on Claude and completely invisible on ChatGPT for the exact same question. For the KPIs, dashboard walkthrough, and how to connect visibility to actual leads, see <Link href="/en/blog/measure-ai-visibility" className="text-(--accent-ink) hover:text-(--accent-ink)">Measure AI Visibility: KPIs, Dashboard &amp; Your Own Data</Link>.
                         </p>
                     </section>
 
                     <section id="faq" className="scroll-mt-28">
-                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Frequently asked questions about AI visibility</h2>
+                        <h2 className="text-[28px] leading-tight tracking-[-0.03em] font-bold text-(--text-white) mb-4">Frequently asked questions about AI visibility</h2>
                         <div className="space-y-4">
                             {faqLd.mainEntity.map((faq, i) => (
-                                <div key={i} className="bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-2xl p-5">
-                                    <h3 className="font-semibold text-[var(--text-white)] mb-2 text-sm">{faq.name}</h3>
-                                    <p className="text-sm text-[var(--text-muted)] leading-relaxed">{faq.acceptedAnswer.text}</p>
+                                <div key={i} className="bg-(--card) border border-(--line) rounded-2xl p-5">
+                                    <h3 className="font-semibold text-(--text-white) mb-2 text-sm">{faq.name}</h3>
+                                    <p className="text-sm text-(--text-muted) leading-relaxed">{faq.acceptedAnswer.text}</p>
                                 </div>
                             ))}
                         </div>
@@ -292,25 +292,25 @@ export default function AiVisibilityPage() {
                 </div>
 
                 {/* CTA */}
-                <div className="mt-14 bg-gradient-to-br from-violet-950/40 to-[var(--bg-base)] border border-violet-500/20 rounded-2xl p-6 sm:p-8 text-center">
-                    <h2 className="text-xl sm:text-2xl font-bold text-[var(--text-white)] mb-3">
+                <div className="mt-14 bg-(--tint) border border-(--line) rounded-2xl p-6 sm:p-8 text-center">
+                    <h2 className="text-xl sm:text-2xl font-bold text-(--text-white) mb-3">
                         Are you getting cited by ChatGPT, Claude & Perplexity?
                     </h2>
-                    <p className="text-[var(--text-muted)] text-sm mb-6 max-w-md mx-auto leading-relaxed">
+                    <p className="text-(--text-muted) text-sm mb-6 max-w-md mx-auto leading-relaxed">
                         Scanora’s AI visibility tracking checks weekly and automatically whether your domain gets mentioned - including context, competitor comparison, and trend over time. Starting at $4.99/month, 14-day free trial.
                     </p>
                     <Link
                         href="/en/geo/pricing"
-                        className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-[var(--text-white)] text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-violet-500/20"
+                        className="inline-flex items-center gap-2 px-6 py-3 bg-(--accent) hover:bg-(--accent) hover:text-(--on-accent) text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-(--accent-border)"
                     >
                         Start tracking AI visibility
                     </Link>
-                    <div className="mt-3 text-xs text-[var(--text-faint)]">14-day free trial · Claude, ChatGPT, Perplexity, Google AI Overview</div>
+                    <div className="mt-3 text-xs text-(--text-faint)">14-day free trial · Claude, ChatGPT, Perplexity, Google AI Overview</div>
                 </div>
 
                 {/* Back to blog */}
-                <div className="mt-10 pt-8 border-t border-[var(--text-white)]/5">
-                    <Link href="/en/blog" className="text-sm text-[var(--text-faint)] hover:text-[var(--text-body)] transition-colors">
+                <div className="mt-10 pt-8 border-t border-(--line)">
+                    <Link href="/en/blog" className="text-sm text-(--text-faint) hover:text-(--text-body) transition-colors">
                         ← Back to blog
                     </Link>
                 </div>

@@ -1,5 +1,5 @@
 export const metadata = {
-    title: 'Profil – Scanora',
+    title: 'Profil',
     description: 'Verwalte dein Scanora-Konto, deinen Plan und deine Einstellungen.',
     robots: { index: false, follow: true },
 }

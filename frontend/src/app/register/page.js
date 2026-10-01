@@ -2,7 +2,7 @@
 import {useState, useEffect} from 'react'
 import Link from 'next/link'
 import {motion} from 'framer-motion'
-import {Zap, Mail, Lock, User, ArrowRight, Check, Search, Globe} from 'lucide-react'
+import {Zap, Mail, Lock, User, Check, Search, Globe} from 'lucide-react'
 import toast from 'react-hot-toast'
 import {useRouter} from 'next/navigation'
 import {trackScanoraLead} from '../lib/scanoraLeads'
@@ -66,17 +66,15 @@ export default function RegisterPage() {
     }
 
     const passwordStrength = formData.password.length === 0 ? 0 : formData.password.length < 6 ? 1 : formData.password.length < 10 ? 2 : 3
-    const strengthColor = ['', '#ef4444', '#f59e0b', '#22c55e'][passwordStrength]
+    const strengthColor = ['', 'var(--danger)', 'var(--warning)', 'var(--success)'][passwordStrength]
     const strengthLabel = ['', 'Zu kurz', 'Mittel', 'Stark'][passwordStrength]
 
     return (
-        <div className="min-h-screen bg-[var(--bg-base)] flex">
+        <div className="min-h-screen bg-(--bg-base) flex">
 
-            {/* Left — Form */}
+            {/* Left - Form */}
             <div className="flex-1 flex items-center justify-center px-5 py-12 order-2 lg:order-1">
                 <div className="absolute inset-0 lg:hidden">
-                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-125 h-100 rounded-full blur-3xl"
-                         style={{background: 'radial-gradient(ellipse, var(--accent-glow), transparent 70%)'}}/>
                 </div>
 
                 <motion.div initial={{opacity: 0, y: 30}} animate={{opacity: 1, y: 0}} transition={{duration: 0.5}}
@@ -86,58 +84,58 @@ export default function RegisterPage() {
                     <div className="flex justify-center mb-8 lg:hidden">
                         <Link href="/" className="flex items-center gap-2.5">
                             <div
-                                className="w-9 h-9 rounded-xl bg-[var(--accent)] flex items-center justify-center shadow-lg shadow-[var(--accent-border)] active:scale-[0.97] active:duration-75">
-                                <svg className="w-4 h-4 text-[var(--bg-base)]" viewBox="0 0 192 192" fill="none"><circle cx="96" cy="96" r="50" stroke="currentColor" strokeWidth="14" /><circle cx="110" cy="82" r="13" fill="currentColor" /></svg>
+                                className="w-9 h-9 rounded-xl bg-(--text-white) flex items-center justify-center">
+                                <svg className="w-4 h-4 text-(--bg-base)" viewBox="0 0 192 192" fill="none"><circle cx="96" cy="96" r="50" stroke="currentColor" strokeWidth="14" /><circle cx="110" cy="82" r="13" fill="currentColor" /></svg>
                             </div>
-                            <span className="text-xl font-bold text-[var(--text-white)]">Scanora</span>
+                            <span className="text-xl font-bold text-(--text-white)">Scanora</span>
                         </Link>
                     </div>
 
                     <div className="mb-8">
-                        <h1 className="text-3xl font-bold text-[var(--text-white)] mb-2">Account erstellen</h1>
+                        <h1 className="text-3xl font-bold text-(--text-white) mb-2">Account erstellen</h1>
                         {geoCheckContext ? (
-                            <div className="flex items-center gap-2 mt-3 px-3 py-2 bg-[var(--accent-soft)] border border-[var(--accent-border)] rounded-xl">
-                                <p className="text-xs text-[var(--accent)]">
+                            <div className="flex items-center gap-2 mt-3 px-3 py-2 bg-(--accent-soft) border border-(--accent-border) rounded-xl">
+                                <p className="text-xs text-(--accent-ink)">
                                     {geoCheckContext.mentioned
-                                        ? <>Du wirst bei <b>{geoCheckContext.label}</b> zitiert — bleib dran mit wöchentlichem Tracking für <b>{geoCheckContext.domain}</b>.</>
-                                        : <>Du wirst bei <b>{geoCheckContext.label}</b> noch nicht zitiert — starte Tracking für <b>{geoCheckContext.domain}</b>, um das zu ändern.</>}
+                                        ? <>Du wirst bei <b>{geoCheckContext.label}</b> zitiert - bleib dran mit wöchentlichem Tracking für <b>{geoCheckContext.domain}</b>.</>
+                                        : <>Du wirst bei <b>{geoCheckContext.label}</b> noch nicht zitiert - starte Tracking für <b>{geoCheckContext.domain}</b>, um das zu ändern.</>}
                                 </p>
                             </div>
                         ) : hasPendingAudit && (
-                            <div className="flex items-center gap-2 mt-3 px-3 py-2 bg-[var(--accent-soft)] border border-[var(--accent-border)] rounded-xl">
-                                <p className="text-xs text-[var(--accent)]">Dein Audit wartet — du siehst die Ergebnisse sofort nach der Registrierung.</p>
+                            <div className="flex items-center gap-2 mt-3 px-3 py-2 bg-(--accent-soft) border border-(--accent-border) rounded-xl">
+                                <p className="text-xs text-(--accent-ink)">Dein Audit wartet - du siehst die Ergebnisse sofort nach der Registrierung.</p>
                             </div>
                         )}
                     </div>
 
                     <form onSubmit={handleSubmit} className="space-y-4">
                         <div>
-                            <label className="text-sm text-[var(--text-body)] mb-2 block font-medium">Benutzername</label>
+                            <label className="text-sm text-(--text-body) mb-2 block font-medium">Benutzername</label>
                             <div className="relative">
-                                <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-faint)]"/>
+                                <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-(--text-faint)"/>
                                 <input type="text" name="name" value={formData.name} onChange={handleChange}
                                        placeholder="Benutzername" required
-                                       className="w-full bg-[var(--surface-06)] border border-[var(--border-subtle)] hover:border-[var(--border-strong)] focus:border-[var(--accent-border)] rounded-xl pl-11 pr-4 py-3.5 text-[var(--text-white)] placeholder:text-[var(--text-faint)] outline-none transition-all text-sm"/>
+                                       className="w-full bg-(--card) border border-(--line) hover:border-(--border-strong) focus:border-(--accent) focus:shadow-[0_0_0_4px_var(--accent-ring)] rounded-xl pl-11 pr-4 py-3.5 text-(--text-white) placeholder:text-(--text-faint) outline-none transition-all text-sm"/>
                             </div>
                         </div>
 
                         <div>
-                            <label className="text-sm text-[var(--text-body)] mb-2 block font-medium">E-Mail</label>
+                            <label className="text-sm text-(--text-body) mb-2 block font-medium">E-Mail</label>
                             <div className="relative">
-                                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-faint)]"/>
+                                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-(--text-faint)"/>
                                 <input type="email" name="email" value={formData.email} onChange={handleChange}
                                        placeholder="du@beispiel.de" required
-                                       className="w-full bg-[var(--surface-06)] border border-[var(--border-subtle)] hover:border-[var(--border-strong)] focus:border-[var(--accent-border)] rounded-xl pl-11 pr-4 py-3.5 text-[var(--text-white)] placeholder:text-[var(--text-faint)] outline-none transition-all text-sm"/>
+                                       className="w-full bg-(--card) border border-(--line) hover:border-(--border-strong) focus:border-(--accent) focus:shadow-[0_0_0_4px_var(--accent-ring)] rounded-xl pl-11 pr-4 py-3.5 text-(--text-white) placeholder:text-(--text-faint) outline-none transition-all text-sm"/>
                             </div>
                         </div>
 
                         <div>
-                            <label className="text-sm text-[var(--text-body)] mb-2 block font-medium">Passwort</label>
+                            <label className="text-sm text-(--text-body) mb-2 block font-medium">Passwort</label>
                             <div className="relative">
-                                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-faint)]"/>
+                                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-(--text-faint)"/>
                                 <input type="password" name="password" value={formData.password} onChange={handleChange}
                                        placeholder="Mindestens 6 Zeichen" required minLength={6}
-                                       className="w-full bg-[var(--surface-06)] border border-[var(--border-subtle)] hover:border-[var(--border-strong)] focus:border-[var(--accent-border)] rounded-xl pl-11 pr-4 py-3.5 text-[var(--text-white)] placeholder:text-[var(--text-faint)] outline-none transition-all text-sm"/>
+                                       className="w-full bg-(--card) border border-(--line) hover:border-(--border-strong) focus:border-(--accent) focus:shadow-[0_0_0_4px_var(--accent-ring)] rounded-xl pl-11 pr-4 py-3.5 text-(--text-white) placeholder:text-(--text-faint) outline-none transition-all text-sm"/>
                             </div>
                             {/* Password strength */}
                             {formData.password.length > 0 && (
@@ -145,7 +143,7 @@ export default function RegisterPage() {
                                     <div className="flex gap-1 mb-1">
                                         {[1, 2, 3].map(i => (
                                             <div key={i} className="h-1 flex-1 rounded-full transition-all duration-300"
-                                                 style={{background: i <= passwordStrength ? strengthColor : 'rgba(255,255,255,0.06)'}}/>
+                                                 style={{background: i <= passwordStrength ? strengthColor : 'var(--surface-10)'}}/>
                                         ))}
                                     </div>
                                     <p className="text-xs" style={{color: strengthColor}}>{strengthLabel}</p>
@@ -157,20 +155,20 @@ export default function RegisterPage() {
                             <div
                                 onClick={() => setConsent(v => !v)}
                                 className={`mt-0.5 w-4 h-4 rounded flex items-center justify-center shrink-0 border transition-all ${
-                                    consent ? 'bg-[var(--accent)] border-[var(--accent)]' : 'border-[var(--border-strong)] bg-[var(--surface-08)] group-hover:border-[var(--border-strong)]'
+                                    consent ? 'bg-(--accent) border-(--accent)' : 'border-(--border-strong) bg-(--surface-08) group-hover:border-(--border-strong)'
                                 }`}
                             >
                                 {consent && (
-                                    <svg className="w-2.5 h-2.5 text-[var(--text-white)]" fill="none" viewBox="0 0 10 8" stroke="currentColor" strokeWidth={2.5}>
+                                    <svg className="w-2.5 h-2.5 text-(--text-white)" fill="none" viewBox="0 0 10 8" stroke="currentColor" strokeWidth={2.5}>
                                         <path d="M1 4l3 3 5-6" strokeLinecap="round" strokeLinejoin="round"/>
                                     </svg>
                                 )}
                             </div>
-                            <span className="text-xs text-[var(--text-muted)] leading-relaxed">
+                            <span className="text-xs text-(--text-muted) leading-relaxed">
                                 Ich habe die{' '}
-                                <Link href="/nutzungsbedingungen" target="_blank" className="text-[var(--text-body)] hover:text-[var(--accent)] underline underline-offset-2">Nutzungsbedingungen</Link>{' '}
+                                <Link href="/nutzungsbedingungen" target="_blank" className="text-(--text-body) hover:text-(--accent) underline underline-offset-2">Nutzungsbedingungen</Link>{' '}
                                 und die{' '}
-                                <Link href="/datenschutz" target="_blank" className="text-[var(--text-body)] hover:text-[var(--accent)] underline underline-offset-2">Datenschutzerklärung</Link>{' '}
+                                <Link href="/datenschutz" target="_blank" className="text-(--text-body) hover:text-(--accent) underline underline-offset-2">Datenschutzerklärung</Link>{' '}
                                 gelesen und stimme diesen zu.
                             </span>
                         </label>
@@ -179,26 +177,26 @@ export default function RegisterPage() {
                             <div
                                 onClick={() => setMarketingConsent(v => !v)}
                                 className={`mt-0.5 w-4 h-4 rounded flex items-center justify-center shrink-0 border transition-all ${
-                                    marketingConsent ? 'bg-[var(--accent)] border-[var(--accent)]' : 'border-[var(--border-strong)] bg-[var(--surface-08)] group-hover:border-[var(--border-strong)]'
+                                    marketingConsent ? 'bg-(--accent) border-(--accent)' : 'border-(--border-strong) bg-(--surface-08) group-hover:border-(--border-strong)'
                                 }`}
                             >
                                 {marketingConsent && (
-                                    <svg className="w-2.5 h-2.5 text-[var(--text-white)]" fill="none" viewBox="0 0 10 8" stroke="currentColor" strokeWidth={2.5}>
+                                    <svg className="w-2.5 h-2.5 text-(--text-white)" fill="none" viewBox="0 0 10 8" stroke="currentColor" strokeWidth={2.5}>
                                         <path d="M1 4l3 3 5-6" strokeLinecap="round" strokeLinejoin="round"/>
                                     </svg>
                                 )}
                             </div>
-                            <span className="text-xs text-[var(--text-muted)] leading-relaxed">
+                            <span className="text-xs text-(--text-muted) leading-relaxed">
                                 Ich möchte per E-Mail über neue Features und Angebote informiert werden.
                             </span>
                         </label>
 
                         <motion.button type="submit" disabled={loading || !consent} whileTap={{scale: 0.98}}
-                                       className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] font-semibold transition-all duration-200 shadow-lg shadow-[var(--accent-border)] active:scale-[0.97] active:duration-75 disabled:opacity-50 disabled:cursor-not-allowed text-sm mt-2">
+                                       className="w-full flex items-center justify-center gap-2 py-3.5 rounded-[10px] bg-(--accent) hover:bg-(--accent-hover) text-(--on-accent) font-semibold transition-all duration-200 active:scale-[0.97] active:duration-75 disabled:opacity-50 disabled:cursor-not-allowed text-sm mt-2">
                             {loading ? (
                                 <>
                                     <div
-                                        className="w-4 h-4 border-2 border-[var(--bg-base)]/30 border-t-[var(--bg-base)] rounded-full animate-spin"/>
+                                        className="w-4 h-4 border-2 border-(--bg-base)/30 border-t-(--bg-base) rounded-full animate-spin"/>
                                     Account wird erstellt...</>
                             ) : (
                                 <>Account erstellen</>
@@ -207,14 +205,14 @@ export default function RegisterPage() {
                     </form>
 
                     <div className="my-6 flex items-center gap-4">
-                        <div className="flex-1 h-px bg-[var(--border-subtle)]"/>
-                        <span className="text-xs text-[var(--text-faint)] uppercase tracking-wider">oder</span>
-                        <div className="flex-1 h-px bg-[var(--border-subtle)]"/>
+                        <div className="flex-1 h-px bg-(--border-subtle)"/>
+                        <span className="text-xs text-(--text-faint) ">oder</span>
+                        <div className="flex-1 h-px bg-(--border-subtle)"/>
                     </div>
 
-                    <div className="text-center text-sm text-[var(--text-faint)]">
+                    <div className="text-center text-sm text-(--text-faint)">
                         Bereits ein Account?{' '}
-                        <Link href="/login" className="text-[var(--text-white)] hover:text-[var(--accent)] font-medium transition-colors">
+                        <Link href="/login" className="text-(--text-white) hover:text-(--accent) font-medium transition-colors">
                             Einloggen
                         </Link>
                     </div>
@@ -222,38 +220,30 @@ export default function RegisterPage() {
                 </motion.div>
             </div>
 
-            {/* Right — Branding */}
+            {/* Right - Branding */}
             <div
-                className="hidden lg:flex flex-col justify-between w-120 shrink-0 relative overflow-hidden border-l border-[var(--border-subtle)] p-12 order-1 lg:order-2">
-                <div className="absolute inset-0 bg-[var(--bg-base)]"/>
-                <div className="absolute top-0 right-0 w-80 h-80 rounded-full blur-3xl"
-                     style={{background: 'radial-gradient(circle, var(--accent-glow), transparent 70%)'}}/>
-                <div className="absolute bottom-0 left-0 w-60 h-60 rounded-full blur-3xl"
-                     style={{background: 'radial-gradient(circle, var(--accent-glow), transparent 70%)'}}/>
-                <div className="absolute inset-0" style={{
-                    backgroundImage: 'linear-gradient(rgba(255,255,255,0.012) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.012) 1px, transparent 1px)',
-                    backgroundSize: '40px 40px'
-                }}/>
+                className="hidden lg:flex flex-col justify-between w-120 shrink-0 relative overflow-hidden border-l border-(--border-subtle) p-12 order-1 lg:order-2">
+                <div className="absolute inset-0 bg-(--bg-base)"/>
 
                 <div className="relative z-10">
                     <Link href="/" className="flex items-center gap-2.5">
                         <div
-                            className="w-9 h-9 rounded-xl bg-[var(--accent)] flex items-center justify-center shadow-lg shadow-[var(--accent-border)] active:scale-[0.97] active:duration-75">
-                            <svg className="w-4 h-4 text-[var(--bg-base)]" viewBox="0 0 192 192" fill="none"><circle cx="96" cy="96" r="50" stroke="currentColor" strokeWidth="14" /><circle cx="110" cy="82" r="13" fill="currentColor" /></svg>
+                            className="w-9 h-9 rounded-xl bg-(--text-white) flex items-center justify-center">
+                            <svg className="w-4 h-4 text-(--bg-base)" viewBox="0 0 192 192" fill="none"><circle cx="96" cy="96" r="50" stroke="currentColor" strokeWidth="14" /><circle cx="110" cy="82" r="13" fill="currentColor" /></svg>
                         </div>
-                        <span className="text-xl font-bold text-[var(--text-white)] tracking-tight">
+                        <span className="text-xl font-bold text-(--text-white) tracking-tight">
               Scanora
             </span>
                     </Link>
                 </div>
 
                 <div className="relative z-10">
-                    <h2 className="text-4xl font-bold text-[var(--text-white)] leading-tight mb-4">
+                    <h2 className="text-4xl font-bold text-(--text-white) leading-tight mb-4">
                         Einmal registrieren.<br/>
                         Immer den Überblick.
                     </h2>
-                    <p className="text-[var(--text-muted)] text-sm leading-relaxed mb-8">
-                        Speicher deine Audit-Ergebnisse, prüf dieselbe Domain erneut und verfolg deine Fortschritte — alles an einem Ort.
+                    <p className="text-(--text-muted) text-sm leading-relaxed mb-8">
+                        Speicher deine Audit-Ergebnisse, prüf dieselbe Domain erneut und verfolg deine Fortschritte - alles an einem Ort.
                     </p>
 
                     {/* Benefits */}
@@ -263,10 +253,10 @@ export default function RegisterPage() {
                                         transition={{delay: 0.2 + i * 0.08}}
                                         className="flex items-center gap-3">
                                 <div
-                                    className="w-5 h-5 rounded-full bg-[var(--accent-soft-strong)] border border-[var(--accent-border)] flex items-center justify-center shrink-0">
-                                    <Check className="w-3 h-3 text-[var(--accent)]" strokeWidth={3}/>
+                                    className="w-5 h-5 rounded-full bg-(--accent-soft-strong) border border-(--accent-border) flex items-center justify-center shrink-0">
+                                    <Check className="w-3 h-3 text-(--accent-ink)" strokeWidth={3}/>
                                 </div>
-                                <span className="text-sm text-[var(--text-muted)]">{b.text}</span>
+                                <span className="text-sm text-(--text-muted)">{b.text}</span>
                             </motion.div>
                         ))}
                     </div>
@@ -275,13 +265,13 @@ export default function RegisterPage() {
                     <div className="grid grid-cols-2 gap-3">
                         {PLAN_FEATURES.map((f, i) => (
                             <div key={i}
-                                 className="flex items-center gap-2.5 bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-xl px-3 py-2.5">
-                                <div className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0 bg-[var(--accent-soft)] border border-[var(--accent-border)]">
-                                    <f.icon className="w-3.5 h-3.5 text-[var(--accent)]" strokeWidth={1.8}/>
+                                 className="flex items-center gap-2.5 bg-(--card) border border-(--line) rounded-xl px-3 py-2.5">
+                                <div className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0 bg-(--accent-soft) border border-(--accent-border)">
+                                    <f.icon className="w-3.5 h-3.5 text-(--accent-ink)" strokeWidth={1.8}/>
                                 </div>
                                 <div>
-                                    <div className="text-xs font-semibold text-[var(--text-white)]">{f.value}</div>
-                                    <div className="text-[10px] text-[var(--text-faint)]">{f.label}</div>
+                                    <div className="text-xs font-semibold text-(--text-white)">{f.value}</div>
+                                    <div className="text-[10px] text-(--text-faint)">{f.label}</div>
                                 </div>
                             </div>
                         ))}

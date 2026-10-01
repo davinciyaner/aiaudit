@@ -1,5 +1,5 @@
 export const metadata = {
-    title: 'GEO Automation Pricing – Track Your Brand on ChatGPT, Claude, Gemini, Perplexity & Google AI Overview',
+    title: 'GEO Automation Pricing: Track Your AI Visibility',
     description: 'Plans start at €4.99/month: weekly checks of whether ChatGPT, Claude, Gemini, Perplexity, and Google AI Overview mention your site. 14-day free trial.',
     keywords: 'geo automation pricing, ai visibility tracking tool, chatgpt visibility tracker, claude ai visibility, gemini ai visibility, perplexity visibility tracker, google ai overview tracking, generative engine optimization tool, geo tracking cost',
     alternates: {
@@ -15,7 +15,7 @@ export const metadata = {
         url: 'https://www.scanora.ai/en/geo/pricing',
         type: 'website',
         locale: 'en_US',
-        images: ['https://www.scanora.ai/opengraph-image'],
+        images: ['https://www.scanora.ai/en/opengraph-image'],
     },
 }
 
@@ -28,7 +28,7 @@ const faqJsonLd = {
             name: 'What does a GEO audit or GEO automation cost?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'GEO automation at Scanora starts at €4.99/month for 1 website and 10 keywords with weekly Claude and Gemini tracking. The Pro plan (€29.99/month) adds ChatGPT, Perplexity, and Google AI Overview tracking for 3 websites and 20 keywords, 2 prompt variants per keyword, and topic visibility analysis, and the Expert plan (€89.99/month) covers up to 10 websites and 60 keywords plus historical trends per keyword. Every plan includes a 14-day free trial.',
+                text: 'GEO automation at Scanora starts at €4.99/month for 1 website and 10 keywords with weekly Claude and Gemini tracking. The Pro plan (€74.99/month) adds ChatGPT, Perplexity, and Google AI Overview tracking for 3 websites and 20 keywords, 2 prompt variants per keyword, and topic visibility analysis, and the Expert plan (€199.99/month) covers up to 10 websites and 60 keywords plus historical trends per keyword. Every plan includes a 14-day free trial.',
             },
         },
         {
@@ -36,7 +36,7 @@ const faqJsonLd = {
             name: 'Can I track my visibility on Claude (Claude AI)?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'Yes. Even the Starter plan at €4.99/month automatically checks every week whether and how often Claude and Google Gemini cite your website as a source for relevant queries — including a mention history over time. To also track ChatGPT, Perplexity, and Google AI Overview in the same dashboard, you need the Pro plan at €29.99/month.',
+                text: 'Yes. Even the Starter plan at €4.99/month automatically checks every week whether and how often Claude and Google Gemini cite your website as a source for relevant queries - including a mention history over time. To also track ChatGPT, Perplexity, and Google AI Overview in the same dashboard, you need the Pro plan at €74.99/month.',
             },
         },
         {
@@ -52,7 +52,7 @@ const faqJsonLd = {
             name: 'What do topic visibility analysis and historical trends show me?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'Topic visibility analysis (from Pro) shows which domains get cited most often in AI answers touching your tracked keywords — across all contexts, not just tool recommendations (for that, use the separate Competitors tab). Historical trends (Expert) show, per keyword, how much overall mention volume that topic gets in Google AI Overview responses each month — a topic-volume trend, not domain-specific citation tracking.',
+                text: 'Topic visibility analysis (from Pro) shows which domains get cited most often in AI answers touching your tracked keywords - across all contexts, not just tool recommendations (for that, use the separate Competitors tab). Historical trends (Expert) show, per keyword, how much overall mention volume that topic gets in Google AI Overview responses each month - a topic-volume trend, not domain-specific citation tracking.',
             },
         },
         {
@@ -77,8 +77,8 @@ const geoJsonLd = {
     description: 'Weekly tracking of whether ChatGPT, Claude, Gemini, Perplexity, and Google AI Overview name your domain as a source in response to relevant queries.',
     offers: [
         { '@type': 'Offer', name: 'Starter', price: '4.99', priceCurrency: 'EUR', description: '1 website, 10 keywords, Claude & Gemini tracking' },
-        { '@type': 'Offer', name: 'Pro', price: '29.99', priceCurrency: 'EUR', description: '3 websites, 20 keywords, Claude + ChatGPT + Gemini + Perplexity + Google AI Overview tracking, 2 prompt variants per keyword, topic visibility analysis' },
-        { '@type': 'Offer', name: 'Expert', price: '89.99', priceCurrency: 'EUR', description: '10 websites, 60 keywords, all platforms, 2 prompt variants per keyword, topic visibility analysis, historical trends per keyword (Google AI Overview)' },
+        { '@type': 'Offer', name: 'Pro', price: '74.99', priceCurrency: 'EUR', description: '3 websites, 20 keywords, Claude + ChatGPT + Gemini + Perplexity + Google AI Overview tracking, 2 prompt variants per keyword, topic visibility analysis' },
+        { '@type': 'Offer', name: 'Expert', price: '199.99', priceCurrency: 'EUR', description: '10 websites, 60 keywords, all platforms, 2 prompt variants per keyword, topic visibility analysis, historical trends per keyword (Google AI Overview)' },
     ],
 }
 

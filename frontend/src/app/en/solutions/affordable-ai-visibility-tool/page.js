@@ -4,7 +4,7 @@ import Footer from '../../../components/Footer'
 
 export const metadata = {
     title: 'Affordable AI Visibility Tool from €4.99',
-    description: 'Looking for an affordable AI visibility tool with SEO built in? Scanora combines GEO tracking (ChatGPT, Claude, Perplexity) and SEO rankings from €4.99/month.',
+    description: 'Looking for an affordable AI visibility tool with SEO built in? Scanora combines GEO tracking (from €4.99/month) and SEO rankings.',
     keywords: 'affordable ai visibility tool, cheap ai visibility tool, seo and ai visibility tracker combined, ai visibility and seo in one tool, affordable geo tool, ai visibility tool pricing comparison',
     alternates: {
         canonical: 'https://www.scanora.ai/en/solutions/affordable-ai-visibility-tool',
@@ -15,7 +15,7 @@ export const metadata = {
     },
     openGraph: {
         title: 'Affordable AI Visibility Tool: SEO and AI Visibility in One Plan',
-        description: 'Scanora combines GEO tracking (ChatGPT, Claude, Perplexity, Google AI Overview) and SEO rankings from €4.99/month — with a real free plan.',
+        description: 'Scanora combines GEO tracking (Claude and Gemini from €4.99/month, all five platforms from €74.99/month) and SEO rankings - with a real free plan.',
         url: 'https://www.scanora.ai/en/solutions/affordable-ai-visibility-tool',
         type: 'article',
         locale: 'en_US',
@@ -27,10 +27,10 @@ const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: 'Affordable AI Visibility Tool: SEO and AI Visibility in One Plan',
-    description: 'Scanora combines GEO tracking (ChatGPT, Claude, Perplexity, Google AI Overview) and SEO rankings from €4.99/month — with a real free plan.',
+    description: 'Scanora combines GEO tracking (Claude and Gemini from €4.99/month, all five platforms from €74.99/month) and SEO rankings - with a real free plan.',
     image: 'https://www.scanora.ai/en/solutions/affordable-ai-visibility-tool/opengraph-image',
     datePublished: '2026-08-28T09:00:00+02:00',
-    dateModified: '2026-08-28T09:00:00+02:00',
+    dateModified: '2026-10-01T09:00:00+02:00',
     author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.scanora.ai/about' },
     publisher: {
         '@type': 'Organization',
@@ -74,7 +74,7 @@ const faqLd = {
             name: 'Is there a tool that combines SEO and AI visibility tracking?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'Yes. Scanora offers SEO automation (weekly Google rankings, keyword ideas, competitor analysis, backlinks) and GEO automation (AI visibility across ChatGPT, Claude, Perplexity, Google AI Overview) from one account — bookable separately or together. Most pure AI-visibility tools don\'t cover classic SEO at all.',
+                text: 'Yes. Scanora offers SEO automation (weekly Google rankings, keyword ideas, competitor analysis, backlinks) and GEO automation (AI visibility across ChatGPT, Claude, Perplexity, Google AI Overview) from one account - bookable separately or together. Most pure AI-visibility tools don\'t cover classic SEO at all.',
             },
         },
         {
@@ -82,7 +82,7 @@ const faqLd = {
             name: 'How much does AI visibility tracking cost with Scanora?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'GEO automation starts at €4.99/month (Claude + Gemini, 1 website, 10 keywords, weekly auto-check). The Pro plan at €29.99/month covers all five AI platforms. SEO automation starts separately at €19/month. All automation plans include a 14-day free trial.',
+                text: 'GEO automation starts at €4.99/month (Claude + Gemini, 1 website, 10 keywords, weekly auto-check). The Pro plan at €74.99/month covers all five AI platforms. SEO automation starts separately at €29.99/month. All automation plans include a 14-day free trial.',
             },
         },
         {
@@ -90,7 +90,7 @@ const faqLd = {
             name: 'Is Scanora really free to use?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'Yes. The Free plan is permanently free and includes 1 audit per month with an SEO score, GEO visibility, and performance metrics — no credit card required. The automation subscriptions (ongoing weekly checks) are optional add-ons.',
+                text: 'Yes. The Free plan is permanently free and includes 1 audit per month with an SEO score, GEO visibility, and performance metrics - no credit card required. The automation subscriptions (ongoing weekly checks) are optional add-ons.',
             },
         },
         {
@@ -98,7 +98,7 @@ const faqLd = {
             name: 'Which AI platforms does GEO automation cover?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'Claude, ChatGPT, Gemini, Perplexity, and Google AI Overview. The Starter plan includes Claude and Gemini; from the Pro plan (€29.99/month) all five platforms are included — with no separate per-platform add-on cost.',
+                text: 'Claude, ChatGPT, Gemini, Perplexity, and Google AI Overview. The Starter plan includes Claude and Gemini; from the Pro plan (€74.99/month) all five platforms are included - with no separate per-platform add-on cost.',
             },
         },
     ],
@@ -106,9 +106,9 @@ const faqLd = {
 
 const PRICING_ROWS = [
     ['Free Audit', '1 audit/month · SEO score, GEO visibility, performance', '€0 forever'],
-    ['GEO Starter', 'Claude tracking · 1 website · 10 keywords · weekly auto-check', '€4.99/month'],
-    ['GEO Pro', 'ChatGPT + Claude + Gemini + Perplexity + Google AI Overview · 3 websites · 20 keywords', '€29.99/month'],
-    ['SEO Starter', '3 websites · 50 keywords · weekly ranking updates · backlink overview', '€19/month'],
+    ['GEO Starter', 'Claude + Gemini · 1 website · 10 keywords · weekly auto-check', '€4.99/month'],
+    ['GEO Pro', 'ChatGPT + Claude + Gemini + Perplexity + Google AI Overview · 3 websites · 20 keywords', '€74.99/month'],
+    ['SEO Starter', '3 websites · 50 keywords · weekly ranking updates · backlink overview', '€29.99/month'],
 ]
 
 const INCLUDED_GEO = [
@@ -134,41 +134,41 @@ const FOR_WHOM = [
 
 export default function AffordableGeoToolPageEn() {
     return (
-        <main className="bg-[var(--bg-base)] min-h-screen">
+        <main className="bg-(--bg-base) min-h-screen">
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
             <Navbar locale="en" />
 
-            <article className="max-w-3xl mx-auto px-5 sm:px-8 pt-32 pb-24">
+            <article className="max-w-190 mx-auto px-4 sm:px-8 pt-28 md:pt-34 pb-18 md:pb-28">
 
                 {/* Breadcrumb */}
-                <div className="flex items-center gap-2 text-xs text-[var(--text-faint)] mb-8">
-                    <Link href="/en" className="hover:text-[var(--text-muted)] transition-colors">Scanora</Link>
+                <div className="flex flex-wrap items-center gap-2 text-sm text-(--text-muted) mb-8">
+                    <Link href="/en" className="hover:text-(--accent-ink) transition-colors">Scanora</Link>
                     <span>/</span>
-                    <Link href="/en/solutions" className="hover:text-[var(--text-muted)] transition-colors">Solutions</Link>
+                    <Link href="/en/solutions" className="hover:text-(--accent-ink) transition-colors">Solutions</Link>
                     <span>/</span>
-                    <span className="text-[var(--text-faint)]">Affordable AI Visibility Tool</span>
+                    <span className="text-(--text-faint)">Affordable AI Visibility Tool</span>
                 </div>
 
                 {/* Header */}
                 <div className="mb-10">
                     <div className="flex items-center gap-3 mb-4 flex-wrap">
-                        <span className="text-[11px] font-semibold px-2.5 py-1 rounded-full uppercase tracking-wider bg-[var(--accent-soft)] text-[var(--accent)]">
+                        <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-(--accent-soft) text-(--accent-ink)">
                             Solution
                         </span>
-                        <span className="text-xs text-[var(--text-faint)]">August 28, 2026</span>
-                        <span className="text-xs text-[var(--text-faint)]">· 6 min read</span>
+                        <span className="text-xs text-(--text-faint)">August 28, 2026</span>
+                        <span className="text-xs text-(--text-faint)">· 6 min read</span>
                     </div>
-                    <h1 className="text-3xl sm:text-5xl font-bold text-[var(--text-white)] leading-tight tracking-tight mb-5">
+                    <h1 className="text-[clamp(34px,4.4vw,52px)] font-bold text-(--text-white) leading-[1.06] tracking-[-0.035em] mb-5">
                         Affordable AI Visibility Tool: SEO and AI Visibility in One Plan
                     </h1>
-                    <p className="text-lg text-[var(--text-muted)] leading-relaxed">
-                        Most AI visibility tools are pure prompt-monitoring dashboards — no SEO, often starting at $25–30/month, with every extra AI platform billed separately. If you need both, you end up paying for two subscriptions. Scanora combines GEO automation (AI visibility across ChatGPT, Claude, Perplexity, and Google AI Overview) with SEO automation in one account — starting at €4.99/month, with a permanently free plan.
+                    <p className="text-lg text-(--text-body) leading-relaxed">
+                        Most AI visibility tools are pure prompt-monitoring dashboards - no SEO, often starting at $25–30/month, with every extra AI platform billed separately. If you need both, you end up paying for two subscriptions. Scanora combines GEO automation (AI visibility across ChatGPT, Claude, Gemini, Perplexity, and Google AI Overview) with SEO automation in one account - starting at €4.99/month with Claude and Gemini, with a permanently free plan.
                     </p>
-                    <div className="mt-5 flex items-center gap-2 text-xs text-[var(--text-faint)]">
-                        <Link href="/en/about" className="flex items-center gap-2 hover:text-[var(--text-body)] transition-colors">
-                            <div className="w-6 h-6 rounded-full bg-[var(--accent)] flex items-center justify-center text-[var(--bg-base)] text-[10px] font-bold">F</div>
+                    <div className="mt-5 flex items-center gap-2 text-xs text-(--text-faint)">
+                        <Link href="/en/about" className="flex items-center gap-2 hover:text-(--text-body) transition-colors">
+                            <div className="w-6 h-6 rounded-full bg-(--accent) flex items-center justify-center text-(--on-accent) text-[10px] font-bold">F</div>
                             <span>Finn Paustian</span>
                         </Link>
                         <span>·</span>
@@ -176,14 +176,14 @@ export default function AffordableGeoToolPageEn() {
                     </div>
                 </div>
 
-                <div className="border-t border-[var(--border-subtle)] mb-10" />
+                <div className="border-t border-(--border-subtle) mb-10" />
 
-                <div className="space-y-10 text-[var(--text-body)] leading-relaxed">
+                <div className="space-y-10 text-(--text-body) leading-relaxed">
 
                     <section>
-                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Why one tool for both makes more sense</h2>
+                        <h2 className="text-[28px] leading-tight tracking-[-0.03em] font-bold text-(--text-white) mb-4">Why one tool for both makes more sense</h2>
                         <p>
-                            Classic SEO optimizes for Google showing you in the blue link list. GEO (Generative Engine Optimization) optimizes for ChatGPT, Claude, Perplexity, or Google AI Overview <em>citing</em> you inside a generated answer. The two are connected — structured data, clear product definitions, and technically clean pages help with both — but they're usually measured by completely separate tools: an SEO rank tracker here, an AI visibility dashboard there. Two subscriptions, two logins, two invoices.
+                            Classic SEO optimizes for Google showing you in the blue link list. GEO (Generative Engine Optimization) optimizes for ChatGPT, Claude, Perplexity, or Google AI Overview <em>citing</em> you inside a generated answer. The two are connected - structured data, clear product definitions, and technically clean pages help with both - but they're usually measured by completely separate tools: an SEO rank tracker here, an AI visibility dashboard there. Two subscriptions, two logins, two invoices.
                         </p>
                         <p className="mt-4">
                             Scanora bundles both into one account. You see your Google rankings and your AI mentions side by side, but you can also book just one of the two if that's all you need.
@@ -191,52 +191,52 @@ export default function AffordableGeoToolPageEn() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">All prices at a glance</h2>
-                        <div className="overflow-x-auto rounded-2xl border border-[var(--border-subtle)]">
-                            <table className="w-full text-sm min-w-[560px]">
+                        <h2 className="text-[28px] leading-tight tracking-[-0.03em] font-bold text-(--text-white) mb-4">All prices at a glance</h2>
+                        <div className="overflow-x-auto rounded-2xl border border-(--border-subtle)">
+                            <table className="w-full text-sm min-w-140">
                                 <thead>
-                                    <tr className="border-b border-[var(--border-subtle)] bg-[var(--surface-06)]">
-                                        <th className="text-left px-5 py-3 text-[var(--text-muted)] font-semibold">Plan</th>
-                                        <th className="text-left px-5 py-3 text-[var(--text-muted)] font-semibold">Includes</th>
-                                        <th className="text-left px-5 py-3 text-[var(--accent)] font-semibold">Price</th>
+                                    <tr className="border-b border-(--line) bg-(--card)">
+                                        <th className="text-left px-5 py-3 text-(--text-muted) font-semibold">Plan</th>
+                                        <th className="text-left px-5 py-3 text-(--text-muted) font-semibold">Includes</th>
+                                        <th className="text-left px-5 py-3 text-(--accent-ink) font-semibold">Price</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {PRICING_ROWS.map(([plan, included, price], i) => (
-                                        <tr key={i} className="border-b border-[var(--border-subtle)] last:border-0">
-                                            <td className="px-5 py-3 text-[var(--text-white)] font-medium whitespace-nowrap">{plan}</td>
-                                            <td className="px-5 py-3 text-[var(--text-body)]">{included}</td>
-                                            <td className="px-5 py-3 text-[var(--text-white)] font-semibold whitespace-nowrap">{price}</td>
+                                        <tr key={i} className="border-b border-(--border-subtle) last:border-0">
+                                            <td className="px-5 py-3 text-(--text-white) font-medium whitespace-nowrap">{plan}</td>
+                                            <td className="px-5 py-3 text-(--text-body)">{included}</td>
+                                            <td className="px-5 py-3 text-(--text-white) font-semibold whitespace-nowrap">{price}</td>
                                         </tr>
                                     ))}
                                 </tbody>
                             </table>
                         </div>
-                        <p className="text-xs text-[var(--text-faint)] mt-3">
+                        <p className="text-xs text-(--text-faint) mt-3">
                             Prices as of August 2026. All automation plans (SEO + GEO) include a 14-day free trial, cancel anytime. See details on the{' '}
-                            <Link href="/en/pricing" className="text-[var(--text-faint)] hover:text-[var(--text-body)] underline underline-offset-2">pricing pages</Link>.
+                            <Link href="/en/pricing" className="text-(--text-faint) hover:text-(--text-body) underline underline-offset-2">pricing pages</Link>.
                         </p>
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">What's included</h2>
+                        <h2 className="text-[28px] leading-tight tracking-[-0.03em] font-bold text-(--text-white) mb-4">What's included</h2>
                         <div className="grid sm:grid-cols-2 gap-4">
-                            <div className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl p-5">
-                                <h3 className="font-semibold text-[var(--text-white)] mb-3 text-sm">GEO automation (AI visibility)</h3>
+                            <div className="bg-(--card) border border-(--line) rounded-2xl p-5">
+                                <h3 className="font-semibold text-(--text-white) mb-3 text-sm">GEO automation (AI visibility)</h3>
                                 <ul className="space-y-2">
                                     {INCLUDED_GEO.map((item, i) => (
-                                        <li key={i} className="text-sm text-[var(--text-muted)] leading-relaxed flex gap-2">
-                                            <span className="text-[var(--accent)] shrink-0">–</span>{item}
+                                        <li key={i} className="text-sm text-(--text-muted) leading-relaxed flex gap-2">
+                                            <span className="text-(--accent-ink) shrink-0">–</span>{item}
                                         </li>
                                     ))}
                                 </ul>
                             </div>
-                            <div className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl p-5">
-                                <h3 className="font-semibold text-[var(--text-white)] mb-3 text-sm">SEO automation</h3>
+                            <div className="bg-(--card) border border-(--line) rounded-2xl p-5">
+                                <h3 className="font-semibold text-(--text-white) mb-3 text-sm">SEO automation</h3>
                                 <ul className="space-y-2">
                                     {INCLUDED_SEO.map((item, i) => (
-                                        <li key={i} className="text-sm text-[var(--text-muted)] leading-relaxed flex gap-2">
-                                            <span className="text-[var(--accent)] shrink-0">–</span>{item}
+                                        <li key={i} className="text-sm text-(--text-muted) leading-relaxed flex gap-2">
+                                            <span className="text-(--accent-ink) shrink-0">–</span>{item}
                                         </li>
                                     ))}
                                 </ul>
@@ -245,29 +245,29 @@ export default function AffordableGeoToolPageEn() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Who this is for</h2>
+                        <h2 className="text-[28px] leading-tight tracking-[-0.03em] font-bold text-(--text-white) mb-4">Who this is for</h2>
                         <p className="mb-4">An affordable combined tool is the right choice if …</p>
                         <ul className="space-y-2">
                             {FOR_WHOM.map((item, i) => (
-                                <li key={i} className="text-sm text-[var(--text-muted)] leading-relaxed flex gap-2">
-                                    <span className="text-[var(--accent)] shrink-0">–</span>{item}
+                                <li key={i} className="text-sm text-(--text-muted) leading-relaxed flex gap-2">
+                                    <span className="text-(--accent-ink) shrink-0">–</span>{item}
                                 </li>
                             ))}
                         </ul>
-                        <p className="mt-4 text-sm text-[var(--text-faint)]">
+                        <p className="mt-4 text-sm text-(--text-faint)">
                             For very high-volume agency monitoring across many client workspaces, a specialized, pricier tool like{' '}
-                            <Link href="/en/compare/otterly-alternative" className="text-[var(--text-muted)] hover:text-[var(--accent)] underline underline-offset-2">Otterly.ai</Link>{' '}
-                            may offer more capacity — but for most single sites, freelancers, and small teams, Scanora's cheaper combined approach is enough.
+                            <Link href="/en/compare/otterly-alternative" className="text-(--text-muted) hover:text-(--accent-ink) underline underline-offset-2">Otterly.ai</Link>{' '}
+                            may offer more capacity - but for most single sites, freelancers, and small teams, Scanora's cheaper combined approach is enough.
                         </p>
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Frequently asked questions</h2>
+                        <h2 className="text-[28px] leading-tight tracking-[-0.03em] font-bold text-(--text-white) mb-4">Frequently asked questions</h2>
                         <div className="space-y-4">
                             {faqLd.mainEntity.map((faq, i) => (
-                                <div key={i} className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl p-5">
-                                    <h3 className="font-semibold text-[var(--text-white)] mb-2 text-sm">{faq.name}</h3>
-                                    <p className="text-sm text-[var(--text-muted)] leading-relaxed">{faq.acceptedAnswer.text}</p>
+                                <div key={i} className="bg-(--card) border border-(--line) rounded-2xl p-5">
+                                    <h3 className="font-semibold text-(--text-white) mb-2 text-sm">{faq.name}</h3>
+                                    <p className="text-sm text-(--text-muted) leading-relaxed">{faq.acceptedAnswer.text}</p>
                                 </div>
                             ))}
                         </div>
@@ -276,20 +276,20 @@ export default function AffordableGeoToolPageEn() {
                 </div>
 
                 {/* CTA: Try it yourself */}
-                <div className="mt-14 bg-[var(--accent-soft)] border border-[var(--accent-border)] rounded-2xl p-6 sm:p-8">
+                <div className="mt-14 bg-(--accent-soft) border border-(--accent-border) rounded-2xl p-6 sm:p-8">
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 justify-between">
                         <div>
-                            <span className="text-xs font-semibold text-[var(--accent)] uppercase tracking-wider mb-1 block">Try it yourself</span>
-                            <h3 className="text-base sm:text-lg font-bold text-[var(--text-white)] mb-2">
+                            <span className="text-xs font-semibold text-(--accent-ink) mb-1 block">Try it yourself</span>
+                            <h3 className="text-base sm:text-lg font-bold text-(--text-white) mb-2">
                                 Check for free how visible you are on Google and in AI answers
                             </h3>
-                            <p className="text-[var(--text-muted)] text-sm leading-relaxed max-w-md">
-                                Enter your URL and get your SEO and AI visibility score in about 60 seconds — no sign-up, no credit card.
+                            <p className="text-(--text-muted) text-sm leading-relaxed max-w-md">
+                                Enter your URL and get your SEO and AI visibility score in about 60 seconds - no sign-up, no credit card.
                             </p>
                         </div>
                         <Link
                             href="/en/dashboard"
-                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-[var(--accent-border)] active:scale-[0.97] active:duration-75 shrink-0"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-(--accent) hover:bg-(--accent-hover) text-(--on-accent) text-sm font-semibold rounded-[10px] transition-all duration-200 active:scale-[0.97] active:duration-75 shrink-0"
                         >
                             Check for free
                         </Link>
@@ -297,20 +297,20 @@ export default function AffordableGeoToolPageEn() {
                 </div>
 
                 {/* Cross-link: comparison page */}
-                <div className="mt-5 bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl p-6 sm:p-8">
+                <div className="mt-5 bg-(--card) border border-(--line) rounded-2xl p-6 sm:p-8">
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 justify-between">
                         <div>
-                            <span className="text-xs font-semibold text-[var(--accent)] uppercase tracking-wider mb-1 block">Comparison</span>
-                            <h3 className="text-base sm:text-lg font-bold text-[var(--text-white)] mb-2">
+                            <span className="text-xs font-semibold text-(--accent-ink) mb-1 block">Comparison</span>
+                            <h3 className="text-base sm:text-lg font-bold text-(--text-white) mb-2">
                                 Otterly.ai alternative: the full comparison
                             </h3>
-                            <p className="text-[var(--text-muted)] text-sm leading-relaxed max-w-md">
-                                How Scanora stacks up against the best-known pure AI-visibility tracker — including pricing and where it falls short.
+                            <p className="text-(--text-muted) text-sm leading-relaxed max-w-md">
+                                How Scanora stacks up against the best-known pure AI-visibility tracker - including pricing and where it falls short.
                             </p>
                         </div>
                         <Link
                             href="/en/compare/otterly-alternative"
-                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--surface-08)] hover:bg-[var(--surface-10)] text-[var(--text-white)] text-sm font-semibold rounded-xl transition-all duration-200 shrink-0"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-(--surface-08) hover:bg-(--surface-10) text-(--text-white) text-sm font-semibold rounded-xl transition-all duration-200 shrink-0"
                         >
                             Read comparison
                         </Link>
@@ -318,20 +318,20 @@ export default function AffordableGeoToolPageEn() {
                 </div>
 
                 {/* Cross-link: SEO+GEO automation blog post */}
-                <div className="mt-5 bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl p-6 sm:p-8">
+                <div className="mt-5 bg-(--card) border border-(--line) rounded-2xl p-6 sm:p-8">
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 justify-between">
                         <div>
-                            <span className="text-xs font-semibold text-[var(--accent)] uppercase tracking-wider mb-1 block">Read more</span>
-                            <h3 className="text-base sm:text-lg font-bold text-[var(--text-white)] mb-2">
+                            <span className="text-xs font-semibold text-(--accent-ink) mb-1 block">Read more</span>
+                            <h3 className="text-base sm:text-lg font-bold text-(--text-white) mb-2">
                                 SEO rank tracker & AI visibility monitor
                             </h3>
-                            <p className="text-[var(--text-muted)] text-sm leading-relaxed max-w-md">
-                                How SEO automation and GEO automation work in detail at Scanora — including pricing.
+                            <p className="text-(--text-muted) text-sm leading-relaxed max-w-md">
+                                How SEO automation and GEO automation work in detail at Scanora - including pricing.
                             </p>
                         </div>
                         <Link
                             href="/en/blog/seo-geo-automation"
-                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--surface-08)] hover:bg-[var(--surface-10)] text-[var(--text-white)] text-sm font-semibold rounded-xl transition-all duration-200 shrink-0"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-(--surface-08) hover:bg-(--surface-10) text-(--text-white) text-sm font-semibold rounded-xl transition-all duration-200 shrink-0"
                         >
                             Read article
                         </Link>
@@ -339,8 +339,8 @@ export default function AffordableGeoToolPageEn() {
                 </div>
 
                 {/* Back */}
-                <div className="mt-10 pt-8 border-t border-[var(--border-subtle)]">
-                    <Link href="/en" className="text-sm text-[var(--text-faint)] hover:text-[var(--text-body)] transition-colors">
+                <div className="mt-10 pt-8 border-t border-(--border-subtle)">
+                    <Link href="/en" className="text-sm text-(--text-faint) hover:text-(--text-body) transition-colors">
                         ← Back to homepage
                     </Link>
                 </div>

@@ -113,26 +113,26 @@ const LAYERS = [
     {
         number: '01',
         title: 'Technische Grundlage',
-        color: '#06b6d4',
+        color: 'var(--accent)',
         desc: 'Die Voraussetzung, nicht die Lösung: llms.txt, Schema.org-Daten, FAQ-Schema mit sichtbarem HTML-Content, und KI-Crawler wie GPTBot, ClaudeBot und PerplexityBot explizit in robots.txt erlauben. Ohne das kann eine KI eine Website gar nicht lesen - mit alleine reicht es aber nicht, um zitiert zu werden.',
         internalLink: { label: 'GEO-Optimierung im Detail: die technische Checkliste', href: '/blog/geo-optimierung-2026' },
     },
     {
         number: '02',
         title: 'Zitierbarer, autoritativer Content',
-        color: '#a78bfa',
+        color: 'var(--accent)',
         desc: 'KI-Modelle zitieren bevorzugt Quellen, die eine klare Aussage treffen und sich mit anderen Quellen zum selben Thema vergleichen lassen. Konkrete Fakten und Zahlen statt Marketingfloskeln, klare Definitionen im "X ist Y für Z"-Format, und vor allem: Präsenz in Vergleichs- und Übersichtsartikeln zum eigenen Themenfeld - eigene oder fremde. Modelle mit Trainings-Cutoff wie Claude greifen überproportional oft auf genau solche Vergleichsquellen zurück.',
     },
     {
         number: '03',
         title: 'Externe Erwähnung & E-E-A-T',
-        color: '#10b981',
+        color: 'var(--success)',
         desc: 'Wird die eigene Marke bereits an anderer Stelle im Web diskutiert - in Foren, Vergleichsartikeln, auf GitHub, in Testberichten? Je häufiger eine Domain im offenen Web mit einem Thema verknüpft auftaucht, desto eher übernehmen KI-Modelle diese Verknüpfung. Eine gepflegte About-Seite mit Gründerinfo und externe Quellenverweise verstärken zusätzlich das Vertrauenssignal.',
     },
     {
         number: '04',
         title: 'Kontinuierliches Monitoring',
-        color: '#f59e0b',
+        color: 'var(--warning)',
         desc: 'KI-Antworten sind nicht deterministisch - dieselbe Frage kann je nach Zeitpunkt unterschiedlich beantwortet werden. Ohne wiederholte Messung lässt sich nicht unterscheiden, ob eine Maßnahme wirkt oder ob man nur eine Momentaufnahme sieht. Monitoring zeigt außerdem, wer stattdessen zitiert wird - und ob eine Formulierung wie "AI Visibility" von einem Modell überhaupt der richtigen Kategorie zugeordnet wird.',
         internalLink: { label: 'KI-Sichtbarkeit automatisiert tracken mit GEO Automatisierung', href: '/blog/seo-geo-automatisierung' },
     },
@@ -140,41 +140,41 @@ const LAYERS = [
 
 export default function KiSichtbarkeitErlangenPage() {
     return (
-        <main className="bg-[var(--bg-base)] min-h-screen">
+        <main className="bg-(--bg-base) min-h-screen">
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
             <Navbar />
 
-            <article className="max-w-3xl mx-auto px-5 sm:px-8 pt-32 pb-24">
+            <article className="max-w-190 mx-auto px-4 sm:px-8 pt-28 md:pt-34 pb-18 md:pb-28">
 
                 {/* Breadcrumb */}
-                <div className="flex items-center gap-2 text-xs text-[var(--text-faint)] mb-8">
-                    <Link href="/" className="hover:text-[var(--text-muted)] transition-colors">Scanora</Link>
+                <div className="flex flex-wrap items-center gap-2 text-sm text-(--text-muted) mb-8">
+                    <Link href="/" className="hover:text-(--accent-ink) transition-colors">Scanora</Link>
                     <span>/</span>
-                    <Link href="/blog" className="hover:text-[var(--text-muted)] transition-colors">Blog</Link>
+                    <Link href="/blog" className="hover:text-(--accent-ink) transition-colors">Blog</Link>
                     <span>/</span>
-                    <span className="text-[var(--text-faint)]">KI-Sichtbarkeit erlangen</span>
+                    <span className="text-(--text-faint)">KI-Sichtbarkeit erlangen</span>
                 </div>
 
                 {/* Header */}
                 <div className="mb-10">
                     <div className="flex items-center gap-3 mb-4">
-                        <span className="text-[11px] font-semibold px-2.5 py-1 rounded-full uppercase tracking-wider bg-violet-500/15 text-violet-400">
+                        <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-(--accent-soft) text-(--accent-ink)">
                             GEO
                         </span>
-                        <span className="text-xs text-[var(--text-faint)]">10. August 2026</span>
-                        <span className="text-xs text-[var(--text-faint)]">· 9 min Lesezeit</span>
+                        <span className="text-xs text-(--text-faint)">10. August 2026</span>
+                        <span className="text-xs text-(--text-faint)">· 9 min Lesezeit</span>
                     </div>
-                    <h1 className="text-3xl sm:text-5xl font-bold text-[var(--text-white)] leading-tight tracking-tight mb-5">
+                    <h1 className="text-[clamp(34px,4.4vw,52px)] font-bold text-(--text-white) leading-[1.06] tracking-[-0.035em] mb-5">
                         KI-Sichtbarkeit erlangen: So wirst du von ChatGPT, Claude & Perplexity zitiert
                     </h1>
-                    <p className="text-lg text-[var(--text-muted)] leading-relaxed">
+                    <p className="text-lg text-(--text-body) leading-relaxed">
                         llms.txt anlegen und Schema Markup einbauen ist der leichte Teil. Der eigentliche Grund, warum die meisten Websites trotzdem nicht zitiert werden, liegt eine Ebene tiefer - bei Content-Strategie und Monitoring. Hier ist der vollständige Weg zu echter KI-Sichtbarkeit, plattformspezifisch.
                     </p>
-                    <div className="mt-5 flex items-center gap-2 text-xs text-[var(--text-faint)]">
-                        <Link href="/about" className="flex items-center gap-2 hover:text-[var(--text-body)] transition-colors">
-                            <div className="w-6 h-6 rounded-full bg-gradient-to-br from-violet-600 to-cyan-600 flex items-center justify-center text-[var(--text-white)] text-[10px] font-bold">F</div>
+                    <div className="mt-5 flex items-center gap-2 text-xs text-(--text-faint)">
+                        <Link href="/about" className="flex items-center gap-2 hover:text-(--text-body) transition-colors">
+                            <div className="w-6 h-6 rounded-full bg-(--accent) flex items-center justify-center text-(--on-accent) text-[10px] font-bold">F</div>
                             <span>Finn Paustian</span>
                         </Link>
                         <span>·</span>
@@ -182,31 +182,31 @@ export default function KiSichtbarkeitErlangenPage() {
                     </div>
                 </div>
 
-                <div className="border-t border-[var(--text-white)]/5 mb-10" />
+                <div className="border-t border-(--line) mb-10" />
 
-                <div className="prose prose-invert prose-slate max-w-none space-y-10 text-[var(--text-body)] leading-relaxed">
+                <div className="prose prose-invert prose-slate max-w-none space-y-10 text-(--text-body) leading-relaxed">
 
-                    <nav aria-label="Inhaltsverzeichnis" className="bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-2xl p-5 sm:p-6">
-                        <p className="text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider mb-3">In diesem Artikel</p>
+                    <nav aria-label="Inhaltsverzeichnis" className="bg-(--card) border border-(--line) rounded-2xl p-5 sm:p-6">
+                        <p className="text-xs font-semibold text-(--text-faint) mb-3">In diesem Artikel</p>
                         <ol className="grid sm:grid-cols-2 gap-x-6 gap-y-1.5 text-sm">
-                            <li><a href="#was-ist-ki-sichtbarkeit" className="text-[var(--text-muted)] hover:text-violet-300 transition-colors">Was ist KI-Sichtbarkeit genau?</a></li>
-                            <li><a href="#warum-technik-nicht-reicht" className="text-[var(--text-muted)] hover:text-violet-300 transition-colors">Warum reicht Technik allein nicht?</a></li>
+                            <li><a href="#was-ist-ki-sichtbarkeit" className="text-(--text-muted) hover:text-(--accent-ink) transition-colors">Was ist KI-Sichtbarkeit genau?</a></li>
+                            <li><a href="#warum-technik-nicht-reicht" className="text-(--text-muted) hover:text-(--accent-ink) transition-colors">Warum reicht Technik allein nicht?</a></li>
                             {LAYERS.map((l) => (
                                 <li key={l.number}>
-                                    <a href={`#ebene-${l.number}`} className="text-[var(--text-muted)] hover:text-violet-300 transition-colors">
-                                        <span className="font-mono text-[var(--text-faint)] mr-1.5">{l.number}</span>{l.title}
+                                    <a href={`#ebene-${l.number}`} className="text-(--text-muted) hover:text-(--accent-ink) transition-colors">
+                                        <span className="font-mono text-(--text-faint) mr-1.5">{l.number}</span>{l.title}
                                     </a>
                                 </li>
                             ))}
-                            <li><a href="#pro-plattform" className="text-[var(--text-muted)] hover:text-violet-300 transition-colors">Was zählt pro Plattform?</a></li>
-                            <li><a href="#faq" className="text-[var(--text-muted)] hover:text-violet-300 transition-colors">Häufige Fragen</a></li>
+                            <li><a href="#pro-plattform" className="text-(--text-muted) hover:text-(--accent-ink) transition-colors">Was zählt pro Plattform?</a></li>
+                            <li><a href="#faq" className="text-(--text-muted) hover:text-(--accent-ink) transition-colors">Häufige Fragen</a></li>
                         </ol>
                     </nav>
 
                     <section id="was-ist-ki-sichtbarkeit" className="scroll-mt-28">
-                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Was ist KI-Sichtbarkeit genau?</h2>
+                        <h2 className="text-[28px] leading-tight tracking-[-0.03em] font-bold text-(--text-white) mb-4">Was ist KI-Sichtbarkeit genau?</h2>
                         <p>
-                            <strong className="text-[var(--text-white)]">KI-Sichtbarkeit</strong> beschreibt, wie oft und wie prominent eine Website oder Marke in den Antworten von KI-Modellen wie ChatGPT, Claude, Perplexity oder Google AI Overview erwähnt wird. Sie ist das GEO-Äquivalent zu Google-Rankings im klassischen SEO - nur dass die "Suchergebnisseite" eine generierte Antwort statt einer Liste von Links ist, und dass eine Marke entweder erwähnt wird oder eben nicht, mit allem dazwischen (Kontext, Sentiment, welche Quellen daneben zitiert werden).
+                            <strong className="text-(--text-white)">KI-Sichtbarkeit</strong> beschreibt, wie oft und wie prominent eine Website oder Marke in den Antworten von KI-Modellen wie ChatGPT, Claude, Perplexity oder Google AI Overview erwähnt wird. Sie ist das GEO-Äquivalent zu Google-Rankings im klassischen SEO - nur dass die "Suchergebnisseite" eine generierte Antwort statt einer Liste von Links ist, und dass eine Marke entweder erwähnt wird oder eben nicht, mit allem dazwischen (Kontext, Sentiment, welche Quellen daneben zitiert werden).
                         </p>
                         <p className="mt-4">
                             "KI-Sichtbarkeit erlangen" heißt deshalb mehr als nur crawlbar zu sein. Es bedeutet, dass ein Modell eine Domain kennt, sie einem Thema zuordnet, und sie gegenüber anderen möglichen Quellen für zitierwürdig genug hält.
@@ -214,33 +214,33 @@ export default function KiSichtbarkeitErlangenPage() {
                     </section>
 
                     <section id="warum-technik-nicht-reicht" className="scroll-mt-28">
-                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Warum reicht Technik allein nicht?</h2>
+                        <h2 className="text-[28px] leading-tight tracking-[-0.03em] font-bold text-(--text-white) mb-4">Warum reicht Technik allein nicht?</h2>
                         <p>
                             llms.txt, Schema.org und offene Crawler-Regeln lösen ein Zugänglichkeitsproblem: Kann die KI die Seite überhaupt lesen? Sie lösen aber kein Autoritätsproblem: Warum sollte die KI ausgerechnet diese Seite zitieren statt einer von hundert anderen zum selben Thema?
                         </p>
-                        <div className="bg-violet-500/8 border border-violet-500/20 rounded-2xl p-5 mt-5">
-                            <p className="text-sm text-violet-300 font-medium mb-1">Der häufigste Fehler</p>
-                            <p className="text-sm text-[var(--text-muted)]">
+                        <div className="bg-(--accent-soft) border border-(--accent-border) rounded-2xl p-5 mt-5">
+                            <p className="text-sm text-(--accent-ink) font-medium mb-1">Der häufigste Fehler</p>
+                            <p className="text-sm text-(--text-muted)">
                                 Websites setzen alle technischen GEO-Signale um, bleiben aber trotzdem unzitiert - weil an keiner Stelle im Web (auch nicht auf der eigenen Seite) ein Vergleich existiert, der die eigene Marke neben den bereits etablierten Antworten auf dieselbe Frage positioniert.
                             </p>
                         </div>
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-2">Die 4 Ebenen, um KI-Sichtbarkeit zu erlangen</h2>
-                        <p className="text-[var(--text-muted)] mb-6">Technik ist nur die erste von vier Ebenen. Erst alle vier zusammen führen zu tatsächlichen Zitierungen:</p>
+                        <h2 className="text-[28px] leading-tight tracking-[-0.03em] font-bold text-(--text-white) mb-2">Die 4 Ebenen, um KI-Sichtbarkeit zu erlangen</h2>
+                        <p className="text-(--text-muted) mb-6">Technik ist nur die erste von vier Ebenen. Erst alle vier zusammen führen zu tatsächlichen Zitierungen:</p>
                         <div className="space-y-4">
                             {LAYERS.map((l) => (
-                                <div key={l.number} id={`ebene-${l.number}`} className="bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-2xl p-5 scroll-mt-28">
+                                <div key={l.number} id={`ebene-${l.number}`} className="bg-(--card) border border-(--line) rounded-2xl p-5 scroll-mt-28">
                                     <div className="flex items-start gap-4">
                                         <span className="text-[11px] font-bold font-mono shrink-0 mt-0.5" style={{ color: l.color }}>{l.number}</span>
                                         <div className="flex-1">
-                                            <h3 className="font-semibold text-[var(--text-white)] mb-2">{l.title}</h3>
-                                            <p className="text-sm text-[var(--text-muted)] leading-relaxed">{l.desc}</p>
+                                            <h3 className="font-semibold text-(--text-white) mb-2">{l.title}</h3>
+                                            <p className="text-sm text-(--text-muted) leading-relaxed">{l.desc}</p>
                                             {l.internalLink && (
                                                 <Link
                                                     href={l.internalLink.href}
-                                                    className="mt-3 inline-block text-xs text-violet-400 hover:text-violet-300 underline underline-offset-2"
+                                                    className="mt-3 inline-block text-xs text-(--accent-ink) hover:text-(--accent-ink) underline underline-offset-2"
                                                 >
                                                     {l.internalLink.label} →
                                                 </Link>
@@ -253,17 +253,17 @@ export default function KiSichtbarkeitErlangenPage() {
                     </section>
 
                     <section id="pro-plattform" className="scroll-mt-28">
-                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Was zählt pro Plattform - Claude, ChatGPT, Perplexity, Google AI Overview?</h2>
+                        <h2 className="text-[28px] leading-tight tracking-[-0.03em] font-bold text-(--text-white) mb-4">Was zählt pro Plattform - Claude, ChatGPT, Perplexity, Google AI Overview?</h2>
                         <p>
                             KI-Sichtbarkeit ist keine einzelne Kennzahl - jede Plattform funktioniert technisch anders und braucht deshalb eine andere Priorität:
                         </p>
-                        <div className="overflow-hidden rounded-2xl border border-[var(--text-white)]/[0.07] mt-5">
+                        <div className="overflow-hidden rounded-2xl border border-(--line) mt-5">
                             <table className="w-full text-sm">
                                 <thead>
-                                    <tr className="border-b border-[var(--text-white)]/5 bg-[var(--text-white)]/[0.02]">
-                                        <th className="text-left px-5 py-3 text-[var(--text-muted)] font-semibold">Plattform</th>
-                                        <th className="text-left px-5 py-3 text-[var(--text-muted)] font-semibold">Funktionsweise</th>
-                                        <th className="text-left px-5 py-3 text-violet-400 font-semibold">Was zählt</th>
+                                    <tr className="border-b border-(--line) bg-(--card)">
+                                        <th className="text-left px-5 py-3 text-(--text-muted) font-semibold">Plattform</th>
+                                        <th className="text-left px-5 py-3 text-(--text-muted) font-semibold">Funktionsweise</th>
+                                        <th className="text-left px-5 py-3 text-(--accent-ink) font-semibold">Was zählt</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -273,27 +273,27 @@ export default function KiSichtbarkeitErlangenPage() {
                                         ['ChatGPT', 'Trainingsdaten, teils mit Websuche', 'Eindeutige Begriffe - mehrdeutige Formulierungen werden leicht falsch zugeordnet'],
                                         ['Google AI Overview', 'Google-Index als Basis', 'Klassisches SEO-Ranking bleibt Voraussetzung für die Zitierquelle'],
                                     ].map(([platform, how, what], i) => (
-                                        <tr key={i} className="border-b border-[var(--text-white)]/[0.04] last:border-0">
-                                            <td className="px-5 py-3 text-[var(--text-white)] font-medium">{platform}</td>
-                                            <td className="px-5 py-3 text-[var(--text-muted)]">{how}</td>
-                                            <td className="px-5 py-3 text-[var(--text-body)]">{what}</td>
+                                        <tr key={i} className="border-b border-(--line) last:border-0">
+                                            <td className="px-5 py-3 text-(--text-white) font-medium">{platform}</td>
+                                            <td className="px-5 py-3 text-(--text-muted)">{how}</td>
+                                            <td className="px-5 py-3 text-(--text-body)">{what}</td>
                                         </tr>
                                     ))}
                                 </tbody>
                             </table>
                         </div>
                         <p className="mt-4">
-                            Genau diese Streuung ist auch der Grund, warum Monitoring pro Plattform getrennt sinnvoll ist statt einer einzigen Gesamtzahl - eine Marke kann auf Claude sehr sichtbar und auf ChatGPT für dieselbe Frage komplett unsichtbar sein. Mehr dazu: <Link href="/loesungen/chatgpt-sichtbarkeit-tracken" className="text-violet-400 hover:text-violet-300">Sichtbarkeit in ChatGPT tracken</Link> und <Link href="/loesungen/claude-ai-sichtbarkeit-tracken" className="text-violet-400 hover:text-violet-300">Sichtbarkeit in Claude tracken</Link>. Einen Überblick über GEO-Tools inklusive Preisen liefert unser <Link href="/blog/beste-geo-ki-sichtbarkeit-tools-2026" className="text-violet-400 hover:text-violet-300">Vergleich der besten GEO-Tools 2026</Link>. Wie du diese Sichtbarkeit systematisch misst statt nur zu erlangen, zeigt <Link href="/blog/ki-sichtbarkeit-messen" className="text-violet-400 hover:text-violet-300">KI-Sichtbarkeit messen: Kennzahlen, Dashboard & eigene Daten</Link>.
+                            Genau diese Streuung ist auch der Grund, warum Monitoring pro Plattform getrennt sinnvoll ist statt einer einzigen Gesamtzahl - eine Marke kann auf Claude sehr sichtbar und auf ChatGPT für dieselbe Frage komplett unsichtbar sein. Mehr dazu: <Link href="/loesungen/chatgpt-sichtbarkeit-tracken" className="text-(--accent-ink) hover:text-(--accent-ink)">Sichtbarkeit in ChatGPT tracken</Link> und <Link href="/loesungen/claude-ai-sichtbarkeit-tracken" className="text-(--accent-ink) hover:text-(--accent-ink)">Sichtbarkeit in Claude tracken</Link>. Einen Überblick über GEO-Tools inklusive Preisen liefert unser <Link href="/blog/beste-geo-ki-sichtbarkeit-tools-2026" className="text-(--accent-ink) hover:text-(--accent-ink)">Vergleich der besten GEO-Tools 2026</Link>. Wie du diese Sichtbarkeit systematisch misst statt nur zu erlangen, zeigt <Link href="/blog/ki-sichtbarkeit-messen" className="text-(--accent-ink) hover:text-(--accent-ink)">KI-Sichtbarkeit messen: Kennzahlen, Dashboard & eigene Daten</Link>.
                         </p>
                     </section>
 
                     <section id="faq" className="scroll-mt-28">
-                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Häufige Fragen zu KI-Sichtbarkeit</h2>
+                        <h2 className="text-[28px] leading-tight tracking-[-0.03em] font-bold text-(--text-white) mb-4">Häufige Fragen zu KI-Sichtbarkeit</h2>
                         <div className="space-y-4">
                             {faqLd.mainEntity.map((faq, i) => (
-                                <div key={i} className="bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-2xl p-5">
-                                    <h3 className="font-semibold text-[var(--text-white)] mb-2 text-sm">{faq.name}</h3>
-                                    <p className="text-sm text-[var(--text-muted)] leading-relaxed">{faq.acceptedAnswer.text}</p>
+                                <div key={i} className="bg-(--card) border border-(--line) rounded-2xl p-5">
+                                    <h3 className="font-semibold text-(--text-white) mb-2 text-sm">{faq.name}</h3>
+                                    <p className="text-sm text-(--text-muted) leading-relaxed">{faq.acceptedAnswer.text}</p>
                                 </div>
                             ))}
                         </div>
@@ -302,25 +302,25 @@ export default function KiSichtbarkeitErlangenPage() {
                 </div>
 
                 {/* CTA */}
-                <div className="mt-14 bg-gradient-to-br from-violet-950/40 to-[var(--bg-base)] border border-violet-500/20 rounded-2xl p-6 sm:p-8 text-center">
-                    <h2 className="text-xl sm:text-2xl font-bold text-[var(--text-white)] mb-3">
+                <div className="mt-14 bg-(--tint) border border-(--line) rounded-2xl p-6 sm:p-8 text-center">
+                    <h2 className="text-xl sm:text-2xl font-bold text-(--text-white) mb-3">
                         Wirst du bei ChatGPT, Claude & Perplexity zitiert?
                     </h2>
-                    <p className="text-[var(--text-muted)] text-sm mb-6 max-w-md mx-auto leading-relaxed">
+                    <p className="text-(--text-muted) text-sm mb-6 max-w-md mx-auto leading-relaxed">
                         GEO Automatisierung von Scanora testet wöchentlich automatisch, ob deine Domain erwähnt wird - inklusive Kontext, Konkurrenzvergleich und Verlauf über Zeit. Ab 4,99 €/Monat, 14 Tage kostenlos testen.
                     </p>
                     <Link
                         href="/geo/pricing"
-                        className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-[var(--text-white)] text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-violet-500/20"
+                        className="inline-flex items-center gap-2 px-6 py-3 bg-(--accent) hover:bg-(--accent) hover:text-(--on-accent) text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-(--accent-border)"
                     >
                         KI-Sichtbarkeit jetzt tracken
                     </Link>
-                    <div className="mt-3 text-xs text-[var(--text-faint)]">14 Tage kostenlos · Claude, ChatGPT, Perplexity, Google AI Overview</div>
+                    <div className="mt-3 text-xs text-(--text-faint)">14 Tage kostenlos · Claude, ChatGPT, Perplexity, Google AI Overview</div>
                 </div>
 
                 {/* Back to blog */}
-                <div className="mt-10 pt-8 border-t border-[var(--text-white)]/5">
-                    <Link href="/blog" className="text-sm text-[var(--text-faint)] hover:text-[var(--text-body)] transition-colors">
+                <div className="mt-10 pt-8 border-t border-(--line)">
+                    <Link href="/blog" className="text-sm text-(--text-faint) hover:text-(--text-body) transition-colors">
                         ← Zurück zum Blog
                     </Link>
                 </div>

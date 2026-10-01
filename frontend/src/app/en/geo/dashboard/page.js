@@ -8,12 +8,12 @@ import toast from 'react-hot-toast'
 import Navbar from '../../../components/Navbar'
 
 function MentionRateBadge({ rate, mentioned, checked }) {
-    if (rate == null) return <span className="text-xs text-[var(--text-faint)]">No check yet</span>
-    const color = rate >= 70 ? 'text-[var(--accent)]' : rate >= 40 ? 'text-amber-400' : 'text-[var(--text-muted)]'
+    if (rate == null) return <span className="text-xs text-(--text-faint)">No check yet</span>
+    const color = rate >= 70 ? 'text-(--accent-ink)' : rate >= 40 ? 'text-(--warning)' : 'text-(--text-muted)'
     return (
         <div>
             <span className={`text-xl font-bold ${color}`}>{rate}%</span>
-            <span className="text-xs text-[var(--text-faint)] ml-1.5">{mentioned}/{checked} keywords</span>
+            <span className="text-xs text-(--text-faint) ml-1.5">{mentioned}/{checked} keywords</span>
         </div>
     )
 }
@@ -44,38 +44,38 @@ function SiteCard({ site, onDelete }) {
         <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="group relative bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl p-6 hover:border-[var(--accent-border)] transition-all duration-200"
+            className="group relative bg-(--bg-surface) border border-(--border-subtle) rounded-2xl p-6 hover:border-(--accent-border) transition-all duration-200"
         >
             <button
                 onClick={handleDelete}
                 disabled={deleting}
-                className="absolute top-4 right-4 w-7 h-7 flex items-center justify-center rounded-lg opacity-0 group-hover:opacity-100 bg-[var(--surface-06)] hover:bg-red-500/15 text-[var(--text-faint)] hover:text-red-400 transition-all"
+                className="absolute top-4 right-4 w-7 h-7 flex items-center justify-center rounded-lg opacity-0 group-hover:opacity-100 bg-(--surface-06) hover:bg-(--danger-soft) text-(--text-faint) hover:text-(--danger) transition-all"
             >
                 {deleting ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Trash2 className="w-3.5 h-3.5" />}
             </button>
 
             <div className="flex items-start gap-3 mb-4">
-                <div className="w-9 h-9 rounded-xl bg-[var(--accent-soft)] border border-[var(--accent-border)] flex items-center justify-center shrink-0">
-                    <Globe className="w-4 h-4 text-[var(--accent)]" />
+                <div className="w-9 h-9 rounded-xl bg-(--accent-soft) border border-(--accent-border) flex items-center justify-center shrink-0">
+                    <Globe className="w-4 h-4 text-(--accent-ink)" />
                 </div>
                 <div className="min-w-0">
-                    <div className="text-sm font-semibold text-[var(--text-white)] truncate">{site.displayName || site.domain}</div>
-                    <div className="text-xs text-[var(--text-faint)] truncate">{site.domain}</div>
+                    <div className="text-sm font-semibold text-(--text-white) truncate">{site.displayName || site.domain}</div>
+                    <div className="text-xs text-(--text-faint) truncate">{site.domain}</div>
                 </div>
             </div>
 
             <div className="grid grid-cols-2 gap-3 mb-4">
-                <div className="bg-[var(--surface-06)] rounded-xl p-3">
-                    <div className="text-xs text-[var(--text-faint)] mb-1">AI mentions</div>
+                <div className="bg-(--surface-06) rounded-xl p-3">
+                    <div className="text-xs text-(--text-faint) mb-1">AI mentions</div>
                     <MentionRateBadge rate={site.mentionRate} mentioned={site.mentionedCount} checked={site.checkedCount} />
                 </div>
-                <div className="bg-[var(--surface-06)] rounded-xl p-3">
-                    <div className="text-xs text-[var(--text-faint)] mb-1">Keywords</div>
-                    <span className="text-xl font-bold text-[var(--text-white)]">{site.keywords?.length || 0}</span>
+                <div className="bg-(--surface-06) rounded-xl p-3">
+                    <div className="text-xs text-(--text-faint) mb-1">Keywords</div>
+                    <span className="text-xl font-bold text-(--text-white)">{site.keywords?.length || 0}</span>
                 </div>
             </div>
 
-            <div className="text-[11px] text-[var(--text-faint)] mb-4">
+            <div className="text-[11px] text-(--text-faint) mb-4">
                 {site.lastChecked
                     ? `Last checked: ${new Date(site.lastChecked).toLocaleDateString('en-US')}`
                     : 'Not checked yet'}
@@ -83,7 +83,7 @@ function SiteCard({ site, onDelete }) {
 
             <Link
                 href={`/en/geo/${site._id}`}
-                className="flex items-center justify-center gap-2 w-full py-2.5 text-sm font-semibold rounded-xl bg-[var(--accent-soft)] hover:bg-[var(--accent-soft-strong)] text-[var(--accent)] border border-[var(--accent-border)] transition-all"
+                className="flex items-center justify-center gap-2 w-full py-2.5 text-sm font-semibold rounded-xl bg-(--accent-soft) hover:bg-(--accent-soft-strong) text-(--accent-ink) border border-(--accent-border) transition-all"
             >
                 View results
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -162,30 +162,30 @@ function AddSiteModal({ slotsLeft, onClose, onAdded, initialDomain = '', initial
                 initial={{ opacity: 0, scale: 0.95, y: 16 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.95 }}
-                className="w-full max-w-md bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl p-6"
+                className="w-full max-w-md bg-(--bg-surface) border border-(--border-subtle) rounded-2xl p-6"
             >
                 <div className="flex items-center justify-between mb-6">
-                    <h3 className="text-lg font-bold text-[var(--text-white)]">Add website</h3>
-                    <button onClick={onClose} className="w-8 h-8 flex items-center justify-center rounded-lg bg-[var(--surface-06)] hover:bg-[var(--surface-10)] text-[var(--text-muted)] hover:text-[var(--text-white)] transition-all">
+                    <h3 className="text-lg font-bold text-(--text-white)">Add website</h3>
+                    <button onClick={onClose} className="w-8 h-8 flex items-center justify-center rounded-lg bg-(--surface-06) hover:bg-(--surface-10) text-(--text-muted) hover:text-(--text-white) transition-all">
                         <X className="w-4 h-4" />
                     </button>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
-                        <label className="text-sm text-[var(--text-body)] font-medium block mb-1.5">Domain</label>
+                        <label className="text-sm text-(--text-body) font-medium block mb-1.5">Domain</label>
                         <input
                             type="text"
                             value={domain}
                             onChange={e => setDomain(e.target.value)}
                             placeholder="example.com"
                             required
-                            className="w-full bg-[var(--surface-06)] border border-[var(--border-subtle)] focus:border-[var(--accent-border)] rounded-xl px-4 py-3 text-[var(--text-white)] placeholder:text-[var(--text-faint)] outline-none transition-all text-sm"
+                            className="w-full bg-(--card) border border-(--line) focus:border-(--accent) focus:shadow-[0_0_0_4px_var(--accent-ring)] rounded-xl px-4 py-3 text-(--text-white) placeholder:text-(--text-faint) outline-none transition-all text-sm"
                         />
                     </div>
 
                     <div>
-                        <label className="text-sm text-[var(--text-body)] font-medium block mb-1.5">Track AI platforms</label>
+                        <label className="text-sm text-(--text-body) font-medium block mb-1.5">Track AI platforms</label>
                         <div className="space-y-2">
                             {PLATFORMS.map(p => {
                                 const active = selectedPlatforms.includes(p.id)
@@ -196,18 +196,18 @@ function AddSiteModal({ slotsLeft, onClose, onAdded, initialDomain = '', initial
                                         onClick={() => togglePlatform(p.id)}
                                         className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl border transition-all text-left ${
                                             active
-                                                ? 'bg-[var(--accent-soft)] border-[var(--accent-border)] text-[var(--text-white)]'
-                                                : 'bg-[var(--surface-06)] border-[var(--border-subtle)] text-[var(--text-faint)] hover:border-[var(--border-strong)]'
+                                                ? 'bg-(--accent-soft) border-(--accent-border) text-(--text-white)'
+                                                : 'bg-(--card) border-(--line) text-(--text-faint) hover:border-(--border-strong)'
                                         }`}
                                     >
                                         <div className={`w-4 h-4 rounded border-2 flex items-center justify-center shrink-0 transition-all ${
-                                            active ? 'bg-[var(--accent)] border-[var(--accent)]' : 'border-[var(--border-strong)]'
+                                            active ? 'bg-(--accent) border-(--accent)' : 'border-(--border-strong)'
                                         }`}>
-                                            {active && <span className="text-[var(--text-white)] text-[10px] font-bold">✓</span>}
+                                            {active && <span className="text-(--text-white) text-[10px] font-bold">✓</span>}
                                         </div>
                                         <div className="min-w-0">
                                             <div className="text-sm font-semibold">{p.label}</div>
-                                            <div className="text-xs text-[var(--text-faint)]">{p.sub}</div>
+                                            <div className="text-xs text-(--text-faint)">{p.sub}</div>
                                         </div>
                                     </button>
                                 )
@@ -216,21 +216,21 @@ function AddSiteModal({ slotsLeft, onClose, onAdded, initialDomain = '', initial
                     </div>
 
                     <div>
-                        <label className="text-sm text-[var(--text-body)] font-medium block mb-1.5">
-                            Keywords <span className="text-[var(--text-faint)]">(one per line, max. {slotsLeft} remaining)</span>
+                        <label className="text-sm text-(--text-body) font-medium block mb-1.5">
+                            Keywords <span className="text-(--text-faint)">(one per line, max. {slotsLeft} remaining)</span>
                         </label>
                         <textarea
                             value={keywordsText}
                             onChange={e => setKeywordsText(e.target.value)}
                             placeholder={"seo tool\nwebsite audit\nkeyword tracking"}
                             rows={4}
-                            className="w-full bg-[var(--surface-06)] border border-[var(--border-subtle)] focus:border-[var(--accent-border)] rounded-xl px-4 py-3 text-[var(--text-white)] placeholder:text-[var(--text-faint)] outline-none transition-all text-sm resize-none font-mono"
+                            className="w-full bg-(--card) border border-(--line) focus:border-(--accent) focus:shadow-[0_0_0_4px_var(--accent-ring)] rounded-xl px-4 py-3 text-(--text-white) placeholder:text-(--text-faint) outline-none transition-all text-sm resize-none font-mono"
                         />
                         <div className="flex items-center justify-between mt-1">
-                            <p className="text-xs text-[var(--text-faint)]">{kwCount} keywords entered</p>
+                            <p className="text-xs text-(--text-faint)">{kwCount} keywords entered</p>
                             {kwCount > 0 && (
-                                <p className="text-xs text-[var(--text-faint)]">
-                                    ~<span className="text-[var(--text-body)] font-medium">${estimatedCost}</span>/month API cost
+                                <p className="text-xs text-(--text-faint)">
+                                    ~<span className="text-(--text-body) font-medium">${estimatedCost}</span>/month API cost
                                 </p>
                             )}
                         </div>
@@ -239,7 +239,7 @@ function AddSiteModal({ slotsLeft, onClose, onAdded, initialDomain = '', initial
                     <button
                         type="submit"
                         disabled={loading || !domain.trim() || !selectedPlatforms.length}
-                        className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] font-semibold transition-all disabled:opacity-50 text-sm"
+                        className="w-full flex items-center justify-center gap-2 py-3 rounded-[10px] bg-(--accent) hover:bg-(--accent-hover) text-(--on-accent) font-semibold transition-all disabled:opacity-50 text-sm"
                     >
                         {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Plus className="w-4 h-4" />}
                         {loading ? 'Adding…' : 'Add website'}
@@ -321,28 +321,28 @@ function GeoDashboardPageEnInner() {
     }
 
     if (loading) return (
-        <div className="min-h-screen bg-[var(--bg-base)] flex items-center justify-center">
-            <Loader2 className="w-8 h-8 text-[var(--accent)] animate-spin" />
+        <div className="min-h-screen bg-(--bg-base) flex items-center justify-center">
+            <Loader2 className="w-8 h-8 text-(--accent-ink) animate-spin" />
         </div>
     )
 
     if (!plan) return (
-        <div className="min-h-screen bg-[var(--bg-base)]">
+        <div className="min-h-screen bg-(--bg-base)">
             <Navbar locale="en" />
             <div className="flex flex-col items-center justify-center min-h-screen gap-6 px-5 text-center">
-                <div className="w-16 h-16 rounded-2xl bg-[var(--accent-soft)] border border-[var(--accent-border)] flex items-center justify-center">
-                    <Sparkles className="w-7 h-7 text-[var(--accent)]" />
+                <div className="w-16 h-16 rounded-2xl bg-(--accent-soft) border border-(--accent-border) flex items-center justify-center">
+                    <Sparkles className="w-7 h-7 text-(--accent-ink)" />
                 </div>
                 <div>
-                    <h2 className="text-2xl font-bold text-[var(--text-white)] mb-2">GEO Automation</h2>
-                    <p className="text-[var(--text-faint)] text-sm max-w-sm">
-                        Track whether Claude, ChatGPT, Perplexity, and Google AI Overview recommend your domain — automatically, every week.
+                    <h2 className="text-2xl font-bold text-(--text-white) mb-2">GEO Automation</h2>
+                    <p className="text-(--text-faint) text-sm max-w-sm">
+                        Track whether Claude, ChatGPT, Perplexity, and Google AI Overview recommend your domain - automatically, every week.
                         Choose a plan to get started.
                     </p>
                 </div>
                 <Link
                     href="/en/geo/pricing"
-                    className="flex items-center gap-2 px-6 py-3 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] font-semibold rounded-xl transition-all shadow-lg shadow-[var(--accent-border)] active:scale-[0.97] active:duration-75"
+                    className="flex items-center gap-2 px-6 py-3 bg-(--accent) hover:bg-(--accent-hover) text-(--on-accent) font-semibold rounded-[10px] transition-all active:scale-[0.97] active:duration-75"
                 >
                     View plans →
                 </Link>
@@ -351,7 +351,7 @@ function GeoDashboardPageEnInner() {
     )
 
     return (
-        <div className="min-h-screen bg-[var(--bg-base)]">
+        <div className="min-h-screen bg-(--bg-base)">
             <Navbar locale="en" />
 
             <div className="max-w-7xl mx-auto px-5 sm:px-8 pt-28 pb-16">
@@ -359,18 +359,18 @@ function GeoDashboardPageEnInner() {
                 {/* Header */}
                 <div className="flex items-start justify-between gap-4 mb-8">
                     <div>
-                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--accent-border)] bg-[var(--accent-soft)] text-[var(--accent)] text-xs font-medium mb-3">
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-(--accent-border) bg-(--accent-soft) text-(--accent-ink) text-xs font-medium mb-3">
                             <Sparkles className="w-3 h-3" />
                             GEO Tracking · Claude · ChatGPT
                         </div>
-                        <h1 className="text-2xl sm:text-3xl font-bold text-[var(--text-white)]">GEO Automation</h1>
-                        <p className="text-[var(--text-faint)] text-sm mt-1">Is your domain mentioned by AI systems?</p>
+                        <h1 className="text-2xl sm:text-3xl font-bold text-(--text-white)">GEO Automation</h1>
+                        <p className="text-(--text-faint) text-sm mt-1">Is your domain mentioned by AI systems?</p>
                     </div>
 
                     {limits.usedSites < limits.maxSites && (
                         <button
                             onClick={() => setShowAdd(true)}
-                            className="flex items-center gap-2 px-4 py-2.5 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all shadow-lg shadow-[var(--accent-border)] active:scale-[0.97] active:duration-75"
+                            className="flex items-center gap-2 px-4 py-2.5 bg-(--accent) hover:bg-(--accent-hover) text-(--on-accent) text-sm font-semibold rounded-[10px] transition-all active:scale-[0.97] active:duration-75"
                         >
                             <Plus className="w-4 h-4" />
                             Add website
@@ -384,14 +384,14 @@ function GeoDashboardPageEnInner() {
                         { label: 'Websites', used: limits.usedSites, max: limits.maxSites },
                         { label: 'Keywords', used: limits.usedKeywords, max: limits.maxKeywords },
                     ].map(({ label, used, max }) => (
-                        <div key={label} className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-xl p-4">
+                        <div key={label} className="bg-(--bg-surface) border border-(--border-subtle) rounded-xl p-4">
                             <div className="flex items-center justify-between mb-2">
-                                <span className="text-sm text-[var(--text-muted)]">{label}</span>
-                                <span className="text-sm font-semibold text-[var(--text-white)]">{used} / {max}</span>
+                                <span className="text-sm text-(--text-muted)">{label}</span>
+                                <span className="text-sm font-semibold text-(--text-white)">{used} / {max}</span>
                             </div>
-                            <div className="h-1.5 bg-[var(--surface-08)] rounded-full overflow-hidden">
+                            <div className="h-1.5 bg-(--surface-08) rounded-full overflow-hidden">
                                 <div
-                                    className="h-full bg-[var(--accent)] rounded-full transition-all"
+                                    className="h-full bg-(--accent) rounded-full transition-all"
                                     style={{ width: `${max > 0 ? (used / max) * 100 : 0}%` }}
                                 />
                             </div>
@@ -400,9 +400,9 @@ function GeoDashboardPageEnInner() {
                 </div>
 
                 {/* Info banner */}
-                <div className="bg-[var(--accent-soft)] border border-[var(--accent-border)] rounded-2xl p-4 mb-8 flex items-start gap-3">
-                    <Sparkles className="w-4 h-4 text-[var(--accent)] shrink-0 mt-0.5" />
-                    <p className="text-xs text-[var(--text-muted)] leading-relaxed">
+                <div className="bg-(--accent-soft) border border-(--accent-border) rounded-2xl p-4 mb-8 flex items-start gap-3">
+                    <Sparkles className="w-4 h-4 text-(--accent-ink) shrink-0 mt-0.5" />
+                    <p className="text-xs text-(--text-muted) leading-relaxed">
                         GEO tracking checks whether Claude, ChatGPT, Perplexity, and Google AI Overview mention your domain for relevant queries.
                         The more keywords AI systems associate with your site, the better your GEO visibility.
                         Checks run automatically every week or manually on demand.
@@ -412,14 +412,14 @@ function GeoDashboardPageEnInner() {
                 {/* Sites grid */}
                 {sites.length === 0 ? (
                     <div className="text-center py-20">
-                        <div className="w-16 h-16 rounded-2xl bg-[var(--accent-soft)] border border-[var(--accent-border)] flex items-center justify-center mx-auto mb-4">
-                            <Sparkles className="w-7 h-7 text-[var(--accent)]" />
+                        <div className="w-16 h-16 rounded-2xl bg-(--accent-soft) border border-(--accent-border) flex items-center justify-center mx-auto mb-4">
+                            <Sparkles className="w-7 h-7 text-(--accent-ink)" />
                         </div>
-                        <h3 className="text-xl font-bold text-[var(--text-white)] mb-2">No website added yet</h3>
-                        <p className="text-[var(--text-faint)] text-sm mb-6">Add your website with keywords and check whether Claude AI mentions you.</p>
+                        <h3 className="text-xl font-bold text-(--text-white) mb-2">No website added yet</h3>
+                        <p className="text-(--text-faint) text-sm mb-6">Add your website with keywords and check whether Claude AI mentions you.</p>
                         <button
                             onClick={() => setShowAdd(true)}
-                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-(--accent) hover:bg-(--accent-hover) text-(--on-accent) text-sm font-semibold rounded-[10px] transition-all"
                         >
                             <Plus className="w-4 h-4" />
                             Add first website

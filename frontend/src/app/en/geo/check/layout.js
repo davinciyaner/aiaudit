@@ -15,7 +15,7 @@ export const metadata = {
         url: 'https://www.scanora.ai/en/geo/check',
         type: 'website',
         locale: 'en_US',
-        images: ['https://www.scanora.ai/opengraph-image'],
+        images: ['https://www.scanora.ai/en/opengraph-image'],
     },
 }
 

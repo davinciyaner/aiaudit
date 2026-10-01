@@ -1,6 +1,5 @@
 'use client'
 import { useState } from 'react'
-import { motion } from 'framer-motion'
 import { ArrowRight, Globe, Search, CheckCircle2, AlertCircle } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
@@ -34,24 +33,24 @@ function HeroAuditInput() {
     }
 
     const barStateClass = showError
-        ? 'border-[var(--danger)] focus-within:border-[var(--danger)] focus-within:ring-[var(--danger-soft)]'
+        ? 'border-(--danger) focus-within:border-(--danger) focus-within:ring-(--danger-soft)'
         : showSuccess
-            ? 'border-[var(--success-border)] focus-within:border-[var(--success)] focus-within:ring-[var(--success-soft)]'
-            : 'border-[var(--border-subtle)] focus-within:border-[var(--accent-border)] focus-within:ring-[var(--accent-soft-strong)] focus-within:bg-[var(--surface-08)]'
+            ? 'border-(--success-border) focus-within:border-(--success) focus-within:ring-(--success-soft)'
+            : 'border-(--border-subtle) focus-within:border-(--accent-border) focus-within:ring-(--accent-soft-strong) focus-within:bg-(--surface-08)'
 
     return (
         <form onSubmit={handleSubmit} className="w-full" noValidate>
-            <label htmlFor="hero-audit-url-en" className="block text-xs font-semibold text-[var(--text-faint)] text-center mb-2">
+            <label htmlFor="hero-audit-url-en" className="block text-xs font-semibold text-(--text-faint) text-center mb-2">
                 Website URL
             </label>
-            <div className={`relative flex items-center gap-3 p-2 bg-[var(--surface-06)] border rounded-2xl focus-within:ring-2 transition-all duration-200 shadow-card ${barStateClass}`}>
+            <div className={`relative flex items-center gap-3 p-2 bg-(--surface-06) border rounded-2xl focus-within:ring-2 transition-all duration-200 shadow-card ${barStateClass}`}>
                 <div className="flex items-center gap-3 flex-1 px-3">
                     {showError ? (
-                        <AlertCircle className="w-4 h-4 text-[var(--danger)] shrink-0" />
+                        <AlertCircle className="w-4 h-4 text-(--danger) shrink-0" />
                     ) : showSuccess ? (
-                        <CheckCircle2 className="w-4 h-4 text-[var(--success)] shrink-0" />
+                        <CheckCircle2 className="w-4 h-4 text-(--success) shrink-0" />
                     ) : (
-                        <Globe className="w-4 h-4 text-[var(--text-faint)] shrink-0" />
+                        <Globe className="w-4 h-4 text-(--text-faint) shrink-0" />
                     )}
                     <input
                         id="hero-audit-url-en"
@@ -63,7 +62,7 @@ function HeroAuditInput() {
                         placeholder="yourwebsite.com"
                         aria-invalid={showError}
                         aria-describedby="hero-audit-url-en-hint"
-                        className="flex-1 bg-transparent text-[var(--text-white)] placeholder-[var(--text-faint)] text-sm outline-none py-2 disabled:opacity-60"
+                        className="flex-1 bg-transparent text-(--text-white) placeholder-(--text-faint) text-sm outline-none py-2 disabled:opacity-60"
                         autoComplete="off"
                         autoCapitalize="off"
                         autoCorrect="off"
@@ -71,20 +70,20 @@ function HeroAuditInput() {
                         spellCheck={false}
                     />
                     {url.trim() && !url.startsWith('http') && (
-                        <span className="text-xs text-[var(--text-faint)] shrink-0 hidden sm:block">→ {normalized}</span>
+                        <span className="text-xs text-(--text-faint) shrink-0 hidden sm:block">→ {normalized}</span>
                     )}
                 </div>
                 <button type="submit" disabled={submitting} aria-busy={submitting}
-                    className="flex items-center gap-2 px-6 py-3 bg-[var(--accent)] hover:opacity-90 disabled:opacity-80 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-[var(--accent-border)] active:scale-[0.97] active:duration-75 shrink-0">
+                    className="flex items-center gap-2 px-6 py-3 bg-(--accent) hover:bg-(--accent-hover) disabled:opacity-80 text-(--on-accent) text-sm font-semibold rounded-[10px] transition-all duration-200 active:scale-[0.97] active:duration-75 shrink-0">
                     {submitting
-                        ? <span className="w-4 h-4 rounded-full border-2 border-[var(--bg-base)]/30 border-t-[var(--bg-base)] animate-spin" aria-hidden="true" />
+                        ? <span className="w-4 h-4 rounded-full border-2 border-(--bg-base)/30 border-t-(--bg-base) animate-spin" aria-hidden="true" />
                         : <Search className="w-4 h-4" />}
                     <span>{submitting ? 'Checking…' : 'Check for free now'}</span>
                     {!submitting && <ArrowRight className="w-3.5 h-3.5" />}
                 </button>
             </div>
             <p id="hero-audit-url-en-hint" role={showError ? 'alert' : undefined}
-                className={`text-xs text-center mt-3 ${showError ? 'text-[var(--danger)]' : 'text-[var(--text-muted)]'}`}>
+                className={`text-xs text-center mt-3 ${showError ? 'text-(--danger)' : 'text-(--text-muted)'}`}>
                 {showError
                     ? 'Please enter a URL'
                     : 'Free · No sign-up to start · Register free for the full report · Results in ~60 seconds'}
@@ -96,28 +95,26 @@ function HeroAuditInput() {
 export default function Hero() {
     return (
         <section id="hero" className="relative flex items-center pt-28 pb-16 sm:pt-36 sm:pb-24 overflow-hidden">
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[500px] rounded-full blur-3xl pointer-events-none"
-                style={{ background: 'radial-gradient(ellipse, var(--accent-glow) 0%, transparent 70%)' }} />
 
             <div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-8 w-full">
                 <div className="flex flex-col items-center text-center">
 
-                    <div className="order-6 w-full max-w-2xl mt-10 mb-4 p-5 rounded-2xl bg-[var(--surface-06)] border border-[var(--border-subtle)] text-left">
-                        <h2 className="text-xs font-semibold text-[var(--accent)] uppercase tracking-wide">In short</h2>
-                        <p className="mt-2 text-sm text-[var(--text-body)] leading-relaxed">
+                    <div className="order-6 w-full max-w-2xl mt-10 mb-4 p-5 rounded-2xl bg-(--card) border border-(--line) text-left">
+                        <h2 className="text-xs font-semibold text-(--accent-ink) ">In short</h2>
+                        <p className="mt-2 text-sm text-(--text-body) leading-relaxed">
                             Scanora is an SEO &amp; GEO monitoring platform built in Germany. For SEO tracking, you get
                             weekly automated Google ranking updates per keyword, competitor analysis with content and
                             backlink gaps, and keyword ideas with real search volume. For GEO monitoring, you see your
                             mention rate across ChatGPT, Claude, Gemini, Perplexity, and Google AI Overview, citations
-                            with source context, and your share of voice against competitors — including a side-by-side
+                            with source context, and your share of voice against competitors - including a side-by-side
                             of where you rank on Google vs. where AI systems mention you.
                         </p>
-                        <p className="mt-2 text-sm text-[var(--text-body)] leading-relaxed">
+                        <p className="mt-2 text-sm text-(--text-body) leading-relaxed">
                             If your rankings drop or you lose AI mentions, you get an automatic email with likely
                             causes. Start free with a 60-second audit, then get ongoing automated monitoring from
                             €29/month (Pro, 10 audits) or €99/month (Agency, unlimited).
                         </p>
-                        <p className="mt-3 pt-3 border-t border-[var(--border-subtle)] text-xs text-[var(--text-faint)]">
+                        <p className="mt-3 pt-3 border-t border-(--border-subtle) text-xs text-(--text-faint)">
                             Updated: September 12, 2026 · By Finn Paustian, Founder of Scanora
                         </p>
                     </div>
@@ -127,13 +124,13 @@ export default function Hero() {
                         Google knows you - Does AI?
                     </h1>
 
-                    <p className="order-2 text-sm font-semibold text-[var(--accent)] mb-4">
-                        Scanora – AI Visibility & SEO Tool
+                    <p className="order-2 text-sm font-semibold text-(--accent-ink) mb-4">
+                        Scanora - AI Visibility & SEO Tool
                     </p>
 
-                    <p className="order-3 text-base sm:text-lg text-[var(--text-muted)] mb-10 max-w-2xl leading-relaxed">
+                    <p className="order-3 text-base sm:text-lg text-(--text-muted) mb-10 max-w-2xl leading-relaxed">
                         For marketing teams and agencies: Scanora checks whether ChatGPT, Claude, Gemini, Perplexity
-                        and Google AI Overview know your site — and how you rank on Google. Free score instantly,
+                        and Google AI Overview know your site - and how you rank on Google. Free score instantly,
                         concrete AI fixes from Pro.
                     </p>
 

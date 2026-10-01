@@ -150,42 +150,42 @@ const COMPARISON = [
 
 export default function SeoTestVsAgenturPage() {
     return (
-        <main className="bg-[var(--bg-base)] min-h-screen">
+        <main className="bg-(--bg-base) min-h-screen">
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
             <Navbar />
 
-            <article className="max-w-3xl mx-auto px-5 sm:px-8 pt-32 pb-24">
+            <article className="max-w-190 mx-auto px-4 sm:px-8 pt-28 md:pt-34 pb-18 md:pb-28">
 
                 {/* Breadcrumb */}
-                <div className="flex items-center gap-2 text-xs text-[var(--text-faint)] mb-8">
-                    <Link href="/" className="hover:text-[var(--text-muted)] transition-colors">Scanora</Link>
+                <div className="flex flex-wrap items-center gap-2 text-sm text-(--text-muted) mb-8">
+                    <Link href="/" className="hover:text-(--accent-ink) transition-colors">Scanora</Link>
                     <span>/</span>
-                    <Link href="/blog" className="hover:text-[var(--text-muted)] transition-colors">Blog</Link>
+                    <Link href="/blog" className="hover:text-(--accent-ink) transition-colors">Blog</Link>
                     <span>/</span>
-                    <span className="text-[var(--text-faint)]">SEO-Audit vs. Agentur</span>
+                    <span className="text-(--text-faint)">SEO-Audit vs. Agentur</span>
                 </div>
 
                 {/* Header */}
                 <div className="mb-10">
                     <div className="flex items-center gap-3 mb-4">
-                        <span className="text-[11px] font-semibold px-2.5 py-1 rounded-full uppercase tracking-wider bg-violet-500/15 text-violet-400">
+                        <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-(--accent-soft) text-(--accent-ink)">
                             SEO
                         </span>
-                        <span className="text-xs text-[var(--text-faint)]">26. Juli 2026</span>
-                        <span className="text-xs text-[var(--text-faint)]">· 9 min Lesezeit</span>
-                        <span className="text-xs text-[var(--text-faint)]">· Aktualisiert am 12. September 2026</span>
+                        <span className="text-xs text-(--text-faint)">26. Juli 2026</span>
+                        <span className="text-xs text-(--text-faint)">· 9 min Lesezeit</span>
+                        <span className="text-xs text-(--text-faint)">· Aktualisiert am 12. September 2026</span>
                     </div>
-                    <h1 className="text-3xl sm:text-5xl font-bold text-[var(--text-white)] leading-tight tracking-tight mb-5">
+                    <h1 className="text-[clamp(34px,4.4vw,52px)] font-bold text-(--text-white) leading-[1.06] tracking-[-0.035em] mb-5">
                         SEO-Agentur prüfen: SEO-Check vs. Agentur beauftragen
                     </h1>
-                    <p className="text-lg text-[var(--text-muted)] leading-relaxed">
+                    <p className="text-lg text-(--text-body) leading-relaxed">
                         Kurz gesagt: Ein automatisierter SEO-Check kostet ab 0 €, eine SEO-Agentur meist 500-8.000+ € pro Monat. Willst du deine aktuelle SEO-Agentur vor der Vertragsverlängerung unabhängig prüfen lassen, findest du weiter unten eine konkrete Checkliste dafür. Ansonsten kommt die Antwort, was für dich richtig ist, darauf an, was dein eigentliches Problem ist - ein automatisiertes Tool und eine SEO-Agentur lösen unterschiedliche Probleme. Hier der Vergleich ohne Verkaufsrhetorik, inklusive echter Preisspannen.
                     </p>
-                    <div className="mt-5 flex items-center gap-2 text-xs text-[var(--text-faint)]">
-                        <Link href="/about" className="flex items-center gap-2 hover:text-[var(--text-body)] transition-colors">
-                            <div className="w-6 h-6 rounded-full bg-gradient-to-br from-violet-600 to-cyan-600 flex items-center justify-center text-[var(--text-white)] text-[10px] font-bold">F</div>
+                    <div className="mt-5 flex items-center gap-2 text-xs text-(--text-faint)">
+                        <Link href="/about" className="flex items-center gap-2 hover:text-(--text-body) transition-colors">
+                            <div className="w-6 h-6 rounded-full bg-(--accent) flex items-center justify-center text-(--on-accent) text-[10px] font-bold">F</div>
                             <span>Finn Paustian</span>
                         </Link>
                         <span>·</span>
@@ -193,12 +193,12 @@ export default function SeoTestVsAgenturPage() {
                     </div>
                 </div>
 
-                <div className="border-t border-[var(--text-white)]/5 mb-10" />
+                <div className="border-t border-(--line) mb-10" />
 
-                <div className="space-y-10 text-[var(--text-body)] leading-relaxed">
+                <div className="space-y-10 text-(--text-body) leading-relaxed">
 
-                    <section className="bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-2xl p-6 sm:p-8">
-                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">
+                    <section className="bg-(--card) border border-(--line) rounded-2xl p-6 sm:p-8">
+                        <h2 className="text-[28px] leading-tight tracking-[-0.03em] font-bold text-(--text-white) mb-4">
                             Ich will meine aktuelle SEO-Agentur unabhängig prüfen lassen, bevor ich verlängere - wer macht sowas?
                         </h2>
                         <p>
@@ -207,35 +207,35 @@ export default function SeoTestVsAgenturPage() {
                         <p className="mt-4">
                             Der Grund, warum sich dieser Check gerade vor der Verlängerung lohnt: Der einzige Report, den du normalerweise siehst, kommt von der Agentur selbst, die ihn auch beurteilt. Eine zweite, unabhängige Datenquelle zeigt, ob sich Rankings, technische Basics und Sichtbarkeit wirklich so entwickelt haben wie berichtet - bevor du erneut Budget bindest.
                         </p>
-                        <h3 className="text-lg font-semibold text-[var(--text-white)] mt-6 mb-4">Was eine gute unabhängige Prüfung leisten sollte</h3>
+                        <h3 className="text-lg font-semibold text-(--text-white) mt-6 mb-4">Was eine gute unabhängige Prüfung leisten sollte</h3>
                         <div className="space-y-3">
                             {INDEPENDENT_CHECK_CRITERIA.map((s) => (
-                                <div key={s.title} className="flex items-start gap-3 py-2.5 border-b border-[var(--text-white)]/[0.04] last:border-0">
-                                    <div className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0 mt-2" />
+                                <div key={s.title} className="flex items-start gap-3 py-2.5 border-b border-(--line) last:border-0">
+                                    <div className="w-1.5 h-1.5 rounded-full bg-(--accent) shrink-0 mt-2" />
                                     <div>
-                                        <span className="text-sm font-medium text-[var(--text-white)]">{s.title}</span>
-                                        <span className="text-sm text-[var(--text-faint)]"> - {s.desc}</span>
+                                        <span className="text-sm font-medium text-(--text-white)">{s.title}</span>
+                                        <span className="text-sm text-(--text-faint)"> - {s.desc}</span>
                                     </div>
                                 </div>
                             ))}
                         </div>
-                        <p className="mt-5 text-sm text-[var(--text-muted)]">
+                        <p className="mt-5 text-sm text-(--text-muted)">
                             Ehrlich gesagt: Scanora ist keine Vermittlungsplattform, die dir "konkrete Agenturen" empfiehlt, und wird auch keine erfinden. Was Scanora leisten kann, ist der objektive, wiederholbare Teil der Prüfung - technischer Score, Ranking-Verlauf, Konkurrenzvergleich und Backlink-Übersicht (Details dazu weiter unten). Für die Bewertung von Strategie und Content-Qualität lohnt sich zusätzlich das Gespräch mit einem Freelancer oder Berater, der in keinem Vertragsverhältnis zur aktuellen Agentur steht.
                         </p>
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Was eine SEO-Agentur wirklich abdeckt</h2>
+                        <h2 className="text-[28px] leading-tight tracking-[-0.03em] font-bold text-(--text-white) mb-4">Was eine SEO-Agentur wirklich abdeckt</h2>
                         <p>
                             Eine gute SEO-Agentur macht deutlich mehr als Fehler suchen. Der Wert liegt vor allem in Arbeit, die (noch) niemand automatisieren kann:
                         </p>
                         <div className="space-y-3 mt-5">
                             {AGENTUR_SCOPE.map((s) => (
-                                <div key={s.title} className="flex items-start gap-3 py-2.5 border-b border-[var(--text-white)]/[0.04] last:border-0">
-                                    <div className="w-1.5 h-1.5 rounded-full bg-violet-400 shrink-0 mt-2" />
+                                <div key={s.title} className="flex items-start gap-3 py-2.5 border-b border-(--line) last:border-0">
+                                    <div className="w-1.5 h-1.5 rounded-full bg-(--accent) shrink-0 mt-2" />
                                     <div>
-                                        <span className="text-sm font-medium text-[var(--text-white)]">{s.title}</span>
-                                        <span className="text-sm text-[var(--text-faint)]"> - {s.desc}</span>
+                                        <span className="text-sm font-medium text-(--text-white)">{s.title}</span>
+                                        <span className="text-sm text-(--text-faint)"> - {s.desc}</span>
                                     </div>
                                 </div>
                             ))}
@@ -243,20 +243,20 @@ export default function SeoTestVsAgenturPage() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Was ein automatisierter SEO-Audit abdeckt - und was nicht</h2>
+                        <h2 className="text-[28px] leading-tight tracking-[-0.03em] font-bold text-(--text-white) mb-4">Was ein automatisierter SEO-Audit abdeckt - und was nicht</h2>
                         <p>
                             Ein Tool wie Scanora ist ein Diagnose-Instrument, keine Ersatz-Agentur. Es findet technische Probleme automatisch und wiederholt - schreibt aber keine Inhalte und baut keine Backlinks auf. Welche Fehler das konkret sind, steht mit Zahlen und Fix-Anleitung in unserem Artikel zu den{' '}
-                            <Link href="/blog/seo-test-haeufige-fehler" className="text-amber-400 hover:text-amber-300 underline underline-offset-2">
+                            <Link href="/blog/seo-test-haeufige-fehler" className="text-(--warning) hover:text-(--warning) underline underline-offset-2">
                                 10 häufigsten SEO-Fehlern
                             </Link>.
                         </p>
                         <div className="space-y-3 mt-5">
                             {TEST_SCOPE.map((s) => (
-                                <div key={s.title} className="flex items-start gap-3 py-2.5 border-b border-[var(--text-white)]/[0.04] last:border-0">
-                                    <div className="w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0 mt-2" />
+                                <div key={s.title} className="flex items-start gap-3 py-2.5 border-b border-(--line) last:border-0">
+                                    <div className="w-1.5 h-1.5 rounded-full bg-(--warning) shrink-0 mt-2" />
                                     <div>
-                                        <span className="text-sm font-medium text-[var(--text-white)]">{s.title}</span>
-                                        <span className="text-sm text-[var(--text-faint)]"> - {s.desc}</span>
+                                        <span className="text-sm font-medium text-(--text-white)">{s.title}</span>
+                                        <span className="text-sm text-(--text-faint)"> - {s.desc}</span>
                                     </div>
                                 </div>
                             ))}
@@ -264,30 +264,30 @@ export default function SeoTestVsAgenturPage() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-6">Was kostet ein SEO-Audit im Vergleich zur Agentur?</h2>
-                        <div className="overflow-x-auto rounded-2xl border border-[var(--text-white)]/[0.07]">
-                            <table className="w-full text-sm min-w-[600px]">
+                        <h2 className="text-[28px] leading-tight tracking-[-0.03em] font-bold text-(--text-white) mb-6">Was kostet ein SEO-Audit im Vergleich zur Agentur?</h2>
+                        <div className="overflow-x-auto rounded-2xl border border-(--line)">
+                            <table className="w-full text-sm min-w-150">
                                 <thead>
-                                    <tr className="border-b border-[var(--text-white)]/5 bg-[var(--text-white)]/[0.02]">
-                                        <th className="text-left px-5 py-3 text-[var(--text-muted)] font-semibold">Kriterium</th>
-                                        <th className="text-left px-5 py-3 text-amber-400 font-semibold">Automatisierter SEO-Audit</th>
-                                        <th className="text-left px-5 py-3 text-violet-400 font-semibold">SEO-Agentur</th>
+                                    <tr className="border-b border-(--line) bg-(--card)">
+                                        <th className="text-left px-5 py-3 text-(--text-muted) font-semibold">Kriterium</th>
+                                        <th className="text-left px-5 py-3 text-(--warning) font-semibold">Automatisierter SEO-Audit</th>
+                                        <th className="text-left px-5 py-3 text-(--accent-ink) font-semibold">SEO-Agentur</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {COMPARISON.map(([aspect, tool, agency], i) => (
-                                        <tr key={i} className="border-b border-[var(--text-white)]/[0.04] last:border-0">
-                                            <td className="px-5 py-3 text-[var(--text-white)] font-medium">{aspect}</td>
-                                            <td className="px-5 py-3 text-[var(--text-body)]">{tool}</td>
-                                            <td className="px-5 py-3 text-[var(--text-body)]">{agency}</td>
+                                        <tr key={i} className="border-b border-(--line) last:border-0">
+                                            <td className="px-5 py-3 text-(--text-white) font-medium">{aspect}</td>
+                                            <td className="px-5 py-3 text-(--text-body)">{tool}</td>
+                                            <td className="px-5 py-3 text-(--text-body)">{agency}</td>
                                         </tr>
                                     ))}
                                 </tbody>
                             </table>
                         </div>
-                        <p className="text-xs text-[var(--text-faint)] mt-3">
+                        <p className="text-xs text-(--text-faint) mt-3">
                             Agentur-Preisspannen basieren auf mehreren aktuellen deutschen Marktübersichten für 2026, z.B.{' '}
-                            <a href="https://www.seoagentur.de/magazin/was-kostet-seo/" target="_blank" rel="noopener noreferrer" className="text-[var(--text-faint)] hover:text-[var(--text-muted)] underline underline-offset-2">
+                            <a href="https://www.seoagentur.de/magazin/was-kostet-seo/" target="_blank" rel="noopener noreferrer" className="text-(--text-faint) hover:text-(--text-muted) underline underline-offset-2">
                                 seoagentur.de: Was kostet SEO 2026? ↗
                             </a>{' '}
                             - deine tatsächlichen Kosten hängen stark von Branche, Wettbewerb und Leistungsumfang ab.
@@ -295,28 +295,28 @@ export default function SeoTestVsAgenturPage() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Wann lohnt sich was?</h2>
+                        <h2 className="text-[28px] leading-tight tracking-[-0.03em] font-bold text-(--text-white) mb-4">Wann lohnt sich was?</h2>
                         <p>
                             Wenn dein Hauptproblem technische Fehler sind - langsame Ladezeit, fehlende Meta-Descriptions, kaputte Canonicals, mangelnde KI-Sichtbarkeit - ist ein automatisierter SEO-Audit fast immer die schnellere und günstigere erste Wahl. Das gilt besonders für Freelancer, kleine Unternehmen und alle, die zuerst wissen wollen, wo sie überhaupt stehen, bevor sie einen größeren Betrag investieren.
                         </p>
                         <p className="mt-4">
                             Eine Agentur wird relevant, sobald es um Content-Strategie, Backlink-Aufbau oder komplexe technische Migrationen geht - Arbeit, die Erfahrung, Kreativität und Ausführung braucht, nicht nur Diagnose.
                         </p>
-                        <div className="bg-violet-500/8 border border-violet-500/20 rounded-2xl p-5 mt-5">
-                            <p className="text-sm text-violet-300 font-medium mb-1">Die pragmatischste Kombination</p>
-                            <p className="text-sm text-[var(--text-muted)]">
+                        <div className="bg-(--accent-soft) border border-(--accent-border) rounded-2xl p-5 mt-5">
+                            <p className="text-sm text-(--accent-ink) font-medium mb-1">Die pragmatischste Kombination</p>
+                            <p className="text-sm text-(--text-muted)">
                                 Viele Websites fahren am besten mit beidem: automatisiertes Monitoring für laufende technische Kontrolle zwischen den Terminen, plus Agentur oder Freelancer für Strategie und Umsetzung. So fallen technische Probleme sofort auf, statt erst beim nächsten Quartals-Report.
                             </p>
                         </div>
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Häufige Fragen: SEO-Agentur prüfen, Kosten & unabhängige Zweitmeinung</h2>
+                        <h2 className="text-[28px] leading-tight tracking-[-0.03em] font-bold text-(--text-white) mb-4">Häufige Fragen: SEO-Agentur prüfen, Kosten & unabhängige Zweitmeinung</h2>
                         <div className="space-y-4">
                             {faqLd.mainEntity.map((faq, i) => (
-                                <div key={i} className="bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-2xl p-5">
-                                    <h3 className="font-semibold text-[var(--text-white)] mb-2 text-sm">{faq.name}</h3>
-                                    <p className="text-sm text-[var(--text-muted)] leading-relaxed">{faq.acceptedAnswer.text}</p>
+                                <div key={i} className="bg-(--card) border border-(--line) rounded-2xl p-5">
+                                    <h3 className="font-semibold text-(--text-white) mb-2 text-sm">{faq.name}</h3>
+                                    <p className="text-sm text-(--text-muted) leading-relaxed">{faq.acceptedAnswer.text}</p>
                                 </div>
                             ))}
                         </div>
@@ -325,37 +325,37 @@ export default function SeoTestVsAgenturPage() {
                 </div>
 
                 {/* CTA */}
-                <div className="mt-14 bg-gradient-to-br from-violet-950/40 to-[var(--bg-base)] border border-violet-500/20 rounded-2xl p-6 sm:p-8 text-center">
-                    <h2 className="text-xl sm:text-2xl font-bold text-[var(--text-white)] mb-3">
+                <div className="mt-14 bg-(--tint) border border-(--line) rounded-2xl p-6 sm:p-8 text-center">
+                    <h2 className="text-xl sm:text-2xl font-bold text-(--text-white) mb-3">
                         Erst prüfen, dann entscheiden
                     </h2>
-                    <p className="text-[var(--text-muted)] text-sm mb-6 max-w-md mx-auto leading-relaxed">
+                    <p className="text-(--text-muted) text-sm mb-6 max-w-md mx-auto leading-relaxed">
                         Bevor du eine Agentur beauftragst, lohnt sich ein kostenloser Check: Vielleicht sind es nur ein paar technische Fehler, die du selbst in 60 Sekunden findest. Start ohne Registrierung, für den vollständigen Report mit allen Scores meldest du dich kostenlos an.
                     </p>
                     <Link
                         href="/dashboard"
-                        className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-[var(--text-white)] text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-violet-500/20"
+                        className="inline-flex items-center gap-2 px-6 py-3 bg-(--accent) hover:bg-(--accent) hover:text-(--on-accent) text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-(--accent-border)"
                     >
                         Kostenlosen SEO-Audit starten
                     </Link>
-                    <div className="mt-3 text-xs text-[var(--text-faint)]">Ohne Registrierung starten · Voller Report kostenlos · 60 Sekunden</div>
+                    <div className="mt-3 text-xs text-(--text-faint)">Ohne Registrierung starten · Voller Report kostenlos · 60 Sekunden</div>
                 </div>
 
                 {/* Cross-link to sibling posts */}
-                <div className="mt-5 bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-2xl p-6 sm:p-8">
+                <div className="mt-5 bg-(--card) border border-(--line) rounded-2xl p-6 sm:p-8">
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 justify-between">
                         <div>
-                            <span className="text-xs font-semibold text-violet-400 uppercase tracking-wider mb-1 block">Weiterlesen</span>
-                            <h3 className="text-base sm:text-lg font-bold text-[var(--text-white)] mb-2">
+                            <span className="text-xs font-semibold text-(--accent-ink) mb-1 block">Weiterlesen</span>
+                            <h3 className="text-base sm:text-lg font-bold text-(--text-white) mb-2">
                                 Website SEO Check & Audit mit Scanora
                             </h3>
-                            <p className="text-[var(--text-muted)] text-sm leading-relaxed max-w-md">
+                            <p className="text-(--text-muted) text-sm leading-relaxed max-w-md">
                                 Falls du erstmal selbst testen willst: alle Features im Überblick, inklusive kostenlosem Audit.
                             </p>
                         </div>
                         <Link
                             href="/blog/beste-seo-check-tools-2026"
-                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--text-white)]/[0.06] hover:bg-[var(--text-white)]/10 text-[var(--text-white)] text-sm font-semibold rounded-xl transition-all duration-200 shrink-0"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-(--tint) hover:bg-(--tint) text-(--text-white) text-sm font-semibold rounded-xl transition-all duration-200 shrink-0"
                         >
                             Mehr erfahren
                         </Link>
@@ -363,8 +363,8 @@ export default function SeoTestVsAgenturPage() {
                 </div>
 
                 {/* Back */}
-                <div className="mt-10 pt-8 border-t border-[var(--text-white)]/5">
-                    <Link href="/blog" className="text-sm text-[var(--text-faint)] hover:text-[var(--text-body)] transition-colors">
+                <div className="mt-10 pt-8 border-t border-(--line)">
+                    <Link href="/blog" className="text-sm text-(--text-faint) hover:text-(--text-body) transition-colors">
                         ← Zurück zum Blog
                     </Link>
                 </div>

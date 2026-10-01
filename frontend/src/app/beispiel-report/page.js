@@ -2,7 +2,7 @@ import SampleReportClient from '../components/SampleReportClient'
 
 export const metadata = {
     title: 'Beispiel-Report kostenlos herunterladen',
-    description: 'Lade einen echten Scanora-Report herunter: SEO-Analyse, Performance, Keyword Intelligence, alle 23 GEO-Signale und den vollen KI-Bericht — kostenlos per E-Mail.',
+    description: 'Lade einen echten Scanora-Report herunter: SEO-Analyse, Performance, Keyword Intelligence, alle 23 GEO-Signale und den vollen KI-Bericht - kostenlos per E-Mail.',
     alternates: {
         canonical: 'https://www.scanora.ai/beispiel-report',
         languages: {

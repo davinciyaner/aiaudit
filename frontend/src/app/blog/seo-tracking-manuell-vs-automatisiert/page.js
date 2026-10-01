@@ -31,7 +31,7 @@ const jsonLd = {
     description: 'SEO Tracking manuell vs. automatisiert im Vergleich: Zeitaufwand, Kosten und warum KI-Sichtbarkeit (GEO) manuell kaum zuverlässig messbar ist.',
     image: 'https://www.scanora.ai/blog/seo-tracking-manuell-vs-automatisiert/opengraph-image',
     datePublished: '2026-07-15T09:00:00+02:00',
-    dateModified: '2026-09-12T09:00:00+02:00',
+    dateModified: '2026-10-01T09:00:00+02:00',
     author: { '@type': 'Person', name: 'Finn Paustian', url: 'https://www.scanora.ai/about' },
     publisher: {
         '@type': 'Organization',
@@ -86,7 +86,7 @@ const faqLd = {
             name: 'Ab wann rechnet sich Automatisierung gegenüber manuellem Tracking?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'Rechnest du deine eigene Zeit mit einem Stundensatz, kostet manuelles Tracking bei 60-90 Minuten pro Woche schnell mehr als die Tool-Kosten selbst: SEO-Automatisierung liegt ab 19 €/Monat, GEO-Automatisierung ab 4,99 €/Monat - beides mit 14 Tage kostenloser Testphase. Sobald du mehr als eine Website oder mehrere Keyword-Gruppen betreust, ist die gesparte Zeit in der Regel mehr wert als der Tool-Preis.',
+                text: 'Rechnest du deine eigene Zeit mit einem Stundensatz, kostet manuelles Tracking bei 60-90 Minuten pro Woche schnell mehr als die Tool-Kosten selbst: SEO-Automatisierung liegt ab 29,99 €/Monat, GEO-Automatisierung ab 4,99 €/Monat - beides mit 14 Tage kostenloser Testphase. Sobald du mehr als eine Website oder mehrere Keyword-Gruppen betreust, ist die gesparte Zeit in der Regel mehr wert als der Tool-Preis.',
             },
         },
     ],
@@ -98,50 +98,50 @@ const COMPARISON = [
     ['Skalierbarkeit', 'Jede zusätzliche Website/Keyword-Gruppe erhöht den Aufwand linear', 'Mehr Websites/Keywords = höherer Plan, kein Mehraufwand an Zeit'],
     ['Konsistenz', 'Abhängig davon, ob der Check tatsächlich jede Woche gemacht wird', 'Läuft strukturell jede Woche, unabhängig von Tagesform oder Auslastung'],
     ['Reaktionszeit bei Problemen', 'Nur so schnell wie der nächste manuelle Check', 'Woche für Woche sichtbar im Verlauf'],
-    ['Kosten', 'Keine Tool-Kosten, aber gebundene Arbeitszeit', 'ab 19 €/Monat (SEO) bzw. ab 4,99 €/Monat (GEO)'],
+    ['Kosten', 'Keine Tool-Kosten, aber gebundene Arbeitszeit', 'ab 29,99 €/Monat (SEO) bzw. ab 4,99 €/Monat (GEO)'],
 ]
 
 export default function SeoTrackingVergleichPage() {
     return (
-        <main className="bg-[var(--bg-base)] min-h-screen">
+        <main className="bg-(--bg-base) min-h-screen">
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
             <Navbar />
 
-            <article className="max-w-3xl mx-auto px-5 sm:px-8 pt-32 pb-24">
+            <article className="max-w-190 mx-auto px-4 sm:px-8 pt-28 md:pt-34 pb-18 md:pb-28">
 
                 {/* Breadcrumb */}
-                <div className="flex items-center gap-2 text-xs text-[var(--text-faint)] mb-8">
-                    <Link href="/" className="hover:text-[var(--text-muted)] transition-colors">Scanora</Link>
+                <div className="flex flex-wrap items-center gap-2 text-sm text-(--text-muted) mb-8">
+                    <Link href="/" className="hover:text-(--accent-ink) transition-colors">Scanora</Link>
                     <span>/</span>
-                    <Link href="/blog" className="hover:text-[var(--text-muted)] transition-colors">Blog</Link>
+                    <Link href="/blog" className="hover:text-(--accent-ink) transition-colors">Blog</Link>
                     <span>/</span>
-                    <span className="text-[var(--text-faint)]">Manuell vs. automatisiert</span>
+                    <span className="text-(--text-faint)">Manuell vs. automatisiert</span>
                 </div>
 
                 {/* Header */}
                 <div className="mb-10">
                     <div className="flex items-center gap-3 mb-4 flex-wrap">
-                        <span className="text-[11px] font-semibold px-2.5 py-1 rounded-full uppercase tracking-wider bg-emerald-500/15 text-emerald-400">
+                        <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-(--success-soft) text-(--success)">
                             SEO
                         </span>
-                        <span className="text-[11px] font-semibold px-2.5 py-1 rounded-full uppercase tracking-wider bg-violet-500/15 text-violet-400">
+                        <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-(--accent-soft) text-(--accent-ink)">
                             GEO
                         </span>
-                        <span className="text-xs text-[var(--text-faint)]">15. Juli 2026</span>
-                        <span className="text-xs text-[var(--text-faint)]">· 9 min Lesezeit</span>
-                        <span className="text-xs text-[var(--text-faint)]">· Aktualisiert am 12. September 2026</span>
+                        <span className="text-xs text-(--text-faint)">15. Juli 2026</span>
+                        <span className="text-xs text-(--text-faint)">· 9 min Lesezeit</span>
+                        <span className="text-xs text-(--text-faint)">· Aktualisiert am 1. Oktober 2026</span>
                     </div>
-                    <h1 className="text-3xl sm:text-5xl font-bold text-[var(--text-white)] leading-tight tracking-tight mb-5">
+                    <h1 className="text-[clamp(34px,4.4vw,52px)] font-bold text-(--text-white) leading-[1.06] tracking-[-0.035em] mb-5">
                         SEO Tracking manuell vs. automatisiert: Was lohnt sich wirklich?
                     </h1>
-                    <p className="text-lg text-[var(--text-muted)] leading-relaxed">
+                    <p className="text-lg text-(--text-body) leading-relaxed">
                         Bei SEO Tracking ist die Frage selten "ob" - sondern wie oft du wirklich nachsiehst. Ein ehrlicher Vergleich zwischen manuellem SEO Tracking und Automatisierung, inklusive dem Punkt, an dem manuelles Tracking strukturell an seine Grenzen stößt: KI-Sichtbarkeit.
                     </p>
-                    <div className="mt-5 flex items-center gap-2 text-xs text-[var(--text-faint)]">
-                        <Link href="/about" className="flex items-center gap-2 hover:text-[var(--text-body)] transition-colors">
-                            <div className="w-6 h-6 rounded-full bg-gradient-to-br from-violet-600 to-cyan-600 flex items-center justify-center text-[var(--text-white)] text-[10px] font-bold">F</div>
+                    <div className="mt-5 flex items-center gap-2 text-xs text-(--text-faint)">
+                        <Link href="/about" className="flex items-center gap-2 hover:text-(--text-body) transition-colors">
+                            <div className="w-6 h-6 rounded-full bg-(--accent) flex items-center justify-center text-(--on-accent) text-[10px] font-bold">F</div>
                             <span>Finn Paustian</span>
                         </Link>
                         <span>·</span>
@@ -149,28 +149,28 @@ export default function SeoTrackingVergleichPage() {
                     </div>
                 </div>
 
-                <div className="border-t border-[var(--text-white)]/5 mb-10" />
+                <div className="border-t border-(--line) mb-10" />
 
-                <div className="space-y-10 text-[var(--text-body)] leading-relaxed">
+                <div className="space-y-10 text-(--text-body) leading-relaxed">
 
                     <section>
-                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Was manuelles SEO Tracking konkret bedeutet</h2>
+                        <h2 className="text-[28px] leading-tight tracking-[-0.03em] font-bold text-(--text-white) mb-4">Was manuelles SEO Tracking konkret bedeutet</h2>
                         <p>
                             SEO Tracking manuell heißt: einmal pro Woche (realistisch eher unregelmäßiger) in die{' '}
-                            <a href="https://search.google.com/search-console/about" target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:text-emerald-300 underline underline-offset-2">Google Search Console</a>{' '}
+                            <a href="https://search.google.com/search-console/about" target="_blank" rel="noopener noreferrer" className="text-(--success) hover:text-(--success) underline underline-offset-2">Google Search Console</a>{' '}
                             gehen, Positionen für die wichtigsten Keywords prüfen, kurz schauen wer auf den vorderen Plätzen mitkonkurriert, und vielleicht noch neue Keyword-Ideen recherchieren. Für eine Website mit einer überschaubaren Keyword-Liste ist das machbar - realistisch 60 bis 90 Minuten pro Woche, je nachdem wie gründlich (die feste Reihenfolge dafür steht in unserer{' '}
-                            <Link href="/blog/seo-checkliste-2026" className="text-emerald-400 hover:text-emerald-300 underline underline-offset-2">
+                            <Link href="/blog/seo-checkliste-2026" className="text-(--success) hover:text-(--success) underline underline-offset-2">
                                 SEO-Checkliste 2026
                             </Link>).
                         </p>
                         <p className="mt-4">
                             Bei KI-Sichtbarkeit wird es schwieriger. Manuell würdest du dieselben Fragen wiederholt in ChatGPT, Claude, Perplexity und Google AI Overview eingeben und protokollieren, ob deine Marke in der Antwort vorkommt. Das Problem:{' '}
-                            <a href="https://developers.openai.com/api/docs/guides/advanced-usage" target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:text-emerald-300 underline underline-offset-2">KI-Modelle antworten laut OpenAIs eigener API-Dokumentation nicht deterministisch</a>. Dieselbe Frage kann heute eine andere Antwort liefern als gestern - eine einzelne Stichprobe sagt wenig aus, du bräuchtest mehrere Wiederholungen pro Woche für einen verlässlichen Trend statt einer Zufallsmessung.
+                            <a href="https://developers.openai.com/api/docs/guides/advanced-usage" target="_blank" rel="noopener noreferrer" className="text-(--success) hover:text-(--success) underline underline-offset-2">KI-Modelle antworten laut OpenAIs eigener API-Dokumentation nicht deterministisch</a>. Dieselbe Frage kann heute eine andere Antwort liefern als gestern - eine einzelne Stichprobe sagt wenig aus, du bräuchtest mehrere Wiederholungen pro Woche für einen verlässlichen Trend statt einer Zufallsmessung.
                         </p>
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Was Automatisierung konkret übernimmt</h2>
+                        <h2 className="text-[28px] leading-tight tracking-[-0.03em] font-bold text-(--text-white) mb-4">Was Automatisierung konkret übernimmt</h2>
                         <p>
                             Automatisiertes Tracking führt dieselben Checks strukturell jede Woche aus - unabhängig davon, ob gerade Zeit dafür da ist. Für SEO heißt das: Ranking-Positionen, Gewinner/Verlierer und Keyword-Ideen landen automatisch aufbereitet in einem Dashboard. Für GEO heißt das: dieselben Prompts werden wiederholt gegen ChatGPT, Claude, Perplexity und Google AI Overview getestet, sodass ein echter Verlauf statt einer Einzelmessung entsteht.
                         </p>
@@ -183,31 +183,31 @@ export default function SeoTrackingVergleichPage() {
                                 alt="Scanora Score-Übersicht mit Overall-, SEO-, Performance- und GEO-Score aus einem echten Audit-Report"
                                 width={960}
                                 height={194}
-                                className="w-full h-auto rounded-xl border border-[var(--text-white)]/[0.07]"
+                                className="w-full h-auto rounded-xl border border-(--line)"
                             />
-                            <figcaption className="text-xs text-[var(--text-faint)] mt-2">
+                            <figcaption className="text-xs text-(--text-faint) mt-2">
                                 Ein Score wie dieser ist die Momentaufnahme, die ein einmaliger Audit liefert. Der Unterschied zur Automatisierung: ob du diesen Snapshot einmal bekommst - oder jede Woche neu, ohne selbst nachzusehen.
                             </figcaption>
                         </figure>
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-6">Der Vergleich im Überblick</h2>
-                        <div className="overflow-x-auto rounded-2xl border border-[var(--text-white)]/[0.07]">
-                            <table className="w-full text-sm min-w-[600px]">
+                        <h2 className="text-[28px] leading-tight tracking-[-0.03em] font-bold text-(--text-white) mb-6">Der Vergleich im Überblick</h2>
+                        <div className="overflow-x-auto rounded-2xl border border-(--line)">
+                            <table className="w-full text-sm min-w-150">
                                 <thead>
-                                    <tr className="border-b border-[var(--text-white)]/5 bg-[var(--text-white)]/[0.02]">
-                                        <th className="text-left px-5 py-3 text-[var(--text-muted)] font-semibold">Kriterium</th>
-                                        <th className="text-left px-5 py-3 text-[var(--text-muted)] font-semibold">Manuell</th>
-                                        <th className="text-left px-5 py-3 text-emerald-400 font-semibold">Automatisiert</th>
+                                    <tr className="border-b border-(--line) bg-(--card)">
+                                        <th className="text-left px-5 py-3 text-(--text-muted) font-semibold">Kriterium</th>
+                                        <th className="text-left px-5 py-3 text-(--text-muted) font-semibold">Manuell</th>
+                                        <th className="text-left px-5 py-3 text-(--success) font-semibold">Automatisiert</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {COMPARISON.map(([aspect, manual, auto], i) => (
-                                        <tr key={i} className="border-b border-[var(--text-white)]/[0.04] last:border-0">
-                                            <td className="px-5 py-3 text-[var(--text-white)] font-medium">{aspect}</td>
-                                            <td className="px-5 py-3 text-[var(--text-muted)]">{manual}</td>
-                                            <td className="px-5 py-3 text-[var(--text-body)]">{auto}</td>
+                                        <tr key={i} className="border-b border-(--line) last:border-0">
+                                            <td className="px-5 py-3 text-(--text-white) font-medium">{aspect}</td>
+                                            <td className="px-5 py-3 text-(--text-muted)">{manual}</td>
+                                            <td className="px-5 py-3 text-(--text-body)">{auto}</td>
                                         </tr>
                                     ))}
                                 </tbody>
@@ -216,38 +216,38 @@ export default function SeoTrackingVergleichPage() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Die Zeit-gegen-Kosten-Rechnung</h2>
+                        <h2 className="text-[28px] leading-tight tracking-[-0.03em] font-bold text-(--text-white) mb-4">Die Zeit-gegen-Kosten-Rechnung</h2>
                         <p>
-                            Eine grobe, aber ehrliche Rechnung: 75 Minuten pro Woche für manuelles SEO-Tracking sind rund 5,4 Stunden im Monat. Setzt du deine eigene Zeit mit einem Stundensatz an - egal ob als Freelancer-Rate oder als das, was deine Zeit als Gründer sonst wert ist - kommen bei 40 €/Stunde schon über 200 € im Monat an gebundener Zeit zusammen. Automatisierung kostet ab 19 €/Monat für SEO und ab 4,99 €/Monat für GEO.
+                            Eine grobe, aber ehrliche Rechnung: 75 Minuten pro Woche für manuelles SEO-Tracking sind rund 5,4 Stunden im Monat. Setzt du deine eigene Zeit mit einem Stundensatz an - egal ob als Freelancer-Rate oder als das, was deine Zeit als Gründer sonst wert ist - kommen bei 40 €/Stunde schon über 200 € im Monat an gebundener Zeit zusammen. Automatisierung kostet ab 29,99 €/Monat für SEO und ab 4,99 €/Monat für GEO.
                         </p>
                         <p className="mt-4">
                             Das ist keine exakte Wissenschaft - dein tatsächlicher Zeitaufwand und Stundensatz können abweichen. Aber die Größenordnung zeigt, wann sich Automatisierung rechnet: sobald die gesparte Zeit mehr wert ist als der Tool-Preis, was bei mehr als ein bis zwei Websites fast immer der Fall ist.
                         </p>
-                        <div className="bg-emerald-500/8 border border-emerald-500/20 rounded-2xl p-5 mt-5">
-                            <p className="text-sm text-emerald-300 font-medium mb-1">Wann sich manuelles Tracking noch lohnt</p>
-                            <p className="text-sm text-[var(--text-muted)]">
+                        <div className="bg-(--success-soft) border border-(--success-border) rounded-2xl p-5 mt-5">
+                            <p className="text-sm text-(--success) font-medium mb-1">Wann sich manuelles Tracking noch lohnt</p>
+                            <p className="text-sm text-(--text-muted)">
                                 Bei einer einzelnen kleinen Website, wenigen Keywords und ohne Zeitdruck ist manuelles Nachsehen völlig ausreichend - hier zahlt sich ein zusätzliches Tool noch nicht aus.
                             </p>
                         </div>
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Wann Automatisierung sich klar lohnt</h2>
+                        <h2 className="text-[28px] leading-tight tracking-[-0.03em] font-bold text-(--text-white) mb-4">Wann Automatisierung sich klar lohnt</h2>
                         <p>
                             Ab dem Punkt, an dem du mehrere Keywords, mehrere Websites oder mehrere Kunden betreust, wächst der manuelle Aufwand linear mit - Automatisierung dagegen kaum. Für Agenturen und alle, die GEO ernsthaft verfolgen wollen, kommt ein zweiter Grund dazu: konsistentes GEO-Tracking ist manuell kaum durchzuhalten, weil es Wiederholung braucht, die bei Tagesgeschäft schnell hinten runterfällt.
                         </p>
                         <p className="mt-4">
-                            Mehr zum Unterschied zwischen einem klassischen SEO-Tool und einem AI-Tracker für KI-Sichtbarkeit: <Link href="/blog/seo-geo-automatisierung" className="text-emerald-400 hover:text-emerald-300 underline underline-offset-2">SEO Automatisierung & GEO Automatisierung erklärt</Link>.
+                            Mehr zum Unterschied zwischen einem klassischen SEO-Tool und einem AI-Tracker für KI-Sichtbarkeit: <Link href="/blog/seo-geo-automatisierung" className="text-(--success) hover:text-(--success) underline underline-offset-2">SEO Automatisierung & GEO Automatisierung erklärt</Link>.
                         </p>
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-[var(--text-white)] mb-4">Häufige Fragen</h2>
+                        <h2 className="text-[28px] leading-tight tracking-[-0.03em] font-bold text-(--text-white) mb-4">Häufige Fragen</h2>
                         <div className="space-y-4">
                             {faqLd.mainEntity.map((faq, i) => (
-                                <div key={i} className="bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-2xl p-5">
-                                    <h3 className="font-semibold text-[var(--text-white)] mb-2 text-sm">{faq.name}</h3>
-                                    <p className="text-sm text-[var(--text-muted)] leading-relaxed">{faq.acceptedAnswer.text}</p>
+                                <div key={i} className="bg-(--card) border border-(--line) rounded-2xl p-5">
+                                    <h3 className="font-semibold text-(--text-white) mb-2 text-sm">{faq.name}</h3>
+                                    <p className="text-sm text-(--text-muted) leading-relaxed">{faq.acceptedAnswer.text}</p>
                                 </div>
                             ))}
                         </div>
@@ -256,20 +256,20 @@ export default function SeoTrackingVergleichPage() {
                 </div>
 
                 {/* CTA: SEO Automatisierung */}
-                <div className="mt-14 bg-emerald-500/[0.04] border border-emerald-500/20 rounded-2xl p-6 sm:p-8">
+                <div className="mt-14 bg-(--success)/4 border border-(--success-border) rounded-2xl p-6 sm:p-8">
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 justify-between">
                         <div>
-                            <span className="text-xs font-semibold text-emerald-400 uppercase tracking-wider mb-1 block">SEO Automatisierung</span>
-                            <h3 className="text-base sm:text-lg font-bold text-[var(--text-white)] mb-2">
+                            <span className="text-xs font-semibold text-(--success) mb-1 block">SEO Automatisierung</span>
+                            <h3 className="text-base sm:text-lg font-bold text-(--text-white) mb-2">
                                 Rechne dir die Zeitersparnis selbst aus
                             </h3>
-                            <p className="text-[var(--text-muted)] text-sm leading-relaxed max-w-md">
-                                14 Tage kostenlos testen, ab 19 €/Monat - meist günstiger als die eigene gebundene Zeit.
+                            <p className="text-(--text-muted) text-sm leading-relaxed max-w-md">
+                                14 Tage kostenlos testen, ab 29,99 €/Monat - meist günstiger als die eigene gebundene Zeit.
                             </p>
                         </div>
                         <Link
                             href="/seo/pricing"
-                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-[var(--text-white)] text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-emerald-500/20 shrink-0"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-(--success) hover:bg-(--success) text-(--on-accent) text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-(--accent-border) shrink-0"
                         >
                             SEO-Tracking testen
                         </Link>
@@ -277,20 +277,20 @@ export default function SeoTrackingVergleichPage() {
                 </div>
 
                 {/* CTA: GEO Automatisierung */}
-                <div className="mt-5 bg-violet-500/[0.04] border border-violet-500/20 rounded-2xl p-6 sm:p-8">
+                <div className="mt-5 bg-(--accent)/4 border border-(--accent-border) rounded-2xl p-6 sm:p-8">
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 justify-between">
                         <div>
-                            <span className="text-xs font-semibold text-violet-400 uppercase tracking-wider mb-1 block">GEO Automatisierung</span>
-                            <h3 className="text-base sm:text-lg font-bold text-[var(--text-white)] mb-2">
+                            <span className="text-xs font-semibold text-(--accent-ink) mb-1 block">GEO Automatisierung</span>
+                            <h3 className="text-base sm:text-lg font-bold text-(--text-white) mb-2">
                                 Spar dir das wiederholte Prompt-Testen
                             </h3>
-                            <p className="text-[var(--text-muted)] text-sm leading-relaxed max-w-md">
-                                Ab 4,99 €/Monat übernimmt der wöchentliche Auto-Check das manuelle Nachfragen bei ChatGPT, Claude, Perplexity & Google AI Overview.
+                            <p className="text-(--text-muted) text-sm leading-relaxed max-w-md">
+                                Ab 4,99 €/Monat übernimmt der wöchentliche Auto-Check das manuelle Nachfragen bei Claude und Gemini, ab 74,99 €/Monat auch bei ChatGPT, Perplexity und Google AI Overview.
                             </p>
                         </div>
                         <Link
                             href="/geo/pricing"
-                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-violet-600 hover:bg-violet-500 text-[var(--text-white)] text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-violet-500/20 shrink-0"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-(--accent) hover:bg-(--accent) text-(--on-accent) text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-(--accent-border) shrink-0"
                         >
                             GEO-Tracking testen
                         </Link>
@@ -298,8 +298,8 @@ export default function SeoTrackingVergleichPage() {
                 </div>
 
                 {/* Back */}
-                <div className="mt-10 pt-8 border-t border-[var(--text-white)]/5">
-                    <Link href="/blog" className="text-sm text-[var(--text-faint)] hover:text-[var(--text-body)] transition-colors">
+                <div className="mt-10 pt-8 border-t border-(--line)">
+                    <Link href="/blog" className="text-sm text-(--text-faint) hover:text-(--text-body) transition-colors">
                         ← Zurück zum Blog
                     </Link>
                 </div>

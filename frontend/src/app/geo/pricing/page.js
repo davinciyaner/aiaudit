@@ -1,21 +1,22 @@
 'use client'
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { Check, Sparkles, Zap, Star, Building2, LogIn, Loader2, Lock } from 'lucide-react'
+import { Check, Zap, Star, Building2, LogIn, Loader2, Lock } from 'lucide-react'
 import Link from 'next/link'
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js'
 import toast from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
 import Navbar from '../../components/Navbar'
+import { withPlanData } from '@/lib/plans'
 
 const FAQS = [
     {
         q: 'Was kostet ein GEO-Audit?',
-        a: 'Ein einmaliger GEO-Audit ist bei Scanora kostenlos (Teil des Website-Audits im Free-Plan, 1x pro Monat) bzw. ab 29 €/Monat im Pro-Plan mit KI-generiertem Fix-Report. Das laufende, wöchentliche Monitoring - die GEO-Automatisierung - ist ein separates Abo und startet ab 4,99 €/Monat für 1 Website und 10 Keywords mit Claude- und Gemini-Tracking. Der Pro-Plan (29,99 €/Monat) ergänzt ChatGPT-, Perplexity- und Google-AI-Overview-Tracking für 3 Websites und 20 Keywords, 2 Prompt-Varianten pro Keyword sowie eine Themen-Sichtbarkeits-Analyse, der Expert-Plan (89,99 €/Monat) deckt bis zu 10 Websites und 60 Keywords ab und ergänzt Historien-Trends pro Keyword. Alle Automatisierungs-Pläne bieten 14 Tage kostenlose Testphase.',
+        a: 'Ein einmaliger GEO-Audit ist bei Scanora kostenlos (Teil des Website-Audits im Free-Plan, 1x pro Monat) bzw. ab 29 €/Monat im Pro-Plan mit KI-generiertem Fix-Report. Das laufende, wöchentliche Monitoring - die GEO-Automatisierung - ist ein separates Abo und startet ab 4,99 €/Monat für 1 Website und 10 Keywords mit Claude- und Gemini-Tracking. Der Pro-Plan (74,99 €/Monat) ergänzt ChatGPT-, Perplexity- und Google-AI-Overview-Tracking für 3 Websites und 20 Keywords, 2 Prompt-Varianten pro Keyword sowie eine Themen-Sichtbarkeits-Analyse, der Expert-Plan (199,99 €/Monat) deckt bis zu 10 Websites und 60 Keywords ab und ergänzt Historien-Trends pro Keyword. Alle Automatisierungs-Pläne bieten 14 Tage kostenlose Testphase.',
     },
     {
         q: 'Kann ich meine Sichtbarkeit bei Claude (Claude AI) tracken?',
-        a: 'Ja. Schon der Einsteiger-Plan ab 4,99 €/Monat trackt wöchentlich automatisch, ob und wie oft Claude und Google Gemini deine Website bei relevanten Anfragen als Quelle nennen — inklusive Mention-Verlauf über Zeit. Für zusätzliches Tracking bei ChatGPT, Perplexity und Google AI Overview im selben Dashboard brauchst du den Pro-Plan ab 29,99 €/Monat.',
+        a: 'Ja. Schon der Einsteiger-Plan ab 4,99 €/Monat trackt wöchentlich automatisch, ob und wie oft Claude und Google Gemini deine Website bei relevanten Anfragen als Quelle nennen - inklusive Mention-Verlauf über Zeit. Für zusätzliches Tracking bei ChatGPT, Perplexity und Google AI Overview im selben Dashboard brauchst du den Pro-Plan ab 74,99 €/Monat.',
     },
     {
         q: 'Was ist der Unterschied zwischen einem einmaligen GEO Audit und GEO Automatisierung?',
@@ -23,11 +24,11 @@ const FAQS = [
     },
     {
         q: 'Was sind Prompt-Varianten und wozu brauche ich mehrere?',
-        a: 'Reale Nutzer fragen KI-Systeme auf sehr unterschiedliche Art — mal empfehlungsorientiert ("Welches Tool kennst du für X?"), mal vergleichend ("Was ist das beste Tool für X im Vergleich?"). Ab dem Pro-Plan prüft Scanora pro Keyword beide Varianten separat, damit du siehst, bei welcher Art von Anfrage du erwähnt wirst und bei welcher nicht.',
+        a: 'Reale Nutzer fragen KI-Systeme auf sehr unterschiedliche Art - mal empfehlungsorientiert ("Welches Tool kennst du für X?"), mal vergleichend ("Was ist das beste Tool für X im Vergleich?"). Ab dem Pro-Plan prüft Scanora pro Keyword beide Varianten separat, damit du siehst, bei welcher Art von Anfrage du erwähnt wirst und bei welcher nicht.',
     },
     {
         q: 'Was zeigen mir die Themen-Sichtbarkeits-Analyse und Historien-Trends?',
-        a: 'Die Themen-Sichtbarkeits-Analyse (ab Pro) zeigt dir, welche Domains in KI-Antworten zu deinen getrackten Keywords am häufigsten zitiert werden — über alle Kontexte hinweg (Erklärungen, Vergleiche, Tutorials), nicht nur Tool-Empfehlungen. Für konkrete Konkurrenz-Tools nutze den „Wettbewerber"-Tab, der gezielt Empfehlungs-Antworten auswertet. Historien-Trends (Expert) zeigen dir pro Keyword, wie stark das Thema insgesamt monatlich in KI-Antworten bei Google AI Overview vorkommt — ein Trend fürs Themenvolumen, kein domainspezifisches Zitations-Tracking.',
+        a: 'Die Themen-Sichtbarkeits-Analyse (ab Pro) zeigt dir, welche Domains in KI-Antworten zu deinen getrackten Keywords am häufigsten zitiert werden - über alle Kontexte hinweg (Erklärungen, Vergleiche, Tutorials), nicht nur Tool-Empfehlungen. Für konkrete Konkurrenz-Tools nutze den „Wettbewerber"-Tab, der gezielt Empfehlungs-Antworten auswertet. Historien-Trends (Expert) zeigen dir pro Keyword, wie stark das Thema insgesamt monatlich in KI-Antworten bei Google AI Overview vorkommt - ein Trend fürs Themenvolumen, kein domainspezifisches Zitations-Tracking.',
     },
     {
         q: 'Gibt es eine kostenlose Testphase für GEO Automatisierung?',
@@ -35,7 +36,7 @@ const FAQS = [
     },
 ]
 
-const PLANS = [
+const PLANS = withPlanData('de', 'geo', [
     {
         id: 'einsteiger',
         name: 'Einsteiger',
@@ -64,7 +65,7 @@ const PLANS = [
     {
         id: 'pro',
         name: 'Pro',
-        price: '29,99',
+        price: '74,99',
         period: 'pro Monat',
         desc: 'Für Freelancer und kleine Agenturen',
         icon: Star,
@@ -89,7 +90,7 @@ const PLANS = [
     {
         id: 'expert',
         name: 'Expert',
-        price: '89,99',
+        price: '199,99',
         period: 'pro Monat',
         desc: 'Für Agenturen mit vielen Kunden',
         icon: Building2,
@@ -108,7 +109,7 @@ const PLANS = [
         cta: 'Expert starten',
         planEnvKey: 'NEXT_PUBLIC_PAYPAL_PLAN_ID_GEO_EXPERT',
     },
-]
+])
 
 const PLAN_IDS = {
     einsteiger: process.env.NEXT_PUBLIC_PAYPAL_PLAN_ID_GEO_EINSTEIGER,
@@ -126,63 +127,63 @@ function PlanCard({ plan, user, currentPlan, loading, onSuccess }) {
             transition={{ delay: PLANS.indexOf(plan) * 0.1 }}
             className={`relative flex flex-col rounded-2xl p-8 border transition-all duration-300 ${
                 plan.highlight
-                    ? 'bg-[var(--accent-soft)] border-[var(--accent-border)] shadow-2xl shadow-[var(--accent-border)]'
-                    : 'bg-[var(--surface-06)] border-[var(--border-subtle)]'
+                    ? 'shadow-card bg-(--card) border-(--accent) '
+                    : 'bg-(--card) border-(--line)'
             }`}
         >
             {plan.badge && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-[var(--accent)] rounded-full text-xs font-semibold text-[var(--bg-base)] shadow-lg whitespace-nowrap">
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-(--accent) rounded-full text-xs font-semibold text-(--on-accent) whitespace-nowrap">
                     {plan.badge}
                 </div>
             )}
 
             {currentPlan === plan.id && (
-                <div className="absolute -top-3 right-6 px-3 py-1 bg-[var(--accent-soft-strong)] border border-[var(--accent-border)] rounded-full text-xs font-semibold text-[var(--accent)]">
+                <div className="absolute -top-3 right-6 px-3 py-1 bg-(--accent-soft-strong) border border-(--accent-border) rounded-full text-xs font-semibold text-(--accent-ink)">
                     Aktuell
                 </div>
             )}
 
             <div className="mb-6">
                 <div className="flex items-center gap-2 mb-3">
-                    <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${plan.highlight ? 'bg-[var(--accent-soft-strong)]' : 'bg-[var(--surface-08)]'}`}>
-                        <plan.icon className={`w-4 h-4 ${plan.highlight ? 'text-[var(--accent)]' : 'text-[var(--text-muted)]'}`} strokeWidth={1.8} />
+                    <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${plan.highlight ? 'bg-(--accent-soft-strong)' : 'bg-(--surface-08)'}`}>
+                        <plan.icon className={`w-4 h-4 ${plan.highlight ? 'text-(--accent-ink)' : 'text-(--text-muted)'}`} strokeWidth={1.8} />
                     </div>
-                    <span className="text-sm font-semibold text-[var(--text-muted)] uppercase tracking-wider">{plan.name}</span>
+                    <span className="text-sm font-semibold text-(--text-muted) ">{plan.name}</span>
                 </div>
                 <div className="flex items-baseline gap-1 mb-1">
-                    <span className="text-5xl font-bold text-[var(--text-white)]">{plan.price}</span>
-                    <span className="text-[var(--text-muted)] text-lg">€</span>
+                    <span className="text-5xl font-bold text-(--text-white)">{plan.price}</span>
+                    <span className="text-(--text-muted) text-lg">€</span>
                 </div>
-                <div className="text-sm text-[var(--text-faint)] mb-3">{plan.period}</div>
-                <p className="text-sm text-[var(--text-muted)]">{plan.desc}</p>
+                <div className="text-sm text-(--text-faint) mb-3">{plan.period}</div>
+                <p className="text-sm text-(--text-muted)">{plan.desc}</p>
             </div>
 
             <div className="space-y-3 mb-8 flex-1">
                 {plan.features.map(f => (
                     <div key={f} className="flex items-center gap-3 text-sm">
-                        <div className={`w-4 h-4 rounded-full flex items-center justify-center shrink-0 ${plan.highlight ? 'bg-[var(--accent-soft-strong)]' : 'bg-[var(--surface-08)]'}`}>
-                            <Check className={`w-2.5 h-2.5 ${plan.highlight ? 'text-[var(--accent)]' : 'text-[var(--text-muted)]'}`} strokeWidth={3} />
+                        <div className={`w-4 h-4 rounded-full flex items-center justify-center shrink-0 ${plan.highlight ? 'bg-(--accent-soft-strong)' : 'bg-(--surface-08)'}`}>
+                            <Check className={`w-2.5 h-2.5 ${plan.highlight ? 'text-(--accent-ink)' : 'text-(--text-muted)'}`} strokeWidth={3} />
                         </div>
-                        <span className="text-[var(--text-body)]">{f}</span>
+                        <span className="text-(--text-body)">{f}</span>
                     </div>
                 ))}
                 {plan.locked?.map(f => (
                     <div key={f} className="flex items-center gap-3 text-sm opacity-40">
-                        <div className="w-4 h-4 rounded-full flex items-center justify-center shrink-0 bg-[var(--surface-08)]">
-                            <Lock className="w-2.5 h-2.5 text-[var(--text-faint)]" strokeWidth={3} />
+                        <div className="w-4 h-4 rounded-full flex items-center justify-center shrink-0 bg-(--surface-08)">
+                            <Lock className="w-2.5 h-2.5 text-(--text-faint)" strokeWidth={3} />
                         </div>
-                        <span className="text-[var(--text-faint)] line-through">{f}</span>
+                        <span className="text-(--text-faint) line-through">{f}</span>
                     </div>
                 ))}
             </div>
 
             <div>
                 {loading ? (
-                    <div className="flex items-center justify-center w-full py-3 rounded-xl border border-[var(--border-subtle)]">
-                        <Loader2 className="w-4 h-4 text-[var(--text-faint)] animate-spin" />
+                    <div className="flex items-center justify-center w-full py-3 rounded-xl border border-(--border-subtle)">
+                        <Loader2 className="w-4 h-4 text-(--text-faint) animate-spin" />
                     </div>
                 ) : currentPlan === plan.id ? (
-                    <div className="block w-full py-3 text-center text-sm font-semibold rounded-xl border border-[var(--accent-border)] text-[var(--accent)] bg-[var(--accent-soft)]">
+                    <div className="block w-full py-3 text-center text-sm font-semibold rounded-xl border border-(--accent-border) text-(--accent-ink) bg-(--accent-soft)">
                         Aktives Abo
                     </div>
                 ) : !user ? (
@@ -190,8 +191,8 @@ function PlanCard({ plan, user, currentPlan, loading, onSuccess }) {
                         href="/login?redirect=/geo/pricing"
                         className={`flex items-center justify-center gap-2 w-full py-3 text-center text-sm font-semibold rounded-xl transition-all duration-200 ${
                             plan.highlight
-                                ? 'bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] shadow-lg shadow-[var(--accent-border)] active:scale-[0.97] active:duration-75 hover:-translate-y-0.5'
-                                : 'border border-[var(--border-subtle)] text-[var(--text-body)] hover:text-[var(--text-white)] hover:border-[var(--border-strong)] hover:bg-[var(--surface-06)]'
+                                ? 'bg-(--accent) hover:bg-(--accent-hover) text-(--on-accent) active:scale-[0.97] active:duration-75 '
+                                : 'border border-(--border-subtle) text-(--text-body) hover:text-(--text-white) hover:border-(--border-strong) hover:bg-(--surface-06)'
                         }`}
                     >
                         <LogIn className="w-4 h-4" /> Anmelden zum Abonnieren
@@ -294,45 +295,37 @@ export default function GeoPricingPage() {
 
     return (
         <>
-            <div className="min-h-screen bg-[var(--bg-base)]">
+            <div className="min-h-screen bg-(--bg-base)">
                 <Navbar />
 
-                <div className="relative pt-32 pb-24 px-5 sm:px-8">
-                    <div
-                        className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] rounded-full blur-3xl pointer-events-none"
-                        style={{ background: 'radial-gradient(ellipse, var(--accent-glow) 0%, transparent 70%)' }}
-                    />
+                <div className="relative pt-28 md:pt-34 pb-18 md:pb-28 px-4 sm:px-8">
 
-                    <div className="relative z-10 max-w-6xl mx-auto">
-                        <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-16">
-                            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[var(--accent-border)] bg-[var(--accent-soft)] text-[var(--accent)] text-xs font-medium mb-6">
-                                <Sparkles className="w-3.5 h-3.5" />
-                                GEO Automatisierung
-                            </div>
-                            <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-5">
-                                Wirst du von KI<br />
-                                empfohlen?
+                    <div className="relative max-w-300 mx-auto">
+                        <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} className="mb-14 max-w-190">
+                            <p className="eyebrow mb-4">GEO Automatisierung</p>
+                            <h1 className="text-[clamp(34px,4.4vw,54px)] leading-[1.05] tracking-[-0.038em] font-bold text-(--text-white) mb-5">
+                                Wirst du von KI empfohlen?
                             </h1>
-                            <p className="text-lg text-[var(--text-muted)] max-w-xl mx-auto mb-6">
-                                Tracke ob Claude, ChatGPT, Gemini, Perplexity und Google AI Overview deine Domain erwähnen — wöchentlich automatisch.
+                            <p className="text-lg text-(--text-body) max-w-[62ch] mb-6">
+                                Tracke ob Claude, ChatGPT, Gemini, Perplexity und Google AI Overview deine Domain erwähnen - wöchentlich automatisch.
                             </p>
-                            <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-[var(--accent-border)] bg-[var(--accent-soft)] text-sm">
-                                <span className="text-[var(--accent)] font-semibold">14 Tage kostenlos testen</span>
-                                <span className="text-[var(--text-faint)]">·</span>
-                                <span className="text-[var(--text-muted)]">danach automatisch verlängerbar · jederzeit kündbar</span>
+                            <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-(--accent-border) bg-(--accent-soft) text-sm">
+                                <span className="text-(--accent-ink) font-semibold">14 Tage kostenlos testen</span>
+                                <span className="text-(--text-faint)">·</span>
+                                <span className="text-(--text-muted)">danach automatisch verlängerbar · jederzeit kündbar</span>
                             </div>
 
                             {geoCheckContext?.domain && (
-                                <div className="mt-6 inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[var(--surface-06)] border border-[var(--border-subtle)] text-sm max-w-xl mx-auto">
-                                    <span className="text-[var(--text-muted)]">
-                                        Dein Check: <b className="text-[var(--text-white)]">{geoCheckContext.domain}</b> wird bei <b className="text-[var(--text-white)]">{geoCheckContext.label}</b>{' '}
-                                        {geoCheckContext.mentioned ? 'zitiert' : 'noch nicht zitiert'} — Pro trackt alle 4 Plattformen automatisch.
+                                <div className="mt-6 inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-(--card) border border-(--line) text-sm max-w-[62ch]">
+                                    <span className="text-(--text-muted)">
+                                        Dein Check: <b className="text-(--text-white)">{geoCheckContext.domain}</b> wird bei <b className="text-(--text-white)">{geoCheckContext.label}</b>{' '}
+                                        {geoCheckContext.mentioned ? 'zitiert' : 'noch nicht zitiert'} - Pro trackt alle 5 Plattformen automatisch.
                                     </span>
                                 </div>
                             )}
                         </motion.div>
 
-                        <h2 className="text-xl sm:text-2xl font-bold text-[var(--text-white)] text-center mb-8">
+                        <h2 className="text-xl sm:text-2xl font-bold text-(--text-white) text-center mb-8">
                             GEO Automatisierung Preise im Überblick
                         </h2>
 
@@ -348,20 +341,20 @@ export default function GeoPricingPage() {
                         ) : plansGrid}
 
                         <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}
-                            className="text-center text-sm text-[var(--text-faint)] mt-10">
+                            className="text-center text-sm text-(--text-faint) mt-10">
                             14 Tage kostenlos testen · nach dem Testzeitraum automatische Abbuchung · jederzeit kündbar · Bezahlung über PayPal
                         </motion.p>
 
                         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
                             className="mt-20 max-w-2xl mx-auto">
-                            <h2 className="text-xl sm:text-2xl font-bold text-[var(--text-white)] text-center mb-8">
+                            <h2 className="text-xl sm:text-2xl font-bold text-(--text-white) text-center mb-8">
                                 Häufige Fragen zu GEO Automatisierung Preisen
                             </h2>
                             <div className="space-y-4">
                                 {FAQS.map((faq, i) => (
-                                    <div key={i} className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl p-5">
-                                        <h3 className="font-semibold text-[var(--text-white)] mb-2 text-sm">{faq.q}</h3>
-                                        <p className="text-sm text-[var(--text-muted)] leading-relaxed">{faq.a}</p>
+                                    <div key={i} className="bg-(--card) border border-(--line) rounded-2xl p-5">
+                                        <h3 className="font-semibold text-(--text-white) mb-2 text-sm">{faq.q}</h3>
+                                        <p className="text-sm text-(--text-muted) leading-relaxed">{faq.a}</p>
                                     </div>
                                 ))}
                             </div>

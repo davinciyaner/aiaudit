@@ -30,26 +30,26 @@ export default function AdminLoginPage() {
     }
 
     return (
-        <div className="min-h-screen bg-[var(--bg-base)] flex items-center justify-center px-5">
+        <div className="min-h-screen bg-(--bg-base) flex items-center justify-center px-5">
             <div className="w-full max-w-sm">
                 <div className="flex items-center justify-center gap-2 mb-8">
-                    <div className="w-8 h-8 rounded-lg bg-[var(--accent)] flex items-center justify-center">
-                        <svg className="w-4 h-4 text-[var(--text-white)]" viewBox="0 0 192 192" fill="none"><circle cx="96" cy="96" r="50" stroke="currentColor" strokeWidth="14" /><circle cx="110" cy="82" r="13" fill="currentColor" /></svg>
+                    <div className="w-8 h-8 rounded-lg bg-(--accent) flex items-center justify-center">
+                        <svg className="w-4 h-4 text-(--text-white)" viewBox="0 0 192 192" fill="none"><circle cx="96" cy="96" r="50" stroke="currentColor" strokeWidth="14" /><circle cx="110" cy="82" r="13" fill="currentColor" /></svg>
                     </div>
-                    <span className="font-bold text-[var(--text-white)]">
+                    <span className="font-bold text-(--text-white)">
                         Scanora
                     </span>
                 </div>
 
                 <form
                     onSubmit={handleSubmit}
-                    className="bg-[var(--bg-base)] border border-[var(--text-white)]/[0.08] rounded-2xl p-6 space-y-4"
+                    className="bg-(--bg-base) border border-(--line) rounded-2xl p-6 space-y-4"
                 >
                     <div className="flex items-center gap-2 mb-1">
-                        <Lock className="w-4 h-4 text-[var(--text-faint)]" />
-                        <p className="text-[var(--text-white)] font-semibold">Admin-Zugang</p>
+                        <Lock className="w-4 h-4 text-(--text-faint)" />
+                        <p className="text-(--text-white) font-semibold">Admin-Zugang</p>
                     </div>
-                    <p className="text-xs text-[var(--text-faint)]">Nur für autorisierte Nutzer.</p>
+                    <p className="text-xs text-(--text-faint)">Nur für autorisierte Nutzer.</p>
 
                     <input
                         type="password"
@@ -58,11 +58,11 @@ export default function AdminLoginPage() {
                         placeholder="Admin-Token eingeben"
                         required
                         autoFocus
-                        className="w-full bg-[var(--text-white)]/[0.03] border border-[var(--text-white)]/10 rounded-xl px-4 py-2.5 text-sm text-[var(--text-white)] placeholder-[var(--text-faint)] outline-none focus:border-violet-500/50 transition-colors"
+                        className="w-full bg-(--card) border border-(--line) rounded-xl px-4 py-2.5 text-sm text-(--text-white) placeholder-(--text-faint) outline-none focus:border-(--accent) focus:shadow-[0_0_0_4px_var(--accent-ring)] transition-colors"
                     />
 
                     {error && (
-                        <p className="text-xs text-red-400 bg-red-500/10 border border-red-500/20 rounded-xl px-3 py-2">
+                        <p className="text-xs text-(--danger) bg-(--danger-soft) border border-(--danger-border) rounded-xl px-3 py-2">
                             {error}
                         </p>
                     )}
@@ -70,7 +70,7 @@ export default function AdminLoginPage() {
                     <button
                         type="submit"
                         disabled={loading}
-                        className="w-full py-2.5 bg-linear-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 disabled:opacity-50 text-[var(--text-white)] text-sm font-semibold rounded-xl transition-all"
+                        className="w-full py-2.5 bg-(--accent) hover:bg-(--accent-hover) disabled:opacity-50 text-(--on-accent) text-sm font-semibold rounded-xl transition-all"
                     >
                         {loading ? 'Wird geprüft...' : 'Einloggen'}
                     </button>

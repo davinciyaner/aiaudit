@@ -1,5 +1,5 @@
 export const metadata = {
-    title: 'Connect Extension – Scanora',
+    title: 'Connect Extension',
     description: 'Connect the Scanora browser extension to your account.',
     robots: { index: false, follow: false },
 }

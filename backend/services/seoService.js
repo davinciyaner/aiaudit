@@ -4,11 +4,11 @@ import * as cheerio from 'cheerio'
 import SeoKeywordInsight from '../models/seo_keyword_insight.js'
 import SeoTrackedSite from '../models/seo_tracked_site.js'
 
-// DataForSEO API — DATAFORSEO_LOGIN + DATAFORSEO_PASSWORD in .env.local setzen
+// DataForSEO API — DATAFORSEO_LOGIN + DATAFORSEO_PASSWORD in .env.local.local setzen
 const LOGIN    = process.env.DATAFORSEO_LOGIN
 const PASSWORD = process.env.DATAFORSEO_PASSWORD
 
-// DATAFORSEO_SANDBOX=true in .env schaltet auf sandbox.dataforseo.com um — gleiche Zugangsdaten,
+// DATAFORSEO_SANDBOX=true in .env.local schaltet auf sandbox.dataforseo.com um — gleiche Zugangsdaten,
 // gleiches Response-Format, aber Dummy-Daten statt echter Rankings und ohne Kosten. Nur fuers
 // Testen/Debuggen der SEO-Rank-Tracking-Integration gedacht, NICHT fuer GEO-Mention-Checks (dort
 // braucht es echte KI-Antworten, Sandbox wuerde das Ergebnis sinnlos machen).

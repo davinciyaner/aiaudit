@@ -2,8 +2,8 @@
 import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
-    TrendingUp, TrendingDown, Plus, Trash2, Globe, Loader2,
-    ArrowRight, X, ChevronUp, ChevronDown, Minus
+    TrendingUp, Plus, Trash2, Globe, Loader2,
+    ArrowRight, X,
 } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -11,11 +11,11 @@ import toast from 'react-hot-toast'
 import Navbar from '../../components/Navbar'
 
 function PositionBadge({ position }) {
-    if (position == null) return <span className="text-xs text-[var(--text-faint)]">-</span>
-    if (position <= 3)  return <span className="text-sm font-bold text-emerald-400">#{position}</span>
-    if (position <= 10) return <span className="text-sm font-bold text-teal-400">#{position}</span>
-    if (position <= 30) return <span className="text-sm font-bold text-amber-400">#{position}</span>
-    return <span className="text-sm font-bold text-[var(--text-white)]">#{position}</span>
+    if (position == null) return <span className="text-xs text-(--text-faint)">-</span>
+    if (position <= 3)  return <span className="text-sm font-bold text-(--success)">#{position}</span>
+    if (position <= 10) return <span className="text-sm font-bold text-(--success)">#{position}</span>
+    if (position <= 30) return <span className="text-sm font-bold text-(--warning)">#{position}</span>
+    return <span className="text-sm font-bold text-(--text-white)">#{position}</span>
 }
 
 function SiteCard({ site, onDelete }) {
@@ -44,48 +44,48 @@ function SiteCard({ site, onDelete }) {
         <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="group relative bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl p-6 hover:border-[var(--accent-border)] transition-all duration-200"
+            className="group relative bg-(--bg-surface) border border-(--border-subtle) rounded-2xl p-6 hover:border-(--accent-border) transition-all duration-200"
         >
             <button
                 onClick={handleDelete}
                 disabled={deleting}
-                className="absolute top-4 right-4 w-7 h-7 flex items-center justify-center rounded-lg opacity-0 group-hover:opacity-100 bg-[var(--surface-06)] hover:bg-red-500/15 text-[var(--text-faint)] hover:text-red-400 transition-all"
+                className="absolute top-4 right-4 w-7 h-7 flex items-center justify-center rounded-lg opacity-0 group-hover:opacity-100 bg-(--surface-06) hover:bg-(--danger-soft) text-(--text-faint) hover:text-(--danger) transition-all"
             >
                 {deleting ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Trash2 className="w-3.5 h-3.5" />}
             </button>
 
             <div className="flex items-start gap-3 mb-4">
-                <div className="w-9 h-9 rounded-xl bg-[var(--accent-soft)] border border-[var(--accent-border)] flex items-center justify-center shrink-0">
-                    <Globe className="w-4 h-4 text-[var(--accent)]" />
+                <div className="w-9 h-9 rounded-xl bg-(--accent-soft) border border-(--accent-border) flex items-center justify-center shrink-0">
+                    <Globe className="w-4 h-4 text-(--accent-ink)" />
                 </div>
                 <div className="min-w-0">
-                    <div className="text-sm font-semibold text-[var(--text-white)] truncate">{site.displayName || site.domain}</div>
-                    <div className="text-xs text-[var(--text-faint)] truncate">{site.domain}</div>
+                    <div className="text-sm font-semibold text-(--text-white) truncate">{site.displayName || site.domain}</div>
+                    <div className="text-xs text-(--text-faint) truncate">{site.domain}</div>
                 </div>
             </div>
 
             <div className="grid grid-cols-2 gap-3 mb-5">
-                <div className="bg-[var(--surface-06)] rounded-xl p-3">
-                    <div className="text-xs text-[var(--text-faint)] mb-1">Ø Position</div>
+                <div className="bg-(--surface-06) rounded-xl p-3">
+                    <div className="text-xs text-(--text-faint) mb-1">Ø Position</div>
                     <PositionBadge position={site.avgPosition} />
                 </div>
-                <div className="bg-[var(--surface-06)] rounded-xl p-3">
-                    <div className="text-xs text-[var(--text-faint)] mb-1">Keywords</div>
-                    <span className="text-sm font-bold text-[var(--text-white)]">{site.trackedCount || 0}</span>
+                <div className="bg-(--surface-06) rounded-xl p-3">
+                    <div className="text-xs text-(--text-faint) mb-1">Keywords</div>
+                    <span className="text-sm font-bold text-(--text-white)">{site.trackedCount || 0}</span>
                 </div>
             </div>
 
             {site.lastChecked ? (
-                <div className="text-[11px] text-[var(--text-faint)] mb-4">
+                <div className="text-[11px] text-(--text-faint) mb-4">
                     Zuletzt: {new Date(site.lastChecked).toLocaleDateString('de-DE')}
                 </div>
             ) : (
-                <div className="text-[11px] text-[var(--text-faint)] mb-4">Noch nicht geprüft</div>
+                <div className="text-[11px] text-(--text-faint) mb-4">Noch nicht geprüft</div>
             )}
 
             <Link
                 href={`/seo/${site._id}`}
-                className="flex items-center justify-center gap-2 w-full py-2.5 text-sm font-semibold rounded-xl bg-[var(--accent-soft)] hover:bg-[var(--accent-soft-strong)] text-[var(--accent)] border border-[var(--accent-border)] transition-all"
+                className="flex items-center justify-center gap-2 w-full py-2.5 text-sm font-semibold rounded-xl bg-(--accent-soft) hover:bg-(--accent-soft-strong) text-(--accent-ink) border border-(--accent-border) transition-all"
             >
                 Rankings ansehen
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -136,40 +136,40 @@ function AddSiteModal({ maxKeywords, usedKeywords, onClose, onAdded }) {
                 initial={{ opacity: 0, scale: 0.95, y: 16 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.95 }}
-                className="w-full max-w-md bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl p-6"
+                className="w-full max-w-md bg-(--bg-surface) border border-(--border-subtle) rounded-2xl p-6"
             >
                 <div className="flex items-center justify-between mb-6">
-                    <h3 className="text-lg font-bold text-[var(--text-white)]">Website hinzufügen</h3>
-                    <button onClick={onClose} className="w-8 h-8 flex items-center justify-center rounded-lg bg-[var(--surface-06)] hover:bg-[var(--surface-10)] text-[var(--text-muted)] hover:text-[var(--text-white)] transition-all">
+                    <h3 className="text-lg font-bold text-(--text-white)">Website hinzufügen</h3>
+                    <button onClick={onClose} className="w-8 h-8 flex items-center justify-center rounded-lg bg-(--surface-06) hover:bg-(--surface-10) text-(--text-muted) hover:text-(--text-white) transition-all">
                         <X className="w-4 h-4" />
                     </button>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
-                        <label className="text-sm text-[var(--text-body)] font-medium block mb-1.5">Domain</label>
+                        <label className="text-sm text-(--text-body) font-medium block mb-1.5">Domain</label>
                         <input
                             type="text"
                             value={domain}
                             onChange={e => setDomain(e.target.value)}
                             placeholder="example.com"
                             required
-                            className="w-full bg-[var(--surface-06)] border border-[var(--border-subtle)] hover:border-[var(--border-strong)] focus:border-[var(--accent-border)] rounded-xl px-4 py-3 text-[var(--text-white)] placeholder:text-[var(--text-faint)] outline-none transition-all text-sm"
+                            className="w-full bg-(--card) border border-(--line) hover:border-(--border-strong) focus:border-(--accent) focus:shadow-[0_0_0_4px_var(--accent-ring)] rounded-xl px-4 py-3 text-(--text-white) placeholder:text-(--text-faint) outline-none transition-all text-sm"
                         />
                     </div>
 
                     <div>
-                        <label className="text-sm text-[var(--text-body)] font-medium block mb-1.5">
-                            Keywords <span className="text-[var(--text-faint)]">(eines pro Zeile, max. {slotsLeft} verbleibend)</span>
+                        <label className="text-sm text-(--text-body) font-medium block mb-1.5">
+                            Keywords <span className="text-(--text-faint)">(eines pro Zeile, max. {slotsLeft} verbleibend)</span>
                         </label>
                         <textarea
                             value={keywordsText}
                             onChange={e => setKeywordsText(e.target.value)}
                             placeholder={"keyword eins\nkeyword zwei\nkeyword drei"}
                             rows={6}
-                            className="w-full bg-[var(--surface-06)] border border-[var(--border-subtle)] hover:border-[var(--border-strong)] focus:border-[var(--accent-border)] rounded-xl px-4 py-3 text-[var(--text-white)] placeholder:text-[var(--text-faint)] outline-none transition-all text-sm resize-none font-mono"
+                            className="w-full bg-(--card) border border-(--line) hover:border-(--border-strong) focus:border-(--accent) focus:shadow-[0_0_0_4px_var(--accent-ring)] rounded-xl px-4 py-3 text-(--text-white) placeholder:text-(--text-faint) outline-none transition-all text-sm resize-none font-mono"
                         />
-                        <div className="text-xs text-[var(--text-faint)] mt-1">
+                        <div className="text-xs text-(--text-faint) mt-1">
                             {keywordsText.split('\n').filter(k => k.trim()).length} Keywords eingegeben
                         </div>
                     </div>
@@ -177,7 +177,7 @@ function AddSiteModal({ maxKeywords, usedKeywords, onClose, onAdded }) {
                     <button
                         type="submit"
                         disabled={loading}
-                        className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] font-semibold transition-all disabled:opacity-50 text-sm"
+                        className="w-full flex items-center justify-center gap-2 py-3 rounded-[10px] bg-(--accent) hover:bg-(--accent-hover) text-(--on-accent) font-semibold transition-all disabled:opacity-50 text-sm"
                     >
                         {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Plus className="w-4 h-4" />}
                         {loading ? 'Wird hinzugefügt...' : 'Website hinzufügen'}
@@ -254,14 +254,14 @@ export default function SeoDashboardPage() {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-[var(--bg-base)] flex items-center justify-center">
-                <Loader2 className="w-8 h-8 text-[var(--accent)] animate-spin" />
+            <div className="min-h-screen bg-(--bg-base) flex items-center justify-center">
+                <Loader2 className="w-8 h-8 text-(--accent-ink) animate-spin" />
             </div>
         )
     }
 
     return (
-        <div className="min-h-screen bg-[var(--bg-base)]">
+        <div className="min-h-screen bg-(--bg-base)">
             <Navbar />
 
             <div className="max-w-7xl mx-auto px-5 sm:px-8 pt-28 pb-16">
@@ -269,13 +269,13 @@ export default function SeoDashboardPage() {
                 {/* Header */}
                 <div className="flex items-start justify-between gap-4 mb-8">
                     <div>
-                        <h1 className="text-2xl sm:text-3xl font-bold text-[var(--text-white)]">Keyword Rankings</h1>
+                        <h1 className="text-2xl sm:text-3xl font-bold text-(--text-white)">Keyword Rankings</h1>
                     </div>
 
                     {limits.usedSites < limits.maxSites && (
                         <button
                             onClick={() => setShowAdd(true)}
-                            className="flex items-center gap-2 px-4 py-2.5 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all shadow-lg shadow-[var(--accent-border)] active:scale-[0.97] active:duration-75"
+                            className="flex items-center gap-2 px-4 py-2.5 bg-(--accent) hover:bg-(--accent-hover) text-(--on-accent) text-sm font-semibold rounded-[10px] transition-all active:scale-[0.97] active:duration-75"
                         >
                             <Plus className="w-4 h-4" />
                             Website hinzufügen
@@ -285,26 +285,26 @@ export default function SeoDashboardPage() {
 
                 {/* Usage bar */}
                 <div className="grid sm:grid-cols-2 gap-4 mb-8">
-                    <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-xl p-4">
+                    <div className="bg-(--bg-surface) border border-(--border-subtle) rounded-xl p-4">
                         <div className="flex items-center justify-between mb-2">
-                            <span className="text-sm text-[var(--text-muted)]">Websites</span>
-                            <span className="text-sm font-semibold text-[var(--text-white)]">{limits.usedSites} / {limits.maxSites}</span>
+                            <span className="text-sm text-(--text-muted)">Websites</span>
+                            <span className="text-sm font-semibold text-(--text-white)">{limits.usedSites} / {limits.maxSites}</span>
                         </div>
-                        <div className="h-1.5 bg-[var(--surface-08)] rounded-full overflow-hidden">
+                        <div className="h-1.5 bg-(--surface-08) rounded-full overflow-hidden">
                             <div
-                                className="h-full bg-[var(--accent)] rounded-full transition-all"
+                                className="h-full bg-(--accent) rounded-full transition-all"
                                 style={{ width: `${limits.maxSites > 0 ? (limits.usedSites / limits.maxSites) * 100 : 0}%` }}
                             />
                         </div>
                     </div>
-                    <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-xl p-4">
+                    <div className="bg-(--bg-surface) border border-(--border-subtle) rounded-xl p-4">
                         <div className="flex items-center justify-between mb-2">
-                            <span className="text-sm text-[var(--text-muted)]">Keywords</span>
-                            <span className="text-sm font-semibold text-[var(--text-white)]">{limits.usedKeywords} / {limits.maxKeywords}</span>
+                            <span className="text-sm text-(--text-muted)">Keywords</span>
+                            <span className="text-sm font-semibold text-(--text-white)">{limits.usedKeywords} / {limits.maxKeywords}</span>
                         </div>
-                        <div className="h-1.5 bg-[var(--surface-08)] rounded-full overflow-hidden">
+                        <div className="h-1.5 bg-(--surface-08) rounded-full overflow-hidden">
                             <div
-                                className="h-full bg-[var(--accent)] rounded-full transition-all"
+                                className="h-full bg-(--accent) rounded-full transition-all"
                                 style={{ width: `${limits.maxKeywords > 0 ? (limits.usedKeywords / limits.maxKeywords) * 100 : 0}%` }}
                             />
                         </div>
@@ -314,14 +314,14 @@ export default function SeoDashboardPage() {
                 {/* Sites grid */}
                 {sites.length === 0 ? (
                     <div className="text-center py-20">
-                        <div className="w-16 h-16 rounded-2xl bg-[var(--accent-soft)] border border-[var(--accent-border)] flex items-center justify-center mx-auto mb-4">
-                            <TrendingUp className="w-7 h-7 text-[var(--accent)]" />
+                        <div className="w-16 h-16 rounded-2xl bg-(--accent-soft) border border-(--accent-border) flex items-center justify-center mx-auto mb-4">
+                            <TrendingUp className="w-7 h-7 text-(--accent-ink)" />
                         </div>
-                        <h3 className="text-xl font-bold text-[var(--text-white)] mb-2">Noch keine Website hinzugefügt</h3>
-                        <p className="text-[var(--text-faint)] text-sm mb-6">Füge deine erste Website mit Keywords hinzu und tracke deine Rankings.</p>
+                        <h3 className="text-xl font-bold text-(--text-white) mb-2">Noch keine Website hinzugefügt</h3>
+                        <p className="text-(--text-faint) text-sm mb-6">Füge deine erste Website mit Keywords hinzu und tracke deine Rankings.</p>
                         <button
                             onClick={() => setShowAdd(true)}
-                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-(--accent) hover:bg-(--accent-hover) text-(--on-accent) text-sm font-semibold rounded-[10px] transition-all"
                         >
                             <Plus className="w-4 h-4" />
                             Erste Website hinzufügen

@@ -4,7 +4,7 @@ import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
 
 export const metadata = {
-    title: { absolute: 'About Scanora – Why This Tool Exists' },
+    title: { absolute: 'About Scanora - Why This Tool Exists' },
     description: 'Scanora automatically tracks whether your website gets cited by ChatGPT, Claude, Perplexity, and Google AI Overview - and how it ranks on Google.',
     alternates: {
         canonical: 'https://www.scanora.ai/en/about',
@@ -19,7 +19,7 @@ export const metadata = {
         url: 'https://www.scanora.ai/en/about',
         type: 'website',
         locale: 'en_US',
-        images: ['https://www.scanora.ai/opengraph-image'],
+        images: ['https://www.scanora.ai/en/opengraph-image'],
     },
 }
 
@@ -47,82 +47,82 @@ const breadcrumbLd = {
 }
 
 const FACTS = [
-    { icon: Sparkles, label: 'AI visibility & SEO in one report', color: '#7c3aed' },
-    { icon: ZapIcon, label: 'Audit in under 60 seconds', color: '#06b6d4' },
-    { icon: RefreshCw, label: 'Weekly automated tracking', color: '#10b981' },
+    { icon: Sparkles, label: 'AI visibility & SEO in one report', color: 'var(--accent)' },
+    { icon: ZapIcon, label: 'Audit in under 60 seconds', color: 'var(--accent)' },
+    { icon: RefreshCw, label: 'Weekly automated tracking', color: 'var(--success)' },
 ]
 
 export default function AboutPageEn() {
     return (
-        <main className="bg-[var(--bg-base)] min-h-screen">
+        <main className="bg-(--bg-base) min-h-screen">
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
             <Navbar locale="en" />
 
-            <article className="max-w-3xl mx-auto px-5 sm:px-8 pt-32 pb-24">
+            <article className="max-w-3xl mx-auto px-5 sm:px-8 pt-28 md:pt-34 pb-24">
 
                 {/* Breadcrumb */}
-                <div className="flex items-center gap-2 text-xs text-[var(--text-faint)] mb-8">
-                    <Link href="/en" className="hover:text-[var(--text-muted)] transition-colors">Scanora</Link>
+                <div className="flex items-center gap-2 text-xs text-(--text-faint) mb-8">
+                    <Link href="/en" className="hover:text-(--text-muted) transition-colors">Scanora</Link>
                     <span>/</span>
-                    <span className="text-[var(--text-faint)]">About</span>
+                    <span className="text-(--text-faint)">About</span>
                 </div>
 
                 {/* Header */}
                 <div className="flex items-center gap-4 mb-10">
-                    <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-violet-600 to-cyan-600 flex items-center justify-center shrink-0">
-                        <ZapIcon className="w-7 h-7 text-[var(--text-white)]" strokeWidth={2.5} />
+                    <div className="w-16 h-16 rounded-2xl bg-(--accent) flex items-center justify-center shrink-0">
+                        <ZapIcon className="w-7 h-7 text-(--text-white)" strokeWidth={2.5} />
                     </div>
                     <div>
-                        <h1 className="text-2xl sm:text-3xl font-bold text-[var(--text-white)] tracking-tight">About Scanora</h1>
-                        <p className="text-[var(--text-muted)] text-sm mt-1">AI visibility & SEO tracking, one report</p>
+                        <h1 className="text-[clamp(34px,4.4vw,54px)] leading-[1.05] tracking-[-0.038em] font-bold text-(--text-white)">About Scanora</h1>
+                        <p className="text-(--text-muted) text-sm mt-1">AI visibility & SEO tracking, one report</p>
                     </div>
                 </div>
 
                 {/* Facts row */}
                 <div className="grid sm:grid-cols-3 gap-3 mb-12">
                     {FACTS.map(({ icon: Icon, label, color }) => (
-                        <div key={label} className="flex items-center gap-3 bg-[var(--text-white)]/[0.03] border border-[var(--text-white)]/[0.06] rounded-xl p-4">
-                            <div className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0" style={{ background: `${color}1a` }}>
+                        <div key={label} className="flex items-center gap-3 bg-(--card) border border-(--line) rounded-xl p-4">
+                            <div className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0" style={{ background: `color-mix(in oklch, ${color} 10%, transparent)` }}>
                                 <Icon className="w-4 h-4" style={{ color }} />
                             </div>
-                            <span className="text-sm text-[var(--text-body)]">{label}</span>
+                            <span className="text-sm text-(--text-body)">{label}</span>
                         </div>
                     ))}
                 </div>
 
                 {/* Bio */}
-                <div className="prose prose-invert prose-slate max-w-none text-[var(--text-body)] leading-relaxed space-y-5">
-                    <h2 className="text-xl font-bold text-[var(--text-white)] mb-3">Why Scanora?</h2>
+                <div className="prose prose-invert prose-slate max-w-none text-(--text-body) leading-relaxed space-y-5">
+                    <h2 className="text-xl font-bold text-(--text-white) mb-3">Why Scanora?</h2>
                     <p>
                         Google isn't the only search engine anymore. More and more people ask ChatGPT, Claude, or
-                        Perplexity for recommendations instead of googling — and a website can sit at #1 on Google while
+                        Perplexity for recommendations instead of googling - and a website can sit at #1 on Google while
                         being completely invisible to those AI models. Keeping an eye on both means, in practice: manually
-                        checking rankings, meta data, and Core Web Vitals — plus regularly asking several AI models
+                        checking rankings, meta data, and Core Web Vitals - plus regularly asking several AI models
                         yourself whether your site even gets mentioned. Spread across multiple tools, that quickly turns
                         into a full-time job on its own.
                     </p>
                     <p>
                         Scanora automates exactly that: one audit that tracks both AI visibility across ChatGPT, Claude,
-                        Perplexity, and Google AI Overview, and classic Google rankings — with concrete, prioritized fixes
+                        Perplexity, and Google AI Overview, and classic Google rankings - with concrete, prioritized fixes
                         instead of generic tips. Checks run automatically every week in the background, so a ranking drop
                         or a lost AI mention gets caught before it costs traffic.
                     </p>
 
-                    <h2 className="text-xl font-bold text-[var(--text-white)] mb-3 mt-10">Contact</h2>
+                    <h2 className="text-xl font-bold text-(--text-white) mb-3 mt-10">Contact</h2>
                     <p>
                         Questions or feedback about Scanora:{' '}
-                        <a href="mailto:scanoraai@gmail.com" className="text-violet-400 hover:text-violet-300 inline-flex items-center gap-1.5">
+                        <a href="mailto:scanoraai@gmail.com" className="text-(--accent-ink) hover:text-(--accent-ink) inline-flex items-center gap-1.5">
                             <Mail className="w-3.5 h-3.5" />
                             scanoraai@gmail.com
                         </a>
                     </p>
                 </div>
 
-                <div className="mt-14 pt-8 border-t border-[var(--text-white)]/5">
+                <div className="mt-14 pt-8 border-t border-(--line)">
                     <Link
                         href="/en/blog"
-                        className="inline-flex items-center gap-2 text-sm text-violet-400 hover:text-violet-300 transition-colors font-medium"
+                        className="inline-flex items-center gap-2 text-sm text-(--accent-ink) hover:text-(--accent-ink) transition-colors font-medium"
                     >
                         Read all blog articles →
                     </Link>

@@ -12,11 +12,11 @@ import toast from 'react-hot-toast'
 import Navbar from '../../components/Navbar'
 
 const PLATFORM_META = {
-    claude:     { label: 'Claude',             color: 'text-violet-400', bg: 'bg-violet-500/10', border: 'border-violet-500/20' },
-    chatgpt:    { label: 'ChatGPT',            color: 'text-green-400',  bg: 'bg-green-500/10',  border: 'border-green-500/20'  },
-    gemini:     { label: 'Gemini',             color: 'text-amber-400',  bg: 'bg-amber-500/10',  border: 'border-amber-500/20'  },
-    perplexity: { label: 'Perplexity',         color: 'text-teal-400',   bg: 'bg-teal-500/10',   border: 'border-teal-500/20'   },
-    google_aio: { label: 'Google AI Overview', color: 'text-blue-400',   bg: 'bg-blue-500/10',   border: 'border-blue-500/20'   },
+    claude:     { label: 'Claude',             color: 'text-(--accent-ink)', bg: 'bg-(--accent-soft)', border: 'border-(--accent-border)' },
+    chatgpt:    { label: 'ChatGPT',            color: 'text-(--success)',  bg: 'bg-(--success-soft)',  border: 'border-(--success-border)'  },
+    gemini:     { label: 'Gemini',             color: 'text-(--warning)',  bg: 'bg-(--warning-soft)',  border: 'border-(--warning-border)'  },
+    perplexity: { label: 'Perplexity',         color: 'text-(--success)',   bg: 'bg-(--success-soft)',   border: 'border-(--success-border)'   },
+    google_aio: { label: 'Google AI Overview', color: 'text-(--accent-ink)',   bg: 'bg-(--accent-soft)',   border: 'border-(--accent-border)'   },
 }
 
 const COST_PER_CHECK = { claude: 0.0121, chatgpt: 0.0040, gemini: 0.0110, perplexity: 0.0064, google_aio: 0.0026 }
@@ -50,10 +50,10 @@ const INTENT_META = {
 const NAV_ITEMS = [
     { id: 'overview',    label: 'Übersicht',                   description: 'Deine Mention-Rate, Verlauf und alle getrackten Keywords im Detail.' },
     { id: 'leads',       label: 'Leads',                        description: 'Leads auf eurer eigenen Website, die über ChatGPT, Perplexity, Claude oder Gemini zustande kamen.' },
-    { id: 'competitors', label: 'Wettbewerber',                 description: 'Welche anderen Domains KI-Modelle neben dir zitieren — als Liste oder Diagramm.' },
-    { id: 'market',      label: 'Themen-Sichtbarkeit',           description: 'Welche Domains in KI-Antworten zu deinen Keywords am häufigsten zitiert werden — über alle Kontexte hinweg (Erklärungen, Vergleiche, Tutorials), nicht nur Empfehlungen. Für Konkurrenz-Tools siehe „Wettbewerber".' },
+    { id: 'competitors', label: 'Wettbewerber',                 description: 'Welche anderen Domains KI-Modelle neben dir zitieren - als Liste oder Diagramm.' },
+    { id: 'market',      label: 'Themen-Sichtbarkeit',           description: 'Welche Domains in KI-Antworten zu deinen Keywords am häufigsten zitiert werden - über alle Kontexte hinweg (Erklärungen, Vergleiche, Tutorials), nicht nur Empfehlungen. Für Konkurrenz-Tools siehe „Wettbewerber".' },
     { id: 'suggestions', label: 'Keywords vorschlagen',         description: 'SEO-Keywords, die sich auch für GEO-Tracking eignen würden.' },
-    { id: 'correlation', label: 'SEO-Ranking + KI-Erwähnungen', description: 'Rankt eine Seite bei Google, wird aber nie von KI-Modellen genannt — oder umgekehrt?' },
+    { id: 'correlation', label: 'SEO-Ranking + KI-Erwähnungen', description: 'Rankt eine Seite bei Google, wird aber nie von KI-Modellen genannt - oder umgekehrt?' },
 ]
 
 function aggregateMention(checks, platform, intents) {
@@ -82,26 +82,26 @@ function keywordRateStats(history) {
 }
 
 function MentionBadge({ mentioned }) {
-    if (mentioned == null) return <span className="text-xs text-[var(--text-faint)]">—</span>
+    if (mentioned == null) return <span className="text-xs text-(--text-faint)">—</span>
     return mentioned
-        ? <span className="inline-flex items-center gap-1 text-xs font-semibold text-[var(--accent)] bg-[var(--accent-soft)] border border-[var(--accent-border)] px-2 py-0.5 rounded-md"><Check className="w-3 h-3" />Ja</span>
-        : <span className="inline-flex items-center gap-1 text-xs font-semibold text-[var(--text-faint)] bg-[var(--surface-08)] border border-[var(--border-subtle)] px-2 py-0.5 rounded-md"><X className="w-3 h-3 opacity-50" />Nein</span>
+        ? <span className="inline-flex items-center gap-1 text-xs font-semibold text-(--accent-ink) bg-(--accent-soft) border border-(--accent-border) px-2 py-0.5 rounded-md"><Check className="w-3 h-3" />Ja</span>
+        : <span className="inline-flex items-center gap-1 text-xs font-semibold text-(--text-faint) bg-(--surface-08) border border-(--border-subtle) px-2 py-0.5 rounded-md"><X className="w-3 h-3 opacity-50" />Nein</span>
 }
 
 function MentionDot({ mentioned }) {
-    if (mentioned == null) return <span className="inline-block w-2 h-2 rounded-full bg-[var(--surface-10)]" title="Nicht getestet" />
+    if (mentioned == null) return <span className="inline-block w-2 h-2 rounded-full bg-(--surface-10)" title="Nicht getestet" />
     return mentioned
-        ? <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-[var(--accent-soft-strong)] border border-[var(--accent-border)]" title="Erwähnt">
-              <Check className="w-3 h-3 text-[var(--accent)]" strokeWidth={3} />
+        ? <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-(--accent-soft-strong) border border-(--accent-border)" title="Erwähnt">
+              <Check className="w-3 h-3 text-(--accent-ink)" strokeWidth={3} />
           </span>
-        : <span className="inline-block w-2 h-2 rounded-full bg-[var(--surface-10)]" title="Nicht erwähnt" />
+        : <span className="inline-block w-2 h-2 rounded-full bg-(--surface-10)" title="Nicht erwähnt" />
 }
 
 function SentimentBadge({ sentiment }) {
     const meta = {
-        positive: { label: 'Positiv', color: 'text-emerald-400', bg: 'bg-emerald-500/10', border: 'border-emerald-500/20' },
-        neutral:  { label: 'Neutral', color: 'text-[var(--text-muted)]',   bg: 'bg-[var(--surface-08)]',         border: 'border-[var(--border-subtle)]'    },
-        negative: { label: 'Negativ', color: 'text-red-400',     bg: 'bg-red-500/10',      border: 'border-red-500/20'  },
+        positive: { label: 'Positiv', color: 'text-(--success)', bg: 'bg-(--success-soft)', border: 'border-(--success-border)' },
+        neutral:  { label: 'Neutral', color: 'text-(--text-muted)',   bg: 'bg-(--surface-08)',         border: 'border-(--border-subtle)'    },
+        negative: { label: 'Negativ', color: 'text-(--danger)',     bg: 'bg-(--danger-soft)',      border: 'border-(--danger-border)'  },
     }[sentiment]
     if (!meta) return null
     return (
@@ -113,13 +113,13 @@ function SentimentBadge({ sentiment }) {
 
 function KeywordRateBadge({ rate, delta }) {
     if (rate == null) return null
-    const color = rate >= 70 ? 'text-[var(--accent)]' : rate >= 40 ? 'text-[var(--warning)]' : 'text-[var(--text-faint)]'
+    const color = rate >= 70 ? 'text-(--accent-ink)' : rate >= 40 ? 'text-(--warning)' : 'text-(--text-faint)'
     return (
         <span className={`inline-flex items-center gap-0.5 text-xs font-semibold ${color}`}
             title="Mention-Rate über die komplette Check-Historie dieses Keywords">
             {rate}%
-            {delta > 0 && <ArrowUp className="w-2.5 h-2.5 text-[var(--success)]" strokeWidth={3} />}
-            {delta < 0 && <ArrowDown className="w-2.5 h-2.5 text-[var(--danger)]" strokeWidth={3} />}
+            {delta > 0 && <ArrowUp className="w-2.5 h-2.5 text-(--success)" strokeWidth={3} />}
+            {delta < 0 && <ArrowDown className="w-2.5 h-2.5 text-(--danger)" strokeWidth={3} />}
         </span>
     )
 }
@@ -127,21 +127,21 @@ function KeywordRateBadge({ rate, delta }) {
 function PositionBadge({ position, citationsCount, trend }) {
     if (position == null) return null
     return (
-        <span className="inline-flex items-center gap-1 text-[10px] font-semibold px-1.5 py-0.5 rounded ml-1.5 text-[var(--text-body)] bg-[var(--surface-08)] border border-[var(--border-subtle)]"
+        <span className="inline-flex items-center gap-1 text-[10px] font-semibold px-1.5 py-0.5 rounded ml-1.5 text-(--text-body) bg-(--surface-08) border border-(--border-subtle)"
             title="Position innerhalb der zitierten Quellen dieser Antwort">
             Platz {position}{citationsCount ? `/${citationsCount}` : ''}
-            {trend > 0 && <ArrowUp className="w-2.5 h-2.5 text-[var(--success)]" strokeWidth={3} />}
-            {trend < 0 && <ArrowDown className="w-2.5 h-2.5 text-[var(--danger)]" strokeWidth={3} />}
-            {trend === 0 && <Minus className="w-2.5 h-2.5 text-[var(--text-faint)]" strokeWidth={3} />}
+            {trend > 0 && <ArrowUp className="w-2.5 h-2.5 text-(--success)" strokeWidth={3} />}
+            {trend < 0 && <ArrowDown className="w-2.5 h-2.5 text-(--danger)" strokeWidth={3} />}
+            {trend === 0 && <Minus className="w-2.5 h-2.5 text-(--text-faint)" strokeWidth={3} />}
         </span>
     )
 }
 
 const CORRELATION_VERDICT_META = {
-    both:     { label: 'Beides sichtbar', color: 'text-emerald-400', bg: 'bg-emerald-500/10', border: 'border-emerald-500/20' },
-    seo_only: { label: 'Nur Google',      color: 'text-amber-400',   bg: 'bg-amber-500/10',   border: 'border-amber-500/20'  },
-    geo_only: { label: 'Nur KI',          color: 'text-blue-400',    bg: 'bg-blue-500/10',    border: 'border-blue-500/20'   },
-    neither:  { label: 'Beides fehlt',    color: 'text-[var(--text-faint)]',   bg: 'bg-[var(--surface-08)]',        border: 'border-[var(--border-subtle)]'      },
+    both:     { label: 'Beides sichtbar', color: 'text-(--success)', bg: 'bg-(--success-soft)', border: 'border-(--success-border)' },
+    seo_only: { label: 'Nur Google',      color: 'text-(--warning)',   bg: 'bg-(--warning-soft)',   border: 'border-(--warning-border)'  },
+    geo_only: { label: 'Nur KI',          color: 'text-(--accent-ink)',    bg: 'bg-(--accent-soft)',    border: 'border-(--accent-border)'   },
+    neither:  { label: 'Beides fehlt',    color: 'text-(--text-faint)',   bg: 'bg-(--surface-08)',        border: 'border-(--border-subtle)'      },
 }
 
 const SEO_VISIBLE_THRESHOLD = 20
@@ -164,26 +164,26 @@ function CorrelationPanel({ siteId, onGoToSuggestions }) {
 
     if (loading) return (
         <div className="flex flex-col items-center justify-center py-20 gap-3">
-            <Loader2 className="w-6 h-6 text-[var(--accent)] animate-spin" />
-            <span className="text-sm text-[var(--text-faint)]">Daten werden geladen…</span>
+            <Loader2 className="w-6 h-6 text-(--accent-ink) animate-spin" />
+            <span className="text-sm text-(--text-faint)">Daten werden geladen…</span>
         </div>
     )
     if (!data) return null
 
     if (!data.linked) {
         return (
-            <div className="flex flex-col items-center text-center gap-3 bg-[var(--bg-surface)] border border-dashed border-[var(--border-subtle)] rounded-2xl p-8">
-                <div className="w-10 h-10 rounded-xl bg-[var(--surface-08)] flex items-center justify-center">
-                    <GitCompare className="w-4.5 h-4.5 text-[var(--text-faint)]" />
+            <div className="flex flex-col items-center text-center gap-3 bg-(--bg-surface) border border-dashed border-(--border-subtle) rounded-2xl p-8">
+                <div className="w-10 h-10 rounded-xl bg-(--surface-08) flex items-center justify-center">
+                    <GitCompare className="w-4.5 h-4.5 text-(--text-faint)" />
                 </div>
                 <div>
-                    <h3 className="text-sm font-semibold text-[var(--text-white)] mb-1.5">SEO-Ranking + KI-Erwähnung vergleichen</h3>
-                    <p className="text-xs text-[var(--text-faint)] leading-relaxed max-w-sm">
+                    <h3 className="text-sm font-semibold text-(--text-white) mb-1.5">SEO-Ranking + KI-Erwähnung vergleichen</h3>
+                    <p className="text-xs text-(--text-faint) leading-relaxed max-w-sm">
                         Für diese Domain läuft noch keine SEO-Automatisierung. Sobald beide Produkte dieselbe Domain tracken, zeigt Scanora hier direkt,
-                        ob eine Seite bei Google rankt, aber nie von KI-Modellen genannt wird — oder umgekehrt.
+                        ob eine Seite bei Google rankt, aber nie von KI-Modellen genannt wird - oder umgekehrt.
                     </p>
                 </div>
-                <Link href="/seo/pricing" className="text-xs font-semibold text-[var(--accent)] hover:opacity-80">
+                <Link href="/seo/pricing" className="text-xs font-semibold text-(--accent-ink) hover:opacity-80">
                     SEO-Automatisierung starten →
                 </Link>
             </div>
@@ -192,19 +192,19 @@ function CorrelationPanel({ siteId, onGoToSuggestions }) {
 
     if (!data.matched.length) {
         return (
-            <div className="flex flex-col items-center text-center gap-3 bg-[var(--bg-surface)] border border-dashed border-[var(--border-subtle)] rounded-2xl p-8">
-                <div className="w-10 h-10 rounded-xl bg-[var(--surface-08)] flex items-center justify-center">
-                    <GitCompare className="w-4.5 h-4.5 text-[var(--text-faint)]" />
+            <div className="flex flex-col items-center text-center gap-3 bg-(--bg-surface) border border-dashed border-(--border-subtle) rounded-2xl p-8">
+                <div className="w-10 h-10 rounded-xl bg-(--surface-08) flex items-center justify-center">
+                    <GitCompare className="w-4.5 h-4.5 text-(--text-faint)" />
                 </div>
                 <div>
-                    <h3 className="text-sm font-semibold text-[var(--text-white)] mb-1.5">SEO-Ranking + KI-Erwähnung vergleichen</h3>
-                    <p className="text-xs text-[var(--text-faint)] leading-relaxed max-w-sm">
+                    <h3 className="text-sm font-semibold text-(--text-white) mb-1.5">SEO-Ranking + KI-Erwähnung vergleichen</h3>
+                    <p className="text-xs text-(--text-faint) leading-relaxed max-w-sm">
                         Keine gemeinsamen Keywords zwischen SEO- und GEO-Tracking ({data.seoOnlyKeywords.length} nur SEO, {data.geoOnlyKeywords.length} nur GEO).
                         Füge dieselben Keywords in beiden Produkten hinzu, um Google-Ranking und KI-Erwähnung nebeneinander zu sehen.
                     </p>
                 </div>
                 {onGoToSuggestions && (
-                    <button onClick={onGoToSuggestions} className="text-xs font-semibold text-[var(--accent)] hover:opacity-80">
+                    <button onClick={onGoToSuggestions} className="text-xs font-semibold text-(--accent-ink) hover:opacity-80">
                         Passende Keywords vorschlagen lassen →
                     </button>
                 )}
@@ -219,38 +219,38 @@ function CorrelationPanel({ siteId, onGoToSuggestions }) {
     const visibleCount = data.matched.filter(m => m.seoPosition != null && m.seoPosition <= SEO_VISIBLE_THRESHOLD).length
 
     return (
-        <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl p-5 mb-6">
+        <div className="bg-(--bg-surface) border border-(--border-subtle) rounded-2xl p-5 mb-6">
             <div className="flex items-center justify-between mb-4">
-                <h3 className="text-sm font-semibold text-[var(--text-white)]">SEO-Ranking + KI-Erwähnung</h3>
-                <span className="text-xs text-[var(--text-faint)]">{data.matched.length} gemeinsame Keywords</span>
+                <h3 className="text-sm font-semibold text-(--text-white)">SEO-Ranking + KI-Erwähnung</h3>
+                <span className="text-xs text-(--text-faint)">{data.matched.length} gemeinsame Keywords</span>
             </div>
 
-            <div className="flex items-center gap-5 mb-5 pb-5 border-b border-[var(--border-subtle)] flex-wrap">
+            <div className="flex items-center gap-5 mb-5 pb-5 border-b border-(--border-subtle) flex-wrap">
                 <div className="flex items-baseline gap-2">
-                    <span className="text-xs text-[var(--text-faint)]">Keywords</span>
-                    <span className="text-lg font-bold text-[var(--text-white)]">{data.matched.length}/{totalKeywords}</span>
+                    <span className="text-xs text-(--text-faint)">Keywords</span>
+                    <span className="text-lg font-bold text-(--text-white)">{data.matched.length}/{totalKeywords}</span>
                 </div>
-                <div className="w-px h-7 bg-[var(--surface-10)]" />
+                <div className="w-px h-7 bg-(--surface-10)" />
                 <div className="flex items-baseline gap-2">
-                    <span className="text-xs text-[var(--text-faint)]">Ø Platzierung</span>
-                    <span className="text-lg font-bold text-[var(--text-white)]">{data.avgPosition ?? '—'}</span>
+                    <span className="text-xs text-(--text-faint)">Ø Platzierung</span>
+                    <span className="text-lg font-bold text-(--text-white)">{data.avgPosition ?? '—'}</span>
                     {positionTrendDelta != null && <TrendArrow delta={positionTrendDelta} />}
                 </div>
-                <div className="w-px h-7 bg-[var(--surface-10)]" />
+                <div className="w-px h-7 bg-(--surface-10)" />
                 <div className="flex items-baseline gap-2">
-                    <span className="text-xs text-[var(--text-faint)]">Google (Top {SEO_VISIBLE_THRESHOLD})</span>
-                    <span className="text-lg font-bold text-[var(--text-white)]">{visibleCount}/{data.matched.length}</span>
+                    <span className="text-xs text-(--text-faint)">Google (Top {SEO_VISIBLE_THRESHOLD})</span>
+                    <span className="text-lg font-bold text-(--text-white)">{visibleCount}/{data.matched.length}</span>
                 </div>
             </div>
 
             <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                     <thead>
-                        <tr className="border-b border-[var(--border-subtle)]">
-                            <th className="text-left text-xs text-[var(--text-faint)] font-semibold uppercase tracking-wider pb-2">Keyword</th>
-                            <th className="text-left text-xs text-[var(--text-faint)] font-semibold uppercase tracking-wider pb-2">Google</th>
-                            <th className="text-left text-xs text-[var(--text-faint)] font-semibold uppercase tracking-wider pb-2">KI-Erwähnung</th>
-                            <th className="text-left text-xs text-[var(--text-faint)] font-semibold uppercase tracking-wider pb-2">Status</th>
+                        <tr className="border-b border-(--border-subtle)">
+                            <th className="text-left text-xs text-(--text-faint) font-semibold pb-2">Keyword</th>
+                            <th className="text-left text-xs text-(--text-faint) font-semibold pb-2">Google</th>
+                            <th className="text-left text-xs text-(--text-faint) font-semibold pb-2">KI-Erwähnung</th>
+                            <th className="text-left text-xs text-(--text-faint) font-semibold pb-2">Status</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -258,20 +258,20 @@ function CorrelationPanel({ siteId, onGoToSuggestions }) {
                             const v = CORRELATION_VERDICT_META[m.verdict]
                             const seoVisible = m.seoPosition != null && m.seoPosition <= SEO_VISIBLE_THRESHOLD
                             return (
-                                <tr key={m.keyword} className="border-b border-[var(--border-subtle)] last:border-0">
-                                    <td className="py-2.5 pr-3 text-[var(--text-body)]">{m.keyword}</td>
+                                <tr key={m.keyword} className="border-b border-(--border-subtle) last:border-0">
+                                    <td className="py-2.5 pr-3 text-(--text-body)">{m.keyword}</td>
                                     <td className="py-2.5 pr-3">
                                         {m.seoPosition == null ? (
-                                            <span className="text-[var(--text-faint)]">—</span>
+                                            <span className="text-(--text-faint)">—</span>
                                         ) : seoVisible ? (
-                                            <span className="text-[var(--success)] font-semibold">#{m.seoPosition}</span>
+                                            <span className="text-(--success) font-semibold">#{m.seoPosition}</span>
                                         ) : (
-                                            <span className="text-[var(--text-faint)]" title={`Position ${m.seoPosition} — außerhalb der ersten 20 Ergebnisse, praktisch nicht auffindbar`}>
+                                            <span className="text-(--text-faint)" title={`Position ${m.seoPosition} - außerhalb der ersten 20 Ergebnisse, praktisch nicht auffindbar`}>
                                                 #{m.seoPosition} <span className="text-[10px]">(nicht sichtbar)</span>
                                             </span>
                                         )}
                                     </td>
-                                    <td className="py-2.5 pr-3 text-[var(--text-muted)]">{m.geoChecked ? (m.geoMentioned ? 'Ja' : 'Nein') : '—'}</td>
+                                    <td className="py-2.5 pr-3 text-(--text-muted)">{m.geoChecked ? (m.geoMentioned ? 'Ja' : 'Nein') : '—'}</td>
                                     <td className="py-2.5">
                                         <span className={`inline-flex text-xs font-semibold px-2 py-0.5 rounded-md border ${v.color} ${v.bg} ${v.border}`}>{v.label}</span>
                                     </td>
@@ -283,7 +283,7 @@ function CorrelationPanel({ siteId, onGoToSuggestions }) {
             </div>
             {data.matched.length > 3 && (
                 <button onClick={() => setExpanded(v => !v)}
-                    className="mt-3 text-xs text-[var(--accent)] hover:text-[var(--accent)]">
+                    className="mt-3 text-xs text-(--accent-ink) hover:text-(--accent-ink)">
                     {expanded ? 'Weniger anzeigen' : `Alle ${data.matched.length} anzeigen`}
                 </button>
             )}
@@ -291,7 +291,7 @@ function CorrelationPanel({ siteId, onGoToSuggestions }) {
     )
 }
 
-// Schlägt SEO-Keywords vor, die noch nicht im GEO-Tracking sind — schließt die Lücke, die
+// Schlägt SEO-Keywords vor, die noch nicht im GEO-Tracking sind - schließt die Lücke, die
 // CorrelationPanel aufzeigt (wenig Überschneidung = die Korrelation liefert kaum echte Insights).
 function KeywordSuggestionsPanel({ siteId, onAdded }) {
     const [suggestions, setSuggestions] = useState(null)
@@ -333,7 +333,7 @@ function KeywordSuggestionsPanel({ siteId, onAdded }) {
             onAdded?.()
             await fetchSuggestions()
         } catch (err) {
-            toast.error(err.message || 'Keywords konnten nicht hinzugefügt werden — bitte nochmal versuchen.')
+            toast.error(err.message || 'Keywords konnten nicht hinzugefügt werden - bitte nochmal versuchen.')
         } finally {
             setAdding(false)
         }
@@ -341,31 +341,31 @@ function KeywordSuggestionsPanel({ siteId, onAdded }) {
 
     if (loading) return (
         <div className="flex flex-col items-center justify-center py-20 gap-3">
-            <Loader2 className="w-6 h-6 text-[var(--accent)] animate-spin" />
-            <span className="text-sm text-[var(--text-faint)]">Daten werden geladen…</span>
+            <Loader2 className="w-6 h-6 text-(--accent-ink) animate-spin" />
+            <span className="text-sm text-(--text-faint)">Daten werden geladen…</span>
         </div>
     )
     if (!suggestions?.length) return (
-        <div className="flex flex-col items-center justify-center text-center gap-3 bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl py-16 px-6">
-            <div className="w-10 h-10 rounded-xl bg-[var(--surface-08)] flex items-center justify-center">
-                <Lightbulb className="w-4.5 h-4.5 text-[var(--text-faint)]" />
+        <div className="flex flex-col items-center justify-center text-center gap-3 bg-(--bg-surface) border border-(--border-subtle) rounded-2xl py-16 px-6">
+            <div className="w-10 h-10 rounded-xl bg-(--surface-08) flex items-center justify-center">
+                <Lightbulb className="w-4.5 h-4.5 text-(--text-faint)" />
             </div>
-            <p className="text-sm text-[var(--text-faint)] max-w-sm">
+            <p className="text-sm text-(--text-faint) max-w-sm">
                 Keine passenden SEO-Keywords gefunden. Sobald bei SEO-Automatisierung Keywords für diese Domain getrackt werden, schlagen wir dir hier vor, welche sich auch für GEO eignen.
             </p>
-            <Link href="/seo/pricing" className="text-xs font-semibold text-[var(--accent)] hover:opacity-80">
+            <Link href="/seo/pricing" className="text-xs font-semibold text-(--accent-ink) hover:opacity-80">
                 SEO-Automatisierung starten →
             </Link>
         </div>
     )
 
     return (
-        <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl p-5 mb-6">
+        <div className="bg-(--bg-surface) border border-(--border-subtle) rounded-2xl p-5 mb-6">
             <div className="flex items-center justify-between mb-1.5">
-                <h3 className="text-sm font-semibold text-[var(--text-white)]">SEO-Keywords für GEO vorschlagen</h3>
-                <span className="text-xs text-[var(--text-faint)]">{suggestions.length} Vorschläge</span>
+                <h3 className="text-sm font-semibold text-(--text-white)">SEO-Keywords für GEO vorschlagen</h3>
+                <span className="text-xs text-(--text-faint)">{suggestions.length} Vorschläge</span>
             </div>
-            <p className="text-xs text-[var(--text-faint)] leading-relaxed mb-4">
+            <p className="text-xs text-(--text-faint) leading-relaxed mb-4">
                 Diese Keywords werden bereits bei SEO-Automatisierung getrackt und eignen sich als KI-Empfehlungsfrage. Wähle aus, welche zusätzlich bei GEO getrackt werden sollen.
             </p>
 
@@ -376,15 +376,15 @@ function KeywordSuggestionsPanel({ siteId, onAdded }) {
                         <button key={s.keyword} type="button" onClick={() => toggle(s.keyword)}
                             className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-lg border text-left transition-all ${
                                 checked
-                                    ? 'bg-[var(--accent-soft)] border-[var(--accent-border)] text-[var(--text-white)]'
-                                    : 'bg-[var(--surface-06)] border-[var(--border-subtle)] text-[var(--text-faint)] hover:border-[var(--border-strong)]'
+                                    ? 'bg-(--accent-soft) border-(--accent-border) text-(--text-white)'
+                                    : 'bg-(--card) border-(--line) text-(--text-faint) hover:border-(--border-strong)'
                             }`}>
-                            <div className={`w-3.5 h-3.5 rounded border shrink-0 flex items-center justify-center ${checked ? 'bg-[var(--accent)] border-[var(--accent)]' : 'border-[var(--border-strong)]'}`}>
-                                {checked && <Check className="w-2.5 h-2.5 text-[var(--text-white)]" strokeWidth={3.5} />}
+                            <div className={`w-3.5 h-3.5 rounded border shrink-0 flex items-center justify-center ${checked ? 'bg-(--accent) border-(--accent)' : 'border-(--border-strong)'}`}>
+                                {checked && <Check className="w-2.5 h-2.5 text-(--text-white)" strokeWidth={3.5} />}
                             </div>
                             <span className="text-sm flex-1">{s.keyword}</span>
                             {s.aiSearchVolume != null && (
-                                <span className="text-[10px] text-[var(--accent)]/80 font-medium shrink-0" title="Geschätztes AI-Suchvolumen/Monat">
+                                <span className="text-[10px] text-(--accent)/80 font-medium shrink-0" title="Geschätztes AI-Suchvolumen/Monat">
                                     {s.aiSearchVolume.toLocaleString('de-DE')} KI-Suchen/Mo.
                                 </span>
                             )}
@@ -395,12 +395,12 @@ function KeywordSuggestionsPanel({ siteId, onAdded }) {
 
             <div className="flex items-center gap-2 flex-wrap">
                 <button onClick={() => addKeywords([...selected])} disabled={adding || !selected.size}
-                    className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] transition-all disabled:opacity-50">
+                    className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-[10px] bg-(--accent) hover:bg-(--accent-hover) text-(--on-accent) transition-all disabled:opacity-50">
                     {adding ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Plus className="w-3.5 h-3.5" />}
                     Ausgewählte hinzufügen ({selected.size})
                 </button>
                 <button onClick={() => addKeywords(suggestions.map(s => s.keyword))} disabled={adding}
-                    className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl bg-[var(--surface-08)] hover:bg-[var(--surface-10)] text-[var(--text-body)] border border-[var(--border-subtle)] transition-all disabled:opacity-50">
+                    className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl bg-(--surface-08) hover:bg-(--surface-10) text-(--text-body) border border-(--border-subtle) transition-all disabled:opacity-50">
                     Alle {suggestions.length} übernehmen
                 </button>
             </div>
@@ -408,7 +408,7 @@ function KeywordSuggestionsPanel({ siteId, onAdded }) {
     )
 }
 
-// Google's public favicon service — no API key, no own storage, just the domain.
+// Google's public favicon service - no API key, no own storage, just the domain.
 function faviconUrl(domain, size = 64) {
     return `https://www.google.com/s2/favicons?domain=${encodeURIComponent(domain)}&sz=${size}`
 }
@@ -418,7 +418,7 @@ function CompetitorLogo({ domain, size = 28 }) {
     if (broken) {
         return (
             <div
-                className="rounded-full bg-[var(--accent-soft-strong)] border border-[var(--accent-border)] flex items-center justify-center text-[var(--accent)] font-bold shrink-0"
+                className="rounded-full bg-(--accent-soft-strong) border border-(--accent-border) flex items-center justify-center text-(--accent-ink) font-bold shrink-0"
                 style={{ width: size, height: size, fontSize: size * 0.4 }}
             >
                 {domain[0]?.toUpperCase()}
@@ -432,7 +432,7 @@ function CompetitorLogo({ domain, size = 28 }) {
             alt={domain}
             width={size}
             height={size}
-            className="rounded-full bg-[var(--surface-08)] border border-[var(--border-subtle)] shrink-0 object-cover"
+            className="rounded-full bg-(--surface-08) border border-(--border-subtle) shrink-0 object-cover"
             onError={() => setBroken(true)}
         />
     )
@@ -445,8 +445,8 @@ function PlatformPresenceDots({ present }) {
                 const active = present?.includes(p)
                 const m = PLATFORM_META[p]
                 return (
-                    <span key={p} title={`${m.label}${active ? ' — zitiert diese Domain' : ' — zitiert diese Domain nicht'}`}
-                        className={`w-3.5 h-3.5 rounded-full border flex items-center justify-center text-[7px] font-bold shrink-0 ${active ? `${m.bg} ${m.border} ${m.color}` : 'bg-transparent border-[var(--border-subtle)] text-transparent'}`}>
+                    <span key={p} title={`${m.label}${active ? ' - zitiert diese Domain' : ' - zitiert diese Domain nicht'}`}
+                        className={`w-3.5 h-3.5 rounded-full border flex items-center justify-center text-[7px] font-bold shrink-0 ${active ? `${m.bg} ${m.border} ${m.color}` : 'bg-transparent border-(--border-subtle) text-transparent'}`}>
                         {m.label[0]}
                     </span>
                 )
@@ -462,13 +462,13 @@ function CompetitorBarChart({ competitors }) {
             <div className="flex items-center gap-3 mb-2">
                 <div className="w-32 sm:w-44 shrink-0" />
                 <div className="relative flex-1 h-3">
-                    <span className="absolute left-0 text-[9px] text-[var(--text-faint)]">0%</span>
-                    <span className="absolute left-1/2 -translate-x-1/2 text-[9px] text-[var(--text-faint)]">50%</span>
-                    <span className="absolute right-0 text-[9px] text-[var(--text-faint)]">100%</span>
+                    <span className="absolute left-0 text-[9px] text-(--text-faint)">0%</span>
+                    <span className="absolute left-1/2 -translate-x-1/2 text-[9px] text-(--text-faint)">50%</span>
+                    <span className="absolute right-0 text-[9px] text-(--text-faint)">100%</span>
                 </div>
                 <span className="w-11 shrink-0" />
                 <span className="w-16 shrink-0" />
-                <span className="w-[72px] shrink-0" />
+                <span className="w-18 shrink-0" />
             </div>
             <div className="space-y-3">
                 {competitors.map((c) => (
@@ -477,17 +477,17 @@ function CompetitorBarChart({ competitors }) {
                             title={c.keywords?.length ? `Genannt für: ${c.keywords.join(', ')}` : undefined}>
                             <CompetitorLogo domain={c.domain} size={20} />
                             <a href={`https://${c.domain}`} target="_blank" rel="noopener noreferrer"
-                                className="text-xs text-[var(--text-body)] hover:text-[var(--accent)] truncate">{c.domain}</a>
+                                className="text-xs text-(--text-body) hover:text-(--accent-ink) truncate">{c.domain}</a>
                         </div>
                         <div className="relative flex-1 h-2.5">
                             {[25, 50, 75, 100].map(v => (
-                                <div key={v} className="absolute top-0 bottom-0 w-px bg-[var(--surface-08)]" style={{ left: `${v}%` }} />
+                                <div key={v} className="absolute top-0 bottom-0 w-px bg-(--surface-08)" style={{ left: `${v}%` }} />
                             ))}
-                            <div className="absolute inset-y-0 left-0 bg-[var(--accent)] rounded-full"
+                            <div className="absolute inset-y-0 left-0 bg-(--accent) rounded-full"
                                 style={{ width: `${Math.max((c.share / maxShare) * 100, 3)}%` }} />
                         </div>
-                        <span className="text-xs font-semibold text-[var(--accent)] w-11 text-right shrink-0">{c.share}%</span>
-                        <span className="text-[11px] text-[var(--text-faint)] w-16 text-right shrink-0" title="Durchschnittliche Position bei Erwähnung">
+                        <span className="text-xs font-semibold text-(--accent-ink) w-11 text-right shrink-0">{c.share}%</span>
+                        <span className="text-[11px] text-(--text-faint) w-16 text-right shrink-0" title="Durchschnittliche Position bei Erwähnung">
                             {c.avgPosition != null ? `Ø Platz ${c.avgPosition}` : ''}
                         </span>
                         <PlatformPresenceDots present={c.platforms} />
@@ -517,20 +517,20 @@ function CompetitorsPanel({ siteId, onGoToOverview }) {
 
     if (loading) return (
         <div className="flex flex-col items-center justify-center py-20 gap-3">
-            <Loader2 className="w-6 h-6 text-[var(--accent)] animate-spin" />
-            <span className="text-sm text-[var(--text-faint)]">Daten werden geladen…</span>
+            <Loader2 className="w-6 h-6 text-(--accent-ink) animate-spin" />
+            <span className="text-sm text-(--text-faint)">Daten werden geladen…</span>
         </div>
     )
     if (!data?.competitors?.length) return (
-        <div className="flex flex-col items-center justify-center text-center gap-3 bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl py-16 px-6">
-            <div className="w-10 h-10 rounded-xl bg-[var(--surface-08)] flex items-center justify-center">
-                <Users className="w-4.5 h-4.5 text-[var(--text-faint)]" />
+        <div className="flex flex-col items-center justify-center text-center gap-3 bg-(--bg-surface) border border-(--border-subtle) rounded-2xl py-16 px-6">
+            <div className="w-10 h-10 rounded-xl bg-(--surface-08) flex items-center justify-center">
+                <Users className="w-4.5 h-4.5 text-(--text-faint)" />
             </div>
-            <p className="text-sm text-[var(--text-faint)] max-w-sm">
-                Noch keine Wettbewerber gefunden — dafür müssen erst KI-Antworten zu deinen Keywords ausgewertet worden sein.
+            <p className="text-sm text-(--text-faint) max-w-sm">
+                Noch keine Wettbewerber gefunden - dafür müssen erst KI-Antworten zu deinen Keywords ausgewertet worden sein.
             </p>
             {onGoToOverview && (
-                <button onClick={onGoToOverview} className="text-xs font-semibold text-[var(--accent)] hover:opacity-80">
+                <button onClick={onGoToOverview} className="text-xs font-semibold text-(--accent-ink) hover:opacity-80">
                     Zur Übersicht, um einen Check zu starten →
                 </button>
             )}
@@ -540,25 +540,25 @@ function CompetitorsPanel({ siteId, onGoToOverview }) {
     const visible = expanded ? data.competitors : data.competitors.slice(0, 5)
 
     return (
-        <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl p-5 mb-6">
+        <div className="bg-(--bg-surface) border border-(--border-subtle) rounded-2xl p-5 mb-6">
             <div className="flex items-center justify-between mb-1">
-                <h3 className="text-sm font-semibold text-[var(--text-white)]">Wer wird sonst noch genannt (Share of Voice)</h3>
+                <h3 className="text-sm font-semibold text-(--text-white)">Wer wird sonst noch genannt (Share of Voice)</h3>
                 <div className="flex items-center gap-3">
-                    <div className="flex bg-[var(--surface-08)] rounded-lg p-0.5">
+                    <div className="flex bg-(--surface-08) rounded-lg p-0.5">
                         <button onClick={() => setView('list')}
-                            className={`px-2.5 py-1 text-[11px] font-medium rounded-md transition-all ${view === 'list' ? 'bg-[var(--surface-10)] text-[var(--text-white)]' : 'text-[var(--text-faint)] hover:text-[var(--text-body)]'}`}>
+                            className={`px-2.5 py-1 text-[11px] font-medium rounded-md transition-all ${view === 'list' ? 'bg-(--surface-10) text-(--text-white)' : 'text-(--text-faint) hover:text-(--text-body)'}`}>
                             Liste
                         </button>
                         <button onClick={() => setView('chart')}
-                            className={`px-2.5 py-1 text-[11px] font-medium rounded-md transition-all ${view === 'chart' ? 'bg-[var(--surface-10)] text-[var(--text-white)]' : 'text-[var(--text-faint)] hover:text-[var(--text-body)]'}`}>
+                            className={`px-2.5 py-1 text-[11px] font-medium rounded-md transition-all ${view === 'chart' ? 'bg-(--surface-10) text-(--text-white)' : 'text-(--text-faint) hover:text-(--text-body)'}`}>
                             Diagramm
                         </button>
                     </div>
-                    <span className="text-xs text-[var(--text-faint)] hidden sm:inline">{data.totalCitations} Zitate insgesamt</span>
+                    <span className="text-xs text-(--text-faint) hidden sm:inline">{data.totalCitations} Zitate insgesamt</span>
                 </div>
             </div>
-            <p className="text-[11px] text-[var(--text-faint)] mb-4">
-                Domains, die KI-Modelle neben dir zitieren — sortiert nach Anteil. Die Punkte zeigen, auf welcher Plattform genau, „Für: ...” zeigt zu welchem Keyword.
+            <p className="text-[11px] text-(--text-faint) mb-4">
+                Domains, die KI-Modelle neben dir zitieren - sortiert nach Anteil. Die Punkte zeigen, auf welcher Plattform genau, „Für: ...” zeigt zu welchem Keyword.
             </p>
 
             {view === 'chart' ? (
@@ -567,36 +567,36 @@ function CompetitorsPanel({ siteId, onGoToOverview }) {
                 <div className="space-y-2.5">
                     {visible.map((c, i) => (
                         <div key={c.domain} className="flex items-center gap-3">
-                            <span className="text-xs text-[var(--text-faint)] w-5 text-right shrink-0">{i + 1}.</span>
+                            <span className="text-xs text-(--text-faint) w-5 text-right shrink-0">{i + 1}.</span>
                             <CompetitorLogo domain={c.domain} size={22} />
                             <div className="flex-1 min-w-0">
                                 <a href={`https://${c.domain}`} target="_blank" rel="noopener noreferrer"
-                                    className="text-sm text-[var(--text-body)] hover:text-[var(--accent)] truncate block">{c.domain}</a>
+                                    className="text-sm text-(--text-body) hover:text-(--accent-ink) truncate block">{c.domain}</a>
                                 {c.keywords?.length > 0 && (
-                                    <div className="text-[11px] text-[var(--text-faint)] truncate">
+                                    <div className="text-[11px] text-(--text-faint) truncate">
                                         Für: {c.keywords.map(k => `„${k}"`).join(', ')}
                                     </div>
                                 )}
                             </div>
                             {c.avgPosition != null && (
-                                <span className="text-[11px] text-[var(--text-faint)] shrink-0 hidden md:block w-20 text-right" title="Durchschnittliche Position bei Erwähnung">
+                                <span className="text-[11px] text-(--text-faint) shrink-0 hidden md:block w-20 text-right" title="Durchschnittliche Position bei Erwähnung">
                                     Ø Platz {c.avgPosition}
                                 </span>
                             )}
                             <PlatformPresenceDots present={c.platforms} />
                             <div className="w-20 shrink-0 hidden sm:block">
-                                <div className="h-1.5 bg-[var(--surface-08)] rounded-full overflow-hidden">
-                                    <div className="h-full bg-[var(--accent)] rounded-full" style={{ width: `${Math.min(c.share * 4, 100)}%` }} />
+                                <div className="h-1.5 bg-(--surface-08) rounded-full overflow-hidden">
+                                    <div className="h-full bg-(--accent) rounded-full" style={{ width: `${Math.min(c.share * 4, 100)}%` }} />
                                 </div>
                             </div>
-                            <span className="text-xs font-semibold text-[var(--accent)] w-12 text-right shrink-0">{c.share}%</span>
+                            <span className="text-xs font-semibold text-(--accent-ink) w-12 text-right shrink-0">{c.share}%</span>
                         </div>
                     ))}
                 </div>
             )}
             {data.competitors.length > 5 && (
                 <button onClick={() => setExpanded(v => !v)}
-                    className="mt-3 text-xs text-[var(--accent)] hover:text-[var(--accent)]">
+                    className="mt-3 text-xs text-(--accent-ink) hover:text-(--accent-ink)">
                     {expanded ? 'Weniger anzeigen' : `Alle ${data.competitors.length} anzeigen`}
                 </button>
             )}
@@ -605,16 +605,16 @@ function CompetitorsPanel({ siteId, onGoToOverview }) {
 }
 
 const LEAD_SOURCE_META = {
-    chatgpt:    { label: 'ChatGPT',    color: 'text-green-400',  bg: 'bg-green-500/10',  border: 'border-green-500/20',  bar: 'bg-green-500'  },
-    perplexity: { label: 'Perplexity', color: 'text-teal-400',   bg: 'bg-teal-500/10',   border: 'border-teal-500/20',   bar: 'bg-teal-500'   },
-    claude:     { label: 'Claude',     color: 'text-violet-400', bg: 'bg-violet-500/10', border: 'border-violet-500/20', bar: 'bg-violet-500' },
-    gemini:     { label: 'Gemini',     color: 'text-amber-400',  bg: 'bg-amber-500/10',  border: 'border-amber-500/20',  bar: 'bg-amber-500'  },
+    chatgpt:    { label: 'ChatGPT',    color: 'text-(--success)',  bg: 'bg-(--success-soft)',  border: 'border-(--success-border)',  bar: 'bg-(--success)'  },
+    perplexity: { label: 'Perplexity', color: 'text-(--success)',   bg: 'bg-(--success-soft)',   border: 'border-(--success-border)',   bar: 'bg-(--success)'   },
+    claude:     { label: 'Claude',     color: 'text-(--accent-ink)', bg: 'bg-(--accent-soft)', border: 'border-(--accent-border)', bar: 'bg-(--accent)' },
+    gemini:     { label: 'Gemini',     color: 'text-(--warning)',  bg: 'bg-(--warning-soft)',  border: 'border-(--warning-border)',  bar: 'bg-(--warning)'  },
 }
 
 function LeadSourceChip({ source }) {
     const meta = LEAD_SOURCE_META[source]
     if (!meta) return (
-        <span className="inline-flex items-center text-xs font-medium px-2 py-0.5 rounded-md text-[var(--text-faint)] bg-[var(--surface-08)] border border-[var(--border-subtle)]">
+        <span className="inline-flex items-center text-xs font-medium px-2 py-0.5 rounded-md text-(--text-faint) bg-(--surface-08) border border-(--border-subtle)">
             Direkt
         </span>
     )
@@ -635,12 +635,12 @@ function leadTimeAgo(dateStr) {
     return `vor ${days} Tag${days === 1 ? '' : 'en'}`
 }
 
-// ScanoraLeads.init() startet nichts automatisch beim Laden des Scripts — der Kunde ruft es erst
+// ScanoraLeads.init() startet nichts automatisch beim Laden des Scripts - der Kunde ruft es erst
 // auf, nachdem er selbst die Einwilligung seines Besuchers eingeholt hat (z.B. im Callback seines
 // eigenen Cookie-Consent-Tools). Das Snippet trifft diese Entscheidung bewusst nicht selbst, weil
 // der Kunde laut eurem AVV "Verantwortlicher" fuer seine eigene Website ist, nicht Scanora.
 // init() schickt zusaetzlich (gedrosselt auf max. 1x/6h uebers Snippet selbst) ein Lebenszeichen an
-// /leads/verify, damit im Dashboard sichtbar ist, ob das Snippet ueberhaupt eingebunden ist — auch
+// /leads/verify, damit im Dashboard sichtbar ist, ob das Snippet ueberhaupt eingebunden ist - auch
 // wenn noch kein einziger echter Lead reinkam.
 function buildLeadSnippet(siteKey) {
     const trackApi = `${process.env.NEXT_PUBLIC_API_URL}/leads/track`
@@ -706,22 +706,22 @@ function LeadsSnippetBox({ siteKey }) {
     }
 
     return (
-        <div className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-xl p-4">
+        <div className="bg-(--card) border border-(--line) rounded-xl p-4">
             <div className="flex items-center justify-between mb-2">
-                <p className="text-xs font-semibold text-[var(--text-white)]">Snippet auf eurer Website einbinden</p>
+                <p className="text-xs font-semibold text-(--text-white)">Snippet auf eurer Website einbinden</p>
                 <button onClick={handleCopy}
-                    className="flex items-center gap-1.5 text-[11px] font-medium text-[var(--accent)] hover:opacity-80 shrink-0">
+                    className="flex items-center gap-1.5 text-[11px] font-medium text-(--accent-ink) hover:opacity-80 shrink-0">
                     {copied ? <Check className="w-3 h-3" /> : <Copy className="w-3 h-3" />}
                     {copied ? 'Kopiert' : 'Kopieren'}
                 </button>
             </div>
-            <pre className="text-[10.5px] text-[var(--text-faint)] bg-[var(--surface-08)] rounded-lg p-3 overflow-x-auto whitespace-pre-wrap break-all">
+            <pre className="text-[10.5px] text-(--text-faint) bg-(--surface-08) rounded-lg p-3 overflow-x-auto whitespace-pre-wrap break-all">
 {snippet}
             </pre>
-            <div className="text-[11px] text-[var(--text-faint)] mt-2 leading-relaxed space-y-1">
-                <p>Vor dem schließenden <code className="text-[var(--text-body)]">&lt;/body&gt;</code> auf eurer eigenen Website einfügen.</p>
-                <p>Ruft <code className="text-[var(--text-body)]">ScanoraLeads.init()</code> erst auf, nachdem der Besucher eurem Tracking zugestimmt hat — z.&nbsp;B. im Callback eures Cookie-Consent-Tools. Das Snippet startet bewusst nichts von selbst.</p>
-                <p>Ruft <code className="text-[var(--text-body)]">ScanoraLeads.track(&apos;kunde@email.de&apos;)</code> auf, sobald euer eigenes Formular erfolgreich abgeschickt wurde.</p>
+            <div className="text-[11px] text-(--text-faint) mt-2 leading-relaxed space-y-1">
+                <p>Vor dem schließenden <code className="text-(--text-body)">&lt;/body&gt;</code> auf eurer eigenen Website einfügen.</p>
+                <p>Ruft <code className="text-(--text-body)">ScanoraLeads.init()</code> erst auf, nachdem der Besucher eurem Tracking zugestimmt hat - z.&nbsp;B. im Callback eures Cookie-Consent-Tools. Das Snippet startet bewusst nichts von selbst.</p>
+                <p>Ruft <code className="text-(--text-body)">ScanoraLeads.track(&apos;kunde@email.de&apos;)</code> auf, sobald euer eigenes Formular erfolgreich abgeschickt wurde.</p>
             </div>
         </div>
     )
@@ -754,20 +754,20 @@ function LeadsSparkline({ points }) {
 }
 
 // Beantwortet "hat der Kunde das Snippet ueberhaupt eingebunden" unabhaengig davon, ob schon ein
-// echter Lead reinkam — ohne das koennte "0 Leads" entweder "Snippet fehlt" oder "Snippet laeuft,
+// echter Lead reinkam - ohne das koennte "0 Leads" entweder "Snippet fehlt" oder "Snippet laeuft,
 // aber noch niemand konvertiert" bedeuten, und man wuesste nicht, welcher Fall gerade vorliegt.
 function SnippetStatusBadge({ lastSeenAt, className = '' }) {
     if (!lastSeenAt) {
         return (
-            <div className={`inline-flex items-center gap-1.5 text-xs font-medium text-[var(--text-faint)] bg-[var(--surface-08)] border border-[var(--border-subtle)] rounded-md px-2.5 py-1 ${className}`}>
-                <span className="w-1.5 h-1.5 rounded-full bg-[var(--text-faint)]" />
+            <div className={`inline-flex items-center gap-1.5 text-xs font-medium text-(--text-faint) bg-(--surface-08) border border-(--border-subtle) rounded-md px-2.5 py-1 ${className}`}>
+                <span className="w-1.5 h-1.5 rounded-full bg-(--text-faint)" />
                 Snippet noch nicht erkannt
             </div>
         )
     }
     return (
-        <div className={`inline-flex items-center gap-1.5 text-xs font-medium text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 rounded-md px-2.5 py-1 ${className}`}>
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+        <div className={`inline-flex items-center gap-1.5 text-xs font-medium text-(--success) bg-(--success-soft) border border-(--success-border) rounded-md px-2.5 py-1 ${className}`}>
+            <span className="w-1.5 h-1.5 rounded-full bg-(--success)" />
             Snippet aktiv · zuletzt gesehen {leadTimeAgo(lastSeenAt)}
         </div>
     )
@@ -798,7 +798,7 @@ function LeadsPanel({ siteId }) {
         fetchLeads().finally(() => setLoading(false))
     }, [fetchLeads])
 
-    // Loeschfunktion fuer Betroffenenanfragen (Art. 17 DSGVO) — ein Lead meldet sich beim Site-Owner
+    // Loeschfunktion fuer Betroffenenanfragen (Art. 17 DSGVO) - ein Lead meldet sich beim Site-Owner
     // und verlangt Loeschung, der Owner erledigt das hier direkt statt per Mail an Scanora.
     const handleDelete = async (lead) => {
         if (!confirm(`Lead "${lead.email}" endgültig löschen?`)) return
@@ -823,7 +823,7 @@ function LeadsPanel({ siteId }) {
         }
     }
 
-    // Auskunftsfunktion (Art. 15 DSGVO) — sucht ALLE Datensaetze zu einer E-Mail (nicht nur die
+    // Auskunftsfunktion (Art. 15 DSGVO) - sucht ALLE Datensaetze zu einer E-Mail (nicht nur die
     // letzten 50 aus dem normalen Feed), fuer den Fall dass ein Lead Auskunft ueber die bei euch
     // gespeicherten Daten verlangt.
     const handleLookup = async (e) => {
@@ -860,8 +860,8 @@ function LeadsPanel({ siteId }) {
 
     if (loading) return (
         <div className="flex flex-col items-center justify-center py-20 gap-3">
-            <Loader2 className="w-6 h-6 text-[var(--accent)] animate-spin" />
-            <span className="text-sm text-[var(--text-faint)]">Daten werden geladen…</span>
+            <Loader2 className="w-6 h-6 text-(--accent-ink) animate-spin" />
+            <span className="text-sm text-(--text-faint)">Daten werden geladen…</span>
         </div>
     )
     if (!data) return null
@@ -870,14 +870,14 @@ function LeadsPanel({ siteId }) {
 
     if (data.totalLeads === 0) {
         return (
-            <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl p-5 mb-6">
+            <div className="bg-(--bg-surface) border border-(--border-subtle) rounded-2xl p-5 mb-6">
                 <SnippetStatusBadge lastSeenAt={data.snippetLastSeenAt} className="mb-4" />
                 <div className="flex flex-col items-center justify-center text-center gap-3 py-10">
-                    <div className="w-10 h-10 rounded-xl bg-[var(--surface-08)] flex items-center justify-center">
-                        <Users className="w-4.5 h-4.5 text-[var(--text-faint)]" />
+                    <div className="w-10 h-10 rounded-xl bg-(--surface-08) flex items-center justify-center">
+                        <Users className="w-4.5 h-4.5 text-(--text-faint)" />
                     </div>
-                    <p className="text-sm text-[var(--text-faint)] max-w-md">
-                        Noch keine Leads erfasst. Bindet das Snippet unten auf eurer Website ein — sobald jemand über ChatGPT, Perplexity, Claude oder Gemini kommt und euer Formular abschickt, taucht der Lead hier auf.
+                    <p className="text-sm text-(--text-faint) max-w-md">
+                        Noch keine Leads erfasst. Bindet das Snippet unten auf eurer Website ein - sobald jemand über ChatGPT, Perplexity, Claude oder Gemini kommt und euer Formular abschickt, taucht der Lead hier auf.
                     </p>
                 </div>
                 <LeadsSnippetBox siteKey={data.siteKey} />
@@ -886,47 +886,47 @@ function LeadsPanel({ siteId }) {
     }
 
     return (
-        <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl p-5 mb-6">
+        <div className="bg-(--bg-surface) border border-(--border-subtle) rounded-2xl p-5 mb-6">
             <SnippetStatusBadge lastSeenAt={data.snippetLastSeenAt} className="mb-4" />
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-5">
-                <div className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-xl p-4">
-                    <div className="flex items-center gap-1.5 text-xs text-[var(--text-faint)] mb-1.5">
+                <div className="bg-(--card) border border-(--line) rounded-xl p-4">
+                    <div className="flex items-center gap-1.5 text-xs text-(--text-faint) mb-1.5">
                         KI-zugeordnete Leads
                     </div>
-                    <div className="text-2xl font-bold text-[var(--text-white)] tracking-tight">{data.aiAttributedCount}</div>
+                    <div className="text-2xl font-bold text-(--text-white) tracking-tight">{data.aiAttributedCount}</div>
                     <LeadsSparkline points={data.trend} />
-                    <div className="text-[11px] text-[var(--text-faint)] mt-1">
+                    <div className="text-[11px] text-(--text-faint) mt-1">
                         {data.trendDeltaPercent != null && (
-                            <span className={data.trendDeltaPercent >= 0 ? 'text-emerald-400 font-semibold' : 'text-red-400 font-semibold'}>
+                            <span className={data.trendDeltaPercent >= 0 ? 'text-(--success) font-semibold' : 'text-(--danger) font-semibold'}>
                                 {data.trendDeltaPercent >= 0 ? '+' : ''}{data.trendDeltaPercent}%{' '}
                             </span>
                         )}
                         {data.trendDeltaPercent != null ? 'ggü. den 4 Wochen davor · ' : ''}letzte 8 Wochen
                     </div>
                 </div>
-                <div className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-xl p-4">
-                    <div className="flex items-center gap-1.5 text-xs text-[var(--text-faint)] mb-1.5">
+                <div className="bg-(--card) border border-(--line) rounded-xl p-4">
+                    <div className="flex items-center gap-1.5 text-xs text-(--text-faint) mb-1.5">
                         Anteil an allen Leads
                     </div>
-                    <div className="text-2xl font-bold text-[var(--text-white)] tracking-tight">{data.aiAttributedPercent}%</div>
-                    <div className="text-xs text-[var(--text-faint)] mt-0.5">von {data.totalLeads} Leads insgesamt</div>
+                    <div className="text-2xl font-bold text-(--text-white) tracking-tight">{data.aiAttributedPercent}%</div>
+                    <div className="text-xs text-(--text-faint) mt-0.5">von {data.totalLeads} Leads insgesamt</div>
                 </div>
-                <div className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-xl p-4">
-                    <div className="text-xs text-[var(--text-faint)] mb-1.5">Häufigste Quelle</div>
+                <div className="bg-(--card) border border-(--line) rounded-xl p-4">
+                    <div className="text-xs text-(--text-faint) mb-1.5">Häufigste Quelle</div>
                     {data.topSource ? (
                         <>
                             <LeadSourceChip source={data.topSource} />
-                            <div className="text-xs text-[var(--text-faint)] mt-1.5">
+                            <div className="text-xs text-(--text-faint) mt-1.5">
                                 {data.breakdown.find(b => b.source === data.topSource)?.percent}% aller KI-zugeordneten Leads
                             </div>
                         </>
-                    ) : <span className="text-sm text-[var(--text-faint)]">—</span>}
+                    ) : <span className="text-sm text-(--text-faint)">—</span>}
                 </div>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_1.4fr] gap-4 mb-4 items-start">
-                <div className="border border-[var(--border-subtle)] rounded-xl p-4">
-                    <p className="text-xs font-semibold text-[var(--text-white)] mb-3">Leads nach KI-Quelle</p>
+                <div className="border border-(--border-subtle) rounded-xl p-4">
+                    <p className="text-xs font-semibold text-(--text-white) mb-3">Leads nach KI-Quelle</p>
                     {data.breakdown.length > 0 ? (
                         <div className="space-y-2.5">
                             {data.breakdown.map(b => {
@@ -934,11 +934,11 @@ function LeadsPanel({ siteId }) {
                                 return (
                                     <div key={b.source}>
                                         <div className="flex items-center justify-between text-xs mb-1">
-                                            <span className="text-[var(--text-body)]">{meta?.label || b.source}</span>
-                                            <span className="text-[var(--text-faint)]">{b.count} · {b.percent}%</span>
+                                            <span className="text-(--text-body)">{meta?.label || b.source}</span>
+                                            <span className="text-(--text-faint)">{b.count} · {b.percent}%</span>
                                         </div>
-                                        <div className="relative h-2 bg-[var(--surface-08)] rounded-full overflow-hidden">
-                                            <div className={`h-full rounded-full ${meta?.bar || 'bg-[var(--text-faint)]'}`}
+                                        <div className="relative h-2 bg-(--surface-08) rounded-full overflow-hidden">
+                                            <div className={`h-full rounded-full ${meta?.bar || 'bg-(--text-faint)'}`}
                                                 style={{ width: `${Math.max((b.count / maxCount) * 100, 3)}%` }} />
                                         </div>
                                     </div>
@@ -946,33 +946,33 @@ function LeadsPanel({ siteId }) {
                             })}
                         </div>
                     ) : (
-                        <p className="text-xs text-[var(--text-faint)]">Noch keine KI-zugeordneten Leads für eine Verteilung.</p>
+                        <p className="text-xs text-(--text-faint)">Noch keine KI-zugeordneten Leads für eine Verteilung.</p>
                     )}
                 </div>
 
-                <div className="border border-[var(--border-subtle)] rounded-xl overflow-hidden">
+                <div className="border border-(--border-subtle) rounded-xl overflow-hidden">
                     <div className="overflow-x-auto">
-                        <table className="w-full min-w-[460px]">
+                        <table className="w-full min-w-115">
                             <thead>
-                                <tr className="border-b border-[var(--border-subtle)]">
-                                    <th className="text-left text-[10px] font-semibold text-[var(--text-faint)] uppercase tracking-wider px-4 py-2.5">Lead</th>
-                                    <th className="text-left text-[10px] font-semibold text-[var(--text-faint)] uppercase tracking-wider px-3 py-2.5">Quelle</th>
-                                    <th className="text-left text-[10px] font-semibold text-[var(--text-faint)] uppercase tracking-wider px-3 py-2.5 hidden sm:table-cell">Seite</th>
-                                    <th className="text-left text-[10px] font-semibold text-[var(--text-faint)] uppercase tracking-wider px-4 py-2.5">Zeit</th>
+                                <tr className="border-b border-(--border-subtle)">
+                                    <th className="text-left text-xs font-semibold text-(--text-faint) px-4 py-2.5">Lead</th>
+                                    <th className="text-left text-xs font-semibold text-(--text-faint) px-3 py-2.5">Quelle</th>
+                                    <th className="text-left text-xs font-semibold text-(--text-faint) px-3 py-2.5 hidden sm:table-cell">Seite</th>
+                                    <th className="text-left text-xs font-semibold text-(--text-faint) px-4 py-2.5">Zeit</th>
                                     <th className="px-3 py-2.5 w-8"></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {data.leads.map(lead => (
-                                    <tr key={lead._id} className="border-b border-[var(--border-subtle)] last:border-0 group">
-                                        <td className="px-4 py-2.5 text-sm text-[var(--text-body)]">{lead.email}</td>
+                                    <tr key={lead._id} className="border-b border-(--border-subtle) last:border-0 group">
+                                        <td className="px-4 py-2.5 text-sm text-(--text-body)">{lead.email}</td>
                                         <td className="px-3 py-2.5"><LeadSourceChip source={lead.aiSource} /></td>
-                                        <td className="px-3 py-2.5 text-xs text-[var(--text-faint)] hidden sm:table-cell">{lead.landingPage || '—'}</td>
-                                        <td className="px-4 py-2.5 text-xs text-[var(--text-faint)] whitespace-nowrap">{leadTimeAgo(lead.createdAt)}</td>
+                                        <td className="px-3 py-2.5 text-xs text-(--text-faint) hidden sm:table-cell">{lead.landingPage || '—'}</td>
+                                        <td className="px-4 py-2.5 text-xs text-(--text-faint) whitespace-nowrap">{leadTimeAgo(lead.createdAt)}</td>
                                         <td className="px-3 py-2.5">
                                             <button type="button" onClick={() => handleDelete(lead)} disabled={deletingId === lead._id}
                                                 title="Lead löschen (Betroffenenanfrage)"
-                                                className="opacity-0 group-hover:opacity-100 text-[var(--text-faint)] hover:text-red-400 transition-all disabled:opacity-50">
+                                                className="opacity-0 group-hover:opacity-100 text-(--text-faint) hover:text-(--danger) transition-all disabled:opacity-50">
                                                 {deletingId === lead._id ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Trash2 className="w-3.5 h-3.5" />}
                                             </button>
                                         </td>
@@ -986,47 +986,47 @@ function LeadsPanel({ siteId }) {
 
             <div className="flex items-center gap-5">
                 <button type="button" onClick={() => setShowSnippet(v => !v)}
-                    className="text-[11px] font-semibold text-[var(--accent)] hover:opacity-80 inline-flex items-center gap-1">
+                    className="text-[11px] font-semibold text-(--accent-ink) hover:opacity-80 inline-flex items-center gap-1">
                     {showSnippet ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
                     Snippet {showSnippet ? 'ausblenden' : 'anzeigen'}
                 </button>
                 <button type="button" onClick={() => setShowLookup(v => !v)}
-                    className="text-[11px] font-semibold text-[var(--accent)] hover:opacity-80 inline-flex items-center gap-1">
+                    className="text-[11px] font-semibold text-(--accent-ink) hover:opacity-80 inline-flex items-center gap-1">
                     {showLookup ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
                     Auskunft zu einer E-Mail {showLookup ? 'ausblenden' : 'anfordern'}
                 </button>
             </div>
             {showSnippet && <div className="mt-3"><LeadsSnippetBox siteKey={data.siteKey} /></div>}
             {showLookup && (
-                <div className="mt-3 bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-xl p-4">
-                    <p className="text-xs font-semibold text-[var(--text-white)] mb-1">Auskunft nach Art. 15 DSGVO</p>
-                    <p className="text-[11px] text-[var(--text-faint)] mb-3 leading-relaxed">
-                        Sucht alle bei euch zu dieser E-Mail gespeicherten Leads — nicht nur die letzten 50 aus der Liste oben.
+                <div className="mt-3 bg-(--card) border border-(--line) rounded-xl p-4">
+                    <p className="text-xs font-semibold text-(--text-white) mb-1">Auskunft nach Art. 15 DSGVO</p>
+                    <p className="text-[11px] text-(--text-faint) mb-3 leading-relaxed">
+                        Sucht alle bei euch zu dieser E-Mail gespeicherten Leads - nicht nur die letzten 50 aus der Liste oben.
                     </p>
                     <form onSubmit={handleLookup} className="flex items-center gap-2 mb-3">
                         <input type="email" required value={lookupEmail} onChange={e => setLookupEmail(e.target.value)}
                             placeholder="kunde@email.de"
-                            className="flex-1 bg-[var(--surface-08)] border border-[var(--border-subtle)] rounded-lg px-3 py-1.5 text-sm text-[var(--text-body)] placeholder:text-[var(--text-faint)] focus:outline-none focus:border-[var(--accent-border)]" />
+                            className="flex-1 bg-(--surface-08) border border-(--border-subtle) rounded-lg px-3 py-1.5 text-sm text-(--text-body) placeholder:text-(--text-faint) focus:outline-none focus:border-(--accent) focus:shadow-[0_0_0_4px_var(--accent-ring)]" />
                         <button type="submit" disabled={lookupLoading}
-                            className="shrink-0 bg-[var(--surface-08)] hover:bg-[var(--surface-10)] border border-[var(--border-subtle)] text-[var(--text-body)] text-xs font-semibold px-3 py-1.5 rounded-lg transition-all disabled:opacity-50">
+                            className="shrink-0 bg-(--surface-08) hover:bg-(--surface-10) border border-(--border-subtle) text-(--text-body) text-xs font-semibold px-3 py-1.5 rounded-lg transition-all disabled:opacity-50">
                             {lookupLoading ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : 'Suchen'}
                         </button>
                     </form>
                     {lookupResults && (
                         lookupResults.length === 0 ? (
-                            <p className="text-xs text-[var(--text-faint)]">Keine Daten zu dieser E-Mail gefunden.</p>
+                            <p className="text-xs text-(--text-faint)">Keine Daten zu dieser E-Mail gefunden.</p>
                         ) : (
                             <div className="space-y-2">
                                 {lookupResults.map((l, i) => (
-                                    <div key={i} className="text-[11px] text-[var(--text-faint)] bg-[var(--surface-08)] rounded-lg p-2.5 leading-relaxed">
-                                        <div><span className="text-[var(--text-body)]">Quelle:</span> {l.aiSource || 'keine'}</div>
-                                        <div><span className="text-[var(--text-body)]">Referrer:</span> {l.referrerRaw || '—'}</div>
-                                        <div><span className="text-[var(--text-body)]">Zielseite:</span> {l.landingPage || '—'}</div>
-                                        <div><span className="text-[var(--text-body)]">Erfasst am:</span> {new Date(l.createdAt).toLocaleString('de-DE')}</div>
+                                    <div key={i} className="text-[11px] text-(--text-faint) bg-(--surface-08) rounded-lg p-2.5 leading-relaxed">
+                                        <div><span className="text-(--text-body)">Quelle:</span> {l.aiSource || 'keine'}</div>
+                                        <div><span className="text-(--text-body)">Referrer:</span> {l.referrerRaw || '—'}</div>
+                                        <div><span className="text-(--text-body)">Zielseite:</span> {l.landingPage || '—'}</div>
+                                        <div><span className="text-(--text-body)">Erfasst am:</span> {new Date(l.createdAt).toLocaleString('de-DE')}</div>
                                     </div>
                                 ))}
                                 <button type="button" onClick={handleCopyLookup}
-                                    className="text-[11px] font-semibold text-[var(--accent)] hover:opacity-80 inline-flex items-center gap-1 mt-1">
+                                    className="text-[11px] font-semibold text-(--accent-ink) hover:opacity-80 inline-flex items-center gap-1 mt-1">
                                     <Copy className="w-3 h-3" />Als Text kopieren
                                 </button>
                             </div>
@@ -1040,12 +1040,12 @@ function LeadsPanel({ siteId }) {
 
 function UpsellCard({ label }) {
     return (
-        <div className="bg-[var(--bg-surface)] border border-dashed border-[var(--border-subtle)] rounded-2xl p-8 flex flex-col items-center text-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[var(--surface-08)] flex items-center justify-center">
-                <Lock className="w-4.5 h-4.5 text-[var(--text-faint)]" />
+        <div className="bg-(--bg-surface) border border-dashed border-(--border-subtle) rounded-2xl p-8 flex flex-col items-center text-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-(--surface-08) flex items-center justify-center">
+                <Lock className="w-4.5 h-4.5 text-(--text-faint)" />
             </div>
-            <p className="text-sm text-[var(--text-muted)] max-w-sm">{label}</p>
-            <Link href="/geo/pricing" className="text-xs font-semibold text-[var(--accent)] hover:opacity-80">
+            <p className="text-sm text-(--text-muted) max-w-sm">{label}</p>
+            <Link href="/geo/pricing" className="text-xs font-semibold text-(--accent-ink) hover:opacity-80">
                 Plan ansehen
             </Link>
         </div>
@@ -1075,52 +1075,52 @@ function MarketAnalyticsPanel({ siteId, plan }) {
     useEffect(() => { load() }, [load])
 
     if (!enabled) {
-        return <UpsellCard label="Themen-Sichtbarkeit zeigt dir, welche Domains in KI-Antworten zu deinen Keywords am häufigsten zitiert werden — ab dem Pro-Plan verfügbar." />
+        return <UpsellCard label="Themen-Sichtbarkeit zeigt dir, welche Domains in KI-Antworten zu deinen Keywords am häufigsten zitiert werden - ab dem Pro-Plan verfügbar." />
     }
 
     if (loading) return (
         <div className="flex flex-col items-center justify-center py-20 gap-3">
-            <Loader2 className="w-6 h-6 text-[var(--accent)] animate-spin" />
-            <span className="text-sm text-[var(--text-faint)]">Daten werden geladen…</span>
+            <Loader2 className="w-6 h-6 text-(--accent-ink) animate-spin" />
+            <span className="text-sm text-(--text-faint)">Daten werden geladen…</span>
         </div>
     )
     if (error) return (
         <div className="flex flex-col items-center justify-center py-20 gap-3">
-            <span className="text-sm text-[var(--text-faint)]">Marktdaten konnten nicht geladen werden.</span>
+            <span className="text-sm text-(--text-faint)">Marktdaten konnten nicht geladen werden.</span>
             <button onClick={load}
-                className="mt-1 flex items-center gap-2 px-3.5 py-2 text-xs font-semibold rounded-xl bg-[var(--surface-08)] hover:bg-[var(--surface-10)] text-[var(--text-body)] border border-[var(--border-subtle)] transition-all">
+                className="mt-1 flex items-center gap-2 px-3.5 py-2 text-xs font-semibold rounded-xl bg-(--surface-08) hover:bg-(--surface-10) text-(--text-body) border border-(--border-subtle) transition-all">
                 <RefreshCw className="w-3.5 h-3.5" />Neu laden
             </button>
         </div>
     )
     if (!data?.domains?.length) return (
         <div className="flex flex-col items-center justify-center py-20 gap-3">
-            <Sparkles className="w-8 h-8 text-[var(--text-faint)]" />
-            <span className="text-sm text-[var(--text-faint)]">Noch keine Marktdaten verfügbar.</span>
+            <Sparkles className="w-8 h-8 text-(--text-faint)" />
+            <span className="text-sm text-(--text-faint)">Noch keine Marktdaten verfügbar.</span>
             <button onClick={load}
-                className="mt-1 flex items-center gap-2 px-3.5 py-2 text-xs font-semibold rounded-xl bg-[var(--surface-08)] hover:bg-[var(--surface-10)] text-[var(--text-body)] border border-[var(--border-subtle)] transition-all">
+                className="mt-1 flex items-center gap-2 px-3.5 py-2 text-xs font-semibold rounded-xl bg-(--surface-08) hover:bg-(--surface-10) text-(--text-body) border border-(--border-subtle) transition-all">
                 <RefreshCw className="w-3.5 h-3.5" />Neu laden
             </button>
         </div>
     )
 
     return (
-        <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl p-5 mb-6">
+        <div className="bg-(--bg-surface) border border-(--border-subtle) rounded-2xl p-5 mb-6">
             <div className="flex items-center justify-between mb-1">
-                <h3 className="text-sm font-semibold text-[var(--text-white)]">Themen-Sichtbarkeit: Top-Domains zu deinen Keywords</h3>
-                {data.cached && <span className="text-[10px] text-[var(--text-faint)]">Wöchentlich aktualisiert</span>}
+                <h3 className="text-sm font-semibold text-(--text-white)">Themen-Sichtbarkeit: Top-Domains zu deinen Keywords</h3>
+                {data.cached && <span className="text-[10px] text-(--text-faint)">Wöchentlich aktualisiert</span>}
             </div>
-            <p className="text-[11px] text-[var(--text-faint)] mb-4">
-                Domains, die in KI-Antworten zu deinen Keywords am häufigsten zitiert werden — über alle Kontexte hinweg (Erklärungen, Vergleiche, Tutorials), nicht nur Tool-Empfehlungen. Für konkrete Konkurrenz-Tools schau dir den „Wettbewerber"-Tab an, der gezielt Empfehlungs-Antworten auswertet.
+            <p className="text-[11px] text-(--text-faint) mb-4">
+                Domains, die in KI-Antworten zu deinen Keywords am häufigsten zitiert werden - über alle Kontexte hinweg (Erklärungen, Vergleiche, Tutorials), nicht nur Tool-Empfehlungen. Für konkrete Konkurrenz-Tools schau dir den „Wettbewerber"-Tab an, der gezielt Empfehlungs-Antworten auswertet.
             </p>
             <div className="space-y-2.5">
                 {data.domains.map((d, i) => (
                     <div key={d.domain} className="flex items-center gap-3">
-                        <span className="text-xs text-[var(--text-faint)] w-5 text-right shrink-0">{d.rank ?? i + 1}.</span>
+                        <span className="text-xs text-(--text-faint) w-5 text-right shrink-0">{d.rank ?? i + 1}.</span>
                         <CompetitorLogo domain={d.domain} size={22} />
                         <a href={`https://${d.domain}`} target="_blank" rel="noopener noreferrer"
-                            className="flex-1 min-w-0 text-sm text-[var(--text-body)] hover:text-[var(--accent)] truncate">{d.domain}</a>
-                        {d.count != null && <span className="text-xs text-[var(--text-faint)] shrink-0">{d.count} Erwähnungen</span>}
+                            className="flex-1 min-w-0 text-sm text-(--text-body) hover:text-(--accent-ink) truncate">{d.domain}</a>
+                        {d.count != null && <span className="text-xs text-(--text-faint) shrink-0">{d.count} Erwähnungen</span>}
                     </div>
                 ))}
             </div>
@@ -1164,11 +1164,11 @@ function CitationAnalysis({ url }) {
             ['Autor-Info', c.hasAuthorInfo],
         ]
         return (
-            <div className="mt-1.5 p-2.5 bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-lg">
-                <div className="text-xs font-semibold text-[var(--text-white)] mb-1.5">GEO-Score: {analysis.score}/100</div>
-                <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-[11px] text-[var(--text-muted)]">
+            <div className="mt-1.5 p-2.5 bg-(--card) border border-(--line) rounded-lg">
+                <div className="text-xs font-semibold text-(--text-white) mb-1.5">GEO-Score: {analysis.score}/100</div>
+                <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-[11px] text-(--text-muted)">
                     {rows.map(([label, ok], i) => (
-                        <span key={i} className={ok === true && i === 0 ? '' : ok ? 'text-emerald-400' : 'text-[var(--text-faint)]'}>
+                        <span key={i} className={ok === true && i === 0 ? '' : ok ? 'text-(--success)' : 'text-(--text-faint)'}>
                             {i === 0 ? label : `${ok ? '✓' : '✗'} ${label}`}
                         </span>
                     ))}
@@ -1179,13 +1179,13 @@ function CitationAnalysis({ url }) {
 
     return (
         <button onClick={handleAnalyze} disabled={loading}
-            className="text-[11px] text-[var(--accent)] hover:text-[var(--accent)] underline underline-offset-2 disabled:opacity-50 disabled:no-underline">
-            {loading ? 'Analysiere…' : error ? `Fehler — nochmal versuchen` : 'Warum wird das zitiert?'}
+            className="text-[11px] text-(--accent-ink) hover:text-(--accent-ink) underline underline-offset-2 disabled:opacity-50 disabled:no-underline">
+            {loading ? 'Analysiere…' : error ? `Fehler - nochmal versuchen` : 'Warum wird das zitiert?'}
         </button>
     )
 }
 
-// Kompakte Chips statt einer ausgeschriebenen Liste mit Analyse-Button pro Zitat — bei bis zu
+// Kompakte Chips statt einer ausgeschriebenen Liste mit Analyse-Button pro Zitat - bei bis zu
 // 4 Plattformen × 2 Prompt-Varianten × 5 Zitaten wurde die aufgeklappte Zeile sonst riesig
 // ("ewig runterscrollen"). Wer die GEO-Analyse zu einer Quelle sehen will, klickt den Chip.
 function CitationList({ citations }) {
@@ -1194,14 +1194,14 @@ function CitationList({ citations }) {
     const shown = showAll ? citations : citations.slice(0, 4)
     return (
         <div className="mt-1.5">
-            <p className="text-[10px] text-[var(--text-faint)] mb-1">Diese Quellen wurden stattdessen zitiert — anklicken für Details:</p>
+            <p className="text-[10px] text-(--text-faint) mb-1">Diese Quellen wurden stattdessen zitiert - anklicken für Details:</p>
             <div className="flex flex-wrap items-center gap-1.5">
                 {shown.map((cit, idx) => (
                     <CitationChip key={idx} citation={cit} />
                 ))}
                 {!showAll && citations.length > shown.length && (
                     <button type="button" onClick={() => setShowAll(true)}
-                        className="text-[11px] text-[var(--accent)] hover:text-[var(--accent)] underline underline-offset-2">
+                        className="text-[11px] text-(--accent-ink) hover:text-(--accent-ink) underline underline-offset-2">
                         +{citations.length - shown.length} weitere anzeigen
                     </button>
                 )}
@@ -1215,13 +1215,13 @@ function CitationChip({ citation: cit }) {
     return (
         <div className="relative">
             <button type="button" onClick={() => cit.url && setOpen(v => !v)}
-                className="text-[11px] text-[var(--text-muted)] hover:text-[var(--text-body)] bg-[var(--surface-06)] hover:bg-[var(--surface-10)] border border-[var(--border-subtle)] px-2 py-0.5 rounded-md transition-colors">
+                className="text-[11px] text-(--text-muted) hover:text-(--text-body) bg-(--card) hover:bg-(--surface-10) border border-(--line) px-2 py-0.5 rounded-md transition-colors">
                 {cit.domain}
             </button>
             {open && cit.url && (
                 <div className="mt-1.5">
                     <a href={cit.url} target="_blank" rel="noopener noreferrer"
-                        className="text-[11px] text-[var(--accent)] hover:text-[var(--accent)] underline underline-offset-2 block mb-1">
+                        className="text-[11px] text-(--accent-ink) hover:text-(--accent-ink) underline underline-offset-2 block mb-1">
                         Seite öffnen ↗
                     </a>
                     <CitationAnalysis url={cit.url} />
@@ -1233,7 +1233,7 @@ function CitationChip({ citation: cit }) {
 
 // Pro/Expert-only (siehe citabilityDiagnosisEnabled in backend/controllers/geo_tracking.js). Bei
 // "Nein" beantwortet sie "warum nicht", bei "Ja, aber nicht Platz 1" "was hat Platz 1, was wir nicht
-// haben" — beides über denselben analyzeGEO-Check wie CitationAnalysis oben, nur gegen die eigene
+// haben" - beides über denselben analyzeGEO-Check wie CitationAnalysis oben, nur gegen die eigene
 // Domain statt gegen eine fremde Zitat-URL gerichtet, plus einem Backlink-Abgleich für die externe
 // Autorität. Auf Platz 1 zitiert gibt es nichts zu diagnostizieren, dort rendert die Funktion nichts.
 function CitabilityDiagnosis({ siteId, keyword, platform, promptIntent, mentioned, ownPosition, plan }) {
@@ -1272,10 +1272,10 @@ function CitabilityDiagnosis({ siteId, keyword, platform, promptIntent, mentione
         return (
             <div className="mt-1.5">
                 <button type="button" onClick={handleDiagnose} disabled={state === 'loading'}
-                    className="text-[11px] text-[var(--accent)] hover:text-[var(--accent)] underline underline-offset-2 disabled:opacity-50 disabled:no-underline">
-                    {state === 'loading' ? 'Diagnose läuft…' : state === 'error' ? 'Fehler — nochmal versuchen' : mentioned ? 'Lücke zu Platz 1 anzeigen' : 'Warum nicht zitiert?'}
+                    className="text-[11px] text-(--accent-ink) hover:text-(--accent-ink) underline underline-offset-2 disabled:opacity-50 disabled:no-underline">
+                    {state === 'loading' ? 'Diagnose läuft…' : state === 'error' ? 'Fehler - nochmal versuchen' : mentioned ? 'Lücke zu Platz 1 anzeigen' : 'Warum nicht zitiert?'}
                 </button>
-                {state === 'error' && error && <p className="text-[10px] text-[var(--text-faint)] mt-0.5">{error}</p>}
+                {state === 'error' && error && <p className="text-[10px] text-(--text-faint) mt-0.5">{error}</p>}
             </div>
         )
     }
@@ -1288,11 +1288,11 @@ function CitabilityDiagnosisResult({ data }) {
     const topFindings = (own?.recommendations || []).slice(0, 3)
 
     return (
-        <div className="mt-1.5 p-2.5 bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-lg space-y-3">
+        <div className="mt-1.5 p-2.5 bg-(--card) border border-(--line) rounded-lg space-y-3">
             {caveats?.length > 0 && (
                 <div className="space-y-1.5">
                     {caveats.map((note, i) => (
-                        <div key={i} className="flex items-start gap-1.5 text-[11px] text-[var(--warning)] leading-relaxed">
+                        <div key={i} className="flex items-start gap-1.5 text-[11px] text-(--warning) leading-relaxed">
                             <Lightbulb className="w-3 h-3 mt-0.5 shrink-0" />
                             <span>{note}</span>
                         </div>
@@ -1300,45 +1300,45 @@ function CitabilityDiagnosisResult({ data }) {
                 </div>
             )}
             <div>
-                <div className="text-xs font-semibold text-[var(--text-white)] mb-1.5">Eigener GEO-Score: {own.score}/100</div>
+                <div className="text-xs font-semibold text-(--text-white) mb-1.5">Eigener GEO-Score: {own.score}/100</div>
                 {topFindings.length > 0 ? (
                     <ul className="space-y-1">
                         {topFindings.map((f, i) => (
-                            <li key={i} className="text-[11px] text-[var(--text-muted)]">
-                                <span className="text-[var(--text-faint)]">✗</span> {f.title} <span className="text-[var(--text-faint)]">— {f.effort}</span>
+                            <li key={i} className="text-[11px] text-(--text-muted)">
+                                <span className="text-(--text-faint)">✗</span> {f.title} <span className="text-(--text-faint)">— {f.effort}</span>
                             </li>
                         ))}
                     </ul>
                 ) : (
-                    <p className="text-[11px] text-emerald-400">✓ Keine kritischen Lücken auf der eigenen Seite gefunden</p>
+                    <p className="text-[11px] text-(--success)">✓ Keine kritischen Lücken auf der eigenen Seite gefunden</p>
                 )}
             </div>
 
             {competitor && diff && (
-                <div className="pt-2.5 border-t border-[var(--border-subtle)]">
-                    <p className="text-[10px] text-[var(--text-faint)] mb-1.5">
-                        Vergleich zur zitierten Quelle <span className="text-[var(--text-body)]">{competitor.domain}</span>:
+                <div className="pt-2.5 border-t border-(--border-subtle)">
+                    <p className="text-[10px] text-(--text-faint) mb-1.5">
+                        Vergleich zur zitierten Quelle <span className="text-(--text-body)">{competitor.domain}</span>:
                     </p>
                     <div className="space-y-1 mb-2">
                         {diff.filter(row => !row.numeric).map((row, i) => (
                             <div key={i} className="flex items-center justify-between text-[11px] gap-3">
-                                <span className="text-[var(--text-muted)]">{row.factor}</span>
+                                <span className="text-(--text-muted)">{row.factor}</span>
                                 <span className="flex items-center gap-2 shrink-0">
-                                    <span className={row.own ? 'text-emerald-400' : 'text-[var(--text-faint)]'}>{row.own ? '✓' : '✗'} ihr</span>
-                                    <span className={row.competitor ? 'text-emerald-400' : 'text-[var(--text-faint)]'}>{row.competitor ? '✓' : '✗'} die</span>
+                                    <span className={row.own ? 'text-(--success)' : 'text-(--text-faint)'}>{row.own ? '✓' : '✗'} ihr</span>
+                                    <span className={row.competitor ? 'text-(--success)' : 'text-(--text-faint)'}>{row.competitor ? '✓' : '✗'} die</span>
                                 </span>
                             </div>
                         ))}
                     </div>
                     <div className="space-y-0.5 mb-2">
                         {diff.filter(row => row.numeric).map((row, i) => (
-                            <p key={i} className="text-[11px] text-[var(--text-muted)]">
-                                {row.factor}: <span className="text-[var(--text-body)] font-semibold">{row.own}</span> (ihr) vs. <span className="text-[var(--text-body)] font-semibold">{row.competitor}</span> ({competitor.domain})
+                            <p key={i} className="text-[11px] text-(--text-muted)">
+                                {row.factor}: <span className="text-(--text-body) font-semibold">{row.own}</span> (ihr) vs. <span className="text-(--text-body) font-semibold">{row.competitor}</span> ({competitor.domain})
                             </p>
                         ))}
                     </div>
                     {lever && (
-                        <p className="text-[11px] text-[var(--accent)] leading-relaxed border-l-2 border-[var(--accent-border)] pl-2">{lever.text}</p>
+                        <p className="text-[11px] text-(--accent-ink) leading-relaxed border-l-2 border-(--accent-border) pl-2">{lever.text}</p>
                     )}
                 </div>
             )}
@@ -1347,7 +1347,7 @@ function CitabilityDiagnosisResult({ data }) {
 }
 
 // Expert-only, pro Keyword einzeln geladen (nicht beim Öffnen der Seite für alle Keywords auf
-// einmal) — hält die DataForSEO-Kosten proportional zur tatsächlichen Nutzung. Deckt nur Google
+// einmal) - hält die DataForSEO-Kosten proportional zur tatsächlichen Nutzung. Deckt nur Google
 // AI Overview und ChatGPT ab (einzige von DataForSEOs historical-Endpoint unterstützte Plattformen);
 // ChatGPT liefert bei DataForSEO aktuell nur für englischsprachige Sites Daten (siehe language-Hinweis unten).
 function KeywordTrendPanel({ siteId, keyword, language }) {
@@ -1370,36 +1370,36 @@ function KeywordTrendPanel({ siteId, keyword, language }) {
 
     useEffect(() => { load() }, [load])
 
-    if (loading) return <div className="flex items-center gap-2 text-xs text-[var(--text-faint)] py-2"><Loader2 className="w-3.5 h-3.5 animate-spin" />Daten werden geladen…</div>
+    if (loading) return <div className="flex items-center gap-2 text-xs text-(--text-faint) py-2"><Loader2 className="w-3.5 h-3.5 animate-spin" />Daten werden geladen…</div>
     if (error) return (
-        <button onClick={load} className="flex items-center gap-1.5 text-xs text-[var(--text-faint)] hover:text-[var(--text-muted)] py-2 transition-colors">
-            <RefreshCw className="w-3 h-3" />Daten konnten nicht geladen werden — erneut versuchen
+        <button onClick={load} className="flex items-center gap-1.5 text-xs text-(--text-faint) hover:text-(--text-muted) py-2 transition-colors">
+            <RefreshCw className="w-3 h-3" />Daten konnten nicht geladen werden - erneut versuchen
         </button>
     )
-    if (!data?.length) return <p className="text-xs text-[var(--text-faint)] py-2">Noch keine Daten für dieses Keyword (verfügbar ab August 2025).</p>
+    if (!data?.length) return <p className="text-xs text-(--text-faint) py-2">Noch keine Daten für dieses Keyword (verfügbar ab August 2025).</p>
 
     const platformLabel = { google: 'Google AI Overview', chat_gpt: 'ChatGPT' }
     const maxCount = Math.max(...data.map(d => d.mentionsCount || 0), 1)
 
     return (
         <div className="py-1">
-            <p className="text-[10px] text-[var(--text-faint)] mb-1.5 leading-relaxed">
-                Gesamtes Erwähnungsvolumen des Themas &bdquo;{keyword}&ldquo; in KI-Antworten pro Monat (DataForSEO-Datensatz) — zeigt, wie oft das Thema insgesamt aufkommt, nicht speziell, wie oft deine Domain dabei zitiert wird.
+            <p className="text-[10px] text-(--text-faint) mb-1.5 leading-relaxed">
+                Gesamtes Erwähnungsvolumen des Themas &bdquo;{keyword}&ldquo; in KI-Antworten pro Monat (DataForSEO-Datensatz) - zeigt, wie oft das Thema insgesamt aufkommt, nicht speziell, wie oft deine Domain dabei zitiert wird.
             </p>
             {language !== 'en' && (
-                <p className="text-[10px] text-[var(--text-faint)] mb-2 leading-relaxed">
-                    ChatGPT-Historie nur für englischsprachige Websites verfügbar — hier siehst du nur Google AI Overview.
+                <p className="text-[10px] text-(--text-faint) mb-2 leading-relaxed">
+                    ChatGPT-Historie nur für englischsprachige Websites verfügbar - hier siehst du nur Google AI Overview.
                 </p>
             )}
             <div className="space-y-1.5">
             {data.map((d, i) => (
                 <div key={`${d.month}-${d.platform}-${i}`} className="flex items-center gap-3">
-                    <span className="text-[11px] text-[var(--text-faint)] w-16 shrink-0">{d.month}</span>
-                    <span className="text-[11px] text-[var(--text-faint)] w-32 shrink-0">{platformLabel[d.platform] || d.platform}</span>
-                    <div className="relative flex-1 h-1.5 bg-[var(--surface-08)] rounded-full overflow-hidden">
-                        <div className="h-full bg-[var(--accent)] rounded-full" style={{ width: `${Math.max((d.mentionsCount / maxCount) * 100, d.mentionsCount ? 3 : 0)}%` }} />
+                    <span className="text-[11px] text-(--text-faint) w-16 shrink-0">{d.month}</span>
+                    <span className="text-[11px] text-(--text-faint) w-32 shrink-0">{platformLabel[d.platform] || d.platform}</span>
+                    <div className="relative flex-1 h-1.5 bg-(--surface-08) rounded-full overflow-hidden">
+                        <div className="h-full bg-(--accent) rounded-full" style={{ width: `${Math.max((d.mentionsCount / maxCount) * 100, d.mentionsCount ? 3 : 0)}%` }} />
                     </div>
-                    <span className="text-[11px] font-semibold text-[var(--text-body)] w-8 text-right shrink-0">{d.mentionsCount ?? 0}</span>
+                    <span className="text-[11px] font-semibold text-(--text-body) w-8 text-right shrink-0">{d.mentionsCount ?? 0}</span>
                 </div>
             ))}
             </div>
@@ -1410,9 +1410,9 @@ function KeywordTrendPanel({ siteId, keyword, language }) {
 function KeywordTrendToggle({ siteId, keyword, language }) {
     const [open, setOpen] = useState(false)
     return (
-        <div className="pt-2 mt-2 border-t border-[var(--border-subtle)]">
+        <div className="pt-2 mt-2 border-t border-(--border-subtle)">
             <button type="button" onClick={() => setOpen(v => !v)}
-                className="text-[11px] font-semibold text-[var(--accent)] hover:opacity-80 inline-flex items-center gap-1">
+                className="text-[11px] font-semibold text-(--accent-ink) hover:opacity-80 inline-flex items-center gap-1">
                 {open ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
                 Themen-Erwähnungsvolumen {open ? 'ausblenden' : 'anzeigen'}
             </button>
@@ -1422,9 +1422,9 @@ function KeywordTrendToggle({ siteId, keyword, language }) {
 }
 
 function TrendArrow({ delta }) {
-    if (delta > 0) return <span className="inline-flex items-center gap-0.5 text-[var(--success)]"><ArrowUp className="w-3.5 h-3.5" strokeWidth={2.5} />{delta}</span>
-    if (delta < 0) return <span className="inline-flex items-center gap-0.5 text-[var(--danger)]"><ArrowDown className="w-3.5 h-3.5" strokeWidth={2.5} />{Math.abs(delta)}</span>
-    return <span className="inline-flex items-center gap-0.5 text-[var(--text-faint)]"><Minus className="w-3.5 h-3.5" /></span>
+    if (delta > 0) return <span className="inline-flex items-center gap-0.5 text-(--success)"><ArrowUp className="w-3.5 h-3.5" strokeWidth={2.5} />{delta}</span>
+    if (delta < 0) return <span className="inline-flex items-center gap-0.5 text-(--danger)"><ArrowDown className="w-3.5 h-3.5" strokeWidth={2.5} />{Math.abs(delta)}</span>
+    return <span className="inline-flex items-center gap-0.5 text-(--text-faint)"><Minus className="w-3.5 h-3.5" /></span>
 }
 
 function MentionHistoryChart({ siteId, mentionedCount, mentionRate, checkedCount }) {
@@ -1463,7 +1463,7 @@ function MentionHistoryChart({ siteId, mentionedCount, mentionRate, checkedCount
     const visibilityDelta = n >= 2 ? Math.round((history[n - 1].rate - history[0].rate) * 10) / 10 : null
 
     // Näherungsweise Position im Feld: eigene Mention-Rate gegen den Share-of-Voice-Wert der
-    // Konkurrenten verglichen (beide sind % wie häufig KI-Modelle die Domain nennen) — kein
+    // Konkurrenten verglichen (beide sind % wie häufig KI-Modelle die Domain nennen) - kein
     // exakt identisches Maß, aber die beste verfügbare Vergleichsgröße für ein Ranking.
     let position = null, positionTotal = null
     if (competitors && mentionRate != null) {
@@ -1473,37 +1473,37 @@ function MentionHistoryChart({ siteId, mentionedCount, mentionRate, checkedCount
     }
 
     return (
-        <div className="mb-8 pb-6 border-b border-[var(--border-subtle)]">
+        <div className="mb-8 pb-6 border-b border-(--border-subtle)">
             <div className="flex items-center gap-5 mb-5 flex-wrap">
                 <div className="flex items-baseline gap-2">
-                    <span className="text-xs text-[var(--text-faint)]">Visibility</span>
-                    <span className="text-lg font-bold text-[var(--text-white)]">{mentionedCount ?? '—'}/{checkedCount ?? '—'}</span>
+                    <span className="text-xs text-(--text-faint)">Visibility</span>
+                    <span className="text-lg font-bold text-(--text-white)">{mentionedCount ?? '—'}/{checkedCount ?? '—'}</span>
                     {visibilityDelta != null && <TrendArrow delta={visibilityDelta} />}
                 </div>
-                <div className="w-px h-7 bg-[var(--surface-10)]" />
+                <div className="w-px h-7 bg-(--surface-10)" />
                 <div className="flex items-baseline gap-2">
-                    <span className="text-xs text-[var(--text-faint)]">Position</span>
-                    <span className="text-lg font-bold text-[var(--text-white)]">{position ?? '—'}/{positionTotal ?? '—'}</span>
+                    <span className="text-xs text-(--text-faint)">Position</span>
+                    <span className="text-lg font-bold text-(--text-white)">{position ?? '—'}/{positionTotal ?? '—'}</span>
                 </div>
             </div>
 
             {mentionedCount === 0 && checkedCount > 0 && (
-                <p className="text-xs text-[var(--text-faint)] leading-relaxed mb-5 -mt-2">
-                    Noch keine Erwähnungen — bei jungen Domains normal. KI-Modelle lernen neue Websites erst nach und nach kennen, das kann Wochen bis Monate dauern.
+                <p className="text-xs text-(--text-faint) leading-relaxed mb-5 -mt-2">
+                    Noch keine Erwähnungen - bei jungen Domains normal. KI-Modelle lernen neue Websites erst nach und nach kennen, das kann Wochen bis Monate dauern.
                 </p>
             )}
 
             <div className="flex items-center justify-between mb-4">
-                <h3 className="text-sm font-semibold text-[var(--text-white)]">Mention-Rate Verlauf</h3>
-                {n > 0 && <span className="text-xs text-[var(--text-faint)]">{n} Check{n !== 1 ? 's' : ''} aufgezeichnet</span>}
+                <h3 className="text-sm font-semibold text-(--text-white)">Mention-Rate Verlauf</h3>
+                {n > 0 && <span className="text-xs text-(--text-faint)">{n} Check{n !== 1 ? 's' : ''} aufgezeichnet</span>}
             </div>
 
             {loading ? (
                 <div className="h-24 flex items-center justify-center">
-                    <Loader2 className="w-5 h-5 text-[var(--accent)] animate-spin" />
+                    <Loader2 className="w-5 h-5 text-(--accent-ink) animate-spin" />
                 </div>
             ) : n < 2 ? (
-                <div className="h-20 flex items-center justify-center text-center text-sm text-[var(--text-faint)] px-4">
+                <div className="h-20 flex items-center justify-center text-center text-sm text-(--text-faint) px-4">
                     Noch nicht genug Daten für einen Verlauf. Mindestens 2 Checks benötigt.
                 </div>
             ) : (
@@ -1511,15 +1511,15 @@ function MentionHistoryChart({ siteId, mentionedCount, mentionRate, checkedCount
                     <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-auto" preserveAspectRatio="xMidYMid meet">
                         {[0, 25, 50, 75, 100].map(v => (
                             <g key={v}>
-                                <line x1={padL} x2={W - padR} y1={yAt(v)} y2={yAt(v)} stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
-                                <text x={padL - 8} y={yAt(v) + 3} textAnchor="end" fontSize="9" fill="#64748b">{v}%</text>
+                                <line x1={padL} x2={W - padR} y1={yAt(v)} y2={yAt(v)} stroke="var(--surface-10)" strokeWidth="1" />
+                                <text x={padL - 8} y={yAt(v) + 3} textAnchor="end" fontSize="9" fill="var(--text-faint)">{v}%</text>
                             </g>
                         ))}
 
                         {history.map((h, i) => {
                             if (n > 1 && i !== 0 && i !== n - 1 && i % Math.ceil(n / 6) !== 0) return null
                             return (
-                                <text key={i} x={xAt(i)} y={H - 6} textAnchor="middle" fontSize="9" fill="#64748b">
+                                <text key={i} x={xAt(i)} y={H - 6} textAnchor="middle" fontSize="9" fill="var(--text-faint)">
                                     {formatDate(h.date)}
                                 </text>
                             )
@@ -1537,14 +1537,14 @@ function MentionHistoryChart({ siteId, mentionedCount, mentionRate, checkedCount
                     </svg>
 
                     {hover != null && (
-                        <div className="absolute px-2.5 py-1.5 bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-lg text-xs pointer-events-none shadow-lg"
+                        <div className="absolute px-2.5 py-1.5 bg-(--bg-surface) border border-(--border-subtle) rounded-lg text-xs pointer-events-none shadow-lg"
                             style={{
                                 left: `${(xAt(hover) / W) * 100}%`,
                                 top: `${(yAt(history[hover].rate) / H) * 100}%`,
                                 transform: 'translate(-50%, -130%)',
                             }}>
-                            <div className="text-[var(--text-faint)]">{formatDate(history[hover].date)}</div>
-                            <div className="text-[var(--text-white)] font-semibold">{history[hover].rate}% &middot; {history[hover].mentioned}/{history[hover].checked}</div>
+                            <div className="text-(--text-faint)">{formatDate(history[hover].date)}</div>
+                            <div className="text-(--text-white) font-semibold">{history[hover].rate}% &middot; {history[hover].mentioned}/{history[hover].checked}</div>
                         </div>
                     )}
                 </div>
@@ -1559,25 +1559,25 @@ function HistoryDots({ history }) {
         <div className="flex items-center gap-1 mt-1">
             {history.slice(-8).map((h, i) => (
                 <div key={i} title={new Date(h.checkedAt).toLocaleDateString('de-DE')}
-                    className={`w-2 h-2 rounded-full ${h.mentioned ? 'bg-[var(--accent)]' : 'bg-[var(--surface-10)]'}`} />
+                    className={`w-2 h-2 rounded-full ${h.mentioned ? 'bg-(--accent)' : 'bg-(--surface-10)'}`} />
             ))}
         </div>
     )
 }
 
 
-// Analog zu TableSkeleton im SEO-Dashboard — zeigt die bekannte Tabellenform statt eines
+// Analog zu TableSkeleton im SEO-Dashboard - zeigt die bekannte Tabellenform statt eines
 // nackten Spinners, während die Ergebnisse laden.
 function ResultsTableSkeleton({ columns = 5, rows = 6 }) {
     return (
-        <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl overflow-hidden">
-            <div className="animate-pulse divide-y divide-[var(--border-subtle)]">
+        <div className="bg-(--bg-surface) border border-(--border-subtle) rounded-2xl overflow-hidden">
+            <div className="animate-pulse divide-y divide-(--border-subtle)">
                 {Array.from({ length: rows }).map((_, i) => (
                     <div key={i} className="flex items-center gap-4 px-5 py-3.5">
-                        <div className="w-3.5 h-3.5 rounded bg-[var(--surface-08)] shrink-0" />
-                        <div className="h-3 w-32 rounded bg-[var(--surface-08)]" />
+                        <div className="w-3.5 h-3.5 rounded bg-(--surface-08) shrink-0" />
+                        <div className="h-3 w-32 rounded bg-(--surface-08)" />
                         {Array.from({ length: columns }).map((__, j) => (
-                            <div key={j} className="h-3 w-8 rounded-full bg-[var(--surface-08)] ml-auto" />
+                            <div key={j} className="h-3 w-8 rounded-full bg-(--surface-08) ml-auto" />
                         ))}
                     </div>
                 ))}
@@ -1604,7 +1604,7 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated, onStatsChange }) {
     const [savingPlatforms, setSavingPlatforms]   = useState(false)
     const cancelledRef = useRef(false)
 
-    // pollUntilDone läuft unabhängig von der Komponente weiter (kein AbortController) — ohne
+    // pollUntilDone läuft unabhängig von der Komponente weiter (kein AbortController) - ohne
     // dieses Flag würde jeder Tab-Wechsel während eines laufenden Checks eine weitere, nie
     // gestoppte Polling-Schleife starten und sich mit älteren Schleifen aufsummieren.
     useEffect(() => {
@@ -1644,7 +1644,7 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated, onStatsChange }) {
             setShowPlatformEdit(false)
             onSiteUpdated()
             await fetchResults()
-        } catch (err) { toast.error(err.message || 'Plattformen konnten nicht gespeichert werden — bitte nochmal versuchen.') }
+        } catch (err) { toast.error(err.message || 'Plattformen konnten nicht gespeichert werden - bitte nochmal versuchen.') }
         finally { setSavingPlatforms(false) }
     }
 
@@ -1658,18 +1658,18 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated, onStatsChange }) {
             if (!res.ok) throw new Error(d.error)
             setData(d)
             onStatsChange?.(d)
-        } catch { toast.error('Ergebnisse konnten nicht geladen werden — bitte Seite neu laden.') }
+        } catch { toast.error('Ergebnisse konnten nicht geladen werden - bitte Seite neu laden.') }
         finally { setLoading(false) }
     }, [siteId, onStatsChange])
 
     useEffect(() => { fetchResults() }, [fetchResults])
 
     const CHECK_ERROR_MESSAGES = {
-        check_already_running: 'Es läuft bereits ein Check für diese Website — bitte warten.',
+        check_already_running: 'Es läuft bereits ein Check für diese Website - bitte warten.',
         monthly_limit_reached: 'Monatliches Limit an manuellen Checks erreicht.',
     }
 
-    // Check läuft im Hintergrund weiter (siehe triggerCheck-Umbau) — hier nur pollen, bis checkStatus wieder 'idle'/'failed' ist.
+    // Check läuft im Hintergrund weiter (siehe triggerCheck-Umbau) - hier nur pollen, bis checkStatus wieder 'idle'/'failed' ist.
     const pollUntilDone = async () => {
         const token = localStorage.getItem('token')
         for (let i = 0; i < 300; i++) { // Sicherheitslimit, deckt auch sehr große Expert-Sites locker ab
@@ -1690,7 +1690,7 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated, onStatsChange }) {
         try {
             const token = localStorage.getItem('token')
             // Sind Keywords/Prompts ausgewählt (dieselbe Checkbox-Auswahl wie beim Entfernen), prüft
-            // der Check nur die — spart manuelle Check-Kontingent-Kosten gegenüber einem vollen Rerun.
+            // der Check nur die - spart manuelle Check-Kontingent-Kosten gegenüber einem vollen Rerun.
             // Ohne Auswahl: wie bisher alle Keywords + Prompts der Site.
             const { keywords: selectedKws, customPrompts: selectedPrompts } = splitSelection([...selected])
             const body = selected.size > 0 ? { keywords: selectedKws, customPrompts: selectedPrompts } : undefined
@@ -1704,13 +1704,13 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated, onStatsChange }) {
 
             const finalStatus = await pollUntilDone()
             if (finalStatus === 'cancelled') return // Komponente wurde unterdessen unmounted
-            if (finalStatus === 'failed') toast.error('Check fehlgeschlagen — bitte später erneut versuchen.')
-            else if (finalStatus === 'timeout') toast.error('Check läuft ungewöhnlich lange — Ergebnis später prüfen.')
+            if (finalStatus === 'failed') toast.error('Check fehlgeschlagen - bitte später erneut versuchen.')
+            else if (finalStatus === 'timeout') toast.error('Check läuft ungewöhnlich lange - Ergebnis später prüfen.')
             else toast.success('Check abgeschlossen')
 
             await fetchResults()
             onSiteUpdated()
-        } catch (err) { toast.error(err.message || 'Check konnte nicht gestartet werden — bitte nochmal versuchen.') }
+        } catch (err) { toast.error(err.message || 'Check konnte nicht gestartet werden - bitte nochmal versuchen.') }
         finally { setChecking(false) }
     }
 
@@ -1721,7 +1721,7 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated, onStatsChange }) {
         pollUntilDone()
             .then(finalStatus => {
                 if (finalStatus === 'cancelled') return
-                if (finalStatus === 'failed') toast.error('Check fehlgeschlagen — bitte später erneut versuchen.')
+                if (finalStatus === 'failed') toast.error('Check fehlgeschlagen - bitte später erneut versuchen.')
                 return fetchResults()
             })
             .finally(() => setChecking(false))
@@ -1746,7 +1746,7 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated, onStatsChange }) {
             setNewKws(''); setShowAdd(false)
             onSiteUpdated()
             await fetchResults()
-        } catch (err) { toast.error(err.message || 'Keywords konnten nicht hinzugefügt werden — bitte nochmal versuchen.') }
+        } catch (err) { toast.error(err.message || 'Keywords konnten nicht hinzugefügt werden - bitte nochmal versuchen.') }
         finally { setAddingKws(false) }
     }
 
@@ -1768,12 +1768,12 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated, onStatsChange }) {
             setNewCustomPrompt(''); setShowAddPrompt(false)
             onSiteUpdated()
             await fetchResults()
-        } catch (err) { toast.error(err.message || 'Prompt konnte nicht hinzugefügt werden — bitte nochmal versuchen.') }
+        } catch (err) { toast.error(err.message || 'Prompt konnte nicht hinzugefügt werden - bitte nochmal versuchen.') }
         finally { setAddingPrompt(false) }
     }
 
     // selected kann sowohl kurze Keywords als auch eigene Prompts enthalten (gemeinsame Checkbox-
-    // Auswahl in derselben Tabelle) — beim Entfernen/Prüfen anhand von site.customPrompts trennen,
+    // Auswahl in derselben Tabelle) - beim Entfernen/Prüfen anhand von site.customPrompts trennen,
     // da beide Arten über unterschiedliche Endpoints laufen.
     const customPromptSet = new Set((site?.customPrompts || []).map(cp => cp.prompt))
     const splitSelection = (items) => ({
@@ -1812,7 +1812,7 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated, onStatsChange }) {
                 ])
                 onSiteUpdated()
             } catch {
-                toast.error('Entfernen fehlgeschlagen — Einträge wurden wiederhergestellt, bitte nochmal versuchen.')
+                toast.error('Entfernen fehlgeschlagen - Einträge wurden wiederhergestellt, bitte nochmal versuchen.')
                 restore()
             }
         }, 5000)
@@ -1822,7 +1822,7 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated, onStatsChange }) {
                 <span>{toRemove.length} Eintrag{toRemove.length > 1 ? 'e' : ''} entfernt</span>
                 <button
                     onClick={() => { undone = true; clearTimeout(timer); restore(); toast.dismiss(t.id) }}
-                    className="font-semibold text-[var(--accent)] hover:underline underline-offset-2 whitespace-nowrap"
+                    className="font-semibold text-(--accent-ink) hover:underline underline-offset-2 whitespace-nowrap"
                 >
                     Rückgängig
                 </button>
@@ -1840,7 +1840,7 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated, onStatsChange }) {
     // pro Zeile die passenden Intents waehlen statt ueberall baseIntents anzunehmen.
     const rowIntents = (r) => r.isCustomPrompt ? ['custom'] : baseIntents
 
-    // Erwähnte Keywords zuerst — bei überwiegend negativen Ergebnissen sollen die wenigen
+    // Erwähnte Keywords zuerst - bei überwiegend negativen Ergebnissen sollen die wenigen
     // echten Treffer sofort sichtbar sein, statt irgendwo zwischen 70 Nein-Zeilen zu stehen.
     const filtered = results
         .filter(r => {
@@ -1877,7 +1877,7 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated, onStatsChange }) {
                 checkedCount={data?.checkedCount}
             />
 
-            {/* Eine Kontroll-Leiste statt zwei getrennter Zeilen — was getrackt wird und was
+            {/* Eine Kontroll-Leiste statt zwei getrennter Zeilen - was getrackt wird und was
                 man tun kann, gehört auf einen Blick zusammen, nicht in separate Blöcke. */}
             <div className="flex items-center justify-between gap-3 mb-2 flex-wrap">
                 <div className="flex items-center gap-2 flex-wrap">
@@ -1890,27 +1890,27 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated, onStatsChange }) {
                         )
                     })}
                     <button onClick={openPlatformEdit}
-                        className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold text-[var(--text-faint)] hover:text-[var(--text-body)] bg-[var(--surface-06)] hover:bg-[var(--surface-10)] border border-[var(--border-subtle)] transition-all">
+                        className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold text-(--text-faint) hover:text-(--text-body) bg-(--card) hover:bg-(--surface-10) border border-(--line) transition-all">
                         <Settings2 className="w-3 h-3" />Bearbeiten
                     </button>
                 </div>
                 <div className="flex items-center gap-2 flex-wrap">
                     {selected.size > 0 && (
                         <button onClick={handleRemoveSelected}
-                            className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl border border-red-500/20 text-red-400 hover:bg-red-500/10 transition-all">
+                            className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl border border-(--danger-border) text-(--danger) hover:bg-(--danger-soft) transition-all">
                             <Trash2 className="w-3.5 h-3.5" />{selected.size} entfernen
                         </button>
                     )}
                     <button onClick={() => setShowAdd(v => !v)}
-                        className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl bg-[var(--surface-08)] hover:bg-[var(--surface-10)] text-[var(--text-body)] border border-[var(--border-subtle)] transition-all">
+                        className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl bg-(--surface-08) hover:bg-(--surface-10) text-(--text-body) border border-(--border-subtle) transition-all">
                         <Plus className="w-3.5 h-3.5" />Keywords
                     </button>
                     <button onClick={() => setShowAddPrompt(v => !v)}
-                        className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl bg-[var(--surface-08)] hover:bg-[var(--surface-10)] text-[var(--text-body)] border border-[var(--border-subtle)] transition-all">
+                        className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl bg-(--surface-08) hover:bg-(--surface-10) text-(--text-body) border border-(--border-subtle) transition-all">
                         <Plus className="w-3.5 h-3.5" />Eigener Prompt
                     </button>
                     <button onClick={handleCheck} disabled={checking}
-                        className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] transition-all disabled:opacity-50">
+                        className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-[10px] bg-(--accent) hover:bg-(--accent-hover) text-(--on-accent) transition-all disabled:opacity-50">
                         {checking ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <RefreshCw className="w-3.5 h-3.5" />}
                         {checkLabel}
                     </button>
@@ -1919,7 +1919,7 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated, onStatsChange }) {
             {/* Zuletzt geprüft + Kontingent stehen jetzt prominent in der Überblick-Leiste oben —
                 hier nur noch die Prompt-Varianten-Konfiguration, die dort keinen Platz hat. */}
             {baseIntents.length > 1 && (
-                <div className="text-xs text-[var(--text-faint)] mb-5">
+                <div className="text-xs text-(--text-faint) mb-5">
                     {baseIntents.length} Prompt-Varianten pro Keyword ({baseIntents.map(i => INTENT_META[i]?.label || i).join(', ')})
                 </div>
             )}
@@ -1928,10 +1928,10 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated, onStatsChange }) {
             <AnimatePresence>
                 {showPlatformEdit && (
                     <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
-                        className="bg-[var(--bg-surface)] border border-[var(--accent-border)] rounded-2xl p-5 mb-5">
+                        className="bg-(--bg-surface) border border-(--accent-border) rounded-2xl p-5 mb-5">
                         <div className="flex items-center justify-between mb-3">
-                            <span className="text-sm font-semibold text-[var(--text-white)]">AI-Plattformen tracken</span>
-                            <button onClick={() => setShowPlatformEdit(false)} className="text-[var(--text-faint)] hover:text-[var(--text-white)] transition-colors"><X className="w-4 h-4" /></button>
+                            <span className="text-sm font-semibold text-(--text-white)">AI-Plattformen tracken</span>
+                            <button onClick={() => setShowPlatformEdit(false)} className="text-(--text-faint) hover:text-(--text-white) transition-colors"><X className="w-4 h-4" /></button>
                         </div>
                         <div className="space-y-2 mb-4">
                             {ALL_PLATFORMS.map(id => {
@@ -1943,19 +1943,19 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated, onStatsChange }) {
                                         onClick={() => togglePlatformEdit(id)}
                                         className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl border transition-all text-left ${
                                             locked
-                                                ? 'bg-[var(--surface-06)] border-[var(--border-subtle)] text-[var(--text-faint)] cursor-not-allowed'
+                                                ? 'bg-(--card) border-(--line) text-(--text-faint) cursor-not-allowed'
                                                 : active
-                                                    ? 'bg-[var(--accent-soft)] border-[var(--accent-border)] text-[var(--text-white)]'
-                                                    : 'bg-[var(--surface-06)] border-[var(--border-subtle)] text-[var(--text-faint)] hover:border-[var(--border-strong)]'
+                                                    ? 'bg-(--accent-soft) border-(--accent-border) text-(--text-white)'
+                                                    : 'bg-(--card) border-(--line) text-(--text-faint) hover:border-(--border-strong)'
                                         }`}>
                                         <div className={`w-4 h-4 rounded border-2 flex items-center justify-center shrink-0 transition-all ${
-                                            active && !locked ? 'bg-[var(--accent)] border-[var(--accent)]' : 'border-[var(--border-strong)]'
+                                            active && !locked ? 'bg-(--accent) border-(--accent)' : 'border-(--border-strong)'
                                         }`}>
-                                            {active && !locked && <span className="text-[var(--text-white)] text-[10px] font-bold">✓</span>}
+                                            {active && !locked && <span className="text-(--text-white) text-[10px] font-bold">✓</span>}
                                         </div>
                                         <span className="text-sm font-semibold flex-1">{m.label}</span>
                                         {locked && (
-                                            <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-[var(--text-faint)] uppercase tracking-wider">
+                                            <span className="inline-flex items-center gap-1 text-xs font-semibold text-(--text-faint) ">
                                                 <Lock className="w-3 h-3" />Pro/Expert
                                             </span>
                                         )}
@@ -1964,7 +1964,7 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated, onStatsChange }) {
                             })}
                         </div>
                         <button onClick={handleSavePlatforms} disabled={savingPlatforms}
-                            className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold transition-all disabled:opacity-50">
+                            className="w-full flex items-center justify-center gap-2 py-2.5 rounded-[10px] bg-(--accent) hover:bg-(--accent-hover) text-(--on-accent) text-sm font-semibold transition-all disabled:opacity-50">
                             {savingPlatforms ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Check className="w-3.5 h-3.5" />}
                             Speichern
                         </button>
@@ -1972,11 +1972,11 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated, onStatsChange }) {
                 )}
             </AnimatePresence>
 
-            {/* Zusammenfassung — damit man das Gesamtbild nicht erst aus der ganzen Tabelle
+            {/* Zusammenfassung - damit man das Gesamtbild nicht erst aus der ganzen Tabelle
                 zusammensuchen muss, wenn die meisten Zeilen ohnehin "Nein" zeigen. */}
             {results.length > 0 && (
-                <p className="text-sm text-[var(--text-muted)] mb-4">
-                    <span className="text-[var(--text-white)] font-semibold">{data?.mentionedCount ?? 0} von {data?.checkedCount ?? results.length}</span> Keywords wurden bereits mindestens einmal erwähnt.
+                <p className="text-sm text-(--text-muted) mb-4">
+                    <span className="text-(--text-white) font-semibold">{data?.mentionedCount ?? 0} von {data?.checkedCount ?? results.length}</span> Keywords wurden bereits mindestens einmal erwähnt.
                 </p>
             )}
 
@@ -1987,13 +1987,13 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated, onStatsChange }) {
                         <button key={f.id} onClick={() => setFilter(f.id)}
                             className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${
                                 filter === f.id
-                                    ? 'bg-[var(--accent-soft)] border border-[var(--accent-border)] text-[var(--accent)]'
-                                    : 'bg-[var(--surface-06)] border border-[var(--border-subtle)] text-[var(--text-faint)] hover:text-[var(--text-body)] hover:bg-[var(--surface-10)]'
+                                    ? 'bg-(--accent-soft) border border-(--accent-border) text-(--accent-ink)'
+                                    : 'bg-(--card) border border-(--line) text-(--text-faint) hover:text-(--text-body) hover:bg-(--surface-10)'
                             }`}>
                             {f.label}
                         </button>
                     ))}
-                    <span className="text-xs text-[var(--text-faint)] ml-1">{filtered.length} Keywords</span>
+                    <span className="text-xs text-(--text-faint) ml-1">{filtered.length} Keywords</span>
                 </div>
             )}
 
@@ -2001,17 +2001,17 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated, onStatsChange }) {
             <AnimatePresence>
                 {showAdd && (
                     <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
-                        className="bg-[var(--bg-surface)] border border-[var(--accent-border)] rounded-2xl p-5 mb-5">
+                        className="bg-(--bg-surface) border border-(--accent-border) rounded-2xl p-5 mb-5">
                         <div className="flex items-center justify-between mb-3">
-                            <span className="text-sm font-semibold text-[var(--text-white)]">Keywords hinzufügen</span>
-                            <button onClick={() => setShowAdd(false)} className="text-[var(--text-faint)] hover:text-[var(--text-white)] transition-colors"><X className="w-4 h-4" /></button>
+                            <span className="text-sm font-semibold text-(--text-white)">Keywords hinzufügen</span>
+                            <button onClick={() => setShowAdd(false)} className="text-(--text-faint) hover:text-(--text-white) transition-colors"><X className="w-4 h-4" /></button>
                         </div>
                         <form onSubmit={handleAddKeywords} className="flex gap-3">
                             <textarea value={newKws} onChange={e => setNewKws(e.target.value)}
                                 placeholder={"seo tool\nwebsite audit"} rows={3}
-                                className="flex-1 bg-[var(--surface-06)] border border-[var(--border-subtle)] focus:border-[var(--accent-border)] rounded-xl px-4 py-3 text-[var(--text-white)] placeholder:text-[var(--text-faint)] outline-none text-sm resize-none font-mono" />
+                                className="flex-1 bg-(--card) border border-(--line) focus:border-(--accent) focus:shadow-[0_0_0_4px_var(--accent-ring)] rounded-xl px-4 py-3 text-(--text-white) placeholder:text-(--text-faint) outline-none text-sm resize-none font-mono" />
                             <button type="submit" disabled={addingKws}
-                                className="self-end flex items-center gap-2 px-4 py-2 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all disabled:opacity-50">
+                                className="self-end flex items-center gap-2 px-4 py-2 bg-(--accent) hover:bg-(--accent-hover) text-(--on-accent) text-sm font-semibold rounded-[10px] transition-all disabled:opacity-50">
                                 {addingKws ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Plus className="w-3.5 h-3.5" />}
                                 Hinzufügen
                             </button>
@@ -2024,18 +2024,18 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated, onStatsChange }) {
             <AnimatePresence>
                 {showAddPrompt && (
                     <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
-                        className="bg-[var(--bg-surface)] border border-[var(--accent-border)] rounded-2xl p-5 mb-5">
+                        className="bg-(--bg-surface) border border-(--accent-border) rounded-2xl p-5 mb-5">
                         <div className="flex items-center justify-between mb-3">
-                            <span className="text-sm font-semibold text-[var(--text-white)]">Eigenen Prompt hinzufügen</span>
-                            <button onClick={() => setShowAddPrompt(false)} className="text-[var(--text-faint)] hover:text-[var(--text-white)] transition-colors"><X className="w-4 h-4" /></button>
+                            <span className="text-sm font-semibold text-(--text-white)">Eigenen Prompt hinzufügen</span>
+                            <button onClick={() => setShowAddPrompt(false)} className="text-(--text-faint) hover:text-(--text-white) transition-colors"><X className="w-4 h-4" /></button>
                         </div>
-                        <p className="text-xs text-[var(--text-faint)] mb-3">Wird unverändert an die KI gesendet, statt in ein Keyword-Template eingesetzt zu werden.</p>
+                        <p className="text-xs text-(--text-faint) mb-3">Wird unverändert an die KI gesendet, statt in ein Keyword-Template eingesetzt zu werden.</p>
                         <form onSubmit={handleAddCustomPrompt} className="flex gap-3">
                             <textarea value={newCustomPrompt} onChange={e => setNewCustomPrompt(e.target.value)}
                                 placeholder="z.B. Ich brauche eine Agentur für ein neues Webdesign in Lübeck" rows={3} maxLength={300}
-                                className="flex-1 bg-[var(--surface-06)] border border-[var(--border-subtle)] focus:border-[var(--accent-border)] rounded-xl px-4 py-3 text-[var(--text-white)] placeholder:text-[var(--text-faint)] outline-none text-sm resize-none" />
+                                className="flex-1 bg-(--card) border border-(--line) focus:border-(--accent) focus:shadow-[0_0_0_4px_var(--accent-ring)] rounded-xl px-4 py-3 text-(--text-white) placeholder:text-(--text-faint) outline-none text-sm resize-none" />
                             <button type="submit" disabled={addingPrompt}
-                                className="self-end flex items-center gap-2 px-4 py-2 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all disabled:opacity-50">
+                                className="self-end flex items-center gap-2 px-4 py-2 bg-(--accent) hover:bg-(--accent-hover) text-(--on-accent) text-sm font-semibold rounded-[10px] transition-all disabled:opacity-50">
                                 {addingPrompt ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Plus className="w-3.5 h-3.5" />}
                                 Hinzufügen
                             </button>
@@ -2049,43 +2049,43 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated, onStatsChange }) {
                 <ResultsTableSkeleton columns={platforms.length} />
             ) : results.length === 0 ? (
                 <div className="flex flex-col items-center justify-center py-20 gap-3">
-                    <Sparkles className="w-8 h-8 text-[var(--text-faint)]" />
-                    <span className="text-sm text-[var(--text-faint)] text-center max-w-sm">Noch keine Keywords getrackt. Füge dein erstes Keyword hinzu, um zu sehen, ob KI-Modelle dich dabei nennen.</span>
+                    <Sparkles className="w-8 h-8 text-(--text-faint)" />
+                    <span className="text-sm text-(--text-faint) text-center max-w-sm">Noch keine Keywords getrackt. Füge dein erstes Keyword hinzu, um zu sehen, ob KI-Modelle dich dabei nennen.</span>
                     <button onClick={() => setShowAdd(true)}
-                        className="mt-1 flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold rounded-xl bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] transition-all">
+                        className="mt-1 flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold rounded-[10px] bg-(--accent) hover:bg-(--accent-hover) text-(--on-accent) transition-all">
                         <Plus className="w-3.5 h-3.5" />Erstes Keyword hinzufügen
                     </button>
                 </div>
             ) : filtered.length === 0 ? (
                 <div className="flex flex-col items-center justify-center py-16 gap-3">
-                    <Sparkles className="w-8 h-8 text-[var(--text-faint)]" />
-                    <span className="text-sm text-[var(--text-faint)]">Kein Keyword passt zu „{RESULT_FILTERS.find(f => f.id === filter)?.label}".</span>
+                    <Sparkles className="w-8 h-8 text-(--text-faint)" />
+                    <span className="text-sm text-(--text-faint)">Kein Keyword passt zu „{RESULT_FILTERS.find(f => f.id === filter)?.label}".</span>
                     <button onClick={() => setFilter('alle')}
-                        className="mt-1 flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold rounded-xl bg-[var(--surface-08)] hover:bg-[var(--surface-10)] text-[var(--text-body)] border border-[var(--border-subtle)] transition-all">
+                        className="mt-1 flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold rounded-xl bg-(--surface-08) hover:bg-(--surface-10) text-(--text-body) border border-(--border-subtle) transition-all">
                         Alle Keywords zeigen
                     </button>
                 </div>
             ) : (
-                <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl overflow-hidden">
+                <div className="bg-(--bg-surface) border border-(--border-subtle) rounded-2xl overflow-hidden">
                     <div className="overflow-x-auto">
                         <table className="w-full">
                             <thead>
-                                <tr className="border-b border-[var(--border-subtle)]">
+                                <tr className="border-b border-(--border-subtle)">
                                     <th className="w-8 px-5 py-3">
                                         <input type="checkbox" checked={allVisibleSelected}
                                             ref={el => { if (el) el.indeterminate = someVisibleSelected }}
                                             onChange={toggleSelectAll}
                                             aria-label="Alle sichtbaren Einträge auswählen"
-                                            className="w-3.5 h-3.5 rounded border-[var(--border-strong)] accent-red-500 cursor-pointer" />
+                                            className="w-3.5 h-3.5 rounded border-(--border-strong) accent-(--danger) cursor-pointer" />
                                     </th>
-                                    <th className="px-5 py-3 text-left text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider">Keyword</th>
+                                    <th className="px-5 py-3 text-left text-xs font-semibold text-(--text-faint) ">Keyword</th>
                                     {platforms.map(p => (
-                                        <th key={p} className={`px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider ${PLATFORM_META[p]?.color || 'text-[var(--text-faint)]'}`}>
+                                        <th key={p} className={`px-4 py-3 text-left text-xs font-semibold ${PLATFORM_META[p]?.color || 'text-(--text-faint)'}`}>
                                             {PLATFORM_META[p]?.label || p}
                                         </th>
                                     ))}
-                                    <th className="px-5 py-3 text-left text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider hidden sm:table-cell">Verlauf</th>
-                                    <th className="px-5 py-3 text-left text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wider hidden md:table-cell">Datum</th>
+                                    <th className="px-5 py-3 text-left text-xs font-semibold text-(--text-faint) hidden sm:table-cell">Verlauf</th>
+                                    <th className="px-5 py-3 text-left text-xs font-semibold text-(--text-faint) hidden md:table-cell">Datum</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -2105,24 +2105,24 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated, onStatsChange }) {
 
                                     return (
                                         <React.Fragment key={keyword}>
-                                            <tr className={`border-b border-[var(--border-subtle)] last:border-0 transition-colors ${isSelected ? 'bg-red-500/5' : isExpanded ? 'bg-[var(--surface-06)]' : 'hover:bg-[var(--surface-08)]'}`}>
+                                            <tr className={`border-b border-(--border-subtle) last:border-0 transition-colors ${isSelected ? 'bg-(--danger-soft)' : isExpanded ? 'bg-(--surface-06)' : 'hover:bg-(--surface-08)'}`}>
                                                 <td className="px-5 py-3.5">
                                                     <input type="checkbox" checked={isSelected} onChange={() => toggleSelect(keyword)}
                                                         aria-label={`${keyword} auswählen`}
-                                                        className="w-3.5 h-3.5 rounded border-[var(--border-strong)] accent-red-500 cursor-pointer" />
+                                                        className="w-3.5 h-3.5 rounded border-(--border-strong) accent-(--danger) cursor-pointer" />
                                                 </td>
                                                 <td className="px-5 py-3.5">
                                                     <div className="flex items-center gap-2">
                                                         {isCustomPrompt && (
-                                                            <span className="shrink-0 text-[9px] font-semibold uppercase tracking-wider text-violet-400 bg-violet-500/10 border border-violet-500/25 rounded px-1.5 py-0.5">Prompt</span>
+                                                            <span className="shrink-0 text-xs font-semibold text-(--accent-ink) bg-(--accent-soft) border border-(--accent-border) rounded px-1.5 py-0.5">Prompt</span>
                                                         )}
-                                                        <span className="text-sm text-[var(--text-body)]">{keyword}</span>
+                                                        <span className="text-sm text-(--text-body)">{keyword}</span>
                                                         <KeywordRateBadge rate={keywordRate} delta={keywordDelta} />
                                                         {hasDetail && (
                                                             <button type="button" onClick={() => setExpanded(prev => prev === keyword ? null : keyword)}
                                                                 aria-expanded={isExpanded} aria-controls={`geo-detail-${keyword}`}
                                                                 aria-label={isExpanded ? 'Details einklappen' : 'Details ausklappen'}
-                                                                className={`transition-colors ${isExpanded ? 'text-[var(--accent)]' : 'text-[var(--text-faint)] hover:text-[var(--text-body)]'}`}>
+                                                                className={`transition-colors ${isExpanded ? 'text-(--accent-ink)' : 'text-(--text-faint) hover:text-(--text-body)'}`}>
                                                                 {isExpanded ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
                                                             </button>
                                                         )}
@@ -2138,26 +2138,26 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated, onStatsChange }) {
                                                 </td>
                                                 <td className="px-5 py-3.5 hidden md:table-cell">
                                                     {latestDate
-                                                        ? <span className="text-xs text-[var(--text-faint)]">{new Date(latestDate).toLocaleDateString('de-DE')}</span>
-                                                        : <span className="text-xs text-[var(--text-faint)]">—</span>}
+                                                        ? <span className="text-xs text-(--text-faint)">{new Date(latestDate).toLocaleDateString('de-DE')}</span>
+                                                        : <span className="text-xs text-(--text-faint)">—</span>}
                                                 </td>
                                             </tr>
                                             {isExpanded && (
-                                                <tr className="border-b border-[var(--border-subtle)] last:border-0">
-                                                    <td id={`geo-detail-${keyword}`} colSpan={3 + platforms.length} className="px-5 py-4 bg-[var(--surface-06)]">
+                                                <tr className="border-b border-(--border-subtle) last:border-0">
+                                                    <td id={`geo-detail-${keyword}`} colSpan={3 + platforms.length} className="px-5 py-4 bg-(--surface-06)">
                                                         <div className="space-y-4">
                                                             {platforms.filter(p => intents.some(i => checks?.[p]?.[i])).map(p => {
                                                                 const m = PLATFORM_META[p]
                                                                 return (
                                                                     <div key={p}>
-                                                                        <p className={`text-xs uppercase tracking-wider font-semibold mb-2 ${m.color}`}>{m.label}</p>
-                                                                        <div className="space-y-2 pl-3 border-l-2 border-[var(--border-subtle)]">
+                                                                        <p className={`text-xs font-semibold mb-2 ${m.color}`}>{m.label}</p>
+                                                                        <div className="space-y-2 pl-3 border-l-2 border-(--border-subtle)">
                                                                             {intents.filter(i => checks?.[p]?.[i]).map(i => {
                                                                                 const c = checks[p][i]
                                                                                 return (
                                                                                     <div key={i} className="flex items-start gap-3">
                                                                                         {intents.length > 1 && (
-                                                                                            <span className="text-[10px] uppercase tracking-wider text-[var(--text-faint)] font-semibold mt-1 w-20 shrink-0">
+                                                                                            <span className="text-xs text-(--text-faint) font-semibold mt-1 w-20 shrink-0">
                                                                                                 {INTENT_META[i]?.label || i}
                                                                                             </span>
                                                                                         )}
@@ -2167,7 +2167,7 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated, onStatsChange }) {
                                                                                             <PositionBadge position={c.ownPosition} citationsCount={c.ownPositionTotal ?? c.citations?.length}
                                                                                                 trend={positionTrendFor(history, p, i)} />
                                                                                             {c.context && (
-                                                                                                <p className="text-sm text-[var(--text-body)] italic leading-relaxed mt-1">&ldquo;{c.context}&rdquo;</p>
+                                                                                                <p className="text-sm text-(--text-body) italic leading-relaxed mt-1">&ldquo;{c.context}&rdquo;</p>
                                                                                             )}
                                                                                             <CitationList citations={c.citations} />
                                                                                             <CitabilityDiagnosis siteId={siteId} keyword={keyword} platform={p} promptIntent={i}
@@ -2197,7 +2197,7 @@ function ResultsTab({ siteId, site, plan, onSiteUpdated, onStatsChange }) {
     )
 }
 
-// Zeigt die wichtigsten Zahlen sofort und unabhängig von der aktiven Ansicht — analog zu
+// Zeigt die wichtigsten Zahlen sofort und unabhängig von der aktiven Ansicht - analog zu
 // OverviewStats im SEO-Dashboard, statt sie in einer Textzeile im Übersicht-Tab zu verstecken.
 function GeoOverviewStats({ site, overview }) {
     const stats = [
@@ -2224,12 +2224,12 @@ function GeoOverviewStats({ site, overview }) {
     return (
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
             {stats.map(s => (
-                <div key={s.label} className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-xl p-4">
-                    <div className="flex items-center gap-1.5 text-xs text-[var(--text-faint)] mb-1.5 whitespace-nowrap">
+                <div key={s.label} className="bg-(--bg-surface) border border-(--border-subtle) rounded-xl p-4">
+                    <div className="flex items-center gap-1.5 text-xs text-(--text-faint) mb-1.5 whitespace-nowrap">
                         <s.icon className="w-3.5 h-3.5 shrink-0" />
                         {s.label}
                     </div>
-                    <div className="text-2xl font-bold text-[var(--text-white)] tracking-tight">{s.value}</div>
+                    <div className="text-2xl font-bold text-(--text-white) tracking-tight">{s.value}</div>
                 </div>
             ))}
         </div>
@@ -2276,36 +2276,36 @@ export default function GeoSitePage() {
     }, [fetchSite, fetchPlan, router])
 
     if (loading) return (
-        <div className="min-h-screen bg-[var(--bg-base)] flex items-center justify-center">
-            <Loader2 className="w-8 h-8 text-[var(--accent)] animate-spin" />
+        <div className="min-h-screen bg-(--bg-base) flex items-center justify-center">
+            <Loader2 className="w-8 h-8 text-(--accent-ink) animate-spin" />
         </div>
     )
 
     const activeItem = NAV_ITEMS.find(n => n.id === activeView) || NAV_ITEMS[0]
 
     return (
-        <div className="min-h-screen bg-[var(--bg-base)]">
+        <div className="min-h-screen bg-(--bg-base)">
             <Navbar />
 
             <div className="max-w-[1600px] mx-auto px-5 sm:px-8 pt-28 pb-16">
 
                 {/* Back + Header */}
                 <div className="mb-8">
-                    <Link href="/geo/dashboard" className="inline-flex items-center gap-2 text-sm text-[var(--text-faint)] hover:text-[var(--text-body)] transition-colors mb-4">
+                    <Link href="/geo/dashboard" className="inline-flex items-center gap-2 text-sm text-(--text-faint) hover:text-(--text-body) transition-colors mb-4">
                         <ArrowLeft className="w-4 h-4" />Zurück zum Dashboard
                     </Link>
                     <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-xl bg-[var(--accent-soft)] border border-[var(--accent-border)] flex items-center justify-center">
-                            <Globe className="w-5 h-5 text-[var(--accent)]" />
+                        <div className="w-10 h-10 rounded-xl bg-(--accent-soft) border border-(--accent-border) flex items-center justify-center">
+                            <Globe className="w-5 h-5 text-(--accent-ink)" />
                         </div>
                         <div>
-                            <h1 className="text-2xl sm:text-3xl font-bold text-[var(--text-white)] tracking-tight">{site?.displayName || site?.domain}</h1>
-                            <div className="text-sm text-[var(--text-faint)]">{site?.domain}</div>
+                            <h1 className="text-2xl sm:text-3xl font-bold text-(--text-white) tracking-tight">{site?.displayName || site?.domain}</h1>
+                            <div className="text-sm text-(--text-faint)">{site?.domain}</div>
                         </div>
                     </div>
                 </div>
 
-                {/* Überblick — die wichtigsten Zahlen, unabhängig von der aktiven Ansicht immer sichtbar */}
+                {/* Überblick - die wichtigsten Zahlen, unabhängig von der aktiven Ansicht immer sichtbar */}
                 <GeoOverviewStats site={site} overview={overview} />
 
                 {/* Mobile: horizontal tab strip instead of a side drawer */}
@@ -2314,8 +2314,8 @@ export default function GeoSitePage() {
                         <button key={item.id} onClick={() => setActiveView(item.id)}
                             className={`px-3 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all shrink-0 ${
                                 activeView === item.id
-                                    ? 'bg-[var(--accent-soft)] border border-[var(--accent-border)] text-[var(--accent)]'
-                                    : 'bg-[var(--surface-06)] border border-[var(--border-subtle)] text-[var(--text-faint)] hover:text-[var(--text-body)]'
+                                    ? 'bg-(--accent-soft) border border-(--accent-border) text-(--accent-ink)'
+                                    : 'bg-(--card) border border-(--line) text-(--text-faint) hover:text-(--text-body)'
                             }`}>
                             {item.label}
                         </button>
@@ -2331,8 +2331,8 @@ export default function GeoSitePage() {
                                 <button key={item.id} onClick={() => setActiveView(item.id)}
                                     className={`text-left px-4 py-3 rounded-xl text-sm font-medium transition-all ${
                                         active
-                                            ? 'bg-[var(--accent-soft)] text-[var(--accent)]'
-                                            : 'text-[var(--text-faint)] hover:text-[var(--text-body)] hover:bg-[var(--surface-08)]'
+                                            ? 'bg-(--accent-soft) text-(--accent-ink)'
+                                            : 'text-(--text-faint) hover:text-(--text-body) hover:bg-(--surface-08)'
                                     }`}>
                                     {item.label}
                                 </button>
@@ -2344,8 +2344,8 @@ export default function GeoSitePage() {
                     <div className="flex-1 min-w-0">
                         {activeView !== 'overview' && (
                             <div className="mb-5">
-                                <h2 className="text-lg font-bold text-[var(--text-white)] mb-1">{activeItem.label}</h2>
-                                <p className="text-sm text-[var(--text-faint)]">{activeItem.description}</p>
+                                <h2 className="text-lg font-bold text-(--text-white) mb-1">{activeItem.label}</h2>
+                                <p className="text-sm text-(--text-faint)">{activeItem.description}</p>
                             </div>
                         )}
                         {activeView === 'overview'    && <ResultsTab siteId={siteId} site={site} plan={plan} onSiteUpdated={fetchSite} onStatsChange={setOverview} />}

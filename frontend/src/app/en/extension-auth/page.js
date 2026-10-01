@@ -29,15 +29,15 @@ export default function ExtensionAuthPageEn() {
     }, [])
 
     return (
-        <div className="min-h-screen bg-[var(--bg-base)] flex items-center justify-center p-6">
+        <div className="min-h-screen bg-(--bg-base) flex items-center justify-center p-6">
             <div className="w-full max-w-sm">
 
                 {/* Logo */}
                 <div className="flex items-center justify-center gap-2.5 mb-8">
-                    <div className="w-9 h-9 rounded-xl bg-[var(--accent)] flex items-center justify-center shadow-lg shadow-[var(--accent-border)] active:scale-[0.97] active:duration-75">
-                        <svg className="w-4.5 h-4.5 text-[var(--text-white)]" viewBox="0 0 192 192" fill="none"><circle cx="96" cy="96" r="50" stroke="currentColor" strokeWidth="14" /><circle cx="110" cy="82" r="13" fill="currentColor" /></svg>
+                    <div className="w-9 h-9 rounded-xl bg-(--text-white) flex items-center justify-center">
+                        <svg className="w-4.5 h-4.5 text-(--text-white)" viewBox="0 0 192 192" fill="none"><circle cx="96" cy="96" r="50" stroke="currentColor" strokeWidth="14" /><circle cx="110" cy="82" r="13" fill="currentColor" /></svg>
                     </div>
-                    <span className="text-xl font-bold text-[var(--text-white)] tracking-tight">
+                    <span className="text-xl font-bold text-(--text-white) tracking-tight">
                         Scanora
                     </span>
                 </div>
@@ -45,25 +45,25 @@ export default function ExtensionAuthPageEn() {
                 {/* Loading */}
                 {status === 'loading' && (
                     <div className="text-center">
-                        <div className="w-8 h-8 border-2 border-violet-500/30 border-t-violet-500 rounded-full animate-spin mx-auto mb-4" />
-                        <p className="text-[var(--text-muted)] text-sm">Connecting…</p>
+                        <div className="w-8 h-8 border-2 border-(--accent-border) border-t-violet-500 rounded-full animate-spin mx-auto mb-4" />
+                        <p className="text-(--text-muted) text-sm">Connecting…</p>
                     </div>
                 )}
 
                 {/* Connected */}
                 {status === 'connected' && (
-                    <div className="bg-[var(--text-white)]/[0.03] border border-[var(--text-white)]/[0.07] rounded-2xl p-8 text-center">
-                        <div className="w-14 h-14 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mx-auto mb-4">
-                            <CheckCircle className="w-7 h-7 text-emerald-400" strokeWidth={1.5} />
+                    <div className="bg-(--card) border border-(--line) rounded-2xl p-8 text-center">
+                        <div className="w-14 h-14 rounded-full bg-(--success-soft) border border-(--success-border) flex items-center justify-center mx-auto mb-4">
+                            <CheckCircle className="w-7 h-7 text-(--success)" strokeWidth={1.5} />
                         </div>
-                        <h1 className="text-xl font-bold text-[var(--text-white)] mb-2">Connected!</h1>
-                        <p className="text-[var(--text-muted)] text-sm leading-relaxed">
+                        <h1 className="text-xl font-bold text-(--text-white) mb-2">Connected!</h1>
+                        <p className="text-(--text-muted) text-sm leading-relaxed">
                             The extension is now connected to your account.<br />
                             This tab will close automatically shortly.
                         </p>
                         <div className="mt-6 flex justify-center gap-1.5">
                             {[0, 1, 2].map(i => (
-                                <span key={i} className="w-1.5 h-1.5 rounded-full bg-violet-500 opacity-60"
+                                <span key={i} className="w-1.5 h-1.5 rounded-full bg-(--accent) opacity-60"
                                       style={{ animation: `pulse 1.2s ${i * 0.2}s infinite` }} />
                             ))}
                         </div>
@@ -72,23 +72,23 @@ export default function ExtensionAuthPageEn() {
 
                 {/* Not logged in */}
                 {status === 'login' && (
-                    <div className="bg-[var(--text-white)]/[0.03] border border-[var(--text-white)]/[0.07] rounded-2xl p-8 text-center">
-                        <div className="w-14 h-14 rounded-full bg-violet-500/10 border border-violet-500/20 flex items-center justify-center mx-auto mb-4">
-                            <LogIn className="w-7 h-7 text-violet-400" strokeWidth={1.5} />
+                    <div className="bg-(--card) border border-(--line) rounded-2xl p-8 text-center">
+                        <div className="w-14 h-14 rounded-full bg-(--accent-soft) border border-(--accent-border) flex items-center justify-center mx-auto mb-4">
+                            <LogIn className="w-7 h-7 text-(--accent-ink)" strokeWidth={1.5} />
                         </div>
-                        <h1 className="text-xl font-bold text-[var(--text-white)] mb-2">Not logged in yet</h1>
-                        <p className="text-[var(--text-muted)] text-sm leading-relaxed mb-6">
-                            Log in to Scanora first. Then reopen the extension — it will connect automatically.
+                        <h1 className="text-xl font-bold text-(--text-white) mb-2">Not logged in yet</h1>
+                        <p className="text-(--text-muted) text-sm leading-relaxed mb-6">
+                            Log in to Scanora first. Then reopen the extension - it will connect automatically.
                         </p>
                         <a
                             href="/en/login"
-                            className="inline-flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-[var(--text-white)] font-semibold text-sm transition-all shadow-lg shadow-violet-500/20"
+                            className="inline-flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-(--accent) hover:bg-(--accent) hover:text-(--on-accent) font-semibold text-sm transition-all shadow-lg shadow-(--accent-border)"
                         >
                             Log in now
                         </a>
-                        <p className="mt-4 text-xs text-[var(--text-faint)]">
+                        <p className="mt-4 text-xs text-(--text-faint)">
                             No account?{' '}
-                            <a href="/en/register" className="text-violet-400 hover:text-violet-300 transition-colors">
+                            <a href="/en/register" className="text-(--accent-ink) hover:text-(--accent-ink) transition-colors">
                                 No registration required
                             </a>
                         </p>
@@ -97,12 +97,12 @@ export default function ExtensionAuthPageEn() {
 
                 {/* Error */}
                 {status === 'error' && (
-                    <div className="bg-[var(--text-white)]/[0.03] border border-red-500/20 rounded-2xl p-8 text-center">
-                        <div className="w-14 h-14 rounded-full bg-red-500/10 border border-red-500/20 flex items-center justify-center mx-auto mb-4">
-                            <AlertCircle className="w-7 h-7 text-red-400" strokeWidth={1.5} />
+                    <div className="bg-(--card) border border-(--danger-border) rounded-2xl p-8 text-center">
+                        <div className="w-14 h-14 rounded-full bg-(--danger-soft) border border-(--danger-border) flex items-center justify-center mx-auto mb-4">
+                            <AlertCircle className="w-7 h-7 text-(--danger)" strokeWidth={1.5} />
                         </div>
-                        <h1 className="text-xl font-bold text-[var(--text-white)] mb-2">Connection failed</h1>
-                        <p className="text-[var(--text-muted)] text-sm">
+                        <h1 className="text-xl font-bold text-(--text-white) mb-2">Connection failed</h1>
+                        <p className="text-(--text-muted) text-sm">
                             Please reload the page or reopen the extension.
                         </p>
                     </div>

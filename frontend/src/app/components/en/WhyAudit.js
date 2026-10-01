@@ -27,7 +27,7 @@ const DECAY_ITEMS = [
     {
         icon: TrendingDown,
         title: 'Rankings drop without warning',
-        desc: 'Google makes thousands of changes to its search systems every year by its own account. Any change can shift your position — you get no notification.',
+        desc: 'Google makes thousands of changes to its search systems every year by its own account. Any change can shift your position - you get no notification.',
     },
     {
         icon: ShieldOff,
@@ -36,7 +36,7 @@ const DECAY_ITEMS = [
     },
     {
         icon: Clock,
-        title: 'Competitors optimize — you stand still',
+        title: 'Competitors optimize - you stand still',
         desc: "Your competitors check their pages regularly. Without monitoring, you lose positions even if you didn't do anything wrong yourself.",
     },
     {
@@ -48,15 +48,15 @@ const DECAY_ITEMS = [
 
 export default function WhyAudit() {
     return (
-        <section className="relative py-16 md:py-28 bg-[var(--bg-base)] overflow-hidden">
+        <section className="relative py-16 md:py-28 bg-(--bg-base) overflow-hidden">
             <div className="relative z-10 max-w-6xl mx-auto px-5 sm:px-8">
 
                 <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12 sm:mb-16">
                     <h2 className="text-3xl sm:text-5xl font-bold mb-4 leading-tight tracking-tight">
-                        Your rankings decay. <span className="text-[var(--text-faint)]">Every month.</span>
+                        Your rankings decay. <span className="text-(--text-faint)">Every month.</span>
                     </h2>
-                    <p className="text-[var(--text-muted)] max-w-xl mx-auto text-base sm:text-lg leading-relaxed">
-                        Google keeps changing, so does your site — and every change can introduce new problems you can't see.
+                    <p className="text-(--text-muted) max-w-xl mx-auto text-base sm:text-lg leading-relaxed">
+                        Google keeps changing, so does your site - and every change can introduce new problems you can't see.
                     </p>
                 </motion.div>
 
@@ -64,13 +64,13 @@ export default function WhyAudit() {
                     {STATS.map((s, i) => (
                         <motion.div key={i}
                             initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
-                            className="flex sm:flex-col items-center sm:items-start gap-4 sm:gap-0 bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl p-5 sm:p-8 shadow-card hover-lift hover:shadow-card-hover hover:-translate-y-2 transition-all duration-200">
-                            <div className="text-4xl sm:text-5xl font-black shrink-0 text-[var(--text-white)]">{s.value}</div>
+                            className="flex sm:flex-col items-center sm:items-start gap-4 sm:gap-0 bg-(--card) border border-(--line) rounded-2xl p-5 sm:p-8 shadow-card hover-lift hover:shadow-card-hover transition-all duration-200">
+                            <div className="text-4xl sm:text-5xl font-black shrink-0 text-(--text-white)">{s.value}</div>
                             <div>
-                                <div className="text-sm font-semibold text-[var(--text-white)] sm:mt-3 sm:mb-2 leading-snug">{s.label}</div>
-                                <div className="text-xs text-[var(--text-faint)] leading-relaxed mt-0.5">{s.sub}</div>
+                                <div className="text-sm font-semibold text-(--text-white) sm:mt-3 sm:mb-2 leading-snug">{s.label}</div>
+                                <div className="text-xs text-(--text-faint) leading-relaxed mt-0.5">{s.sub}</div>
                                 <a href={s.source.url} target="_blank" rel="noopener noreferrer"
-                                    className="block text-[10px] text-[var(--text-muted)] hover:text-[var(--text-body)] underline underline-offset-2 mt-2 transition-colors">
+                                    className="block text-[10px] text-(--text-muted) hover:text-(--text-body) underline underline-offset-2 mt-2 transition-colors">
                                     Source: {s.source.label} ↗
                                 </a>
                             </div>
@@ -82,20 +82,20 @@ export default function WhyAudit() {
                     <h3 className="text-2xl sm:text-3xl font-bold text-center mb-3 tracking-tight">
                         What happens if you don't check
                     </h3>
-                    <p className="text-[var(--text-muted)] text-center text-sm mb-8 sm:mb-10 max-w-lg mx-auto leading-relaxed">
-                        Your website changes with every deploy, every piece of content, every update — not always for the better.
+                    <p className="text-(--text-muted) text-center text-sm mb-8 sm:mb-10 max-w-lg mx-auto leading-relaxed">
+                        Your website changes with every deploy, every piece of content, every update - not always for the better.
                     </p>
                     <div className="grid sm:grid-cols-2 gap-3 sm:gap-4">
                         {DECAY_ITEMS.map((item, i) => (
                             <motion.div key={i}
                                 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}
-                                className="flex gap-4 bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl p-4 sm:p-6 hover-lift hover:shadow-card hover:-translate-y-1 transition-all duration-200">
-                                <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 bg-[var(--accent-soft)] border border-[var(--accent-border)]">
-                                    <item.icon className="w-5 h-5 text-[var(--accent)]" strokeWidth={1.8} />
+                                className="flex gap-4 bg-(--card) border border-(--line) rounded-2xl p-4 sm:p-6 hover-lift hover:shadow-card transition-all duration-200">
+                                <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 bg-(--accent-soft) border border-(--accent-border)">
+                                    <item.icon className="w-5 h-5 text-(--accent-ink)" strokeWidth={1.8} />
                                 </div>
                                 <div>
-                                    <div className="text-sm font-semibold text-[var(--text-white)] mb-1.5">{item.title}</div>
-                                    <div className="text-xs text-[var(--text-faint)] leading-relaxed">{item.desc}</div>
+                                    <div className="text-sm font-semibold text-(--text-white) mb-1.5">{item.title}</div>
+                                    <div className="text-xs text-(--text-faint) leading-relaxed">{item.desc}</div>
                                 </div>
                             </motion.div>
                         ))}

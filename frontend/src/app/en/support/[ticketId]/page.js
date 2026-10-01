@@ -11,30 +11,30 @@ const STATUSES = [
         label: 'Waiting for support',
         description: 'Your ticket has been received and is waiting to be handled.',
         icon: Clock,
-        color: 'text-amber-400',
-        bg: 'bg-amber-500/10',
-        border: 'border-amber-500/20',
-        dot: 'bg-amber-400',
+        color: 'text-(--warning)',
+        bg: 'bg-(--warning-soft)',
+        border: 'border-(--warning-border)',
+        dot: 'bg-(--warning)',
     },
     {
         key: 'in_progress',
         label: 'In progress',
         description: 'A team member has taken over your ticket and is working on a solution.',
         icon: Wrench,
-        color: 'text-blue-400',
-        bg: 'bg-blue-500/10',
-        border: 'border-blue-500/20',
-        dot: 'bg-blue-400',
+        color: 'text-(--accent-ink)',
+        bg: 'bg-(--accent-soft)',
+        border: 'border-(--accent-border)',
+        dot: 'bg-(--accent)',
     },
     {
         key: 'closed',
         label: 'Ticket closed',
         description: 'Your ticket has been handled and closed.',
         icon: CheckCircle,
-        color: 'text-emerald-400',
-        bg: 'bg-emerald-500/10',
-        border: 'border-emerald-500/20',
-        dot: 'bg-emerald-400',
+        color: 'text-(--success)',
+        bg: 'bg-(--success-soft)',
+        border: 'border-(--success-border)',
+        dot: 'bg-(--success)',
     },
 ]
 
@@ -85,34 +85,34 @@ export default function TicketStatusPageEn() {
     const currentIndex = ticket ? getStatusIndex(ticket.status) : 0
 
     return (
-        <div className="min-h-screen bg-[var(--bg-base)] flex flex-col">
-            <nav className="border-b border-[var(--text-white)]/5 bg-[var(--bg-base)]/90 backdrop-blur-xl">
+        <div className="min-h-screen bg-(--bg-base) flex flex-col">
+            <nav className="border-b border-(--line) bg-(--bg-base)/90 backdrop-blur-xl">
                 <div className="max-w-5xl mx-auto px-5 sm:px-8 h-16 flex items-center">
                     <Link href="/en" className="flex items-center gap-2">
-                        <div className="w-8 h-8 rounded-lg bg-[var(--accent)] flex items-center justify-center">
-                            <svg className="w-4 h-4 text-[var(--text-white)]" viewBox="0 0 192 192" fill="none"><circle cx="96" cy="96" r="50" stroke="currentColor" strokeWidth="14" /><circle cx="110" cy="82" r="13" fill="currentColor" /></svg>
+                        <div className="w-8 h-8 rounded-lg bg-(--accent) flex items-center justify-center">
+                            <svg className="w-4 h-4 text-(--text-white)" viewBox="0 0 192 192" fill="none"><circle cx="96" cy="96" r="50" stroke="currentColor" strokeWidth="14" /><circle cx="110" cy="82" r="13" fill="currentColor" /></svg>
                         </div>
-                        <span className="font-bold text-[var(--text-white)]">Scanora</span>
+                        <span className="font-bold text-(--text-white)">Scanora</span>
                     </Link>
                 </div>
             </nav>
 
             <div className="flex-1 flex items-center justify-center px-5 py-16">
                 {loading && (
-                    <div className="flex items-center gap-3 text-[var(--text-muted)]">
-                        <div className="w-5 h-5 border-2 border-[var(--border-strong)] border-t-violet-500 rounded-full animate-spin" />
+                    <div className="flex items-center gap-3 text-(--text-muted)">
+                        <div className="w-5 h-5 border-2 border-(--border-strong) border-t-violet-500 rounded-full animate-spin" />
                         Loading ticket...
                     </div>
                 )}
 
                 {notFound && (
                     <div className="text-center">
-                        <div className="w-16 h-16 rounded-2xl bg-red-500/10 border border-red-500/20 flex items-center justify-center mx-auto mb-4">
-                            <XCircle className="w-7 h-7 text-red-400" />
+                        <div className="w-16 h-16 rounded-2xl bg-(--danger-soft) border border-(--danger-border) flex items-center justify-center mx-auto mb-4">
+                            <XCircle className="w-7 h-7 text-(--danger)" />
                         </div>
-                        <h1 className="text-xl font-bold text-[var(--text-white)] mb-2">Ticket not found</h1>
-                        <p className="text-[var(--text-muted)] text-sm mb-6">Ticket number <span className="font-mono text-[var(--text-body)]">{ticketId}</span> doesn't exist.</p>
-                        <Link href="/en" className="text-violet-400 hover:text-violet-300 text-sm transition-colors">← Back to homepage</Link>
+                        <h1 className="text-xl font-bold text-(--text-white) mb-2">Ticket not found</h1>
+                        <p className="text-(--text-muted) text-sm mb-6">Ticket number <span className="font-mono text-(--text-body)">{ticketId}</span> doesn't exist.</p>
+                        <Link href="/en" className="text-(--accent-ink) hover:text-(--accent-ink) text-sm transition-colors">← Back to homepage</Link>
                     </div>
                 )}
 
@@ -124,9 +124,9 @@ export default function TicketStatusPageEn() {
                     >
                         {/* Header */}
                         <div className="text-center">
-                            <p className="text-xs text-[var(--text-faint)] uppercase tracking-wider font-semibold mb-1">Support Ticket</p>
-                            <h1 className="text-2xl font-bold text-[var(--text-white)] mb-1 font-mono">{ticket.ticketNumber}</h1>
-                            <p className="text-[var(--text-muted)] text-sm">{ticket.subject}</p>
+                            <p className="text-xs text-(--text-faint) font-semibold mb-1">Support Ticket</p>
+                            <h1 className="text-2xl font-bold text-(--text-white) mb-1 font-mono">{ticket.ticketNumber}</h1>
+                            <p className="text-(--text-muted) text-sm">{ticket.subject}</p>
                         </div>
 
                         {/* Current status */}
@@ -135,12 +135,12 @@ export default function TicketStatusPageEn() {
                                 <div className={`w-2.5 h-2.5 rounded-full ${currentStatus.dot} animate-pulse`} />
                                 <span className={`font-semibold ${currentStatus.color}`}>{currentStatus.label}</span>
                             </div>
-                            <p className="text-[var(--text-muted)] text-sm mt-2 ml-5">{currentStatus.description}</p>
+                            <p className="text-(--text-muted) text-sm mt-2 ml-5">{currentStatus.description}</p>
                         </div>
 
                         {/* Progress stepper */}
-                        <div className="bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-2xl p-6">
-                            <p className="text-xs text-[var(--text-faint)] uppercase tracking-wider font-semibold mb-5">History</p>
+                        <div className="bg-(--card) border border-(--line) rounded-2xl p-6">
+                            <p className="text-xs text-(--text-faint) font-semibold mb-5">History</p>
                             <div className="space-y-0">
                                 {STATUSES.map((s, i) => {
                                     const done = i <= currentIndex
@@ -153,17 +153,17 @@ export default function TicketStatusPageEn() {
                                                     active
                                                         ? `${s.bg} ${s.border}`
                                                         : done
-                                                            ? 'bg-emerald-500/10 border-emerald-500/30'
-                                                            : 'bg-[var(--text-white)]/[0.03] border-[var(--text-white)]/10'
+                                                            ? 'bg-(--success-soft) border-(--success-border)'
+                                                            : 'bg-(--card) border-(--line)'
                                                 }`}>
-                                                    <Icon className={`w-3.5 h-3.5 ${active ? s.color : done ? 'text-emerald-400' : 'text-[var(--text-faint)]'}`} />
+                                                    <Icon className={`w-3.5 h-3.5 ${active ? s.color : done ? 'text-(--success)' : 'text-(--text-faint)'}`} />
                                                 </div>
                                                 {i < STATUSES.length - 1 && (
-                                                    <div className={`w-0.5 h-8 mt-1 ${done && i < currentIndex ? 'bg-emerald-500/30' : 'bg-[var(--text-white)]/[0.06]'}`} />
+                                                    <div className={`w-0.5 h-8 mt-1 ${done && i < currentIndex ? 'bg-(--success)' : 'bg-(--tint)'}`} />
                                                 )}
                                             </div>
                                             <div className={`pb-8 ${i === STATUSES.length - 1 ? 'pb-0' : ''}`}>
-                                                <p className={`text-sm font-medium mt-1 ${active ? s.color : done ? 'text-[var(--text-body)]' : 'text-[var(--text-faint)]'}`}>
+                                                <p className={`text-sm font-medium mt-1 ${active ? s.color : done ? 'text-(--text-body)' : 'text-(--text-faint)'}`}>
                                                     {s.label}
                                                 </p>
                                             </div>
@@ -175,27 +175,27 @@ export default function TicketStatusPageEn() {
 
                         {/* Meta */}
                         <div className="grid grid-cols-2 gap-3">
-                            <div className="bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-xl px-4 py-3">
-                                <p className="text-xs text-[var(--text-faint)] mb-1">Created on</p>
-                                <p className="text-sm text-[var(--text-body)]">
+                            <div className="bg-(--card) border border-(--line) rounded-xl px-4 py-3">
+                                <p className="text-xs text-(--text-faint) mb-1">Created on</p>
+                                <p className="text-sm text-(--text-body)">
                                     {new Date(ticket.createdAt).toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric' })}
                                 </p>
                             </div>
-                            <div className="bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-xl px-4 py-3">
-                                <p className="text-xs text-[var(--text-faint)] mb-1">Last updated</p>
-                                <p className="text-sm text-[var(--text-body)]">
+                            <div className="bg-(--card) border border-(--line) rounded-xl px-4 py-3">
+                                <p className="text-xs text-(--text-faint) mb-1">Last updated</p>
+                                <p className="text-sm text-(--text-body)">
                                     {new Date(ticket.updatedAt).toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric' })}
                                 </p>
                             </div>
                         </div>
 
                         {/* History & replies */}
-                        <div className="bg-[var(--text-white)]/[0.02] border border-[var(--text-white)]/[0.06] rounded-2xl p-6 space-y-3">
-                            <p className="text-xs text-[var(--text-faint)] uppercase tracking-wider font-semibold mb-2">Conversation</p>
+                        <div className="bg-(--card) border border-(--line) rounded-2xl p-6 space-y-3">
+                            <p className="text-xs text-(--text-faint) font-semibold mb-2">Conversation</p>
 
-                            <div className="bg-[var(--text-white)]/[0.03] rounded-xl p-4">
-                                <p className="text-xs text-[var(--text-faint)] mb-1">Your message</p>
-                                <p className="text-sm text-[var(--text-body)] whitespace-pre-wrap">{ticket.message}</p>
+                            <div className="bg-(--card) rounded-xl p-4">
+                                <p className="text-xs text-(--text-faint) mb-1">Your message</p>
+                                <p className="text-sm text-(--text-body) whitespace-pre-wrap">{ticket.message}</p>
                             </div>
 
                             {(ticket.messages || []).map((m, i) => (
@@ -203,20 +203,20 @@ export default function TicketStatusPageEn() {
                                     key={i}
                                     className={`rounded-xl p-4 ${
                                         m.author === 'admin'
-                                            ? 'bg-violet-500/10 border border-violet-500/20'
-                                            : 'bg-[var(--text-white)]/[0.03] ml-auto'
+                                            ? 'bg-(--accent-soft) border border-(--accent-border)'
+                                            : 'bg-(--card) ml-auto'
                                     }`}
                                 >
-                                    <p className="text-xs text-[var(--text-faint)] mb-1">
+                                    <p className="text-xs text-(--text-faint) mb-1">
                                         {m.author === 'admin' ? 'Scanora Support' : 'You'} ·{' '}
                                         {new Date(m.createdAt).toLocaleString('en-US', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' })}
                                     </p>
-                                    <p className="text-sm text-[var(--text-body)] whitespace-pre-wrap">{m.body}</p>
+                                    <p className="text-sm text-(--text-body) whitespace-pre-wrap">{m.body}</p>
                                 </div>
                             ))}
 
                             {ticket.status === 'closed' && (
-                                <p className="text-xs text-amber-400/80">This ticket is closed — replying will reopen it.</p>
+                                <p className="text-xs text-(--warning)">This ticket is closed - replying will reopen it.</p>
                             )}
 
                             <div className="flex gap-2 pt-1">
@@ -225,21 +225,21 @@ export default function TicketStatusPageEn() {
                                     onChange={e => setReplyText(e.target.value)}
                                     placeholder="Write a reply..."
                                     rows={2}
-                                    className="flex-1 bg-[var(--text-white)]/[0.03] border border-[var(--text-white)]/10 rounded-xl px-3 py-2 text-sm text-[var(--text-white)] placeholder:text-[var(--text-faint)] resize-none focus:outline-none focus:border-violet-500/40"
+                                    className="flex-1 bg-(--card) border border-(--line) rounded-xl px-3 py-2 text-sm text-(--text-white) placeholder:text-(--text-faint) resize-none focus:outline-none focus:border-(--accent) focus:shadow-[0_0_0_4px_var(--accent-ring)]"
                                 />
                                 <button
                                     onClick={sendReply}
                                     disabled={sending || !replyText.trim()}
-                                    className="flex items-center gap-1.5 px-4 rounded-xl bg-violet-500/15 border border-violet-500/30 text-violet-300 text-sm font-medium hover:bg-violet-500/25 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                                    className="flex items-center gap-1.5 px-4 rounded-xl bg-(--accent-soft) border border-(--accent-border) text-(--accent-ink) text-sm font-medium hover:bg-(--accent-soft) transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
                                 >
                                     <Send className="w-3.5 h-3.5" /> Send
                                 </button>
                             </div>
                         </div>
 
-                        <p className="text-center text-xs text-[var(--text-faint)]">
+                        <p className="text-center text-xs text-(--text-faint)">
                             This page doesn't refresh automatically —{' '}
-                            <button onClick={() => window.location.reload()} className="text-[var(--text-faint)] hover:text-[var(--text-muted)] underline underline-offset-2">
+                            <button onClick={() => window.location.reload()} className="text-(--text-faint) hover:text-(--text-muted) underline underline-offset-2">
                                 reload
                             </button>
                             {' '}to see the current status.

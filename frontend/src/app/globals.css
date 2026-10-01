@@ -1,110 +1,134 @@
 @import "tailwindcss";
 
+/* dark: utilities follow the ThemeToggle class, not the OS setting. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 /*
-  Color system — 60/30/10, three fixed OKLCH hues, no gradients between them.
-  60% Dominant  → bg-base / bg-surface (two shades of one hue), every section background.
-  30% Secondary → used at low alpha for card surfaces and borders (--surface-*, --border-*).
-  10% Accent    → oklch(...) blue-cyan, reserved for buttons, icon chips, badges and focus
-                  states only — never for headline or body text.
+  Color system: cool paper + ink + one cobalt accent. Light is the default theme.
+  Dominant  → bg-base (paper) and bg-surface (cobalt-tinted band) for section backgrounds.
+  Secondary → --card for raised surfaces, --border-* / --line for edges.
+  Accent    → cobalt, reserved for buttons, links, focus, chart marks and highlights.
   Keep new sections on this palette instead of introducing extra hues.
 
-  Light/dark: the .light class (toggled by ThemeToggle, persisted in localStorage, applied
-  before paint by the inline script in layout.js) overrides the same token names below —
-  every component that reads these vars (or the semantic text-[var(--text-*)] utilities)
-  adapts automatically. Dark stays the default so existing users see no change.
+  Light/dark: the .dark class (toggled by ThemeToggle, persisted in localStorage, applied
+  before paint by the inline script in layout.js) overrides the same token names below,
+  so every component that reads these vars adapts automatically.
+
+  Radius rule: controls (buttons, inputs) 10px, cards 16px, status pills fully round.
 */
 :root {
-  --bg-base: oklch(13% 0.028 261.692);
-  --bg-surface: oklch(16.5% 0.03 261.692);
-  --bg-surface-2: oklch(19.5% 0.03 261.692);
-  --surface-06: oklch(37.3% 0.034 259.733 / 8%);
-  --surface-08: oklch(37.3% 0.034 259.733 / 12%);
-  --surface-10: oklch(37.3% 0.034 259.733 / 16%);
-  --border-hairline: oklch(100% 0 0 / 8%);
-  --border-subtle: oklch(37.3% 0.034 259.733 / 35%);
-  --border-strong: oklch(37.3% 0.034 259.733 / 60%);
-  --accent: oklch(68.5% 0.145 237.323);
-  --accent-soft: oklch(68.5% 0.145 237.323 / 12%);
-  --accent-soft-strong: oklch(68.5% 0.145 237.323 / 18%);
-  --accent-border: oklch(68.5% 0.145 237.323 / 35%);
-  --accent-glow: oklch(68.5% 0.145 237.323 / 10%);
+  color-scheme: light;
+  --bg-base: oklch(98.4% 0.004 255);
+  --bg-surface: oklch(96.2% 0.012 262);
+  --bg-surface-2: oklch(93.5% 0.014 262);
+  --card: oklch(99.6% 0.002 255);
+  --tint: oklch(95.6% 0.016 262);
+  --surface-06: oklch(21% 0.035 264 / 3.5%);
+  --surface-08: oklch(21% 0.035 264 / 5.5%);
+  --surface-10: oklch(21% 0.035 264 / 8%);
+  --border-hairline: oklch(21% 0.035 264 / 7%);
+  --border-subtle: oklch(90% 0.012 262);
+  --border-strong: oklch(82% 0.016 262);
+  --line: oklch(90% 0.012 262);
+  --line-soft: oklch(93.5% 0.008 262);
+  --accent: oklch(49% 0.2 262);
+  --accent-hover: oklch(44% 0.2 262);
+  --accent-ink: oklch(43% 0.19 262);
+  --on-accent: oklch(99% 0.003 262);
+  --accent-soft: oklch(49% 0.2 262 / 8%);
+  --accent-soft-strong: oklch(49% 0.2 262 / 14%);
+  --accent-border: oklch(49% 0.2 262 / 30%);
+  --accent-glow: oklch(49% 0.2 262 / 8%);
+  --accent-ring: oklch(49% 0.2 262 / 22%);
 
-  /* Semantic text tiers — same values body/headings already used, just named so
-     components can opt in via text-[var(--text-*)] and respond to theme switches. */
-  --text-white: oklch(97% 0.006 260);
-  --text-body: oklch(80% 0.014 259.733);
-  --text-muted: oklch(66% 0.02 259.733);
-  --text-faint: oklch(60% 0.02 259.733);
+  /* Semantic text tiers. --text-white is the strongest ink in either theme (name kept
+     for backwards compatibility with existing text-(--text-white) utilities). */
+  --text-white: oklch(21% 0.035 264);
+  --text-body: oklch(37% 0.03 264);
+  --text-muted: oklch(47% 0.025 264);
+  --text-faint: oklch(49% 0.02 264);
 
-  /* Semantic status colors — layered on top of the primitives above so every
-     "good/warning/danger" state in the app (rankings, difficulty, spam score)
-     reads from one place instead of scattered Tailwind palette classes. */
-  --success: oklch(72% 0.15 155);
-  --success-soft: oklch(72% 0.15 155 / 12%);
-  --success-border: oklch(72% 0.15 155 / 30%);
-  --warning: oklch(80% 0.15 80);
-  --warning-soft: oklch(80% 0.15 80 / 12%);
-  --warning-border: oklch(80% 0.15 80 / 30%);
-  --danger: oklch(65% 0.19 25);
-  --danger-soft: oklch(65% 0.19 25 / 12%);
-  --danger-border: oklch(65% 0.19 25 / 30%);
+  /* Semantic status colors: every "good/warning/danger" state reads from one place. */
+  --success: oklch(47% 0.13 155);
+  --success-soft: oklch(47% 0.13 155 / 10%);
+  --success-border: oklch(47% 0.13 155 / 30%);
+  --warning: oklch(52% 0.13 65);
+  --warning-soft: oklch(58% 0.14 70 / 14%);
+  --warning-border: oklch(58% 0.14 70 / 35%);
+  --danger: oklch(50% 0.19 25);
+  --danger-soft: oklch(50% 0.19 25 / 10%);
+  --danger-border: oklch(50% 0.19 25 / 30%);
 
   /* Motion tokens (Animation Timing / Easing Curves) */
   --ease-out: cubic-bezier(0, 0, .2, 1);
+  --ease-smooth: cubic-bezier(.16, 1, .3, 1);
   --ease-spring: cubic-bezier(.34, 1.56, .64, 1);
   --dur-press: 85ms;
   --dur-hover-card: 200ms;
   --dur-enter: 240ms;
   --dur-exit: 140ms;
 
-  /* Layered shadow system (Shadow Elevation / Perfect Card): tight contact shadow +
-     mid-distance shadow, with an optional accent-tinted ambient glow on hover. */
-  --shadow-tight: 0 1px 2px rgba(0, 0, 0, .5);
-  --shadow-mid: 0 10px 28px -8px rgba(0, 0, 0, .55);
-  --shadow-ambient: 0 32px 70px -20px var(--accent-glow);
+  /* Layered shadow system, tinted to the ink hue (never pure black on paper). */
+  --shadow-tight: 0 1px 2px oklch(30% 0.04 264 / 6%);
+  --shadow-mid: 0 18px 44px -22px oklch(30% 0.06 264 / 22%);
+  --shadow-ambient: 0 28px 60px -24px var(--accent-glow);
   --shadow-card: var(--shadow-tight), var(--shadow-mid);
-  --shadow-card-hover: var(--shadow-tight), 0 18px 40px -10px rgba(0, 0, 0, .6), var(--shadow-ambient);
+  --shadow-card-hover: var(--shadow-tight), 0 22px 50px -22px oklch(30% 0.06 264 / 28%), var(--shadow-ambient);
+  --shadow-demo: 0 2px 4px oklch(30% 0.04 264 / 5%), 0 40px 90px -40px oklch(30% 0.08 264 / 35%);
 }
 
-/* Light mode — same brand hues, re-tuned for a warm cream surface (deliberately not
-   #fff/near-white; flat white read as too sterile/bright against the blue accent). */
-.light {
-  color-scheme: light;
-  --bg-base: oklch(93% 0.016 78);
-  --bg-surface: oklch(96.5% 0.012 78);
-  --bg-surface-2: oklch(89% 0.018 78);
-  --surface-06: oklch(38% 0.03 255 / 5%);
-  --surface-08: oklch(38% 0.03 255 / 8%);
-  --surface-10: oklch(38% 0.03 255 / 13%);
-  --border-hairline: oklch(25% 0.02 255 / 9%);
-  --border-subtle: oklch(38% 0.03 255 / 18%);
-  --border-strong: oklch(38% 0.03 255 / 32%);
-  --accent: oklch(52% 0.17 230);
-  --accent-soft: oklch(52% 0.17 230 / 9%);
-  --accent-soft-strong: oklch(52% 0.17 230 / 15%);
-  --accent-border: oklch(52% 0.17 230 / 35%);
-  --accent-glow: oklch(52% 0.17 230 / 9%);
+/* Dark mode: same brand hue, navy ground. */
+.dark {
+  color-scheme: dark;
+  --bg-base: oklch(14% 0.028 262);
+  --bg-surface: oklch(17% 0.03 262);
+  --bg-surface-2: oklch(20.5% 0.03 262);
+  --card: oklch(17.5% 0.03 262);
+  --tint: oklch(21% 0.032 262);
+  --surface-06: oklch(80% 0.03 262 / 5%);
+  --surface-08: oklch(80% 0.03 262 / 8%);
+  --surface-10: oklch(80% 0.03 262 / 12%);
+  --border-hairline: oklch(100% 0 0 / 8%);
+  --border-subtle: oklch(30% 0.03 262);
+  --border-strong: oklch(38% 0.03 262);
+  --line: oklch(30% 0.03 262);
+  --line-soft: oklch(25% 0.03 262);
+  --accent: oklch(70% 0.14 258);
+  --accent-hover: oklch(75% 0.13 258);
+  --accent-ink: oklch(78% 0.12 258);
+  --on-accent: oklch(14% 0.028 262);
+  --accent-soft: oklch(70% 0.14 258 / 12%);
+  --accent-soft-strong: oklch(70% 0.14 258 / 18%);
+  --accent-border: oklch(70% 0.14 258 / 35%);
+  --accent-glow: oklch(70% 0.14 258 / 10%);
+  --accent-ring: oklch(70% 0.14 258 / 28%);
 
-  --text-white: oklch(24% 0.025 255);
-  --text-body: oklch(35% 0.028 255);
-  --text-muted: oklch(48% 0.026 255);
-  --text-faint: oklch(48% 0.02 255);
+  --text-white: oklch(97% 0.006 260);
+  --text-body: oklch(82% 0.014 260);
+  --text-muted: oklch(70% 0.02 260);
+  --text-faint: oklch(66% 0.02 260);
 
-  --success: oklch(48% 0.13 155);
-  --success-soft: oklch(48% 0.13 155 / 10%);
-  --success-border: oklch(48% 0.13 155 / 35%);
-  --warning: oklch(55% 0.16 80);
-  --warning-soft: oklch(55% 0.16 80 / 10%);
-  --warning-border: oklch(55% 0.16 80 / 35%);
-  --danger: oklch(50% 0.19 25);
-  --danger-soft: oklch(50% 0.19 25 / 12%);
-  --danger-border: oklch(50% 0.19 25 / 35%);
+  --success: oklch(72% 0.15 155);
+  --success-soft: oklch(72% 0.15 155 / 12%);
+  --success-border: oklch(72% 0.15 155 / 30%);
+  --warning: oklch(80% 0.15 80);
+  --warning-soft: oklch(80% 0.15 80 / 12%);
+  --warning-border: oklch(80% 0.15 80 / 30%);
+  --danger: oklch(68% 0.19 25);
+  --danger-soft: oklch(68% 0.19 25 / 12%);
+  --danger-border: oklch(68% 0.19 25 / 30%);
 
-  --shadow-tight: 0 1px 2px rgba(20, 30, 55, .06);
-  --shadow-mid: 0 10px 24px -8px rgba(20, 30, 55, .10);
-  --shadow-ambient: 0 28px 60px -20px var(--accent-glow);
+  --shadow-tight: 0 1px 2px oklch(5% 0.03 262 / 50%);
+  --shadow-mid: 0 18px 44px -20px oklch(5% 0.03 262 / 70%);
+  --shadow-ambient: 0 32px 70px -20px var(--accent-glow);
   --shadow-card: var(--shadow-tight), var(--shadow-mid);
-  --shadow-card-hover: var(--shadow-tight), 0 16px 34px -10px rgba(20, 30, 55, .14), var(--shadow-ambient);
+  --shadow-card-hover: var(--shadow-tight), 0 22px 50px -20px oklch(5% 0.03 262 / 75%), var(--shadow-ambient);
+  --shadow-demo: 0 2px 4px oklch(5% 0.03 262 / 40%), 0 40px 90px -40px oklch(5% 0.03 262 / 80%);
+}
+
+@theme inline {
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, 'SF Mono', Menlo, monospace;
 }
 
 * {
@@ -133,9 +157,83 @@ html {
 body {
   background: var(--bg-base);
   color: var(--text-white);
+  font-family: var(--font-sans);
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
   transition: background-color .25s var(--ease-out), color .25s var(--ease-out);
 }
+
+h1, h2, h3 {
+  text-wrap: balance;
+}
+
+/* Shared building blocks of the site design. Components compose these with Tailwind
+   utilities so buttons, cards and labels look identical on every page. */
+.btn-primary,
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  white-space: nowrap;
+  min-height: 48px;
+  padding: 0 22px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 15px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color .2s var(--ease-smooth), border-color .2s, transform .2s var(--ease-smooth);
+}
+.btn-primary {
+  background: var(--accent);
+  color: var(--on-accent);
+  border: 0;
+}
+.btn-primary:hover { background: var(--accent-hover); transform: translateY(-1px); }
+.btn-ghost {
+  background: transparent;
+  color: var(--text-white);
+  border: 1px solid var(--line);
+}
+.btn-ghost:hover { background: var(--card); border-color: var(--text-muted); }
+.btn-primary:active, .btn-ghost:active { transform: scale(.98); }
+.btn-primary:disabled, .btn-ghost:disabled { cursor: progress; opacity: .85; transform: none; }
+.btn-sm { min-height: 40px; font-size: 14px; padding: 0 16px; }
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+}
+
+.eyebrow {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent-ink);
+}
+
+.prose-site {
+  color: var(--text-body);
+  font-size: 17px;
+  line-height: 1.75;
+}
+.prose-site h2 { color: var(--text-white); font-size: 28px; line-height: 1.2; letter-spacing: -0.03em; font-weight: 700; margin: 56px 0 16px; }
+.prose-site h3 { color: var(--text-white); font-size: 20px; line-height: 1.3; letter-spacing: -0.015em; font-weight: 600; margin: 32px 0 12px; }
+.prose-site p + p { margin-top: 16px; }
+.prose-site a { color: var(--accent-ink); text-decoration: underline; text-underline-offset: 3px; }
+.prose-site code { font-family: var(--font-mono); font-size: .9em; background: var(--tint); padding: 2px 6px; border-radius: 6px; color: var(--text-white); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .site-enter { animation: site-up .7s var(--ease-smooth) both; }
+  @supports (animation-timeline: view()) {
+    .reveal { animation: site-rise linear both; animation-timeline: view(); animation-range: entry 0% entry 40%; }
+  }
+}
+@keyframes site-up { from { opacity: .001; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes site-rise { from { opacity: .35; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+@keyframes site-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+@keyframes site-out { to { opacity: 0; } }
 
 /* Gradient radial utility */
 .bg-gradient-radial {

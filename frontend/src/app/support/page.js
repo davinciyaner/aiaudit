@@ -5,9 +5,9 @@ import { Search, Mail, Hash, ArrowRight, Clock, Wrench, CheckCircle } from 'luci
 import Link from 'next/link'
 
 const STATUS_CONFIG = {
-    open:        { label: 'Warten auf Support', icon: Clock,         color: 'text-amber-400',   bg: 'bg-amber-500/10',   border: 'border-amber-500/20' },
-    in_progress: { label: 'Wird bearbeitet',    icon: Wrench,        color: 'text-blue-400',    bg: 'bg-blue-500/10',    border: 'border-blue-500/20' },
-    closed:      { label: 'Geschlossen',         icon: CheckCircle,   color: 'text-emerald-400', bg: 'bg-emerald-500/10', border: 'border-emerald-500/20' },
+    open:        { label: 'Warten auf Support', icon: Clock,         color: 'text-(--warning)',   bg: 'bg-(--warning-soft)',   border: 'border-(--warning-border)' },
+    in_progress: { label: 'Wird bearbeitet',    icon: Wrench,        color: 'text-(--accent-ink)',    bg: 'bg-(--accent-soft)',    border: 'border-(--accent-border)' },
+    closed:      { label: 'Geschlossen',         icon: CheckCircle,   color: 'text-(--success)', bg: 'bg-(--success-soft)', border: 'border-(--success-border)' },
 }
 
 export default function SupportPage() {
@@ -45,31 +45,31 @@ export default function SupportPage() {
     }
 
     return (
-        <div className="min-h-screen bg-[var(--bg-base)]">
-            <nav className="border-b border-[var(--text-white)]/5 bg-[var(--bg-base)]/90 backdrop-blur-xl">
+        <div className="min-h-screen bg-(--bg-base)">
+            <nav className="border-b border-(--line) bg-(--bg-base)/90 backdrop-blur-xl">
                 <div className="max-w-5xl mx-auto px-5 sm:px-8 h-16 flex items-center">
                     <Link href="/" className="flex items-center gap-2">
-                        <div className="w-8 h-8 rounded-lg bg-[var(--accent)] flex items-center justify-center">
-                            <svg className="w-4 h-4 text-[var(--text-white)]" viewBox="0 0 192 192" fill="none"><circle cx="96" cy="96" r="50" stroke="currentColor" strokeWidth="14" /><circle cx="110" cy="82" r="13" fill="currentColor" /></svg>
+                        <div className="w-8 h-8 rounded-lg bg-(--accent) flex items-center justify-center">
+                            <svg className="w-4 h-4 text-(--text-white)" viewBox="0 0 192 192" fill="none"><circle cx="96" cy="96" r="50" stroke="currentColor" strokeWidth="14" /><circle cx="110" cy="82" r="13" fill="currentColor" /></svg>
                         </div>
-                        <span className="font-bold text-[var(--text-white)]">Scanora</span>
+                        <span className="font-bold text-(--text-white)">Scanora</span>
                     </Link>
                 </div>
             </nav>
 
             <div className="max-w-lg mx-auto px-5 py-16">
                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-                    <h1 className="text-2xl font-bold text-[var(--text-white)] mb-1 text-center">Support-Tickets</h1>
-                    <p className="text-[var(--text-muted)] text-sm text-center mb-8">
+                    <h1 className="text-2xl font-bold text-(--text-white) mb-1 text-center">Support-Tickets</h1>
+                    <p className="text-(--text-muted) text-sm text-center mb-8">
                         Finde dein Ticket per E-Mail oder Ticketnummer.
                     </p>
 
                     {/* Tabs */}
-                    <div className="flex gap-1 bg-[var(--text-white)]/[0.03] border border-[var(--text-white)]/[0.06] rounded-xl p-1 mb-6">
+                    <div className="flex gap-1 bg-(--card) border border-(--line) rounded-xl p-1 mb-6">
                         <button
                             onClick={() => { setTab('email'); setTickets(null); setError('') }}
                             className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-sm font-medium transition-all ${
-                                tab === 'email' ? 'bg-[var(--text-white)]/10 text-[var(--text-white)]' : 'text-[var(--text-faint)] hover:text-[var(--text-body)]'
+                                tab === 'email' ? 'bg-(--tint) text-(--text-white)' : 'text-(--text-faint) hover:text-(--text-body)'
                             }`}
                         >
                             <Mail className="w-3.5 h-3.5" /> Per E-Mail suchen
@@ -77,7 +77,7 @@ export default function SupportPage() {
                         <button
                             onClick={() => { setTab('number'); setTickets(null); setError('') }}
                             className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-sm font-medium transition-all ${
-                                tab === 'number' ? 'bg-[var(--text-white)]/10 text-[var(--text-white)]' : 'text-[var(--text-faint)] hover:text-[var(--text-body)]'
+                                tab === 'number' ? 'bg-(--tint) text-(--text-white)' : 'text-(--text-faint) hover:text-(--text-body)'
                             }`}
                         >
                             <Hash className="w-3.5 h-3.5" /> Ticketnummer eingeben
@@ -94,14 +94,14 @@ export default function SupportPage() {
                                     onChange={e => setEmail(e.target.value)}
                                     placeholder="deine@email.de"
                                     required
-                                    className="flex-1 bg-[var(--text-white)]/[0.03] border border-[var(--text-white)]/10 rounded-xl px-4 py-2.5 text-sm text-[var(--text-white)] placeholder-[var(--text-faint)] outline-none focus:border-violet-500/50 transition-colors"
+                                    className="flex-1 bg-(--card) border border-(--line) rounded-xl px-4 py-2.5 text-sm text-(--text-white) placeholder-(--text-faint) outline-none focus:border-(--accent) focus:shadow-[0_0_0_4px_var(--accent-ring)] transition-colors"
                                 />
                                 <button
                                     type="submit"
                                     disabled={loading}
-                                    className="flex items-center gap-2 px-5 py-2.5 bg-linear-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 disabled:opacity-50 text-[var(--text-white)] text-sm font-semibold rounded-xl transition-all"
+                                    className="flex items-center gap-2 px-5 py-2.5 bg-(--accent) hover:bg-(--accent-hover) disabled:opacity-50 text-(--on-accent) text-sm font-semibold rounded-xl transition-all"
                                 >
-                                    {loading ? <div className="w-4 h-4 border-2 border-[var(--text-white)]/30 border-t-white rounded-full animate-spin" /> : <Search className="w-4 h-4" />}
+                                    {loading ? <div className="w-4 h-4 border-2 border-(--border-strong) border-t-white rounded-full animate-spin" /> : <Search className="w-4 h-4" />}
                                 </button>
                             </div>
                         </form>
@@ -115,11 +115,11 @@ export default function SupportPage() {
                                 value={ticketId}
                                 onChange={e => setTicketId(e.target.value)}
                                 placeholder="TK-XXXXXXXX"
-                                className="flex-1 bg-[var(--text-white)]/[0.03] border border-[var(--text-white)]/10 rounded-xl px-4 py-2.5 text-sm text-[var(--text-white)] placeholder-[var(--text-faint)] font-mono outline-none focus:border-violet-500/50 transition-colors uppercase"
+                                className="flex-1 bg-(--card) border border-(--line) rounded-xl px-4 py-2.5 text-sm text-(--text-white) placeholder-(--text-faint) font-mono outline-none focus:border-(--accent) focus:shadow-[0_0_0_4px_var(--accent-ring)] transition-colors uppercase"
                             />
                             <button
                                 type="submit"
-                                className="flex items-center gap-2 px-5 py-2.5 bg-linear-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-[var(--text-white)] text-sm font-semibold rounded-xl transition-all"
+                                className="flex items-center gap-2 px-5 py-2.5 bg-(--accent) hover:bg-(--accent-hover) text-(--on-accent) text-sm font-semibold rounded-xl transition-all"
                             >
                                 <ArrowRight className="w-4 h-4" />
                             </button>
@@ -127,7 +127,7 @@ export default function SupportPage() {
                     )}
 
                     {error && (
-                        <p className="text-sm text-red-400 bg-red-500/10 border border-red-500/20 rounded-xl px-4 py-3 mt-4">{error}</p>
+                        <p className="text-sm text-(--danger) bg-(--danger-soft) border border-(--danger-border) rounded-xl px-4 py-3 mt-4">{error}</p>
                     )}
 
                     {/* Ergebnisse */}
@@ -139,12 +139,12 @@ export default function SupportPage() {
                                 className="mt-6 space-y-3"
                             >
                                 {tickets.length === 0 ? (
-                                    <p className="text-center text-[var(--text-faint)] text-sm py-8">
+                                    <p className="text-center text-(--text-faint) text-sm py-8">
                                         Keine Tickets für diese E-Mail-Adresse gefunden.
                                     </p>
                                 ) : (
                                     <>
-                                        <p className="text-xs text-[var(--text-faint)] mb-3">{tickets.length} Ticket{tickets.length !== 1 ? 's' : ''} gefunden</p>
+                                        <p className="text-xs text-(--text-faint) mb-3">{tickets.length} Ticket{tickets.length !== 1 ? 's' : ''} gefunden</p>
                                         {tickets.map(ticket => {
                                             const cfg = STATUS_CONFIG[ticket.status] || STATUS_CONFIG.open
                                             const Icon = cfg.icon
@@ -152,22 +152,22 @@ export default function SupportPage() {
                                                 <Link
                                                     key={ticket.ticketNumber}
                                                     href={`/support/${ticket.ticketNumber}`}
-                                                    className="flex items-center justify-between gap-4 bg-[var(--text-white)]/[0.02] hover:bg-[var(--text-white)]/[0.04] border border-[var(--text-white)]/[0.06] rounded-xl px-5 py-4 transition-all group"
+                                                    className="flex items-center justify-between gap-4 bg-(--card) hover:bg-(--tint) border border-(--line) rounded-xl px-5 py-4 transition-all group"
                                                 >
                                                     <div className="min-w-0">
                                                         <div className="flex items-center gap-2 mb-0.5">
-                                                            <span className="font-mono text-xs font-bold text-violet-300">{ticket.ticketNumber}</span>
+                                                            <span className="font-mono text-xs font-bold text-(--accent-ink)">{ticket.ticketNumber}</span>
                                                             <span className={`text-xs px-2 py-0.5 rounded-full border ${cfg.bg} ${cfg.border} ${cfg.color} flex items-center gap-1`}>
                                                                 <Icon className="w-3 h-3" />
                                                                 {cfg.label}
                                                             </span>
                                                         </div>
-                                                        <p className="text-sm text-[var(--text-body)] truncate">{ticket.subject}</p>
-                                                        <p className="text-xs text-[var(--text-faint)] mt-0.5">
+                                                        <p className="text-sm text-(--text-body) truncate">{ticket.subject}</p>
+                                                        <p className="text-xs text-(--text-faint) mt-0.5">
                                                             {new Date(ticket.createdAt).toLocaleDateString('de-DE', { day: '2-digit', month: 'short', year: 'numeric' })}
                                                         </p>
                                                     </div>
-                                                    <ArrowRight className="w-4 h-4 text-[var(--text-faint)] group-hover:text-[var(--text-muted)] shrink-0 transition-colors" />
+                                                    <ArrowRight className="w-4 h-4 text-(--text-faint) group-hover:text-(--text-muted) shrink-0 transition-colors" />
                                                 </Link>
                                             )
                                         })}

@@ -2,9 +2,9 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import {
-    User, Mail, Crown, Building2, Zap, BarChart2,
+    Mail, Crown, Building2, Zap, BarChart2,
     Receipt, Download, AlertTriangle, Loader2, CheckCircle, XCircle,
-    MessageSquare, Clock, Wrench, ArrowRight, Plus, History, ExternalLink,
+    MessageSquare, Clock, Wrench, ArrowRight, Plus, History,
     ChevronLeft, ChevronRight, Lock
 } from 'lucide-react'
 import Link from 'next/link'
@@ -14,23 +14,23 @@ import Navbar from '../../components/Navbar'
 import SupportModal from '../../components/SupportModal'
 
 const TICKET_STATUS = {
-    open:        { label: 'Waiting for support', icon: Clock,         color: 'text-amber-400',   bg: 'bg-amber-500/10',   border: 'border-amber-500/20' },
-    in_progress: { label: 'In progress',         icon: Wrench,        color: 'text-blue-400',    bg: 'bg-blue-500/10',    border: 'border-blue-500/20' },
-    closed:      { label: 'Closed',              icon: CheckCircle,   color: 'text-emerald-400', bg: 'bg-emerald-500/10', border: 'border-emerald-500/20' },
+    open:        { label: 'Waiting for support', icon: Clock,         color: 'text-(--warning)',   bg: 'bg-(--warning-soft)',   border: 'border-(--warning-border)' },
+    in_progress: { label: 'In progress',         icon: Wrench,        color: 'text-(--accent-ink)',    bg: 'bg-(--accent-soft)',    border: 'border-(--accent-border)' },
+    closed:      { label: 'Closed',              icon: CheckCircle,   color: 'text-(--success)', bg: 'bg-(--success-soft)', border: 'border-(--success-border)' },
 }
 
 const PLAN_META = {
-    free:   { label: 'Free',   color: '#64748b', icon: Zap,       limit: 1 },
+    free:   { label: 'Free',   color: 'var(--text-faint)', icon: Zap,       limit: 1 },
     pro:    { label: 'Pro',    color: 'var(--accent)', icon: Crown,     limit: 10 },
     agency: { label: 'Agency', color: 'var(--accent)', icon: Building2, limit: null },
 }
 
 function StatCard({ label, value, sub, color }) {
     return (
-        <div className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl p-4 sm:p-6">
-            <div className="text-xs sm:text-sm text-[var(--text-faint)] mb-1">{label}</div>
-            <div className="text-2xl sm:text-3xl font-bold text-[var(--text-white)]" style={color ? { color } : {}}>{value}</div>
-            {sub && <div className="text-xs text-[var(--text-faint)] mt-1">{sub}</div>}
+        <div className="bg-(--card) border border-(--line) rounded-2xl p-4 sm:p-6">
+            <div className="text-xs sm:text-sm text-(--text-faint) mb-1">{label}</div>
+            <div className="text-2xl sm:text-3xl font-bold text-(--text-white)" style={color ? { color } : {}}>{value}</div>
+            {sub && <div className="text-xs text-(--text-faint) mt-1">{sub}</div>}
         </div>
     )
 }
@@ -155,8 +155,8 @@ export default function ProfilePageEn() {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-[var(--bg-base)] flex items-center justify-center">
-                <Loader2 className="w-8 h-8 text-[var(--accent)] animate-spin" />
+            <div className="min-h-screen bg-(--bg-base) flex items-center justify-center">
+                <Loader2 className="w-8 h-8 text-(--accent-ink) animate-spin" />
             </div>
         )
     }
@@ -170,36 +170,34 @@ export default function ProfilePageEn() {
     const initials = data?.user?.name?.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) || '??'
 
     return (
-        <div className="min-h-screen bg-[var(--bg-base)]">
+        <div className="min-h-screen bg-(--bg-base)">
             <Navbar locale="en" />
 
             <div className="relative pt-28 pb-24 px-5 sm:px-8">
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-125 h-75 rounded-full blur-3xl pointer-events-none"
-                    style={{ background: 'radial-gradient(ellipse, var(--accent-glow) 0%, transparent 70%)' }} />
 
                 <div className="relative z-10 max-w-3xl mx-auto space-y-6">
 
                     {/* Profile Header */}
                     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-                        className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl p-5 sm:p-8">
+                        className="bg-(--card) border border-(--line) rounded-2xl p-5 sm:p-8">
                         <div className="flex items-center gap-4 sm:gap-6">
-                            <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-[var(--accent)] flex items-center justify-center text-[var(--bg-base)] text-xl font-bold shrink-0 shadow-lg shadow-[var(--accent-border)] active:scale-[0.97] active:duration-75">
+                            <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-(--accent) flex items-center justify-center text-(--on-accent) text-xl font-bold shrink-0 active:scale-[0.97] active:duration-75">
                                 {initials}
                             </div>
                             <div className="flex-1 min-w-0">
-                                <h1 className="text-xl sm:text-2xl font-bold text-[var(--text-white)] truncate">{data?.user?.name}</h1>
-                                <div className="flex items-center gap-2 text-[var(--text-muted)] text-sm mt-1 min-w-0">
+                                <h1 className="text-xl sm:text-2xl font-bold text-(--text-white) truncate">{data?.user?.name}</h1>
+                                <div className="flex items-center gap-2 text-(--text-muted) text-sm mt-1 min-w-0">
                                     <Mail className="w-3.5 h-3.5 shrink-0" />
                                     <span className="truncate">{data?.user?.email}</span>
                                 </div>
                                 <div className="mt-2 sm:hidden">
-                                    <div className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-semibold ${plan === 'free' ? 'border-[var(--border-strong)] bg-[var(--surface-08)] text-[var(--text-body)]' : 'border-[var(--accent-border)] bg-[var(--accent-soft)] text-[var(--accent)]'}`}>
+                                    <div className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-semibold ${plan === 'free' ? 'border-(--border-strong) bg-(--surface-08) text-(--text-body)' : 'border-(--accent-border) bg-(--accent-soft) text-(--accent-ink)'}`}>
                                         <PlanIcon className="w-3.5 h-3.5" />
                                         {planMeta.label}
                                     </div>
                                 </div>
                             </div>
-                            <div className={`hidden sm:flex items-center gap-2 px-4 py-2 rounded-xl border shrink-0 ${plan === 'free' ? 'border-[var(--border-strong)] bg-[var(--surface-08)] text-[var(--text-body)]' : 'border-[var(--accent-border)] bg-[var(--accent-soft)] text-[var(--accent)]'}`}>
+                            <div className={`hidden sm:flex items-center gap-2 px-4 py-2 rounded-xl border shrink-0 ${plan === 'free' ? 'border-(--border-strong) bg-(--surface-08) text-(--text-body)' : 'border-(--accent-border) bg-(--accent-soft) text-(--accent-ink)'}`}>
                                 <PlanIcon className="w-4 h-4" />
                                 <span className="text-sm font-semibold">{planMeta.label}</span>
                             </div>
@@ -213,22 +211,22 @@ export default function ProfilePageEn() {
                         <StatCard label="Total audits" value={data?.audits?.total ?? 0} />
                         <StatCard label="Subscription status"
                             value={data?.subscription?.status === 'ACTIVE' ? 'Active' : data?.subscription?.status === 'CANCELLED' ? 'Cancelled' : 'Free'}
-                            color={data?.subscription?.status === 'ACTIVE' ? '#22c55e' : data?.subscription?.status === 'CANCELLED' ? '#ef4444' : '#64748b'}
+                            color={data?.subscription?.status === 'ACTIVE' ? 'var(--success)' : data?.subscription?.status === 'CANCELLED' ? 'var(--danger)' : 'var(--text-faint)'}
                         />
                     </motion.div>
 
                     {/* Audit Usage Bar */}
                     {auditsLimit && (
                         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-                            className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl p-6">
+                            className="bg-(--card) border border-(--line) rounded-2xl p-6">
                             <div className="flex justify-between items-center mb-3">
                                 <div className="flex items-center gap-2">
-                                    <BarChart2 className="w-4 h-4 text-[var(--text-muted)]" />
-                                    <span className="text-sm font-medium text-[var(--text-body)]">Audit usage this month</span>
+                                    <BarChart2 className="w-4 h-4 text-(--text-muted)" />
+                                    <span className="text-sm font-medium text-(--text-body)">Audit usage this month</span>
                                 </div>
-                                <span className="text-sm font-bold text-[var(--text-white)]">{auditsUsed} / {auditsLimit}</span>
+                                <span className="text-sm font-bold text-(--text-white)">{auditsUsed} / {auditsLimit}</span>
                             </div>
-                            <div className="h-2 bg-[var(--surface-08)] rounded-full overflow-hidden">
+                            <div className="h-2 bg-(--surface-08) rounded-full overflow-hidden">
                                 <motion.div
                                     initial={{ width: 0 }}
                                     animate={{ width: `${auditsProgress}%` }}
@@ -236,15 +234,15 @@ export default function ProfilePageEn() {
                                     className="h-full rounded-full"
                                     style={{
                                         background: auditsProgress >= 90
-                                            ? '#ef4444' : 'var(--accent)'
+                                            ? 'var(--danger)' : 'var(--accent)'
                                     }}
                                 />
                             </div>
                             {auditsProgress >= 90 && (
-                                <div className="flex items-center gap-2 mt-3 text-amber-400 text-xs">
+                                <div className="flex items-center gap-2 mt-3 text-(--warning) text-xs">
                                     <AlertTriangle className="w-3.5 h-3.5" />
                                     Almost used up —{' '}
-                                    <Link href="/en/pricing" className="underline underline-offset-2 hover:text-amber-300">Get an upgrade</Link>
+                                    <Link href="/en/pricing" className="underline underline-offset-2 hover:text-(--warning)">Get an upgrade</Link>
                                 </div>
                             )}
                         </motion.div>
@@ -252,19 +250,19 @@ export default function ProfilePageEn() {
 
                     {/* Audit History */}
                     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.12 }}
-                        className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl p-6">
-                        <h2 className="text-base font-semibold text-[var(--text-white)] mb-5 flex items-center gap-2">
-                            <History className="w-4 h-4 text-[var(--accent)]" /> Audit history
+                        className="bg-(--card) border border-(--line) rounded-2xl p-6">
+                        <h2 className="text-base font-semibold text-(--text-white) mb-5 flex items-center gap-2">
+                            <History className="w-4 h-4 text-(--accent-ink)" /> Audit history
                             {historyTotal > 0 && (
-                                <span className="text-xs text-[var(--text-faint)] font-normal ml-1">{historyTotal} total</span>
+                                <span className="text-xs text-(--text-faint) font-normal ml-1">{historyTotal} total</span>
                             )}
                         </h2>
                         {historyLoading ? (
-                            <div className="flex items-center gap-2 text-[var(--text-faint)] text-sm py-6 justify-center">
+                            <div className="flex items-center gap-2 text-(--text-faint) text-sm py-6 justify-center">
                                 <Loader2 className="w-4 h-4 animate-spin" /> Loading history...
                             </div>
                         ) : history.length === 0 ? (
-                            <div className="text-center py-10 text-[var(--text-faint)] text-sm">
+                            <div className="text-center py-10 text-(--text-faint) text-sm">
                                 No audits run yet
                             </div>
                         ) : (
@@ -273,37 +271,37 @@ export default function ProfilePageEn() {
                                     {history.map((report) => {
                                         const domain = (() => { try { return new URL(report.url).hostname.replace(/^www\./, '') } catch { return report.url } })()
                                         const date = new Date(report.createdAt).toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric' })
-                                        const scoreColor = (s) => s >= 80 ? 'text-emerald-400' : s >= 60 ? 'text-amber-400' : 'text-red-400'
+                                        const scoreColor = (s) => s >= 80 ? 'text-(--success)' : s >= 60 ? 'text-(--warning)' : 'text-(--danger)'
                                         const pdfUrl = report.pdfPath
                                             ? `${process.env.NEXT_PUBLIC_API_URL.replace('/api', '')}/reports/${report.pdfPath.split('/').pop()}`
                                             : null
                                         return (
-                                            <div key={report._id} className="flex items-center gap-4 py-3.5 border-b border-[var(--border-subtle)] last:border-0">
+                                            <div key={report._id} className="flex items-center gap-4 py-3.5 border-b border-(--border-subtle) last:border-0">
                                                 <div className="flex-1 min-w-0">
-                                                    <div className="text-sm font-medium text-[var(--text-body)] truncate">{domain}</div>
-                                                    <div className="text-xs text-[var(--text-faint)] mt-0.5">{date}</div>
+                                                    <div className="text-sm font-medium text-(--text-body) truncate">{domain}</div>
+                                                    <div className="text-xs text-(--text-faint) mt-0.5">{date}</div>
                                                 </div>
                                                 <div className="flex items-center gap-3 shrink-0">
                                                     {[['Ovr', report.scores.overall], ['SEO', report.scores.seo], ['Perf', report.scores.performance], ['GEO', report.scores.geo]].map(([label, score]) => (
                                                         <div key={label} className="text-center hidden sm:block">
                                                             <div className={`text-sm font-bold ${scoreColor(score)}`}>{score}</div>
-                                                            <div className="text-[9px] text-[var(--text-faint)] uppercase tracking-wide">{label}</div>
+                                                            <div className="text-xs text-(--text-faint) ">{label}</div>
                                                         </div>
                                                     ))}
                                                     <div className="text-center sm:hidden">
                                                         <div className={`text-sm font-bold ${scoreColor(report.scores.overall)}`}>{report.scores.overall}</div>
-                                                        <div className="text-[9px] text-[var(--text-faint)] uppercase tracking-wide">Ovr</div>
+                                                        <div className="text-xs text-(--text-faint) ">Ovr</div>
                                                     </div>
                                                     {plan === 'free' ? (
                                                         <Link href="/en/pricing"
-                                                            className="flex items-center gap-1 px-2.5 py-1.5 border border-[var(--border-subtle)] text-[var(--text-faint)] text-xs rounded-lg cursor-pointer opacity-50 hover:opacity-75 transition-opacity"
+                                                            className="flex items-center gap-1 px-2.5 py-1.5 border border-(--border-subtle) text-(--text-faint) text-xs rounded-lg cursor-pointer opacity-50 hover:opacity-75 transition-opacity"
                                                             title="PDF export requires Pro">
                                                             <Lock className="w-3 h-3" />
                                                             <span className="hidden sm:inline">PDF</span>
                                                         </Link>
                                                     ) : pdfUrl ? (
                                                         <a href={pdfUrl} target="_blank" rel="noopener noreferrer"
-                                                            className="flex items-center gap-1 px-2.5 py-1.5 border border-[var(--border-subtle)] text-[var(--text-muted)] hover:text-[var(--text-white)] hover:border-[var(--border-strong)] text-xs rounded-lg transition-all">
+                                                            className="flex items-center gap-1 px-2.5 py-1.5 border border-(--border-subtle) text-(--text-muted) hover:text-(--text-white) hover:border-(--border-strong) text-xs rounded-lg transition-all">
                                                             <Download className="w-3 h-3" />
                                                             <span className="hidden sm:inline">PDF</span>
                                                         </a>
@@ -314,15 +312,15 @@ export default function ProfilePageEn() {
                                     })}
                                 </div>
                                 {historyTotal > 10 && (
-                                    <div className="flex items-center justify-between mt-4 pt-4 border-t border-[var(--border-subtle)]">
-                                        <span className="text-xs text-[var(--text-faint)]">Page {historyPage} of {Math.ceil(historyTotal / 10)}</span>
+                                    <div className="flex items-center justify-between mt-4 pt-4 border-t border-(--border-subtle)">
+                                        <span className="text-xs text-(--text-faint)">Page {historyPage} of {Math.ceil(historyTotal / 10)}</span>
                                         <div className="flex gap-2">
                                             <button onClick={() => handleHistoryPage(historyPage - 1)} disabled={historyPage <= 1}
-                                                className="p-1.5 border border-[var(--border-subtle)] text-[var(--text-muted)] hover:text-[var(--text-white)] hover:border-[var(--border-strong)] rounded-lg transition-all disabled:opacity-30 disabled:cursor-not-allowed">
+                                                className="p-1.5 border border-(--border-subtle) text-(--text-muted) hover:text-(--text-white) hover:border-(--border-strong) rounded-lg transition-all disabled:opacity-30 disabled:cursor-not-allowed">
                                                 <ChevronLeft className="w-3.5 h-3.5" />
                                             </button>
                                             <button onClick={() => handleHistoryPage(historyPage + 1)} disabled={historyPage >= Math.ceil(historyTotal / 10)}
-                                                className="p-1.5 border border-[var(--border-subtle)] text-[var(--text-muted)] hover:text-[var(--text-white)] hover:border-[var(--border-strong)] rounded-lg transition-all disabled:opacity-30 disabled:cursor-not-allowed">
+                                                className="p-1.5 border border-(--border-subtle) text-(--text-muted) hover:text-(--text-white) hover:border-(--border-strong) rounded-lg transition-all disabled:opacity-30 disabled:cursor-not-allowed">
                                                 <ChevronRight className="w-3.5 h-3.5" />
                                             </button>
                                         </div>
@@ -334,19 +332,19 @@ export default function ProfilePageEn() {
 
                     {/* Subscription Management */}
                     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}
-                        className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl p-6">
-                        <h2 className="text-base font-semibold text-[var(--text-white)] mb-5 flex items-center gap-2">
-                            <Crown className="w-4 h-4 text-[var(--accent)]" /> Subscription
+                        className="bg-(--card) border border-(--line) rounded-2xl p-6">
+                        <h2 className="text-base font-semibold text-(--text-white) mb-5 flex items-center gap-2">
+                            <Crown className="w-4 h-4 text-(--accent-ink)" /> Subscription
                         </h2>
 
                         {plan === 'free' ? (
                             <div className="flex items-center justify-between">
                                 <div>
-                                    <div className="text-[var(--text-body)] text-sm">You're currently on the Free plan</div>
-                                    <div className="text-[var(--text-faint)] text-xs mt-1">1 audit per month included</div>
+                                    <div className="text-(--text-body) text-sm">You're currently on the Free plan</div>
+                                    <div className="text-(--text-faint) text-xs mt-1">1 audit per month included</div>
                                 </div>
                                 <Link href="/en/pricing"
-                                    className="px-5 py-2.5 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-[var(--accent-border)] active:scale-[0.97] active:duration-75">
+                                    className="px-5 py-2.5 bg-(--accent) hover:bg-(--accent-hover) text-(--on-accent) text-sm font-semibold rounded-[10px] transition-all duration-200 active:scale-[0.97] active:duration-75">
                                     Upgrade
                                 </Link>
                             </div>
@@ -354,21 +352,21 @@ export default function ProfilePageEn() {
                             <div>
                                 <div className="flex items-center justify-between mb-4">
                                     <div>
-                                        <div className="text-[var(--text-body)] text-sm">
+                                        <div className="text-(--text-body) text-sm">
                                             {planMeta.label} plan ·{' '}
                                             <span style={{ color: planMeta.color }}>
                                                 {data?.subscription?.status === 'ACTIVE' ? 'Active' : 'Cancelled'}
                                             </span>
                                         </div>
                                         {data?.subscription?.since && (
-                                            <div className="text-[var(--text-faint)] text-xs mt-1">
+                                            <div className="text-(--text-faint) text-xs mt-1">
                                                 Since {new Date(data.subscription.since).toLocaleDateString('en-US', { day: '2-digit', month: 'long', year: 'numeric' })}
                                             </div>
                                         )}
                                     </div>
                                     {data?.subscription?.status === 'ACTIVE' && !showCancelConfirm && (
                                         <button onClick={() => setShowCancelConfirm(true)}
-                                            className="px-4 py-2 border border-red-500/20 text-red-400 hover:bg-red-500/10 text-sm rounded-xl transition-all">
+                                            className="px-4 py-2 border border-(--danger-border) text-(--danger) hover:bg-(--danger-soft) text-sm rounded-xl transition-all">
                                             Cancel
                                         </button>
                                     )}
@@ -376,12 +374,12 @@ export default function ProfilePageEn() {
 
                                 {showCancelConfirm && (
                                     <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }}
-                                        className="bg-red-500/5 border border-red-500/20 rounded-xl p-5">
+                                        className="bg-(--danger-soft) border border-(--danger-border) rounded-xl p-5">
                                         <div className="flex items-start gap-3 mb-4">
-                                            <AlertTriangle className="w-5 h-5 text-red-400 shrink-0 mt-0.5" />
+                                            <AlertTriangle className="w-5 h-5 text-(--danger) shrink-0 mt-0.5" />
                                             <div>
-                                                <div className="text-sm font-semibold text-red-300 mb-1">Really cancel your subscription?</div>
-                                                <div className="text-xs text-[var(--text-muted)] leading-relaxed">
+                                                <div className="text-sm font-semibold text-(--danger) mb-1">Really cancel your subscription?</div>
+                                                <div className="text-xs text-(--text-muted) leading-relaxed">
                                                     Your subscription stays active until the end of the current billing period.
                                                     After that you'll be downgraded to the Free plan.
                                                 </div>
@@ -389,12 +387,12 @@ export default function ProfilePageEn() {
                                         </div>
                                         <div className="flex gap-3">
                                             <button onClick={handleCancel} disabled={cancelling}
-                                                className="flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-500 text-[var(--text-white)] text-sm font-semibold rounded-xl transition-all disabled:opacity-50">
+                                                className="flex items-center gap-2 px-4 py-2 bg-(--danger) hover:bg-(--danger) text-(--on-accent) text-sm font-semibold rounded-xl transition-all disabled:opacity-50">
                                                 {cancelling ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <XCircle className="w-3.5 h-3.5" />}
                                                 Yes, cancel now
                                             </button>
                                             <button onClick={() => setShowCancelConfirm(false)}
-                                                className="px-4 py-2 border border-[var(--border-subtle)] text-[var(--text-body)] hover:text-[var(--text-white)] text-sm rounded-xl transition-all">
+                                                className="px-4 py-2 border border-(--border-subtle) text-(--text-body) hover:text-(--text-white) text-sm rounded-xl transition-all">
                                                 Never mind
                                             </button>
                                         </div>
@@ -406,13 +404,13 @@ export default function ProfilePageEn() {
 
                     {/* Billing History */}
                     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
-                        className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl p-6">
-                        <h2 className="text-base font-semibold text-[var(--text-white)] mb-5 flex items-center gap-2">
-                            <Receipt className="w-4 h-4 text-[var(--accent)]" /> Billing
+                        className="bg-(--card) border border-(--line) rounded-2xl p-6">
+                        <h2 className="text-base font-semibold text-(--text-white) mb-5 flex items-center gap-2">
+                            <Receipt className="w-4 h-4 text-(--accent-ink)" /> Billing
                         </h2>
 
                         {billing.length === 0 ? (
-                            <div className="text-center py-10 text-[var(--text-faint)] text-sm">
+                            <div className="text-center py-10 text-(--text-faint) text-sm">
                                 No billing history yet
                             </div>
                         ) : (
@@ -421,22 +419,22 @@ export default function ProfilePageEn() {
                                     const amount = t.amount_with_breakdown?.gross_amount
                                     const date = new Date(t.time).toLocaleDateString('en-US', { day: '2-digit', month: 'long', year: 'numeric' })
                                     return (
-                                        <div key={t.id} className="flex items-center justify-between py-3.5 border-b border-[var(--border-subtle)] last:border-0">
+                                        <div key={t.id} className="flex items-center justify-between py-3.5 border-b border-(--border-subtle) last:border-0">
                                             <div>
-                                                <div className="text-sm text-[var(--text-body)] font-medium">{date}</div>
-                                                <div className="text-xs text-[var(--text-faint)] mt-0.5">{t.id}</div>
+                                                <div className="text-sm text-(--text-body) font-medium">{date}</div>
+                                                <div className="text-xs text-(--text-faint) mt-0.5">{t.id}</div>
                                             </div>
                                             <div className="flex items-center gap-4">
                                                 <div className="flex items-center gap-1.5">
-                                                    <CheckCircle className="w-3.5 h-3.5 text-emerald-500" />
-                                                    <span className="text-sm font-semibold text-[var(--text-white)]">
+                                                    <CheckCircle className="w-3.5 h-3.5 text-(--success)" />
+                                                    <span className="text-sm font-semibold text-(--text-white)">
                                                         {amount?.value} {amount?.currency_code}
                                                     </span>
                                                 </div>
                                                 <button
                                                     onClick={() => handleDownloadInvoice(t.id)}
                                                     disabled={downloadingId === t.id}
-                                                    className="flex items-center gap-1.5 px-3 py-1.5 border border-[var(--border-subtle)] text-[var(--text-muted)] hover:text-[var(--text-white)] hover:border-[var(--border-strong)] text-xs rounded-lg transition-all disabled:opacity-50">
+                                                    className="flex items-center gap-1.5 px-3 py-1.5 border border-(--border-subtle) text-(--text-muted) hover:text-(--text-white) hover:border-(--border-strong) text-xs rounded-lg transition-all disabled:opacity-50">
                                                     {downloadingId === t.id
                                                         ? <Loader2 className="w-3 h-3 animate-spin" />
                                                         : <Download className="w-3 h-3" />
@@ -453,34 +451,34 @@ export default function ProfilePageEn() {
 
                     {/* Support Tickets */}
                     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}
-                        className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl p-6">
+                        className="bg-(--card) border border-(--line) rounded-2xl p-6">
                         <div className="flex items-center justify-between mb-5">
-                            <h2 className="text-base font-semibold text-[var(--text-white)] flex items-center gap-2">
-                                <MessageSquare className="w-4 h-4 text-[var(--accent)]" /> Support tickets
+                            <h2 className="text-base font-semibold text-(--text-white) flex items-center gap-2">
+                                <MessageSquare className="w-4 h-4 text-(--accent-ink)" /> Support tickets
                             </h2>
                             <button
                                 onClick={() => setSupportOpen(true)}
-                                className="flex items-center gap-1.5 px-3 py-1.5 bg-[var(--accent-soft)] hover:bg-[var(--accent-soft-strong)] border border-[var(--accent-border)] text-[var(--accent)] text-xs font-medium rounded-lg transition-all"
+                                className="flex items-center gap-1.5 px-3 py-1.5 bg-(--accent-soft) hover:bg-(--accent-soft-strong) border border-(--accent-border) text-(--accent-ink) text-xs font-medium rounded-lg transition-all"
                             >
                                 <Plus className="w-3.5 h-3.5" /> New ticket
                             </button>
                         </div>
 
                         {ticketsLoading ? (
-                            <div className="flex items-center gap-2 text-[var(--text-faint)] text-sm py-4">
+                            <div className="flex items-center gap-2 text-(--text-faint) text-sm py-4">
                                 <Loader2 className="w-4 h-4 animate-spin" /> Loading tickets...
                             </div>
                         ) : (() => {
                             const activeTickets = tickets.filter(t => t.status !== 'closed')
                             if (activeTickets.length === 0) return (
-                                <div className="text-center py-8 text-[var(--text-faint)] text-sm">
+                                <div className="text-center py-8 text-(--text-faint) text-sm">
                                     No open support tickets
                                 </div>
                             )
                             const visible = ticketsExpanded ? activeTickets : activeTickets.slice(0, 1)
                             return (
                                 <div>
-                                    <div className="divide-y divide-[var(--border-subtle)]">
+                                    <div className="divide-y divide-(--border-subtle)">
                                         {visible.map(ticket => {
                                             const cfg = TICKET_STATUS[ticket.status] || TICKET_STATUS.open
                                             const Icon = cfg.icon
@@ -492,18 +490,18 @@ export default function ProfilePageEn() {
                                                 >
                                                     <div className="min-w-0">
                                                         <div className="flex items-center gap-2 mb-0.5">
-                                                            <span className="font-mono text-xs font-bold text-[var(--accent)]">{ticket.ticketNumber}</span>
+                                                            <span className="font-mono text-xs font-bold text-(--accent-ink)">{ticket.ticketNumber}</span>
                                                             <span className={`text-xs px-2 py-0.5 rounded-full border flex items-center gap-1 ${cfg.bg} ${cfg.border} ${cfg.color}`}>
                                                                 <Icon className="w-3 h-3" />
                                                                 {cfg.label}
                                                             </span>
                                                         </div>
-                                                        <p className="text-sm text-[var(--text-body)] truncate">{ticket.subject}</p>
-                                                        <p className="text-xs text-[var(--text-faint)] mt-0.5">
+                                                        <p className="text-sm text-(--text-body) truncate">{ticket.subject}</p>
+                                                        <p className="text-xs text-(--text-faint) mt-0.5">
                                                             {new Date(ticket.createdAt).toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric' })}
                                                         </p>
                                                     </div>
-                                                    <ArrowRight className="w-4 h-4 text-[var(--text-faint)] group-hover:text-[var(--text-muted)] shrink-0 transition-colors" />
+                                                    <ArrowRight className="w-4 h-4 text-(--text-faint) group-hover:text-(--text-muted) shrink-0 transition-colors" />
                                                 </Link>
                                             )
                                         })}
@@ -511,7 +509,7 @@ export default function ProfilePageEn() {
                                     {activeTickets.length > 1 && (
                                         <button
                                             onClick={() => setTicketsExpanded(e => !e)}
-                                            className="mt-4 w-full flex items-center justify-center gap-2 py-2 text-xs text-[var(--text-faint)] hover:text-[var(--text-body)] border border-[var(--border-subtle)] hover:border-[var(--border-strong)] rounded-xl transition-all"
+                                            className="mt-4 w-full flex items-center justify-center gap-2 py-2 text-xs text-(--text-faint) hover:text-(--text-body) border border-(--border-subtle) hover:border-(--border-strong) rounded-xl transition-all"
                                         >
                                             <ArrowRight className={`w-3.5 h-3.5 transition-transform ${ticketsExpanded ? '-rotate-90' : 'rotate-90'}`} />
                                             {ticketsExpanded ? 'Show less' : `Show ${activeTickets.length - 1} more ticket${activeTickets.length - 1 !== 1 ? 's' : ''}`}

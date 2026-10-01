@@ -28,12 +28,13 @@ import Loading from '../components/Loading'
 import ReactivationBanner from '../components/ReactivationBanner'
 import FeedbackWidget from '../components/FeedbackWidget'
 import Navbar from "@/app/components/Navbar";
+import AuditHome from '../components/dashboard/AuditHome'
 
 function IssueItem({ text, type = 'error' }) {
     const styles = {
-        error: 'bg-red-500/10 border-red-500/20 text-red-400',
-        warn: 'bg-amber-500/10 border-amber-500/20 text-amber-400',
-        success: 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400',
+        error: 'bg-(--danger-soft) border-(--danger-border) text-(--danger)',
+        warn: 'bg-(--warning-soft) border-(--warning-border) text-(--warning)',
+        success: 'bg-(--success-soft) border-(--success-border) text-(--success)',
     }
     const icons = { error: XCircle, warn: AlertTriangle, success: CheckCircle }
     const Icon = icons[type] || AlertTriangle
@@ -56,8 +57,8 @@ function LockedIssues({ count, type = 'error', onRegister }) {
         'Problem mit hoher Priorität erkannt.',
     ]
     const styles = {
-        error: 'bg-red-500/10 border-red-500/20 text-red-400',
-        warn: 'bg-amber-500/10 border-amber-500/20 text-amber-400',
+        error: 'bg-(--danger-soft) border-(--danger-border) text-(--danger)',
+        warn: 'bg-(--warning-soft) border-(--warning-border) text-(--warning)',
     }
     const icons = { error: XCircle, warn: AlertTriangle }
     const Icon = icons[type] || XCircle
@@ -76,10 +77,10 @@ function LockedIssues({ count, type = 'error', onRegister }) {
             <div className="absolute inset-0 flex flex-col items-center justify-center rounded-xl"
                 style={{ background: 'linear-gradient(to top, var(--bg-base) 40%, transparent)' }}>
                 <div className="flex flex-col items-center gap-1.5 pb-1">
-                    <Lock className="w-3.5 h-3.5 text-[var(--text-faint)]" />
-                    <p className="text-xs font-semibold text-[var(--text-body)]">+{count} weitere Problem{count !== 1 ? 'e' : ''} versteckt</p>
+                    <Lock className="w-3.5 h-3.5 text-(--text-faint)" />
+                    <p className="text-xs font-semibold text-(--text-body)">+{count} weitere Problem{count !== 1 ? 'e' : ''} versteckt</p>
                     <button onClick={onRegister}
-                        className="text-xs font-semibold text-[var(--accent)] hover:opacity-80 underline underline-offset-2 transition-colors">
+                        className="text-xs font-semibold text-(--accent-ink) hover:opacity-80 underline underline-offset-2 transition-colors">
                         Kostenlos registrieren um alle zu sehen →
                     </button>
                 </div>
@@ -92,16 +93,16 @@ function Section({ title, icon, children, defaultOpen = true }) {
     const [open, setOpen] = useState(defaultOpen)
 
     return (
-        <div className="bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-2xl overflow-hidden">
+        <div className="bg-(--card) border border-(--line) rounded-2xl overflow-hidden">
             <button
                 onClick={() => setOpen(!open)}
-                className="w-full flex items-center justify-between px-4 sm:px-6 py-4 sm:py-5 hover:bg-[var(--surface-08)] transition-colors"
+                className="w-full flex items-center justify-between px-4 sm:px-6 py-4 sm:py-5 hover:bg-(--surface-08) transition-colors"
             >
                 <div className="flex items-center gap-3">
                     <span className="text-lg">{icon}</span>
-                    <span className="font-semibold text-[var(--text-white)]">{title}</span>
+                    <span className="font-semibold text-(--text-white)">{title}</span>
                 </div>
-                {open ? <ChevronUp className="w-4 h-4 text-[var(--text-faint)]" /> : <ChevronDown className="w-4 h-4 text-[var(--text-faint)]" />}
+                {open ? <ChevronUp className="w-4 h-4 text-(--text-faint)" /> : <ChevronDown className="w-4 h-4 text-(--text-faint)" />}
             </button>
             <AnimatePresence>
                 {open && (
@@ -112,7 +113,7 @@ function Section({ title, icon, children, defaultOpen = true }) {
                         transition={{ duration: 0.3 }}
                         className="overflow-hidden"
                     >
-                        <div className="px-4 sm:px-6 pb-4 sm:pb-6 border-t border-[var(--border-subtle)]">
+                        <div className="px-4 sm:px-6 pb-4 sm:pb-6 border-t border-(--border-subtle)">
                             <div className="pt-4">{children}</div>
                         </div>
                     </motion.div>
@@ -183,7 +184,7 @@ export default function Dashboard() {
         setResult(data || null)
         if (data && !data.limitReached && !data.domainLimitReached) {
             const token = localStorage.getItem('token')
-            // Vorher 2500ms — Modal verdeckte die Scores, bevor der Nutzer sie überhaupt gesehen
+            // Vorher 2500ms - Modal verdeckte die Scores, bevor der Nutzer sie überhaupt gesehen
             // hatte. Erst den Score wirken lassen, dann registrieren vorschlagen.
             if (!token) setTimeout(() => setShowRegisterModal(true), 7000)
         }
@@ -256,7 +257,7 @@ export default function Dashboard() {
     }
 
     return (
-        <div className="min-h-screen bg-[var(--bg-base)]">
+        <div className="min-h-screen bg-(--bg-base)">
 
             <Navbar />
 
@@ -266,18 +267,18 @@ export default function Dashboard() {
 
                 {/* HEADER */}
                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-10">
-                    <h1 className="text-2xl sm:text-4xl font-bold text-[var(--text-white)] mb-3">
+                    <h1 className="text-2xl sm:text-4xl font-bold text-(--text-white) mb-3">
                         {result ? 'Audit Fertig' : 'Audit deine Website'}
                     </h1>
-                    <p className="text-[var(--text-muted)] text-sm max-md mx-auto px-4">
+                    <p className="text-(--text-muted) text-sm max-md mx-auto px-4">
                         {result
                             ? `Resultate für ${result?.auditData?.url || auditUrl}`
-                            : 'Gib deine URL ein und erhalte einen vollständigen AI Bericht'}
+                            : 'Prüfe GEO, SEO und Performance deiner Website in unter 60 Sekunden.'}
                     </p>
                     {result && !result.limitReached && (
                         <button
                             onClick={() => { setResult(null); setLoading(false) }}
-                            className="mt-4 inline-flex items-center gap-2 px-4 py-2 text-sm text-[var(--text-muted)] hover:text-[var(--text-white)] border border-[var(--border-subtle)] hover:border-[var(--border-strong)] rounded-xl transition-all"
+                            className="mt-4 inline-flex items-center gap-2 px-4 py-2 text-sm text-(--text-muted) hover:text-(--text-white) border border-(--border-subtle) hover:border-(--border-strong) rounded-xl transition-all"
                         >
                             <RefreshCw className="w-3.5 h-3.5" />
                             Neue Prüfung
@@ -293,6 +294,10 @@ export default function Dashboard() {
                     />
                 )}
 
+                {!result && !loading && (
+                    <AuditHome locale="de" onRerun={(url) => runAudit(url, localStorage.getItem('token'))} />
+                )}
+
                 {/* LOADING */}
                 {loading && <Loading url={auditUrl} />}
 
@@ -301,29 +306,29 @@ export default function Dashboard() {
                     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
                         className="flex flex-col items-center text-center gap-6 py-16"
                     >
-                        <div className="w-16 h-16 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center">
-                            <Lock className="w-7 h-7 text-amber-400" />
+                        <div className="w-16 h-16 rounded-2xl bg-(--warning-soft) border border-(--warning-border) flex items-center justify-center">
+                            <Lock className="w-7 h-7 text-(--warning)" />
                         </div>
                         <div>
-                            <h2 className="text-2xl font-bold text-[var(--text-white)] mb-2">Kostenlose Prüfung bereits genutzt</h2>
-                            <p className="text-[var(--text-muted)] max-w-md">
+                            <h2 className="text-2xl font-bold text-(--text-white) mb-2">Kostenlose Prüfung bereits genutzt</h2>
+                            <p className="text-(--text-muted) max-w-md">
                                 Du hast deine monatliche Gratis-Prüfung bereits durchgeführt. Upgrade auf{' '}
-                                <span className="text-[var(--text-white)] font-semibold">Pro</span>, um 10 Prüfungen pro Monat zu erhalten.
+                                <span className="text-(--text-white) font-semibold">Pro</span>, um 10 Prüfungen pro Monat zu erhalten.
                             </p>
                         </div>
                         <div className="flex flex-col sm:flex-row gap-3">
                             <Link href="/pricing"
-                                className="flex items-center gap-2 px-6 py-3 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] font-semibold rounded-xl transition-all shadow-lg shadow-[var(--accent-border)] active:scale-[0.97] active:duration-75"
+                                className="flex items-center gap-2 px-6 py-3 bg-(--accent) hover:bg-(--accent-hover) text-(--on-accent) font-semibold rounded-[10px] transition-all active:scale-[0.97] active:duration-75"
                             >
                                 Auf Pro upgraden <ArrowRight className="w-4 h-4" />
                             </Link>
                             <button onClick={() => setResult(null)}
-                                className="px-6 py-3 text-[var(--text-muted)] hover:text-[var(--text-white)] border border-[var(--border-subtle)] hover:border-[var(--border-strong)] rounded-xl transition-all text-sm"
+                                className="px-6 py-3 text-(--text-muted) hover:text-(--text-white) border border-(--border-subtle) hover:border-(--border-strong) rounded-xl transition-all text-sm"
                             >
                                 Zurück
                             </button>
                         </div>
-                        <p className="text-xs text-[var(--text-faint)]">Nächste kostenlose Prüfung: In einem Monat</p>
+                        <p className="text-xs text-(--text-faint)">Nächste kostenlose Prüfung: In einem Monat</p>
                     </motion.div>
                 )}
 
@@ -332,29 +337,29 @@ export default function Dashboard() {
                     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
                         className="flex flex-col items-center text-center gap-6 py-16"
                     >
-                        <div className="w-16 h-16 rounded-2xl bg-[var(--accent-soft)] border border-[var(--accent-border)] flex items-center justify-center">
-                            <RefreshCw className="w-7 h-7 text-[var(--accent)]" />
+                        <div className="w-16 h-16 rounded-2xl bg-(--accent-soft) border border-(--accent-border) flex items-center justify-center">
+                            <RefreshCw className="w-7 h-7 text-(--accent-ink)" />
                         </div>
                         <div>
-                            <h2 className="text-2xl font-bold text-[var(--text-white)] mb-2">Hast du die Fehler behoben?</h2>
-                            <p className="text-[var(--text-muted)] max-w-md">
+                            <h2 className="text-2xl font-bold text-(--text-white) mb-2">Hast du die Fehler behoben?</h2>
+                            <p className="text-(--text-muted) max-w-md">
                                 Diese Domain wurde bereits kostenlos geprüft. Erstell ein{' '}
-                                <span className="text-[var(--text-white)] font-semibold">kostenloses Konto</span> um deine Website erneut zu prüfen.
+                                <span className="text-(--text-white) font-semibold">kostenloses Konto</span> um deine Website erneut zu prüfen.
                             </p>
                         </div>
                         <div className="flex flex-col sm:flex-row gap-3">
                             <Link href="/register"
-                                className="flex items-center gap-2 px-6 py-3 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] font-semibold rounded-xl transition-all shadow-lg shadow-[var(--accent-border)] active:scale-[0.97] active:duration-75"
+                                className="flex items-center gap-2 px-6 py-3 bg-(--accent) hover:bg-(--accent-hover) text-(--on-accent) font-semibold rounded-[10px] transition-all active:scale-[0.97] active:duration-75"
                             >
                                 <UserPlus className="w-4 h-4" /> Kostenlosen Account erstellen
                             </Link>
                             <Link href="/pricing"
-                                className="flex items-center gap-2 px-6 py-3 text-[var(--text-body)] hover:text-[var(--text-white)] border border-[var(--border-subtle)] hover:border-[var(--accent-border)] font-semibold rounded-xl transition-all text-sm"
+                                className="flex items-center gap-2 px-6 py-3 text-(--text-body) hover:text-(--text-white) border border-(--border-subtle) hover:border-(--accent-border) font-semibold rounded-xl transition-all text-sm"
                             >
                                 Pro für 29€/Monat <ArrowRight className="w-4 h-4" />
                             </Link>
                         </div>
-                        <button onClick={() => setResult(null)} className="text-xs text-[var(--text-faint)] hover:text-[var(--text-muted)] transition-colors">
+                        <button onClick={() => setResult(null)} className="text-xs text-(--text-faint) hover:text-(--text-muted) transition-colors">
                             Andere URL prüfen
                         </button>
                     </motion.div>
@@ -376,15 +381,15 @@ export default function Dashboard() {
                         {/* FULL REPORT */}
                         {true && (
                             <>
-                                {/* AI REPORT — nur Pro/Agency */}
+                                {/* AI REPORT - nur Pro/Agency */}
                                 {result.aiReport && (
                                     <Section title="KI-Analyse & Empfehlungen" icon="🤖">
                                         <div
-                                            className="text-[var(--text-body)] text-sm whitespace-pre-wrap break-words"
+                                            className="text-(--text-body) text-sm whitespace-pre-wrap wrap-break-word"
                                             dangerouslySetInnerHTML={{
                                                 __html: (result.aiReport || '')
                                                     .replace(/[<>&"']/g, c => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;', "'": '&#039;' }[c]))
-                                                    .replace(/\*\*(.*?)\*\*/g, '<strong class="text-[var(--text-white)]">$1</strong>')
+                                                    .replace(/\*\*(.*?)\*\*/g, '<strong class="text-(--text-white)">$1</strong>')
                                                     .replace(/\n/g, '<br/>'),
                                             }}
                                         />
@@ -442,7 +447,7 @@ export default function Dashboard() {
                                             },
                                         ].map(({ label, ok, detail }) => (
                                             <div key={label} className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-xs font-medium ${
-                                                ok ? 'bg-emerald-500/8 border-emerald-500/20 text-emerald-400' : 'bg-red-500/10 border-red-500/20 text-red-400'
+                                                ok ? 'bg-(--success-soft) border-(--success-border) text-(--success)' : 'bg-(--danger-soft) border-(--danger-border) text-(--danger)'
                                             }`}>
                                                 {ok
                                                     ? <CheckCircle className="w-3 h-3 shrink-0" strokeWidth={2} />
@@ -463,7 +468,7 @@ export default function Dashboard() {
                                                 <div key={i} className="space-y-1.5">
                                                     <IssueItem text={issue} type="error" />
                                                     {isPro && audit.seo.suggestions?.[i] && (
-                                                        <div className="ml-6 text-xs text-[var(--text-faint)] bg-[var(--surface-06)] rounded-lg px-3 py-2 border border-[var(--border-subtle)]">
+                                                        <div className="ml-6 text-xs text-(--text-faint) bg-(--card) rounded-lg px-3 py-2 border border-(--line)">
                                                             Empfehlung: {audit.seo.suggestions[i]}
                                                         </div>
                                                     )}
@@ -476,24 +481,24 @@ export default function Dashboard() {
                                             />
                                         </div>
                                     ) : (
-                                        <div className="text-center py-4 text-emerald-400 text-sm">
+                                        <div className="text-center py-4 text-(--success) text-sm">
                                             Alle SEO-Checks bestanden ✓
                                         </div>
                                     )}
 
                                     {/* Title + Description anzeigen */}
                                     {(audit?.seo?.title?.text || audit?.seo?.description?.text) && (
-                                        <div className="mt-4 pt-4 border-t border-[var(--border-subtle)] space-y-3">
+                                        <div className="mt-4 pt-4 border-t border-(--border-subtle) space-y-3">
                                             {audit?.seo?.title?.text && (
                                                 <div>
-                                                    <div className="text-[10px] text-[var(--text-faint)] uppercase tracking-wider mb-1">Title-Tag</div>
-                                                    <div className="text-xs text-[var(--text-muted)] bg-[var(--surface-06)] rounded-lg px-3 py-2 border border-[var(--border-subtle)]">{audit.seo.title.text}</div>
+                                                    <div className="text-xs text-(--text-faint) mb-1">Title-Tag</div>
+                                                    <div className="text-xs text-(--text-muted) bg-(--card) rounded-lg px-3 py-2 border border-(--line)">{audit.seo.title.text}</div>
                                                 </div>
                                             )}
                                             {audit?.seo?.description?.text && (
                                                 <div>
-                                                    <div className="text-[10px] text-[var(--text-faint)] uppercase tracking-wider mb-1">Meta Description</div>
-                                                    <div className="text-xs text-[var(--text-muted)] bg-[var(--surface-06)] rounded-lg px-3 py-2 border border-[var(--border-subtle)]">{audit.seo.description.text}</div>
+                                                    <div className="text-xs text-(--text-faint) mb-1">Meta Description</div>
+                                                    <div className="text-xs text-(--text-muted) bg-(--card) rounded-lg px-3 py-2 border border-(--line)">{audit.seo.description.text}</div>
                                                 </div>
                                             )}
                                         </div>
@@ -502,7 +507,7 @@ export default function Dashboard() {
 
                                 {/* GEO */}
                                 {audit?.geo && (
-                                    <Section title="GEO — KI-Sichtbarkeit" icon="🤖">
+                                    <Section title="GEO - KI-Sichtbarkeit" icon="🤖">
                                         {/* Checks Grid */}
                                         <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-5">
                                             {[
@@ -520,7 +525,7 @@ export default function Dashboard() {
                                                 { label: 'Kontakt/About', ok: audit.geo.checks?.hasAuthorInfo || audit.geo.checks?.hasContactInfo, detail: (audit.geo.checks?.hasAuthorInfo || audit.geo.checks?.hasContactInfo) ? 'gefunden' : 'fehlt' },
                                             ].map(({ label, ok, detail }) => (
                                                 <div key={label} className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-xs font-medium ${
-                                                    ok ? 'bg-emerald-500/8 border-emerald-500/20 text-emerald-400' : 'bg-red-500/10 border-red-500/20 text-red-400'
+                                                    ok ? 'bg-(--success-soft) border-(--success-border) text-(--success)' : 'bg-(--danger-soft) border-(--danger-border) text-(--danger)'
                                                 }`}>
                                                     {ok
                                                         ? <CheckCircle className="w-3 h-3 shrink-0" strokeWidth={2} />
@@ -541,7 +546,7 @@ export default function Dashboard() {
                                                     <div key={i} className="space-y-1.5">
                                                         <IssueItem text={issue} type="error" />
                                                         {isPro && audit.geo.suggestions?.[i] && (
-                                                            <div className="ml-6 text-xs text-[var(--text-faint)] bg-[var(--surface-06)] rounded-lg px-3 py-2 border border-[var(--border-subtle)]">
+                                                            <div className="ml-6 text-xs text-(--text-faint) bg-(--card) rounded-lg px-3 py-2 border border-(--line)">
                                                                 Empfehlung: {audit.geo.suggestions[i]}
                                                             </div>
                                                         )}
@@ -554,39 +559,39 @@ export default function Dashboard() {
                                                 />
                                             </div>
                                         ) : (
-                                            <div className="text-center py-4 text-emerald-400 text-sm mb-4">
+                                            <div className="text-center py-4 text-(--success) text-sm mb-4">
                                                 Alle GEO-Checks bestanden ✓
                                             </div>
                                         )}
 
-                                        {/* Priorisierte Massnahmen — nur Pro */}
+                                        {/* Priorisierte Massnahmen - nur Pro */}
                                         {isPro && audit.geo.recommendations?.length > 0 && (
                                             <div className="space-y-2 mb-5">
-                                                <div className="text-[10px] text-[var(--text-faint)] uppercase tracking-wider mb-2">Priorisierte Massnahmen</div>
+                                                <div className="text-xs text-(--text-faint) mb-2">Priorisierte Massnahmen</div>
                                                 {audit.geo.recommendations.map((r, i) => (
-                                                    <div key={i} className="flex gap-3 bg-[var(--surface-06)] border border-[var(--border-subtle)] rounded-xl p-4">
+                                                    <div key={i} className="flex gap-3 bg-(--card) border border-(--line) rounded-xl p-4">
                                                         <span className={`text-xs font-bold px-2 py-1 rounded shrink-0 h-fit ${
-                                                            r.priority === 'critical' ? 'bg-red-500/15 text-red-400' :
-                                                            r.priority === 'high' ? 'bg-amber-500/15 text-amber-400' :
-                                                            'bg-blue-500/15 text-blue-400'
+                                                            r.priority === 'critical' ? 'bg-(--danger-soft) text-(--danger)' :
+                                                            r.priority === 'high' ? 'bg-(--warning-soft) text-(--warning)' :
+                                                            'bg-(--accent-soft) text-(--accent-ink)'
                                                         }`}>{{ critical: 'KRITISCH', high: 'HOCH', medium: 'MITTEL', low: 'NIEDRIG' }[r.priority] || r.priority}</span>
                                                         <div className="flex-1 min-w-0">
-                                                            <div className="text-sm font-semibold text-[var(--text-white)] mb-1">{r.title}</div>
-                                                            <div className="text-xs text-[var(--text-faint)] leading-relaxed">{r.desc}</div>
+                                                            <div className="text-sm font-semibold text-(--text-white) mb-1">{r.title}</div>
+                                                            <div className="text-xs text-(--text-faint) leading-relaxed">{r.desc}</div>
                                                         </div>
-                                                        <div className="text-xs text-[var(--text-faint)] shrink-0 whitespace-nowrap">{r.effort}</div>
+                                                        <div className="text-xs text-(--text-faint) shrink-0 whitespace-nowrap">{r.effort}</div>
                                                     </div>
                                                 ))}
                                             </div>
                                         )}
 
-                                        {/* Generated llms.txt — nur Pro */}
+                                        {/* Generated llms.txt - nur Pro */}
                                         {isPro && !audit.geo.checks?.hasLlmsTxt && audit.geo.generatedLlmsTxt && (
                                             <div className="mt-2">
-                                                <div className="text-xs font-bold text-[var(--accent)] uppercase tracking-wider mb-2">
-                                                    Generierte llms.txt — als /llms.txt in dein Projekt speichern
+                                                <div className="text-xs font-bold text-(--accent-ink) mb-2">
+                                                    Generierte llms.txt - als /llms.txt in dein Projekt speichern
                                                 </div>
-                                                <pre className="bg-[var(--accent-soft)] border border-[var(--accent-border)] rounded-xl p-4 text-xs text-[var(--text-muted)] overflow-auto whitespace-pre-wrap">
+                                                <pre className="bg-(--accent-soft) border border-(--accent-border) rounded-xl p-4 text-xs text-(--text-muted) overflow-auto whitespace-pre-wrap">
                                                     {audit.geo.generatedLlmsTxt}
                                                 </pre>
                                             </div>
@@ -594,11 +599,11 @@ export default function Dashboard() {
                                     </Section>
                                 )}
 
-                                {/* KEYWORD INTELLIGENCE — Brücke zur GEO-Automatisierung, damit Nutzer die im
+                                {/* KEYWORD INTELLIGENCE - Brücke zur GEO-Automatisierung, damit Nutzer die im
                                     Audit gefundenen Vorschläge nicht manuell rüberkopieren müssen */}
                                 {(audit?.keywords?.topKeywords?.length > 0 || audit?.keywords?.longTailSuggestions?.length > 0) && (
                                     <Section title="Keyword Intelligence" icon="🎯">
-                                        <p className="text-xs text-[var(--text-faint)] mb-4">
+                                        <p className="text-xs text-(--text-faint) mb-4">
                                             Wähle Keywords aus und tracke automatisch, ob ChatGPT, Claude, Gemini, Perplexity oder Google AI Overview deine Website dafür nennen.
                                         </p>
                                         <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-4">
@@ -611,17 +616,17 @@ export default function Dashboard() {
                                                     <button key={kw} type="button" onClick={() => toggleGeoKw(kw)}
                                                         className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-xs font-medium text-left transition-all ${
                                                             checked
-                                                                ? 'bg-[var(--accent-soft)] border-[var(--accent-border)] text-[var(--accent)]'
-                                                                : 'bg-[var(--surface-06)] border-[var(--border-subtle)] text-[var(--text-muted)] hover:border-[var(--border-strong)]'
+                                                                ? 'bg-(--accent-soft) border-(--accent-border) text-(--accent-ink)'
+                                                                : 'bg-(--card) border-(--line) text-(--text-muted) hover:border-(--border-strong)'
                                                         }`}>
-                                                        <div className={`w-3 h-3 rounded border shrink-0 ${checked ? 'bg-[var(--accent)] border-[var(--accent)]' : 'border-[var(--border-strong)]'}`} />
+                                                        <div className={`w-3 h-3 rounded border shrink-0 ${checked ? 'bg-(--accent) border-(--accent)' : 'border-(--border-strong)'}`} />
                                                         <span className="truncate">{kw}</span>
                                                     </button>
                                                 )
                                             })}
                                         </div>
                                         <button onClick={handleAddToGeo} disabled={!selectedGeoKws.size || addingToGeo}
-                                            className="flex items-center gap-2 px-4 py-2.5 bg-[var(--accent)] hover:opacity-90 disabled:opacity-40 text-[var(--bg-base)] text-sm font-semibold rounded-xl transition-all">
+                                            className="flex items-center gap-2 px-4 py-2.5 bg-(--accent) hover:bg-(--accent-hover) disabled:opacity-40 text-(--on-accent) text-sm font-semibold rounded-[10px] transition-all">
                                             <TrendingUp className="w-4 h-4" />
                                             {addingToGeo
                                                 ? 'Wird hinzugefügt…'
@@ -630,34 +635,35 @@ export default function Dashboard() {
                                     </Section>
                                 )}
 
-                                {/* AI REPORT UPSELL — nach den Issues, damit der Nutzer erst den Schmerz sieht */}
+                                {/* AI REPORT UPSELL - nach den Issues, damit der Nutzer erst den Schmerz sieht */}
                                 {!result.aiReport && (
                                     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-                                        className="relative overflow-hidden rounded-2xl border border-[var(--accent-border)] bg-[var(--bg-surface)] p-6 sm:p-8 text-center">
-                                        <div className="pointer-events-none absolute -top-20 left-1/2 -translate-x-1/2 w-64 h-64 rounded-full bg-[var(--accent-soft)] blur-3xl" />
+                                        className="relative overflow-hidden rounded-2xl border border-(--accent-border) bg-(--bg-surface) p-6 sm:p-8 text-center">
                                         <div className="relative z-10">
-                                            <div className="w-12 h-12 rounded-2xl bg-[var(--accent-soft)] border border-[var(--accent-border)] flex items-center justify-center mx-auto mb-4">
-                                                <Bot className="w-6 h-6 text-[var(--accent)]" />
+                                            <div className="w-12 h-12 rounded-2xl bg-(--accent-soft) border border-(--accent-border) flex items-center justify-center mx-auto mb-4">
+                                                <Bot className="w-6 h-6 text-(--accent-ink)" />
                                             </div>
-                                            <h3 className="text-lg font-bold text-[var(--text-white)] mb-2">Konkrete Fixes für jeden dieser Fehler</h3>
-                                            <p className="text-[var(--text-muted)] text-sm mb-5 max-w-md mx-auto leading-relaxed">
-                                                Der KI-Bericht analysiert deine spezifischen Ergebnisse und liefert Schritt-für-Schritt-Fixes — kein generisches "optimiere deinen Title-Tag".
+                                            <h3 className="text-lg font-bold text-(--text-white) mb-2">Konkrete Fixes für jeden dieser Fehler</h3>
+                                            <p className="text-(--text-muted) text-sm mb-5 max-w-md mx-auto leading-relaxed">
+                                                {isLoggedIn
+                                                    ? 'Der KI-Bericht analysiert deine spezifischen Ergebnisse und liefert Schritt-für-Schritt-Fixes - kein generisches "optimiere deinen Title-Tag".'
+                                                    : 'Mit einem kostenlosen Account siehst du alle gefundenen Fehler. Die Schritt-für-Schritt-Fixes aus dem KI-Bericht und den PDF-Report gibt es ab Pro.'}
                                             </p>
                                             <div className="flex flex-col sm:flex-row gap-3 justify-center">
                                                 {isLoggedIn ? (
                                                     <>
                                                         <Link href="/pricing"
-                                                            className="flex items-center justify-center gap-2 px-6 py-3 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] font-semibold rounded-xl transition-all shadow-lg shadow-[var(--accent-border)] active:scale-[0.97] active:duration-75 text-sm">
+                                                            className="flex items-center justify-center gap-2 px-6 py-3 bg-(--accent) hover:bg-(--accent-hover) text-(--on-accent) font-semibold rounded-[10px] transition-all active:scale-[0.97] active:duration-75 text-sm">
                                                             Pro für €29/Monat <ArrowRight className="w-4 h-4" />
                                                         </Link>
                                                         <Link href="/pricing"
-                                                            className="flex items-center justify-center gap-2 px-6 py-3 text-[var(--text-muted)] hover:text-[var(--text-white)] border border-[var(--border-subtle)] hover:border-[var(--border-strong)] rounded-xl transition-all text-sm">
+                                                            className="flex items-center justify-center gap-2 px-6 py-3 text-(--text-muted) hover:text-(--text-white) border border-(--border-subtle) hover:border-(--border-strong) rounded-xl transition-all text-sm">
                                                             Alle Preise
                                                         </Link>
                                                     </>
                                                 ) : (
                                                     <button onClick={openRegisterModal}
-                                                        className="flex items-center justify-center gap-2 px-6 py-3 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] font-semibold rounded-xl transition-all shadow-lg shadow-[var(--accent-border)] active:scale-[0.97] active:duration-75 text-sm">
+                                                        className="flex items-center justify-center gap-2 px-6 py-3 bg-(--accent) hover:bg-(--accent-hover) text-(--on-accent) font-semibold rounded-[10px] transition-all active:scale-[0.97] active:duration-75 text-sm">
                                                         Kostenlos registrieren <ArrowRight className="w-4 h-4" />
                                                     </button>
                                                 )}
@@ -668,41 +674,41 @@ export default function Dashboard() {
 
                                 {/* SEO AUTOMATISIERUNG UPSELL */}
                                     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}
-                                        className="rounded-2xl border border-[var(--accent-border)] bg-[var(--accent-soft)] p-5">
+                                        className="rounded-2xl border border-(--accent-border) bg-(--accent-soft) p-5">
                                         <div className="flex items-start gap-3 mb-4">
-                                            <div className="w-9 h-9 rounded-xl bg-[var(--accent-soft-strong)] border border-[var(--accent-border)] flex items-center justify-center shrink-0">
-                                                <TrendingUp className="w-4 h-4 text-[var(--accent)]" />
+                                            <div className="w-9 h-9 rounded-xl bg-(--accent-soft-strong) border border-(--accent-border) flex items-center justify-center shrink-0">
+                                                <TrendingUp className="w-4 h-4 text-(--accent-ink)" />
                                             </div>
                                             <div>
-                                                <span className="text-xs font-semibold text-[var(--accent)] uppercase tracking-wider">Add-on</span>
-                                                <h3 className="text-sm font-bold text-[var(--text-white)]">SEO Automatisierung</h3>
+                                                <span className="text-xs font-semibold text-(--accent-ink) ">Add-on</span>
+                                                <h3 className="text-sm font-bold text-(--text-white)">SEO Automatisierung</h3>
                                             </div>
                                         </div>
                                         <ul className="space-y-1.5 mb-4">
                                             {['Wöchentliche Google-Rankings', 'Keyword-Ideen & Suchvolumen', 'Konkurrenzanalyse', 'Backlink-Übersicht'].map(f => (
-                                                <li key={f} className="flex items-center gap-2 text-xs text-[var(--text-faint)]">
-                                                    <CheckCircle className="w-3 h-3 text-[var(--accent)]/60 shrink-0" />
+                                                <li key={f} className="flex items-center gap-2 text-xs text-(--text-faint)">
+                                                    <CheckCircle className="w-3 h-3 text-(--accent)/60 shrink-0" />
                                                     {f}
                                                 </li>
                                             ))}
                                         </ul>
                                         {isLoggedIn ? (
-                                            <Link href="/seo/pricing" className="flex items-center justify-center gap-1.5 w-full px-4 py-2 bg-[var(--accent-soft)] hover:bg-[var(--accent-soft-strong)] border border-[var(--accent-border)] text-[var(--accent)] text-xs font-semibold rounded-xl transition-all">
+                                            <Link href="/seo/pricing" className="flex items-center justify-center gap-1.5 w-full px-4 py-2 bg-(--accent-soft) hover:bg-(--accent-soft-strong) border border-(--accent-border) text-(--accent-ink) text-xs font-semibold rounded-xl transition-all">
                                                 Jetzt buchen <ArrowRight className="w-3 h-3" />
                                             </Link>
                                         ) : (
                                             <div className="flex gap-2">
-                                                <Link href="/register" className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 bg-[var(--accent-soft)] hover:bg-[var(--accent-soft-strong)] border border-[var(--accent-border)] text-[var(--accent)] text-xs font-semibold rounded-xl transition-all">
+                                                <Link href="/register" className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 bg-(--accent-soft) hover:bg-(--accent-soft-strong) border border-(--accent-border) text-(--accent-ink) text-xs font-semibold rounded-xl transition-all">
                                                     <UserPlus className="w-3 h-3" /> Registrieren
                                                 </Link>
-                                                <Link href="/seo/pricing" className="flex items-center justify-center px-3 py-2 border border-[var(--border-subtle)] hover:border-[var(--border-strong)] text-[var(--text-faint)] hover:text-[var(--text-body)] text-xs rounded-xl transition-all">
+                                                <Link href="/seo/pricing" className="flex items-center justify-center px-3 py-2 border border-(--border-subtle) hover:border-(--border-strong) text-(--text-faint) hover:text-(--text-body) text-xs rounded-xl transition-all">
                                                     Preise
                                                 </Link>
                                             </div>
                                         )}
                                     </motion.div>
 
-                                {/* PDF DOWNLOAD — nur Pro/Agency */}
+                                {/* PDF DOWNLOAD - nur Pro/Agency */}
                                 {result?.reportFile ? (
                                     <div className="flex justify-center pt-2">
                                         <a
@@ -717,7 +723,7 @@ export default function Dashboard() {
                                                     })
                                                 }
                                             }}
-                                            className="flex items-center gap-2 px-6 py-3 bg-[var(--accent)] text-[var(--bg-base)] rounded-xl"
+                                            className="flex items-center gap-2 px-6 py-3 bg-(--accent) text-(--on-accent) rounded-[10px]"
                                         >
                                             <Download className="w-4 h-4" />
                                             PDF herunterladen
@@ -725,13 +731,13 @@ export default function Dashboard() {
                                         </a>
                                     </div>
                                 ) : isLoggedIn ? (
-                                    <div className="flex items-center justify-between gap-4 px-4 sm:px-5 py-4 rounded-xl border border-[var(--border-subtle)] bg-[var(--surface-06)]">
+                                    <div className="flex items-center justify-between gap-4 px-4 sm:px-5 py-4 rounded-xl border border-(--line) bg-(--card)">
                                         <div className="flex items-center gap-3">
-                                            <FileText className="w-4 h-4 text-[var(--text-faint)] shrink-0" />
-                                            <span className="text-sm text-[var(--text-faint)]">PDF-Report verfügbar mit Pro</span>
+                                            <FileText className="w-4 h-4 text-(--text-faint) shrink-0" />
+                                            <span className="text-sm text-(--text-faint)">PDF-Report verfügbar mit Pro</span>
                                         </div>
                                         <Link href="/pricing"
-                                            className="flex items-center gap-1.5 px-4 py-2 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] text-xs font-semibold rounded-lg transition-all shrink-0">
+                                            className="flex items-center gap-1.5 px-4 py-2 bg-(--accent) hover:bg-(--accent-hover) text-(--on-accent) text-xs font-semibold rounded-lg transition-all shrink-0">
                                             Upgraden <ArrowRight className="w-3 h-3" />
                                         </Link>
                                     </div>
@@ -742,7 +748,7 @@ export default function Dashboard() {
                 )}
             </div>
 
-            {/* FEEDBACK WIDGET — shown 30s after audit completes */}
+            {/* FEEDBACK WIDGET - shown 30s after audit completes */}
             {result && audit && (
                 <FeedbackWidget
                     auditUrl={auditUrl}
@@ -750,7 +756,7 @@ export default function Dashboard() {
                 />
             )}
 
-            {/* REGISTER MODAL — anonymous users, 2.5s nach Audit */}
+            {/* REGISTER MODAL - anonymous users, 2.5s nach Audit */}
             <AnimatePresence>
                 {showRegisterModal && (
                     <motion.div
@@ -764,21 +770,21 @@ export default function Dashboard() {
                             animate={{ opacity: 1, scale: 1, y: 0 }}
                             exit={{ opacity: 0, scale: 0.95, y: 16 }}
                             transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-                            className="relative w-full max-w-md bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl p-6 shadow-2xl"
+                            className="relative w-full max-w-md bg-(--bg-surface) border border-(--border-subtle) rounded-2xl p-6 shadow-2xl"
                             onClick={e => e.stopPropagation()}
                         >
                             <button
                                 onClick={() => setShowRegisterModal(false)}
-                                className="absolute top-4 right-4 text-[var(--text-faint)] hover:text-[var(--text-body)] transition-colors text-lg leading-none"
+                                className="absolute top-4 right-4 text-(--text-faint) hover:text-(--text-body) transition-colors text-lg leading-none"
                             >✕</button>
 
                             <div className="mb-5">
-                                <div className="w-10 h-10 rounded-xl bg-[var(--accent-soft-strong)] border border-[var(--accent-border)] flex items-center justify-center mb-4">
-                                    <UserPlus className="w-5 h-5 text-[var(--accent)]" />
+                                <div className="w-10 h-10 rounded-xl bg-(--accent-soft-strong) border border-(--accent-border) flex items-center justify-center mb-4">
+                                    <UserPlus className="w-5 h-5 text-(--accent-ink)" />
                                 </div>
-                                <h2 className="text-lg font-bold text-[var(--text-white)] mb-1">Ergebnisse speichern</h2>
-                                <p className="text-sm text-[var(--text-muted)]">
-                                    Erstelle einen kostenlosen Account und behalte deine Audits — kein Abo, keine Kreditkarte.
+                                <h2 className="text-lg font-bold text-(--text-white) mb-1">Ergebnisse speichern</h2>
+                                <p className="text-sm text-(--text-muted)">
+                                    Erstelle einen kostenlosen Account und behalte deine Audits - kein Abo, keine Kreditkarte.
                                 </p>
                             </div>
 
@@ -788,9 +794,9 @@ export default function Dashboard() {
                                     'Erneut prüfen mit einem Klick',
                                     '1 Audit pro Monat kostenlos',
                                 ].map(f => (
-                                    <li key={f} className="flex items-center gap-2.5 text-sm text-[var(--text-body)]">
-                                        <span className="w-4 h-4 rounded-full bg-[var(--accent-soft-strong)] flex items-center justify-center shrink-0">
-                                            <span className="text-[var(--accent)] text-[10px]">✓</span>
+                                    <li key={f} className="flex items-center gap-2.5 text-sm text-(--text-body)">
+                                        <span className="w-4 h-4 rounded-full bg-(--accent-soft-strong) flex items-center justify-center shrink-0">
+                                            <span className="text-(--accent-ink) text-[10px]">✓</span>
                                         </span>
                                         {f}
                                     </li>
@@ -802,7 +808,7 @@ export default function Dashboard() {
                                     if (auditUrl) sessionStorage.setItem('pendingAuditUrl', auditUrl)
                                     router.push('/register')
                                 }}
-                                className="flex items-center justify-center gap-2 w-full py-3 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] font-semibold rounded-xl transition-all shadow-lg shadow-[var(--accent-border)] active:scale-[0.97] active:duration-75 mb-3"
+                                className="flex items-center justify-center gap-2 w-full py-3 bg-(--accent) hover:bg-(--accent-hover) text-(--on-accent) font-semibold rounded-[10px] transition-all active:scale-[0.97] active:duration-75 mb-3"
                             >
                                 <UserPlus className="w-4 h-4" />
                                 Gratis Account erstellen

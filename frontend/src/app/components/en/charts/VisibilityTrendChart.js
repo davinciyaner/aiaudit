@@ -43,16 +43,16 @@ export default function VisibilityTrendChart() {
     const delta = SCORES[SCORES.length - 1] - SCORES[0]
 
     return (
-        <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl p-5 sm:p-6">
+        <div className="bg-(--bg-surface) border border-(--border-subtle) rounded-2xl p-5 sm:p-6">
             <div className="flex items-start justify-between gap-3 mb-1">
                 <div>
                     <div className="flex items-center gap-2">
-                        <h3 className="text-sm font-semibold text-[var(--text-white)]">AI Visibility Score</h3>
-                        <span className="text-[10px] px-1.5 py-0.5 rounded-md bg-[var(--surface-08)] text-[var(--text-faint)] font-medium">Example</span>
+                        <h3 className="text-sm font-semibold text-(--text-white)">AI Visibility Score</h3>
+                        <span className="text-[10px] px-1.5 py-0.5 rounded-md bg-(--surface-08) text-(--text-faint) font-medium">Example</span>
                     </div>
-                    <p className="text-xs text-[var(--text-faint)] mt-0.5">Mentions on ChatGPT, Claude, Perplexity &amp; Google AI Overview — 8 weeks of tracking</p>
+                    <p className="text-xs text-(--text-faint) mt-0.5">Mentions on ChatGPT, Claude, Perplexity &amp; Google AI Overview - 8 weeks of tracking</p>
                 </div>
-                <div className="flex items-center gap-1 px-2 py-1 rounded-lg bg-[var(--accent-soft)] border border-[var(--accent-border)] text-[var(--accent)] text-xs font-semibold shrink-0">
+                <div className="flex items-center gap-1 px-2 py-1 rounded-lg bg-(--accent-soft) border border-(--accent-border) text-(--accent-ink) text-xs font-semibold shrink-0">
                     <TrendingUp className="w-3 h-3" /> +{delta} points
                 </div>
             </div>
