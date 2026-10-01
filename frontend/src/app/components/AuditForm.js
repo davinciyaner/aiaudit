@@ -133,13 +133,13 @@ export default function AuditForm({ onAuditStart, onAuditComplete, defaultUrl = 
     return (
         <div className="w-full">
             <form onSubmit={handleSubmit} className="w-full">
-                <div className={`relative flex items-center gap-3 p-2 bg-(--surface-06) border rounded-2xl transition-all duration-200 shadow-card ${
+                <div className={`relative flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 p-2 sm:p-1.5 bg-(--card) border rounded-[14px] transition-[border-color,box-shadow] duration-200 shadow-card ${
                     domainError && trimmed
-                        ? 'border-(--danger-border) focus-within:border-(--danger-border) focus-within:ring-2 focus-within:ring-(--danger-border)'
-                        : 'border-(--border-subtle) focus-within:border-(--accent-border) focus-within:ring-2 focus-within:ring-(--accent-soft-strong) focus-within:bg-(--surface-08)'
+                        ? 'border-(--danger) focus-within:shadow-[0_0_0_4px_var(--danger-soft)]'
+                        : 'border-(--line) focus-within:border-(--accent) focus-within:shadow-[0_0_0_4px_var(--accent-ring)]'
                 }`}>
-                    <div className="flex items-center gap-2 flex-1 px-3 min-w-0">
-                        <Globe className="w-4 h-4 text-(--text-faint) shrink-0" />
+                    <div className="flex items-center gap-2 flex-1 px-2 sm:px-3 min-w-0">
+                        <Globe className="w-4.5 h-4.5 text-(--text-muted) shrink-0" aria-hidden="true" />
                         <label htmlFor="audit-form-url" className="sr-only">{locale === 'en' ? 'Website URL' : 'Website-URL'}</label>
                         <input
                             ref={inputRef}
@@ -148,8 +148,8 @@ export default function AuditForm({ onAuditStart, onAuditComplete, defaultUrl = 
                             value={url}
                             onChange={e => setUrl(e.target.value)}
                             onKeyDown={handleKeyDown}
-                            placeholder="yourwebsite.com"
-                            className="flex-1 min-w-0 bg-transparent text-(--text-white) placeholder-(--text-faint) text-sm outline-none py-2"
+                            placeholder={locale === 'en' ? 'yourwebsite.com' : 'deinewebsite.de'}
+                            className="flex-1 min-w-0 bg-transparent text-(--text-white) placeholder:text-(--text-muted) text-base outline-none py-2.5"
                             disabled={loading}
                             autoComplete="off"
                             autoCapitalize="off"
@@ -196,7 +196,7 @@ export default function AuditForm({ onAuditStart, onAuditComplete, defaultUrl = 
                         type="submit"
                         disabled={loading || (!!trimmed && !!domainError)}
                         whileTap={{ scale: 0.97 }}
-                        className="flex items-center gap-2 px-6 py-3 bg-(--accent) hover:bg-(--accent-hover) disabled:opacity-50 disabled:cursor-not-allowed text-(--on-accent) text-sm font-semibold rounded-[10px] transition-all duration-200 active:scale-[0.97] active:duration-75 shrink-0"
+                        className="btn-primary w-full sm:w-auto shrink-0 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                         {loading ? (
                             <><div className="w-4 h-4 border-2 border-(--bg-base)/30 border-t-(--bg-base) rounded-full animate-spin" />{locale === 'en' ? 'Analyzing...' : 'Analysiert...'}</>

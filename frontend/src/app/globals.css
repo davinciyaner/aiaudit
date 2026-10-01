@@ -148,10 +148,14 @@ html {
 /* Visible keyboard-focus indicator on every interactive element, including inputs that
    suppress their own outline (e.g. AuditForm) — this rule sits outside Tailwind's layers
    so it wins over utility classes like outline-none. */
-:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-  border-radius: 2px;
+/* In the base layer so utilities (e.g. outline-none on inputs that show a focus ring on
+   their wrapper instead) can still override it. */
+@layer base {
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
 }
 
 body {

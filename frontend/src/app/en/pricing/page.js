@@ -179,7 +179,7 @@ const GEO_PLANS = withPlanData('en', 'geo', [
 function PlanCard({plan, user, currentPlan, loading, onSuccess}) {
     const router = useRouter()
     const isPaid = plan.id !== 'free'
-    const isCurrentPlan = currentPlan === plan.id
+    const isCurrentPlan = !!user && currentPlan === plan.id
 
     return (
         <motion.div

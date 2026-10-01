@@ -16,7 +16,7 @@ export function PlanGrid({ plans, onFree }) {
                         {p.flag && <span className="text-xs font-semibold text-(--accent-ink) bg-(--accent-soft) px-2.5 py-1 rounded-full">{p.flag}</span>}
                     </div>
                     <div className="flex items-baseline gap-1.5">
-                        <span className="font-mono text-[44px] font-bold tracking-[-0.04em] leading-none">{p.price}</span>
+                        <span className="tabular-nums text-[44px] font-bold tracking-[-0.04em] leading-none">{p.price}</span>
                         <span className="text-[15px] text-(--text-muted)">{p.per}</span>
                     </div>
                     <p className="text-[15px] text-(--text-body) -mt-2">{p.desc}</p>

@@ -31,13 +31,13 @@ function MentionChart({ series, weeks, ariaLabel }) {
     )
 }
 
-function Bars({ items }) {
+function Bars({ items, pct }) {
     return (
         <ul className="flex flex-col gap-3">
             {items.map(it => (
                 <li key={it.label} className={`grid grid-cols-[minmax(0,1fr)_auto] gap-x-2.5 gap-y-1 text-sm ${it.me ? 'font-semibold' : ''}`}>
                     <span className="truncate">{it.label}</span>
-                    <span className="font-mono tabular-nums text-(--text-body)">{it.value} %</span>
+                    <span className="font-mono tabular-nums text-(--text-body)">{pct(it.value)}</span>
                     <span className="col-span-2 h-1.5 rounded-full" style={{ width: `${it.width}%`, background: it.muted ? 'color-mix(in oklch, var(--text-muted) 35%, transparent)' : 'var(--accent)' }} />
                 </li>
             ))}
@@ -47,6 +47,7 @@ function Bars({ items }) {
 
 export default function ProductDemo({ locale = 'de' }) {
     const c = COPY[locale].demo
+    const pct = v => (locale === 'en' ? `${v}%` : `${v}\u202F%`)
     const weeks = locale === 'en' ? DEMO_WEEKS_EN : DEMO_WEEKS
     const [tab, setTab] = useState(0)
     const [platform, setPlatform] = useState('all')
@@ -108,8 +109,8 @@ export default function ProductDemo({ locale = 'de' }) {
                 <div className="p-3.5 sm:p-5">
                     <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
                         {[
-                            [c.kpis.rate, `${series.me[li]} %`, `+${series.me[li] - series.me[0]} ${c.kpis.since}`, true],
-                            [c.kpis.sov, '22 %', c.kpis.sovSub, false],
+                            [c.kpis.rate, pct(series.me[li]), `+${series.me[li] - series.me[0]} ${c.kpis.since}`, true],
+                            [c.kpis.sov, pct(22), c.kpis.sovSub, false],
                             [c.kpis.src, '14', c.kpis.srcSub, false],
                             [c.kpis.geo, '71', c.kpis.geoSub, true, ' / 100'],
                         ].map(([k, v, d, up, suffix]) => (
@@ -153,7 +154,7 @@ export default function ProductDemo({ locale = 'de' }) {
                                     <span className="text-sm font-semibold">{c.perPlatform}</span>
                                     <span className="text-[13px] text-(--text-muted)">{c.week}</span>
                                 </div>
-                                <Bars items={platformBars} />
+                                <Bars items={platformBars} pct={pct} />
                             </div>
                         </div>
                     </div>
@@ -164,7 +165,7 @@ export default function ProductDemo({ locale = 'de' }) {
                                 <span className="text-sm font-semibold">{c.sovTitle}</span>
                                 <span className="text-[13px] text-(--text-muted)">{c.allPlatforms}</span>
                             </div>
-                            <Bars items={competitorBars} />
+                            <Bars items={competitorBars} pct={pct} />
                         </div>
                     </div>
 
