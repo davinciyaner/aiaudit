@@ -12,14 +12,14 @@ export default function PlatformBreakdown() {
     const reduceMotion = useReducedMotion()
 
     return (
-        <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl p-5 sm:p-6">
+        <div className="bg-(--bg-surface) border border-(--border-subtle) rounded-2xl p-5 sm:p-6">
             <div className="flex items-start justify-between gap-3 mb-5">
                 <div>
                     <div className="flex items-center gap-2">
-                        <h3 className="text-sm font-semibold text-[var(--text-white)]">Where do you get cited?</h3>
-                        <span className="text-[10px] px-1.5 py-0.5 rounded-md bg-[var(--surface-08)] text-[var(--text-faint)] font-medium">Example</span>
+                        <h3 className="text-sm font-semibold text-(--text-white)">Where do you get cited?</h3>
+                        <span className="text-[10px] px-1.5 py-0.5 rounded-md bg-(--surface-08) text-(--text-faint) font-medium">Example</span>
                     </div>
-                    <p className="text-xs text-[var(--text-faint)] mt-0.5">Share of your mentions per AI platform</p>
+                    <p className="text-xs text-(--text-faint) mt-0.5">Share of your mentions per AI platform</p>
                 </div>
             </div>
 
@@ -27,12 +27,12 @@ export default function PlatformBreakdown() {
                 {ROWS.map((r, i) => (
                     <div key={r.platform}>
                         <div className="flex items-center justify-between gap-3 mb-1.5">
-                            <span className="text-sm text-[var(--text-body)]">{r.platform}</span>
-                            <span className="text-xs text-[var(--text-white)] font-semibold tabular-nums">{r.share}%</span>
+                            <span className="text-sm text-(--text-body)">{r.platform}</span>
+                            <span className="text-xs text-(--text-white) font-semibold tabular-nums">{r.share}%</span>
                         </div>
-                        <div className="relative h-2.5 rounded-full bg-[var(--surface-08)] overflow-hidden">
+                        <div className="relative h-2.5 rounded-full bg-(--surface-08) overflow-hidden">
                             <motion.div
-                                className="absolute inset-y-0 left-0 rounded-full bg-[var(--accent)]"
+                                className="absolute inset-y-0 left-0 rounded-full bg-(--accent)"
                                 initial={reduceMotion ? false : { width: 0 }}
                                 whileInView={{ width: `${r.share}%` }}
                                 viewport={{ once: true }}
