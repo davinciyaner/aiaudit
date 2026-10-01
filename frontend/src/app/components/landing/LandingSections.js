@@ -207,6 +207,15 @@ export function WhatIsScanora({ locale = 'de' }) {
                     <h2 id="h-what" className={H2}>{c.h2}</h2>
                     <p className="text-[22px] leading-normal tracking-[-0.01em] max-w-[34em]">{c.big}</p>
                     <p className="text-(--text-body) max-w-[62ch]">{c.body}</p>
+                    <p className="text-sm text-(--text-muted) max-w-[62ch]">
+                        {c.sources[0]}{' '}
+                        {c.sources[1].map(([label, href], i) => (
+                            <span key={href}>
+                                {i > 0 && (i === c.sources[1].length - 1 ? (locale === 'de' ? ' und ' : ' and ') : ', ')}
+                                <a href={href} target="_blank" rel="noopener noreferrer" className="text-(--accent-ink) underline underline-offset-2 hover:no-underline">{label}</a>
+                            </span>
+                        ))}.
+                    </p>
                     <p className="text-sm text-(--text-muted)">
                         {c.byline[0]} <strong className="text-(--text-body) font-semibold">{c.byline[1]}</strong>, {c.byline[2]} <time dateTime="2026-09-26">{c.byline[3]}</time>.
                     </p>

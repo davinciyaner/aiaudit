@@ -2,9 +2,10 @@ import Image from 'next/image'
 import Link from 'next/link'
 import Navbar from '../../../components/Navbar'
 import Footer from '../../../components/Footer'
+import ArticleSources from '../../../components/site/ArticleSources'
 
 export const metadata = {
-    title: 'Measure AI Visibility 2026: KPIs, Dashboard & Your Own Data',
+    title: 'Measure AI Visibility: KPIs, Dashboard & Your Own Data',
     description: 'Measure AI visibility: the 3 KPIs that actually matter, step-by-step with real dashboard screenshots, plus why visibility alone tells you nothing about leads.',
     keywords: 'measure ai visibility, ai visibility measurement, track ai visibility, geo measurement, ai visibility kpi, measure chatgpt visibility, generative engine optimization measurement',
     alternates: {
@@ -130,6 +131,29 @@ const KPI_ROWS = [
     { name: 'Mention rate', def: 'Share of checked queries where the brand is mentioned at all - the baseline metric.' },
     { name: 'Recommendation context (sentiment)', def: 'Is the brand actively recommended, just mentioned neutrally, or shown worse than competitors in a comparison?' },
     { name: 'Lead source', def: 'How many of your actual website visitors and conversions provably come from an AI source - the metric that connects visibility to business outcome.' },
+]
+
+const SOURCES = [
+    {
+        "label": "GEO: Generative Engine Optimization (Aggarwal et al., 2023)",
+        "publisher": "arXiv",
+        "href": "https://arxiv.org/abs/2311.09735"
+    },
+    {
+        "label": "AI features and your website",
+        "publisher": "Google Search Central",
+        "href": "https://developers.google.com/search/docs/appearance/ai-features"
+    },
+    {
+        "label": "Search Console performance report",
+        "publisher": "Google Search Console Help",
+        "href": "https://support.google.com/webmasters/answer/7576553"
+    },
+    {
+        "label": "Overview of OpenAI crawlers",
+        "publisher": "OpenAI",
+        "href": "https://developers.openai.com/api/docs/bots"
+    }
 ]
 
 export default function MeasureAiVisibilityPage() {
@@ -492,6 +516,8 @@ export default function MeasureAiVisibilityPage() {
                         </Link>
                     </div>
                 </div>
+
+                <ArticleSources title="Sources" sources={SOURCES} />
 
                 {/* Back */}
                 <div className="mt-10 pt-8 border-t border-(--border-subtle)">

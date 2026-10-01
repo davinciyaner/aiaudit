@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
+import ArticleSources from '../../components/site/ArticleSources'
 
 export const metadata = {
     title: 'Website SEO Check & Audit: Scanora mit GEO-Analyse (2026)',
@@ -107,6 +108,29 @@ const faqLd = {
         },
     ],
 }
+
+const SOURCES = [
+    {
+        "label": "Google Search Console",
+        "publisher": "Google",
+        "href": "https://search.google.com/search-console/about"
+    },
+    {
+        "label": "PageSpeed Insights",
+        "publisher": "Google",
+        "href": "https://pagespeed.web.dev/"
+    },
+    {
+        "label": "Test für Rich-Suchergebnisse",
+        "publisher": "Google",
+        "href": "https://search.google.com/test/rich-results"
+    },
+    {
+        "label": "SEO-Leitfaden für Einsteiger",
+        "publisher": "Google Search Central",
+        "href": "https://developers.google.com/search/docs/fundamentals/seo-starter-guide"
+    }
+]
 
 export default function AuditAiOverviewPage() {
     return (
@@ -461,6 +485,8 @@ export default function AuditAiOverviewPage() {
                         </Link>
                     </div>
                 </div>
+
+                <ArticleSources title="Quellen" sources={SOURCES} />
 
                 {/* Back */}
                 <div className="mt-10 pt-8 border-t border-(--line)">

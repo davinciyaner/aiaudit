@@ -33,6 +33,42 @@ function isPrivateHost(hostname) {
     return PRIVATE_HOST_RE.some(r => r.test(h)) || METADATA_HOSTS.has(h)
 }
 
+// Cookie/consent banners covered half of the report screenshots. First try the site's own
+// "reject"/"only necessary" button (so the page renders as a visitor without consent sees it),
+// then hide whatever consent overlay is still on screen. Best effort: never throws.
+async function dismissConsentBanners(page) {
+    try {
+        await page.evaluate(() => {
+            // Must mention cookies/consent explicitly: a sticky header with a "Datenschutz"
+            // link is not a consent banner and has to stay in the screenshot.
+            const CONSENT_TEXT = /cookie|consent|einwillig/i
+            const REJECT = /^(alle\s+)?(ablehnen|nur\s+(notwendige|essenzielle|erforderliche)(\s+cookies)?|reject(\s+all)?|decline(\s+all)?|deny|only\s+(necessary|essential)(\s+cookies)?|necessary\s+only)$/i
+            const ACCEPT = /^(alle\s+)?(akzeptieren|annehmen|zustimmen|einverstanden|accept(\s+all)?|allow(\s+all)?|agree|ok|got\s+it|verstanden)$/i
+            const isVisible = (el) => {
+                const r = el.getBoundingClientRect()
+                const s = getComputedStyle(el)
+                return r.width > 0 && r.height > 0 && s.visibility !== 'hidden' && s.display !== 'none'
+            }
+            const overlays = [...document.querySelectorAll('body *')].filter(el => {
+                const s = getComputedStyle(el)
+                return (s.position === 'fixed' || s.position === 'sticky') && isVisible(el) && CONSENT_TEXT.test(el.textContent || '')
+                    && (el.textContent || '').length < 3000
+            })
+            const known = [...document.querySelectorAll('#onetrust-banner-sdk, #CybotCookiebotDialog, #usercentrics-root, .cc-window, #cookie-law-info-bar, #cmplz-cookiebanner-container, [id*="cookie" i], [class*="cookie-banner" i], [aria-label*="cookie" i]')]
+            const containers = [...new Set([...overlays, ...known])]
+            for (const box of containers) {
+                const buttons = [...box.querySelectorAll('button, a, [role="button"]')].filter(isVisible)
+                const label = (b) => (b.innerText || b.textContent || '').trim()
+                const btn = buttons.find(b => REJECT.test(label(b))) || buttons.find(b => ACCEPT.test(label(b)))
+                if (btn) { btn.click(); break }
+            }
+            for (const box of containers) {
+                if (box.isConnected && isVisible(box)) box.style.setProperty('display', 'none', 'important')
+            }
+        })
+    } catch {}
+}
+
 function readTimingEntries() {
     // `null` statt `0` fuer nicht messbare Werte — sonst wird ein fehlgeschlagener
     // Messwert im Scoring wie eine perfekte 0ms-Zeit behandelt statt als Mangel.
@@ -289,10 +325,15 @@ export async function runAudit(url, language) {
         })
 
         console.log('Screenshots werden erstellt...')
-        const screenshotDesktop = await page.screenshot({ fullPage: true, type: 'jpeg', quality: 85 })
+        // Viewport captures (first screen), not full-page: a full-page image squeezed into the
+        // report was unreadable, and the first screen is what visitors actually judge.
+        await dismissConsentBanners(page)
+        await page.waitForTimeout(400)
+        const screenshotDesktop = await page.screenshot({ fullPage: false, type: 'jpeg', quality: 82 })
         await page.setViewportSize({ width: 390, height: 844 })
         await page.waitForTimeout(500)
-        const screenshotMobile = await page.screenshot({ fullPage: true, type: 'jpeg', quality: 85 })
+        await dismissConsentBanners(page)
+        const screenshotMobile = await page.screenshot({ fullPage: false, type: 'jpeg', quality: 82 })
 
         // Resources der Landingpage sichern mit korrekten Größen
         const landingResources = resources.map(r => ({

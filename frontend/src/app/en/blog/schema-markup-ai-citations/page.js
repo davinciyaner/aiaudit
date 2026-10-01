@@ -1,9 +1,10 @@
 import Link from 'next/link'
 import Navbar from '../../../components/Navbar'
 import Footer from '../../../components/Footer'
+import ArticleSources from '../../../components/site/ArticleSources'
 
 export const metadata = {
-    title: { absolute: 'Schema Markup for AI Citations 2026: How to Get Cited by ChatGPT & Co.' },
+    title: { absolute: 'Schema Markup for AI Citations: Get Cited by ChatGPT' },
     description: 'Schema markup for AI search citations (JSON-LD) explained: priority order, ready-to-copy code, free generators, and the mistake that kills rich results.',
     keywords: 'schema markup ai search citations, ai search citations, schema markup, schema markup generator, structured data testing free, json-ld generator, json-ld example, faq schema, organization schema, rich results test',
     alternates: {
@@ -133,6 +134,34 @@ const GENERATOR_TOOLS = [
     { name: 'Merkle Schema Generator', desc: 'Form-based, covers the most common types - a solid starting point.' },
     { name: 'TechnicalSEO.com Generator', desc: 'Similar, with especially strong local-business coverage.' },
     { name: 'Google Structured Data Markup Helper', desc: 'Tag elements directly on a pasted-in page with clicks.' },
+]
+
+const SOURCES = [
+    {
+        "label": "Schema.org vocabulary",
+        "publisher": "schema.org",
+        "href": "https://schema.org/"
+    },
+    {
+        "label": "Introduction to structured data",
+        "publisher": "Google Search Central",
+        "href": "https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data"
+    },
+    {
+        "label": "Rich Results Test",
+        "publisher": "Google",
+        "href": "https://search.google.com/test/rich-results"
+    },
+    {
+        "label": "Schema Markup Validator",
+        "publisher": "schema.org",
+        "href": "https://validator.schema.org/"
+    },
+    {
+        "label": "AI features and your website",
+        "publisher": "Google Search Central",
+        "href": "https://developers.google.com/search/docs/appearance/ai-features"
+    }
 ]
 
 export default function SchemaMarkupPageEn() {
@@ -345,7 +374,7 @@ export default function SchemaMarkupPageEn() {
                         Does your schema match your visible content?
                     </h2>
                     <p className="text-(--text-muted) text-sm mb-6 max-w-md mx-auto leading-relaxed">
-                        Scanora automatically checks whether Organization, FAQ, and other schema types are present and correct - as part of 19 GEO signals in under 60 seconds. Start without registration, sign up free for the full report with all scores.
+                        Scanora automatically checks whether Organization, FAQ, and other schema types are present and correct - as part of 23 GEO signals in under 60 seconds. Start without registration, sign up free for the full report with all scores.
                     </p>
                     <Link
                         href="/dashboard"
@@ -396,6 +425,8 @@ export default function SchemaMarkupPageEn() {
                         </Link>
                     </div>
                 </div>
+
+                <ArticleSources title="Sources" sources={SOURCES} />
 
                 {/* Back */}
                 <div className="mt-10 pt-8 border-t border-(--line)">

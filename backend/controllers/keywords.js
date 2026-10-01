@@ -2,24 +2,17 @@ import * as cheerio from 'cheerio'
 
 const MESSAGES = {
     de: {
-        fewTitleKeywords: () => 'Zu wenige Keywords im Title Tag — wichtigste Keywords einbauen',
-        fewH1Keywords: () => 'H1 enthält zu wenige Keywords — Hauptkeyword in H1 platzieren',
+        fewTitleKeywords: () => 'Zu wenige Keywords im Title Tag - wichtigste Keywords einbauen',
+        fewH1Keywords: () => 'H1 enthält zu wenige Keywords - Hauptkeyword in H1 platzieren',
         notInMeta: (list) => `Top-Keywords nicht in Meta Description: ${list.join(', ')}`,
         weakKeywords: (n) => `${n} Keywords erscheinen nur einmal und haben keinen SEO-Wert`,
     },
     en: {
-        fewTitleKeywords: () => 'Too few keywords in the title tag — add your most important keywords',
-        fewH1Keywords: () => 'H1 contains too few keywords — place your main keyword in the H1',
+        fewTitleKeywords: () => 'Too few keywords in the title tag - add your most important keywords',
+        fewH1Keywords: () => 'H1 contains too few keywords - place your main keyword in the H1',
         notInMeta: (list) => `Top keywords missing from the meta description: ${list.join(', ')}`,
         weakKeywords: (n) => `${n} keywords appear only once and have no SEO value`,
     },
-}
-
-// "kostenlos"/"Vergleich"/"wie X funktioniert" sind DE-Templates; EN braucht eigene
-// grammatisch passende Muster statt einer woertlichen Uebersetzung.
-const LONGTAIL_TEMPLATES = {
-    de: (term) => [`${term} kostenlos`, `${term} Test`, `${term} Vergleich`, `${term} 2026`, `wie ${term} funktioniert`],
-    en: (term) => [`${term} free`, `${term} review`, `${term} vs`, `${term} 2026`, `how does ${term} work`],
 }
 
 export async function analyzeKeywords(url, html, language) {
@@ -37,7 +30,7 @@ export async function analyzeKeywords(url, html, language) {
     const metaKeywords = ($('meta[name="keywords"]').attr('content') || '').toLowerCase()
     const bodyText = $('body').text().toLowerCase().replace(/\s+/g, ' ')
 
-    // Keyword-Extraktion — deutsche Liste bewusst breit (Pronomen, Artikel, Hilfsverben,
+    // Keyword-Extraktion - deutsche Liste bewusst breit (Pronomen, Artikel, Hilfsverben,
     // Konjunktionen), sonst rutschen haeufige Fuellwoerter wie "deine" oder "auch" als
     // vermeintliches Top-Keyword durch und erzeugen sinnlose Long-Tail-Vorschlaege daraus.
     const stopWords = new Set([
@@ -152,22 +145,64 @@ export async function analyzeKeywords(url, html, language) {
         })
     }
 
-    // Long-tail Keyword-Vorschläge basierend auf gefundenen Keywords
+    // Long-tail suggestions: real 2-4 word phrases from title, H1, H2 and meta description
+    // (the terms the page already targets), ranked by where they appear and how often they
+    // recur in the body. Replaces the old "<single word> + kostenlos/Test/2026" templates,
+    // which produced suggestions like "website kostenlos" or "wie visibility funktioniert".
     const domain = new URL(url).hostname.replace('www.', '')
-
-    // Plattform-/Marken-Begriffe wie "google" oder "chatgpt" tauchen oft haeufig auf (weil die
-    // Seite ueber sie schreibt), sind aber als Long-Tail-Ziel sinnlos — niemand sucht "google 2026"
-    // und man kann nicht fuer "Google" ranken. Fuer die Vorschlags-Templates raus, aus der reinen
-    // Keyword-Haeufigkeitsanzeige oben aber bewusst nicht (die zeigt korrekt, was auf der Seite steht).
-    const nonBrandableTerms = new Set([
-        'google', 'chatgpt', 'claude', 'gemini', 'perplexity', 'openai', 'anthropic', 'microsoft',
-        'scanora', domain.split('.')[0],
-    ])
-    const topTerms = topKeywords.filter(k => !nonBrandableTerms.has(k.keyword)).slice(0, 3).map(k => k.keyword)
-    // "beste X Seite"/"X ohne Gebühren" klingen bei vielen Begriffen holprig ("beste website
-    // Seite"). Diese Muster passen grammatisch auf praktisch jedes Substantiv/jeden Markennamen.
-    const buildLongTail = LONGTAIL_TEMPLATES[outputLang]
-    const longTailSuggestions = topTerms.flatMap(term => buildLongTail(term)).slice(0, 10)
+    const brandTerms = new Set(['scanora', domain.split('.')[0]])
+    const genericOnly = new Set(['website', 'webseite', 'seite', 'page', 'tool', 'tools', 'jetzt', 'kostenlos', 'free', 'mehr', 'more', 'neu', 'new'])
+    // Sentence glue that makes a phrase read like a fragment of marketing copy instead of a
+    // search query ("empfiehlt dich chatgpt"); search-style verbs (tracken, prüfen, ...) stay.
+    const fragmentWords = new Set(['dich', 'dir', 'mich', 'mir', 'uns', 'euch', 'sich', 'sieh', 'siehst', 'empfiehlt', 'empfehlen',
+        'bekommst', 'bekommt', 'findest', 'findet', 'hilft', 'helfen', 'macht', 'machen', 'gibt', 'geht', 'lässt', 'kostenloser', 'kostenlose',
+        'meisten', 'kaum', 'wenige', 'einige', 'manche', 'oft', 'selten', 'wirklich', 'welche', 'welcher', 'bedeutet', 'mehrere', 'pro',
+        'you', 'see', 'get', 'gets', 'recommend', 'recommends', 'helps', 'makes', 'lets', 'free',
+        'on', 'of', 'to', 'in', 'at', 'by', 'or', 'an', 'is', 'be', 'as', 'it', 'we', 'us', 'most', 'many', 'few', 'orders'])
+    const phraseSources = [
+        [title, 5],
+        [h1Text, 4],
+        [metaDesc, 3],
+        // question headings (FAQ) break apart into fragments like "welche ki-plattformen trackt"
+        ...$('h2, h3').map((_, el) => [[$(el).text().toLowerCase(), 2]]).get().filter(([t]) => !t.includes('?')),
+    ]
+    const topicTerms = new Set(sorted.slice(0, 20).map(k => k.keyword).filter(k => !brandTerms.has(k)))
+    const phraseScores = new Map()
+    for (const [text, weight] of phraseSources) {
+        // split into runs of content words; stop words and punctuation end a run
+        const runs = text.split(/[|.,!?;:()"“”„«»\[\]/–—]+/).flatMap(chunk => {
+            const out = [[]]
+            for (const w of chunk.trim().split(/\s+/)) {
+                const clean = w.replace(/^[-'’&]+|[-'’&]+$/g, '')
+                if (!clean || clean.length < 2 || stopWords.has(clean) || /^\d+$/.test(clean)) { out.push([]); continue }
+                out[out.length - 1].push(clean)
+            }
+            return out.filter(r => r.length >= 2)
+        })
+        for (const run of runs) {
+            for (let n = 2; n <= Math.min(4, run.length); n++) {
+                for (let i = 0; i + n <= run.length; i++) {
+                    const words = run.slice(i, i + n)
+                    if (words.every(w => genericOnly.has(w) || brandTerms.has(w))) continue
+                    if (words.some(w => brandTerms.has(w))) continue
+                    if (words.some(w => fragmentWords.has(w))) continue
+                    // must touch the page's actual topic, otherwise UI headings like "url eingeben" slip in
+                    if (!words.some(w => topicTerms.has(w) || [...topicTerms].some(t => w.includes(t) && t.length > 3))) continue
+                    const phrase = words.join(' ')
+                    const bodyHits = bodyText.split(phrase).length - 1
+                    phraseScores.set(phrase, (phraseScores.get(phrase) || 0) + weight + Math.min(bodyHits, 5))
+                }
+            }
+        }
+    }
+    const ranked = [...phraseScores.entries()].sort((a, b) => b[1] - a[1] || b[0].length - a[0].length).map(([p]) => p)
+    // drop phrases fully contained in a higher-ranked one ("ki sichtbarkeit" vs "ki sichtbarkeit tracken")
+    const longTailSuggestions = []
+    for (const p of ranked) {
+        if (longTailSuggestions.some(q => q.includes(p) || p.includes(q))) continue
+        longTailSuggestions.push(p)
+        if (longTailSuggestions.length === 8) break
+    }
 
     return {
         topKeywords: keywordDensity,

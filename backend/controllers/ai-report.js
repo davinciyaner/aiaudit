@@ -81,6 +81,15 @@ GEO CHECKS:
 GEO ISSUES:
 ${auditData.geo?.issues?.join('\n') || none}
 
+ADVICE RULES (mandatory):
+- Base every statement on the data above. Do not invent numbers, customers or results.
+- Never advise removing or weakening the core topic terms of the business, its brand-relevant terms, or the platforms and products the site is about (for an SEO tool, words like "google", "seo" or "audit" are core terms). Only advise de-emphasizing words that are clearly off-topic or filler.
+- Do not recommend adding the brand name to the H1 unless the H1 is missing the main topic.
+- Titles up to about 65 characters including a short brand suffix are fine; only call a title too long above that.
+- If llms.txt is present, do not suggest creating one.
+- Testimonials: only recommend adding real customer quotes, never invented ones.
+- Missing external links: recommend citing primary sources (official documentation, studies) where the content makes claims.
+
 Now write the report. Use exactly these seven section names, each on its own line in uppercase, with no additional characters:
 
 SUMMARY
@@ -96,7 +105,7 @@ PERFORMANCE ANALYSIS
 What's concretely slowing the page down. Technical fixes, no code blocks.
 
 KEYWORD STRATEGY
-Split into three paragraphs with the headings: Keywords to keep, Keywords to remove, New keywords to test.
+Split into three paragraphs with the headings: Keywords to keep, Keywords with little value, New keywords to test. Under Keywords with little value only list genuinely off-topic or filler words; if there are none, say so.
 
 GEO ANALYSIS
 How well AI currently finds the site. What's missing for better AI recommendations. What to implement immediately.
@@ -165,6 +174,15 @@ GEO CHECKS:
 GEO PROBLEME:
 ${auditData.geo?.issues?.join('\n') || none}
 
+RATSCHLAG-REGELN (zwingend):
+- Jede Aussage muss sich auf die Daten oben stuetzen. Keine erfundenen Zahlen, Kunden oder Ergebnisse.
+- Niemals raten, Kernbegriffe des Geschaefts, markenrelevante Begriffe oder die Plattformen und Produkte, um die es auf der Seite geht, zu entfernen oder abzuschwaechen (bei einem SEO-Tool sind z. B. "google", "seo" oder "audit" Kernbegriffe). Nur Woerter zuruecknehmen, die klar themenfremd oder Fuellwoerter sind.
+- Den Markennamen nicht fuer die H1 empfehlen, ausser der H1 fehlt das Hauptthema.
+- Titel bis etwa 65 Zeichen inklusive kurzem Markenzusatz sind in Ordnung; erst darueber als zu lang bezeichnen.
+- Ist eine llms.txt vorhanden, keine neue vorschlagen.
+- Testimonials: nur echte Kundenstimmen empfehlen, niemals erfundene.
+- Fehlende externe Links: empfehlen, Primaerquellen (offizielle Dokumentation, Studien) dort zu verlinken, wo der Inhalt Behauptungen aufstellt.
+
 Schreibe jetzt den Bericht. Verwende genau diese sieben Abschnittsnamen, jeden auf einer eigenen Zeile in Grossbuchstaben, ohne jegliche zusaetzliche Zeichen:
 
 ZUSAMMENFASSUNG
@@ -180,7 +198,7 @@ PERFORMANCE-ANALYSE
 Was verlangsamt die Seite konkret. Technische Fixes ohne Code-Bloecke.
 
 KEYWORD-STRATEGIE
-Unterteile in drei Absaetze mit den Ueberschriften: Keywords behalten, Keywords entfernen, Neue Keywords testen.
+Unterteile in drei Absaetze mit den Ueberschriften: Keywords behalten, Keywords mit wenig Wert, Neue Keywords testen. Unter Keywords mit wenig Wert nur klar themenfremde Begriffe oder Fuellwoerter nennen; gibt es keine, das so sagen.
 
 GEO-ANALYSE
 Wie gut findet KI die Seite aktuell. Was fehlt fuer bessere KI-Empfehlungen. Was sofort umgesetzt werden soll.

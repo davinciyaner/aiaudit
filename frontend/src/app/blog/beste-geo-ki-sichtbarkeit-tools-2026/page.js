@@ -1,9 +1,10 @@
 import Link from 'next/link'
 import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
+import ArticleSources from '../../components/site/ArticleSources'
 
 export const metadata = {
-    title: 'Beste GEO- & KI-Sichtbarkeits-Tools 2026: 5 Tools im Vergleich',
+    title: 'Beste GEO- & KI-Sichtbarkeits-Tools 2026 im Vergleich',
     description: 'Scanora, Peec.ai, Otterly.ai, Writesonic und Rankscale im Preis- und Funktionsvergleich: Welches GEO-Tool passt zu welchem Budget und Anwendungsfall.',
     keywords: 'geo tool, beste geo tools, ki sichtbarkeit tool, ai sichtbarkeit tool, geo tools vergleich, generative engine optimization tools, seo geo tool, ai visibility tools 2026',
     alternates: {
@@ -169,6 +170,34 @@ const COMPARISON_ROWS = [
         leadTracking: 'Nein - GA4-Integration laut Anbieter erst in Beta',
         bestFor: 'Maximale Plattformbreite',
     },
+]
+
+const SOURCES = [
+    {
+        "label": "GEO: Generative Engine Optimization (Aggarwal et al., 2023)",
+        "publisher": "arXiv",
+        "href": "https://arxiv.org/abs/2311.09735"
+    },
+    {
+        "label": "KI-Funktionen in der Google-Suche und deine Website",
+        "publisher": "Google Search Central",
+        "href": "https://developers.google.com/search/docs/appearance/ai-features"
+    },
+    {
+        "label": "The /llms.txt file: Spezifikation",
+        "publisher": "llmstxt.org",
+        "href": "https://llmstxt.org/"
+    },
+    {
+        "label": "Übersicht der OpenAI-Crawler",
+        "publisher": "OpenAI",
+        "href": "https://developers.openai.com/api/docs/bots"
+    },
+    {
+        "label": "Wie Anthropic Daten aus dem Web crawlt",
+        "publisher": "Anthropic",
+        "href": "https://support.claude.com/en/articles/8896518-does-anthropic-crawl-data-from-the-web-and-how-can-site-owners-block-the-crawler"
+    }
 ]
 
 export default function BesteGeoToolsPage() {
@@ -384,6 +413,8 @@ export default function BesteGeoToolsPage() {
                         </Link>
                     </div>
                 </div>
+
+                <ArticleSources title="Quellen" sources={SOURCES} />
 
                 {/* Back */}
                 <div className="mt-10 pt-8 border-t border-(--border-subtle)">

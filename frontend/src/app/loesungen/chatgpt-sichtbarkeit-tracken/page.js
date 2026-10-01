@@ -3,7 +3,7 @@ import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
 
 export const metadata = {
-    title: 'Sichtbarkeit in ChatGPT tracken 2026: ChatGPT AI Sichtbarkeit prüfen',
+    title: 'Sichtbarkeit in ChatGPT tracken: Wirst du empfohlen?',
     description: 'Sichtbarkeit in ChatGPT tracken ab 74,99 €/Monat inklusive Google-Rankings im selben Dashboard - wöchentliches Mention-Tracking mit Quellenkontext.',
     keywords: 'sichtbarkeit in chatgpt, chatgpt sichtbarkeit tracken, chatgpt ai sichtbarkeit, chatgpt visibility tracking, chatgpt seo, ki sichtbarkeit chatgpt, generative engine optimization chatgpt, chatgpt erwähnungen tracken',
     alternates: {

@@ -9,11 +9,11 @@ const COPY = {
     de: {
         eyebrow: 'Kostenloser Download',
         title: 'So sieht ein echter Scanora-Report aus',
-        subtitle: 'Wir haben unsere eigene Website scanora.ai geprüft und zeigen dir den kompletten, unbearbeiteten Report - SEO, Performance, Keywords, GEO und den vollen KI-Bericht.',
-        disclaimer: 'Echte Analyse unserer eigenen Seite, transparent gekennzeichnet im PDF - kein Fake-Beispiel.',
+        subtitle: 'Wir haben unsere eigene Website scanora.ai geprüft und zeigen dir den kompletten, unbearbeiteten Report: SEO, Performance, Keywords, GEO und den vollen KI-Bericht.',
+        disclaimer: 'Echte Analyse unserer eigenen Seite, transparent gekennzeichnet im PDF, kein Fake-Beispiel.',
         featuresTitle: 'Das steckt im Report',
         features: [
-            { icon: Search, label: 'SEO-Analyse', desc: 'Title, Meta, Überschriften, Links - mit konkreten Problemen' },
+            { icon: Search, label: 'SEO-Analyse', desc: 'Title, Meta, Überschriften, Links, mit konkreten Problemen' },
             { icon: Zap, label: 'Performance-Analyse', desc: 'Ladezeiten, Core Web Vitals, Ressourcen' },
             { icon: FileText, label: 'Keyword Intelligence', desc: 'Top-Begriffe, Long-Tail-Ideen, Dichte' },
             { icon: Globe, label: 'GEO-Analyse', desc: 'Alle 23 KI-Sichtbarkeits-Signale im Detail' },
@@ -32,7 +32,23 @@ const COPY = {
         successTitle: 'Fast geschafft!',
         successSubtitle: 'Der Download startet automatisch. Falls nicht:',
         successButton: 'Report jetzt öffnen',
-        successEmailNote: 'Wir haben dir außerdem eine Bestätigungs-E-Mail geschickt - falls sie nicht ankommt, schau bitte auch in deinem Spam- bzw. Werbung-Ordner nach.',
+        successEmailNote: 'Wir haben dir außerdem eine Bestätigungs-E-Mail geschickt. Falls sie nicht ankommt, schau bitte auch in deinem Spam- bzw. Werbung-Ordner nach.',
+        detailTitle: 'Was die einzelnen Abschnitte zeigen',
+        detailLead: 'Der Report ist so aufgebaut, wie du ihn abarbeitest: oben der Gesamtscore, danach jeder Bereich mit Messwerten, gefundenen Problemen und Empfehlungen.',
+        detail: [
+            { h: 'SEO-Analyse', p: 'Prüft Title-Tag (30 bis 65 Zeichen), Meta Description, H1- und H2-Struktur, interne Links und Bilder ohne Alt-Text. Jeder Fund steht mit Priorität von Kritisch bis Niedrig im Report.' },
+            { h: 'Performance-Analyse', p: 'Misst Time to First Byte, First Contentful Paint, Largest Contentful Paint, Cumulative Layout Shift, DOM- und volle Ladezeit sowie Seitengröße und Anzahl der Requests. Langsame und große Ressourcen werden einzeln aufgelistet.' },
+            { h: 'Keyword-Analyse', p: 'Zeigt die häufigsten Begriffe deiner Seite mit Dichte, Begriffe, die nur einmal vorkommen, und Long-Tail-Ideen, die aus deinen eigenen Überschriften abgeleitet sind.' },
+            { h: 'GEO-Analyse', p: '23 Signale, die beeinflussen, ob ChatGPT, Claude, Gemini oder Perplexity deine Seite verstehen und zitieren: Schema.org-Daten, llms.txt, erlaubte KI-Crawler, direkte Definitionen, Statistiken, Autoren- und Kontaktangaben, Canonical und HTTPS.' },
+            { h: 'KI-Bericht', p: 'Ordnet alle Messwerte ein und macht daraus einen Aktionsplan mit konkreten Fixes, sortiert nach Wirkung. Fehlt eine llms.txt, liegt ein fertiger Vorschlag bei.' },
+            { h: 'Screenshots', p: 'Der erste Bildschirm deiner Seite auf Desktop und Handy, so wie Besucher und Crawler ihn beim Laden sehen.' },
+        ],
+        accessTitle: 'Was du in deinem eigenen Audit bekommst',
+        access: [
+            ['Ohne Anmeldung', 'Gesamtscore und Scores für SEO, Performance und GEO'],
+            ['Kostenloses Konto', 'Alle gefundenen Fehler und dein Audit-Verlauf'],
+            ['Audit Pro', 'KI-Bericht mit konkreten Fixes, PDF-Report und Screenshots'],
+        ],
         ctaTitle: 'Willst du deine eigene Website prüfen?',
         ctaButton: 'Jetzt kostenlos starten',
         downloadsLabel: (n) => `${n.toLocaleString('de-DE')} ${n === 1 ? 'Download' : 'Downloads'}`,
@@ -40,11 +56,11 @@ const COPY = {
     en: {
         eyebrow: 'Free Download',
         title: 'See what a real Scanora report looks like',
-        subtitle: "We audited our own website, scanora.ai, and we're sharing the complete, unedited report - SEO, performance, keywords, GEO, and the full AI report.",
-        disclaimer: 'A real analysis of our own site, clearly labeled in the PDF - not a fake mockup.',
+        subtitle: "We audited our own website, scanora.ai, and we're sharing the complete, unedited report: SEO, performance, keywords, GEO, and the full AI report.",
+        disclaimer: 'A real analysis of our own site, clearly labeled in the PDF, not a fake mockup.',
         featuresTitle: "What's inside",
         features: [
-            { icon: Search, label: 'SEO analysis', desc: 'Title, meta, headings, links - with concrete issues' },
+            { icon: Search, label: 'SEO analysis', desc: 'Title, meta, headings, links, with concrete issues' },
             { icon: Zap, label: 'Performance analysis', desc: 'Load times, Core Web Vitals, resources' },
             { icon: FileText, label: 'Keyword intelligence', desc: 'Top terms, long-tail ideas, density' },
             { icon: Globe, label: 'GEO analysis', desc: 'All 23 AI visibility signals in detail' },
@@ -63,7 +79,23 @@ const COPY = {
         successTitle: 'Almost there!',
         successSubtitle: "Your download should start automatically. If not:",
         successButton: 'Open report now',
-        successEmailNote: "We've also sent you a confirmation email - if it doesn't show up, please check your spam or promotions folder.",
+        successEmailNote: "We've also sent you a confirmation email. If it doesn't show up, please check your spam or promotions folder.",
+        detailTitle: 'What each section shows',
+        detailLead: 'The report follows the order you work through it: the overall score first, then each area with measurements, issues found and recommendations.',
+        detail: [
+            { h: 'SEO analysis', p: 'Checks the title tag (30 to 65 characters), meta description, H1 and H2 structure, internal links and images without alt text. Every finding is listed with a priority from critical to low.' },
+            { h: 'Performance analysis', p: 'Measures time to first byte, first contentful paint, largest contentful paint, cumulative layout shift, DOM and full load time, page size and request count. Slow and heavy resources are listed one by one.' },
+            { h: 'Keyword analysis', p: 'Shows the most frequent terms on your page with their density, terms that appear only once, and long-tail ideas derived from your own headings.' },
+            { h: 'GEO analysis', p: '23 signals that affect whether ChatGPT, Claude, Gemini or Perplexity understand and cite your page: Schema.org data, llms.txt, allowed AI crawlers, direct definitions, statistics, author and contact details, canonical and HTTPS.' },
+            { h: 'AI report', p: 'Puts every measurement in context and turns it into an action plan with concrete fixes, sorted by impact. If your site has no llms.txt, a ready-to-use draft is included.' },
+            { h: 'Screenshots', p: 'The first screen of your page on desktop and mobile, as visitors and crawlers see it on load.' },
+        ],
+        accessTitle: 'What you get in your own audit',
+        access: [
+            ['No sign-up', 'Overall score plus SEO, performance and GEO scores'],
+            ['Free account', 'Every issue found and your audit history'],
+            ['Audit Pro', 'AI report with concrete fixes, PDF report and screenshots'],
+        ],
         ctaTitle: 'Want to check your own website?',
         ctaButton: 'Start for free',
         downloadsLabel: (n) => `${n.toLocaleString('en-US')} ${n === 1 ? 'download' : 'downloads'}`,
@@ -238,6 +270,34 @@ export default function SampleReportClient({ locale = 'de' }) {
                         </div>
                     </motion.div>
                 </div>
+
+                {/* Section-by-section explanation of the report */}
+                <section className="mt-20 grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-10 lg:gap-16">
+                    <div>
+                        <h2 className="text-[28px] leading-tight tracking-[-0.03em] font-bold text-(--text-white)">{t.detailTitle}</h2>
+                        <p className="mt-4 text-(--text-body) leading-relaxed">{t.detailLead}</p>
+                    </div>
+                    <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-7">
+                        {t.detail.map(d => (
+                            <div key={d.h} className="border-t border-(--line) pt-4">
+                                <dt className="font-semibold text-(--text-white)">{d.h}</dt>
+                                <dd className="mt-2 text-[15px] text-(--text-body) leading-relaxed">{d.p}</dd>
+                            </div>
+                        ))}
+                    </dl>
+                </section>
+
+                <section className="mt-16">
+                    <h2 className="text-[28px] leading-tight tracking-[-0.03em] font-bold text-(--text-white) mb-5">{t.accessTitle}</h2>
+                    <div className="card divide-y divide-(--line-soft)">
+                        {t.access.map(([tier, what]) => (
+                            <div key={tier} className="grid grid-cols-1 sm:grid-cols-[200px_1fr] gap-1 sm:gap-6 px-5 py-4">
+                                <span className="font-semibold text-(--text-white)">{tier}</span>
+                                <span className="text-(--text-body)">{what}</span>
+                            </div>
+                        ))}
+                    </div>
+                </section>
 
                 {/* Closing CTA back to the real product */}
                 <div className="mt-20 pt-10 border-t border-(--border-subtle) text-center">

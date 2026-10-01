@@ -137,7 +137,7 @@ export default function AIVisibilityExplainer() {
                 {/* Signal checklist */}
                 <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12">
                     <h3 className="text-2xl sm:text-3xl font-bold text-center mb-3 tracking-tight">
-                        19 Signale, die Scanora prüft
+                        23 Signale, die Scanora prüft
                     </h3>
                     <p className="text-(--text-muted) text-center text-sm mb-8 sm:mb-10 max-w-lg mx-auto leading-relaxed">
                         Alles, was darüber entscheidet, ob KI-Modelle deine Website als Quelle erkennen und zitieren.

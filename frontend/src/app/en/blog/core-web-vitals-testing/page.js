@@ -1,9 +1,10 @@
 import Link from 'next/link'
 import Navbar from '../../../components/Navbar'
 import Footer from '../../../components/Footer'
+import ArticleSources from '../../../components/site/ArticleSources'
 
 export const metadata = {
-    title: { absolute: 'Core Web Vitals in 2026: What They Are and How to Test Them for Free' },
+    title: { absolute: 'Core Web Vitals 2026: What They Are and How to Test Them' },
     description: 'Core Web Vitals explained simply: LCP, INP, and CLS with Google\'s official thresholds. Plus how to test them for free in under 2 minutes.',
     keywords: 'core web vitals, core web vitals testing, core web vitals test free, free core web vitals check, lcp inp cls, free page speed test, pagespeed insights',
     alternates: {
@@ -152,6 +153,29 @@ const CAUSES = [
             'Ad containers without a defined minimum height',
         ],
     },
+]
+
+const SOURCES = [
+    {
+        "label": "Web Vitals",
+        "publisher": "web.dev",
+        "href": "https://web.dev/articles/vitals"
+    },
+    {
+        "label": "Core Web Vitals and Google Search results",
+        "publisher": "Google Search Central",
+        "href": "https://developers.google.com/search/docs/appearance/core-web-vitals"
+    },
+    {
+        "label": "PageSpeed Insights",
+        "publisher": "Google",
+        "href": "https://pagespeed.web.dev/"
+    },
+    {
+        "label": "Chrome UX Report (CrUX)",
+        "publisher": "Chrome for Developers",
+        "href": "https://developer.chrome.com/docs/crux"
+    }
 ]
 
 export default function CoreWebVitalsPageEn() {
@@ -339,6 +363,8 @@ export default function CoreWebVitalsPageEn() {
                         </Link>
                     </div>
                 </div>
+
+                <ArticleSources title="Sources" sources={SOURCES} />
 
                 {/* Back */}
                 <div className="mt-10 pt-8 border-t border-(--line)">

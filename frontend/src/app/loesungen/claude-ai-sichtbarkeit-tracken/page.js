@@ -3,7 +3,7 @@ import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
 
 export const metadata = {
-    title: 'Sichtbarkeit in Claude tracken 2026: Claude AI Sichtbarkeit prüfen',
+    title: 'Sichtbarkeit in Claude tracken: Empfiehlt dich Claude?',
     description: 'Wie Claude AI entscheidet, wen es zitiert: Training vs. Websuche, Crawler-Steuerung und Zitierregeln. Sichtbarkeit in Claude mit Scanora tracken.',
     keywords: 'sichtbarkeit in claude, claude ai sichtbarkeit, claude sichtbarkeit tracken, claude visibility tracking, claude ai visibility, perplexity sichtbarkeit, claude ki sichtbarkeit, generative engine optimization claude',
     alternates: {

@@ -8,7 +8,7 @@ export async function analyzePerformance(url, page, metrics) {
 
     const isMeasured = v => typeof v === 'number' && Number.isFinite(v) && v >= 0
 
-    // `null` bei fehlender Messung statt `0` — ein Messfehler ist kein Bestwert.
+    // `null` bei fehlender Messung statt `0` - ein Messfehler ist kein Bestwert.
     const ttfb = isMeasured(timing.responseStart) && isMeasured(timing.requestStart)
         ? timing.responseStart - timing.requestStart
         : null
@@ -16,7 +16,7 @@ export async function analyzePerformance(url, page, metrics) {
     const domLoad = isMeasured(timing.domContentLoadedEventEnd) ? timing.domContentLoadedEventEnd : null
     const fullLoad = isMeasured(timing.loadEventEnd) ? timing.loadEventEnd : null
     const lcp = isMeasured(timing.largestContentfulPaint) ? timing.largestContentfulPaint : null
-    // CLS darf 0 sein (kein Layout-Shift) — negative/undefined Werte gelten als nicht gemessen.
+    // CLS darf 0 sein (kein Layout-Shift) - negative/undefined Werte gelten als nicht gemessen.
     const cls = typeof timing.cumulativeLayoutShift === 'number' && Number.isFinite(timing.cumulativeLayoutShift) && timing.cumulativeLayoutShift >= 0
         ? timing.cumulativeLayoutShift
         : null
@@ -24,19 +24,19 @@ export async function analyzePerformance(url, page, metrics) {
     // Score berechnen
     let score = 100
 
-    if (ttfb === null) { score -= 20; issues.push('TTFB konnte nicht gemessen werden'); suggestions.push('Audit erneut ausführen — Navigation-Timing wurde nicht erfasst') }
+    if (ttfb === null) { score -= 20; issues.push('TTFB konnte nicht gemessen werden'); suggestions.push('Audit erneut ausführen - Navigation-Timing wurde nicht erfasst') }
     else if (ttfb > 600) { score -= 20; issues.push(`TTFB zu hoch: ${Math.round(ttfb)}ms (Ziel: <600ms)`); suggestions.push('Server-Response-Zeit optimieren, CDN verwenden') }
 
-    if (fcp === null) { score -= 20; issues.push('First Contentful Paint konnte nicht gemessen werden'); suggestions.push('Audit erneut ausführen — Paint-Timing wurde nicht erfasst') }
+    if (fcp === null) { score -= 20; issues.push('First Contentful Paint konnte nicht gemessen werden'); suggestions.push('Audit erneut ausführen - Paint-Timing wurde nicht erfasst') }
     else if (fcp > 1800) { score -= 20; issues.push(`First Contentful Paint zu langsam: ${Math.round(fcp)}ms (Ziel: <1800ms)`); suggestions.push('Kritisches CSS inline einbinden, render-blocking Resources entfernen') }
 
-    if (domLoad === null) { score -= 15; issues.push('DOM Load konnte nicht gemessen werden'); suggestions.push('Audit erneut ausführen — Navigation-Timing wurde nicht erfasst') }
+    if (domLoad === null) { score -= 15; issues.push('DOM Load konnte nicht gemessen werden'); suggestions.push('Audit erneut ausführen - Navigation-Timing wurde nicht erfasst') }
     else if (domLoad > 3000) { score -= 15; issues.push(`DOM Load zu langsam: ${Math.round(domLoad)}ms`); suggestions.push('JavaScript minimieren und defer/async verwenden') }
 
-    if (fullLoad === null) { score -= 15; issues.push('Vollständige Ladezeit konnte nicht gemessen werden'); suggestions.push('Audit erneut ausführen — Navigation-Timing wurde nicht erfasst') }
+    if (fullLoad === null) { score -= 15; issues.push('Vollständige Ladezeit konnte nicht gemessen werden'); suggestions.push('Audit erneut ausführen - Navigation-Timing wurde nicht erfasst') }
     else if (fullLoad > 5000) { score -= 15; issues.push(`Vollständige Ladezeit zu hoch: ${Math.round(fullLoad)}ms (Ziel: <5000ms)`); suggestions.push('Bilder komprimieren, unnötige Third-Party Scripts entfernen') }
 
-    // Echte Core Web Vitals (LCP/CLS). INP ist bewusst nicht enthalten — es erfordert eine
+    // Echte Core Web Vitals (LCP/CLS). INP ist bewusst nicht enthalten - es erfordert eine
     // echte Nutzerinteraktion und lässt sich in einem automatisierten, interaktionslosen
     // Crawl nicht seriös messen (kein Fake-Wert statt echter Messung).
     if (lcp === null) { score -= 10; issues.push('Largest Contentful Paint (LCP) konnte nicht gemessen werden'); suggestions.push('Audit erneut ausführen') }

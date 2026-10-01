@@ -131,7 +131,7 @@ export default function AIVisibilityExplainer() {
                 {/* Signal checklist */}
                 <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12">
                     <h3 className="text-2xl sm:text-3xl font-bold text-center mb-3 tracking-tight">
-                        19 signals Scanora checks
+                        23 signals Scanora checks
                     </h3>
                     <p className="text-(--text-muted) text-center text-sm mb-8 sm:mb-10 max-w-lg mx-auto leading-relaxed">
                         Everything that determines whether AI models recognize your website as a source and cite it.

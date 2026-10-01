@@ -2,9 +2,10 @@ import Image from 'next/image'
 import Link from 'next/link'
 import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
+import ArticleSources from '../../components/site/ArticleSources'
 
 export const metadata = {
-    title: 'SEO-Checkliste 2026: In 15 Minuten alle Fehler selbst finden',
+    title: 'SEO-Checkliste 2026: Alle Fehler in 15 Minuten finden',
     description: 'Die komplette SEO-Checkliste 2026: 6 Phasen, 15 Minuten, alle wichtigen SEO- und GEO-Signale. Selbst prüfen oder automatisch mit Scanora checken.',
     keywords: 'seo checkliste 2026, seo checkliste, seo fehler checkliste, seo fehler finden, technische seo checkliste, seo test kostenlos',
     alternates: {
@@ -185,6 +186,44 @@ const PHASES = [
             { label: 'FAQ-Inhalte stehen auch sichtbar im HTML', hint: 'Nicht nur im JSON-LD - KI-Modelle scrapen sichtbaren Text' },
         ],
     },
+]
+
+const SOURCES = [
+    {
+        "label": "SEO-Leitfaden für Einsteiger",
+        "publisher": "Google Search Central",
+        "href": "https://developers.google.com/search/docs/fundamentals/seo-starter-guide"
+    },
+    {
+        "label": "Google Search Essentials",
+        "publisher": "Google Search Central",
+        "href": "https://developers.google.com/search/docs/essentials"
+    },
+    {
+        "label": "Titellinks in der Google-Suche",
+        "publisher": "Google Search Central",
+        "href": "https://developers.google.com/search/docs/appearance/title-link"
+    },
+    {
+        "label": "Snippets und Meta Descriptions",
+        "publisher": "Google Search Central",
+        "href": "https://developers.google.com/search/docs/appearance/snippet"
+    },
+    {
+        "label": "Doppelte URLs mit Canonical konsolidieren",
+        "publisher": "Google Search Central",
+        "href": "https://developers.google.com/search/docs/crawling-indexing/consolidate-duplicate-urls"
+    },
+    {
+        "label": "Best Practices für Bilder",
+        "publisher": "Google Search Central",
+        "href": "https://developers.google.com/search/docs/appearance/google-images"
+    },
+    {
+        "label": "Core Web Vitals und Google-Suchergebnisse",
+        "publisher": "Google Search Central",
+        "href": "https://developers.google.com/search/docs/appearance/core-web-vitals"
+    }
 ]
 
 export default function SeoChecklistePage() {
@@ -398,6 +437,8 @@ export default function SeoChecklistePage() {
                         </Link>
                     </div>
                 </div>
+
+                <ArticleSources title="Quellen" sources={SOURCES} />
 
                 {/* Back */}
                 <div className="mt-10 pt-8 border-t border-(--line)">

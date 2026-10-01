@@ -1,9 +1,10 @@
 import Link from 'next/link'
 import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
+import ArticleSources from '../../components/site/ArticleSources'
 
 export const metadata = {
-    title: 'Core Web Vitals testen kostenlos: LCP, INP & CLS prüfen (2026)',
+    title: 'Core Web Vitals testen: LCP, INP & CLS kostenlos prüfen',
     description: 'Core Web Vitals kostenlos testen: LCP, INP und CLS einzeln prüfen - mit Googles PageSpeed Insights oder als mehrseitige Alternative ohne manuellen Einzelcheck.',
     keywords: 'core web vitals testen kostenlos, core web vitals tool ohne google, lcp testen, inp testen, cls testen, lcp inp cls testen, core web vitals, core web vitals testen, core web vitals kostenlos, core web vitals prüfen kostenlos, ladezeit test kostenlos, pagespeed insights',
     alternates: {
@@ -160,6 +161,29 @@ const CAUSES = [
             'Anzeigen-Container ohne fest definierte Mindesthöhe',
         ],
     },
+]
+
+const SOURCES = [
+    {
+        "label": "Web Vitals",
+        "publisher": "web.dev",
+        "href": "https://web.dev/articles/vitals"
+    },
+    {
+        "label": "Core Web Vitals und Google-Suchergebnisse",
+        "publisher": "Google Search Central",
+        "href": "https://developers.google.com/search/docs/appearance/core-web-vitals"
+    },
+    {
+        "label": "PageSpeed Insights",
+        "publisher": "Google",
+        "href": "https://pagespeed.web.dev/"
+    },
+    {
+        "label": "Chrome UX Report (CrUX)",
+        "publisher": "Chrome for Developers",
+        "href": "https://developer.chrome.com/docs/crux"
+    }
 ]
 
 export default function CoreWebVitalsPage() {
@@ -374,6 +398,8 @@ export default function CoreWebVitalsPage() {
                         </Link>
                     </div>
                 </div>
+
+                <ArticleSources title="Quellen" sources={SOURCES} />
 
                 {/* Back */}
                 <div className="mt-10 pt-8 border-t border-(--line)">

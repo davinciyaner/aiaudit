@@ -2,9 +2,10 @@ import Image from 'next/image'
 import Link from 'next/link'
 import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
+import ArticleSources from '../../components/site/ArticleSources'
 
 export const metadata = {
-    title: 'SEO Tracking manuell vs. automatisiert: Was lohnt sich wirklich?',
+    title: 'SEO Tracking manuell vs. automatisiert: Was lohnt sich?',
     description: 'SEO Tracking manuell vs. automatisiert im Vergleich: Zeitaufwand, Kosten und warum KI-Sichtbarkeit (GEO) manuell kaum zuverlässig messbar ist.',
     keywords: 'seo tracking, seo tracking manuell, seo monitoring automatisch, seo automatisierung lohnt sich, ranking tracking manuell vs automatisch, ki sichtbarkeit tracken, geo tracking manuell',
     alternates: {
@@ -99,6 +100,24 @@ const COMPARISON = [
     ['Konsistenz', 'Abhängig davon, ob der Check tatsächlich jede Woche gemacht wird', 'Läuft strukturell jede Woche, unabhängig von Tagesform oder Auslastung'],
     ['Reaktionszeit bei Problemen', 'Nur so schnell wie der nächste manuelle Check', 'Woche für Woche sichtbar im Verlauf'],
     ['Kosten', 'Keine Tool-Kosten, aber gebundene Arbeitszeit', 'ab 29,99 €/Monat (SEO) bzw. ab 4,99 €/Monat (GEO)'],
+]
+
+const SOURCES = [
+    {
+        "label": "Google Search Console",
+        "publisher": "Google",
+        "href": "https://search.google.com/search-console/about"
+    },
+    {
+        "label": "Leistungsbericht in der Search Console",
+        "publisher": "Google Search Console Hilfe",
+        "href": "https://support.google.com/webmasters/answer/7576553"
+    },
+    {
+        "label": "Leitfaden zu Googles Ranking-Systemen",
+        "publisher": "Google Search Central",
+        "href": "https://developers.google.com/search/docs/appearance/ranking-systems-guide"
+    }
 ]
 
 export default function SeoTrackingVergleichPage() {
@@ -296,6 +315,8 @@ export default function SeoTrackingVergleichPage() {
                         </Link>
                     </div>
                 </div>
+
+                <ArticleSources title="Quellen" sources={SOURCES} />
 
                 {/* Back */}
                 <div className="mt-10 pt-8 border-t border-(--line)">

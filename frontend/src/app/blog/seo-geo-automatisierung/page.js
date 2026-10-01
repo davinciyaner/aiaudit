@@ -2,9 +2,10 @@ import Image from 'next/image'
 import Link from 'next/link'
 import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
+import ArticleSources from '../../components/site/ArticleSources'
 
 export const metadata = {
-    title: 'SEO Rank Tracker & KI-Sichtbarkeits-Monitor: SEO- und GEO-Tracking automatisieren',
+    title: 'SEO & GEO automatisieren: Rankings und KI-Sichtbarkeit',
     description: 'Automatisierter SEO Rank Tracker plus KI-Sichtbarkeits-Monitoring für ChatGPT, Claude & Perplexity - wöchentlich automatisch statt manuell geprüft.',
     keywords: 'seo tool, rank tracker, keyword tracker, seo monitoring, google ranking tool, keyword monitoring, seo tracking tool, seo automatisierung, geo automatisierung, ki sichtbarkeit, automatisiertes seo tracking, seo monitoring tool',
     alternates: {
@@ -130,6 +131,29 @@ const GEO_FEATURES = [
     { title: 'Claude + ChatGPT + Gemini + Perplexity + Google AI Overview Tracking', desc: 'Ab dem Pro-Plan werden alle fünf Plattformen parallel getrackt, im Einsteiger-Plan Claude und Gemini.' },
     { title: 'Mention-Verlauf', desc: 'Verlauf über Zeit statt Einzelmessung - so erkennst du ob deine GEO-Signale wirken.' },
     { title: 'Mehrere Websites & Keywords', desc: 'Von 1 Website / 10 Keywords im Einsteiger-Plan bis 10 Websites / 60 Keywords im Expert-Plan.' },
+]
+
+const SOURCES = [
+    {
+        "label": "Leistungsbericht in der Search Console",
+        "publisher": "Google Search Console Hilfe",
+        "href": "https://support.google.com/webmasters/answer/7576553"
+    },
+    {
+        "label": "Leitfaden zu Googles Ranking-Systemen",
+        "publisher": "Google Search Central",
+        "href": "https://developers.google.com/search/docs/appearance/ranking-systems-guide"
+    },
+    {
+        "label": "GEO: Generative Engine Optimization (Aggarwal et al., 2023)",
+        "publisher": "arXiv",
+        "href": "https://arxiv.org/abs/2311.09735"
+    },
+    {
+        "label": "KI-Funktionen in der Google-Suche und deine Website",
+        "publisher": "Google Search Central",
+        "href": "https://developers.google.com/search/docs/appearance/ai-features"
+    }
 ]
 
 export default function SeoGeoAutomatisierungPage() {
@@ -402,6 +426,8 @@ export default function SeoGeoAutomatisierungPage() {
                         </Link>
                     </div>
                 </div>
+
+                <ArticleSources title="Quellen" sources={SOURCES} />
 
                 {/* Back */}
                 <div className="mt-10 pt-8 border-t border-(--line)">

@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import Navbar from '../../../components/Navbar'
 import Footer from '../../../components/Footer'
+import ArticleSources from '../../../components/site/ArticleSources'
 
 export const metadata = {
     title: { absolute: 'SEO Tool vs. SEO Agency: The Honest Cost Comparison (2026)' },
@@ -114,6 +115,24 @@ const COMPARISON = [
     ['Content strategy & creation', 'No', 'Yes, often a core service'],
     ['Backlink building', 'No (overview only via SEO Automation)', 'Yes, often a core service'],
     ['Personal consulting', 'No', 'Yes'],
+]
+
+const SOURCES = [
+    {
+        "label": "Do you need an SEO?",
+        "publisher": "Google Search Central",
+        "href": "https://developers.google.com/search/docs/fundamentals/do-i-need-seo"
+    },
+    {
+        "label": "SEO Starter Guide",
+        "publisher": "Google Search Central",
+        "href": "https://developers.google.com/search/docs/fundamentals/seo-starter-guide"
+    },
+    {
+        "label": "Google Search Essentials",
+        "publisher": "Google Search Central",
+        "href": "https://developers.google.com/search/docs/essentials"
+    }
 ]
 
 export default function SeoToolVsAgencyPageEn() {
@@ -302,6 +321,8 @@ export default function SeoToolVsAgencyPageEn() {
                         </Link>
                     </div>
                 </div>
+
+                <ArticleSources title="Sources" sources={SOURCES} />
 
                 {/* Back */}
                 <div className="mt-10 pt-8 border-t border-(--line)">

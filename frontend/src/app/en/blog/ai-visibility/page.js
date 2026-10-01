@@ -1,9 +1,10 @@
 import Link from 'next/link'
 import Navbar from '../../../components/Navbar'
 import Footer from '../../../components/Footer'
+import ArticleSources from '../../../components/site/ArticleSources'
 
 export const metadata = {
-    title: 'AI Visibility: How to Get Cited by ChatGPT, Claude & Perplexity',
+    title: 'AI Visibility: How to Get Cited by ChatGPT & Claude',
     description: 'AI visibility is more than llms.txt and schema markup. How to get cited by ChatGPT, Claude, Perplexity and Google AI Overview, plus monitoring.',
     keywords: 'ai visibility, ai visibility tool, get cited by chatgpt, get cited by claude, ai visibility tracker, generative engine optimization, llm visibility, ai search optimization',
     alternates: {
@@ -134,6 +135,39 @@ const LAYERS = [
         color: 'var(--warning)',
         desc: 'AI answers aren’t deterministic - the same question can get a different answer depending on when you ask. Without repeated measurement, you can’t tell whether a change is actually working or you’re just looking at a snapshot. Monitoring also shows who gets cited instead - and whether an ambiguous phrase like "AI visibility" even gets routed to the right category by a given model.',
     },
+]
+
+const SOURCES = [
+    {
+        "label": "GEO: Generative Engine Optimization (Aggarwal et al., 2023)",
+        "publisher": "arXiv",
+        "href": "https://arxiv.org/abs/2311.09735"
+    },
+    {
+        "label": "AI features and your website",
+        "publisher": "Google Search Central",
+        "href": "https://developers.google.com/search/docs/appearance/ai-features"
+    },
+    {
+        "label": "Creating helpful, reliable, people-first content",
+        "publisher": "Google Search Central",
+        "href": "https://developers.google.com/search/docs/fundamentals/creating-helpful-content"
+    },
+    {
+        "label": "Overview of OpenAI crawlers",
+        "publisher": "OpenAI",
+        "href": "https://developers.openai.com/api/docs/bots"
+    },
+    {
+        "label": "Does Anthropic crawl data from the web?",
+        "publisher": "Anthropic",
+        "href": "https://support.claude.com/en/articles/8896518-does-anthropic-crawl-data-from-the-web-and-how-can-site-owners-block-the-crawler"
+    },
+    {
+        "label": "Perplexity crawlers",
+        "publisher": "Perplexity",
+        "href": "https://docs.perplexity.ai/docs/resources/perplexity-crawlers"
+    }
 ]
 
 export default function AiVisibilityPage() {
@@ -314,6 +348,8 @@ export default function AiVisibilityPage() {
                         ← Back to blog
                     </Link>
                 </div>
+
+                <ArticleSources title="Sources" sources={SOURCES} />
 
             </article>
 

@@ -2,9 +2,10 @@ import Image from 'next/image'
 import Link from 'next/link'
 import Navbar from '../../../components/Navbar'
 import Footer from '../../../components/Footer'
+import ArticleSources from '../../../components/site/ArticleSources'
 
 export const metadata = {
-    title: { absolute: '10 Common SEO Mistakes That Cost You Google Rankings (+ Free Fixes)' },
+    title: { absolute: '10 Common SEO Mistakes That Cost You Rankings (+ Fixes)' },
     description: 'These 10 SEO mistakes are hurting rankings on most websites - and nobody notices. Run a free SEO test to catch and fix them today.',
     keywords: 'seo mistakes, common seo mistakes, seo test, free seo checker, website seo audit, missing meta description, h1 tag missing, core web vitals',
     alternates: {
@@ -218,6 +219,39 @@ const MISTAKES = [
         ctaLink: '/dashboard',
         stat: null,
     },
+]
+
+const SOURCES = [
+    {
+        "label": "SEO Starter Guide",
+        "publisher": "Google Search Central",
+        "href": "https://developers.google.com/search/docs/fundamentals/seo-starter-guide"
+    },
+    {
+        "label": "Title links in Google Search",
+        "publisher": "Google Search Central",
+        "href": "https://developers.google.com/search/docs/appearance/title-link"
+    },
+    {
+        "label": "Snippets and meta descriptions",
+        "publisher": "Google Search Central",
+        "href": "https://developers.google.com/search/docs/appearance/snippet"
+    },
+    {
+        "label": "Consolidate duplicate URLs with canonicals",
+        "publisher": "Google Search Central",
+        "href": "https://developers.google.com/search/docs/crawling-indexing/consolidate-duplicate-urls"
+    },
+    {
+        "label": "Image SEO best practices",
+        "publisher": "Google Search Central",
+        "href": "https://developers.google.com/search/docs/appearance/google-images"
+    },
+    {
+        "label": "Introduction to robots.txt",
+        "publisher": "Google Search Central",
+        "href": "https://developers.google.com/search/docs/crawling-indexing/robots/intro"
+    }
 ]
 
 export default function CommonSeoMistakesPageEn() {
@@ -555,6 +589,8 @@ export default function CommonSeoMistakesPageEn() {
                         </Link>
                     </div>
                 </div>
+
+                <ArticleSources title="Sources" sources={SOURCES} />
 
                 {/* Back */}
                 <div className="mt-10 pt-8 border-t border-(--line)">

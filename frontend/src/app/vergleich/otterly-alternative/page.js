@@ -3,7 +3,7 @@ import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
 
 export const metadata = {
-    title: { absolute: 'Otterly.ai Alternative 2026: Scanora im Vergleich | Scanora' },
+    title: { absolute: 'Otterly.ai Alternative 2026: Ehrlicher Vergleich | Scanora' },
     description: 'Otterly AI Alternative: Scanora trackt Claude und Gemini ab 4,99 €/Monat, alle fünf KI-Plattformen ab 74,99 €/Monat, inkl. SEO-Audit. Gratis testen.',
     keywords: 'otterly alternative, otterly.ai alternative, otterly ai vergleich, günstige ai visibility tool, geo tracking tool, ki sichtbarkeit tool',
     alternates: {

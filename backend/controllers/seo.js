@@ -5,7 +5,7 @@ import { load } from 'cheerio'
 // garantiert zu denselben Kriterien synchron bleiben.
 const MESSAGES = {
     de: {
-        title:            (len, text) => [`Titel zu ${len < 30 ? 'kurz' : 'lang'} (${len} Zeichen, ideal: 30-60): "${text}"`, 'Titel zwischen 30-60 Zeichen halten, wichtigstes Keyword zuerst.'],
+        title:            (len, text) => [`Titel zu ${len < 30 ? 'kurz' : 'lang'} (${len} Zeichen, ideal: 30-65): "${text}"`, 'Titel zwischen 30 und 65 Zeichen halten (inklusive Markenname), wichtigstes Keyword zuerst. Längere Titel kürzt Google in den Suchergebnissen.'],
         description:      (len, text) => [len === 0 ? 'Meta Description fehlt' : `Meta Description zu ${len < 120 ? 'kurz' : 'lang'} (${len} Zeichen): "${text}"`, 'Meta Description zwischen 120-160 Zeichen, Call-to-Action hinzufügen.'],
         h1:               (count) => [count === 0 ? 'Keine H1 Tags gefunden' : `${count} H1 Tags (nur 1 erlaubt)`, 'Nur ein H1 Tag pro Seite.'],
         h2:               () => ['Keine H2 Tags gefunden', 'Nutze H2 Tags für Unterüberschriften'],
@@ -16,14 +16,14 @@ const MESSAGES = {
         structuredData:   () => ['Kein Structured Data (JSON-LD) gefunden.', 'Schema.org Markup hinzufügen (WebSite, Organization, etc.).'],
         brokenImages:     (list) => [list.length ? `Bild-Link(s) in strukturierten Daten sind kaputt (404): ${list.join(', ')}` : 'Bild-Links in strukturierten Daten kaputt', 'Alle image/logo-URLs im JSON-LD muessen erreichbar sein, sonst verliert Google Vertrauen in die Rich-Result-Daten.'],
         noindex:          () => ['Seite auf noindex gesetzt!', 'Robots Meta Tag prüfen, noindex entfernen wenn nicht gewünscht.'],
-        viewport:         () => ['Viewport Meta Tag fehlt — Seite nicht mobil-optimiert.', 'Füge hinzu: <meta name="viewport" content="width=device-width, initial-scale=1">'],
+        viewport:         () => ['Viewport Meta Tag fehlt - Seite nicht mobil-optimiert.', 'Füge hinzu: <meta name="viewport" content="width=device-width, initial-scale=1">'],
         lang:             () => ['HTML lang-Attribut fehlt.', 'Sprache im HTML-Tag setzen, z.B. <html lang="de">'],
         internalLinks:    () => ['Keine internen Links gefunden.', 'Interne Verlinkung verbessern für bessere SEO-Struktur.'],
         wordCount:        (n) => [`Zu wenig Text auf der Seite (${n} Wörter, Minimum: 300).`, 'Mindestens 300 Wörter relevanten Content auf der Seite haben.'],
-        testimonials:     () => ['Keine Kundenstimmen/Testimonials gefunden.', 'Echte Kundenzitate oder Case Studies als Zitat-Block ergänzen — starkes Vertrauens- und Content-Signal.'],
+        testimonials:     () => ['Keine Kundenstimmen/Testimonials gefunden.', 'Echte Kundenzitate oder Case Studies als Zitat-Block ergänzen - starkes Vertrauens- und Content-Signal.'],
     },
     en: {
-        title:            (len, text) => [`Title too ${len < 30 ? 'short' : 'long'} (${len} characters, ideal: 30-60): "${text}"`, 'Keep the title between 30-60 characters, most important keyword first.'],
+        title:            (len, text) => [`Title too ${len < 30 ? 'short' : 'long'} (${len} characters, ideal: 30-65): "${text}"`, 'Keep the title between 30 and 65 characters (including the brand name), most important keyword first.'],
         description:      (len, text) => [len === 0 ? 'Meta description missing' : `Meta description too ${len < 120 ? 'short' : 'long'} (${len} characters): "${text}"`, 'Keep the meta description between 120-160 characters, add a call-to-action.'],
         h1:               (count) => [count === 0 ? 'No H1 tags found' : `${count} H1 tags (only 1 allowed)`, 'Use exactly one H1 tag per page.'],
         h2:               () => ['No H2 tags found', 'Use H2 tags for subheadings'],
@@ -34,11 +34,11 @@ const MESSAGES = {
         structuredData:   () => ['No structured data (JSON-LD) found.', 'Add Schema.org markup (WebSite, Organization, etc.).'],
         brokenImages:     (list) => [list.length ? `Image link(s) in structured data are broken (404): ${list.join(', ')}` : 'Image links in structured data are broken', 'Every image/logo URL in the JSON-LD must be reachable, otherwise Google loses trust in the rich result data.'],
         noindex:          () => ['Page is set to noindex!', 'Check the robots meta tag, remove noindex if not intended.'],
-        viewport:         () => ['Viewport meta tag missing — page is not mobile-optimized.', 'Add: <meta name="viewport" content="width=device-width, initial-scale=1">'],
+        viewport:         () => ['Viewport meta tag missing - page is not mobile-optimized.', 'Add: <meta name="viewport" content="width=device-width, initial-scale=1">'],
         lang:             () => ['HTML lang attribute missing.', 'Set the language in the HTML tag, e.g. <html lang="en">'],
         internalLinks:    () => ['No internal links found.', 'Improve internal linking for a better SEO structure.'],
         wordCount:        (n) => [`Not enough text on the page (${n} words, minimum: 300).`, 'Have at least 300 words of relevant content on the page.'],
-        testimonials:     () => ['No customer testimonials found.', 'Add real customer quotes or case studies as a quote block — a strong trust and content signal.'],
+        testimonials:     () => ['No customer testimonials found.', 'Add real customer quotes or case studies as a quote block - a strong trust and content signal.'],
     },
 }
 
@@ -66,7 +66,9 @@ export async function analyzeSEO(url, html, language) {
 
     const title = $('title').text().trim()
     const titleLen = title.length
-    check(titleLen >= 30 && titleLen <= 60, 10, 'title', titleLen, truncate(title, 70))
+    // ~65 characters is roughly where Google truncates a title (~600px); a short brand
+    // suffix like " | Brand" should not turn an otherwise good title into an issue.
+    check(titleLen >= 30 && titleLen <= 65, 10, 'title', titleLen, truncate(title, 70))
 
     const desc = $('meta[name="description"]').attr('content') || ''
     const descLen = desc.length
@@ -102,7 +104,7 @@ export async function analyzeSEO(url, html, language) {
     check(structuredData > 0, 7, 'structuredData')
 
     // Bild-Links aus JSON-LD (Person.image, Organization.logo, primaryImageOfPage) muessen
-    // erreichbar sein — ein 404 in strukturierten Daten kostet Rich-Result-Glaubwuerdigkeit.
+    // erreichbar sein - ein 404 in strukturierten Daten kostet Rich-Result-Glaubwuerdigkeit.
     const schemaImageUrls = new Set()
     const collectImageUrl = (val) => {
         if (!val) return
@@ -137,7 +139,7 @@ export async function analyzeSEO(url, html, language) {
     }
     check(brokenSchemaImages.length === 0, 6, 'brokenImages', brokenSchemaImages)
 
-    // Script/Style-Inhalte raus, bevor wir Fliesstext extrahieren — sonst landen JS-Bundle-Tokens
+    // Script/Style-Inhalte raus, bevor wir Fliesstext extrahieren - sonst landen JS-Bundle-Tokens
     // (const, queryselector, ...) und CSS-Klassennamen in Wortanzahl und Keyword-Analyse.
     $('script, style, noscript').remove()
 

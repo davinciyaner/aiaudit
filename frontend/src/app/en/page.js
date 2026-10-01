@@ -4,7 +4,7 @@ import { Hero, Features, AuditData, HowItWorks, WhatIsScanora, PricingSection, R
 import { FAQS_EN } from '../components/en/faqDataEn'
 
 export const metadata = {
-    title: { absolute: 'AI Visibility & SEO Tracking: Does ChatGPT Recommend You? | Scanora' },
+    title: { absolute: 'AI Visibility Tracking: Does ChatGPT Recommend You? | Scanora' },
     description: 'Free AI visibility & SEO check in 60 seconds: see if ChatGPT, Claude, Gemini, Perplexity and Google AI Overview recommend your website.',
     keywords: 'ai visibility, ai visibility tracker, ai visibility score, geo, geo optimization, seo automation, mention rate tracking, share of voice ai, track chatgpt visibility, track ai mentions, seo test, free seo test, seo check, free website seo check, free seo analysis, free website audit, seo analysis tool, website checker, lighthouse alternative 2026',
     alternates: {

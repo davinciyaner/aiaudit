@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import Navbar from '../../../components/Navbar'
 import Footer from '../../../components/Footer'
+import ArticleSources from '../../../components/site/ArticleSources'
 
 export const metadata = {
     title: { absolute: "Manual vs. Automated SEO Tracking: What's Actually Worth It?" },
@@ -107,6 +108,24 @@ const COMPARISON = [
     ['Consistency', 'Depends on whether the check actually happens every week', 'Runs structurally every week, regardless of how busy you are'],
     ['Response time to problems', 'Only as fast as your next manual check', 'Visible week over week in the history'],
     ['Cost', 'No tool cost, but tied-up work time', 'from €29.99/month (SEO) or €4.99/month (GEO)'],
+]
+
+const SOURCES = [
+    {
+        "label": "Google Search Console",
+        "publisher": "Google",
+        "href": "https://search.google.com/search-console/about"
+    },
+    {
+        "label": "Search Console performance report",
+        "publisher": "Google Search Console Help",
+        "href": "https://support.google.com/webmasters/answer/7576553"
+    },
+    {
+        "label": "Guide to Google Search ranking systems",
+        "publisher": "Google Search Central",
+        "href": "https://developers.google.com/search/docs/appearance/ranking-systems-guide"
+    }
 ]
 
 export default function SeoTrackingManualVsAutomatedPageEn() {
@@ -314,6 +333,8 @@ export default function SeoTrackingManualVsAutomatedPageEn() {
                         </Link>
                     </div>
                 </div>
+
+                <ArticleSources title="Sources" sources={SOURCES} />
 
                 {/* Back */}
                 <div className="mt-10 pt-8 border-t border-(--line)">

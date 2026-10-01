@@ -1,10 +1,11 @@
 import Link from 'next/link'
+import HubLayout, { HubSection, HubTable } from '../components/site/HubLayout'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 
 export const metadata = {
-    title: 'Lösungen',
-    description: 'Scanora-Lösungen für konkrete Anwendungsfälle: günstiges KI-Sichtbarkeit Tool, SEO und AI Visibility kombiniert, und mehr.',
+    title: 'Lösungen für KI-Sichtbarkeit und SEO-Tracking',
+    description: 'Scanora-Lösungen für konkrete Anwendungsfälle: SEO und KI-Sichtbarkeit in einem Tool, günstiges KI-Tracking, Claude- und ChatGPT-Sichtbarkeit tracken.',
     alternates: {
         canonical: 'https://www.scanora.ai/loesungen',
         languages: {
@@ -55,47 +56,37 @@ export default function LoesungenHubPage() {
         <main className="bg-(--bg-base) min-h-screen">
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
             <Navbar />
-            <div className="max-w-300 mx-auto px-4 sm:px-8 pt-28 md:pt-34 pb-24">
-
-                {/* Breadcrumb */}
-                <div className="flex items-center gap-2 text-xs text-(--text-faint) mb-8">
-                    <Link href="/" className="hover:text-(--text-muted) transition-colors">Scanora</Link>
-                    <span>/</span>
-                    <span className="text-(--text-faint)">Lösungen</span>
-                </div>
-
-                <div className="mb-12">
-                    <h1 className="text-[clamp(34px,4.4vw,54px)] leading-[1.05] tracking-[-0.038em] font-bold text-(--text-white) mb-5">Lösungen</h1>
-                    <p className="text-(--text-muted) text-lg max-w-2xl leading-relaxed">
-                        Scanora-Lösungen für konkrete Situationen und Budgets - abseits des direkten Tool-zu-Tool-Vergleichs.
-                        Suchst du stattdessen einen Vergleich zu einem bestimmten Anbieter, findest du den auf der{' '}
-                        <Link href="/vergleich" className="text-(--text-body) hover:text-(--accent-ink) underline underline-offset-2">Vergleichsseite</Link>.
-                    </p>
-                </div>
-
-                <div className="space-y-4">
-                    {SOLUTIONS.map((solution) => (
-                        <Link
-                            key={solution.slug}
-                            href={`/loesungen/${solution.slug}`}
-                            className="group block bg-(--card) hover:bg-(--surface-08) border border-(--line) hover:border-(--border-strong) rounded-2xl p-6 sm:p-8 transition-all duration-200"
-                        >
-                            <div className="flex items-center gap-3 mb-3">
-                                <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-(--accent-soft) text-(--accent-ink)">
-                                    {solution.tag}
-                                </span>
-                            </div>
-                            <h2 className="text-lg sm:text-xl font-bold text-(--text-white) mb-2 group-hover:text-(--accent) transition-colors leading-snug">
-                                {solution.title}
-                            </h2>
-                            <p className="text-sm text-(--text-muted) leading-relaxed">{solution.description}</p>
-                            <div className="mt-4 text-xs text-(--accent-ink) font-medium">
-                                Seite ansehen →
-                            </div>
-                        </Link>
-                    ))}
-                </div>
-            </div>
+            <HubLayout
+                crumbs={[['Scanora', '/'], ['Lösungen']]}
+                title="Lösungen für deinen Anwendungsfall"
+                lead={<>
+                    <p>Scanora misst, wie oft ChatGPT, Claude, Gemini, Perplexity und Google AI Overview deine Website nennen, und wie du bei Google rankst. Diese Seiten zeigen, wie das für einen konkreten Anwendungsfall aussieht.</p>
+                    <p>Willst du Scanora direkt mit einem anderen Tool vergleichen, findest du das auf der <Link href="/vergleich" className="font-semibold text-(--accent-ink) hover:underline underline-offset-4">Vergleichs-Seite</Link>.</p>
+                </>}
+                items={SOLUTIONS.map(s => ({ ...s, href: `/loesungen/${s.slug}` }))}
+                readLabel="Lösung ansehen"
+            >
+                <HubSection title="Welche Lösung passt zu dir?">
+                    <HubTable
+                        head={['Wenn du …', 'dann passt']}
+                        rows={[
+                            [<>Google-Rankings und KI-Sichtbarkeit in einem Dashboard sehen willst</>, <Link href="/loesungen/seo-geo-tool" className="font-semibold text-(--accent-ink) hover:underline underline-offset-4">SEO + GEO Tool</Link>],
+                            [<>mit kleinem Budget starten willst</>, <Link href="/loesungen/guenstiges-ki-sichtbarkeit-tool" className="font-semibold text-(--accent-ink) hover:underline underline-offset-4">Günstiges KI-Sichtbarkeits-Tool</Link>],
+                            [<>vor allem wissen willst, ob Claude dich empfiehlt</>, <Link href="/loesungen/claude-ai-sichtbarkeit-tracken" className="font-semibold text-(--accent-ink) hover:underline underline-offset-4">Claude-Sichtbarkeit tracken</Link>],
+                            [<>vor allem wissen willst, ob ChatGPT dich empfiehlt</>, <Link href="/loesungen/chatgpt-sichtbarkeit-tracken" className="font-semibold text-(--accent-ink) hover:underline underline-offset-4">ChatGPT-Sichtbarkeit tracken</Link>],
+                        ]}
+                    />
+                </HubSection>
+                <HubSection title="Was alle Lösungen gemeinsam haben">
+                    <ul className="flex flex-col gap-2 list-disc pl-5">
+                        <li>Einstieg mit einem kostenlosen Website-Audit in unter 60 Sekunden, ohne Anmeldung.</li>
+                        <li>KI-Tracking ab 4,99 €/Monat mit Claude und Gemini, alle fünf Plattformen ab dem Pro-Plan.</li>
+                        <li>Wöchentlicher automatischer Check mit Verlauf statt einer einmaligen Messung.</li>
+                        <li>E-Mail-Alerts, wenn Rankings einbrechen oder KI-Erwähnungen wegfallen.</li>
+                        <li>Monatlich kündbar, Preise in Euro. Alle Pläne findest du auf der <Link href="/pricing" className="font-semibold text-(--accent-ink) hover:underline underline-offset-4">Preisseite</Link>.</li>
+                    </ul>
+                </HubSection>
+            </HubLayout>
             <Footer />
         </main>
     )

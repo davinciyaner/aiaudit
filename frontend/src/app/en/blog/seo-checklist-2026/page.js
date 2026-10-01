@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import Navbar from '../../../components/Navbar'
 import Footer from '../../../components/Footer'
+import ArticleSources from '../../../components/site/ArticleSources'
 
 export const metadata = {
     title: { absolute: 'SEO Checklist 2026: Find Every Mistake Yourself in 15 Minutes' },
@@ -185,6 +186,44 @@ const PHASES = [
             { label: 'FAQ content is also visible in the HTML', hint: 'Not just in JSON-LD - AI models scrape visible text' },
         ],
     },
+]
+
+const SOURCES = [
+    {
+        "label": "SEO Starter Guide",
+        "publisher": "Google Search Central",
+        "href": "https://developers.google.com/search/docs/fundamentals/seo-starter-guide"
+    },
+    {
+        "label": "Google Search Essentials",
+        "publisher": "Google Search Central",
+        "href": "https://developers.google.com/search/docs/essentials"
+    },
+    {
+        "label": "Title links in Google Search",
+        "publisher": "Google Search Central",
+        "href": "https://developers.google.com/search/docs/appearance/title-link"
+    },
+    {
+        "label": "Snippets and meta descriptions",
+        "publisher": "Google Search Central",
+        "href": "https://developers.google.com/search/docs/appearance/snippet"
+    },
+    {
+        "label": "Consolidate duplicate URLs with canonicals",
+        "publisher": "Google Search Central",
+        "href": "https://developers.google.com/search/docs/crawling-indexing/consolidate-duplicate-urls"
+    },
+    {
+        "label": "Image SEO best practices",
+        "publisher": "Google Search Central",
+        "href": "https://developers.google.com/search/docs/appearance/google-images"
+    },
+    {
+        "label": "Core Web Vitals and Google Search results",
+        "publisher": "Google Search Central",
+        "href": "https://developers.google.com/search/docs/appearance/core-web-vitals"
+    }
 ]
 
 export default function SeoChecklistPageEn() {
@@ -398,6 +437,8 @@ export default function SeoChecklistPageEn() {
                         </Link>
                     </div>
                 </div>
+
+                <ArticleSources title="Sources" sources={SOURCES} />
 
                 {/* Back */}
                 <div className="mt-10 pt-8 border-t border-(--line)">

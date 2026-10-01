@@ -2,9 +2,10 @@ import Image from 'next/image'
 import Link from 'next/link'
 import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
+import ArticleSources from '../../components/site/ArticleSources'
 
 export const metadata = {
-    title: 'KI-Sichtbarkeit messen 2026: Kennzahlen, Dashboard & eigene Daten',
+    title: 'KI-Sichtbarkeit messen: Kennzahlen & Dashboard 2026',
     description: 'KI-Sichtbarkeit messen: die 3 Kennzahlen, die wirklich zählen, Schritt für Schritt mit echten Dashboard-Screenshots und der Verbindung zu Leads.',
     keywords: 'ki sichtbarkeit messen, geo messen, ki sichtbarkeit tracken, ai visibility messen, sichtbarkeit in ki systemen messen, ki sichtbarkeit kpi, chatgpt sichtbarkeit messen, generative engine optimization messen',
     alternates: {
@@ -130,6 +131,29 @@ const KPI_ROWS = [
     { name: 'Mention-Rate', def: 'Anteil der geprüften Anfragen, bei denen die Marke überhaupt erwähnt wird - die Basiskennzahl.' },
     { name: 'Empfehlungs-Kontext (Sentiment)', def: 'Wird die Marke aktiv empfohlen, nur neutral genannt oder im Vergleich schlechter dargestellt als Konkurrenten?' },
     { name: 'Lead-Herkunft', def: 'Wie viele der tatsächlichen Website-Besucher und Conversions stammen nachweislich aus einer KI-Quelle - die Kennzahl, die Sichtbarkeit mit Geschäftsergebnis verbindet.' },
+]
+
+const SOURCES = [
+    {
+        "label": "GEO: Generative Engine Optimization (Aggarwal et al., 2023)",
+        "publisher": "arXiv",
+        "href": "https://arxiv.org/abs/2311.09735"
+    },
+    {
+        "label": "KI-Funktionen in der Google-Suche und deine Website",
+        "publisher": "Google Search Central",
+        "href": "https://developers.google.com/search/docs/appearance/ai-features"
+    },
+    {
+        "label": "Leistungsbericht in der Search Console",
+        "publisher": "Google Search Console Hilfe",
+        "href": "https://support.google.com/webmasters/answer/7576553"
+    },
+    {
+        "label": "Übersicht der OpenAI-Crawler",
+        "publisher": "OpenAI",
+        "href": "https://developers.openai.com/api/docs/bots"
+    }
 ]
 
 export default function KiSichtbarkeitMessenPage() {
@@ -492,6 +516,8 @@ export default function KiSichtbarkeitMessenPage() {
                         </Link>
                     </div>
                 </div>
+
+                <ArticleSources title="Quellen" sources={SOURCES} />
 
                 {/* Back */}
                 <div className="mt-10 pt-8 border-t border-(--border-subtle)">

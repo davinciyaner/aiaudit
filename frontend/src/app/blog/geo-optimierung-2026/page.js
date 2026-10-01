@@ -2,9 +2,10 @@ import Image from 'next/image'
 import Link from 'next/link'
 import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
+import ArticleSources from '../../components/site/ArticleSources'
 
 export const metadata = {
-    title: 'Was ist GEO? Generative Engine Optimization einfach erklärt (+ Checkliste 2026)',
+    title: 'Was ist GEO? Generative Engine Optimization erklärt',
     description: 'GEO (Generative Engine Optimization) ist die Optimierung von Content für KI-Antworten wie ChatGPT und Claude - Definition, Unterschied zu SEO und Checkliste.',
     keywords: 'was ist geo, GEO Optimierung, Generative Engine Optimization, ChatGPT SEO, KI Suchmaschinenoptimierung, ChatGPT Sichtbarkeit, Claude Sichtbarkeit, llms.txt, KI Sichtbarkeit, GEO SEO Unterschied, geo strategie 2026, geo strategie aufbauen',
     alternates: {
@@ -188,6 +189,44 @@ const SIGNALS = [
     },
 ]
 
+const SOURCES = [
+    {
+        "label": "GEO: Generative Engine Optimization (Aggarwal et al., 2023)",
+        "publisher": "arXiv",
+        "href": "https://arxiv.org/abs/2311.09735"
+    },
+    {
+        "label": "KI-Funktionen in der Google-Suche und deine Website",
+        "publisher": "Google Search Central",
+        "href": "https://developers.google.com/search/docs/appearance/ai-features"
+    },
+    {
+        "label": "The /llms.txt file: Spezifikation",
+        "publisher": "llmstxt.org",
+        "href": "https://llmstxt.org/"
+    },
+    {
+        "label": "Einführung in strukturierte Daten",
+        "publisher": "Google Search Central",
+        "href": "https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data"
+    },
+    {
+        "label": "Übersicht der OpenAI-Crawler",
+        "publisher": "OpenAI",
+        "href": "https://developers.openai.com/api/docs/bots"
+    },
+    {
+        "label": "Wie Anthropic Daten aus dem Web crawlt",
+        "publisher": "Anthropic",
+        "href": "https://support.claude.com/en/articles/8896518-does-anthropic-crawl-data-from-the-web-and-how-can-site-owners-block-the-crawler"
+    },
+    {
+        "label": "Perplexity-Crawler",
+        "publisher": "Perplexity",
+        "href": "https://docs.perplexity.ai/docs/resources/perplexity-crawlers"
+    }
+]
+
 export default function GeoArtikelPage() {
     return (
         <main className="bg-(--bg-base) min-h-screen">
@@ -318,7 +357,7 @@ export default function GeoArtikelPage() {
 
                     <section>
                         <h2 className="text-[28px] leading-tight tracking-[-0.03em] font-bold text-(--text-white) mb-2">Was sind die 6 wichtigsten GEO-Signale?</h2>
-                        <p className="text-(--text-muted) mb-6">Scanora prüft insgesamt 19 GEO-Signale. Das sind die sechs mit dem größten Einfluss:</p>
+                        <p className="text-(--text-muted) mb-6">Scanora prüft insgesamt 23 GEO-Signale. Das sind die sechs mit dem größten Einfluss:</p>
                         <figure className="mb-6">
                             <Image
                                 src="/blog/scanora-geo-report.png"
@@ -328,7 +367,7 @@ export default function GeoArtikelPage() {
                                 className="w-full h-auto rounded-2xl border border-(--line)"
                             />
                             <figcaption className="text-xs text-(--text-faint) mt-2">
-                                Ein echter GEO-Score-Report aus Scanora - alle 12 KI-Sichtbarkeits-Signale auf einen Blick, inklusive gefundenem Fehler.
+                                Ausschnitt aus einem echten GEO-Report von Scanora mit geprüften Signalen und einem gefundenen Fehler.
                             </figcaption>
                         </figure>
                         <div className="space-y-4">
@@ -491,7 +530,7 @@ export default function GeoArtikelPage() {
                         Wie gut ist dein GEO-Score?
                     </h2>
                     <p className="text-(--text-muted) text-sm mb-6 max-w-md mx-auto leading-relaxed">
-                        Scanora prüft alle 19 GEO-Signale in unter 60 Sekunden - inklusive llms.txt, Schema.org, KI-Crawler-Erlaubnis und Content-Qualität. Start ohne Registrierung, für den vollständigen Report mit allen Scores meldest du dich kostenlos an.
+                        Scanora prüft alle 23 GEO-Signale in unter 60 Sekunden - inklusive llms.txt, Schema.org, KI-Crawler-Erlaubnis und Content-Qualität. Start ohne Registrierung, für den vollständigen Report mit allen Scores meldest du dich kostenlos an.
                     </p>
                     <Link
                         href="/dashboard"
@@ -508,6 +547,8 @@ export default function GeoArtikelPage() {
                         ← Zurück zum Blog
                     </Link>
                 </div>
+
+                <ArticleSources title="Quellen" sources={SOURCES} />
 
             </article>
 

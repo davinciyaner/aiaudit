@@ -2,9 +2,10 @@ import Link from 'next/link'
 import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
 import FaqAccordion from './FaqAccordion'
+import ArticleSources from '../../components/site/ArticleSources'
 
 export const metadata = {
-    title: 'llms.txt erklärt: Beispiel, Vorlage & Schritt-für-Schritt-Anleitung',
+    title: 'llms.txt erstellen: Beispiel, Vorlage & Anleitung',
     description: 'llms.txt einfach erklärt: Definition, Unterschied zu robots.txt, ein echtes Beispiel zum Kopieren und eine Schritt-für-Schritt-Anleitung zum Erstellen.',
     keywords: 'llms.txt, llms txt, llms.txt erstellen, llms.txt beispiel, llms.txt implementierung, llms.txt datei erstellen, llms.txt vorlage, llms.txt was ist das, llms-full.txt, ai crawler datei, llms.txt generator',
     alternates: {
@@ -161,6 +162,34 @@ const MISTAKES = [
     { title: 'Datei blockiert oder hinter Login', desc: 'llms.txt muss öffentlich ohne Authentifizierung erreichbar sein - sonst können KI-Crawler es gar nicht lesen.' },
     { title: 'Nie aktualisiert', desc: 'Neue Features, geänderte Preise oder umbenannte Produkte veralten in der Datei, wenn sie nicht bei Änderungen mitgepflegt wird.' },
     { title: 'Falsches Format', desc: 'llms.txt muss valides Markdown sein, keine HTML-Seite mit .txt-Endung - sonst können viele Parser es nicht sauber verarbeiten.' },
+]
+
+const SOURCES = [
+    {
+        "label": "The /llms.txt file: Spezifikation",
+        "publisher": "llmstxt.org",
+        "href": "https://llmstxt.org/"
+    },
+    {
+        "label": "Vorschlag zur llms.txt von Jeremy Howard",
+        "publisher": "Answer.AI",
+        "href": "https://www.answer.ai/posts/2024-09-03-llmstxt.html"
+    },
+    {
+        "label": "Einführung in robots.txt",
+        "publisher": "Google Search Central",
+        "href": "https://developers.google.com/search/docs/crawling-indexing/robots/intro"
+    },
+    {
+        "label": "Übersicht der OpenAI-Crawler",
+        "publisher": "OpenAI",
+        "href": "https://developers.openai.com/api/docs/bots"
+    },
+    {
+        "label": "Wie Anthropic Daten aus dem Web crawlt",
+        "publisher": "Anthropic",
+        "href": "https://support.claude.com/en/articles/8896518-does-anthropic-crawl-data-from-the-web-and-how-can-site-owners-block-the-crawler"
+    }
 ]
 
 export default function LlmsTxtPage() {
@@ -335,7 +364,7 @@ export default function LlmsTxtPage() {
                         Hast du bereits eine llms.txt?
                     </h2>
                     <p className="text-(--text-muted) text-sm mb-6 max-w-md mx-auto leading-relaxed">
-                        Scanora prüft automatisch, ob llms.txt und llms-full.txt vorhanden und korrekt formatiert sind - als Teil von 19 GEO-Signalen in unter 60 Sekunden. Start ohne Registrierung, für den vollständigen Report mit allen Scores meldest du dich kostenlos an.
+                        Scanora prüft automatisch, ob llms.txt und llms-full.txt vorhanden und korrekt formatiert sind - als Teil von 23 GEO-Signalen in unter 60 Sekunden. Start ohne Registrierung, für den vollständigen Report mit allen Scores meldest du dich kostenlos an.
                     </p>
                     <Link
                         href="/dashboard"
@@ -355,7 +384,7 @@ export default function LlmsTxtPage() {
                                 GEO-Optimierung 2026: So wirst du von ChatGPT und Claude empfohlen
                             </h3>
                             <p className="text-(--text-muted) text-sm leading-relaxed max-w-md">
-                                llms.txt ist eines von 19 GEO-Signalen - die vollständige Übersicht, was sonst noch zählt.
+                                llms.txt ist eines von 23 GEO-Signalen - die vollständige Übersicht, was sonst noch zählt.
                             </p>
                         </div>
                         <Link
@@ -366,6 +395,8 @@ export default function LlmsTxtPage() {
                         </Link>
                     </div>
                 </div>
+
+                <ArticleSources title="Quellen" sources={SOURCES} />
 
                 {/* Back */}
                 <div className="mt-10 pt-8 border-t border-(--line)">

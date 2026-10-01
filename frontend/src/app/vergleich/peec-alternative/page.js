@@ -3,7 +3,7 @@ import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
 
 export const metadata = {
-    title: 'Peec.ai Alternative 2026: Scanora im ehrlichen Vergleich',
+    title: 'Peec AI Alternative 2026: Ehrlicher Vergleich',
     description: 'Peec.ai Alternative gesucht? Scanora trackt ChatGPT, Claude, Gemini & Perplexity ab 74,99€/Monat inkl. SEO-Audit. Jetzt Preise & Features vergleichen.',
     keywords: 'peec alternative, peec.ai alternative, peec ai alternativen, peec ai competitors, peec ai vergleich, günstige ai visibility tool, geo tracking tool, ki sichtbarkeit tool',
     alternates: {

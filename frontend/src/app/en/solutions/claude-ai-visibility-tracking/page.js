@@ -3,7 +3,7 @@ import Navbar from '../../../components/Navbar'
 import Footer from '../../../components/Footer'
 
 export const metadata = {
-    title: { absolute: 'Claude AI Visibility Tracking 2026: See Whether Claude Recommends You' },
+    title: { absolute: 'Claude AI Visibility Tracking: Does Claude Recommend You?' },
     description: "How Claude AI decides who it cites: training vs. web search, crawler control and citation rules. Track your Claude visibility with Scanora.",
     keywords: 'claude ai visibility, claude visibility tracking, claude ai tracking tool, track claude mentions, generative engine optimization claude',
     alternates: {

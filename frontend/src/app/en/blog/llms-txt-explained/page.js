@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import Navbar from '../../../components/Navbar'
 import Footer from '../../../components/Footer'
+import ArticleSources from '../../../components/site/ArticleSources'
 
 export const metadata = {
     title: { absolute: 'llms.txt Explained: What It Is and How to Set It Up Correctly' },
@@ -126,6 +127,34 @@ const MISTAKES = [
     { title: 'File blocked or behind a login', desc: 'llms.txt needs to be publicly accessible without authentication - otherwise AI crawlers can\'t read it at all.' },
     { title: 'Never updated', desc: 'New features, changed pricing, or renamed products go stale in the file if it isn\'t maintained alongside those changes.' },
     { title: 'Wrong format', desc: 'llms.txt has to be valid markdown, not an HTML page with a .txt extension - otherwise many parsers can\'t process it cleanly.' },
+]
+
+const SOURCES = [
+    {
+        "label": "The /llms.txt file: specification",
+        "publisher": "llmstxt.org",
+        "href": "https://llmstxt.org/"
+    },
+    {
+        "label": "Original llms.txt proposal by Jeremy Howard",
+        "publisher": "Answer.AI",
+        "href": "https://www.answer.ai/posts/2024-09-03-llmstxt.html"
+    },
+    {
+        "label": "Introduction to robots.txt",
+        "publisher": "Google Search Central",
+        "href": "https://developers.google.com/search/docs/crawling-indexing/robots/intro"
+    },
+    {
+        "label": "Overview of OpenAI crawlers",
+        "publisher": "OpenAI",
+        "href": "https://developers.openai.com/api/docs/bots"
+    },
+    {
+        "label": "Does Anthropic crawl data from the web?",
+        "publisher": "Anthropic",
+        "href": "https://support.claude.com/en/articles/8896518-does-anthropic-crawl-data-from-the-web-and-how-can-site-owners-block-the-crawler"
+    }
 ]
 
 export default function LlmsTxtPageEn() {
@@ -276,7 +305,7 @@ export default function LlmsTxtPageEn() {
                         Do you already have an llms.txt?
                     </h2>
                     <p className="text-(--text-muted) text-sm mb-6 max-w-md mx-auto leading-relaxed">
-                        Scanora automatically checks whether llms.txt and llms-full.txt exist and are correctly formatted - as part of 19 GEO signals in under 60 seconds. Start without registration, sign up free for the full report with all scores.
+                        Scanora automatically checks whether llms.txt and llms-full.txt exist and are correctly formatted - as part of 23 GEO signals in under 60 seconds. Start without registration, sign up free for the full report with all scores.
                     </p>
                     <Link
                         href="/dashboard"
@@ -296,7 +325,7 @@ export default function LlmsTxtPageEn() {
                                 What is GEO? How to Get Recommended by ChatGPT and Claude
                             </h3>
                             <p className="text-(--text-muted) text-sm leading-relaxed max-w-md">
-                                llms.txt is one of 19 GEO signals - the full overview of what else counts.
+                                llms.txt is one of 23 GEO signals - the full overview of what else counts.
                             </p>
                         </div>
                         <Link
@@ -307,6 +336,8 @@ export default function LlmsTxtPageEn() {
                         </Link>
                     </div>
                 </div>
+
+                <ArticleSources title="Sources" sources={SOURCES} />
 
                 {/* Back */}
                 <div className="mt-10 pt-8 border-t border-(--line)">

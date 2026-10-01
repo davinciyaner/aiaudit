@@ -1,9 +1,10 @@
 import Link from 'next/link'
 import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
+import ArticleSources from '../../components/site/ArticleSources'
 
 export const metadata = {
-    title: 'SEO-Agentur prüfen: SEO-Check vs. Agentur im Kostenvergleich',
+    title: 'SEO-Agentur prüfen: SEO-Check vs. Agentur im Vergleich',
     description: 'SEO-Agentur unabhängig prüfen lassen vor der Vertragsverlängerung: der ehrliche SEO-Check vs. Agentur Vergleich - Kosten, Leistungsumfang, Checkliste.',
     keywords: 'seo agentur prüfen, agentur für seo check, seo agentur test, seo check agentur, seo agentur check, seo agentur unabhängig prüfen, unabhängige seo zweitmeinung, seo audit vor vertragsverlängerung, seo audit kosten, seo analyse preise, was kostet ein seo audit, seo test vs agentur, seo audit selbst machen, seo agentur kosten, seo agentur oder selbst machen, lohnt sich seo agentur',
     alternates: {
@@ -146,6 +147,24 @@ const COMPARISON = [
     ['Content-Strategie & Erstellung', 'Nein', 'Ja, oft Kernleistung'],
     ['Backlink-Aufbau', 'Nein (nur Übersicht via SEO Automatisierung)', 'Ja, oft Kernleistung'],
     ['Persönliche Beratung', 'Nein', 'Ja'],
+]
+
+const SOURCES = [
+    {
+        "label": "Brauche ich einen SEO?",
+        "publisher": "Google Search Central",
+        "href": "https://developers.google.com/search/docs/fundamentals/do-i-need-seo"
+    },
+    {
+        "label": "SEO-Leitfaden für Einsteiger",
+        "publisher": "Google Search Central",
+        "href": "https://developers.google.com/search/docs/fundamentals/seo-starter-guide"
+    },
+    {
+        "label": "Google Search Essentials",
+        "publisher": "Google Search Central",
+        "href": "https://developers.google.com/search/docs/essentials"
+    }
 ]
 
 export default function SeoTestVsAgenturPage() {
@@ -361,6 +380,8 @@ export default function SeoTestVsAgenturPage() {
                         </Link>
                     </div>
                 </div>
+
+                <ArticleSources title="Quellen" sources={SOURCES} />
 
                 {/* Back */}
                 <div className="mt-10 pt-8 border-t border-(--line)">

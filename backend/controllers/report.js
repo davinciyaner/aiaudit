@@ -3,46 +3,60 @@ import { chromium } from 'playwright'
 
 const SITE_URL = 'https://www.scanora.ai'
 
+// Brand colors of the website (light theme, frontend/src/app/globals.css), as hex because
+// the values are inlined into a PDF.
+const C = {
+    paper: '#f8fafc', card: '#fdfeff', tint: '#ebf1fc', line: '#dadee6', lineSoft: '#e7eaef',
+    ink: '#101828', body: '#384050', muted: '#545b69',
+    accent: '#1554cf', accentInk: '#0643b5',
+    success: '#006f38', successSoft: '#e1f7e7', warning: '#9a5500', warningSoft: '#fef0d8', danger: '#b71824', dangerSoft: '#ffece9',
+}
+
+// A title is "too long" for Google once it gets truncated in the results (~600px, roughly
+// 65 characters incl. a short brand suffix); below 30 it rarely describes the page.
+const TITLE_MIN = 30
+const TITLE_MAX = 65
+
 const LABELS = {
     en: {
-        websitePerformanceReport: 'Website Performance Report',
-        overall: 'Overall', seoTag: 'SEO', performanceTag: 'Performance', keywordsTag: 'Keywords', geoTag: 'GEO', aiReportTag: 'AI Report',
-        poweredBy: 'Powered by Claude AI',
-        generatedAnalysis: 'Generated Analysis',
-        performanceAnalysis: 'Performance Analysis', requestsLower: 'requests', totalLower: 'total',
-        issuesFound: 'Issues Found', recommendations: 'Recommendations', noPerfIssues: 'No performance issues found',
-        pageSize: 'Page Size', requestsLabel: 'Requests', fullLoad: 'Full Load', domLoad: 'DOM Load',
-        domReady: 'DOM Ready', complete: 'Complete', totalWeight: 'Total Weight', totalResources: 'Total Resources', timeToFirstByte: 'Time to First Byte',
-        seoAnalysis: 'SEO Analysis', score: 'Score', issuesFoundCount: 'issues found',
-        titleTag: 'Title Tag', notFound: 'Not found', characters: 'characters', good: 'Good', adjust: 'Adjust',
-        metaDescription: 'Meta Description',
-        h1Tags: 'H1 Tags', h2Tags: 'H2 Tags', internalLinks: 'Internal Links', imagesWithoutAlt: 'Images w/o Alt',
+        reportTitle: 'Website audit: SEO, GEO & performance',
+        overall: 'Overall', seoTag: 'SEO', performanceTag: 'Performance', keywordsTag: 'Keywords', geoTag: 'GEO', aiReportTag: 'AI report',
+        poweredBy: 'Analysis written by Claude (Anthropic)',
+        generatedAnalysis: 'AI analysis',
+        performanceAnalysis: 'Performance analysis', requestsLower: 'requests', totalLower: 'total',
+        issuesFound: 'Issues found', recommendations: 'Recommendations', noPerfIssues: 'No performance issues found',
+        pageSize: 'Page size', requestsLabel: 'Requests', fullLoad: 'Full load', domLoad: 'DOM loaded',
+        domReady: 'DOM ready', complete: 'Complete', totalWeight: 'Total weight', totalResources: 'Total resources', timeToFirstByte: 'Time to first byte',
+        seoAnalysis: 'SEO analysis', score: 'Score', issuesFoundCount: 'issues found',
+        titleTag: 'Title tag', notFound: 'Not found', characters: 'characters', good: 'Good', adjust: 'Adjust',
+        metaDescription: 'Meta description',
+        h1Tags: 'H1 tags', h2Tags: 'H2 tags', internalLinks: 'Internal links', imagesWithoutAlt: 'Images without alt',
         allSeoPassed: 'All SEO checks passed',
-        keywordIntelligence: 'Keyword Intelligence', words: 'words', keywordsIdentified: 'keywords identified',
-        removeOrStrengthen: 'Remove or Strengthen', longTail: 'Long-tail Keywords to Test',
-        geoAnalysis: 'GEO Analysis', aiVisibilityScore: 'AI Visibility Score', aiVisibility: 'AI Visibility',
-        actionItems: 'Action Items', generatedLlms: 'Generated llms.txt — save as /llms.txt in your project',
-        screenshots: 'Screenshots', desktopMobile: 'Desktop & Mobile Capture', desktop: 'Desktop', mobile: 'Mobile',
-        priority: { critical: 'CRITICAL', high: 'HIGH', medium: 'MEDIUM', low: 'LOW' },
-        scoreGood: 'Good', scoreNeedsWork: 'Needs Work', scoreCritical: 'Critical',
+        keywordIntelligence: 'Keyword analysis', words: 'words', keywordsIdentified: 'keywords identified',
+        rareKeywords: 'Mentioned only once', longTail: 'Long-tail ideas from your headings',
+        geoAnalysis: 'GEO analysis', aiVisibilityScore: 'AI visibility score', aiVisibility: 'AI visibility',
+        actionItems: 'Action items', generatedLlms: 'Suggested llms.txt (no llms.txt found on your site)',
+        screenshots: 'Screenshots', desktopMobile: 'First screen on desktop and mobile', desktop: 'Desktop', mobile: 'Mobile',
+        priority: { critical: 'Critical', high: 'High', medium: 'Medium', low: 'Low' },
+        scoreGood: 'Good', scoreNeedsWork: 'Needs work', scoreCritical: 'Critical',
         geoChecks: {
-            structuredData: 'Schema.org', organization: 'Organization', faq: 'FAQ Schema', websiteOrApp: 'WebSite/SoftwareApp Schema',
-            breadcrumb: 'Breadcrumb Schema', brokenImages: 'No broken schema images', faqMismatch: 'FAQ answers in content',
+            structuredData: 'Schema.org', organization: 'Organization', faq: 'FAQ schema', websiteOrApp: 'WebSite/SoftwareApp schema',
+            breadcrumb: 'Breadcrumb schema', brokenImages: 'No broken schema images', faqMismatch: 'FAQ answers in content',
             testimonials: 'Testimonials', llmsTxt: 'llms.txt', llmsFullTxt: 'llms-full.txt', aiCrawlers: 'AI crawlers allowed',
-            sitemap: 'Sitemap.xml', directDefinition: 'Direct definition', statistics: 'Statistics', wordCount: 'Word count ≥ 800',
+            sitemap: 'sitemap.xml', directDefinition: 'Direct definition', statistics: 'Statistics', wordCount: 'Word count ≥ 800',
             h2Count: '≥ 3 H2 headings', externalLinks: 'External links', authorInfo: 'Author info', contactInfo: 'Contact info',
             privacyPolicy: 'Privacy policy linked', https: 'HTTPS', canonical: 'Canonical tag', lang: 'HTML lang attribute',
         },
-        geoChecksTitle: 'AI Visibility Signals', geoChecksSubtitle: 'signals passed',
-        sampleDisclaimer: 'Example report — this is our own analysis of scanora.ai. Your report will look different for your own website.',
-        ctaTitle: 'Get your own report', ctaSubtitle: 'Free in under 60 seconds — no credit card required',
+        geoChecksTitle: 'AI visibility signals', geoChecksSubtitle: 'signals passed',
+        sampleDisclaimer: 'Example report: this is our own analysis of scanora.ai. Your report will look different for your own website.',
+        ctaTitle: 'Get your own report', ctaSubtitle: 'Free in under 60 seconds, no credit card required',
         ctaButton: 'Check my website now', ctaPricingNote: 'Free score instantly. Full AI report with concrete fixes from €29/month (Pro).',
     },
     de: {
-        websitePerformanceReport: 'Website Performance Report',
+        reportTitle: 'Website-Audit: SEO, GEO & Performance',
         overall: 'Gesamt', seoTag: 'SEO', performanceTag: 'Performance', keywordsTag: 'Keywords', geoTag: 'GEO', aiReportTag: 'KI-Bericht',
-        poweredBy: 'Bereitgestellt von Claude AI',
-        generatedAnalysis: 'Generierte Analyse',
+        poweredBy: 'Analyse geschrieben von Claude (Anthropic)',
+        generatedAnalysis: 'KI-Analyse',
         performanceAnalysis: 'Performance-Analyse', requestsLower: 'Requests', totalLower: 'gesamt',
         issuesFound: 'Gefundene Probleme', recommendations: 'Empfehlungen', noPerfIssues: 'Keine Performance-Probleme gefunden',
         pageSize: 'Seitengröße', requestsLabel: 'Anfragen', fullLoad: 'Volle Ladezeit', domLoad: 'DOM geladen',
@@ -52,45 +66,48 @@ const LABELS = {
         metaDescription: 'Meta Description',
         h1Tags: 'H1-Tags', h2Tags: 'H2-Tags', internalLinks: 'Interne Links', imagesWithoutAlt: 'Bilder ohne Alt',
         allSeoPassed: 'Alle SEO-Checks bestanden',
-        keywordIntelligence: 'Keyword Intelligence', words: 'Wörter', keywordsIdentified: 'Keywords identifiziert',
-        removeOrStrengthen: 'Entfernen oder stärken', longTail: 'Long-Tail-Keywords zum Testen',
+        keywordIntelligence: 'Keyword-Analyse', words: 'Wörter', keywordsIdentified: 'Keywords identifiziert',
+        rareKeywords: 'Nur einmal erwähnt', longTail: 'Long-Tail-Ideen aus deinen Überschriften',
         geoAnalysis: 'GEO-Analyse', aiVisibilityScore: 'KI-Sichtbarkeits-Score', aiVisibility: 'KI-Sichtbarkeit',
-        actionItems: 'Maßnahmen', generatedLlms: 'Generierte llms.txt — als /llms.txt im Projekt speichern',
-        screenshots: 'Screenshots', desktopMobile: 'Desktop- & Mobile-Aufnahme', desktop: 'Desktop', mobile: 'Mobile',
-        priority: { critical: 'KRITISCH', high: 'HOCH', medium: 'MITTEL', low: 'NIEDRIG' },
+        actionItems: 'Maßnahmen', generatedLlms: 'Vorschlag für eine llms.txt (auf deiner Website wurde keine gefunden)',
+        screenshots: 'Screenshots', desktopMobile: 'Erster Bildschirm auf Desktop und Handy', desktop: 'Desktop', mobile: 'Mobil',
+        priority: { critical: 'Kritisch', high: 'Hoch', medium: 'Mittel', low: 'Niedrig' },
         scoreGood: 'Gut', scoreNeedsWork: 'Verbesserungswürdig', scoreCritical: 'Kritisch',
         geoChecks: {
             structuredData: 'Schema.org', organization: 'Organisation', faq: 'FAQ-Schema', websiteOrApp: 'WebSite/SoftwareApp-Schema',
             breadcrumb: 'Breadcrumb-Schema', brokenImages: 'Keine defekten Schema-Bilder', faqMismatch: 'FAQ-Antworten im Content',
             testimonials: 'Testimonials', llmsTxt: 'llms.txt', llmsFullTxt: 'llms-full.txt', aiCrawlers: 'KI-Crawler erlaubt',
-            sitemap: 'Sitemap.xml', directDefinition: 'Direkte Definition', statistics: 'Statistiken', wordCount: 'Wortanzahl ≥ 800',
+            sitemap: 'sitemap.xml', directDefinition: 'Direkte Definition', statistics: 'Statistiken', wordCount: 'Wortanzahl ≥ 800',
             h2Count: '≥ 3 H2-Überschriften', externalLinks: 'Externe Links', authorInfo: 'Autoren-Info', contactInfo: 'Kontakt-Info',
             privacyPolicy: 'Datenschutzerklärung verlinkt', https: 'HTTPS', canonical: 'Canonical-Tag', lang: 'HTML lang-Attribut',
         },
         geoChecksTitle: 'KI-Sichtbarkeits-Signale', geoChecksSubtitle: 'Signale erfüllt',
-        sampleDisclaimer: 'Beispiel-Report — das ist unsere eigene Analyse von scanora.ai. Dein Report sieht für deine eigene Website anders aus.',
-        ctaTitle: 'Hol dir deinen eigenen Report', ctaSubtitle: 'Kostenlos in unter 60 Sekunden — keine Kreditkarte nötig',
+        sampleDisclaimer: 'Beispiel-Report: Das ist unsere eigene Analyse von scanora.ai. Dein Report sieht für deine eigene Website anders aus.',
+        ctaTitle: 'Hol dir deinen eigenen Report', ctaSubtitle: 'Kostenlos in unter 60 Sekunden, keine Kreditkarte nötig',
         ctaButton: 'Jetzt meine Website prüfen', ctaPricingNote: 'Kostenloser Score sofort. Voller KI-Bericht mit konkreten Fixes ab 29 €/Monat (Pro).',
     },
 }
 
-// isSample=true fuegt einen Disclaimer ("eigenes Beispiel") + eine Abschluss-CTA-Seite hinzu —
-// nur fuer den ffentlichen Marketing-Beispiel-Download gedacht. Echte Kundenreports (der
-// Normalfall dieser Funktion, siehe audit_router.js) duerfen das nicht zeigen: der Disclaimer
-// waere dort schlicht falsch, und "Hol dir deinen eigenen Report" ergibt fuer jemanden, der
-// bereits seinen eigenen Report in der Hand hat, keinen Sinn.
+const esc = (s) => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+
+const ICON_CHECK = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="${C.success}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>`
+const ICON_CROSS = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="${C.danger}" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>`
+const LOGO = `<svg width="18" height="18" viewBox="0 0 192 192" fill="none"><circle cx="96" cy="96" r="50" stroke="${C.paper}" stroke-width="14"/><circle cx="110" cy="82" r="13" fill="${C.paper}"/></svg>`
+
+// isSample=true adds a disclaimer and a closing CTA page. Only for the public example
+// download; real customer reports (audit_router.js) must not show either.
 export function generateHTMLReport(auditData, aiReport, language = 'de', { isSample = false } = {}) {
     const { url, timestamp, overallScore, seo, performance, keywords, geo, screenshots } = auditData
     const T = language === 'en' ? LABELS.en : LABELS.de
 
-    const scoreColor = (s) => s >= 80 ? '#22c55e' : s >= 60 ? '#f59e0b' : '#ef4444'
+    const scoreColor = (s) => s >= 80 ? C.success : s >= 60 ? C.warning : C.danger
     const scoreLabel = (s) => s >= 80 ? T.scoreGood : s >= 60 ? T.scoreNeedsWork : T.scoreCritical
 
     const cleanAI = (text) => text
         .replace(/```[\s\S]*?```/g, '')
         .replace(/`([^`]+)`/g, '$1')
         .replace(/#{1,6}\s+/g, '')
-        .replace(/\*\*(.*?)\*\*/g, '<strong style="color:#f1f5f9">$1</strong>')
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
         .replace(/\*(.*?)\*/g, '$1')
         .replace(/^-\s+/gm, '• ')
         .replace(/\n{3,}/g, '\n\n')
@@ -98,318 +115,184 @@ export function generateHTMLReport(auditData, aiReport, language = 'de', { isSam
 
     const parseAISections = (text) => {
         const cleaned = cleanAI(text)
-
-        // Flexiblere Erkennung — auch mit Leerzeichen, Zeilenumbrüchen, Nummern davor
-        const sectionPatterns = language === 'en' ? [
-            'SUMMARY',
-            'CRITICAL ISSUES',
-            'SEO ANALYSIS',
-            'PERFORMANCE ANALYSIS',
-            'KEYWORD STRATEGY',
-            'GEO ANALYSIS',
-            'ACTION PLAN',
-        ] : [
-            'ZUSAMMENFASSUNG',
-            'KRITISCHE PROBLEME',
-            'SEO-ANALYSE',
-            'PERFORMANCE-ANALYSE',
-            'KEYWORD-STRATEGIE',
-            'KEYWORD STRATEGIE',    // ← Variante mit Leerzeichen
-            'GEO-ANALYSE',
-            'ACTION PLAN',
-            'AKTIONSPLAN',
-        ]
-
-        // Text in Zeilen aufteilen und Abschnitte erkennen
+        const sectionPatterns = language === 'en'
+            ? ['SUMMARY', 'CRITICAL ISSUES', 'SEO ANALYSIS', 'PERFORMANCE ANALYSIS', 'KEYWORD STRATEGY', 'GEO ANALYSIS', 'ACTION PLAN']
+            : ['ZUSAMMENFASSUNG', 'KRITISCHE PROBLEME', 'SEO-ANALYSE', 'PERFORMANCE-ANALYSE', 'KEYWORD-STRATEGIE', 'KEYWORD STRATEGIE', 'GEO-ANALYSE', 'ACTION PLAN', 'AKTIONSPLAN']
         const lines = cleaned.split('\n')
         const sections = []
         let currentTitle = null
         let currentLines = []
-
         for (const line of lines) {
             const trimmed = line.trim().toUpperCase()
-            // Prüfen ob diese Zeile ein Abschnittsname ist
-            const matchedPattern = sectionPatterns.find(p =>
-                trimmed === p ||
-                trimmed === p + ':' ||
-                trimmed.startsWith(p + ' ') ||
-                trimmed.endsWith(' ' + p)
-            )
-
-            if (matchedPattern) {
-                // Vorherigen Abschnitt speichern
-                if (currentTitle && currentLines.length > 0) {
-                    sections.push({
-                        title: currentTitle,
-                        content: currentLines.join('\n').trim()
-                    })
-                }
+            const matched = sectionPatterns.find(p => trimmed === p || trimmed === p + ':' || trimmed.startsWith(p + ' ') || trimmed.endsWith(' ' + p))
+            if (matched) {
+                if (currentTitle && currentLines.length > 0) sections.push({ title: currentTitle, content: currentLines.join('\n').trim() })
                 currentTitle = line.trim().replace(/:$/, '')
                 currentLines = []
             } else if (currentTitle) {
                 currentLines.push(line)
             }
         }
-
-        // Letzten Abschnitt speichern
-        if (currentTitle && currentLines.length > 0) {
-            sections.push({ title: currentTitle, content: currentLines.join('\n').trim() })
-        }
-
-        return sections.length > 0
-            ? sections
-            : [{ title: language === 'en' ? 'AI ANALYSIS' : 'AI ANALYSE', content: cleaned }]
+        if (currentTitle && currentLines.length > 0) sections.push({ title: currentTitle, content: currentLines.join('\n').trim() })
+        return sections.length > 0 ? sections : [{ title: language === 'en' ? 'AI ANALYSIS' : 'KI-ANALYSE', content: cleaned }]
     }
 
-    const allAISections = parseAISections(aiReport)
+    // Section titles from the model come in UPPERCASE; shown in sentence case in the PDF.
+    const prettyTitle = (t) => {
+        const map = language === 'en'
+            ? { SUMMARY: 'Summary', 'CRITICAL ISSUES': 'Critical issues', 'ACTION PLAN': 'Action plan', 'AI ANALYSIS': 'AI analysis' }
+            : { ZUSAMMENFASSUNG: 'Zusammenfassung', 'KRITISCHE PROBLEME': 'Kritische Probleme', 'ACTION PLAN': 'Action Plan', AKTIONSPLAN: 'Action Plan', 'KI-ANALYSE': 'KI-Analyse' }
+        return map[t.toUpperCase()] || t.charAt(0) + t.slice(1).toLowerCase()
+    }
 
-    // Fließtext- und Rohdaten-Abschnitte trugen bisher denselben Titel ("SEO-Analyse" etc.), tauchten
-    // aber an zwei getrennten Stellen im Dokument auf — die Cover-Tags versprechen 5 klare Themen,
-    // das Dokument selbst wirkte aber doppelt gegliedert. Deshalb werden die vier thematisch
-    // passenden KI-Abschnitte hier herausgezogen und weiter unten direkt in die jeweilige
-    // Datenseite eingebettet, statt als eigene Seite vorneweg zu laufen. Was keinem der vier
-    // Themen zugeordnet werden kann (Zusammenfassung, Kritische Probleme, Aktionsplan, Fallback-
-    // Blob bei fehlgeschlagenem Parsing) bleibt als eigenständige Seite bestehen.
+    const allAISections = aiReport ? parseAISections(aiReport) : []
+    // The four topical AI sections are embedded into their data sections below; summary,
+    // critical issues and action plan keep their own section.
     const takeAISection = (pattern) => {
         const idx = allAISections.findIndex(s => pattern.test(s.title))
-        if (idx === -1) return null
-        return allAISections.splice(idx, 1)[0]
+        return idx === -1 ? null : allAISections.splice(idx, 1)[0]
     }
-    const seoAISection        = takeAISection(/SEO/i)
+    const seoAISection = takeAISection(/SEO/i)
     const performanceAISection = takeAISection(/PERFORMANCE/i)
-    const keywordAISection    = takeAISection(/KEYWORD/i)
-    const geoAISection        = takeAISection(/GEO/i)
+    const keywordAISection = takeAISection(/KEYWORD/i)
+    const geoAISection = takeAISection(/GEO/i)
     const aiSections = allAISections
 
-    const renderAIProse = (content) => {
-        const lines = content.split('\n').filter(l => l.trim())
-        return lines.map(line => {
-            if (line.startsWith('•') || line.startsWith('-')) {
-                const text = line.replace(/^[•\-]\s*/, '')
-                return `<div style="display:flex;gap:9px;margin-bottom:7px"><div style="width:5px;height:5px;border-radius:50%;background:#7c3aed;flex-shrink:0;margin-top:7px"></div><div style="font-size:12px;color:#94a3b8;line-height:1.65">${text}</div></div>`
-            }
-            return `<div style="font-size:12px;color:#94a3b8;line-height:1.75;margin-bottom:9px">${line}</div>`
-        }).join('')
-    }
+    const renderAIProse = (content) => content.split('\n').filter(l => l.trim()).map(line => {
+        if (/^[•-]/.test(line)) return `<div class="bullet"><span class="dot"></span><div>${line.replace(/^[•-]\s*/, '')}</div></div>`
+        return `<p class="prose">${line}</p>`
+    }).join('')
 
-    const aiProseBox = (section) => section ? `
-        <div style="background:rgba(15,23,42,0.55);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:18px;margin-bottom:16px">
-            ${renderAIProse(section.content)}
-        </div>` : ''
+    const aiProseBox = (section) => section ? `<div class="card prose-card">${renderAIProse(section.content)}</div>` : ''
+    const issueRow = (text) => `<div class="issue">${esc(text)}</div>`
+    const suggestionRow = (text) => `<div class="bullet"><span class="dot"></span><div>${esc(text)}</div></div>`
+    const subhead = (text) => `<div class="subhead">${text}</div>`
 
-    const issueRow = (text) =>
-        `<div style="display:flex;gap:10px;align-items:flex-start;background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);border-left:3px solid #ef4444;border-radius:10px;padding:10px 14px;margin-bottom:8px"><div style="color:#fca5a5;font-size:12px;line-height:1.55;flex:1">${text}</div></div>`
-
-    const suggestionRow = (text) =>
-        `<div style="display:flex;gap:10px;align-items:flex-start;margin-bottom:8px"><div style="width:6px;height:6px;border-radius:50%;background:#06b6d4;flex-shrink:0;margin-top:5px"></div><div style="font-size:12px;color:#94a3b8;line-height:1.6;flex:1">${text}</div></div>`
-
-    const sectionHeader = (title, subtitle) =>
-        `<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,0.06)">
+    const sectionHeader = (title, subtitle) => `
+        <div class="section-head">
             <div>
-                <div style="font-size:19px;font-weight:700;color:#f8fafc">${title}</div>
-                ${subtitle ? `<div style="font-size:11px;color:#64748b;margin-top:2px">${subtitle}</div>` : ''}
+                <h2>${title}</h2>
+                ${subtitle ? `<div class="section-sub">${subtitle}</div>` : ''}
             </div>
-            <a href="${SITE_URL}" style="font-size:10px;color:#475569;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;text-decoration:none">Scanora</a>
+            <a class="brand-mini" href="${SITE_URL}">Scanora</a>
         </div>`
 
-    // Nur das Cover bekommt eine feste volle A4-Seite (dramatischer erster Eindruck). Alle
-    // Inhalts-Abschnitte nutzen sectionStyle ohne fixe Mindesthöhe/Seitenumbruch — Chromiums
-    // PDF-Paginierung packt dann mehrere kurze Abschnitte auf eine physische Seite, statt bei
-    // wenigen Problemen/kurzem Text eine fast leere A4-Seite pro Abschnitt zu erzeugen.
-    // break-inside:avoid verhindert trotzdem, dass ein einzelner Abschnitt mitten in einer
-    // Tabelle/Karte hässlich zerschnitten wird.
-    const pageStyle = `width:210mm;min-height:297mm;padding:32px 36px;page-break-after:always;break-after:page;display:flex;flex-direction:column;background:#0a0e1a;position:relative;overflow:hidden;box-sizing:border-box`
-    const sectionStyle = `width:210mm;padding:24px 36px;margin-bottom:4px;page-break-inside:avoid;break-inside:avoid;display:flex;flex-direction:column;background:#0a0e1a;position:relative;overflow:hidden;box-sizing:border-box`
+    const dateStr = new Date(timestamp).toLocaleString(language === 'en' ? 'en-US' : 'de-DE', { dateStyle: 'long', timeStyle: 'short' })
 
-    const glow = (top, right, bottom, left, color) => {
-        let style = `position:absolute;width:250px;height:250px;background:radial-gradient(circle,${color},transparent 70%);border-radius:50%;pointer-events:none;`
-        if (top !== null) style += `top:${top}px;`
-        if (right !== null) style += `right:${right}px;`
-        if (bottom !== null) style += `bottom:${bottom}px;`
-        if (left !== null) style += `left:${left}px;`
-        return `<div style="${style}"></div>`
-    }
-
-    // PAGE 1: Cover
     const coverPage = `
-    <div style="${pageStyle}">
-        ${glow(-80, -80, null, null, 'rgba(124,58,237,0.15)')}
-        ${glow(null, null, -60, -60, 'rgba(6,182,212,0.08)')}
-        <div style="flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;position:relative;z-index:1">
-            <div style="display:flex;flex-direction:column;align-items:center;gap:6px;margin-bottom:24px">
-                <span style="font-size:28px;font-weight:800;background:linear-gradient(to right,#a78bfa,#22d3ee);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Scanora</span>
-                <a href="${SITE_URL}" style="font-size:12px;color:#67e8f9;text-decoration:none;font-weight:600">${SITE_URL}</a>
-            </div>
-            <div style="font-size:10px;color:#64748b;text-transform:uppercase;letter-spacing:0.15em;font-weight:600;margin-bottom:12px">${T.websitePerformanceReport}</div>
-            <div style="background:rgba(15,23,42,0.8);border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:20px 28px;margin-bottom:32px;max-width:360px">
-                <div style="font-size:13px;color:#94a3b8;margin-bottom:6px;word-break:break-all">${url}</div>
-                <div style="font-size:11px;color:#475569">${new Date(timestamp).toLocaleString(language === 'en' ? 'en-US' : 'de-DE', { dateStyle: 'long', timeStyle: 'short' })}</div>
-            </div>
-            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;width:100%;max-width:480px;margin-bottom:32px">
-                ${[[T.overall, overallScore], [T.seoTag, seo.score], [T.performanceTag, performance.score], [T.geoTag, geo ? geo.score : 0]].map(([label, score]) => `
-                <div style="background:rgba(15,23,42,0.7);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:14px 6px;text-align:center">
-                    <div style="font-size:26px;font-weight:800;color:${scoreColor(score)};line-height:1;margin-bottom:4px">${score}</div>
-                    <div style="font-size:9px;color:#64748b;text-transform:uppercase;letter-spacing:0.07em;font-weight:600;margin-bottom:3px">${label}</div>
-                    <div style="font-size:9px;color:${scoreColor(score)};font-weight:600">${scoreLabel(score)}</div>
+    <div class="page cover">
+        <div class="cover-top">
+            <div class="logo"><span class="logo-mark">${LOGO}</span><span>Scanora</span></div>
+            <span class="muted small">${dateStr}</span>
+        </div>
+        <div class="cover-main">
+            <div class="eyebrow">${T.reportTitle}</div>
+            <h1>${esc(url.replace(/^https?:\/\//, '').replace(/\/$/, ''))}</h1>
+            <div class="score-grid">
+                ${[[T.overall, overallScore], [T.seoTag, seo.score], [T.performanceTag, performance.score], [T.geoTag, geo ? geo.score : 0]].map(([label, score], i) => `
+                <div class="score-card${i === 0 ? ' score-main' : ''}">
+                    <div class="score-label">${label}</div>
+                    <div class="score-value" style="color:${scoreColor(score)}">${score}<span>/100</span></div>
+                    <div class="score-state" style="color:${scoreColor(score)}">${scoreLabel(score)}</div>
                 </div>`).join('')}
             </div>
-            <div style="display:flex;gap:7px;flex-wrap:wrap;justify-content:center">
-                ${[[T.seoTag, '#10b981'], [T.performanceTag, '#f59e0b'], [T.keywordsTag, '#a78bfa'], [T.geoTag, '#6366f1'], [T.aiReportTag, '#06b6d4']].map(([l, c]) =>
-        `<span style="font-size:10px;padding:4px 12px;background:${c}18;border:1px solid ${c}35;border-radius:999px;color:${c};font-weight:600">${l}</span>`
-    ).join('')}
-            </div>
-            ${isSample ? `
-            <div style="margin-top:20px;max-width:420px;font-size:10px;color:#64748b;line-height:1.5;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:10px 14px">
-                ${T.sampleDisclaimer}
-            </div>` : ''}
+            <div class="chips">${[T.seoTag, T.performanceTag, T.keywordsTag, T.geoTag, ...(aiReport ? [T.aiReportTag] : [])].map(l => `<span class="chip">${l}</span>`).join('')}</div>
+            ${isSample ? `<div class="note">${T.sampleDisclaimer}</div>` : ''}
         </div>
-        <div style="text-align:center;font-size:10px;color:#334155;padding-top:14px;border-top:1px solid rgba(255,255,255,0.04)">${T.poweredBy}</div>
+        <div class="cover-foot"><span>${aiReport ? T.poweredBy : ''}</span><a href="${SITE_URL}">${SITE_URL.replace('https://', '')}</a></div>
     </div>`
 
-    // PAGE 2+: AI Sections — nur noch die, die keinem der vier Datenthemen zugeordnet wurden
-    // (Zusammenfassung, Kritische Probleme, Aktionsplan, ggf. Fallback-Blob).
     const aiPages = aiSections.map(section => `
-        <div style="${sectionStyle}">
-            ${glow(-60, -60, null, null, 'rgba(124,58,237,0.07)')}
-            ${sectionHeader(section.title, T.generatedAnalysis)}
-            <div style="flex:1;background:rgba(15,23,42,0.55);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:20px;">
-                ${renderAIProse(section.content)}
-            </div>
+        <div class="section">
+            ${sectionHeader(prettyTitle(section.title), T.generatedAnalysis)}
+            <div class="card prose-card">${renderAIProse(section.content)}</div>
         </div>`).join('')
 
-    // PAGE: Performance
+    const metricCard = (label, value, good, sub) => `
+        <div class="card metric">
+            <div class="metric-value" style="color:${good ? C.success : C.danger}">${value}</div>
+            <div class="metric-label">${label}</div>
+            <div class="metric-sub">${sub}</div>
+        </div>`
+
     const performancePage = `
-    <div style="${sectionStyle}">
-        ${glow(-60, -60, null, null, 'rgba(245,158,11,0.07)')}
+    <div class="section">
         ${sectionHeader(T.performanceAnalysis, `${performance.metrics.resourceCount} ${T.requestsLower} · ${performance.metrics.totalSize} KB ${T.totalLower}`)}
         ${aiProseBox(performanceAISection)}
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px">
-            ${[
-        ['TTFB', performance.metrics.ttfb + 'ms', performance.metrics.ttfb < 600, T.timeToFirstByte],
-        ['First Contentful Paint', performance.metrics.fcp + 'ms', performance.metrics.fcp < 1800, 'FCP'],
-        [T.domLoad, performance.metrics.domLoad + 'ms', performance.metrics.domLoad < 3000, T.domReady],
-        [T.fullLoad, performance.metrics.fullLoad + 'ms', performance.metrics.fullLoad < 5000, T.complete],
-        [T.pageSize, performance.metrics.totalSize + ' KB', true, T.totalWeight],
-        [T.requestsLabel, performance.metrics.resourceCount, true, T.totalResources],
-    ].map(([label, value, good, sub]) => `
-            <div style="background:rgba(15,23,42,0.7);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:16px;text-align:center">
-                <div style="font-size:26px;font-weight:800;color:${good ? '#10b981' : '#ef4444'};line-height:1.1;margin-bottom:4px">${value}</div>
-                <div style="font-size:11px;font-weight:600;color:#e2e8f0;margin-bottom:2px">${label}</div>
-                <div style="font-size:9px;color:#475569">${sub}</div>
-            </div>`).join('')}
+        <div class="grid-3">
+            ${metricCard('TTFB', performance.metrics.ttfb + ' ms', performance.metrics.ttfb < 600, T.timeToFirstByte)}
+            ${metricCard('First Contentful Paint', performance.metrics.fcp + ' ms', performance.metrics.fcp < 1800, 'FCP')}
+            ${metricCard(T.domLoad, performance.metrics.domLoad + ' ms', performance.metrics.domLoad < 3000, T.domReady)}
+            ${metricCard(T.fullLoad, performance.metrics.fullLoad + ' ms', performance.metrics.fullLoad < 5000, T.complete)}
+            ${metricCard(T.pageSize, performance.metrics.totalSize + ' KB', true, T.totalWeight)}
+            ${metricCard(T.requestsLabel, performance.metrics.resourceCount, true, T.totalResources)}
         </div>
-        ${performance.issues.length > 0 ? `
-        <div style="margin-bottom:16px">
-            <div style="font-size:11px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px">${T.issuesFound}</div>
-            ${performance.issues.map(i => issueRow(i)).join('')}
-        </div>` : `
-        <div style="background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.2);border-radius:12px;padding:14px;text-align:center;margin-bottom:16px">
-            <div style="font-size:13px;color:#6ee7b7;font-weight:600">${T.noPerfIssues}</div>
-        </div>`}
-        ${performance.suggestions?.length > 0 ? `
-        <div>
-            <div style="font-size:11px;font-weight:700;color:#67e8f9;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px">${T.recommendations}</div>
-            ${performance.suggestions.map(s => suggestionRow(s)).join('')}
-        </div>` : ''}
+        ${performance.issues.length > 0
+        ? `${subhead(T.issuesFound)}${performance.issues.map(issueRow).join('')}`
+        : `<div class="ok-box">${T.noPerfIssues}</div>`}
+        ${performance.suggestions?.length > 0 ? `${subhead(T.recommendations)}${performance.suggestions.map(suggestionRow).join('')}` : ''}
     </div>`
 
-    // PAGE: SEO
+    const titleOk = seo.title.length >= TITLE_MIN && seo.title.length <= TITLE_MAX
+    const descOk = seo.description.length >= 120 && seo.description.length <= 160
+    const meter = (ratio, ok) => `<div class="meter"><div style="width:${Math.min(100, ratio * 100)}%;background:${ok ? C.success : C.danger}"></div></div>`
+
     const seoPage = `
-    <div style="${sectionStyle}">
-        ${glow(-60, -60, null, null, 'rgba(16,185,129,0.07)')}
+    <div class="section">
         ${sectionHeader(T.seoAnalysis, `${T.score}: ${seo.score}/100 · ${seo.issues.length} ${T.issuesFoundCount}`)}
         ${aiProseBox(seoAISection)}
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
-            <div style="background:rgba(15,23,42,0.7);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:16px">
-                <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:#475569;font-weight:600;margin-bottom:8px">${T.titleTag}</div>
-                <div style="font-size:13px;font-weight:600;color:#f1f5f9;margin-bottom:10px;line-height:1.4">${seo.title.text || T.notFound}</div>
-                <div style="height:3px;border-radius:2px;background:rgba(255,255,255,0.06);margin-bottom:5px">
-                    <div style="height:100%;width:${Math.min(100, (seo.title.length / 60) * 100)}%;background:${seo.title.length >= 30 && seo.title.length <= 60 ? '#10b981' : '#ef4444'};border-radius:2px"></div>
-                </div>
-                <div style="display:flex;justify-content:space-between">
-                    <div style="font-size:10px;color:#64748b">${seo.title.length}/60 ${T.characters}</div>
-                    <div style="font-size:10px;color:${seo.title.length >= 30 && seo.title.length <= 60 ? '#10b981' : '#ef4444'};font-weight:600">${seo.title.length >= 30 && seo.title.length <= 60 ? T.good : T.adjust}</div>
-                </div>
+        <div class="grid-2">
+            <div class="card">
+                <div class="label">${T.titleTag}</div>
+                <div class="field-text">${esc(seo.title.text || T.notFound)}</div>
+                ${meter(seo.title.length / TITLE_MAX, titleOk)}
+                <div class="meter-row"><span>${seo.title.length}/${TITLE_MAX} ${T.characters}</span><strong style="color:${titleOk ? C.success : C.danger}">${titleOk ? T.good : T.adjust}</strong></div>
             </div>
-            <div style="background:rgba(15,23,42,0.7);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:16px">
-                <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:#475569;font-weight:600;margin-bottom:8px">${T.metaDescription}</div>
-                <div style="font-size:12px;color:#94a3b8;margin-bottom:10px;line-height:1.5">${(seo.description.text || T.notFound).slice(0, 110)}${(seo.description.text?.length || 0) > 110 ? '...' : ''}</div>
-                <div style="height:3px;border-radius:2px;background:rgba(255,255,255,0.06);margin-bottom:5px">
-                    <div style="height:100%;width:${Math.min(100, (seo.description.length / 160) * 100)}%;background:${seo.description.length >= 120 && seo.description.length <= 160 ? '#10b981' : '#ef4444'};border-radius:2px"></div>
-                </div>
-                <div style="display:flex;justify-content:space-between">
-                    <div style="font-size:10px;color:#64748b">${seo.description.length}/160 ${T.characters}</div>
-                    <div style="font-size:10px;color:${seo.description.length >= 120 && seo.description.length <= 160 ? '#10b981' : '#ef4444'};font-weight:600">${seo.description.length >= 120 && seo.description.length <= 160 ? T.good : T.adjust}</div>
-                </div>
+            <div class="card">
+                <div class="label">${T.metaDescription}</div>
+                <div class="field-text small">${esc((seo.description.text || T.notFound).slice(0, 140))}${(seo.description.text?.length || 0) > 140 ? '…' : ''}</div>
+                ${meter(seo.description.length / 160, descOk)}
+                <div class="meter-row"><span>${seo.description.length}/160 ${T.characters}</span><strong style="color:${descOk ? C.success : C.danger}">${descOk ? T.good : T.adjust}</strong></div>
             </div>
         </div>
-        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px">
+        <div class="grid-4">
             ${[
         [T.h1Tags, seo.headings?.h1?.length || 0, seo.headings?.h1?.length === 1],
         [T.h2Tags, seo.headings?.h2?.length || 0, (seo.headings?.h2?.length || 0) > 0],
         [T.internalLinks, seo.links?.internal || 0, (seo.links?.internal || 0) > 0],
         [T.imagesWithoutAlt, seo.images?.withoutAlt || 0, seo.images?.withoutAlt === 0],
-    ].map(([label, value, good]) => `
-            <div style="background:rgba(15,23,42,0.7);border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:12px;text-align:center">
-                <div style="font-size:22px;font-weight:800;color:${good ? '#10b981' : '#ef4444'};margin-bottom:4px">${value}</div>
-                <div style="font-size:9px;color:#475569;text-transform:uppercase;letter-spacing:0.06em">${label}</div>
-            </div>`).join('')}
+    ].map(([label, value, good]) => `<div class="card stat"><div class="stat-value" style="color:${good ? C.success : C.danger}">${value}</div><div class="stat-label">${label}</div></div>`).join('')}
         </div>
-        ${seo.issues.length > 0 ? `
-        <div style="margin-bottom:14px">
-            <div style="font-size:11px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px">${T.issuesFound}</div>
-            ${seo.issues.map(i => issueRow(i)).join('')}
-        </div>` : `
-        <div style="background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.2);border-radius:12px;padding:14px;text-align:center;margin-bottom:14px">
-            <div style="font-size:12px;color:#6ee7b7;font-weight:600">${T.allSeoPassed}</div>
-        </div>`}
-        ${seo.suggestions?.length > 0 ? `
-        <div>
-            <div style="font-size:11px;font-weight:700;color:#67e8f9;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px">${T.recommendations}</div>
-            ${seo.suggestions.map(s => suggestionRow(s)).join('')}
-        </div>` : ''}
+        ${seo.issues.length > 0 ? `${subhead(T.issuesFound)}${seo.issues.map(issueRow).join('')}` : `<div class="ok-box">${T.allSeoPassed}</div>`}
+        ${seo.suggestions?.length > 0 ? `${subhead(T.recommendations)}${seo.suggestions.map(suggestionRow).join('')}` : ''}
     </div>`
 
-    // PAGE: Keywords
     const keywordsPage = `
-    <div style="${sectionStyle}">
-        ${glow(-60, -60, null, null, 'rgba(167,139,250,0.07)')}
+    <div class="section">
         ${sectionHeader(T.keywordIntelligence, `${keywords.totalWords} ${T.words} · ${keywords.topKeywords.length} ${T.keywordsIdentified}`)}
         ${aiProseBox(keywordAISection)}
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px">
+        <div class="grid-2 tight">
             ${keywords.topKeywords.slice(0, 8).map(k => `
-            <div style="background:rgba(15,23,42,0.7);border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:14px;display:flex;align-items:center;justify-content:space-between">
+            <div class="card kw">
                 <div>
-                    <div style="font-size:13px;font-weight:700;color:#f1f5f9;margin-bottom:5px">${k.keyword}</div>
-                    <div style="display:flex;gap:4px;flex-wrap:wrap">
-                        ${k.inTitle ? `<span style="font-size:9px;padding:2px 7px;background:rgba(167,139,250,0.15);border:1px solid rgba(167,139,250,0.3);border-radius:999px;color:#a78bfa;font-weight:600">Title</span>` : ''}
-                        ${k.inH1 ? `<span style="font-size:9px;padding:2px 7px;background:rgba(16,185,129,0.12);border:1px solid rgba(16,185,129,0.25);border-radius:999px;color:#6ee7b7;font-weight:600">H1</span>` : ''}
-                        ${k.inMeta ? `<span style="font-size:9px;padding:2px 7px;background:rgba(6,182,212,0.12);border:1px solid rgba(6,182,212,0.25);border-radius:999px;color:#67e8f9;font-weight:600">Meta</span>` : ''}
-                    </div>
+                    <div class="kw-name">${esc(k.keyword)}</div>
+                    <div class="tags">${k.inTitle ? '<span class="tag">Title</span>' : ''}${k.inH1 ? '<span class="tag">H1</span>' : ''}${k.inMeta ? '<span class="tag">Meta</span>' : ''}</div>
                 </div>
-                <div style="text-align:right;flex-shrink:0;margin-left:12px">
-                    <div style="font-size:22px;font-weight:800;color:#a78bfa;line-height:1">${k.score}</div>
-                    <div style="font-size:9px;color:#475569;margin-top:2px">${k.density}</div>
-                </div>
+                <div class="kw-num"><div>${k.count}×</div><span>${k.density}</span></div>
             </div>`).join('')}
         </div>
         ${keywords.weakKeywords?.length > 0 ? `
-        <div style="background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.15);border-radius:12px;padding:14px;margin-bottom:12px">
-            <div style="font-size:11px;font-weight:700;color:#f87171;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:7px">${T.removeOrStrengthen}</div>
-            <div style="font-size:11px;color:#94a3b8;line-height:1.8">${keywords.weakKeywords.join(' &middot; ')}</div>
+        <div class="card soft">
+            <div class="label">${T.rareKeywords}</div>
+            <div class="small body">${keywords.weakKeywords.map(esc).join(', ')}</div>
         </div>` : ''}
         ${keywords.longTailSuggestions?.length > 0 ? `
-        <div style="background:rgba(6,182,212,0.05);border:1px solid rgba(6,182,212,0.15);border-radius:12px;padding:14px">
-            <div style="font-size:11px;font-weight:700;color:#67e8f9;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px">${T.longTail}</div>
-            <div style="display:flex;flex-wrap:wrap;gap:6px">
-                ${keywords.longTailSuggestions.map(kw => `<span style="font-size:11px;padding:5px 12px;background:rgba(6,182,212,0.1);border:1px solid rgba(6,182,212,0.2);border-radius:999px;color:#67e8f9">${kw}</span>`).join('')}
-            </div>
+        <div class="card soft">
+            <div class="label">${T.longTail}</div>
+            <div class="chips left">${keywords.longTailSuggestions.map(kw => `<span class="chip">${esc(kw)}</span>`).join('')}</div>
         </div>` : ''}
     </div>`
 
-    // PAGE: GEO — alle 23 realen Scoring-Signale aus analyzeGEO() zeigen (nicht nur eine
-    // Teilauswahl), damit der Report die tatsächliche Analysetiefe abbildet statt sie zu
-    // untertreiben. Reihenfolge/Schwellenwerte exakt wie in controllers/geo.js's check()-Aufrufen.
     const geoChecksList = geo ? [
         [T.geoChecks.structuredData, geo.checks.hasStructuredData],
         [T.geoChecks.organization, geo.checks.hasOrganization],
@@ -438,85 +321,50 @@ export function generateHTMLReport(auditData, aiReport, language = 'de', { isSam
     const geoChecksPassed = geoChecksList.filter(([, ok]) => ok).length
 
     const geoPage = geo ? `
-    <div style="${sectionStyle}">
-        ${glow(-60, -60, null, null, 'rgba(99,102,241,0.08)')}
+    <div class="section">
         ${sectionHeader(T.geoAnalysis, `${T.aiVisibilityScore}: ${geo.score}/100`)}
         ${aiProseBox(geoAISection)}
-
-        <div style="display:grid;grid-template-columns:160px 1fr;gap:16px;margin-bottom:16px">
-            <div style="background:rgba(15,23,42,0.7);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:20px;text-align:center;display:flex;flex-direction:column;justify-content:center;align-items:center">
-                <div style="font-size:48px;font-weight:800;color:${scoreColor(geo.score)};line-height:1">${geo.score}</div>
-                <div style="font-size:10px;color:#64748b;margin-top:6px;text-transform:uppercase;letter-spacing:0.08em">${T.aiVisibility}</div>
-                <div style="font-size:11px;font-weight:600;color:${scoreColor(geo.score)};margin-top:4px">${scoreLabel(geo.score)}</div>
+        <div class="geo-top">
+            <div class="card center">
+                <div class="big-score" style="color:${scoreColor(geo.score)}">${geo.score}</div>
+                <div class="label">${T.aiVisibility}</div>
+                <div class="small" style="color:${scoreColor(geo.score)};font-weight:600">${scoreLabel(geo.score)}</div>
             </div>
-            <div style="background:rgba(15,23,42,0.7);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:16px;display:flex;flex-direction:column;justify-content:center">
-                <div style="font-size:10px;color:#475569;text-transform:uppercase;letter-spacing:0.1em;font-weight:600;margin-bottom:6px">${T.geoChecksTitle}</div>
-                <div style="font-size:26px;font-weight:800;color:#f1f5f9;line-height:1">${geoChecksPassed}<span style="font-size:14px;color:#64748b;font-weight:600">/${geoChecksList.length} ${T.geoChecksSubtitle}</span></div>
+            <div class="card">
+                <div class="label">${T.geoChecksTitle}</div>
+                <div class="big-count">${geoChecksPassed}<span>/${geoChecksList.length} ${T.geoChecksSubtitle}</span></div>
             </div>
         </div>
-
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin-bottom:20px">
-            ${geoChecksList.map(([name, ok]) => `
-            <div style="background:${ok ? 'rgba(16,185,129,0.07)' : 'rgba(239,68,68,0.07)'};border:1px solid ${ok ? 'rgba(16,185,129,0.2)' : 'rgba(239,68,68,0.2)'};border-radius:10px;padding:9px 10px;display:flex;align-items:center;gap:7px">
-                <span style="font-size:12px;flex-shrink:0">${ok ? '&#9989;' : '&#10060;'}</span>
-                <span style="font-size:10px;color:${ok ? '#6ee7b7' : '#fca5a5'};font-weight:600;line-height:1.3">${name}</span>
-            </div>`).join('')}
+        <div class="checks">
+            ${geoChecksList.map(([name, ok]) => `<div class="check ${ok ? 'pass' : 'fail'}">${ok ? ICON_CHECK : ICON_CROSS}<span>${name}</span></div>`).join('')}
         </div>
-
-        ${geo.recommendations?.length > 0 ? `
-        <div style="margin-bottom:16px">
-            <div style="font-size:11px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px">${T.actionItems}</div>
-            ${geo.recommendations.map(r => `
-            <div style="display:flex;gap:12px;align-items:flex-start;background:rgba(15,23,42,0.5);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:12px 14px;margin-bottom:8px">
-                <div style="padding:3px 8px;border-radius:6px;font-size:9px;font-weight:700;text-transform:uppercase;flex-shrink:0;background:${r.priority === 'critical' ? 'rgba(239,68,68,0.15)' : r.priority === 'high' ? 'rgba(245,158,11,0.15)' : 'rgba(59,130,246,0.15)'};color:${r.priority === 'critical' ? '#fca5a5' : r.priority === 'high' ? '#fcd34d' : '#93c5fd'}">${T.priority[r.priority] || r.priority}</div>
-                <div style="flex:1">
-                    <div style="font-size:12px;font-weight:700;color:#f1f5f9;margin-bottom:3px">${r.title}</div>
-                    <div style="font-size:11px;color:#64748b;line-height:1.5">${r.desc}</div>
-                </div>
-                <div style="font-size:10px;color:#475569;flex-shrink:0">${r.effort}</div>
-            </div>`).join('')}
-        </div>` : ''}
-
-        <div>
-            <div style="font-size:11px;font-weight:700;color:#67e8f9;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px">${T.generatedLlms}</div>
-            <div style="background:rgba(6,182,212,0.05);border:1px solid rgba(6,182,212,0.15);border-radius:10px;padding:14px;font-family:monospace;font-size:10px;color:#94a3b8;line-height:1.7;white-space:pre-wrap">${geo.generatedLlmsTxt}</div>
-        </div>
+        ${geo.recommendations?.length > 0 ? `${subhead(T.actionItems)}${geo.recommendations.map(r => `
+            <div class="card action">
+                <span class="prio prio-${r.priority}">${T.priority[r.priority] || r.priority}</span>
+                <div class="action-body"><strong>${esc(r.title)}</strong><div class="small muted">${esc(r.desc)}</div></div>
+                <span class="small muted">${esc(r.effort)}</span>
+            </div>`).join('')}` : ''}
+        ${!geo.checks.hasLlmsTxt && geo.generatedLlmsTxt ? `${subhead(T.generatedLlms)}<pre class="code">${esc(geo.generatedLlmsTxt)}</pre>` : ''}
     </div>` : ''
 
+    // Screenshots are viewport captures (runner.js): 1280x800 desktop and 390x844 mobile.
     const screenshotsPage = screenshots ? `
-    <div style="${sectionStyle}">
-        ${glow(-60, -60, null, null, 'rgba(124,58,237,0.07)')}
+    <div class="section">
         ${sectionHeader(T.screenshots, T.desktopMobile)}
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;flex:1">
-            <div>
-                <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:#475569;font-weight:600;margin-bottom:8px">${T.desktop} · 1280px</div>
-                <div style="border:1px solid rgba(255,255,255,0.08);border-radius:12px;overflow:hidden;height:360px;background:#0a0e1a">
-                    <img src="data:image/jpeg;base64,${screenshots.desktop}" style="width:100%;display:block;object-fit:cover;object-position:top" />
-                </div>
-            </div>
-            <div>
-                <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:#475569;font-weight:600;margin-bottom:8px">${T.mobile} · 390px</div>
-                <div style="border:1px solid rgba(255,255,255,0.08);border-radius:12px;overflow:hidden;height:360px;background:#0a0e1a;display:flex;justify-content:center">
-                    <img src="data:image/jpeg;base64,${screenshots.mobile}" style="height:100%;display:block;object-fit:cover;object-position:top" />
-                </div>
-            </div>
+        <div class="shots">
+            <div><div class="label">${T.desktop} · 1280 px</div><div class="shot"><img src="data:image/jpeg;base64,${screenshots.desktop}" /></div></div>
+            <div><div class="label">${T.mobile} · 390 px</div><div class="shot"><img src="data:image/jpeg;base64,${screenshots.mobile}" /></div></div>
         </div>
     </div>` : ''
 
-    // Abschluss-CTA — nur im oeffentlichen Beispiel-Download: der eigentliche Conversion-Moment
-    // nach dem Lesen. Ergibt fuer echte Kundenreports keinen Sinn (die haben ihren Report ja
-    // schon), deshalb an isSample gekoppelt statt immer angehaengt.
     const ctaUrl = language === 'en' ? `${SITE_URL}/en` : SITE_URL
     const ctaPage = isSample ? `
-    <div style="${sectionStyle}">
-        ${glow(-80, -80, null, null, 'rgba(124,58,237,0.15)')}
-        ${glow(null, null, -60, -60, 'rgba(6,182,212,0.08)')}
-        <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 20px;position:relative;z-index:1">
-            <div style="font-size:22px;font-weight:800;color:#f8fafc;margin-bottom:8px">${T.ctaTitle}</div>
-            <div style="font-size:13px;color:#94a3b8;margin-bottom:24px">${T.ctaSubtitle}</div>
-            <a href="${ctaUrl}" style="display:inline-block;background:linear-gradient(to right,#7c3aed,#06b6d4);color:#f8fafc;font-size:14px;font-weight:700;padding:14px 32px;border-radius:12px;text-decoration:none;margin-bottom:20px">${T.ctaButton} →</a>
-            <div style="font-size:11px;color:#64748b;max-width:340px;line-height:1.6">${T.ctaPricingNote}</div>
-            <a href="${ctaUrl}" style="margin-top:20px;font-size:12px;color:#67e8f9;text-decoration:none;font-weight:600">${ctaUrl.replace('https://', '')}</a>
+    <div class="section">
+        <div class="cta">
+            <h2>${T.ctaTitle}</h2>
+            <p>${T.ctaSubtitle}</p>
+            <a class="button" href="${ctaUrl}">${T.ctaButton}</a>
+            <p class="small">${T.ctaPricingNote}</p>
         </div>
     </div>` : ''
 
@@ -524,10 +372,108 @@ export function generateHTMLReport(auditData, aiReport, language = 'de', { isSam
 <html lang="${language === 'en' ? 'en' : 'de'}">
 <head>
 <meta charset="UTF-8"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
 @page { margin: 0; size: A4; }
-* { margin:0; padding:0; box-sizing:border-box; }
-body { font-family: -apple-system, 'Segoe UI', sans-serif; background:#0a0e1a; color:#f1f5f9; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Geist', -apple-system, 'Segoe UI', sans-serif; background: ${C.paper}; color: ${C.ink}; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+a { color: ${C.accentInk}; text-decoration: none; }
+.page { width: 210mm; min-height: 297mm; padding: 40px 44px; break-after: page; display: flex; flex-direction: column; background: ${C.paper}; }
+.section { width: 210mm; padding: 28px 44px 20px; break-inside: avoid; background: ${C.paper}; }
+.small { font-size: 11px; line-height: 1.5; }
+.muted { color: ${C.muted}; }
+.body { color: ${C.body}; }
+.card { background: ${C.card}; border: 1px solid ${C.line}; border-radius: 14px; padding: 16px; }
+.card.soft { background: ${C.tint}; border-color: ${C.tint}; margin-top: 12px; }
+.label { font-size: 11px; font-weight: 600; color: ${C.muted}; margin-bottom: 8px; }
+.subhead { font-size: 13px; font-weight: 600; color: ${C.ink}; margin: 18px 0 10px; }
+
+.cover-top { display: flex; justify-content: space-between; align-items: center; }
+.logo { display: flex; align-items: center; gap: 10px; font-size: 18px; font-weight: 700; letter-spacing: -0.02em; }
+.logo-mark { width: 30px; height: 30px; border-radius: 8px; background: ${C.ink}; display: inline-flex; align-items: center; justify-content: center; }
+.cover-main { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+.eyebrow { font-size: 13px; font-weight: 600; color: ${C.accentInk}; margin-bottom: 12px; }
+h1 { font-size: 40px; line-height: 1.08; letter-spacing: -0.035em; font-weight: 700; margin-bottom: 36px; word-break: break-all; }
+.score-grid { display: grid; grid-template-columns: 1.3fr 1fr 1fr 1fr; gap: 10px; margin-bottom: 24px; }
+.score-card { background: ${C.card}; border: 1px solid ${C.line}; border-radius: 14px; padding: 16px; }
+.score-main { border: 2px solid ${C.accent}; }
+.score-label { font-size: 12px; color: ${C.muted}; margin-bottom: 6px; }
+.score-value { font-size: 34px; font-weight: 700; letter-spacing: -0.03em; line-height: 1; }
+.score-value span { font-size: 13px; color: ${C.muted}; font-weight: 500; letter-spacing: 0; }
+.score-state { font-size: 11px; font-weight: 600; margin-top: 6px; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { font-size: 11px; font-weight: 500; padding: 4px 11px; border-radius: 999px; background: ${C.tint}; color: ${C.accentInk}; }
+.note { margin-top: 20px; font-size: 11px; color: ${C.body}; background: ${C.tint}; border-radius: 10px; padding: 10px 14px; max-width: 460px; }
+.cover-foot { display: flex; justify-content: space-between; font-size: 11px; color: ${C.muted}; border-top: 1px solid ${C.lineSoft}; padding-top: 14px; }
+
+.section-head { display: flex; justify-content: space-between; align-items: flex-end; padding-bottom: 12px; margin-bottom: 16px; border-bottom: 1px solid ${C.line}; }
+h2 { font-size: 22px; font-weight: 700; letter-spacing: -0.03em; }
+.section-sub { font-size: 12px; color: ${C.muted}; margin-top: 3px; }
+.brand-mini { font-size: 11px; font-weight: 600; color: ${C.muted}; }
+.prose-card { margin-bottom: 14px; }
+.prose { font-size: 12px; line-height: 1.7; color: ${C.body}; margin-bottom: 8px; }
+.prose:last-child { margin-bottom: 0; }
+.prose strong { color: ${C.ink}; }
+.bullet { display: flex; gap: 9px; margin-bottom: 7px; font-size: 12px; line-height: 1.6; color: ${C.body}; }
+.dot { width: 5px; height: 5px; border-radius: 50%; background: ${C.accent}; flex-shrink: 0; margin-top: 7px; }
+.issue { font-size: 12px; line-height: 1.55; color: ${C.ink}; background: ${C.dangerSoft}; border-radius: 10px; padding: 9px 12px; margin-bottom: 6px; }
+.ok-box { font-size: 12px; font-weight: 600; color: ${C.success}; background: ${C.successSoft}; border-radius: 10px; padding: 12px; text-align: center; margin-top: 4px; }
+
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+.grid-2.tight { gap: 8px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 4px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 4px; }
+.metric { text-align: left; }
+.metric-value { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; }
+.metric-label { font-size: 12px; font-weight: 600; color: ${C.ink}; margin-top: 4px; }
+.metric-sub { font-size: 10px; color: ${C.muted}; }
+.stat { text-align: center; padding: 12px; }
+.stat-value { font-size: 22px; font-weight: 700; }
+.stat-label { font-size: 10px; color: ${C.muted}; margin-top: 2px; }
+.field-text { font-size: 13px; font-weight: 600; line-height: 1.4; margin-bottom: 10px; }
+.field-text.small { font-weight: 400; color: ${C.body}; font-size: 12px; }
+.meter { height: 4px; border-radius: 4px; background: ${C.lineSoft}; overflow: hidden; margin-bottom: 6px; }
+.meter div { height: 100%; border-radius: 4px; }
+.meter-row { display: flex; justify-content: space-between; font-size: 10px; color: ${C.muted}; }
+
+.kw { display: flex; justify-content: space-between; align-items: center; padding: 12px 14px; }
+.kw-name { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+.tags { display: flex; gap: 4px; }
+.tag { font-size: 9px; font-weight: 600; padding: 2px 7px; border-radius: 999px; background: ${C.tint}; color: ${C.accentInk}; }
+.kw-num { text-align: right; }
+.kw-num div { font-size: 18px; font-weight: 700; color: ${C.accent}; }
+.kw-num span { font-size: 10px; color: ${C.muted}; }
+.chips.left { justify-content: flex-start; }
+.card.soft .chip { background: ${C.card}; }
+
+.geo-top { display: grid; grid-template-columns: 170px 1fr; gap: 10px; margin-bottom: 10px; }
+.center { text-align: center; }
+.big-score { font-size: 44px; font-weight: 700; line-height: 1; margin-bottom: 6px; }
+.big-count { font-size: 28px; font-weight: 700; }
+.big-count span { font-size: 13px; color: ${C.muted}; font-weight: 500; }
+.checks { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.check { display: flex; align-items: center; gap: 7px; font-size: 11px; font-weight: 500; border-radius: 9px; padding: 8px 10px; }
+.check.pass { background: ${C.successSoft}; color: ${C.ink}; }
+.check.fail { background: ${C.dangerSoft}; color: ${C.ink}; }
+.check svg { flex-shrink: 0; }
+.action { display: flex; gap: 12px; align-items: flex-start; padding: 12px 14px; margin-bottom: 6px; }
+.action-body { flex: 1; font-size: 12px; }
+.prio { font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 999px; flex-shrink: 0; }
+.prio-critical { background: ${C.dangerSoft}; color: ${C.danger}; }
+.prio-high { background: ${C.warningSoft}; color: ${C.warning}; }
+.prio-medium, .prio-low { background: ${C.tint}; color: ${C.accentInk}; }
+.code { background: ${C.ink}; color: #e3e8f2; font-family: 'Geist Mono', ui-monospace, monospace; font-size: 10px; line-height: 1.6; border-radius: 10px; padding: 14px; white-space: pre-wrap; }
+
+.shots { display: grid; grid-template-columns: 3.2fr 1fr; gap: 16px; align-items: start; }
+.shot { border: 1px solid ${C.line}; border-radius: 12px; overflow: hidden; background: ${C.card}; }
+.shot img { width: 100%; display: block; }
+
+.cta { background: ${C.ink}; color: ${C.paper}; border-radius: 18px; padding: 40px; text-align: center; }
+.cta h2 { color: ${C.paper}; margin-bottom: 8px; }
+.cta p { color: #c9cfdb; font-size: 13px; margin-bottom: 18px; }
+.cta .small { margin: 16px 0 0; }
+.button { display: inline-block; background: ${C.accent}; color: #fff; font-weight: 600; font-size: 14px; padding: 12px 24px; border-radius: 10px; }
 </style>
 </head>
 <body>
@@ -557,7 +503,10 @@ export async function saveReportAsPDF(html, url) {
         ],
     })
     const page = await browser.newPage()
-    await page.setContent(html, { waitUntil: 'networkidle' })
+    // networkidle also waits for the Geist web font; if it can't load, the PDF falls back
+    // to the system font instead of failing.
+    await page.setContent(html, { waitUntil: 'networkidle', timeout: 30000 })
+    await page.evaluate(() => document.fonts?.ready).catch(() => {})
     await page.pdf({
         path: filename,
         format: 'A4',

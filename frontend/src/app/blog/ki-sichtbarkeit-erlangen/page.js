@@ -1,9 +1,10 @@
 import Link from 'next/link'
 import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
+import ArticleSources from '../../components/site/ArticleSources'
 
 export const metadata = {
-    title: 'KI-Sichtbarkeit erlangen: So wirst du von ChatGPT, Claude & Perplexity zitiert',
+    title: 'KI-Sichtbarkeit erlangen: So zitiert dich ChatGPT',
     description: 'KI-Sichtbarkeit ist mehr als llms.txt und Schema Markup. Wie du wirklich von ChatGPT, Claude, Perplexity und Google AI Overview zitiert wirst.',
     keywords: 'ki sichtbarkeit, ki sichtbarkeit erlangen, ai visibility, ki sichtbarkeit verbessern, von chatgpt zitiert werden, von claude empfohlen werden, ki sichtbarkeit messen, generative engine optimization',
     alternates: {
@@ -136,6 +137,39 @@ const LAYERS = [
         desc: 'KI-Antworten sind nicht deterministisch - dieselbe Frage kann je nach Zeitpunkt unterschiedlich beantwortet werden. Ohne wiederholte Messung lässt sich nicht unterscheiden, ob eine Maßnahme wirkt oder ob man nur eine Momentaufnahme sieht. Monitoring zeigt außerdem, wer stattdessen zitiert wird - und ob eine Formulierung wie "AI Visibility" von einem Modell überhaupt der richtigen Kategorie zugeordnet wird.',
         internalLink: { label: 'KI-Sichtbarkeit automatisiert tracken mit GEO Automatisierung', href: '/blog/seo-geo-automatisierung' },
     },
+]
+
+const SOURCES = [
+    {
+        "label": "GEO: Generative Engine Optimization (Aggarwal et al., 2023)",
+        "publisher": "arXiv",
+        "href": "https://arxiv.org/abs/2311.09735"
+    },
+    {
+        "label": "KI-Funktionen in der Google-Suche und deine Website",
+        "publisher": "Google Search Central",
+        "href": "https://developers.google.com/search/docs/appearance/ai-features"
+    },
+    {
+        "label": "Hilfreiche, zuverlässige Inhalte erstellen",
+        "publisher": "Google Search Central",
+        "href": "https://developers.google.com/search/docs/fundamentals/creating-helpful-content"
+    },
+    {
+        "label": "Übersicht der OpenAI-Crawler",
+        "publisher": "OpenAI",
+        "href": "https://developers.openai.com/api/docs/bots"
+    },
+    {
+        "label": "Wie Anthropic Daten aus dem Web crawlt",
+        "publisher": "Anthropic",
+        "href": "https://support.claude.com/en/articles/8896518-does-anthropic-crawl-data-from-the-web-and-how-can-site-owners-block-the-crawler"
+    },
+    {
+        "label": "Perplexity-Crawler",
+        "publisher": "Perplexity",
+        "href": "https://docs.perplexity.ai/docs/resources/perplexity-crawlers"
+    }
 ]
 
 export default function KiSichtbarkeitErlangenPage() {
@@ -324,6 +358,8 @@ export default function KiSichtbarkeitErlangenPage() {
                         ← Zurück zum Blog
                     </Link>
                 </div>
+
+                <ArticleSources title="Quellen" sources={SOURCES} />
 
             </article>
 
