@@ -24,8 +24,8 @@ function isValidEmail(email) {
 
 async function totals(product) {
     const [all, confirmed] = await Promise.all([
-        WaitlistSignup.countDocuments({ product, unsubscribed: false }),
-        WaitlistSignup.countDocuments({ product, unsubscribed: false, confirmed: true }),
+        WaitlistSignup.countDocuments({ product: { $eq: product }, unsubscribed: false }),
+        WaitlistSignup.countDocuments({ product: { $eq: product }, unsubscribed: false, confirmed: true }),
     ])
     return { all, confirmed }
 }
@@ -36,7 +36,8 @@ const tokenLimiter = rateLimit({ windowMs: 15 * 60 * 1000, limit: 60, standardHe
 router.post('/', signupLimiter, async (req, res) => {
     const email = String(req.body?.email || '').trim().toLowerCase()
     const language = req.body?.language === 'en' ? 'en' : 'de'
-    const product = PRODUCTS.includes(req.body?.product) ? req.body.product : 'seo-agent'
+    // Wert aus der festen Liste nehmen statt aus dem Request, damit nie Nutzereingaben in die Query gelangen.
+    const product = PRODUCTS.find(p => p === req.body?.product) || 'seo-agent'
     const website = String(req.body?.website || '').trim().slice(0, 200) || null
     const interests = Array.isArray(req.body?.interests)
         ? [...new Set(req.body.interests.filter(i => INTERESTS.includes(i)))]
@@ -47,7 +48,7 @@ router.post('/', signupLimiter, async (req, res) => {
     }
 
     try {
-        let signup = await WaitlistSignup.findOne({ product, email })
+        let signup = await WaitlistSignup.findOne({ product: { $eq: product }, email: { $eq: email } })
         let isNew = false
 
         if (!signup) {
@@ -92,7 +93,7 @@ router.post('/', signupLimiter, async (req, res) => {
 })
 
 router.get('/confirm/:token', tokenLimiter, async (req, res) => {
-    const signup = await WaitlistSignup.findOne({ confirmToken: req.params.token })
+    const signup = await WaitlistSignup.findOne({ confirmToken: { $eq: String(req.params.token) } })
     if (!signup || signup.unsubscribed) return res.status(404).json({ error: 'invalid_token' })
 
     if (!signup.confirmed) {
@@ -108,7 +109,7 @@ router.get('/confirm/:token', tokenLimiter, async (req, res) => {
 })
 
 router.get('/unsubscribe/:token', tokenLimiter, async (req, res) => {
-    const signup = await WaitlistSignup.findOne({ confirmToken: req.params.token })
+    const signup = await WaitlistSignup.findOne({ confirmToken: { $eq: String(req.params.token) } })
     if (!signup) return res.status(404).json({ error: 'invalid_token' })
 
     if (!signup.unsubscribed) {
