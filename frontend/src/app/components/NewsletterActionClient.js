@@ -43,14 +43,54 @@ const COPY = {
     },
 }
 
+// Eigene Texte fuer die Warteliste (SEO-Agent), damit dort nicht vom Beispiel-Report die Rede ist.
+const VARIANTS = {
+    waitlist: {
+        de: {
+            confirm: {
+                loading: 'Bestätige deinen Platz…',
+                success: 'Du bist auf der Warteliste',
+                successDesc: 'Danke! Wir schreiben dir, sobald du den SEO-Agenten testen kannst.',
+                error: 'Link ungültig oder abgelaufen',
+                errorDesc: 'Dieser Bestätigungslink funktioniert nicht mehr. Du kannst dich auf der Seite des SEO-Agenten einfach erneut eintragen.',
+            },
+            unsubscribe: {
+                loading: 'Wird abgemeldet…',
+                success: 'Von der Warteliste abgemeldet',
+                successDesc: 'Du bekommst zum SEO-Agenten keine E-Mails mehr von uns.',
+                error: 'Link ungültig oder abgelaufen',
+                errorDesc: 'Dieser Abmeldelink funktioniert nicht mehr. Melde dich gern per Support, falls du weiterhin E-Mails bekommst.',
+            },
+            backHome: 'Zurück zur Startseite',
+        },
+        en: {
+            confirm: {
+                loading: 'Confirming your spot…',
+                success: "You're on the waitlist",
+                successDesc: "Thanks! We'll email you as soon as you can test the SEO agent.",
+                error: 'Link invalid or expired',
+                errorDesc: 'This confirmation link no longer works. You can simply join again on the SEO agent page.',
+            },
+            unsubscribe: {
+                loading: 'Unsubscribing…',
+                success: 'Removed from the waitlist',
+                successDesc: "You won't receive any more emails from us about the SEO agent.",
+                error: 'Link invalid or expired',
+                errorDesc: 'This unsubscribe link no longer works. Feel free to contact support if you keep receiving emails.',
+            },
+            backHome: 'Back to homepage',
+        },
+    },
+}
+
 // endpoint erlaubt anderen Flows (z.B. Marketing-Consent fuer registrierte Nutzer statt
 // Sample-Report-Leads) denselben Confirm/Unsubscribe-Bildschirm mit eigenem Backend-Endpoint zu
 // nutzen, ohne diese Komponente zu duplizieren. Nur ein String (keine Funktion) als Prop, weil
 // page.js als Server Component keine Funktionen an diese Client Component durchreichen kann.
 // 'path'  → /<endpoint>/<action>/<token>   (bestehendes Sample-Report-Verhalten)
 // 'query' → /<endpoint>/<action>?token=<token>  (Marketing-Consent-Endpoints)
-export default function NewsletterActionClient({ locale = 'de', action = 'confirm', endpoint = 'sample-report', tokenStyle = 'path' }) {
-    const localeCopy = COPY[locale] || COPY.de
+export default function NewsletterActionClient({ locale = 'de', action = 'confirm', endpoint = 'sample-report', tokenStyle = 'path', variant }) {
+    const localeCopy = VARIANTS[variant]?.[locale] || COPY[locale] || COPY.de
     const t = localeCopy[action] || localeCopy.confirm
     const homeHref = locale === 'en' ? '/en' : '/'
     const searchParams = useSearchParams()

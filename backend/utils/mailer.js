@@ -1701,3 +1701,149 @@ function ticketReplyHtml({ heading, body, url, ctaLabel, language }) {
 </body>
 </html>`
 }
+
+// ── Warteliste (SEO-Agent) ──────────────────────────────────────────────────────────────────
+
+const WAITLIST_INTEREST_LABELS = {
+    'keyword-cleanup': 'Keywords ohne passenden Content erkennen',
+    'keyword-discovery': 'Rankende, nicht getrackte Keywords finden',
+    'content-compare': 'Content mit Top-Ergebnissen vergleichen und verbessern',
+    'email-reports': 'Vergleich als PDF per E-Mail',
+}
+const WAITLIST_PRODUCT_LABELS = { 'seo-agent': 'SEO-Agent' }
+
+// Double-Opt-In-Mail fuer die Warteliste: erklaert, was geplant ist, und holt die Einwilligung
+// fuer die spaetere Launch-Mail ein. Abmeldelink ist von Anfang an dabei.
+export async function sendWaitlistOptIn({ email, language = 'de', confirmToken }) {
+    const isEn = language === 'en'
+    const confirmUrl = isEn
+        ? `${APP_URL}/en/seo-agent/confirm?token=${confirmToken}`
+        : `${APP_URL}/seo-agent/bestaetigen?token=${confirmToken}`
+    const unsubscribeUrl = isEn
+        ? `${APP_URL}/en/seo-agent/unsubscribe?token=${confirmToken}`
+        : `${APP_URL}/seo-agent/abmelden?token=${confirmToken}`
+
+    const c = isEn ? {
+        subject: 'Confirm your spot on the SEO agent waitlist | Scanora',
+        heading: 'Confirm your spot on the waitlist',
+        intro: 'Thanks for your interest in the Scanora SEO agent. We are building an agent that takes the repetitive SEO work off your plate:',
+        points: [
+            'It finds keywords you rank for but don’t track yet, and keywords you have no matching content for.',
+            'For a keyword stuck on, say, position 40, it compares your page with the pages ranking above you and shows where you are weaker and where you are stronger.',
+            'It drafts concrete improvements for the weak spots.',
+            'You decide what it may do: only suggest, ask for your approval by email, or act automatically.',
+        ],
+        cta: 'Confirm waitlist spot',
+        after: 'Once confirmed, we will email you when the agent is ready to test. Waitlist members get access first. Until then you won’t receive any other emails from us about it.',
+        ignore: 'If you didn’t sign up, just ignore this email. Without confirmation you won’t hear from us again.',
+        unsub: 'Unsubscribe',
+        sign: 'Finn from Scanora',
+    } : {
+        subject: 'Bestätige deinen Platz auf der Warteliste für den SEO-Agenten | Scanora',
+        heading: 'Bestätige deinen Platz auf der Warteliste',
+        intro: 'Danke für dein Interesse am SEO-Agenten von Scanora. Wir bauen einen Agenten, der dir die wiederkehrende SEO-Arbeit abnimmt:',
+        points: [
+            'Er findet Keywords, für die du rankst, die du aber noch nicht trackst, und Keywords, für die du keinen passenden Content hast.',
+            'Steht ein Keyword zum Beispiel auf Platz 40, vergleicht er deine Seite mit den Seiten, die vor dir ranken, und zeigt, wo du schwächer und wo du stärker bist.',
+            'Für die Schwachstellen schreibt er konkrete Verbesserungen.',
+            'Du legst fest, was er darf: nur vorschlagen, per E-Mail um Freigabe bitten oder automatisch handeln.',
+        ],
+        cta: 'Platz auf der Warteliste bestätigen',
+        after: 'Nach der Bestätigung schreiben wir dir, sobald du den Agenten testen kannst. Wer auf der Warteliste steht, bekommt als Erstes Zugang. Bis dahin bekommst du dazu keine weiteren E-Mails.',
+        ignore: 'Falls du dich nicht eingetragen hast, ignoriere diese E-Mail einfach. Ohne Bestätigung hörst du nichts mehr von uns.',
+        unsub: 'Abmelden',
+        sign: 'Finn von Scanora',
+    }
+
+    const text = `${c.heading}\n\n${c.intro}\n\n${c.points.map(p => `- ${p}`).join('\n')}\n\n${c.cta}: ${confirmUrl}\n\n${c.after}\n\n${c.ignore}\n\n${c.sign}\n\n${c.unsub}: ${unsubscribeUrl}`
+    const html = `<!DOCTYPE html>
+<html lang="${isEn ? 'en' : 'de'}">
+<head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/></head>
+<body style="margin:0;padding:0;background:#f8fafc;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#0f172a;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f8fafc;padding:40px 16px;">
+    <tr><td align="center">
+      <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
+        <tr><td style="padding-bottom:24px;">
+          <table cellpadding="0" cellspacing="0"><tr>
+            <td><img src="${APP_URL}/icon.png" width="32" height="32" alt="Scanora" style="display:block;width:32px;height:32px;border-radius:8px;" /></td>
+            <td style="padding-left:10px;font-size:18px;font-weight:700;color:#0f172a;">Scanora</td>
+          </tr></table>
+        </td></tr>
+        <tr><td style="background:#ffffff;border:1px solid #e2e8f0;border-radius:16px;padding:36px;">
+          <p style="margin:0 0 14px;font-size:22px;font-weight:700;letter-spacing:-0.02em;color:#0f172a;">${c.heading}</p>
+          <p style="margin:0 0 14px;font-size:15px;line-height:1.6;color:#334155;">${c.intro}</p>
+          <ul style="margin:0 0 26px;padding-left:20px;font-size:15px;line-height:1.6;color:#334155;">
+            ${c.points.map(p => `<li style="margin-bottom:8px;">${p}</li>`).join('')}
+          </ul>
+          <table cellpadding="0" cellspacing="0" style="margin-bottom:26px;"><tr>
+            <td style="background:#1d4ed8;border-radius:10px;">
+              <a href="${confirmUrl}" style="display:inline-block;padding:13px 26px;font-size:15px;font-weight:600;color:#ffffff;text-decoration:none;">${c.cta} &rarr;</a>
+            </td>
+          </tr></table>
+          <p style="margin:0 0 14px;font-size:14px;line-height:1.6;color:#475569;">${c.after}</p>
+          <p style="margin:0 0 20px;font-size:13px;line-height:1.6;color:#64748b;">${c.ignore}</p>
+          <p style="margin:0;font-size:14px;color:#334155;">${c.sign}</p>
+        </td></tr>
+        <tr><td align="center" style="padding-top:20px;">
+          <a href="${unsubscribeUrl}" style="font-size:12px;color:#64748b;text-decoration:underline;">${c.unsub}</a>
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`
+
+    await transporter.sendMail({
+        from: process.env.SMTP_FROM || process.env.SMTP_USER,
+        to: email,
+        subject: c.subject,
+        text,
+        html,
+    })
+}
+
+export async function sendAdminWaitlistSignup({ product, email, language, website, interests = [], totals }) {
+    const adminEmail = process.env.ADMIN_EMAIL || process.env.SMTP_USER
+    const now = new Date().toLocaleString('de-DE', { timeZone: 'Europe/Berlin' })
+    const label = WAITLIST_PRODUCT_LABELS[product] || product
+    const rows = [
+        ['E-Mail', email],
+        ['Website', website || '-'],
+        ['Interessen', interests.length ? interests.map(i => WAITLIST_INTEREST_LABELS[i] || i).join(', ') : '-'],
+        ['Sprache', language],
+        ['Zeitpunkt', now],
+    ]
+    if (totals) rows.push(['Gesamt', `${totals.all} eingetragen, ${totals.confirmed} bestätigt`])
+    await transporter.sendMail({
+        from: process.env.SMTP_FROM || process.env.SMTP_USER,
+        to: adminEmail,
+        subject: `Warteliste ${label}: ${email}`,
+        html: adminNotifyHtml(`Neue Anmeldung: ${label}`, rows),
+    })
+}
+
+export async function sendAdminWaitlistConfirmed({ product, email, language, totals }) {
+    const adminEmail = process.env.ADMIN_EMAIL || process.env.SMTP_USER
+    const now = new Date().toLocaleString('de-DE', { timeZone: 'Europe/Berlin' })
+    const label = WAITLIST_PRODUCT_LABELS[product] || product
+    const rows = [['E-Mail', email], ['Sprache', language], ['Zeitpunkt', now]]
+    if (totals) rows.push(['Gesamt', `${totals.all} eingetragen, ${totals.confirmed} bestätigt`])
+    await transporter.sendMail({
+        from: process.env.SMTP_FROM || process.env.SMTP_USER,
+        to: adminEmail,
+        subject: `Warteliste ${label} bestätigt: ${email}`,
+        html: adminNotifyHtml(`Warteliste bestätigt: ${label}`, rows),
+    })
+}
+
+export async function sendAdminWaitlistUnsubscribed({ product, email, language }) {
+    const adminEmail = process.env.ADMIN_EMAIL || process.env.SMTP_USER
+    const now = new Date().toLocaleString('de-DE', { timeZone: 'Europe/Berlin' })
+    const label = WAITLIST_PRODUCT_LABELS[product] || product
+    await transporter.sendMail({
+        from: process.env.SMTP_FROM || process.env.SMTP_USER,
+        to: adminEmail,
+        subject: `Warteliste ${label} abgemeldet: ${email}`,
+        html: adminNotifyHtml(`Von der Warteliste abgemeldet: ${label}`, [['E-Mail', email], ['Sprache', language], ['Zeitpunkt', now]]),
+    })
+}

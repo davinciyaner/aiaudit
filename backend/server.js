@@ -21,6 +21,7 @@ import geoOneoffRouter from "./routes/geo_oneoff_router.js";
 import leadsRouter from "./routes/leads_router.js";
 import sampleReportRouter from "./routes/sample_report_router.js";
 import marketingRouter from "./routes/marketing_router.js";
+import waitlistRouter from "./routes/waitlist_router.js";
 import { startSeoTrackingJob, runWeeklySeoChecks } from "./jobs/seoTrackingJob.js";
 import { startGeoTrackingJob } from "./jobs/geoTrackingJob.js";
 import { startLeadsRetentionJob } from "./jobs/leadsRetentionJob.js";
@@ -64,6 +65,7 @@ app.use("/api/geo", geoRouter);
 app.use("/api/geo-check", geoOneoffRouter);
 app.use("/api/sample-report", sampleReportRouter);
 app.use("/api/marketing", marketingRouter);
+app.use("/api/waitlist", waitlistRouter);
 app.use("/reports", express.static("reports"));
 
 app.get("/health", (req, res) => {

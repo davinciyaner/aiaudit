@@ -245,6 +245,26 @@ export default function DatenschutzPage() {
                             </p>
                         </Sub>
 
+                        <Sub title="3.5 Warteliste für den SEO-Agenten">
+                            <p>
+                                Auf <strong className="text-(--text-body)">scanora.ai/seo-agent</strong> kannst du dich auf eine Warteliste für den geplanten SEO-Agenten eintragen. Danach schicken wir dir eine E-Mail mit einem Bestätigungslink (Double-Opt-In). Erst wenn du ihn anklickst, stehst du auf der Warteliste und wir dürfen dich informieren, sobald du den Agenten testen kannst. Ohne Klick passiert nichts weiter.
+                            </p>
+                            <ul className="list-disc list-inside space-y-1 ml-2">
+                                <li>E-Mail-Adresse und gewählte Sprache</li>
+                                <li>freiwillig: deine Website und welche geplanten Funktionen dich interessieren</li>
+                                <li>IP-Adresse und Zeitstempel der Anmeldung sowie - falls erfolgt - des Bestätigungsklicks (Nachweis der wirksamen Einwilligung)</li>
+                                <li>Bestätigungs- und Abmeldestatus</li>
+                            </ul>
+                            <p>
+                                Jede E-Mail zur Warteliste enthält einen Abmeldelink, über den du dich jederzeit sofort austragen kannst.
+                            </p>
+                            <p>
+                                <strong className="text-(--text-body)">Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. a DSGVO (Einwilligung).<br />
+                                <strong className="text-(--text-body)">Speicherdauer:</strong> bis zur Abmeldung, bis zum Start des SEO-Agenten bzw. dessen Einstellung, oder auf Anfrage über unser Support-Formular.<br />
+                                <strong className="text-(--text-body)">Deine Rechte:</strong> Auskunft (Art. 15 DSGVO) und Löschung (Art. 17 DSGVO) kannst du jederzeit über <a href="/support" className="text-(--accent-ink) hover:text-(--accent-ink)">unser Support-Formular</a> geltend machen.
+                            </p>
+                        </Sub>
+
                     </Section>
 
                     <Section title="4. Zahlungsabwicklung über PayPal">

@@ -510,4 +510,22 @@
     <xhtml:link rel="alternate" hreflang="en-US" href="https://www.scanora.ai/en/compare/writesonic-alternative"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.scanora.ai/vergleich/writesonic-alternative"/>
   </url>
+  <url>
+    <loc>https://www.scanora.ai/seo-agent</loc>
+    <lastmod>2026-10-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="de-DE" href="https://www.scanora.ai/seo-agent"/>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://www.scanora.ai/en/seo-agent"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.scanora.ai/seo-agent"/>
+  </url>
+  <url>
+    <loc>https://www.scanora.ai/en/seo-agent</loc>
+    <lastmod>2026-10-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="de-DE" href="https://www.scanora.ai/seo-agent"/>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://www.scanora.ai/en/seo-agent"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.scanora.ai/seo-agent"/>
+  </url>
 </urlset>
