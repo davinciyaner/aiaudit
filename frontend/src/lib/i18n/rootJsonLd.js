@@ -61,10 +61,6 @@ export function getRootJsonLd(locale) {
                     name: 'Finn Paustian',
                     jobTitle: 'Founder',
                     url: 'https://www.scanora.ai/about',
-                    sameAs: [
-                        'https://www.linkedin.com/in/finn-paustian',
-                        'https://x.com/scanoraai',
-                    ],
                     worksFor: { '@id': 'https://www.scanora.ai/en/#organization' },
                 },
                 {
@@ -110,8 +106,6 @@ export function getRootJsonLd(locale) {
                 founder: { '@id': 'https://www.scanora.ai/#founder' },
                 sameAs: [
                     'https://x.com/scanoraai',
-                    'https://www.linkedin.com/company/scanora-ai',
-                    'https://github.com/scanora-ai',
                 ],
             },
             {
@@ -140,10 +134,6 @@ export function getRootJsonLd(locale) {
                 name: 'Finn Paustian',
                 jobTitle: 'Founder',
                 url: 'https://www.scanora.ai/about',
-                sameAs: [
-                    'https://www.linkedin.com/in/finn-paustian',
-                    'https://x.com/scanoraai',
-                ],
                 worksFor: { '@id': 'https://www.scanora.ai/#organization' },
             },
         ],
